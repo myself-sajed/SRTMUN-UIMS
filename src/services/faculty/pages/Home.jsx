@@ -78,7 +78,7 @@ const Home = () => {
 
                                 <div className='text-black '>
                                     <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
-                                    <p className='text-base sm:text-xl'>{user && user.designation},</p>
+                                    <p className='text-base sm:text-xl'>{user && user.designation === 'Contractual' ? 'Assistant Professor(Contractual)' : user.designation},</p>
                                     <p className='text-xs sm:text-sm'>{user && user.department},</p>
                                     <p className='text-xs sm:text-sm'><p className='text-xs sm:text-sm'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p></p>
 
@@ -126,7 +126,7 @@ const Home = () => {
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
                                         <DetailTile keyName="Designation" value={`${user && user.designation}`} />
                                         <DetailTile keyName="School" value={`${user && user.department}`} />
-                                        <DetailTile keyName="Employee ID" value={`${user.designation === 'Contractual' ? '' : 'TG-'}${user && user.username}`} />
+                                        <DetailTile keyName="Employee ID" value={`${user.designation === 'Contractual' || user.username.includes('UFTG') ? '' : 'TG-'}${user && user.username}`} />
                                     </div>
                                     <div className='flex-1'>
                                         <DetailTile keyName="Date of Birth" value={`${user && user.dob === undefined ? 'Not Added' : user.dob}`} />

@@ -56,6 +56,8 @@ import AlumniRegistration from '../services/alumni/pages/AlumniRegistration'
 import ContractualFacultyRegistration from '../services/faculty/pages/ContractualFacultyRegistration'
 import ForgotPassword from './ForgotPassword'
 import DeveloperServices from './DeveloperServices'
+import OtherDashboardData from '../services/dashboard/pages/OtherDashboardData'
+import DirectorDashboardData from '../services/dashboard/pages/DirectorDashboardData'
 
 
 
@@ -96,7 +98,7 @@ const RoutesHandler = () => {
                 <Route path="/student-registration" exact element={<StudentRegister />} />
                 <Route path='/student' exact element={<StudentHome />} />
                 <Route path="/student/student-status" exact element={<StudentMain />} />
-                <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices/>} />
+                <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
                 {
                     adminTable.map((item, index) => {
@@ -124,6 +126,8 @@ const RoutesHandler = () => {
                 <Route path="/dashboard/:school/students" exact element={<AllStudents />} />
                 <Route path="/dashboard/:school/alumni" exact element={<AllAlumni />} />
                 <Route path="/dashboard/alumni/:school/:model/:title" exact element={<AlumniModelWise />} />
+                <Route path="/dashboard/information/:school/:model/:title" exact element={<OtherDashboardData />} />
+                <Route path="/dashboard/director/information/:school/:model/:title" exact element={<DirectorDashboardData />} />
 
                 {/* Forgot Password */}
                 <Route path="/services/forgot-password/:serviceName" exact element={<ForgotPassword />} />

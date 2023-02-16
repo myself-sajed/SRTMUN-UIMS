@@ -19,10 +19,10 @@ const SchoolsProgram = {
         ["M.Sc.(Physics)", 2], ["M.Phil.(physics)", 7], ["Ph.D.(Physics)", 7]
     ],
     "School of Social Sciences": [
-        ["MSW", 2], ["M.A.(Applied Economics)", 2], ["M.A.(Sociology)", 2], ["M.A.(Human Rights)", 2], ["M.Phil(Social Work)", 2], ["M.Phil(Sociology)", 2], ["M.Phil(Human Rights)", 2], ["Ph.D.(Social Work)", 7], ["Ph.D.(Sociology)", 7], ["Ph.D.(Applied Economics)", 7], ["Ph.D.(Human Rights)", 7], ["P.G.Diploma in Women's Studies",1], ["Interdisciplinary Certificate Course in Women's Studies", 1]
+        ["MSW", 2], ["M.A.(Applied Economics)", 2], ["M.A.(Sociology)", 2], ["M.A.(Human Rights)", 2], ["M.Phil(Social Work)", 2], ["M.Phil(Sociology)", 2], ["M.Phil(Human Rights)", 2], ["Ph.D.(Social Work)", 7], ["Ph.D.(Sociology)", 7], ["Ph.D.(Applied Economics)", 7], ["Ph.D.(Human Rights)", 7], ["P.G.Diploma in Women's Studies", 1], ["Interdisciplinary Certificate Course in Women's Studies", 1]
     ],
     "School of Earth Sciences": [
-        ["M.Sc.(Geology)", 2], ["M.Sc.(Environmental Science)", 2], ["M.A/M.Sc.(Geography)", 2], ["M.Sc.(Geophysics)", 2], ["M.Phil.(Geology)", 2], ["M.Phil.(Environmental Science)", 2], ["M.Phil.(Geography)", 2], ["Ph.D.(Geology, Environmental Science, Geography & Geophysics)", 7], ["Post-Graduate Diploma in Geoinformatics", 2],
+        ["M.Sc.(Geology)", 2], ["M.Sc.(Environmental Science)", 2], ["M.A/M.Sc.(Geography)", 2], ["M.Sc.(Geophysics)", 2], ["M.Phil.(Geology)", 2], ["M.Phil.(Environmental Science)", 2], ["M.Phil.(Geography)", 2], ["Ph.D.(Geology)",7], ["Ph.D.(Environmental Science)",7], ["Ph.D.(Geography)",7], ["Ph.D.(Geophysics)", 7], ["Post-Graduate Diploma in Geoinformatics", 2],
         ["Certificate Course in Industrial Safety,Health and Environmental Management (dual course with PG, M.Phil & Ph.D.)", 2]
     ],
     "School of Life Sciences": [
@@ -35,16 +35,16 @@ const SchoolsProgram = {
         ["M.A./M.Sc(Electronic Media)", 2], ["M.A.(Mass Communication & Journalism)", 2], ["M.Phil.(Mass Communication & Journalism)", 2], ["Ph.D.(Mass Communication & Journalism)", 7],
     ],
     "School of Fine and Performing Arts": [
-        ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2], ["Bachalor in Performing Arts", 3]
+        ["Bachalor in Performing Arts", 3], ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2]
     ],
     "School of Language, Literature and Culture Studies": [
-        ["M.A.(English)", 2], ["M.A.(Marathi)", 2], ["Certificate Course  in French Language", 2], ["Diploma Course in French Language", 2], ["Advance Diploma in French Language", 2], ["Certificate Course  in Spanish Language", 2], ["Diploma Course in Spanish Language", 2], ["Advance Diploma in Spanish Language", 2]
+        ["M.A.(English)", 2], ["M.A.(Marathi)", 2], ["M.Phil.(English)", 2], ["M.Phil.(Marathi)", 2], ["Ph.D.(English)", 7], ["Ph.D.(Marathi)", 7], ["Certificate Course  in French Language", 2], ["Diploma Course in French Language", 2], ["Advance Diploma in French Language", 2], ["Certificate Course  in Spanish Language", 2], ["Diploma Course in Spanish Language", 2], ["Advance Diploma in Spanish Language", 2],
     ],
     "School of Management Sciences, Sub-Campus, Latur": [
         ["M.B.A", 2], ["M.Com", 2], ["PGDDM", 2], ["M.Phil(Management Sciences)", 2], ["Ph.D(Management Sciences)", 7], ["Certificate Course in Goods and Service Tax (GST)", 7]
     ],
     "School of Technology, Sub-Campus, Latur": [
-        ["B.Voc.(Software Development)", 3], ["M.Sc.(Computer Science Integrated)", 2], ["M.Sc.(Computer Science)", 2], ["M.Sc.(Bioinformatics)", 2], ["M.Phil.(Computer Science)", 2], ["Ph.D.(Computer Science)", 7]
+        ["B.Voc.(Software Development)", 3], ["M.Sc.(Computer Science Integrated)", 2], ["M.Sc.(Computer Science)", 2], ["M.Sc.(Bioinformatics)", 2], ["M.Phil.(Computer Science)", 2], ["Ph.D.(Computer Science)", 7], ["Ph.D.(Bioinformatics)",7]
     ],
     "School of Social Sciences, Sub-Campus, Latur": [
         ["M.A.(Economics)", 2], ["M.A.(Sociology)", 2], ["M.S.W.", 2], ["Ph.D.(Social Science)", 7], ["Data Interpretation Using MS-Excel and SPSS", 1],

@@ -38,7 +38,7 @@ const Faculty = () => {
                 <div className='bg-white sticky-top'>
                     <GoBack backUrl={-1} pageTitle={`About ${academicData && `${academicData.user?.salutation} ${academicData.user?.name}`}`} />
                 </div>
-                <Header user={academicData.user} title="Faculty Report" subTitle={null} directorData={academicData} userType="faculty" />
+                <Header user={academicData.user} title="Faculty Report" subTitle={null} directorData={academicData} userType="faculty" showPersonalDetails={false} />
                 <Tables academicData={academicData} showProof={false} />
             </div>}
         </div>

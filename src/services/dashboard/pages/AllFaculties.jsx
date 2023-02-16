@@ -69,10 +69,22 @@ const AllFaculties = () => {
                             </thead>
                             <tbody>
 
-
                                 {
-                                    data?.data?.data?.map((item) => {
-                                        return item.designation === 'Professor & Director' && <tr>
+                                    data?.data?.data?.sort(function (a, b) {
+                                        if (a.designation === b.designation) return 0;
+                                        if (a.designation === "Professor & Director") return -1;
+                                        if (b.designation === "Professor & Director") return 1;
+                                        if (a.designation === "Senior Professor") return -1;
+                                        if (b.designation === "Senior Professor") return 1;
+                                        if (a.designation === "Professor") return -1;
+                                        if (b.designation === "Professor") return 1;
+                                        if (a.designation === "Associate Professor") return -1;
+                                        if (b.designation === "Associate Professor") return 1;
+                                        if (a.designation === "Assistant Professor") return -1;
+                                        if (b.designation === "Assistant Professor") return 1;
+                                        return 0;
+                                    }).map((item) => {
+                                        return <tr>
                                             <td className='font-bold'></td>
                                             <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'faculty'} /></td>
 
@@ -82,31 +94,11 @@ const AllFaculties = () => {
                                                     <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => { navigate('/dashboard/faculty/' + item?._id) }}>View Profile</button>
                                                 </div>
                                             </td>
-                                            <td>{item?.designation}</td>
+                                            <td>{item?.designation === 'Contractual' ? 'Assistant Professor (Contractual)' : item?.designation}</td>
                                             <td>{item?.specialization}</td>
                                         </tr>
                                     })
                                 }
-
-                                {
-                                    data?.data?.data?.map((item) => {
-                                        return item.designation !== 'Professor & Director' && <tr>
-                                            <td className='font-bold'></td>
-                                            <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'faculty'} /></td>
-
-                                            <td>
-                                                <div>
-                                                    <p>{item?.salutation} {item?.name}</p>
-                                                    <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => { navigate('/dashboard/faculty/' + item?._id) }}>View Profile</button>
-                                                </div>
-                                            </td>
-                                            <td>{item?.designation}</td>
-                                            <td>{item?.specialization}</td>
-                                        </tr>
-                                    })
-                                }
-
-
 
                             </tbody>
                         </table>

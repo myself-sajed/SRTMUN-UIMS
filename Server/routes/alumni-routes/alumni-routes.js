@@ -15,7 +15,7 @@ const multer = require('multer');
 const path = require('path');
 const alumnistorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const link = path.join(__dirname,`../../uploads/director-uploads/`)
+        const link = path.join(__dirname, `../../uploads/director-uploads/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
@@ -26,7 +26,7 @@ const upload = multer({ storage: alumnistorage })
 
 const alumnistore = multer.diskStorage({
     destination: (req, file, cb) => {
-        const link = path.join(__dirname,`../../uploads/faculty-uploads/`)
+        const link = path.join(__dirname, `../../uploads/faculty-uploads/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
@@ -39,31 +39,31 @@ const uploads = multer({ storage: alumnistore })
 let models = { ProgressionToHE, Placement, AlumniUser, QualifiedExams, AlumniContribution }
 
 router.post("/alumni/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
-    try{
+    try {
         const model = req.params.model
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;
         const { SchoolName, AlumniId } = data
         const up = req.file.filename;
-      
+
         //ProgressionToHE
         if (model == 'ProgressionToHE') {
             const { Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year } = data
-            SendData = { 
+            SendData = {
                 Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year
             }
-            
+
         }
         //Placement
         else if (model == 'Placement') {
-            const {Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement} = data
-            SendData = { 
+            const { Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement } = data
+            SendData = {
                 Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement
             }
         }
         //QualifiedExams
         else if (model == 'QualifiedExams') {
-            const {Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam} = data
+            const { Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam } = data
             SendData = {
                 Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam
             }
@@ -75,15 +75,15 @@ router.post("/alumni/newRecord/:model", upload.single("Upload_Proof"), async (re
                 Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
             }
         }
-        
+
         var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName, AlumniId })
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
-    }catch(err){
+    } catch (err) {
         console.log(err)
         res.status(500).send()
-    }     
+    }
 });
 
 //Delete Route
@@ -92,10 +92,10 @@ router.post('/alumni/deleteRecord', async (req, res) => {
     try {
         const Record = await models[model].findOne({ _id: id });
         console.log(Record);
-        
+
         await models[model].deleteOne({ _id: id })
         const Filename = Record.Upload_Proof;
-        const link = path.join(__dirname,`../../uploads/director-uploads/${Filename}`);
+        const link = path.join(__dirname, `../../uploads/director-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {
                 console.error(err);
@@ -114,21 +114,21 @@ router.post('/alumni/getData', async (req, res) => {
 
     const { model, id, filter } = req.body
     try {
-        if(filter){
-           if(filter === 'placementBusiness'){
-            const fetch = await models[model].find({ AlumniId: id, Type_Of_Placement: 'Business Started'}).sort({ $natural: -1 });
-            res.status(200).send(fetch);
-           }
-           else if(filter === 'placementJob'){
-            const fetch = await models[model].find({ AlumniId: id, Type_Of_Placement : 'Placement'}).sort({ $natural: -1 });
-            res.status(200).send(fetch);
-           }
-           else if(filter === 'AlumniUser'){
+        if (filter) {
+            if (filter === 'placementBusiness') {
+                const fetch = await models[model].find({ AlumniId: id, Type_Of_Placement: 'Business Started' }).sort({ $natural: -1 });
+                res.status(200).send(fetch);
+            }
+            else if (filter === 'placementJob') {
+                const fetch = await models[model].find({ AlumniId: id, Type_Of_Placement: 'Placement' }).sort({ $natural: -1 });
+                res.status(200).send(fetch);
+            }
+            else if (filter === 'AlumniUser') {
                 const fetch = await models[model].find({ _id: id })
                 res.status(200).send(fetch)
-           }
+            }
         }
-        else{
+        else {
             const fetch = await models[model].find({ AlumniId: id }).sort({ $natural: -1 });
             res.status(200).send(fetch);
         }
@@ -141,39 +141,39 @@ router.post('/alumni/getData', async (req, res) => {
 
 
 // alumni user route
-router.post ('/alumni/editRecord', uploads.single('Upload_Proof'), async (req, res) => {
+router.post('/alumni/editRecord', uploads.single('Upload_Proof'), async (req, res) => {
     const data = JSON.parse(JSON.stringify(req.body));
     SendData = null;
-    const {id} = data
+    const { id } = data
     const isfile = req.file
     if (isfile) {
         console.log('file found: ' + isfile)
         var up = req.file.filename
     }
 
-    Object.keys(data).map((item)=>{
-        if(data[item]=='undefined'){
+    Object.keys(data).map((item) => {
+        if (data[item] == 'undefined') {
             data[item] = ""
         }
-        
+
     })
-    
+
     if (isfile) {
         var up = req.file.filename
     }
 
     const programGraduated = data.array;
     const { salutation, name, address, mobile, schoolName, gender, dob, doCompleted, doStarted } = data
-    SendData = {  salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doCompleted,doStarted }
+    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doCompleted, doStarted }
 
-    if(up){
-        alldata = Object.assign(SendData, {photoURL:up})
+    if (up) {
+        alldata = Object.assign(SendData, { photoURL: up })
     }
-    else{
+    else {
         alldata = SendData;
     }
-   await AlumniUser.findOneAndUpdate({ _id: id }, alldata)
-   res.status(200).send("Edited Successfully")
+    await AlumniUser.findOneAndUpdate({ _id: id }, alldata)
+    res.status(200).send("Edited Successfully")
 })
 
 // sub tabels
@@ -183,44 +183,51 @@ router.post('/alumni/editRecord/:model', upload.single('Upload_Proof'), async (r
     let SendData = null;
     const { id } = data
     const isfile = req.file;
-  
+
     if (isfile) {
         var up = req.file.filename
     }
 
-    Object.keys(data).map((item)=>{
-        if(data[item]=='undefined'){
+    Object.keys(data).map((item) => {
+        if (data[item] == 'undefined') {
             data[item] = ""
         }
-        
+
     })
 
     //ProgressionToHE
     if (model == "ProgressionToHE") {
         const { Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year } = data
-        SendData = { Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year}
+        SendData = { Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year }
     }
     //Placement
     else if (model == 'Placement') {
-        const {Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement } = data
-        SendData = { 
+        const { Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement } = data
+        SendData = {
             Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement
         }
     }
     //QualifiedExams
     else if (model == 'QualifiedExams') {
-        const {Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam} = data
+        const { Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam } = data
         SendData = {
             Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam
         }
     }
-    
+    //AlumniContribution
+    else if (model == 'AlumniContribution') {
+        const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
+        SendData = {
+            Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
+        }
+    }
+
 
     var alldata = null
     if (up) {
-        
+
         alldata = Object.assign(SendData, { Upload_Proof: up })
-    
+
     }
     else {
         alldata = SendData
@@ -229,8 +236,8 @@ router.post('/alumni/editRecord/:model', upload.single('Upload_Proof'), async (r
     res.status(200).send("Edited Successfully")
 })
 
-router.get('/viewer/alumni/:filename', (req, res)=>{
-    const link = path.join( __dirname,`../../uploads/director-uploads/${req.params.filename}`)
+router.get('/viewer/alumni/:filename', (req, res) => {
+    const link = path.join(__dirname, `../../uploads/director-uploads/${req.params.filename}`)
     res.sendFile(link);
 })
 

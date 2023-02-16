@@ -13,6 +13,7 @@ import Footer from '../components/Footer'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
+import checkPasswordStrength from '../js/passwordChecker'
 
 const ForgotPassword = () => {
 
@@ -35,6 +36,7 @@ const ForgotPassword = () => {
     const [newCPassword, setNewCPassword] = useState(null)
     const [loading, setLoading] = useState(false)
     const [verifyLoading, setVerifyLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(false)
 
     useEffect(() => {
         if (serviceName in services === false) {
@@ -52,7 +54,7 @@ const ForgotPassword = () => {
 
         // route in utility/forgotPassword
         const link = `${process.env.REACT_APP_MAIN_URL}/sendOTPOnEMailForPasswordReset`
-        Axios.post(link, { email, model: services[serviceName].model }).then((res) => {
+        Axios.post(link, { email: email.toLowerCase(), model: services[serviceName].model }).then((res) => {
             if (res.data.status === 'success') {
                 toast.success(res.data.message);
                 console.log('Res from server :', res.data)
@@ -91,27 +93,27 @@ const ForgotPassword = () => {
     const updatePassword = (e) => {
         e.preventDefault();
 
-        // validate password
-        if (newPassword !== newCPassword) {
-            toast.error('Passwords does not match')
-            return
+
+        if (checkPasswordStrength(newPassword, newCPassword, setErrorMessage)) {
+            setErrorMessage(null)
+            // route in utility/forgotPassword
+            const link = `${process.env.REACT_APP_MAIN_URL}/service/forgotPassword`
+            Axios.post(link, { email: email.toLowerCase(), model: services[serviceName].model, newPassword }).then((res) => {
+                if (res.data.status === 'success') {
+                    toast.success(res.data.message);
+                    setActiveStep(3)
+                    setLoading(false)
+                } else {
+                    toast.error(res.data.message);
+                    setLoading(false)
+                }
+            }).catch((err) => {
+                toast.error('Something went wrong...')
+                setLoading(false)
+            })
         }
 
-        // route in utility/forgotPassword
-        const link = `${process.env.REACT_APP_MAIN_URL}/service/forgotPassword`
-        Axios.post(link, { email, model: services[serviceName].model, newPassword }).then((res) => {
-            if (res.data.status === 'success') {
-                toast.success(res.data.message);
-                setActiveStep(3)
-                setLoading(false)
-            } else {
-                toast.error(res.data.message);
-                setLoading(false)
-            }
-        }).catch((err) => {
-            toast.error('Something went wrong...')
-            setLoading(false)
-        })
+
 
     }
 
@@ -138,7 +140,13 @@ const ForgotPassword = () => {
                                 {
                                     (activeStep === 1) && otp.serverOTP && <Alert severity="success" sx={{ borderRadius: '5px', border: '2px solid green' }}>
                                         <AlertTitle>Success</AlertTitle>
-                                        OTP has been successfully sent on — <strong>{email}</strong>
+                                        OTP has been successfully sent on — <strong>{email.toLowerCase()}</strong>
+                                    </Alert>
+                                }
+                                {
+                                    (errorMessage && activeStep === 2) && <Alert severity="warning" sx={{ borderRadius: '5px', border: '2px solid orange' }}>
+                                        <AlertTitle>Password is not strong</AlertTitle>
+                                        {errorMessage}
                                     </Alert>
                                 }
                             </div>

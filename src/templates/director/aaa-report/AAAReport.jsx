@@ -94,9 +94,9 @@ const AAAReport = () => {
         <div>
             {
                 userData && <div>
-                    <Header user={userData && userData?.data?.data[0]} title="Academic & Administrative Audit" subTitle={`AAA Report of year ${auditData?.map((item) => item.auditYear).join(', ')}`} userType="director" directorData={directorData} />
-                    <AAASummarySheet auditData={auditData} academicData={academicData} directorData={directorData} />
-                    <AAATables auditData={auditData} academicData={academicData} directorData={directorData} />
+                    <Header user={userData && userData?.data?.data[0]} title="Academic & Administrative Audit" subTitle={`AAA Report of year ${auditData?.map((item) => item.auditYear).join(', ')}`} userType="director" directorData={directorData} academicYear={(JSON.parse(selectedYear))[0]} type="aaa" />
+                    <AAASummarySheet auditData={auditData} academicData={academicData} directorData={directorData} academicYear={(JSON.parse(selectedYear))[0]} />
+                    <AAATables auditData={auditData} academicData={academicData} directorData={directorData} academicYear={(JSON.parse(selectedYear))[0]} />
                 </div>
             }
         </div>

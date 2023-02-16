@@ -7,7 +7,6 @@ import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTo
 import UploadFile from './formComponents/UploadFile';
 import excelObject from './excelObject';
 import { CSVLink } from 'react-csv'
-import axios from 'axios';
 
 const BulkExcel = ({ SendReq, refetch, module, department, sampleFile, title, open, setOpen, note = null, data, proof }) => {
     const initialState = { excelFile: "" }

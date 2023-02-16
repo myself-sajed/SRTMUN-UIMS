@@ -56,15 +56,11 @@ const Responsibilities = require('../../models/faculty-models/responsibilities')
 const ConferenceParticipated = require('../../models/faculty-models/conferenceParticipated')
 const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 
-//director models
-const MoUs = require('../../models/director-models/moUsSchema')
-const ExtensionActivities = require('../../models/director-models/extensionActivitysSchema')
-
 
 function initRoutes(app) {
 
     let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit, MoUs, ExtensionActivities
+        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
     }
 
     let nonAcademicYearModels = {

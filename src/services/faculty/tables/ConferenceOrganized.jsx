@@ -148,6 +148,8 @@ const ConferenceOrganized = () => {
                             <select className="form-select" id="validationCustom05" required
                                 value={nat} onChange={(e) => { setNat(e.target.value) }}>
                                 <option selected disabled value="">Choose</option>
+                                <option value="State">State</option>
+                                <option value="University">University</option>
                                 <option value="National">National</option>
                                 <option value="International">International</option>
                             </select>
@@ -183,7 +185,7 @@ const ConferenceOrganized = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.programTitle}</td>

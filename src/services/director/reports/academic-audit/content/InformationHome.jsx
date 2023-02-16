@@ -8,7 +8,7 @@ import Wrapper from '../components/Wrapper';
 import NumberToTextField from '../components/NumberToTextField';
 import { useSelector } from 'react-redux';
 import useDirectorAuth from '../../../../../hooks/useDirectorAuth'
-import { CircularProgress, IconButton } from '@mui/material';
+import { CircularProgress, IconButton, Pagination, PaginationItem } from '@mui/material';
 import RichText from '../inputs/RichText'
 import { saveAAAData } from '../components/audit-services';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -17,6 +17,8 @@ import toast from 'react-hot-toast';
 import FloatButtons from '../components/FloatButtons';
 import siteLinks from '../../../../../components/siteLinks';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, serverAuditData, autoSaveLoader, serverAuditError, allYearAAAData }) => {
 
@@ -668,21 +670,25 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
         console.log('Tabname :', tabName)
     }, [tabName])
 
+    const handleChange = (event, value) => {
+        console.log(event, value)
+        setTabName(value.toString());
+        // Perform any necessary actions here
+    };
+
 
     return (
         <>
 
             {
                 directorUser ?
-                    <div className='w-full'>
+                    <div className='w-full mt-5'>
 
-                        <div className='flex items-end justify-between'>
-                            <div className='mt-5'>
-                                <Note title={'Click on any activity to expand you want to be filled.'} />
-                            </div>
-                            <div>
-                                <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { setAutoSaveLoader(true); handleSteps(); }} />
-                            </div>
+
+                        <div className='flex items-center justify-between gap-5'>
+                            <Pagination count={5} page={parseInt(tabName)} onChange={handleChange} />
+
+                            <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { setAutoSaveLoader(true); handleSteps(); }} />
                         </div>
                         <FloatButtons setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} />
 
@@ -762,7 +768,7 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         </Wrapper>
 
                                         <Wrapper title="3. Name of the Programs introduced during the year" className='mt-3'>
-                                            <NumberToTextField state={programDuringYear} setState={setProgramDuringYear} label="[E] Number of Diploma Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={programDuringYear} setState={setProgramDuringYear} label="Number of Programs offered during year" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "programDuringYear"]}
                                             >
                                                 <AuditTable tableHead={TableData.programs.auditHead}
@@ -824,7 +830,7 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                             </NumberToTextField>
                                         </Wrapper>
 
-                                        <Wrapper title="6. List of Visiting Fellows/Teachers, Adjunct and Emeritus Professors, (for last 4 years)" className='mt-3' input={listOfVisitingTeachers.input}>
+                                        <Wrapper title="6. List of Visiting Fellows/Teachers, Adjunct and Emeritus Professors" className='mt-3' input={listOfVisitingTeachers.input}>
 
                                             <NumberToTextField state={listOfVisitingTeachers} setState={setListOfVisitingTeachers} label="Enter number of Fellows/Teachers, Adjunct and Emeritus Professors visited" isForm={true} classes='my-3'
                                                 options={[{ field: 'Text', keyName: "TeacherName", label: "Teacher Name" },
@@ -1094,7 +1100,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                                 </NumberToTextField>
 
-                                                <NumberToTextField state={schoolSeminarOrganized} setState={setSchoolSeminarOrganized} label="Enter number of Conferences / Seminar / Workshop Organized, State / University level" isForm={true} classes='my-3'
+                                                <NumberToTextField state={schoolSeminarOrganized} setState={setSchoolSeminarOrganized} label="Enter number of Conferences / Seminar / Workshop Organized" isForm={true} classes='my-3'
                                                     options={TableData.ConferencesSemiWorkshopOrganized.fieldOptions}>
 
                                                     <AuditTable tableHead={TableData.ConferencesSemiWorkshopOrganized.auditHead} fetchData={true}
@@ -1662,12 +1668,18 @@ Values, Tolerance and Harmony for the selected Academic Audit Year" className='m
                                 }
                             </div>
 
-                            <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { handleSteps(); setAutoSaveLoader(true) }} />
+                            <div className='flex items-center justify-start gap-5'>
+                                <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { handleSteps(); setAutoSaveLoader(true) }} />
+
+                                <Pagination count={5} page={parseInt(tabName)} onChange={handleChange} />
+
+                            </div>
 
 
 
 
                         </div>
+
 
                     </div>
 

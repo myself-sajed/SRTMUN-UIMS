@@ -35,8 +35,8 @@ const AlumniModelWise = () => {
         },
         Placement: {
             tableHeads: ["Name of the alumni", "School Name", "Name of the employer",
-                "Pay Package per annum (₹)", "Academic Year"],
-            tableCells: ["Name_of_student_placed", "SchoolName", "Name_of_the_employer", "Pay_package_annum",  "Academic_Year"]
+                "Pay Package per annum (₹)", "Employer contact details", "Academic Year"],
+            tableCells: ["Name_of_student_placed", "SchoolName", "Name_of_the_employer", "Pay_package_annum", "Employer_contact_details", "Academic_Year"]
         },
     }
 

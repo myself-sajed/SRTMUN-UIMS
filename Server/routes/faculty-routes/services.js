@@ -47,7 +47,7 @@ const { multerConfig } = require('../../utility/multerConfig');
 
 async function deleteFile(filename, type, callback) {
     let paths = {
-        faculty : path.join(__dirname, `../../uploads/faculty-uploads/${filename}`)
+        faculty: path.join(__dirname, `../../uploads/faculty-uploads/${filename}`)
     }
     fs.unlink(paths[type], callback)
 
@@ -61,7 +61,7 @@ function services(app) {
 
 
     let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped,PolicyDocuments, Experience, DirectorUser, Responsibilities, FinancialSupport, ConferenceParticipated,ForeignVisit
+        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, DirectorUser, Responsibilities, FinancialSupport, ConferenceParticipated, ForeignVisit
     }
 
     app.post('/service/deleteItem', function (req, res) {
@@ -73,10 +73,10 @@ function services(app) {
                 res.send({ status: 'error' });
             } else {
                 // delete item from file storage
-                if(itemToDelete.proof){
-                    deleteFile(itemToDelete.proof, 'faculty', (err)=>{
+                if (itemToDelete.proof) {
+                    deleteFile(itemToDelete.proof, 'faculty', (err) => {
                         try {
-                            if(err){
+                            if (err) {
                                 throw 'File not found'
                             }
                             res.send({ status: 'deleted', data: data });
@@ -85,7 +85,7 @@ function services(app) {
                             res.send({ status: 'error' });
                         }
                     })
-                }else{
+                } else {
                     res.send({ status: 'deleted', data: data });
                 }
 
@@ -113,8 +113,8 @@ function services(app) {
         console.log(email, modelToCheck, filter)
 
         const messageOnUserType = {
-            faculty : 'Username already taken' ,
-            director : 'The Department is already taken by the director',
+            faculty: 'Username already taken',
+            director: 'The Department is already taken by the director',
         }
 
         // check if username is already taken
@@ -124,9 +124,9 @@ function services(app) {
             } else {
 
                 // check if mail already taken
-                models[modelToCheck].findOne({email : email.toLowerCase()}, (err, user)=>{
-                    if(user){
-                        res.send({ status: 'taken', message: 'Email already taken' });   
+                models[modelToCheck].findOne({ email: email.toLowerCase() }, (err, user) => {
+                    if (user) {
+                        res.send({ status: 'taken', message: 'Email already taken' });
                     }
                     else{
                         res.send({ status: 'available' })
@@ -174,11 +174,11 @@ function services(app) {
     // generateReport for user
     app.post('/api/getAllData', async (req, res) => {
 
-    const {userId, fetchYears} = req.body
-    const report = {};
+        const { userId, fetchYears } = req.body
+        const report = {};
 
-    User.findOne({ _id: userId })
-    .then(async function (user, err) {
+        User.findOne({ _id: userId })
+            .then(async function (user, err) {
 
             
             // filter
@@ -189,59 +189,59 @@ function services(app) {
                 filter = {userId, year: {$in: fetchYears}}
             }
 
-            if (user) {
+                if (user) {
 
-                // main object where all data will be collected
-                report.user = user;
+                    // main object where all data will be collected
+                    report.user = user;
 
-                // get qualifications
-                const qualifications = await Qualification.find({userId});
-                report.Qualification = qualifications.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get qualifications
+                    const qualifications = await Qualification.find({ userId });
+                    report.Qualification = qualifications.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get Experience
-                const experience = await Experience.find({userId});
-                report.Experience = experience.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get Experience
+                    const experience = await Experience.find({ userId });
+                    report.Experience = experience.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get degrees
-                const degrees = await Degree.find({userId});
-                report.Degree = degrees.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get degrees
+                    const degrees = await Degree.find({ userId });
+                    report.Degree = degrees.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get appointmentsHeldPrior
-                const appointmentsHeldPrior = await AppointmentsHeldPrior.find({userId});
-                report.AppointmentsHeldPrior = appointmentsHeldPrior.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get appointmentsHeldPrior
+                    const appointmentsHeldPrior = await AppointmentsHeldPrior.find({ userId });
+                    report.AppointmentsHeldPrior = appointmentsHeldPrior.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get post held
-                const postHeld = await PostHeld.find({userId});
-                report.PostHeld = postHeld.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });;
+                    // get post held
+                    const postHeld = await PostHeld.find({ userId });
+                    report.PostHeld = postHeld.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });;
 
-                // get lectures
-                const lectures = await Lectures.find(filter);
-                report.Lectures = lectures.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });;
+                    // get lectures
+                    const lectures = await Lectures.find(filter);
+                    report.Lectures = lectures.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });;
 
-                // get online fdp
-                const online = await Online.find(filter);
-                report.Online = online.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get online fdp
+                    const online = await Online.find(filter);
+                    report.Online = online.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
                 // get ResearchProject
                 const researchProject = await ResearchProject.find(filter);
@@ -264,122 +264,122 @@ function services(app) {
                     return dateB - dateA;
                 });
 
-                // get ResearchProject
-                const researchGuidance = await ResearchGuidance.find(filter);
-                report.ResearchGuidance = researchGuidance.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get ResearchProject
+                    const researchGuidance = await ResearchGuidance.find(filter);
+                    report.ResearchGuidance = researchGuidance.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const phdAwarded = await PhdAwarded.find(filter);
-                report.PhdAwarded = phdAwarded.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const phdAwarded = await PhdAwarded.find(filter);
+                    report.PhdAwarded = phdAwarded.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const jrfSrf = await JrfSrf.find(filter);
-                report.JrfSrf = jrfSrf.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const jrfSrf = await JrfSrf.find(filter);
+                    report.JrfSrf = jrfSrf.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const awardRecognition = await AwardRecognition.find(filter);
-                report.AwardRecognition = awardRecognition.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const awardRecognition = await AwardRecognition.find(filter);
+                    report.AwardRecognition = awardRecognition.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
 
-                const patent = await Patent.find(filter);
-                report.Patent = patent.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const patent = await Patent.find(filter);
+                    report.Patent = patent.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const consultancyServices = await ConsultancyServices.find(filter);
-                report.ConsultancyServices = consultancyServices.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const consultancyServices = await ConsultancyServices.find(filter);
+                    report.ConsultancyServices = consultancyServices.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const collaboration = await Collaboration.find(filter);
-                report.Collaboration = collaboration.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const collaboration = await Collaboration.find(filter);
+                    report.Collaboration = collaboration.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const invitedTalk = await InvitedTalk.find(filter);
-                report.InvitedTalk = invitedTalk.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const invitedTalk = await InvitedTalk.find(filter);
+                    report.InvitedTalk = invitedTalk.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const conferenceOrganized = await ConferenceOrganized.find(filter);
-                report.ConferenceOrganized = conferenceOrganized.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const conferenceOrganized = await ConferenceOrganized.find(filter);
+                    report.ConferenceOrganized = conferenceOrganized.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const fellowship = await Fellowship.find(filter);
-                report.Fellowship = fellowship.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const fellowship = await Fellowship.find(filter);
+                    report.Fellowship = fellowship.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const eContentDeveloped = await EContentDeveloped.find(filter);
-                report.EContentDeveloped = eContentDeveloped.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const eContentDeveloped = await EContentDeveloped.find(filter);
+                    report.EContentDeveloped = eContentDeveloped.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const policyDocuments = await PolicyDocuments.find(filter);
-                report.PolicyDocuments = policyDocuments.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const policyDocuments = await PolicyDocuments.find(filter);
+                    report.PolicyDocuments = policyDocuments.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                const responsibilities = await Responsibilities.find(filter);
-                report.Responsibilities = responsibilities.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    const responsibilities = await Responsibilities.find(filter);
+                    report.Responsibilities = responsibilities.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                res.send({ status: "success", data : report });
+                    res.send({ status: "success", data: report });
 
-            } else {
-                res.send({ status: "error", message: "User Not Found" });
+                } else {
+                    res.send({ status: "error", message: "User Not Found" });
+                    return
+                }
+            })
+            .catch(function (err) {
+                res.send({ status: "error", message: "Something went wrongg" });
                 return
-            }
-        })
-        .catch(function (err) {
-            res.send({ status: "error", message: "Something went wrongg" });
-            return
-        });
+            });
     });
 
     // check if email is already taken by alumni
-    app.post('/service/alumni-checkAndEmail', function (req, res){
+    app.post('/service/alumni-checkAndEmail', function (req, res) {
         const { email } = req.body;
         // check if mail already taken
-        AlumniUser.findOne({email : email.toLowerCase()}, (err, user)=>{
-            if(user){
-                res.send({ status: 'taken', message: 'Email already taken' });   
+        AlumniUser.findOne({ email: email.toLowerCase() }, (err, user) => {
+            if (user) {
+                res.send({ status: 'taken', message: 'Email already taken' });
             }
-            else{
+            else {
                 res.send({ status: 'available' })
             }
         });
     })
 
     // check if email is already taken by student
-    app.post('/service/student-checkAndEmail', function (req, res){
+    app.post('/service/student-checkAndEmail', function (req, res) {
         const { email } = req.body;
         // check if mail already taken
-        StudentUser.findOne({email : email.toLowerCase()}, (err, user)=>{
-            if(user){
-                res.send({ status: 'taken', message: 'Email already taken' });   
+        StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
+            if (user) {
+                res.send({ status: 'taken', message: 'Email already taken' });
             }
-            else{
+            else {
                 res.send({ status: 'available' })
             }
         });
@@ -388,30 +388,30 @@ function services(app) {
     // update profile
     app.post('/api/edit-profile/:modelName/:filter', upload.single('file'), async (req, res) => {
 
-        
+
         const data = JSON.parse(JSON.stringify(req.body));
-        const {modelName, filter} = req.params
-        
-        console.log(modelName+" : "+filter)
+        const { modelName, filter } = req.params
+
+        console.log(modelName + " : " + filter)
         console.log("------------------------------------------------")
         console.log(data)
 
-        if(req.file){
-            data['photoURL'] =  req.file.filename
+        if (req.file) {
+            data['photoURL'] = req.file.filename
         }
-        
+
         // using formData has benefit : any key that matches with mongodb collection schema, it takes it.
         try {
-            let doc = await models[modelName].findOneAndUpdate(JSON.parse(filter), data, {new : true});
-            if(doc){
-                res.send({status: 'edited', data : doc})
+            let doc = await models[modelName].findOneAndUpdate(JSON.parse(filter), data, { new: true });
+            if (doc) {
+                res.send({ status: 'edited', data: doc })
             }
-            else{
-                res.send({error:'error', message: 'Error updating profile'})
+            else {
+                res.send({ error: 'error', message: 'Error updating profile' })
             }
         } catch (error) {
             console.log('Occured while updating profile :', error)
-            res.send({error:'error', message: 'Error updating profile'})
+            res.send({ error: 'error', message: 'Error updating profile' })
         }
     })
 
@@ -421,7 +421,7 @@ function services(app) {
 
 
 
-function sendMail(req, res, mailTo, subject, typeOfFormat, matter, message, sendReponseAfterSuccess=true) {
+function sendMail(req, res, mailTo, subject, typeOfFormat, matter, message, sendReponseAfterSuccess = true) {
     let mailTransporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
@@ -443,16 +443,16 @@ function sendMail(req, res, mailTo, subject, typeOfFormat, matter, message, send
         mailTransporter.sendMail(mailDetails, function (err, data) {
             if (err) {
                 console.log('Error is :', err)
-                if(sendReponseAfterSuccess){
+                if (sendReponseAfterSuccess) {
                     res.send({ status: 'error', message: 'Could not send Email. Please try again...' })
                 }
             }
             else {
-                if(sendReponseAfterSuccess){
+                if (sendReponseAfterSuccess) {
                     res.send(message)
                 }
             }
-        }); 
+        });
     } catch (error) {
         console.log('Error Occured in send mail')
     }
@@ -462,5 +462,5 @@ function sendMail(req, res, mailTo, subject, typeOfFormat, matter, message, send
 
 
 
-module.exports = {services, sendMail, deleteFile}
+module.exports = { services, sendMail, deleteFile }
 

@@ -15,7 +15,7 @@ import useDirectorAuth from '../../../../hooks/useDirectorAuth';
 import title from '../../../../js/title';
 import FacebookLoader from './components/FacebookLoader'
 import { getAuditData } from './components/audit-services';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import { Tooltip, } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -36,6 +36,17 @@ const AuditHome = () => {
     const [autoSaveLoader, setAutoSaveLoader] = useState(false)
     const [allYearAAAData, setAllYearAAAData] = useState(null)
     const navigate = useNavigate()
+    const location = useLocation()
+
+
+    useEffect(() => {
+        console.log('Location is :', location)
+        if (location?.state?.academicYear) {
+            setAuditYearState(location.state.academicYear)
+        }
+    }, [location])
+
+
 
     useEffect(() => {
         window.scrollTo(0, 0);

@@ -250,6 +250,72 @@ const CASDataTable = {
             keyName: ['awardName']
         }
     },
+    FinancialSupport: {
+        tableHeads: [
+            "Name Of Conference",
+            "Name of professional body Funds provided for",
+            "Ammount of Support",
+            "PAN No.",
+            "Year",
+            "Proof"
+        ],
+        tableCells: [
+            "nameOfConference",
+            "feeprovider",
+            "amountOfSupport",
+            "pan",
+            "year",
+            "proof",
+        ]
+    },
+    ConferenceParticipated: {
+        tableHeads: [
+            "Program Title",
+            "Organizing Institute",
+            "Level",
+            "Year",
+            "Proof"
+        ],
+        tableCells: [
+            'programTitle',
+            'organizingInstitute',
+            'isNational',
+            'year',
+            'proof',
+        ]
+    },
+    ForeignVisit: {
+        tableHeads: [
+            "Purpose Of Visit",
+            "Name Of The Institution Visited",
+            "From",
+            "To",
+            "Year"
+        ],
+        tableCells: [
+            'purposeOfVisit',
+            'nameOfTheInstitutionVisited',
+            'fromDate',
+            'toDate',
+            'year',
+        ]
+    },
+    Responsibilities: {
+        tableHeads: [
+            "Name of the Committee",
+            "Designation",
+            "Hosting institute name",
+            "Year",
+            "Uploaded Proof"
+        ],
+        tableCells: [
+            'committeeName',
+            'designation',
+            'institute',
+            'year',
+            'proof',
+        ]
+    },
     InvitedTalk: {
         tableHeads: [
             "Title of Lecture/Academic Session",

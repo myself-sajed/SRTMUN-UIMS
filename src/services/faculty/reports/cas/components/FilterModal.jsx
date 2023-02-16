@@ -42,6 +42,10 @@ export default FilterModal
 
 const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fetchFrom }) => {
 
+  useEffect(() => {
+    console.log('Data :', data)
+  }, [data])
+
 
   const [isAllChecked, setIsAllChecked] = useState(false)
   const DataTable = isConsolidated ? TableData : CASDataTable
@@ -87,7 +91,7 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
       data && data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     }
   }
-  
+
 
   useEffect(() => {
     verifyCheckAll()
@@ -130,6 +134,7 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                 return <th scope="col"><label htmlFor="selectAll">{head}</label></th>
               })
             }
+            <th scope="col">Academic Year</th>
 
           </tr>
         </thead>
@@ -152,7 +157,8 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
           </tbody> :
             <tbody>
               {data && data?.filter(function (filterable) {
-                return fetchFrom === "faculty" ? filterable.year === year : filterable
+                console.log('Filterable :', filterable, filterable.Year_of_activity, year)
+                return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
               })?.map((item, index) => {
                 return <tr key={index}>
                   <td>
@@ -166,6 +172,7 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                       return key === 'name' ? <td><label htmlFor={item._id}>{item.userId.name}</label></td> : <td><label htmlFor={item._id}>{item?.[key]}</label></td>
                     })
                   }
+                  <td>{item?.year || item?.Academic_Year || item?.Academic_year || item?.Acadmic_Year || item?.Year_of_activity || item?.Year_of_Award || item?.Acadmic_year || item?.Year || 'NA'}</td>
                 </tr>
 
               })}

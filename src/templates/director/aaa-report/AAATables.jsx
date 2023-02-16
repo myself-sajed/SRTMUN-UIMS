@@ -1,472 +1,486 @@
 import React from 'react'
 import { useEffect } from 'react'
 import EmptyBox from '../../../components/EmptyBox'
-import { categorywiseTables } from '../../../services/director/reports/academic-audit/components/TableData'
+import { categorywiseTables, reportTables } from '../../../services/director/reports/academic-audit/components/TableData'
 import { ViewFile } from '../../faculty/cas-report/Tables'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { IconButton } from '@mui/material'
 
 
-const AAATables = ({ auditData, academicData, directorData }) => {
+const AAATables = ({ auditData, academicData, directorData, academicYear }) => {
 
-
-    const facultyDirectorObj = [
-        {
-            title: 'Faculty Information',
-            tableNameInMainObject: 'facultyTables',
-            fetchFrom: 'academicData',
-            showName: true,
-            serial: 3,
-            cellHeadName: 'childHead'
-        },
-        {
-            title: 'Director Information',
-            tableNameInMainObject: 'directorTables',
-            fetchFrom: 'directorData',
-            showName: false,
-            serial: 4,
-            cellHeadName: 'stateHead'
-        }
-    ]
 
 
     useEffect(() => {
-        // adding text 
-        Object.keys(categorywiseTables.richTextTables)?.forEach((table) => {
-
-
-            auditData?.forEach((aaaItem) => {
-                document.getElementById(`${categorywiseTables['richTextTables'][table]['title']}-${aaaItem.auditYear}`).innerHTML = aaaItem.AAAData?.['richTextTables'][table]?.content
+        if (auditData?.[0]) {
+            console.log(auditData?.[0])
+            // adding text 
+            Object.keys(categorywiseTables.richTextTables)?.forEach((table) => {
+                document.getElementById(`${categorywiseTables['richTextTables'][table]['title']}-${academicYear}`).innerHTML = auditData[0]?.AAAData?.['richTextTables'][table]?.content
             })
-
-        })
+        }
     }, [auditData, academicData, directorData])
 
 
-
-    const dataObj = { academicData, directorData }
-
     return (
         <div>
+            <p className="aaa-break"></p>
+            {
+                auditData?.[0] && <div className="css-serial">
+                    {
+                        reportTables.map((mainTable, mainIndex) => {
+                            return <div>
 
-            {/* 1. General School / Department Information (6. file feedback is added here) */}
-            <div>
-                <p className="aaa-break mt-5"></p>
-                <SectionTitle title="SECTION 2: DETAILED INFORMATION" className="mt-2 mb-5" />
 
-                <div>
-                    <SectionTitle title="1. General School / Department Information" />
-                    <div className='css-serial'>
-                        {
-                            Object.keys(categorywiseTables.schoolInfoTables)?.map((table, index) => {
+                                {/* 1. School info tables */}
+                                {mainTable.tableFromAAA === 'schoolInfoTables' && auditData[0]?.AAAData?.['schoolInfoTables'][[mainTable.tableName]]?.data?.length > 0 ?
+                                    <div className="bg-white overflow-hidden sm:rounded-lg mt-5 " id={mainTable.tableName} key={mainIndex}>
 
-                                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5" id={table} key={index}>
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
 
-                                    <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                                        <div><h3 className="text-base font-semibold leading-6 text-white"> <span className='add-serial-here mr-3'>.</span>
-                                            {categorywiseTables.schoolInfoTables[table]['title']}</h3>
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <div>
-                                            <a href={`#SummarySheet-${table}`}>
-                                                <ArrowBackRoundedIcon />
-                                            </a>
+
+                                            <div>
+                                                <table className="table table-bordered css-serial">
+                                                    <thead className="bg-[#009879] text-white">
+                                                        <tr>
+                                                            {mainTable?.tableInfo?.auditHead?.map((item) => {
+                                                                return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
+                                                            })
+                                                            }
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className='text-sm'>
+
+                                                        {auditData?.[0]?.AAAData?.['schoolInfoTables'][[mainTable.tableName]]?.data?.length > 0 ? auditData?.[0]?.AAAData?.['schoolInfoTables'][mainTable.tableName]?.data?.map((tableItem) => {
+
+                                                            return <tr>
+                                                                <td scope="row"></td>
+
+                                                                {mainTable.tableInfo?.childHead?.map((item) => {
+                                                                    return (<td>{item === 'proof' &&
+                                                                        mainTable.tableName === 'courseOutcomes' ?
+                                                                        <ViewFile fileName={tableItem['proof']} type="aaaDirURL" customTitle={mainTable.tableName === 'courseOutcomes' ? `View: ${tableItem['proof'].replace('Feedback', academicYear)}` : 'View Proof'} /> : tableItem[item]}</td>);
+                                                                })}
+
+                                                            </tr>
+                                                        }) : null
+                                                        }
+
+
+
+
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
                                         </div>
+
+                                    </div > : null}
+
+
+
+                                {/* 2. File Feedback tables */}
+                                {
+                                    mainTable.tableFromAAA === 'fileFeedback' && auditData[0]?.AAAData?.['fileFeedback'][[mainTable.tableName]]?.data?.length > 0 ? <div className="bg-white overflow-hidden sm:rounded-lg mt-5 " id={mainTable.tableName} key={mainIndex}>
+
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
+
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                            <div>
+                                                <table className="table table-bordered css-serial">
+                                                    <thead className="bg-[#009879] text-white">
+                                                        <tr>
+                                                            {mainTable?.tableInfo?.auditHead?.map((item) => {
+                                                                return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
+                                                            })
+                                                            }
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className='text-sm'>
+
+                                                        {auditData?.[0]?.AAAData?.['fileFeedback'][[mainTable.tableName]]?.data?.length > 0 ? auditData?.[0]?.AAAData?.['fileFeedback'][mainTable.tableName]?.data?.map((tableItem) => {
+
+                                                            return <tr>
+                                                                <td scope="row"></td>
+
+                                                                {mainTable.tableInfo?.childHead?.map((item) => {
+                                                                    return (<td>{item === 'proof' ?
+                                                                        null : tableItem[item]}</td>);
+                                                                })}
+
+                                                            </tr>
+                                                        }) : null
+                                                        }
+
+
+
+
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+
                                     </div>
+                                        : null}
 
 
 
-                                    <div>
-                                        <table className="table table-bordered">
-                                            <thead className="bg-[#009879] text-white">
-                                                <tr>
-                                                    <th scope="col" className='font-medium'>Year</th>
-                                                    <th scope="col" className='font-medium'>Data</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                {/* 3. Faculty tables */}
+                                {
+                                    mainTable.tableFromAAA === 'facultyTables' && (auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.data?.length > 0 && academicData || auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.dataMap?.length > 0) ? <div className="bg-white overflow-hidden sm:rounded-lg mt-5 " id={mainTable.tableName} key={mainIndex}>
 
-                                                {auditData?.map((aaaItem,) => {
-                                                    console.log(index + 1,
-                                                        table, aaaItem.AAAData?.['schoolInfoTables'][table]?.data)
-                                                    return (
-                                                        <tr className="table-light">
-                                                            <th scope="row" className='w-20 text-sm text-[#009879]'>{aaaItem.auditYear}</th>
-                                                            <td>
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
 
-                                                                <table className="table table-bordered css-serial">
-                                                                    <thead className="bg-[#009879] text-white">
-                                                                        <tr>
-                                                                            {categorywiseTables.schoolInfoTables?.[table]?.tableInfo?.auditHead?.map((item) => {
-                                                                                return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
-                                                                            })
-                                                                            }
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                            <div>
+                                                <table className="table table-bordered css-serial">
+                                                    <thead className="bg-[#009879] text-white">
+                                                        <tr>
+                                                            {mainTable?.tableInfo?.auditHead?.map((item) => {
+                                                                return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
+                                                            })
+                                                            }
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className='text-sm'>
+
+                                                        {
+                                                            <>
+                                                                {
+                                                                    auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.data?.map((tableItem, index) => {
+                                                                        return <tr key={index}>
+                                                                            <td scope="row"></td>
+                                                                            <td>{tableItem['name']}</td>
+                                                                            {mainTable.tableInfo?.['childHead']?.map((item) => {
+                                                                                return (<td>{item === 'proof' ?
+                                                                                    <ViewFile fileName={tableItem['proof']} type="aaaDirURL" customTitle={mainTable.tableName === 'courseOutcomes' ? `View: ${tableItem['proof'].replace('Feedback', academicYear)}` : 'View Proof'} /> : tableItem[item]}</td>);
+                                                                            })}
+
+
 
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody className='text-sm'>
-
-                                                                        {
-                                                                            aaaItem?.AAAData?.[categorywiseTables.schoolInfoTables[table].takeFrom ?
-                                                                                categorywiseTables.schoolInfoTables[table].takeFrom : 'schoolInfoTables'][table]?.data?.length > 0 ? aaaItem.AAAData?.[categorywiseTables.schoolInfoTables[table].takeFrom ? categorywiseTables.schoolInfoTables[table].takeFrom : 'schoolInfoTables'][table]?.data?.map((tableItem) => {
-
-                                                                                    return <tr>
-                                                                                        <td scope="row"></td>
-
-                                                                                        {categorywiseTables.schoolInfoTables?.[table]?.tableInfo?.childHead?.map((item) => {
-                                                                                            return (<td>{item === 'proof' ?
-                                                                                                <ViewFile fileName={tableItem['proof']} type="aaaDirURL" customTitle={table === 'courseOutcomes' ? `View: ${tableItem['proof'].replace('Feedback', aaaItem.auditYear)}` : 'View Proof'} /> : tableItem[item]}</td>);
-                                                                                        })}
+                                                                    })
+                                                                }
 
 
-
-                                                                                    </tr>
-                                                                                }) : <tr>
-                                                                                <th colspan="20" className="text-center font-medium text-gray-600"><EmptyBox /></th>
+                                                                {
+                                                                    academicData && academicData?.[mainTable.model]?.map((serverItem, index) => {
+                                                                        return auditData[0]?.AAAData?.[mainTable.tableFromAAA][mainTable.tableName]?.dataMap?.includes(serverItem._id) &&
+                                                                            <tr key={index}>
+                                                                                <td></td>
+                                                                                <td>{serverItem.userId.name}</td>
+                                                                                {mainTable?.tableInfo?.['childHead'].map((item) => {
+                                                                                    return <td>{serverItem[item]}</td>
+                                                                                })
+                                                                                }
                                                                             </tr>
-                                                                        }
-                                                                    </tbody>
 
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })}
+                                                                    })}
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-
-            {/* 2 & 3 Faculty and Director Information */}
-            <div>
-                {
-                    facultyDirectorObj.map((mainItem, mainIndex) => {
-                        return <div key={mainIndex}>
-                            <p className="aaa-break mt-5"></p>
-                            <div>
-                                <SectionTitle title={`${mainItem.serial}. ${mainItem.title}`} />
-                                <div className='css-serial'>
-                                    {
-                                        Object.keys(categorywiseTables[mainItem.tableNameInMainObject])?.map((table, index) => {
-                                            return <div className="bg-white overflow-hidden sm:rounded-lg mt-5" key={index}>
-
-                                                <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                                                    <div><h3 className="text-base font-semibold leading-6 text-white"> <span className='add-serial-here mr-3'>.</span>
-                                                        {categorywiseTables[mainItem.tableNameInMainObject][table]['title']}</h3>
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <table className="table table-bordered">
-                                                        <thead className="bg-[#009879] text-white">
-                                                            <tr>
-                                                                <th scope="col" className='font-medium'>Year</th>
-                                                                <th scope="col" className='font-medium'>Data</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                            {auditData?.map((aaaItem) => {
-                                                                return (
-                                                                    <tr className="table-light">
-                                                                        <th scope="row" className='w-20 text-sm text-[#009879]'>{aaaItem.auditYear}</th>
-                                                                        <td>
-
-                                                                            <table className="table table-bordered css-serial">
-                                                                                <thead className="bg-[#009879] text-white">
-                                                                                    <tr>
-                                                                                        {categorywiseTables[mainItem.tableNameInMainObject]?.[table]?.tableInfo?.auditHead?.map((item) => {
-                                                                                            return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
-                                                                                        })
-                                                                                        }
-
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody className='text-sm'>
-
-                                                                                    {
-                                                                                        aaaItem.AAAData?.[mainItem.tableNameInMainObject][table]?.data?.length > 0 && academicData || aaaItem.AAAData?.[mainItem.tableNameInMainObject][table]?.dataMap?.length > 0 ?
-
-                                                                                            <>
-                                                                                                {
-                                                                                                    aaaItem.AAAData?.[mainItem.tableNameInMainObject][table]?.data?.map((tableItem, index) => {
-                                                                                                        return <tr>
-                                                                                                            <td scope="row"></td>
-                                                                                                            {
-                                                                                                                mainItem.showName && <td>{tableItem['name']}</td>
-                                                                                                            }
-
-                                                                                                            {categorywiseTables[mainItem.tableNameInMainObject]?.[table]?.tableInfo?.[[mainItem.cellHeadName]]?.map((item) => {
-                                                                                                                return (<td>{item === 'proof' ?
-                                                                                                                    <ViewFile fileName={tableItem['proof']} type="aaaDirURL" customTitle={table === 'courseOutcomes' ? `View: ${tableItem['proof'].replace('Feedback', aaaItem.auditYear)}` : 'View Proof'} /> : tableItem[item]}</td>);
-                                                                                                            })}
+                                                            </>
+                                                        }
 
 
 
-                                                                                                        </tr>
-                                                                                                    })
-                                                                                                }
 
-                                                                                                {
-                                                                                                    (directorData && academicData) && dataObj[mainItem.fetchFrom][categorywiseTables[mainItem.tableNameInMainObject][table]['model']]?.map((serverItem, index) => {
 
-                                                                                                        return aaaItem.AAAData?.[mainItem.tableNameInMainObject][table]?.dataMap?.includes(serverItem._id) && <tr key={index}>
-                                                                                                            <td></td>
-                                                                                                            {mainItem.showName && <td>{serverItem.userId.name}</td>}
-                                                                                                            {categorywiseTables[mainItem.tableNameInMainObject]?.[table]?.tableInfo?.childHead?.map((item) => {
-                                                                                                                return <td>{serverItem[item]}</td>
-                                                                                                            })
-                                                                                                            }
-                                                                                                        </tr>
+                                                    </tbody>
 
-                                                                                                    })}
-
-                                                                                            </>
-                                                                                            : <tr>
-                                                                                                <th colspan="20" className="text-center font-medium text-gray-600"><EmptyBox /></th>
-                                                                                            </tr>
-
-                                                                                    }
-
-                                                                                </tbody>
-
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                )
-                                                            })}
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                </table>
                                             </div>
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    })
-                }
-            </div>
 
-            {/* 4. Table as input  */}
-            <div>
-                <p className="aaa-break mt-5"></p>
-                <SectionTitle title="4. Teaching posts, programme & Award Details" />
-                <div className="css-serial">
+                                        </div>
 
-                    {
-                        Object.keys(categorywiseTables.cellAsInputTables)?.map((table, index) => {
-                            return <div className="bg-white overflow-hidden sm:rounded-lg my-4" key={index}>
-
-                                <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                                    <div><h3 className="text-base font-semibold leading-6 text-white"> <span className='add-serial-here mr-3'>.</span>
-                                        {categorywiseTables['cellAsInputTables'][table]['title']}</h3>
                                     </div>
-                                </div>
+                                        : null}
 
-                                <div>
-                                    <table className="table table-bordered">
-                                        <thead className="bg-[#009879] text-white">
-                                            <tr>
-                                                <th scope="col" className='font-medium'>Year</th>
-                                                <th scope="col" className='font-medium'>Data</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {auditData?.map((aaaItem) => {
-                                                return (
-                                                    <tr className="table-light">
-                                                        <th scope="row" className='w-20 text-sm text-[#009879]'>{aaaItem.auditYear}</th>
-                                                        <td>
 
-                                                            <table className="table table-bordered css-serial">
-                                                                <thead className="bg-[#009879] text-white">
-                                                                    <tr>
-                                                                        {categorywiseTables['cellAsInputTables']?.[table]?.tableHead?.map((item) => {
-                                                                            return <th className="font-medium">{item}</th>
-                                                                        })}
+                                {/* 4. Director tables */}
+                                {
+                                    mainTable.tableFromAAA === 'directorTables' && (auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.data?.length > 0 && directorData || auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.dataMap?.length > 0) ? <div className="bg-white overflow-hidden sm:rounded-lg mt-5 " id={mainTable.tableName} key={mainIndex}>
 
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody className='text-sm'>
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
+
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                            <div>
+                                                <table className="table table-bordered css-serial">
+                                                    <thead className="bg-[#009879] text-white">
+                                                        <tr>
+                                                            {mainTable?.tableInfo?.auditHead?.map((item) => {
+                                                                return (item !== 'Action' ? <th className="font-medium">{item}</th> : null);
+                                                            })
+                                                            }
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className='text-sm'>
+
+                                                        {
+                                                            (auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.data?.length > 0 && directorData || auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.dataMap?.length > 0) ?
+
+                                                                <>
+                                                                    {
+                                                                        auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.data?.map((tableItem, index) => {
+                                                                            return <tr key={index}>
+                                                                                <td scope="row"></td>
+                                                                                {mainTable.tableInfo?.['stateHead']?.map((item) => {
+                                                                                    return (<td>{item === 'proof' ?
+                                                                                        <ViewFile fileName={tableItem['proof']} type="aaaDirURL" customTitle={mainTable.tableName === 'courseOutcomes' ? `View: ${tableItem['proof'].replace('Feedback', academicYear)}` : 'View Proof'} /> : tableItem[item]}</td>);
+                                                                                })}
+
+                                                                            </tr>
+                                                                        })
+                                                                    }
 
 
                                                                     {
-                                                                        aaaItem.AAAData?.['cellAsInputTables'][table] ?
+                                                                        directorData && directorData?.[mainTable.model]?.map((serverItem, index) => {
+                                                                            return auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.dataMap?.includes(serverItem._id) &&
+                                                                                <tr key={index}>
+                                                                                    <td></td>
+                                                                                    {mainTable?.tableInfo?.['childHead'].map((item) => {
+                                                                                        return <td>{serverItem[item]}</td>
+                                                                                    })
+                                                                                    }
+                                                                                </tr>
 
-                                                                            <>
+                                                                        })}
 
-                                                                                {
-                                                                                    table === 'teachingPosts' && <>
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='seniorProf' title='Senior Professor' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='prof' title='Professor' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='associateProf' title='Associate Professor' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='assistantProf' title='Assistant Professor' />
-                                                                                        <tr>
-                                                                                            <th scope="row">Total</th>
-                                                                                            <th scope="row">{(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.sanctioned === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.sanctioned)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.sanctioned === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.sanctioned)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.sanctioned === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.sanctioned)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.sanctioned === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.sanctioned))}</th>
-                                                                                            <th scope="row">{(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.filled === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.filled)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.filled === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.filled)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.filled === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.filled)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.filled === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.filled))}</th>
-                                                                                            <th scope="row">{(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.cas === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.cas)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.cas === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].prof.cas)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.cas === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.cas)) + (aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.cas === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.cas))}</th>
+                                                                </>
+                                                                : null
 
-                                                                                        </tr>
-                                                                                    </>
-                                                                                }
+                                                        }
 
-                                                                                {
-                                                                                    table === 'mphilPrograms' && <tr>
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='applications' title='MPSC/UPSC' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='intake' title='NET/SET' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='admissions' title='GATE' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='male' title='Other Exams' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='female' title='Other Exams' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='others' title='Other Exams' tableName='civil' />
+                                                    </tbody>
 
-                                                                                        <th scope="row">{(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].intake === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].intake))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].admissions === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].admissions))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].male === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].male))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].female === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].female))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].others === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['mphilPrograms'].others))
-                                                                                        }
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                }
+                                                </table>
+                                            </div>
 
-                                                                                {
-                                                                                    table === 'phdPrograms' && <tr>
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='applications' title='MPSC/UPSC' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='intake' title='NET/SET' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='admissions' title='GATE' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='male' title='Other Exams' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='female' title='Other Exams' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='others' title='Other Exams' tableName='civil' />
+                                        </div>
 
-                                                                                        <th scope="row">{(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].intake === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].intake))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].admissions === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].admissions))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].male === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].male))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].female === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].female))
-                                                                                            + (aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].others === '' ? 0 : parseInt(aaaItem.AAAData?.['cellAsInputTables']['phdPrograms'].others))
-                                                                                        }
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                }
-
-                                                                                {
-                                                                                    table === 'mphilPhd' &&
-                                                                                    <>
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPhd']} keyName='phd' title='Ph.D.' tableName='mphilphd' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['mphilPhd']} keyName='mphil' title='M.Phil.' tableName='mphilphd' />
-                                                                                    </>
-                                                                                }
-
-                                                                                {
-                                                                                    table === 'facultyAwardsDegree' &&
-                                                                                    <tr>
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='mphil' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='phd' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='dsc' tableName='civil' />
-                                                                                        <EditableTd data={aaaItem.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='dlit' tableName='civil' />
-
-                                                                                    </tr>
-                                                                                }
+                                    </div>
+                                        : null}
 
 
+                                {/* 5. Cell as input tables */}
+                                {
+                                    mainTable.tableFromAAA === 'cellAsInputTables' && <div className="bg-white overflow-hidden sm:rounded-lg mt-5 " id={mainTable.tableName} key={mainIndex}>
+
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
+
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                            <div>
+                                                <table className="table table-bordered">
+                                                    <thead className="bg-[#009879] text-white">
+                                                        <tr>
+                                                            {mainTable.tableHead?.map((item) => {
+                                                                return <th className="font-medium">{item}</th>
+                                                            })}
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className='text-sm'>
 
 
+                                                        {
+                                                            auditData[0]?.AAAData?.['cellAsInputTables'][mainTable.tableName] ?
 
+                                                                <>
 
+                                                                    {
+                                                                        mainTable.tableName === 'teachingPosts' && <>
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='seniorProf' title='Senior Professor' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='prof' title='Professor' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='associateProf' title='Associate Professor' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts']} keyName='assistantProf' title='Assistant Professor' />
+                                                                            <tr>
+                                                                                <th scope="row">Total</th>
+                                                                                <th scope="row">{(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.sanctioned === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.sanctioned)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.sanctioned === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.sanctioned)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.sanctioned === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.sanctioned)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.sanctioned === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.sanctioned))}</th>
+                                                                                <th scope="row">{(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.filled === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.filled)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.filled === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.filled)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.filled === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.filled)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.filled === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.filled))}</th>
+                                                                                <th scope="row">{(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.cas === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].seniorProf.cas)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.cas === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].prof.cas)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.cas === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].assistantProf.cas)) + (auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.cas === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['teachingPosts'].associateProf.cas))}</th>
 
-
-
-
-                                                                            </>
-                                                                            : <tr>
-                                                                                <th colspan="20" className="text-center font-medium text-gray-600"><EmptyBox /></th>
                                                                             </tr>
-
+                                                                        </>
                                                                     }
 
-                                                                </tbody>
+                                                                    {
+                                                                        mainTable.tableName === 'mphilPrograms' && <tr>
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='applications' title='MPSC/UPSC' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='intake' title='NET/SET' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='admissions' title='GATE' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='male' title='Other Exams' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='female' title='Other Exams' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms']} keyName='others' title='Other Exams' tableName='civil' />
 
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                                                            <th scope="row">{(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].intake === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].intake))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].admissions === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].admissions))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].male === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].male))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].female === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].female))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].others === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['mphilPrograms'].others))
+                                                                            }
+                                                                            </th>
+                                                                        </tr>
+                                                                    }
+
+                                                                    {
+                                                                        mainTable.tableName === 'phdPrograms' && <tr>
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='applications' title='MPSC/UPSC' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='intake' title='NET/SET' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='admissions' title='GATE' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='male' title='Other Exams' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='female' title='Other Exams' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms']} keyName='others' title='Other Exams' tableName='civil' />
+
+                                                                            <th scope="row">{(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].intake === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].intake))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].admissions === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].admissions))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].male === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].male))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].female === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].female))
+                                                                                + (auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].others === '' ? 0 : parseInt(auditData[0]?.AAAData?.['cellAsInputTables']['phdPrograms'].others))
+                                                                            }
+                                                                            </th>
+                                                                        </tr>
+                                                                    }
+
+                                                                    {
+                                                                        mainTable.tableName === 'mphilPhd' &&
+                                                                        <>
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPhd']} keyName='phd' title='Ph.D.' tableName='mphilphd' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['mphilPhd']} keyName='mphil' title='M.Phil.' tableName='mphilphd' />
+                                                                        </>
+                                                                    }
+
+                                                                    {
+                                                                        mainTable.tableName === 'facultyAwardsDegree' &&
+                                                                        <tr>
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='mphil' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='phd' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='dsc' tableName='civil' />
+                                                                            <EditableTd data={auditData[0]?.AAAData?.['cellAsInputTables']['facultyAwardsDegree']} keyName='dlit' tableName='civil' />
+
+                                                                        </tr>
+                                                                    }
+                                                                </>
+                                                                : null
+
+                                                        }
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                }
+
+
+                                {/* 6. Rich text tables */}
+                                {
+                                    mainTable.tableFromAAA === 'richTextTables' && (auditData[0]?.AAAData?.[mainTable.tableFromAAA]?.[mainTable.tableName]?.content === null || '' || undefined || ' ' || '<p>Nil</p>' || '<p>Nil</p>' | '<p>Nil</p>' || '<p>Nil</p>') ? <div className="bg-white overflow-hidden mt-5 " id={mainTable.tableName} key={mainIndex}>
+
+                                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between rounded-t-md">
+                                            <div><h3 className="text-base font-semibold leading-6 text-white">
+                                                <span className='add-serial-here mr-3'>.</span>
+                                                {mainTable['title']}</h3>
+                                            </div>
+
+                                            <div>
+                                                <a href={`#SummarySheet-${mainTable.tableName}`}>
+                                                    <ArrowBackRoundedIcon />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div className="border p-2">
+
+                                            <div>
+                                                <div id={`${mainTable['title']}-${academicYear}`}>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                        : null}
+
+
+
+                            </div >
+
                         })
                     }
-
                 </div>
-
-
-
-            </div>
-
-            <div>
-                <p className="aaa-break mt-5"></p>
-                <SectionTitle title="5. School highlights, strengths, weaknesses & future plans" />
-                <div className="css-serial">
-                    {
-                        Object.keys(categorywiseTables.richTextTables)?.map((table, index) => {
-                            return <div className="bg-white overflow-hidden sm:rounded-lg my-4" key={index}>
-
-                                <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                                    <div><h3 className="text-base font-semibold leading-6 text-white"> <span className='add-serial-here mr-3'>.</span>
-                                        {categorywiseTables['richTextTables'][table]['title']}</h3>
-                                    </div>
-                                </div>
-
-                                <div>
-
-                                    <div>
-                                        <table className="table table-bordered">
-                                            <thead className="bg-[#009879] text-white">
-                                                <tr>
-                                                    <th scope="col" className='font-medium'>Year</th>
-                                                    <th scope="col" className='font-medium'>Details</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                {auditData?.map((aaaItem) => {
-                                                    return (
-                                                        <tr className="table-light">
-                                                            <th scope="row" className='w-20 text-sm text-[#009879]'>{aaaItem.auditYear}</th>
-                                                            <td>
-                                                                <div id={`${categorywiseTables['richTextTables'][table]['title']}-${aaaItem.auditYear}`}>
-
-                                                                </div>
-
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })}
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        })}
-                </div>
-
-            </div>
-
-
-
-        </div>
+            }
+        </div >
     )
 }
 
@@ -489,7 +503,7 @@ const EditableTd = ({ title, data, keyName, tableName = 'program' }) => {
                 <td className='p-1'>{data[keyName].cas}</td>
             </tr>
             : tableName === 'civil' ?
-                <td className='p-1'>{data[keyName]}</td>
+                <th className='p-1 font-medium'>{data[keyName]}</th>
                 : tableName === 'mphilphd' ?
                     <tr >
                         <th scope="row">{title}</th>

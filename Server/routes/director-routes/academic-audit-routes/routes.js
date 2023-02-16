@@ -207,79 +207,140 @@ router.post('/api/getAllData/director', async (req, res) => {
 
     const {department, filter} = req.body
     const report = {};
+    // const filteredReponse = response
 
+
+    // get faculties
+    const faculties = await User.find({ department: department }).lean();
+    report.Faculties = faculties.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get ValueAddedCource
+    const ValueAddedCourceres = await ValueAddedCource.find({ department: department }).lean();
+    report.ValueAddedCource = ValueAddedCourceres.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get SyllabusRevision
+    const SyllabusRevisionres = await SyllabusRevision.find({ department: department }).lean();
+    report.SyllabusRevision = SyllabusRevisionres.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get faculties
+    const ExtensionActivitiesres = await ExtensionActivities.find({ department: department }).lean();
+    report.ExtensionActivities = ExtensionActivitiesres.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get ProjectsInternships
+    const ProjectsInternshipsRes = await ProjectsInternships.find({ department: department }).lean();
+    report.ProjectsInternships = ProjectsInternshipsRes.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get Employability
+    const Employabilityres = await Employability.find({ department: department }).lean();
+    report.Employability = Employabilityres.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
+
+    // get UgcSapCasDstFistDBTICSSR
+    const ugcSapCasDstFistDBTICSSR = await UgcSapCasDstFistDBTICSSR.find({ department: department }).lean();
+    report.UgcSapCasDstFistDBTICSSR = ugcSapCasDstFistDBTICSSR.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    })
 
     // get Alumni
-    const alumni = await Alumni.find({schoolName : department}).lean();
+    const alumni = await Alumni.find({ schoolName: department }).lean();
     report.Alumni = alumni.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
+    // get Alumni
+    const DemandRatioRes = await DemandRatio.find({ schoolName: department }).lean();
+    report.DemandRatio = DemandRatioRes.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    });
+
+
+
+
+
     // get alumniContribution
-    const alumniContribution = await AlumniContribution.find({SchoolName : department}).lean()
+    const alumniContribution = await AlumniContribution.find({ SchoolName: department }).lean()
     report.AlumniContribution = alumniContribution.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
     // get qualifiedExam
-    const qualifiedExam = await QualifiedExams.find({SchoolName : department}).lean()
+    const qualifiedExam = await QualifiedExams.find({ SchoolName: department }).lean()
     report.QualifiedExams = qualifiedExam.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
     // get placement
-    const placement = await Placement.find({SchoolName : department}).lean()
+    const placement = await Placement.find({ SchoolName: department }).lean()
     report.Placement = placement.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
     // get awards
-    const awards = await Award.find({SchoolName : department}).lean()
+    const awards = await Award.find({ SchoolName: department }).lean()
     report.Award = awards.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });;
 
     // get student
-    const student = await Student.find({schoolName : department}).lean()
+    const student = await Student.find({ schoolName: department }).lean()
     report.Student = student.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });;
 
     // get progressionToHE
-    const progressionToHE = await ProgressionToHE.find({SchoolName : department}).lean()
+    const progressionToHE = await ProgressionToHE.find({ SchoolName: department }).lean()
     report.ProgressionToHE = progressionToHE.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
     // get conference
-    const conference = await ConferencesSemiWorkshopOrganized.find({SchoolName : department}).lean()
+    const conference = await ConferencesSemiWorkshopOrganized.find({ SchoolName: department }).lean()
     report.ConferencesSemiWorkshopOrganized = conference.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
     // get TrainingProgramsOrganized
-    const training = await TrainingProgramsOrganized.find({SchoolName : department}).lean()
+    const training = await TrainingProgramsOrganized.find({ SchoolName: department }).lean()
     report.TrainingProgramsOrganized = training.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
 
-    res.send({ status: "success", data : report });
-    });
+    res.send({ status: "success", data: report });
+});
 
 // generateReport for user
 router.post('/api/getAllData/faculty', async (req, res) => {
 
-    const {department, filter} = req.body
+    const { department, filter } = req.body
     const report = {};
 
 
@@ -373,24 +434,24 @@ router.post('/api/getAllData/faculty', async (req, res) => {
         return dateB - dateA;
     }).filter((doc) => doc.userId !== null && doc.userId.department === department)
 
-    res.send({ status: "success", data : report });
+    res.send({ status: "success", data: report });
 
 })
 
 
 
-const arrayOfFields = [{name: 'teacher', maxCount: 1}, {name: 'expert', maxCount: 1}, {name: 'industry', maxCount: 1}, {name: 'alumni', maxCount: 1}, {name: 'AAAFile', maxCount:1}]
+const arrayOfFields = [{ name: 'teacher', maxCount: 1 }, { name: 'expert', maxCount: 1 }, { name: 'industry', maxCount: 1 }, { name: 'alumni', maxCount: 1 }, { name: 'AAAFile', maxCount: 1 }]
 
-router.post("/api/director/academic-audit/saveFeedbackReports", upload.fields(arrayOfFields), (req, res)=>{
-    try{
-        res.send({ status: 'success', data : req.files})
-    }catch{
+router.post("/api/director/academic-audit/saveFeedbackReports", upload.fields(arrayOfFields), (req, res) => {
+    try {
+        res.send({ status: 'success', data: req.files })
+    } catch {
         console.log('Error')
     }
 })
 
 
-router.get('/viewer/director/showFile/:filename', (req, res)=>{
+router.get('/viewer/director/showFile/:filename', (req, res) => {
     const link = `${__dirname}/director-uploads/AAA-uploads/${req.params.filename}`.replace('/routes/director-routes/academic-audit-routes', '/uploads')
     res.sendFile(link);
 })

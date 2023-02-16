@@ -21,7 +21,7 @@ import BulkExcel from '../../../components/BulkExcel';
 
 const tableHead = { index: "Sr. no.", Registration_number_roll_number: "Registration number / roll number", Names_of_students_selected_qualified: "Name of student qualified", Name_of_the_Exam: "Exam Qualified", Acadmic_year: "Acadmic Year", Upload_Proof: "Upload Proof", Action: "Action" }
 
-const exam = ["NET" , "SLET" , "GATE" , "GMAT" , "CAT" , "GRE" , "JAM" , "IELTS" , "TOEFL" , "Civil Services" , "State Gov exams" , "Any Such Other Exams" ]
+const exam = ["NET", "SLET", "GATE", "GMAT", "GPAT", "NIPER", "CAT", "GRE", "JAM", "IELTS", "TOEFL", "Civil Services", "State Gov exams", "Any Such Other Exams"]
 
 function QualifiedExams() {
 
@@ -85,8 +85,8 @@ function QualifiedExams() {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof'  sampleFile='QualifiedExamsDirector' title='Qualified Exams' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-            
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='QualifiedExamsDirector' title='Qualified Exams' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+
             <Table TB={data?.data} module={module} year="Acadmic_year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

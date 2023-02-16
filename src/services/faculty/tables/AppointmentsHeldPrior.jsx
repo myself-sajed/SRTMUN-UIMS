@@ -84,7 +84,7 @@ const AppointmentsHeldPrior = () => {
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-    console.log(joiningDate)
+
 
     return (
         <div>

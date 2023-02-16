@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -21,8 +21,8 @@ import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 
 
-const tableHead = { index: "Sr. no." ,  Name_of_student_placed: "Name of student placed/started Business" ,  Program_graduated_from: "Program graduated from" , Name_of_the_employer: "Name of the employer/business" , Employer_contact_details:"Employer/business contact details", Pay_package_annum:"Pay package ( ₹ / annum)", Academic_Year:"Year of Placement", Type_Of_Placement: "Type of placemnt", Upload_Proof:"Upload Proof", Action: "Action" }
-const typesOfPlacements = [ "Placement",  "Business Started"];
+const tableHead = { index: "Sr. no.", Name_of_student_placed: "Name of student placed/started Business", Program_graduated_from: "Program graduated from", Name_of_the_employer: "Name of the employer/business", Employer_contact_details: "Employer/business contact details", Pay_package_annum: "Pay package ( ₹ / annum)", Academic_Year: "Year of Placement", Type_Of_Placement: "Type of placemnt", Upload_Proof: "Upload Proof", Action: "Action" }
+const typesOfPlacements = ["Placement", "Business Started"];
 
 function Placements() {
 
@@ -66,13 +66,13 @@ function Placements() {
             <AddButton onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-                <DialogContent dividers sx={{background:"#e5eaf0" }}>
+                <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField label="Name of student placed/started Business" type="text" value={values.Name_of_student_placed} id="Name_of_student_placed" required={true} onch={setvalues} />

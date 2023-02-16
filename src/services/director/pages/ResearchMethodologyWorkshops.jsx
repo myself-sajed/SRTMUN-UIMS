@@ -54,12 +54,10 @@ function ResearchMethodologyWorkshops() {
                         rmwfd: item.From_Date,
                         rmwtd: item.To_Date,
                     })
-                    
                 }
             })
         }
     }, [itemToEdit])
-    console.log(values.rmwfd);
     //--------------Frant end ui------------
     return (
         <>

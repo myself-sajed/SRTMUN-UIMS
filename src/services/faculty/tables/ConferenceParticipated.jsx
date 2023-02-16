@@ -157,7 +157,7 @@ const ConferenceParticipated = () => {
                         <tr>
                             <th scope="col">Program Title</th>
                             <th scope="col">Organizing Institute</th>
-                            <th scope="col">National / International</th>
+                            <th scope="col">Level</th>
                             <th scope="col"><div className="w-20">Year</div></th>
                             <th scope="col">Upload Proof</th>
                             <th scope="col">Action</th>
@@ -166,7 +166,7 @@ const ConferenceParticipated = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.programTitle}</td>

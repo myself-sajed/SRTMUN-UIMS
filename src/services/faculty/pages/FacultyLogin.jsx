@@ -76,9 +76,11 @@ const Login = () => {
             {
                 step === 1 && <div>
                     <p className="text-center my-3">Choose Teacher Type</p>
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="flex lg:flex-row flex-col items-stretch justify-center gap-2">
                         <button className={`bg-blue-600 text-white rounded-lg hover:bg-blue-700 ease-in-out 
-            duration-200 p-3`} onClick={() => { setFacultyType('Regular'); setStep(2) }}>Permanent / Regular Teacher</button>
+            duration-200 p-3`} onClick={() => { setFacultyType('Regular'); setStep(2) }}>Permanent Teacher</button>
+                        <button className={`bg-blue-600 text-white rounded-lg hover:bg-blue-700 ease-in-out 
+            duration-200 p-3`} onClick={() => { setFacultyType('UF Teacher'); setStep(2) }}>University Fund Teacher</button>
                         <button className={`bg-blue-600 text-white rounded-lg hover:bg-blue-700 ease-in-out 
             duration-200 p-3`} onClick={() => { setFacultyType('Contractual'); setStep(2) }}>Contractual Teacher</button>
                     </div>
@@ -97,11 +99,17 @@ const Login = () => {
                             <CredButton title="Login" isLoading={isLoading} />
                         </>
                             :
-                            <>
-                                <CredInput state={username} setState={setUsername} prefix={true} placeholder="Enter 3 digit User ID" type="number" spacing="mb-2" prefixLetter="C" />
+                            facultyType === 'UF Teacher' ? <>
+                                <CredInput state={username} setState={setUsername} prefix={true} placeholder="Enter 4 digit User ID" type="number" spacing="mb-2" prefixLetter="UFTG" />
                                 <CredInput state={password} setState={setPassword} placeholder="Enter Password" type="password" spacing="mb-3" />
                                 <CredButton title="Login" isLoading={isLoading} />
                             </>
+                                :
+                                <>
+                                    <CredInput state={username} setState={setUsername} prefix={true} placeholder="Enter 3 digit User ID" type="number" spacing="mb-2" prefixLetter="C" />
+                                    <CredInput state={password} setState={setPassword} placeholder="Enter Password" type="password" spacing="mb-3" />
+                                    <CredButton title="Login" isLoading={isLoading} />
+                                </>
                     }
                 </>
             }

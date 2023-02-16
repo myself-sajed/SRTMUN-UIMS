@@ -10,13 +10,13 @@ function casRoutes(app) {
     // multer configuration
     const multer = require('multer')
     const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const link = path.join(__dirname, `../../uploads/faculty-uploads/CAS-uploads/`)
-        cb(null, link)
-    },
-    filename: (req, file, cb) => {
-        cb(null, `CAS-TeachingActivity-${new Date().getTime()}-${file.originalname}`)
-    },
+        destination: (req, file, cb) => {
+            const link = path.join(__dirname, `../../uploads/faculty-uploads/CAS-uploads/`)
+            cb(null, link)
+        },
+        filename: (req, file, cb) => {
+            cb(null, `CAS-TeachingActivity-${new Date().getTime()}-${file.originalname}`)
+        },
     })
     const upload = multer({ storage: storage })
 
@@ -29,9 +29,9 @@ function casRoutes(app) {
         try {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
-            console.log('Link : ', `http://localhost:3000/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
-            await page.goto(`http://localhost:3000/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`, 
-            {waitUntil: 'networkidle0'});
+            console.log('Link : ', `https://srtmun-uims.org/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
+            await page.goto(`https://srtmun-uims.org/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`,
+                { waitUntil: 'networkidle0' });
             await page.pdf({
                 path: `pdfs/${fileName}`,
                 printBackground: true,
@@ -43,9 +43,9 @@ function casRoutes(app) {
                 footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
             });
             await browser.close()
-            res.send({ status: "generated", fileName });    
+            res.send({ status: "generated", fileName });
         } catch (error) {
-            res.send({ status: "error", message : 'Could not generate report, please try again later...' });      
+            res.send({ status: "error", message: 'Could not generate report, please try again later...' });
         }
 
     });
@@ -128,8 +128,8 @@ function casRoutes(app) {
         )
     })
 
-     // for saving cas eligibility data
-     app.post("/saveEligibilityData", (req, res) => {
+    // for saving cas eligibility data
+    app.post("/saveEligibilityData", (req, res) => {
 
         const { stageNumber, userId, eligibilityData } = req.body;
 
@@ -145,7 +145,7 @@ function casRoutes(app) {
                     if (cas) {
                         // if cas data exist only push into that array
                         // remove cas array item with same year as in casData
-    
+
                         cas[stageNumber] = JSON.stringify(eligibilityData)
                         cas.save((err, cas) => {
                             if (err) {
@@ -171,15 +171,15 @@ function casRoutes(app) {
                             }
                             else {
                                 res.send({ status: 'success', data: cas });
-    
+
                             }
                         }
                         )
                     }
                 }
             } catch (error) {
-                    console.log(err);
-                    res.send({ status: "error", message: "Something Went Wrong" })
+                console.log(err);
+                res.send({ status: "error", message: "Something Went Wrong" })
             }
         })
     });
@@ -187,22 +187,22 @@ function casRoutes(app) {
 
 
     // for uploading teaching related activity files
-    const arrayOfFields = [{name: 'file-A', maxCount: 1}, {name: 'file-B', maxCount: 1}, 
-    {name: 'file-C', maxCount: 1}, {name: 'file-D', maxCount: 1}, {name: 'file-E', maxCount: 1}, 
-    {name: 'file-F', maxCount: 1}, {name: 'file-G', maxCount: 1}, {name : 'attendance', maxCount: 1},
-    {name : 'refereed', maxCount: 1},{name : 'impactFactor', maxCount: 1}, {name : 'stage1FDP', maxCount: 1},
-    {name : 'stage1MultiProof', maxCount: 1},{name : 'phdDegree', maxCount: 1},{name : 'stage2File1', maxCount: 1},{name : 'stage2File2', maxCount: 1},
-    {name : 'guideProof1', maxCount: 1},{name : 'guideProof2', maxCount: 1}, {name : 'guideProof', maxCount: 1},
-    {name : 'phdProof1', maxCount: 1},{name : 'phdProof2', maxCount: 1},{name : 'stage2File1', maxCount: 1},
-]
+    const arrayOfFields = [{ name: 'file-A', maxCount: 1 }, { name: 'file-B', maxCount: 1 },
+    { name: 'file-C', maxCount: 1 }, { name: 'file-D', maxCount: 1 }, { name: 'file-E', maxCount: 1 },
+    { name: 'file-F', maxCount: 1 }, { name: 'file-G', maxCount: 1 }, { name: 'attendance', maxCount: 1 },
+    { name: 'refereed', maxCount: 1 }, { name: 'impactFactor', maxCount: 1 }, { name: 'stage1FDP', maxCount: 1 },
+    { name: 'stage1MultiProof', maxCount: 1 }, { name: 'phdDegree', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 }, { name: 'stage2File2', maxCount: 1 },
+    { name: 'guideProof1', maxCount: 1 }, { name: 'guideProof2', maxCount: 1 }, { name: 'guideProof', maxCount: 1 },
+    { name: 'phdProof1', maxCount: 1 }, { name: 'phdProof2', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 },
+    ]
 
-    app.post("/api/faculty/CAS-Report/saveTeachingActivityDocs", upload.fields(arrayOfFields), (req, res)=>{
-        res.send({ status: 'success', data : req.files})
+    app.post("/api/faculty/CAS-Report/saveTeachingActivityDocs", upload.fields(arrayOfFields), (req, res) => {
+        res.send({ status: 'success', data: req.files })
     })
 
 
     // showing file to file viewer
-    app.get('/viewer/CASFiles/showFile/:filename', (req, res)=>{
+    app.get('/viewer/CASFiles/showFile/:filename', (req, res) => {
         const link = path.join(__dirname, `../../uploads/faculty-uploads/CAS-uploads/${req.params.filename}`)
         res.sendFile(link);
     })

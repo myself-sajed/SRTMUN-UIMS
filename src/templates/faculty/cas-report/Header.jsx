@@ -23,6 +23,9 @@ import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import DuoRoundedIcon from '@mui/icons-material/DuoRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
+import { useNavigate } from 'react-router-dom';
+
 
 const dashboardObj = {
     faculty: [
@@ -39,19 +42,21 @@ const dashboardObj = {
         { id: 11, title: 'Administrative Responsibilities', model: 'Responsibilities', icon: <ManageAccountsIcon /> },
     ],
     director: [
-        { id: 1, title: 'Exams Qualified', model: 'QualifiedExams', icon: <HowToRegRoundedIcon /> },
-        { id: 2, title: 'Placements', model: 'Placement', icon: <WorkRoundedIcon /> },
-        { id: 3, title: 'Awards', model: 'Award', icon: <EmojiEventsRoundedIcon /> },
-        { id: 4, title: 'Total Alumni', model: 'Alumni', icon: <PeopleRoundedIcon /> },
-        { id: 5, title: 'Alumni Contributed', model: 'AlumniContribution', icon: <AccountBalanceWalletRoundedIcon /> },
-        { id: 6, title: 'Students', model: 'Student', icon: <GroupsRoundedIcon /> },
-        { id: 7, title: 'Professional Development / Administrative Training Programs Organized', model: 'TrainingProgramsOrganized', icon: <TrendingUpRoundedIcon /> },
-        { id: 8, title: 'Conferences / Seminar / Workshop Organized', model: 'ConferencesSemiWorkshopOrganized', icon: <DuoRoundedIcon /> },
-        { id: 9, title: 'Progression to Higher Education', model: 'ProgressionToHE', icon: <SchoolRoundedIcon /> },
+        { id: 0, title: 'Faculties', model: 'Faculties', icon: <GroupsRoundedIcon />, },
+        { id: 6, title: 'Students', model: 'Student', icon: <LocalLibraryRoundedIcon /> },
+        { id: 4, title: 'Alumni', model: 'Alumni', icon: <PeopleRoundedIcon /> },
+        { id: 1, title: 'Exams Qualified', model: 'QualifiedExams', icon: <HowToRegRoundedIcon />, sort: true, fieldToSort: 'Acadmic_year' },
+        { id: 2, title: 'Placements', model: 'Placement', icon: <WorkRoundedIcon />, sort: true, fieldToSort: 'Academic_Year' },
+        { id: 3, title: 'Awards', model: 'Award', icon: <EmojiEventsRoundedIcon />, sort: true, fieldToSort: 'Year_of_Award' },
+        { id: 5, title: 'Alumni Contributed', model: 'AlumniContribution', icon: <AccountBalanceWalletRoundedIcon />, sort: true, fieldToSort: 'Academic_Year' },
+        { id: 7, title: 'Development & Training Programs', model: 'TrainingProgramsOrganized', icon: <TrendingUpRoundedIcon />, sort: true, fieldToSort: 'Year' },
+        { id: 8, title: 'Conferences / Seminar / Workshop Organized', model: 'ConferencesSemiWorkshopOrganized', icon: <DuoRoundedIcon />, sort: true, fieldToSort: 'Year' },
+        { id: 9, title: 'Progression to Higher Education', model: 'ProgressionToHE', icon: <SchoolRoundedIcon />, sort: true, fieldToSort: 'Academic_Year' },
     ]
 }
 
-const Header = ({ user, title, subTitle, directorData, otherOptions = false, userType }) => {
+const Header = ({ user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
+
 
     return (
         <div className='font-sans mx-auto mt-16'>
@@ -74,16 +79,16 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
                             <p className='lg:text-2xl text-xl text-center text-[#009879] font-semibold'>{`${user.salutation} ${user.name}`}</p>
 
                             <div className="mt-1 text-center lg:text-sm text-xs">
-                                <p className='text-base'>{user.designation}</p>
+                                <p className='text-base'>{user && user.designation === 'Contractual' ? 'Assistant Professor(Contractual)' : user.designation},</p>
                                 <p className='text-gray-800 mt-2'>{user.department}</p>
-                                <p className='text-gray-800'>SRTM University, Vishnupuri, Nanded - 431 606</p>
+                                <p className='text-gray-800'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <ShowDashboard directorData={directorData && directorData}
-                            dashboardObj={dashboardObj[userType]} />
+                            dashboardObj={dashboardObj[userType]} type={type} academicYear={academicYear} user={user} />
                     </div>
                 </div>
 
@@ -103,13 +108,14 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
                                     <DetailTile sr="Name" value={`${user.salutation} ${user.name}`} />
                                     <DetailTile sr="School" value={user.department} />
                                     <DetailTile sr="Current Designation" value={user.designation} />
-                                    <DetailTile sr="Date of Last Promotion" value={user.promotionDate} />
-                                    <DetailTile sr="Grade Pay" value={user.gradePay} />
+                                    {showPersonalDetails && <DetailTile sr="Date of Last Promotion" value={user.promotionDate} />}
+                                    {showPersonalDetails && <DetailTile sr="Grade Pay" value={user.gradePay} />}
+
                                     <DetailTile sr="Address of Correspondence" value={`${user.department}, Swami Ramanand Teerth Marathwada University, Vishnupuri, Nanded-431 606`} />
                                     <DetailTile sr="Email" value={user?.email} />
-                                    <DetailTile sr="Permanent Address" value={user.email} />
-                                    <DetailTile sr="Mobile Number" value={user.mobile} />
-                                    <DetailTile sr="Date of Birth" value={user?.dob} />
+                                    <DetailTile sr="Permanent Address" value={user?.address} />
+                                    {showPersonalDetails && <DetailTile sr="Mobile Number" value={user.mobile} />}
+                                    {showPersonalDetails && <DetailTile sr="Date of Birth" value={user?.dob} />}
                                 </div>
                             </div>
                         </div> : null : <div className="my-5 mx-auto">
@@ -124,13 +130,14 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
                                 <DetailTile sr="Name" value={`${user.salutation} ${user.name}`} />
                                 <DetailTile sr="School" value={user.department} />
                                 <DetailTile sr="Current Designation" value={user.designation} />
-                                <DetailTile sr="Date of Last Promotion" value={user.promotionDate} />
-                                <DetailTile sr="Grade Pay" value={user.gradePay} />
+                                {showPersonalDetails && <DetailTile sr="Date of Last Promotion" value={user.promotionDate} />}
+                                {showPersonalDetails && <DetailTile sr="Grade Pay" value={user.gradePay} />}
+
                                 <DetailTile sr="Address of Correspondence" value={`${user.department}, Swami Ramanand Teerth Marathwada University, Vishnupuri, Nanded-431 606`} />
                                 <DetailTile sr="Email" value={user?.email} />
                                 <DetailTile sr="Permanent Address" value={user?.address} />
-                                <DetailTile sr="Mobile Number" value={user.mobile} />
-                                <DetailTile sr="Date of Birth" value={user?.dob} />
+                                {showPersonalDetails && <DetailTile sr="Mobile Number" value={user.mobile} />}
+                                {showPersonalDetails && <DetailTile sr="Date of Birth" value={user?.dob} />}
                             </div>
                         </div>
                     </div>
@@ -162,13 +169,17 @@ const DetailTile = ({ sr, value }) => {
 export { dashboardObj }
 
 
-const ShowDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColor = "green" }) => {
+const ShowDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColor = "green", type = null, academicYear = null, user }) => {
+
+    const navigate = useNavigate()
+
     return <div className='flex items-center justify-between gap-3 flex-wrap'>
         {
             directorData && dashboardObj.map((item, index) => {
-                return directorData?.[item.model]?.length > 0 && <div key={index} className={`bg-${bgColor}-50 p-2 border border-green-100 rounded-md flex-auto hover:bg-${bgColor}-100`}>
+                return ((type === 'aaa' && item.sort) ? directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length > 0 : directorData?.[item.model]?.length > 0) && <div key={index} className={`bg-${bgColor}-50 p-2 border border-green-100 rounded-md flex-auto hover:bg-${bgColor}-100 cursor-pointer`} onClick={() => { user && navigate(item?.url.replace('school', user?.department)) }} >
                     <div className={`flex items-center justify-start gap-2 ${color.includes('#') ? `text-${color}` : `text-${color}-800`}`}>
-                        {item.icon} <span className='font-bold text-xl'>{directorData?.[item.model]?.length}</span>
+                        {item.icon} <span className='font-bold text-xl'>{(type === 'aaa' && item.sort) ?
+                            directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length : directorData?.[item.model]?.length}</span>
                     </div>
                     <p className='md:text-base text-sm'>{item.title}</p>
                 </div>

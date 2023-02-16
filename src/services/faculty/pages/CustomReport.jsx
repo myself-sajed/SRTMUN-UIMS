@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
@@ -33,7 +33,6 @@ const CustomReport = () => {
     const [ResearchProject, setResearchProject] = useState(true)
     const [ResearchPaper, setResearchPaper] = useState(true)
     const [BookAndChapter, setBookAndChapter] = useState(true)
-    const [ResearchGuidance, setResearchGuidance] = useState(true)
     const [PhdAwarded, setPhdAwarded] = useState(true)
     const [JrfSrf, setJrfSrf] = useState(true)
     const [AwardRecognition, setAwardRecognition] = useState(true)
@@ -44,6 +43,10 @@ const CustomReport = () => {
     const [Fellowship, setFellowship] = useState(true)
     const [Collaboration, setCollaboration] = useState(true)
     const [EContentDeveloped, setEContentDeveloped] = useState(true)
+    const [Responsibilities, setResponsibilities] = useState(true)
+    const [FinancialSupport, setFinancialSupport] = useState(true)
+    const [ConferenceParticipated, setConferenceParticipated] = useState(true)
+    const [ForeignVisit, setForeignVisit] = useState(true)
 
     // important states
     const [loading, setLoading] = useState(false)
@@ -51,6 +54,8 @@ const CustomReport = () => {
     const [selected, setSelected] = useState(true)
     const navigate = useNavigate()
     useAuth(false)
+
+
     // table for iteration purpose
     const tables = [
         {
@@ -131,14 +136,6 @@ const CustomReport = () => {
             state: BookAndChapter,
             setState: setBookAndChapter,
             id: 'BookAndChapter'
-        },
-        ,
-        {
-            title: 'Research Guidance',
-            columns: ['Are You a recognized research guide of this University', 'Year', 'Proof',],
-            state: ResearchGuidance,
-            setState: setResearchGuidance,
-            id: 'ResearchGuidance'
         },
         {
             title: 'Ph.D. Awarded',
@@ -239,9 +236,39 @@ const CustomReport = () => {
 
 
         },
+        {
+            title: 'Financial Support To Attend Conferences',
+            columns: ['All fields', 'Academic Year', 'Uploaded Proof',],
+
+            state: FinancialSupport,
+            setState: setFinancialSupport,
+            id: 'FinancialSupport'
 
 
+        },
+        {
+            title: 'Administrative / Academic Responsibilities',
+            columns: ['All fields', 'Academic Year', 'Uploaded Proof',],
+            state: Responsibilities,
+            setState: setResponsibilities,
+            id: 'Responsibilities'
+        },
+        {
+            title: 'Conference / Workshop / Seminar Participated',
+            columns: ['All fields', 'Academic Year', 'Uploaded Proof',],
+            state: ConferenceParticipated,
+            setState: setConferenceParticipated,
+            id: 'ConferenceParticipated'
 
+
+        },
+        {
+            title: 'Foreign Visits',
+            columns: ['All fields', 'Academic Year', 'Uploaded Proof',],
+            state: ForeignVisit,
+            setState: setForeignVisit,
+            id: 'ForeignVisit'
+        },
 
     ];
 
@@ -249,7 +276,8 @@ const CustomReport = () => {
     function generateReport() {
         setLoading(true)
         let otherOptions = {
-            Photo, PersonalInfo, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped
+            Photo, PersonalInfo, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped,
+            Responsibilities, FinancialSupport, ConferenceParticipated, ForeignVisit,
         }
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/report/generateFacultyReport`, { userId: user._id, otherOptions })
             .then(function (res) {
@@ -281,7 +309,6 @@ const CustomReport = () => {
         setOnline(false)
         setResearchPaper(false)
         setResearchProject(false)
-        setResearchGuidance(false)
         setBookAndChapter(false)
         setPhdAwarded(false)
         setJrfSrf(false)
@@ -294,6 +321,10 @@ const CustomReport = () => {
         setCollaboration(false)
         setSelected(false)
         setEContentDeveloped(false)
+        setResponsibilities(false)
+        setFinancialSupport(false)
+        setConferenceParticipated(false)
+        setForeignVisit(false)
 
     }
 
@@ -306,7 +337,6 @@ const CustomReport = () => {
         setOnline(true)
         setResearchPaper(true)
         setResearchProject(true)
-        setResearchGuidance(true)
         setBookAndChapter(true)
         setPhdAwarded(true)
         setJrfSrf(true)
@@ -319,6 +349,10 @@ const CustomReport = () => {
         setCollaboration(true)
         setSelected(true)
         setEContentDeveloped(true)
+        setResponsibilities(true)
+        setFinancialSupport(true)
+        setConferenceParticipated(true)
+        setForeignVisit(true)
 
     }
 
@@ -430,8 +464,8 @@ const CustomReport = () => {
                                             : null}
                                         <div className='my-2'>
                                             <p className='text-center text-md sm:text-xl font-bold'>{user?.salutation} {user?.name}</p>
-                                            <p className='text-center text-sm sm:text-lg'>{user?.designation}</p>
-                                            <p className='text-center text-xs sm:text-sm'>School of {user?.department}, SRTMU Nanded</p>
+                                            <p className='text-center text-sm sm:text-lg'>{user && user.designation === 'Contractual' ? 'Assistant Professor(Contractual)' : user.designation}</p>
+                                            <p className='text-center text-xs sm:text-sm'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p>
                                         </div>
                                         <hr />
                                         <div>

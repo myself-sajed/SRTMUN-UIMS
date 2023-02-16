@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -21,10 +21,10 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SYTextField from "../components/FormComponents/SYTextField";
 
-const tableHead = { index: "Sr. no." ,  Year: "Year" ,  From_Date: "From Date" ,  To_Date: "To Date" ,Title_Of_the_Program: "Title Of the Program"  ,Level_of_program: "Level of Program" ,Number_of_Participants: "Number of Participants" ,Upload_Proof: "Upload proof" , Action: "Action" }
+const tableHead = { index: "Sr. no.", Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Level_of_program: "Level of Program", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", Action: "Action" }
 
 // const StaffType = [ "Teaching staff" ,  "Non-Teaching Staff" ]
-const level = [ "University" ,  "State" ]
+const level = ["University", "State", "National", "International"]
 
 function ConferencesSemiWorkshopOrganized() {
 
@@ -40,12 +40,13 @@ function ConferencesSemiWorkshopOrganized() {
   const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
   //--------------values useState---------------
-  const initialState = { 
-    Year: "", From_Date: "", To_Date: "", Title_Of_the_Program: "", Number_of_Participants: "", Level_of_program: "", Upload_Proof: "" }
+  const initialState = {
+    Year: "", From_Date: "", To_Date: "", Title_Of_the_Program: "", Number_of_Participants: "", Level_of_program: "", Upload_Proof: ""
+  }
   const [values, setvalues] = useState(initialState);
 
 
-  const {Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program} = values
+  const { Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program } = values
   //---------------edit state-------------------
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
@@ -54,9 +55,10 @@ function ConferencesSemiWorkshopOrganized() {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
         if (item?._id === itemToEdit) {
-          const { Year, From_Date, To_Date, Title_Of_the_Program, Type_of_staff, Number_of_Participants, Level_of_program,} = item
+          const { Year, From_Date, To_Date, Title_Of_the_Program, Type_of_staff, Number_of_Participants, Level_of_program, } = item
           setEdit(true); setAdd(true);
-          setvalues({ Year, From_Date, To_Date, Title_Of_the_Program, Type_of_staff, Number_of_Participants, Level_of_program
+          setvalues({
+            Year, From_Date, To_Date, Title_Of_the_Program, Type_of_staff, Number_of_Participants, Level_of_program
           })
         }
       })
@@ -68,13 +70,13 @@ function ConferencesSemiWorkshopOrganized() {
       <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-        <DialogContent dividers sx={{background:"#e5eaf0" }}>
+        <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-              PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+              EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <SYTextField label="Year" value={Year} id="Year" required={true} onch={setvalues} />
@@ -92,7 +94,7 @@ function ConferencesSemiWorkshopOrganized() {
       </Dialog>
 
       <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ConferencesSemiWorkshopOrganizedDirector' title='Conferences / Seminar / Workshop Organized' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-      
+
       <Table TB={data?.data} module={module} year="Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>
   )

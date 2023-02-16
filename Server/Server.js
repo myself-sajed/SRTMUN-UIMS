@@ -1,6 +1,6 @@
 // all imports
 const cron = require('node-cron');
-const {Delete_Pdfs , DB_Backups, Delete_Excels} = require('./utility/cronFunction');
+const { Delete_Pdfs, DB_Backups, Delete_Excels } = require('./utility/cronFunction');
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -21,11 +21,11 @@ var options = { format: "A4" };
 
 
 // crons Backup_DB/Delete_Pdf_Excels
-cron.schedule('45 0 * * *' ,()=>{
+cron.schedule('45 0 * * *', () => {
   Delete_Excels();
   Delete_Pdfs();
 });
-cron.schedule('30 0 * * *',()=>DB_Backups());
+cron.schedule('30 0 * * *', () => DB_Backups());
 
 
 app.use(function (req, res, next) {
@@ -113,8 +113,8 @@ mongoose
 // 1. File Deletion function
 async function deleteFile(fileName, desiredPath, callback) {
   let paths = {
-      faculty :  path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
-      CAS :  path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`)
+    faculty :  path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
+    CAS: path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`)
   }
   fs.unlink(paths[desiredPath], callback)
 }
@@ -149,10 +149,10 @@ app.get("/getFile/:filename", function (req, res) {
 });
 
 app.get("/showFile/:filename/:userType", function (req, res) {
-  
-  let {userType, filename} = req.params
-  if(!userType){
-      userType = 'faculty'
+
+  let { userType, filename } = req.params
+  if (!userType) {
+    userType = 'faculty'
   }
 
   const uploadPaths = {
@@ -165,24 +165,24 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     alumni: `./uploads/director-uploads/${filename}`,
   }
 
-  const link = path.join(__dirname, uploadPaths[userType] );
+  const link = path.join(__dirname, uploadPaths[userType]);
   res.sendFile(link);
 });
 
 
-app.post("/api/deleteFile", (req, res)=>{
-  const {fileName, path} = req.body 
-  deleteFile(fileName, path,(err)=>{
+app.post("/api/deleteFile", (req, res) => {
+  const { fileName, path } = req.body
+  deleteFile(fileName, path, (err) => {
     try {
-        if(err){
-            throw 'File not found'
-        }
-        res.send({ status: 'deleted'});
+      if (err) {
+        throw 'File not found'
+      }
+      res.send({ status: 'deleted' });
     } catch (error) {
-        console.log('The error is :', error)
-        res.send({ status: 'error' });
+      console.log('The error is :', error)
+      res.send({ status: 'error' });
     }
-})
+  })
 })
 
 

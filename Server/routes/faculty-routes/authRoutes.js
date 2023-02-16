@@ -13,9 +13,11 @@ function authRoutes(app, upload, jwt) {
     app.post("/api/auth/login", (req, res) => {
 
         let username;
-        if(req.body.facultyType === 'Contractual'){
+        if (req.body.facultyType === 'Contractual') {
             username = `C-${req.body.username}`
-        }else{
+        } else if (req.body.facultyType === 'UF Teacher') {
+            username = `UFTG-${req.body.username}`
+        } else {
             username = req.body.username
         }
 
@@ -44,13 +46,13 @@ function authRoutes(app, upload, jwt) {
     });
 
 
-    
+
 
     // faculty-user register handler 
     app.post("/api/auth/register", upload.single("file"), async (req, res) => {
 
         function usernameGenerator(count, noOfZeros) {
-            return Array(noOfZeros-String(count).length+1).join('0')+count;
+            return Array(noOfZeros - String(count).length + 1).join('0') + count;
         }
 
         try {
@@ -61,7 +63,7 @@ function authRoutes(app, upload, jwt) {
 
             let username;
             let newCount;
-            if(data.designation === 'Contractual'){
+            if (data.designation === 'Contractual') {
                 // check if cas data for this user already exists
                 ContractualFacultyID.findOne({ name: 'facultyContractualUsers' }, (err, contractual) => {
                     if (err) {
@@ -75,10 +77,10 @@ function authRoutes(app, upload, jwt) {
 
                             console.log('Contractual Document :', contractual)
 
-                            if(contractual.userIdCount > 0){
+                            if (contractual.userIdCount > 0) {
                                 newCount = contractual.userIdCount + 1
                                 contractual.userIdCount = newCount
-                            }else{
+                            } else {
                                 newCount = 1
                                 contractual.userIdCount = 1
                             }
@@ -86,7 +88,7 @@ function authRoutes(app, upload, jwt) {
                             contractual.save((err, cas) => {
                                 if (err) {
                                     console.log('Error in generating ID');
-                                    res.send({ status: "error", message: 'Error in generating ID'})
+                                    res.send({ status: "error", message: 'Error in generating ID' })
                                 }
                                 else {
                                     console.log('New count :', newCount)
@@ -96,10 +98,10 @@ function authRoutes(app, upload, jwt) {
                             }
                             )
                         }
-                        
+
                     }
                 })
-            }else{
+            } else {
                 username = data.username
             }
 
@@ -120,13 +122,13 @@ function authRoutes(app, upload, jwt) {
                     email: data.email.toLowerCase(),
                     photoURL: req.file.filename,
                 });
-                user.save(function(err, user) {
+                user.save(function (err, user) {
                     if (err) {
                         console.log(err, "Something went wrong. Registration was not successfull");
                         res.send({ status: "error", message: "Something went wrong. Registration was not successfull" });
                     } else {
                         console.log('Faculty Registration is successfull')
-                        if(user.designation === 'Contractual'){
+                        if (user.designation === 'Contractual') {
                             subjectForEmail = `${user.username} is your Employee ID for signing in at SRTMUN-UIMS.`
                             let htmlMatter = `<div>
                                                     <h2>Employee ID generated successfully</h2>
@@ -140,13 +142,13 @@ function authRoutes(app, upload, jwt) {
 
                         }
 
-                        res.send({ status: "success", message: "Registration Successfull", username : user.username });
-                
+                        res.send({ status: "success", message: "Registration Successfull", username: user.username });
+
                     }
-                    
-                    
+
+
                 })
-                
+
             }
             else {
                 res.send({ status: "error", message: "Wrong OTP entered, Please try again" });
@@ -214,14 +216,14 @@ function authRoutes(app, upload, jwt) {
     });
 
 
-     // alumni-user register handler 
-     app.post("/api/auth/alumni-register", upload.single("file"), async (req, res) => {
+    // alumni-user register handler 
+    app.post("/api/auth/alumni-register", upload.single("file"), async (req, res) => {
 
         try {
 
             const data = JSON.parse(JSON.stringify(req.body));
 
-            const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP }= data;
+            const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP } = data;
 
             // otp authentication
             let isMatch = await bcrypt.compare(clientOTP, serverOTP)

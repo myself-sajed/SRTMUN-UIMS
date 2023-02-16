@@ -20,6 +20,10 @@ import serverLinks from '../../../js/serverLinks'
 import { dashboardObj, ShowDashboard } from '../../../templates/faculty/cas-report/Header'
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
+import { generateAAAReport, getAuditData } from '../reports/academic-audit/components/audit-services'
+import { Button, Dropdown } from 'antd'
+import Loading from '../../admin/components/Loading'
+import { setAuditYear } from '../../../redux/slices/AuditSlice'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -36,13 +40,11 @@ const Home = () => {
     const [email, setEmail] = useState('')
     const [file, setFile] = useState(null)
     const [avatar, setAvatar] = useState(null)
-
     const [academicData, setAcademicData] = useState(null)
+    const [serverAuditData, setServerAuditData] = useState(null)
+    const [auditError, setAuditError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
-    const services = [
-        { head: "School Data Management", para: "SDM", lblbtn1: "Manage Data", linkbtn1: siteLinks.sdm.link, lblbtn2: "Generate Report", linkbtn2: siteLinks.directorReport },
-        { head: "Academic and Administrative Audit", para: "AAA", lblbtn1: "Fill Form", linkbtn1: siteLinks.aaa.link, lblbtn2: "Generate Report", linkbtn2: siteLinks.aaaReport }
-    ]
 
     // handle edit button
     function handleEdit(e) {
@@ -73,6 +75,7 @@ const Home = () => {
 
     // get all the academic data for tables
     useEffect(() => {
+        // this route is in : academic-audit/routes
         const URL = `${process.env.REACT_APP_MAIN_URL}/api/getAllData/director`
         if (user) {
             Axios.post(URL, { department: user.department, fetchYears: 'all' })
@@ -83,6 +86,19 @@ const Home = () => {
                 })
         }
     }, [user])
+
+
+    // fetch aaa data for showing it.
+    useEffect(() => {
+        if (user) {
+            getAuditData(user.department, null, setServerAuditData, setAuditError, false)
+        }
+    }, [user])
+
+    useEffect(() => {
+        console.log('Audit Data :', serverAuditData)
+    }, [serverAuditData])
+
 
 
 
@@ -98,6 +114,10 @@ const Home = () => {
             <div className='mt-2'>
                 <Bred links={[siteLinks.welcome, siteLinks.directorHome]} />
             </div>
+
+            {
+                loading && <Loading />
+            }
 
             {
                 editModal && <DialogBox title="Edit Director Profile" buttonName="Save Details" onClickFunction={handleEdit} isModalOpen={editModal} setIsModalOpen={setEditModal}>
@@ -238,7 +258,68 @@ const Home = () => {
                 <div className='w-full mt-4'>
                     <p className='ml-4 font-bold sm:text-xl text-black text-base'>Services</p>
                     <hr className='text-black' />
-                    <HomeServices obj={services} />
+                    <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
+                        <div className="p-3 flex-1 w-full">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
+                                        <h5>School Management System</h5>
+                                        <p className="prices">SDM</p>
+                                    </div>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.sdm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Profile</Link>
+                                        <Link to="#" className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Generate Report</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-3 flex-1 w-full">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
+                                        <h5>Academic & Administrative Audit</h5>
+                                        <p className="prices">AAA</p>
+                                    </div>
+
+                                    <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
+                                        {serverAuditData?.AAAData?.sort((a, b) => {
+                                            let yearA = JSON.parse(a)?.['auditYear']?.split('-')[0];
+                                            let yearB = JSON.parse(b)?.['auditYear']?.split('-')[0];
+                                            return yearB - yearA;
+                                        }).map((aaaItem) => {
+                                            return <Dropdown
+                                                menu={{
+                                                    items: [
+                                                        {
+                                                            key: '1',
+                                                            label: <div onClick={() => { navigate(siteLinks.aaa.link, { state: { academicYear: JSON.parse(aaaItem)?.['auditYear'] } }); }}>View / Edit</div>
+                                                        },
+                                                        {
+                                                            key: '2',
+                                                            label: <div onClick={() => { setLoading(true); toast.success('Generating Report, Please wait...'); generateAAAReport(user, [JSON.parse(aaaItem)?.['auditYear']], setLoading) }}>Generate Report</div>
+                                                        }]
+                                                }}
+                                                placement="bottomLeft"
+                                                arrow={{
+                                                    pointAtCenter: true,
+                                                }}
+                                            >
+                                                <Button className='duration-200 bg-blue-900 text-white hover:bg-blue-800 rounded-lg ease-in-out text-decoration-none'>{JSON.parse(aaaItem)?.['auditYear']}</Button>
+                                            </Dropdown>
+                                        })}
+
+                                        <Button onClick={() => { navigate(siteLinks.aaa.link) }} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 rounded-lg ease-in-out text-decoration-none" > Fill Form </Button>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 

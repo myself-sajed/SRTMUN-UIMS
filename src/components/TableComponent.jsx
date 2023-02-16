@@ -1,7 +1,12 @@
 import React from 'react'
+import CASDataTable from '../services/faculty/reports/cas/components/CASDataTable'
+import { ViewFile } from '../templates/faculty/cas-report/Tables'
 import EmptyBox from './EmptyBox'
 
-const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = 'bg-blue-700' }) => {
+const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = 'bg-blue-700', showProof = false, takeFromModal = false, model = null }) => {
+
+
+
     return (
         <div>
             <div className="table-responsive">
@@ -10,22 +15,38 @@ const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = '
                         <tr>
                             <th scope="col">Sr. No.</th>
                             {
-                                tableHeads.map((head) => {
+                                !takeFromModal ? tableHeads.map((head) => {
                                     return <th scope="col">{head}</th>
-                                })
+                                }) : <>
+                                    <th scope="col">Faculty Name</th>
+                                    {CASDataTable[model]?.tableHeads.map((head) => {
+                                        return <>{head.includes('pload') || head.includes('roof') || head.includes('Order') ? showProof ? <th scope="col">{head}</th> : null : <th scope="col">{head}</th>}
+                                        </>
+                                    })}
+                                </>
                             }
                         </tr>
                     </thead>
                     <tbody>
 
                         {
-                            tableCells ? data?.map((item) => {
+                            tableCells || model ? data?.map((item) => {
                                 return <tr>
                                     <td></td>
                                     {
-                                        tableCells.map((cell) => {
+                                        !takeFromModal ? tableCells.map((cell) => {
                                             return <td>{item?.[cell]}</td>
-                                        })
+                                        }) : <>
+                                            <td>{item.userId.salutation} {item.userId.name}</td>
+                                            {
+                                                CASDataTable[model]?.tableCells.map((cell) => {
+                                                    return (<>{cell === 'proof' ? showProof ?
+                                                        <td><ViewFile fileName={item['proof']} /></td> : null : cell === 'link' ?
+                                                        <td><ViewFile fileName={item['link']}
+                                                            type="linkURL" /></td> : <td>{item[cell]}</td>}</>);
+                                                })
+                                            }
+                                        </>
                                     }
                                 </tr>
                             })

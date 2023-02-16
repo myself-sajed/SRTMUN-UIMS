@@ -50,8 +50,8 @@ const saveAAAData = async (AAAData, schoolName, setAutoSaveLoader) => {
         { AAAData, schoolName })
     if (res) {
         if (res.data.status === 'success') {
-                setAutoSaveLoader(false)
-                toast.success('Progess saved...')
+            setAutoSaveLoader(false)
+            toast.success('Progess saved...')
         }
         else if (res.data.status === 'error') {
             toast.error('Could not save the data')
@@ -71,13 +71,12 @@ const saveAAAData = async (AAAData, schoolName, setAutoSaveLoader) => {
 
 // fetching data from database
 const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear, setAllYearAAAData) => {
-    console.log('Get audit data have been called')
     try {
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/director/academic-audit/getAAAData`, {schoolName})
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/director/academic-audit/getAAAData`, { schoolName })
             .then((res) => {
                 if (res.data.status === 'success') {
 
-                    if(setAllYearAAAData){
+                    if (setAllYearAAAData) {
                         setAllYearAAAData(res.data.data.AAAData && res.data.data.AAAData.sort((a, b) => {
                             return parseInt(JSON.parse(a).auditYear.slice(0, 4)) - parseInt(JSON.parse(b).auditYear.slice(0, 4));
                         }))
@@ -87,19 +86,16 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
                         res.data.data.AAAData.forEach((item) => {
                             if (JSON.parse(item).auditYear === auditYear) {
                                 setData(JSON.parse(item));
-                                console.log('Parsed AAA :', JSON.parse(item))
                                 return
                             }
                         })
                     }
                     else {
-                        console.log('From server', res.data.data)
                         setData(res.data.data);
                     }
                 }
                 else {
                     setData(null)
-                    console.log('From server', res.data.data)
                     setError(new Date().getTime())
                 }
             }).catch((err) => {
@@ -113,7 +109,6 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
 
 const generateAAAReport = (userData, selectedYear, setReportLoading) => {
     try {
-        console.log('AAA Selected years :', selectedYear, 'User Data is :', userData)
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateAAAReport`, { userData, selectedYear })
             .then(function (res) {
                 if (res.data.status === 'generated') {

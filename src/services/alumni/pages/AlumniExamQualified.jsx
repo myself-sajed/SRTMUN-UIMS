@@ -14,7 +14,7 @@ import addReq from '../../../components/requestComponents/addReq'
 
 const tableHead = { index: "Sr. no.", Registration_number_roll_number: "Registration number / roll number", Name_of_the_Exam: "Exam Qualified", Acadmic_year: "Acadmic Year", Upload_Proof: "Upload Proof", Action: "Action" }
 
-const Exams = ["NET", "SLET", "GATE", "GMAT", "CAT", "GRE", "JAM", "IELTS", "TOEFL", "Civil Services", "Centeral Gov exams", "State Gov exams", "Any Such Other Exams"]
+const Exams = ["NET", "SLET", "GATE", "GMAT", "GPAT", "NIPER", "CAT", "GRE", "JAM", "IELTS", "TOEFL", "Civil Services", "Centeral Gov exams", "State Gov exams", "Any Such Other Exams"]
 
 const AlumniExamQualified = () => {
 

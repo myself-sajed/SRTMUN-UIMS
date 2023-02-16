@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -20,7 +20,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no." ,  Name_of_student_enrolling: "Name of student enrolling" ,  Program_graduated_from: "Program graduated from" , Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", Academic_Year: "Academic Year",  Upload_Proof: "Upload Proof" ,  Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_student_enrolling: "Name of student enrolling", Program_graduated_from: "Program graduated from", Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", Academic_Year: "Academic Year", Upload_Proof: "Upload Proof", Action: "Action" }
 
 function ProgressionToHE() {
 
@@ -66,13 +66,13 @@ function ProgressionToHE() {
             <AddButton onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-                <DialogContent dividers sx={{background:"#e5eaf0" }}>
+                <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField value={values.pthenose} id="pthenose" type="text" label="Name of student enrolling" required={true} onch={setvalues} />

@@ -50,6 +50,7 @@ const dashboardCards = [
         id: 5,
         title: 'Books & Chapters',
         countModelName: 'BookAndChapterCount',
+        url: `/dashboard/select-department/BookAndChapter`,
         color: 'pink',
         icon: <AutoStoriesRoundedIcon sx={{ color: 'purple', fontSize: '45px' }} />
     },
@@ -57,6 +58,7 @@ const dashboardCards = [
         id: 6,
         title: 'Research Papers',
         countModelName: 'ResearchPaperCount',
+        url: `/dashboard/select-department/ResearchPaper`,
         color: 'blue',
         icon: <StickyNote2RoundedIcon sx={{ color: 'darkcyan', fontSize: '35px' }} />
     },
@@ -64,6 +66,7 @@ const dashboardCards = [
         id: 2,
         title: 'Research Projects',
         countModelName: 'ResearchProjectCount',
+        url: `/dashboard/select-department/ResearchProject`,
         color: 'lime',
         icon: <ScienceRoundedIcon sx={{ color: 'blue', fontSize: '35px' }} />
     },
@@ -71,6 +74,7 @@ const dashboardCards = [
         id: 3,
         title: 'E-content Developed',
         countModelName: 'EContentDevelopedCount',
+        url: `/dashboard/select-department/EContentDeveloped`,
         color: 'emerald',
         icon: <LanguageRoundedIcon sx={{ color: 'green', fontSize: '35px' }} />
     },
@@ -78,6 +82,7 @@ const dashboardCards = [
         id: 4,
         title: 'Patents Published',
         countModelName: 'PatentCount',
+        url: `/dashboard/select-department/Patent`,
         color: 'teal',
         icon: <BookmarkAddedRoundedIcon sx={{ color: 'brown', fontSize: '35px' }} />
     },
@@ -85,6 +90,7 @@ const dashboardCards = [
         id: 5,
         title: 'Conference Organized',
         countModelName: 'ConferenceOrganizedCount',
+        url: `/dashboard/select-department/ConferenceOrganized`,
         color: 'cyan',
         icon: <VideoChatRoundedIcon sx={{ color: 'DeepPink', fontSize: '35px' }} />
     },
@@ -92,13 +98,15 @@ const dashboardCards = [
         id: 6,
         title: 'Total Invited Talks ',
         countModelName: 'InvitedTalkCount',
+        url: `/dashboard/select-department/InvitedTalk`,
         color: 'fuchsia',
         icon: <LightbulbRoundedIcon sx={{ color: 'fuchsia', fontSize: '35px' }} />
     },
     {
         id: 7,
-        title: 'Ph.D. Awarded ',
+        title: 'Research Guidance ',
         countModelName: 'PhdAwardedCount',
+        url: `/dashboard/select-department/PhdAwarded`,
         color: 'rose',
         icon: <CardMembershipRoundedIcon sx={{ color: 'MediumVioletRed', fontSize: '35px' }} />
     },
@@ -106,6 +114,7 @@ const dashboardCards = [
         id: 8,
         title: 'Fellowships ',
         countModelName: 'FellowshipCount',
+        url: `/dashboard/select-department/Fellowship`,
         color: 'maroon',
         icon: <AttachMoneyRoundedIcon sx={{ color: 'green', fontSize: '35px' }} />
     },

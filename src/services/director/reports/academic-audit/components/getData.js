@@ -24,12 +24,10 @@ const getData = async (model, school, setState) => {
 }
 
 const getDirectorData = async (model, school, setState) => {
-    console.log('Fetching in director model')
     const res = await Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/director/academic-audit/getData/directorData`,
         { model, school })
     if (res) {
         if (res.data.status === 'success') {
-            console.log('data fetched successfully', res.data.data)
             setState(res.data.data)
         }
         else if (res.data.status === 'error') {

@@ -3,16 +3,16 @@ const puppeteer = require('puppeteer')
 function teacherRoute(app) {
     // generateReport for user
     app.post("/report/generateFacultyReport", async (req, res) => {
-        
-        const {userId, otherOptions} = req.body
+
+        const { userId, otherOptions } = req.body
 
         const fileName = `FacultyReport-${new Date().getTime()}.pdf`
         console.log('File name generated :', fileName);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        const link = `http://localhost:3000/report/facultyReport/${userId}/${JSON.stringify(otherOptions)}`
+        const link = `https://srtmun-uims.org/report/facultyReport/${userId}/${JSON.stringify(otherOptions)}`
         console.log('Link : ', link)
-        await page.goto(link, {waitUntil: 'networkidle0'});
+        await page.goto(link, { waitUntil: 'networkidle0' });
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,
@@ -27,7 +27,7 @@ function teacherRoute(app) {
         res.send({ status: "generated", fileName });
 
 
-        
+
     });
 }
 
