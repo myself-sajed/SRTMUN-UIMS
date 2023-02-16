@@ -1,0 +1,37 @@
+const mongoose = require('mongoose');
+
+const extensionActivitysSchema = new mongoose.Schema({
+
+    Name_of_the_activity: {
+        type: String,
+        required: true
+    },
+    Organising_unit: {
+        type: String,
+        required: true
+    },
+    Name_of_the_scheme: {
+        type: String,
+        required: true
+    },
+    Year_of_activity: {
+        type: String,
+        required: false
+    },
+    Number_of_students:{
+        type: Number,
+        required: true
+    },
+    Upload_Proof: {
+        type: String,
+        required: false
+    },
+    SchoolName: {
+        type: String,
+        required: true
+    }
+})
+
+const ExtensionActivity = new mongoose.model('ExtensionActivity', extensionActivitysSchema);
+
+module.exports = ExtensionActivity;

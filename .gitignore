@@ -1,0 +1,8 @@
+/node_modules
+/Server/uploads
+/Server/build
+/Server/maintenance-build
+.env
+/excels
+/pdfs
+/public
