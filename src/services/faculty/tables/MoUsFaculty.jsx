@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
-// import Text from '../../../inputs/Text';
-// import File from '../../../inputs/File';
-// import Year from '../../../inputs/Year';
-import { submitWithFile } from '../js/submit';
-import refresh from '../js/refresh';
 import Actions from './Actions';
 import View from './View';
-import handleEditWithFile from '../js/handleEditWithFile';
 import { useQuery } from 'react-query'
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
@@ -27,7 +20,7 @@ import UploadFile from '../../../components/formComponents/UploadFile';
 
 const MoUsFaculty = () => {
     const module = "faculty";
-    const model = "Mous"
+    const model = "MoUs"
 
     const [orgModal, setOrgModal] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -40,20 +33,19 @@ const MoUsFaculty = () => {
     const user = useSelector(state => state.user.user);
 
     //states
-    const initialstate = {Name_of_Organisation_with_whome_mou_signed: "", Duration_of_MoU: "", Year_of_signing_MoU: "", Upload_Proof: "" }
+    const initialstate = { Name_of_Organisation_with_whome_mou_signed: "", Duration_of_MoU: "", Year_of_signing_MoU: "", Upload_Proof: "" }
     const [values, setValues] = useState(initialstate)
-    const {Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU} = values
+    const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = values
 
-    const params = { model:model, id: user?._id , module: module}
+    const params = { model: model, id: user?._id, module: module }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
-    console.log(data)
 
     function handleSubmit(e) {
         e.preventDefault();
 
         setLoading(true)
-        addReq({ SchoolName: user?.department, FacultyID: user?._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+        addReq({ SchoolName: user?.department, FacultyID: user?._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setLoading, module)
     }
 
     // make states together
@@ -61,20 +53,19 @@ const MoUsFaculty = () => {
         e.preventDefault();
         setLoading(true)
 
-        editReq({id:itemToDelete}, model, initialstate, values, setValues, refetch, setIsFormOpen, setEditModal, setItemToDelete, setLoading, module)
+        editReq({ id: itemToDelete._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setEditModal, setItemToDelete, setLoading, module)
     }
 
-
     function pencilClick(itemId) {
-        data?.data?.data?.forEach(function (item) {
+        data?.data?.forEach(function (item) {
             if (item._id === itemId) {
-                const{Name_of_Organisation_with_whome_mou_signed,Duration_of_MoU,Year_of_signing_MoU} = item
+                const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = item
                 setValues({
-                            Name_of_Organisation_with_whome_mou_signed,Duration_of_MoU,Year_of_signing_MoU,
+                    Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU,
                 })
-
+                setIsFormOpen(true)
                 setItemToDelete(item)
-                
+
             }
         })
     }
@@ -92,7 +83,7 @@ const MoUsFaculty = () => {
 
             <Header exceldialog={setOpen} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
 
-            <BulkExcel data={data?.data?.data} proof='Upload_Proof' sampleFile='MoUsFaculty' title='MoUs' SendReq='MoUs' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUsFaculty' title='MoUs' SendReq='MoUs' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 
@@ -100,15 +91,15 @@ const MoUsFaculty = () => {
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
                 <DialogContent >
                     <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setOrgModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
-                        <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Conference Organized' : 'Add Conference Organized'}</p>
+                        <p className='text-2xl font-bold my-3'>{editModal ? 'Edit MoUs' : 'Add New MoUs'}</p>
 
                         <Text className='col-md-6 col-lg-4' id="Name_of_Organisation_with_whome_mou_signed" value={Name_of_Organisation_with_whome_mou_signed} label="Name of Organisation with whome mou signed" setState={setValues} />
-                        
+
                         <Text className='col-md-6 col-lg-4' id="Duration_of_MoU" value={Duration_of_MoU} label="Duration of MoU" setState={setValues} />
 
                         <YearSelect className='col-md-6 col-lg-4' id="Year_of_signing_MoU" value={Year_of_signing_MoU} label="Year Of Signing Mou" setState={setValues} />
 
-                        <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload actual activity list" setState={setValues} />
+                        <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" required={!editModal} label="Upload actual activity list" setState={setValues} />
 
                     </FormWrapper>
                 </DialogContent>
@@ -130,13 +121,13 @@ const MoUsFaculty = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'Year_of_signing_MoU').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data, 'Year_of_signing_MoU').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.Name_of_Organisation_with_whome_mou_signed}</td>
                                     <td>{item.Duration_of_MoU}</td>
                                     <td>{item.Year_of_signing_MoU}</td>
-                                    <td><View proof={item.Upload_Proof} /></td>
+                                    <td><View proof={item.Upload_Proof} serviceName="director" /></td>
                                     <td> <Actions item={item} model="MoUs" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
                                 </tr>
                             )
@@ -149,7 +140,7 @@ const MoUsFaculty = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data === undefined) && <EmptyBox />
                 }
             </div>
         </div>

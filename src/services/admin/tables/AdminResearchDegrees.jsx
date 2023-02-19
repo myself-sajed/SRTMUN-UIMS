@@ -1,16 +1,18 @@
 import React from 'react'
-import AdminPrototype from '../AdminPrototype';
+// import AdminPrototype from '../AdminPrototype';
 
 const AdminResearchDegrees = () => {
 
 
     return (
-        <AdminPrototype model="Degree" title="Research Degrees" >
+        // <AdminPrototype model="Degree" title="Research Degrees" >
 
 
             <>
 
-                <thead>
+            <div> data disayalay</div>
+
+                {/* <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Full Name</th>
@@ -44,11 +46,11 @@ const AdminResearchDegrees = () => {
                     }
 
 
-                </tbody>
+                </tbody> */}
 
             </>
 
-        </AdminPrototype >
+        // </AdminPrototype >
 
     )
 }

@@ -74,6 +74,8 @@ app.use(require('./routes/director-routes/director-routes'));
 app.use(require('./routes/director-routes/academic-audit-routes/routes'));
 require('./routes/director-routes/directorAuth')(app, jwt)
 
+//admin routes
+app.use(require('./routes/admin-routes/admin-routes'));
 
 //alumni routes
 app.use(require('./routes/alumni-routes/alumni-routes'));

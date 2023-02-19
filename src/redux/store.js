@@ -8,6 +8,7 @@ import { CASSlice } from './slices/CASSlice'
 import { AuditSlice } from './slices/AuditSlice'
 import { DirectorActiveSlice } from './slices/DirectorActiveSlice'
 import { AlumniActiveSlice } from './slices/AlumniActiveSlice'
+import { AdminActiveSlice } from './slices/AdminActiveSlice'
 
 export default configureStore({
     reducer: {
@@ -20,5 +21,6 @@ export default configureStore({
         academicAudit: AuditSlice.reducer,
         directorActive: DirectorActiveSlice.reducer,
         alumniActive: AlumniActiveSlice.reducer,
+        adminActive: AdminActiveSlice.reducer,
     },
 })

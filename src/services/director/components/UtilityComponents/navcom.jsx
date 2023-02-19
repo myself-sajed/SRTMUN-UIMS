@@ -16,9 +16,7 @@ import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 //components
-import ConferencesSemiWorkshopOrganized from '../../pages/conferencesSemiWorkshopOrganized'
 import Employability from "../../pages/Employability";
-import SyllabusRevision from "../../pages/syllabusRevision";
 import ValueAddedCource from "../../pages/ValueAddedCource";
 import ProjectsInternships from "../../pages/ProjectsInternships";
 import DemandRatio from "../../pages/DemandRatio";
@@ -37,6 +35,8 @@ import Placements from "../../pages/Placements";
 import ProgressionToHE from "../../pages/ProgressionToHE";
 import TrainingProgramsOrganized from "../../pages/TrainingProgramsOrganized";
 import AlumniContribution from "../../pages/AlumniContribution";
+import ConferencesSemiWorkshopOrganized from '../../pages/ConferencesSemiWorkshopOrganized';
+import SyllabusRevision from '../../pages/SyllabusRevision';
 
 
 

@@ -11,7 +11,7 @@ const moUsSchema = new mongoose.Schema({
     },
     Year_of_signing_MoU: {
         type: String,
-        required: false
+        required: true
     },
     Upload_Proof: {
         type: String,

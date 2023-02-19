@@ -31,6 +31,9 @@ const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 
 //director models
 const DirectorUser = require('../../models/director-models/directorUser')
+const MoUs = require('../../models/director-models/moUsSchema')
+const ExtensionActivities = require('../../models/director-models/extensionActivitysSchema')
+
 
 // node mailer
 const nodemailer = require('nodemailer');
@@ -61,7 +64,7 @@ function services(app) {
 
 
     let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, DirectorUser, Responsibilities, FinancialSupport, ConferenceParticipated, ForeignVisit
+        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, DirectorUser, Responsibilities, FinancialSupport, ConferenceParticipated, ForeignVisit, MoUs, ExtensionActivities
     }
 
     app.post('/service/deleteItem', function (req, res) {

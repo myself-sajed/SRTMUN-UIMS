@@ -44,6 +44,7 @@
     "react-draft-wysiwyg": "^1.15.0",
     "react-hot-toast": "^2.2.0",
     "react-inner-image-zoom": "^3.0.1",
+    "react-minimal-pie-chart": "^8.4.0",
     "react-pdf": "^5.7.2",
     "react-query": "^3.39.2",
     "react-redux": "^8.0.1",

@@ -315,6 +315,43 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
     }
 });
 
+//faculty routes for mous & extansion activity 
+router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
+    try {
+        const model = req.params.model
+        console.log(model)
+        const data = JSON.parse(JSON.stringify(req.body));
+        let SendData = null;
+        const { SchoolName, FacultyID } = data
+        const up = req.file.filename;
+
+
+        //ExtensionActivities
+        if (model == 'ExtensionActivities') {
+            const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = data
+            SendData = {
+                Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
+            }
+        }
+        //MoUs
+        else if (model == 'MoUs') {
+            const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = data
+            SendData = {
+                Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU
+            }
+        }
+
+        var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName: SchoolName, FacultyID: FacultyID })
+        const obj = new models[model](withUpData);
+        await obj.save();
+        res.status(201).send("Entry Succeed")
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send()
+    }
+});
+
 //Get Route
 router.post('/director/getData', async (req, res) => {
 
@@ -327,6 +364,20 @@ router.post('/director/getData', async (req, res) => {
         res.status(500).send();
     }
 })
+
+//Get Route faculty mous and extension activity
+router.post('/faculty/getData', async (req, res) => {
+
+    const { model, id } = req.body
+    try {
+        const fetch = await models[model].find({ FacultyID: id }).sort({ $natural: -1 });
+        res.status(200).send(fetch);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
 
 //Delete Route
 router.post('/director/deleteRecord', async (req, res) => {
@@ -597,13 +648,6 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Percentage_of_content_added_or_replaced: srpocaor
         }
     }
-    //AlumniContribution
-    else if (model == 'AlumniContribution') {
-        const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
-        SendData = {
-            Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
-        }
-    }
 
     var alldata = null
     if (up) {
@@ -615,6 +659,42 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     await models[model].findOneAndUpdate({ _id: id }, alldata)
     res.status(200).send("Edited Successfully")
 })
+
+//Edit Route for mous and extension activity
+router.post('/faculty/editRecord/:model', upload.single('Upload_Proof'), async (req, res) => {
+    const model = req.params.model
+    const data = JSON.parse(JSON.stringify(req.body));
+    let SendData = null;
+    const { id } = data
+    const isfile = req.file;
+    if (isfile) {
+        var up = req.file.filename
+    }
+     //ExtensionActivities
+     if (model == 'ExtensionActivities') {
+        const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = data
+        SendData = {
+            Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
+        }
+    }
+    //MoUs
+    else if (model == "MoUs") {
+        const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = data
+        SendData = {
+            Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU
+        }
+    }
+     var alldata = null
+    if (up) {
+        alldata = Object.assign(SendData, { Upload_Proof: up })
+    }
+    else {
+        alldata = SendData
+    }
+    await models[model].findOneAndUpdate({ _id: id }, alldata)
+    res.status(200).send("Edited Successfully")
+})
+
 
 router.get('/viewer/director/:filename', (req, res) => {
     const link = path.join(__dirname, `../../uploads/director-uploads/${req.params.filename}`)

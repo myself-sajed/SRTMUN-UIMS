@@ -1209,19 +1209,6 @@ function initRoutes(app) {
         }
     })
 
-    //Get Route
-    app.post('/faculty/getData', async (req, res) => {
-
-    const { model, id } = req.body
-    try {
-        const fetch = await models[model].find({ FacultyID: id }).sort({ $natural: -1 });
-        res.status(200).send(fetch);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-})
-
 }
 
 module.exports = initRoutes

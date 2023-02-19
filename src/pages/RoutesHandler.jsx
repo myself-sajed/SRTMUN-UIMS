@@ -58,6 +58,7 @@ import ForgotPassword from './ForgotPassword'
 import DeveloperServices from './DeveloperServices'
 import OtherDashboardData from '../services/dashboard/pages/OtherDashboardData'
 import DirectorDashboardData from '../services/dashboard/pages/DirectorDashboardData'
+import AdminMain from '../services/admin/pages/AdminMain'
 
 
 
@@ -98,6 +99,7 @@ const RoutesHandler = () => {
                 <Route path="/student-registration" exact element={<StudentRegister />} />
                 <Route path='/student' exact element={<StudentHome />} />
                 <Route path="/student/student-status" exact element={<StudentMain />} />
+                <Route path='/admin' exact element={<AdminMain />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
                 {

@@ -1,9 +1,9 @@
 import React from 'react'
 import FileViewer from '../../../components/FileViewer'
 
-const View = ({ proof }) => {
+const View = ({ proof, serviceName="faculty" }) => {
     return (
-        <FileViewer fileName={proof} serviceName="faculty" />
+        <FileViewer fileName={proof} serviceName={serviceName} />
     )
 }
 

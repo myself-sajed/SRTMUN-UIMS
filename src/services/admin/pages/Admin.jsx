@@ -11,20 +11,20 @@ const Admin = () => {
     return (
 
         <>
+       <div style={{color:"red"}}>srtmun Dashboard</div>
+        {/* //     <AdminNavTools />
+        //     <div className='sm:flex items-start justify-start mt-3 '>
+        //         <div className='hidden lg:block'>
+        //              <AdminNavbar /> */}
+        {/* //         </div> 
 
-            <AdminNavTools />
-            <div className='sm:flex items-start justify-start mt-3 '>
-                <div className='hidden lg:block'>
-                    <AdminNavbar />
-                </div>
 
-
-                <div className="mx-2 w-[80vw]">
-                    <Routes>
-                        <Route path="/dashboard/" element={<Dashboard />}></Route>
-                    </Routes>
-                </div>
-            </div>
+        //         <div className="mx-2 w-[80vw]">
+        //             <Routes>
+        //                 <Route path="/dashboard/" element={<Dashboard />}></Route>
+        //             </Routes>
+        //         </div>
+        //     </div> */}
 
 
         </>
