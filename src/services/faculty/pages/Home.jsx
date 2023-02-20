@@ -105,7 +105,7 @@ const Home = () => {
                 <div>
                     <div>
                         <div className='flex items-center justify-between mx-4 my-2'>
-                            <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
+                            <p className='font-bold text-base sm:text-xl text-black'>Basic Infomation</p>
                             <div className='flex items-center justify-end gap-2'>
                                 {/* <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { setModalOpen(true) }} >
                                     <PlaylistAddRoundedIcon /> Add More Fields
