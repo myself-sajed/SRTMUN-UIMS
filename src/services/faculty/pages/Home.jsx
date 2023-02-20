@@ -84,7 +84,7 @@ const Home = () => {
 
                                     <div className='flex items-center justify-start gap-3 mt-4'>
                                         <button onClick={() => { navigate(siteLinks.facultyProfile.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
-                                            Go to your profile
+                                            Go to Profile
                                         </button>
 
                                         <button onClick={() => { dispatch(setUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('faculty-token'); }} className='p-2 text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
@@ -105,13 +105,13 @@ const Home = () => {
                 <div>
                     <div>
                         <div className='flex items-center justify-between mx-4 my-2'>
-                            <p className='font-bold text-base sm:text-xl text-black'>Basic Infomation</p>
+                            <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             <div className='flex items-center justify-end gap-2'>
                                 {/* <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { setModalOpen(true) }} >
                                     <PlaylistAddRoundedIcon /> Add More Fields
                                 </button> */}
                                 <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { navigate(siteLinks.facultyProfile.link) }}>
-                                    <ModeEditOutlineRoundedIcon /> Edit the Profile
+                                    <ModeEditOutlineRoundedIcon /> Edit Profile
                                 </button>
                             </div>
 
