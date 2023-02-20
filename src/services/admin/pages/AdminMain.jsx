@@ -12,17 +12,17 @@ import AdminMore from "./AdminMore"
 
 
 const AdminMain = () => {
-  const ComponentSetter ={"Dashboard":<AdminDashboard/>, "Facultys":<AdminFaculty />, "Directors": <AdminDirector />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "More": <AdminMore/>}
+  const ComponentSetter = { "Dashboard": <AdminDashboard />, "Faculties": <AdminFaculty />, "Directors": <AdminDirector />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "More": <AdminMore /> }
 
   // title('SDM | School Data Management')
   const AdminActive = useSelector(state => state.adminActive.adminActive)
-    return (<>
-        <AdminHeader />
-        
-        {
-          DashbordButtons?.map(item => item.name === AdminActive ? <div key={item}>{ComponentSetter[item.name]}</div> : null)
-        }
-      </>)
+  return (<>
+    <AdminHeader />
+
+    {
+      DashbordButtons?.map(item => item.name === AdminActive ? <div key={item}>{ComponentSetter[item.name]}</div> : null)
+    }
+  </>)
 }
 
 export default AdminMain

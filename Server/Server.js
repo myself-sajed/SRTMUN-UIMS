@@ -10,7 +10,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const PORT = 5000;
+const PORT = 4000;
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -97,8 +97,8 @@ app.use(require('./utility/verifyOTP'));
 
 
 // Database Configuration
-// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-const URL = `mongodb://localhost:27017/srtmun`
+const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+// const URL = `mongodb://localhost:27017/srtmun`
 mongoose
   .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -115,7 +115,7 @@ mongoose
 // 1. File Deletion function
 async function deleteFile(fileName, desiredPath, callback) {
   let paths = {
-    faculty :  path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
+    faculty: path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
     CAS: path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`)
   }
   fs.unlink(paths[desiredPath], callback)
@@ -140,9 +140,9 @@ app.get("/downloadExcel/:filename", (req, res) => {
 
 app.get("/downloadSampleExcel/:filename", (req, res) => {
   const filename = req.params.filename;
-  
-    const link = path.resolve(`./sampleExcels/${filename}`);
-    res.download(link)
+
+  const link = path.resolve(`./sampleExcels/${filename}`);
+  res.download(link)
 })
 
 app.get("/getFile/:filename", function (req, res) {

@@ -1,4 +1,3 @@
-
 :root {
   --indigo-bg-color: #4B0082;
   --sidebar-btn-hover-bg: #ccc7dd;
@@ -10,35 +9,36 @@
 
 
 .ant-input-search-button {
-    background-color: #9185b5; 
-  }
+  background-color: #9185b5;
+}
+
 /* .ant-input-search-button:hover {
     background-color: ;
   } */
 
-  .ant-input-search-button:hover {
-    background-color: #6957a0;
-    color: #fff;
-  }
+.ant-input-search-button:hover {
+  background-color: #6957a0;
+  color: #fff;
+}
 
 
 /* AdminHeader */
-  .main-header{
-    display: flex;
-    justify-content: space-between;
-    background: var(--indigo-bg-color);
-    color: white;
-    height: 50px;
-    align-items: center;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 0px 20px
-  }
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  background: var(--indigo-bg-color);
+  color: white;
+  height: 50px;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0px 20px
+}
 
 /*Admin Drower*/
-.sidebar-admin-drower{
+.sidebar-admin-drower {
   background: var(--sidebar-bg-color);
-  box-shadow: 10px 0px 7px grey; 
+  box-shadow: 10px 0px 7px grey;
   min-width: 200px;
   max-width: 200px;
   padding-top: 8px;
@@ -47,94 +47,100 @@
 }
 
 /*pie card*/
-.section-pie{
+.section-pie {
   padding: 20px;
+  padding-bottom: 40px;
   display: flex;
   gap: 10px;
 }
-.pie-main-card{
+
+.pie-main-card {
   background-color: #dddddd;
-  width: 330px;
+  min-width: 330px;
   border-radius: 20px;
   box-shadow: 10px 10px 7px #9185b5
 }
-.pie-card-heding{
+
+.pie-card-heding {
   font-size: 20px;
   font-weight: 500;
-  color: var(--indigo-bg-color); 
+  color: var(--indigo-bg-color);
   padding: 15px 20px;
 }
-.category-diclaration{
+
+.category-diclaration {
   color: var(--indigo-bg-color);
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 
 /*Dashboard*/
-  .active{
-    background: var(--sidebar-btn-hover-bg) !important;
-    color: var(--indigo-bg-color) !important;
-  }
+.active {
+  background: var(--sidebar-btn-hover-bg) !important;
+  color: var(--indigo-bg-color) !important;
+}
 
-  .DashbordButtons{
-    display: flex;
-    padding: 9px;
-    width: 100%;
-    background: inherit;
-    padding: 8px;
-    margin-bottom: 2px;
-    color: #fff;
-  }
+.DashbordButtons {
+  display: flex;
+  padding: 9px;
+  width: 100%;
+  background: inherit;
+  padding: 8px;
+  margin-bottom: 2px;
+  color: #fff;
+}
 
-  .DashbordButtons:hover{
-    background: var(--sidebar-btn-hover-bg) !important;
-    color: var(--indigo-bg-color) !important;
-  }
+.DashbordButtons:hover {
+  background: var(--sidebar-btn-hover-bg) !important;
+  color: var(--indigo-bg-color) !important;
+}
 
-  .adminDashbordCard{
-    height: 100px;
-    background: #764799db;
-    border-radius: 10px 0;
-    box-shadow: 10px 10px 5px #8f6daa;
-    color: #fff;
-    min-width: 200px;
-    cursor: pointer;
-    
-  }
+.adminDashbordCard {
+  height: 100px;
+  background: #764799db;
+  border-radius: 10px 0;
+  box-shadow: 7px 8px 8px #8f6daa;
+  color: #fff;
+  min-width: 200px;
+  cursor: pointer;
 
-  .adminDashbordCard:hover{
-    background: #9176a5db !important;
-    color: var(--indigo-bg-color) !important;
-  }
+}
 
-  .abc{
-    min-width: 180px;
-    max-width: 205px;
-    min-height: 110px;
-    max-height: 110px;
-    background: var(--dashboard-card-bg-color);
-    border-radius: 5px;
-    /* box-shadow: 7px 7px 7px grey; */
-    box-shadow: 10px 10px 7px -3px rgb(0 0 0 / 20%);
-    padding: 5px;
-    font-size: 18px;
-    font-weight: 900;
-    font-family: cursive;
-    color: var(--dashboard-card-txt-color)
-  }
-  .abc:hover{
-    color: var(--indigo-bg-color) !important;
-    background-color:#d1cccc !important;
+.adminDashbordCard:hover {
+  background: #9176a5db !important;
+  color: var(--indigo-bg-color) !important;
+}
 
-  }
+.abc {
+  min-width: 180px;
+  max-width: 205px;
+  min-height: 110px;
+  max-height: 110px;
+  background: var(--dashboard-card-bg-color);
+  border-radius: 5px;
+  /* box-shadow: 7px 7px 7px grey; */
+  box-shadow: 10px 10px 7px -3px rgb(0 0 0 / 20%);
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 900;
+  font-family: cursive;
+  color: var(--dashboard-card-txt-color)
+}
 
+.abc:hover {
+  color: var(--indigo-bg-color) !important;
+  background-color: #d1cccc !important;
 
-
+}
 
 
-  /* Set the scrollbar color */
+
+
+
+/* Set the scrollbar color */
 ::-webkit-scrollbar {
-  width: 5px; /* width of the scrollbar */
+  width: 5px;
+  /* width of the scrollbar */
 }
 
 /* Set the background color of the scrollbar */
@@ -144,7 +150,7 @@
 
 /* Set the color of the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
-  background-color: #afa8c4 ;
+  background-color: #afa8c4;
 }
 
 /* Set the color of the scrollbar thumb on hover */

@@ -16,13 +16,18 @@ const InvitedTalk = require('../../models/faculty-models/invitedTalk');
 const ResearchGuidance = require('../../models/faculty-models/researchGuidance');
 const Fellowship = require('../../models/faculty-models/fellowship');
 
-const models = {User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship}
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship }
 
 router.post("/getDocumentCount", async (req, res) => {
     const { model, filterCundition } = req.body
     try {
-        const fetch = await models[model].countDocuments({})
-        res.status(200).send({fetch});
+        if (model === "StudentUser" && filterCundition !== null) {
+            const fetch = await models[model].countDocuments({})
+            res.status(200).send({ fetch });
+        } else {
+            const fetch = await models[model].countDocuments({})
+            res.status(200).send({ fetch });
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send();
