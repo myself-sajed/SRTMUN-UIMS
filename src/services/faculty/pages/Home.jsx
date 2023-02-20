@@ -111,7 +111,7 @@ const Home = () => {
                                     <PlaylistAddRoundedIcon /> Add More Fields
                                 </button> */}
                                 <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { navigate(siteLinks.facultyProfile.link) }}>
-                                    <ModeEditOutlineRoundedIcon /> Edit My Profile
+                                    <ModeEditOutlineRoundedIcon /> Edit the Profile
                                 </button>
                             </div>
 
