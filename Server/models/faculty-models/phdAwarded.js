@@ -30,6 +30,18 @@ const phdAwardedSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    rac: {
+        type: 'string',
+        required: true,
+    },
+    gender: {
+        type: 'string',
+        required: true,
+    },
+    category: {
+        type: 'string',
+        required: true,
+    },
     phdAwardYear: {
         type: 'string',
         required: true,

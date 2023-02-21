@@ -33,7 +33,6 @@ const dashboardObj = {
         { id: 2, title: 'Research Papers', model: 'ResearchPaper', icon: <PlagiarismRoundedIcon /> },
         { id: 3, title: 'Invited Talks', model: 'InvitedTalk', icon: <HeadsetMicRoundedIcon /> },
         { id: 4, title: 'Seminars organized', model: 'ConferenceOrganized', icon: <LaptopChromebookRoundedIcon /> },
-        { id: 5, title: 'Research Guidance', model: 'ResearchGuidance', icon: <AssistantDirectionRoundedIcon /> },
         { id: 6, title: 'ICT Created', model: 'EContentDeveloped', icon: <LanguageRoundedIcon /> },
         { id: 7, title: 'Books & Chapters', model: 'BookAndChapter', icon: <MenuBookRoundedIcon /> },
         { id: 8, title: 'Ph.D. Awarded', model: 'PhdAwarded', icon: <CardMembershipRoundedIcon /> },

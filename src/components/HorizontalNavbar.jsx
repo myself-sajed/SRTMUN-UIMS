@@ -77,7 +77,7 @@ const HorizontalNavbar = () => {
 
                                             <SidebarTile active={active} setActive={setActive} state='online_fdp'
                                                 icon={<SentimentVerySatisfiedRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Orientation/Refresher Course/FDP' />
-                                                
+
                                             <SidebarTile active={active} setActive={setActive} state='conference_participated'
                                                 icon={<ConnectWithoutContactIcon fontSize={`small`} className='text-blue-900' />} title='Conference Participated' />
 
@@ -98,12 +98,12 @@ const HorizontalNavbar = () => {
 
                                             <SidebarTile active={active} setActive={setActive} state='book_and_chapters'
                                                 icon={<MenuBookRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Books / chapters' />
-                                            
+
                                             <SidebarTile active={active} setActive={setActive} state='jrf_srf'
                                                 icon={<PersonSearchRoundedIcon fontSize={`small`} className='text-blue-900' />} title='JRF, SRF, PDF' />
 
                                             <SidebarTile active={active} setActive={setActive} state='phd_awarded'
-                                                icon={<CardMembershipRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Ph.D. Awarded' />
+                                                icon={<CardMembershipRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Research Guidance' />
 
                                             <SidebarTile active={active} setActive={setActive} state='e_content_development'
                                                 icon={<CloudIcon fontSize={`small`} className='text-blue-900' />} title='E-Content Developed' />
@@ -126,16 +126,16 @@ const HorizontalNavbar = () => {
 
                                             <SidebarTile active={active} setActive={setActive} state='invited_talk'
                                                 icon={<HeadsetMicRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Invited Talk' />
-                                            
+
                                             <SidebarTile active={active} setActive={setActive} state='foreign_visit'
                                                 icon={<TourRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Foreign Visit' />
 
                                             <SidebarTile active={active} setActive={setActive} state='mous'
                                                 icon={<Diversity3Icon fontSize={`small`} className='text-blue-900' />} title='MoUs' />
-                                            
+
                                             <SidebarTile active={active} setActive={setActive} state='extension_activities'
                                                 icon={<AssignmentIcon fontSize={`small`} className='text-blue-900' />} title='Extension Activity' />
-                                            
+
                                         </div>
                                     </div>
                                 </div>

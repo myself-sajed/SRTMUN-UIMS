@@ -17,6 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear'
+import GenderSelect, { CasteSelect } from '../../../inputs/GenderSelect';
 
 const PHDAwarded = () => {
     const [phdModal, setPhdModal] = useState(false)
@@ -33,6 +34,9 @@ const PHDAwarded = () => {
     const [awardSubmit, setAwardSubmit] = useState('')
     const [scholarYear, setScholarYear] = useState('')
     const [awardYear, setAwardYear] = useState('')
+    const [rac, setRac] = useState('')
+    const [gender, setGender] = useState('')
+    const [category, setCategory] = useState('')
     const [proof, setProof] = useState(null)
     const [year, setYear] = useState('')
     const [editModal, setEditModal] = useState(false)
@@ -53,6 +57,9 @@ const PHDAwarded = () => {
         formData.append('guideName', guideName)
         formData.append('degreeName', degreeName)
         formData.append('awardSubmit', awardSubmit)
+        formData.append('rac', rac)
+        formData.append('gender', gender)
+        formData.append('category', category)
         formData.append('thesisTitle', thesisTitle)
         formData.append('yearOfScholar', scholarYear)
         formData.append('phdAwardYear', awardYear)
@@ -74,6 +81,9 @@ const PHDAwarded = () => {
         formData.append('scholarName', scholarName)
         formData.append('degreeName', degreeName)
         formData.append('awardSubmit', awardSubmit)
+        formData.append('rac', rac)
+        formData.append('gender', gender)
+        formData.append('category', category)
         formData.append('departmentName', departmentName)
         formData.append('guideName', guideName)
         formData.append('thesisTitle', thesisTitle)
@@ -99,6 +109,10 @@ const PHDAwarded = () => {
                 setThesisTitle(item.thesisTitle)
                 setScholarYear(item.yearOfScholar)
                 setAwardYear(item.phdAwardYear)
+                setRac(item.rac)
+                setGender(item.gender)
+                setCategory(item.category)
+
                 setYear(item.year)
                 setProof(item.file)
 
@@ -117,6 +131,9 @@ const PHDAwarded = () => {
         setDegreeName('')
         setAwardSubmit('')
         setScholarYear('')
+        setRac('')
+        setGender('')
+        setCategory('')
         setAwardYear('')
         setYear('')
         setProof(null)
@@ -159,17 +176,28 @@ const PHDAwarded = () => {
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <label htmlFor="awardSubmit" className="form-label">Awarded / Submitted</label>
+                            <label htmlFor="awardSubmit" className="form-label">Awarded / Submitted / Ongoing</label>
                             <select className="form-select" id="awardSubmit" required
                                 value={awardSubmit} onChange={(e) => { setAwardSubmit(e.target.value) }}>
                                 <option selected disabled value="">Choose</option>
                                 <option value="Awarded">Awarded</option>
                                 <option value="Submitted">Submitted</option>
+                                <option value="Ongoing">Ongoing</option>
                             </select>
                         </div>
-                        <Text title='Year of Scholar Registration' type="number" state={scholarYear} setState={setScholarYear} />
+
+                        <Text type="date" title='Date of Registration (RAC)' state={rac} setState={setRac} />
+
+                        <GenderSelect className="col-md-4" title='Gender' state={gender} setState={setGender} showLabel={true} />
+
+                        <CasteSelect className="col-md-4" title='Category' state={category} setState={setCategory} showLabel={true} />
+
+                        <Year space="col-md-3" title='Year of Scholar Registration' state={scholarYear} setState={setScholarYear} />
+
                         <Text title='Year of Award' type="number" state={awardYear} setState={setAwardYear} />
+
                         <Year state={year} setState={setYear} />
+
 
 
                         <File space='col-md-6' title='Upload Proof' setState={setProof} />
@@ -189,8 +217,11 @@ const PHDAwarded = () => {
                             <th scope="col"><div className="w-36">Department Name</div></th>
                             <th scope="col"><div className="w-36">Guide Name</div></th>
                             <th scope="col"><div className="w-36">Thesis Title</div></th>
+                            <th scope="col"><div className="w-36">Date of Registration (RAC)</div></th>
+                            <th scope="col"><div className="w-36">Gender</div></th>
+                            <th scope="col"><div className="w-36">Category</div></th>
                             <th scope="col"><div className="w-36">Degree</div></th>
-                            <th scope="col"><div className="w-36">Awarded / Submitted</div></th>
+                            <th scope="col"><div className="w-36">Awarded / Submitted / Ongoing</div></th>
                             <th scope="col"><div className="w-24">Year of Scholar Registration</div></th>
                             <th scope="col"><div className="w-16">Year of Award</div></th>
                             <th scope="col"><div className="w-20">Year</div></th>
@@ -201,13 +232,16 @@ const PHDAwarded = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.scholarName}</td>
                                     <td>{item.departmentName}</td>
                                     <td>{item.guideName}</td>
                                     <td>{item.thesisTitle}</td>
+                                    <td>{item.rac}</td>
+                                    <td>{item.gender}</td>
+                                    <td>{item.category}</td>
                                     <td>{item.degreeName}</td>
                                     <td>{item.awardSubmit}</td>
                                     <td>{item.yearOfScholar}</td>
