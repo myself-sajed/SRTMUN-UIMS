@@ -124,21 +124,38 @@ const dashboardCards = [
 const Dashboard = () => {
 
     const newParam = { school: false }
-    const { data, isLoading, isError, } = useQuery([newParam.school, newParam],
+    const { data } = useQuery([newParam.school, newParam],
         () => { return fetchSchoolData(newParam) })
 
+    const [localData, setLocalData] = useState(null)
+
     useEffect(() => {
-        console.log('Data in dashboard is : ', data?.data?.data)
+
+        setLocalData(JSON.parse(localStorage.getItem('dashboardData')) || null)
+        console.log('dashboardData', localStorage.getItem('dashboardData'))
+
+    }, [])
+
+    useEffect(() => {
+
+        if (data) {
+            const filteredData = data?.data?.data
+            delete filteredData['Alumni']
+            delete filteredData['Student']
+            localStorage.setItem('dashboardData', JSON.stringify(filteredData))
+        }
+
     }, [data])
 
     return (
+
         <div>
 
 
 
             {
-                data?.data?.data ? <div className='flex items-center justify-between flex-wrap gap-8'>
-                    <DashboardCard data={data?.data?.data} />
+                localData ? <div className='flex items-center justify-between flex-wrap gap-8'>
+                    <DashboardCard data={localData} />
                 </div> : <div className='flex items-center justify-between flex-wrap gap-8'>
                     <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
                     <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
