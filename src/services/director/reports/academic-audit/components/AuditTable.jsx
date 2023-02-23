@@ -5,18 +5,14 @@ import FilterModal from '../../../../faculty/reports/cas/components/FilterModal'
 import Actions from './Actions'
 import getData, { getDirectorData } from './audit-services'
 
-const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, tableChildHead, fetchFrom = "faculty", state, setState, id, children, cellAsInput = true, type = "complex", stateHead, inputName, editTitle, isForm = true, options, proof = false }) => {
+const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, tableChildHead, fetchFrom = "faculty", state, setState, id, children, cellAsInput = true, type = "complex", stateHead, inputName, editTitle, isForm = true, options, proof = false, setAutoSaveLoader }) => {
 
     const [serverData, setServerData] = useState(null)
     const [serverDirData, setServerDirData] = useState(null)
     const auditYear = useSelector(state => state.academicAudit.auditYear)
     const [dataFilterModal, setDataFilterModal] = useState(false)
 
-    useEffect(() => {
-        if (proof) {
-            console.log('State :', state)
-        }
-    }, [])
+
 
     useEffect(() => {
         if (fetchFrom === 'faculty') {
@@ -82,7 +78,7 @@ const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, 
                                                         return <tr key={index}>
                                                             <td></td>
                                                             <td>{item[id]}</td>
-                                                            <td><Actions size="small" key={item} item={item} itemIndex={index} state={state} type="simple" setState={setState} id={id} inputName={inputName} editTitle={editTitle} isForm={isForm} /></td>
+                                                            <td><Actions size="small" key={item} item={item} itemIndex={index} state={state} type="simple" setState={setState} id={id} inputName={inputName} editTitle={editTitle} isForm={isForm} setAutoSaveLoader={setAutoSaveLoader} /></td>
                                                         </tr>
                                                     })}
 
@@ -100,7 +96,7 @@ const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, 
                                                                     /> : item[keys]}</td>
                                                                 })
                                                             }
-                                                            <td><Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} /></td>
+                                                            <td><Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} setAutoSaveLoader={setAutoSaveLoader} /></td>
                                                         </tr>
                                                     })}
                                                 </>
@@ -126,7 +122,7 @@ const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, 
                                         <>
                                             {state?.data && state?.data.map((item, index) => {
                                                 return <tr key={index}>
-                                                    <td className="flex items-start justify-start gap-1"> <Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} /></td>
+                                                    <td className="flex items-start justify-start gap-1"> <Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} setAutoSaveLoader={setAutoSaveLoader} /></td>
                                                     <td>{item.name}</td>
                                                     {
                                                         tableChildHead.map((keys, index) => {
@@ -157,7 +153,8 @@ const AuditTable = ({ tableHead, classes = '', fetchData = false, fetchDetails, 
                                         <>
                                             {state?.data && state?.data.map((item, index) => {
                                                 return <tr key={index}>
-                                                    <td className="flex items-start justify-start gap-1"><Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} /></td>
+
+                                                    <td className="flex items-start justify-start gap-1"><Actions size="small" key={item} itemIndex={index} item={item} state={state} type="complex" setState={setState} options={options} isForm={isForm} editTitle={editTitle} setAutoSaveLoader={setAutoSaveLoader} /></td>
 
                                                     {
                                                         stateHead.map((keys, index) => {

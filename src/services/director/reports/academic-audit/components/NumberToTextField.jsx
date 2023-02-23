@@ -7,7 +7,7 @@ import Axios from 'axios'
 import { toast } from 'react-hot-toast'
 import ShowAAAFetchButton from './ShowAAAFetchButton'
 
-const NumberToTextField = ({ label, state, setState, id, inputName = "Title", classes = "", isForm = false, options, children, tableWithProof = false, fileKeyName, allYearAAAData, fetchPreviousYears = false, tableToFetch = null }) => {
+const NumberToTextField = ({ label, state, setState, id, inputName = "Title", classes = "", isForm = false, options, children, tableWithProof = false, fileKeyName, allYearAAAData, fetchPreviousYears = false, tableToFetch = null, setAutoSaveLoader, }) => {
 
     const [input, setInput] = useState(0)
     const [showInputs, setShowInputs] = useState(false)
@@ -55,6 +55,7 @@ const NumberToTextField = ({ label, state, setState, id, inputName = "Title", cl
                                 return { input: 0, data: newArray, dataMap: current?.dataMap }
                             }
                         })
+                        setAutoSaveLoader(true)
 
                     }
                     else {
@@ -118,6 +119,7 @@ const NumberToTextField = ({ label, state, setState, id, inputName = "Title", cl
                                         label={label}
                                         setState={setState}
                                         state={state}
+                                        setAutoSaveLoader={setAutoSaveLoader}
                                     />
                                 </div>
                             }
@@ -261,6 +263,7 @@ const NumberToTextField = ({ label, state, setState, id, inputName = "Title", cl
                                                 label={label}
                                                 setState={setState}
                                                 state={state}
+                                                setAutoSaveLoader={setAutoSaveLoader}
                                             />
                                         </div>
                                     }
@@ -293,7 +296,7 @@ const ShowButton = ({ setState }) => {
 }
 
 
-const SaveCancelButtons = ({ state, setState, isForm, setLocalInputToZero, setInputToZero, label, setInputState, id }) => {
+const SaveCancelButtons = ({ state, setState, isForm, setLocalInputToZero, setInputToZero, label, setInputState, id, setAutoSaveLoader, }) => {
 
     const saveData = (e) => {
         e.preventDefault();
@@ -322,6 +325,8 @@ const SaveCancelButtons = ({ state, setState, isForm, setLocalInputToZero, setIn
             else {
                 setState({ ...state, [id]: { [`${id}-data`]: newArray } })
             }
+
+            setAutoSaveLoader(true)
         }
         else if (isForm) {
             // setInputToZero()
@@ -343,6 +348,10 @@ const SaveCancelButtons = ({ state, setState, isForm, setLocalInputToZero, setIn
             else {
                 setState({ input: 0, data: newArray, dataMap: state?.dataMap })
             }
+
+            console.log('running autosaveloader')
+            setAutoSaveLoader(true)
+
 
         }
 
