@@ -190,8 +190,8 @@ const DashboardCard = ({ data }) => {
                         onClick={() => { card.url && navigate(card.url) }}>
                         <div className='w-full'>
                             <div className='flex items-start justify-start gap-2 flex-col'>
-                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-4xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
-                                <p className='text-center'>{card.title}</p>
+                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-4xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
+                                <p className='text-center '>{card.title}</p>
                             </div>
                         </div>
                     </div>

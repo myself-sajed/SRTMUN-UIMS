@@ -139,7 +139,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                 return <th scope="col"><label htmlFor="selectAll">{head}</label></th>
               })
             }
-            <th scope="col">Academic Year</th>
+            {
+              isConsolidated && <th scope="col">Academic Year</th>
+            }
 
           </tr>
         </thead>
