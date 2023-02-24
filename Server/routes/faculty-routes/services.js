@@ -131,18 +131,19 @@ function services(app) {
                     if (user) {
                         res.send({ status: 'taken', message: 'Email already taken' });
                     }
-                    else{
+                    else {
                         res.send({ status: 'available' })
                     }
                 });
             }
         }
-        )})
+        )
+    })
 
     // sending otp on email address
     app.post('/sendOTPOnEMail', async (req, res) => {
 
-        
+
 
         let generatedOTP = OTPGenerator()
         subjectForEmail = `${generatedOTP} is your OTP for Email Verification at SRTMUN-UIMS.`
@@ -183,14 +184,14 @@ function services(app) {
         User.findOne({ _id: userId })
             .then(async function (user, err) {
 
-            
-            // filter
-            let filter;
-            if(fetchYears === 'all'){
-                filter = {userId}
-            }else{
-                filter = {userId, year: {$in: fetchYears}}
-            }
+
+                // filter
+                let filter;
+                if (fetchYears === 'all') {
+                    filter = { userId }
+                } else {
+                    filter = { userId, year: { $in: fetchYears } }
+                }
 
                 if (user) {
 
@@ -246,26 +247,26 @@ function services(app) {
                         return dateB - dateA;
                     });
 
-                // get ResearchProject
-                const researchProject = await ResearchProject.find(filter);
-                report.ResearchProject = researchProject.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get ResearchProject
+                    const researchProject = await ResearchProject.find(filter);
+                    report.ResearchProject = researchProject.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get ResearchProject
-                const researchPaper = await ResearchPaper.find(filter);
-                report.ResearchPaper = researchPaper.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get ResearchProject
+                    const researchPaper = await ResearchPaper.find(filter);
+                    report.ResearchPaper = researchPaper.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
-                // get ResearchProject
-                const bookAndChapter = await BookAndChapter.find(filter);
-                report.BookAndChapter = bookAndChapter.sort(function (a, b) {
-                    var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-                    return dateB - dateA;
-                });
+                    // get ResearchProject
+                    const bookAndChapter = await BookAndChapter.find(filter);
+                    report.BookAndChapter = bookAndChapter.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
 
                     // get ResearchProject
                     const researchGuidance = await ResearchGuidance.find(filter);
@@ -343,6 +344,24 @@ function services(app) {
 
                     const responsibilities = await Responsibilities.find(filter);
                     report.Responsibilities = responsibilities.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
+
+                    const foreignVisit = await ForeignVisit.find(filter);
+                    report.ForeignVisit = foreignVisit.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
+
+                    const financialSupport = await FinancialSupport.find(filter);
+                    report.FinancialSupport = financialSupport.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
+
+                    const conferenceParticipated = await ConferenceParticipated.find(filter);
+                    report.ConferenceParticipated = conferenceParticipated.sort(function (a, b) {
                         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
                         return dateB - dateA;
                     });

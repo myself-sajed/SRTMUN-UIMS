@@ -113,7 +113,7 @@ const Tables = ({ academicData, showProof = false, otherOptions = false }) => {
             {/* Lectures */}
 
             {
-                otherOptions ? otherOptions['Lectures'] ? <div className="my-10">
+                otherOptions ? otherOptions['Lectures'] ? academicData?.['Lectures']?.length > 0 && <div className="my-10" id="Lectures" >
                     <div className="p-2 bg-[#009879] text-white flex items-center justify-between rounded-t-md ">
                         <div className='flex items-center justify-start gap-3'>
                             <h3 className="sm:text-lg text-base leading-6 font-medium text-white">
@@ -132,7 +132,7 @@ const Tables = ({ academicData, showProof = false, otherOptions = false }) => {
                         }
 
                     </div>
-                </div> : null : <div className="my-10">
+                </div> : null : academicData?.['Lectures']?.length > 0 && <div className="my-10" id="Lectures" >
                     <div className="p-2 bg-[#009879] text-white flex items-center justify-between rounded-t-md ">
                         <div className='flex items-center justify-start gap-3'>
                             <h3 className="sm:text-lg text-base leading-6 font-medium text-white">
@@ -171,7 +171,7 @@ export default Tables
 const TableTemplate = ({ item, data, showProof }) => {
     return (
         data?.[item.model]?.length === 0 ?
-            null : <div className="my-10">
+            null : <div className="my-10" id={item.model}>
                 <div className="p-2 bg-[#009879] text-white flex items-center justify-between rounded-t-md ">
                     <div className='flex items-center justify-start gap-3'>
                         <h3 className="sm:text-lg text-base leading-6 font-medium text-white">

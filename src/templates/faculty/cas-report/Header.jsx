@@ -41,9 +41,9 @@ const dashboardObj = {
         { id: 11, title: 'Administrative Responsibilities', model: 'Responsibilities', icon: <ManageAccountsIcon /> },
     ],
     director: [
-        { id: 0, title: 'Faculties', model: 'Faculties', icon: <GroupsRoundedIcon />, },
-        { id: 6, title: 'Students', model: 'Student', icon: <LocalLibraryRoundedIcon /> },
-        { id: 4, title: 'Alumni', model: 'Alumni', icon: <PeopleRoundedIcon /> },
+        { id: 0, title: 'Faculties', model: 'Faculties', icon: <GroupsRoundedIcon />, checkUrl: true },
+        { id: 6, title: 'Students', model: 'Student', icon: <LocalLibraryRoundedIcon />, checkUrl: true },
+        { id: 4, title: 'Alumni', model: 'Alumni', icon: <PeopleRoundedIcon />, checkUrl: true },
         { id: 1, title: 'Exams Qualified', model: 'QualifiedExams', icon: <HowToRegRoundedIcon />, sort: true, fieldToSort: 'Acadmic_year' },
         { id: 2, title: 'Placements', model: 'Placement', icon: <WorkRoundedIcon />, sort: true, fieldToSort: 'Academic_Year' },
         { id: 3, title: 'Awards', model: 'Award', icon: <EmojiEventsRoundedIcon />, sort: true, fieldToSort: 'Year_of_Award' },
@@ -55,6 +55,8 @@ const dashboardObj = {
 }
 
 const Header = ({ user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
+
+
 
 
     return (
@@ -172,16 +174,25 @@ const ShowDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColo
 
     const navigate = useNavigate()
 
+    const checkURL = {
+        ResearchProject: { url: `${process.env.REACT_APP_MAIN_URL}/dashboard/${user?.department}` },
+        Faculties: { url: `${process.env.REACT_APP_MAIN_URL}/dashboard/${user?.department}` },
+        Student: { url: `${process.env.REACT_APP_MAIN_URL}/dashboard/${user?.department}/students` },
+        Alumni: { url: `${process.env.REACT_APP_MAIN_URL}/dashboard/${user?.department}/alumni` },
+    }
+
     return <div className='flex items-center justify-between gap-3 flex-wrap'>
         {
             directorData && dashboardObj.map((item, index) => {
-                return ((type === 'aaa' && item.sort) ? directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length > 0 : directorData?.[item.model]?.length > 0) && <div key={index} className={`bg-${bgColor}-50 p-2 border border-green-100 rounded-md flex-auto hover:bg-${bgColor}-100 cursor-pointer`} onClick={() => { user && navigate(item?.url.replace('school', user?.department)) }} >
-                    <div className={`flex items-center justify-start gap-2 ${color.includes('#') ? `text-${color}` : `text-${color}-800`}`}>
-                        {item.icon} <span className='font-bold text-xl'>{(type === 'aaa' && item.sort) ?
-                            directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length : directorData?.[item.model]?.length}</span>
+                return ((type === 'aaa' && item.sort) ? directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length > 0 : directorData?.[item.model]?.length > 0) && <a href={item.checkUrl ? `${checkURL[item.model].url}` : `#${item.model}`}>
+                    <div key={index} className={`bg-${bgColor}-50 p-2 border border-green-100 rounded-md flex-auto hover:bg-${bgColor}-100 cursor-pointer`} onClick={() => { user && navigate(item?.url.replace('school', user?.department)); }} >
+                        <div className={`flex items-center justify-start gap-2 ${color.includes('#') ? `text-${color}` : `text-${color}-800`}`}>
+                            {item.icon} <span className='font-bold text-xl'>{(type === 'aaa' && item.sort) ?
+                                directorData?.[item.model]?.filter((filterable) => filterable[item.fieldToSort] === academicYear).length : directorData?.[item.model]?.length}</span>
+                        </div>
+                        <p className='md:text-base text-sm'>{item.title}</p>
                     </div>
-                    <p className='md:text-base text-sm'>{item.title}</p>
-                </div>
+                </a>
             })
         }
     </div>
