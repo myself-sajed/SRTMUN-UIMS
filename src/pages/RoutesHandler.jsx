@@ -59,6 +59,7 @@ import DeveloperServices from './DeveloperServices'
 import OtherDashboardData from '../services/dashboard/pages/OtherDashboardData'
 import DirectorDashboardData from '../services/dashboard/pages/DirectorDashboardData'
 import AdminMain from '../services/admin/pages/AdminMain'
+import NewsPage from '../services/news/pages/NewsPage'
 
 
 
@@ -133,6 +134,11 @@ const RoutesHandler = () => {
 
                 {/* Forgot Password */}
                 <Route path="/services/forgot-password/:serviceName" exact element={<ForgotPassword />} />
+
+                {/* News */}
+                <Route path='/news' exact element={<NewsPage />} />
+
+
 
 
             </Routes>

@@ -31,7 +31,7 @@ const dashboardCards = [
     },
     {
         id: 2,
-        title: 'Student',
+        title: 'Students',
         countModelName: 'StudentCount',
         color: 'orange',
         url: `/dashboard/select-department/students`,
