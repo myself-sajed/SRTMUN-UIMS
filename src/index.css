@@ -515,3 +515,11 @@ body {
     /* end at the right */
   }
 }
+
+.ant-upload-list {
+  display: none;
+}
+
+.ant-upload-drag {
+  border: none;
+}

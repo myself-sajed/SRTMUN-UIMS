@@ -2,9 +2,12 @@ import { IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProUser } from '../../../redux/slices/UserSlice';
+import Filter from './Filter';
 
-const Header = () => {
+const Header = ({ title = "News Bulletin", showSearch = true, backURL = -1, search, setSearch, rangeDate, setRangeDate }) => {
 
     const navigate = useNavigate()
     const [date, setDate] = useState(new Date());
@@ -31,28 +34,42 @@ const Header = () => {
     });
 
 
+    const proUser = useSelector((state) => state.user.proUser)
+    const dispatch = useDispatch()
 
     return (
         <div>
             <div className='py-1 border-b'>
-                <div className='flex items-center justify-start gap-3'>
-                    <div className='w-full'>
-                        <IconButton onClick={() => { navigate(-1) }}>
+
+                <div className='flex flex-col md:flex-row md:items-center items-start justify-start gap-1'>
+
+                    <div className='flex items-center justify-start gap-2'>
+                        <IconButton onClick={() => { navigate(backURL) }}>
                             <ArrowBackRoundedIcon />
                         </IconButton>
-                        <span className='mx-2 font-bold text-lg'>News Bulletin</span>
+                        <span className='font-bold md:text-lg text-base whitespace-nowrap'>{title}</span>
                     </div>
-                    <div className='w-full'>
-                        <div className='bg-gray-100 p-2 rounded-md flex items-center justify-start gap-2'>
-                            <SearchRoundedIcon className='text-muted' />
-                            <input type="search" placeholder='Search news articles...' className="outline-none border-none bg-transparent w-full" />
+                    {showSearch && <div className='w-full mr-3'>
+                        <Filter search={search} setSearch={setSearch} setRangeDate={setRangeDate} />
+                    </div>}
+
+                    <div className='float-right flex items-center justify-end gap-2 mr-2 md:ml-0'>
+                        <div className='w-full float-right flex items-center justify-end'>
+                            <div>
+                                <p>{formattedTime}</p>
+                                <p className='text-muted text-sm'>{formattedDate}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className='w-full float-right flex items-center justify-end'>
-                        <div>
-                            <p>{formattedTime}</p>
-                            <p className='text-muted text-sm'>{formattedDate}</p>
-                        </div>
+
+                        {
+                            proUser && <div className='w-full float-right flex items-center justify-end'
+                                onClick={() => { dispatch(setProUser(null)); localStorage.removeItem('pro-token'); navigate('/') }}>
+                                <IconButton>
+                                    <LogoutRoundedIcon />
+                                </IconButton>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>

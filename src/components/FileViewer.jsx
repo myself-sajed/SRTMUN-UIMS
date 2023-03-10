@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FileViewer({ fileName, serviceName, replace = null }) {
+export default function FileViewer({ fileName, serviceName, replace = null, children }) {
 
 
     const [open, setOpen] = React.useState(false);
@@ -28,10 +28,14 @@ export default function FileViewer({ fileName, serviceName, replace = null }) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen}
-                sx={{ textTransform: "none", border: 'none', color: `${serviceName === 'AAA' ? 'green' : 'blue'}`, outline: 'none', backgroundColor: '#d2ebff' }}>
-                {replace ? fileName.replace(replace.target, replace.with) : serviceName === "AAA" ? fileName : 'View File'}
-            </Button>
+            {
+                !children ? <Button onClick={handleClickOpen}
+                    sx={{ textTransform: "none", border: 'none', color: `${serviceName === 'AAA' ? 'green' : 'blue'}`, outline: 'none', backgroundColor: '#d2ebff' }}>
+                    {replace ? fileName.replace(replace.target, replace.with) : serviceName === "AAA" ? fileName : 'View File'}
+                </Button> : <div onClick={handleClickOpen}>
+                    {children}
+                </div>
+            }
             <Dialog
                 fullScreen
                 open={open}

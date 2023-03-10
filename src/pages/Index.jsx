@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 import useScroll from '../hooks/useScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
-import { setDirectorUser, setUser, setAlumniUser, setStudentUser } from '../redux/slices/UserSlice';
+import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 import { FloatButton, Tooltip } from 'antd';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
@@ -28,6 +28,9 @@ import Dashboard from '../services/dashboard/pages/Dashboard';
 import useUserIsLoggedIn from '../hooks/useUserIsLoggedIn';
 import NewspaperRoundedIcon from '@mui/icons-material/NewspaperRounded';
 import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded';
+import { fetchIndexNews } from '../services/news/js/fetchNews';
+import { useQuery } from 'react-query';
+import LoggedInUsers from '../components/LoggedInUsers';
 
 const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }
@@ -101,6 +104,17 @@ const Index = () => {
             tokenId: 'alumni-token',
             loginUrl: '/alumni-login',
             dispatchFunction: setAlumniUser
+
+        },
+        {
+            icon: <NewspaperRoundedIcon sx={iconProps} />,
+            title: 'Public Relation Officer (PRO)',
+            phrase: 'Log in to your account to stay add the latest news and events happening at our university.',
+            user: users.proUser ? users.proUser : null,
+            profileUrl: siteLinks.proHome.link,
+            tokenId: 'pro-token',
+            loginUrl: '/pro-login',
+            dispatchFunction: setProUser
 
         },
         {
@@ -190,6 +204,11 @@ const Index = () => {
         setFeedbackModal(false)
     }
 
+    const { data: news, isLoading, isError, error, refetch } = useQuery([], () => fetchIndexNews())
+
+    useEffect(() => {
+        console.log('news :', news)
+    }, [news])
 
 
     return (
@@ -202,22 +221,18 @@ const Index = () => {
                         <div className='flex items-center justify-start gap-1'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />News Bulletin</div></span>
                     <marquee className='bg-orange-100 text-orange-700' behavior="scroll" direction="left"
                     >
-                        <div className='flex items-center justify-start gap-4'>
+                        {
+                            news?.data?.data.length > 0 ?
+                                <div className='flex items-center justify-start gap-4'>
 
-                            <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate('/news') }}>
-                                <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, laborum.
-                            </div>
-                            <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate('/news') }}>
-                                <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, laborum.
-                            </div>
-                            <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate('/news') }}>
-                                <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, laborum.
-                            </div>
-                            <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate('/news') }}>
-                                <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, laborum.
-                            </div>
+                                    {news?.data?.data?.map((el) => {
+                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate(`/news/${el.slug}`) }}>
+                                            <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> {el.headline}
+                                        </div>
+                                    })}
 
-                        </div>
+                                </div> : 'No Recent News'
+                        }
                     </marquee>
                     <span onClick={() => { navigate('/news') }} className='whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
                         <div className='flex items-center justify-start gap-1 cursor-pointer'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />Explore all News</div></span>
@@ -226,9 +241,14 @@ const Index = () => {
                 </div>
 
 
+                <div className='mt-3 flex items-center justify-center'>
+                    {/* LOGGED IN USERS */}
+                    <LoggedInUsers />
+                </div>
+
                 {/* MAIN DIV */}
 
-                <div className='z-30 mt-5'>
+                <div className='z-30 mt-4'>
                     <div className={`text-center ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__index__heading'}`}>
                         <p className='text-xs text-gray-500'>Welcome to</p>
                         <h2 className='font-bold text-blue-500 text-3xl md:text-6xl sm:text-4xl gradient'>SRTMUN-UIMS</h2>
