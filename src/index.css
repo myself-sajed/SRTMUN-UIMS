@@ -479,3 +479,47 @@ body {
   counter-increment: serial-number;
   content: counter(serial-number);
 }
+
+.news-container {
+  overflow: hidden;
+  white-space: nowrap;
+  /* set white-space to nowrap to prevent wrapping */
+}
+
+.news-headlines {
+  display: inline-block;
+  /* display the headlines in a row */
+  animation: scroll 40s linear infinite;
+  /* set the animation properties */
+  animation-play-state: running;
+}
+
+.news-headlines:hover {
+  animation-play-state: paused;
+  /* pause the animation on hover */
+}
+
+.news-headline {
+  margin-right: 20px;
+  /* add some margin between headlines */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+    /* start at the left */
+  }
+
+  100% {
+    transform: translateX(-100%);
+    /* end at the right */
+  }
+}
+
+.ant-upload-list {
+  display: none;
+}
+
+.ant-upload-drag {
+  border: none;
+}

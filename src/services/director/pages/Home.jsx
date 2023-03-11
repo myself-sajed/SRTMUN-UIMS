@@ -24,6 +24,8 @@ import { generateAAAReport, getAuditData } from '../reports/academic-audit/compo
 import { Button, Dropdown } from 'antd'
 import Loading from '../../admin/components/Loading'
 import { setAuditYear } from '../../../redux/slices/AuditSlice'
+import { ShowLocalDashboard } from '../../faculty/pages/Home'
+import { setDirectorActive } from '../../../redux/slices/DirectorActiveSlice'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -95,9 +97,59 @@ const Home = () => {
         }
     }, [user])
 
-    useEffect(() => {
-        console.log('Audit Data :', serverAuditData)
-    }, [serverAuditData])
+
+    const urlLinks = {
+        Faculties: {
+            onClickFunc: () => {
+                navigate(`/dashboard/${user.department}`);
+            }
+        },
+        Student: {
+            onClickFunc: () => {
+                navigate(`/dashboard/${user.department}/students`);
+            }
+        },
+        Alumni: {
+            onClickFunc: () => {
+                navigate(`/dashboard/${user.department}/alumni`);
+            }
+        },
+        QualifiedExams: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('QualifiedExams'));
+            }
+        },
+        Placement: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('Placement'));
+            }
+        },
+        Award: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('Award'));
+            }
+        },
+        AlumniContribution: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('AlumniContribution'));
+            }
+        },
+        TrainingProgramsOrganized: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('TrainingProgramsOrganized'));
+            }
+        },
+        ConferencesSemiWorkshopOrganized: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('ConferencesSemiWorkshopOrganized'));
+            }
+        },
+        ProgressionToHE: {
+            onClickFunc: () => {
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('ProgressionToHE'));
+            }
+        },
+    }
 
 
 
@@ -213,8 +265,8 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="lg:w-[50%]">
-                                {academicData && <ShowDashboard directorData={academicData && academicData}
-                                    dashboardObj={dashboardObj['director']} color="blue" bgColor="blue" />}
+                                {academicData && <ShowLocalDashboard directorData={academicData && academicData}
+                                    dashboardObj={dashboardObj['director']} color="blue" bgColor="blue" urlLinks={urlLinks} />}
                             </div>
                         </div>
 

@@ -8,7 +8,7 @@ import EditModal from './EditModal';
 import { useState } from 'react';
 
 
-const Actions = ({ size = "normal", item, itemIndex, state, setState, type, id, inputName, editTitle, isForm, options }) => {
+const Actions = ({ size = "normal", setAutoSaveLoader, item, itemIndex, state, setState, type, id, inputName, editTitle, isForm, options }) => {
 
     const [openModal, setOpenModal] = useState(false)
 
@@ -20,10 +20,14 @@ const Actions = ({ size = "normal", item, itemIndex, state, setState, type, id, 
             let newArray = state[id][`${id}-data`].filter((arrItem, index) => itemIndex !== index)
             setState({ ...state, [id]: { [`${id}-data`]: newArray } })
             toast.success('Item deleted successfully.')
+            setAutoSaveLoader(true)
+
         } else if (type === 'complex') {
             let newArray = state.data.filter((arrItem, index) => itemIndex !== index)
             setState({ ...state, data: newArray })
             toast.success('Item deleted successfully.')
+            setAutoSaveLoader(true)
+
         }
 
 
@@ -40,7 +44,7 @@ const Actions = ({ size = "normal", item, itemIndex, state, setState, type, id, 
 
     return (
         <div className>
-            <EditModal openModal={openModal} setOpenModal={setOpenModal} inputName={inputName} editTitle={editTitle} item={item} itemIndex={itemIndex} state={state} setState={setState} type={type} id={id} isForm={isForm} options={options} />
+            <EditModal setAutoSaveLoader={setAutoSaveLoader} openModal={openModal} setOpenModal={setOpenModal} inputName={inputName} editTitle={editTitle} item={item} itemIndex={itemIndex} state={state} setState={setState} type={type} id={id} isForm={isForm} options={options} />
 
 
             <div className='flex flex-col items-center justify-start'>

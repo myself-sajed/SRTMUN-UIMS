@@ -59,6 +59,11 @@ import DeveloperServices from './DeveloperServices'
 import OtherDashboardData from '../services/dashboard/pages/OtherDashboardData'
 import DirectorDashboardData from '../services/dashboard/pages/DirectorDashboardData'
 import AdminMain from '../services/admin/pages/AdminMain'
+import NewsPage from '../services/news/pages/NewsPage'
+import PROLogin from '../services/news/pages/PROLogin'
+import PROEditor from '../services/news/pages/PROEditor'
+import SingleNews from '../services/news/pages/SingleNews'
+import PROHome from '../services/news/pages/PROHome'
 
 
 
@@ -133,6 +138,15 @@ const RoutesHandler = () => {
 
                 {/* Forgot Password */}
                 <Route path="/services/forgot-password/:serviceName" exact element={<ForgotPassword />} />
+
+                {/* News */}
+                <Route path='/news' exact element={<NewsPage />} />
+                <Route path='/pro-login' exact element={<PROLogin />} />
+                <Route path='/pro' exact element={<PROHome />} />
+                <Route path='/pro-editor' exact element={<PROEditor />} />
+                <Route path='/news/:slug' exact element={<SingleNews />} />
+
+
 
 
             </Routes>

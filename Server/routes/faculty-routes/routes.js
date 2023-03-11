@@ -16,15 +16,15 @@ const upload = multer({ storage: storage })
 
 // multer configuration excel 
 const excelStorage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        const link = path.join(__dirname,`../../../excels/`)
+    destination: (req, file, cb) => {
+        const link = path.join(__dirname, `../../../excels/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
         cb(null, `${new Date().getTime()}-${file.originalname}`)
     },
 })
-const excelUpload = multer({storage:excelStorage})
+const excelUpload = multer({ storage: excelStorage })
 
 
 // import all the models here
@@ -60,11 +60,11 @@ const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 function initRoutes(app) {
 
     let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
+        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
     }
 
     let nonAcademicYearModels = {
-        Qualification, Degree, AppointmentsHeldPrior, PostHeld,Online, Experience, Responsibilities,
+        Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
     }
 
     // get data from model specified in the req.body
@@ -91,14 +91,14 @@ function initRoutes(app) {
 
         const { model, userId, year } = req.body
 
-        let filter = {userId}
-        if(year){
-            filter = {userId, year}
+        let filter = { userId }
+        if (year) {
+            filter = { userId, year }
         }
 
 
-        if(model in nonAcademicYearModels){
-            models[model].find({userId}).then((data) => {
+        if (model in nonAcademicYearModels) {
+            models[model].find({ userId }).then((data) => {
                 if (data.length > 0) {
                     res.send({ status: 'fetched', data })
                 }
@@ -108,7 +108,7 @@ function initRoutes(app) {
             }).catch((err) => {
                 res.send({ status: 'error' })
             })
-        }else{
+        } else {
             models[model].find(filter).then((data) => {
                 if (data.length > 0) {
                     res.send({ status: 'fetched', data })
@@ -371,9 +371,9 @@ function initRoutes(app) {
 
     //ForeignVisit
     app.post('/api/add/ForeignVisit', (req, res) => {
-        const {data} = req.body;
+        const { data } = req.body;
         try {
-            
+
             const newForeignVisit = new ForeignVisit({
                 purposeOfVisit: data.purposeOfVisit,
                 nameOfTheInstitutionVisited: data.nameOfTheInstitutionVisited,
@@ -419,9 +419,9 @@ function initRoutes(app) {
 
     // lectures and seminars
     app.post('/api/add/lectures', (req, res) => {
-        const {data} = req.body
+        const { data } = req.body
         try {
-            const {course,level,mode,noOfClasses,classesTaken,year,userId} = data
+            const { course, level, mode, noOfClasses, classesTaken, year, userId } = data
             const lecture = new Lectures({
                 course: course,
                 level: level,
@@ -608,6 +608,9 @@ function initRoutes(app) {
                 thesisTitle: data.thesisTitle,
                 yearOfScholar: data.yearOfScholar,
                 phdAwardYear: data.phdAwardYear,
+                rac: data.rac,
+                gender: data.gender,
+                category: data.category,
                 year: data.year,
                 proof: req.file.filename,
                 userId: data.userId,
@@ -829,8 +832,8 @@ function initRoutes(app) {
     })
 
 
-     // conferenceParticipated
-     app.post('/api/add/ConferenceParticipated', upload.single('file'), (req, res) => {
+    // conferenceParticipated
+    app.post('/api/add/ConferenceParticipated', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
         try {
@@ -842,10 +845,10 @@ function initRoutes(app) {
                 proof: req.file.filename,
                 userId: data.userId,
 
-                
+
             })
             conferenceParticipated.save()
-            if (conferenceParticipated)  {
+            if (conferenceParticipated) {
                 res.send({ status: 'added', data: conferenceParticipated });
             }
             else {
@@ -885,14 +888,14 @@ function initRoutes(app) {
         }
     })
 
-     //  financialSupport
-     app.post('/api/add/FinancialSupport', upload.single('file'), (req, res) => {
+    //  financialSupport
+    app.post('/api/add/FinancialSupport', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
         try {
-            const { nameOfConference, feeprovider, amountOfSupport, pan, year, } = data 
+            const { nameOfConference, feeprovider, amountOfSupport, pan, year, } = data
             const financialSupport = new FinancialSupport({
-                nameOfConference:nameOfConference,
+                nameOfConference: nameOfConference,
                 feeprovider: feeprovider,
                 amountOfSupport: amountOfSupport,
                 pan: pan,
@@ -965,200 +968,200 @@ function initRoutes(app) {
         }
     })
 
-    app.post('/faculty/excelRecord/:model', excelUpload.single('excelFile'), (req, res)=>{
+    app.post('/faculty/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
         const excelFile = req.file.filename
         const model = req.params.model
         let sendData = {};
         const values = JSON.parse(JSON.stringify(req.body));
         const { School } = values
-    
-        
+
+
         let data = []
-        try{
-            const file = xlsx.readFile(path.join(__dirname,`../../../excels/${excelFile}`))
+        try {
+            const file = xlsx.readFile(path.join(__dirname, `../../../excels/${excelFile}`))
             const sheetNames = file.SheetNames
             for (let i = 0; i < sheetNames.length; i++) {
                 const arr = xlsx.utils.sheet_to_json(
                     file.Sheets[sheetNames[i]])
                 arr.forEach((response) => data.push(response))
-             }
-             const excelObject={
-                AppointmentsHeldPrior:{
-                    'Designation':'designation',
-                    'Employer Name':'employerName',
-                    'From':'joiningDate',
-                    'To':'leavingDate',
-                    'Salary with grade':'salaryWithGrade',
-                    'Leaving Reason':'leavingReason',
+            }
+            const excelObject = {
+                AppointmentsHeldPrior: {
+                    'Designation': 'designation',
+                    'Employer Name': 'employerName',
+                    'From': 'joiningDate',
+                    'To': 'leavingDate',
+                    'Salary with grade': 'salaryWithGrade',
+                    'Leaving Reason': 'leavingReason',
                 },
-                Degree:{
-                    'Degree':'degreeName',
-                    'Title':'title',
-                    'University':'university',
-                    'Award Date':'awardDate',
+                Degree: {
+                    'Degree': 'degreeName',
+                    'Title': 'title',
+                    'University': 'university',
+                    'Award Date': 'awardDate',
                     'Subject': 'subject',
                 },
-                Qualification:{
-                    'Exam':'exam',
-                    'Institute/Board':'institute',
-                    'Year':'year',
-                    'Percentage':'percentage',
-                    'Subjects':'subjects',
+                Qualification: {
+                    'Exam': 'exam',
+                    'Institute/Board': 'institute',
+                    'Year': 'year',
+                    'Percentage': 'percentage',
+                    'Subjects': 'subjects',
                 },
-                ResearchProject:{
-                    "Scheme or Project Name"	:'schemeName',
-                    "Program Title"	:'programTitle',
-                    "Principal Invigilator Name"	:'principalName',
-                    "Funding Agency Name"	:'fundingName',
-                    "Wheather Government / Non-Government"	:'isGov',
-                    "Department"	:'department',
-                    "Award Year"	:'awardYear',
-                    "Project Duration (In Year)"	:'projectDuration',
-                    "Provided Funds (INR)"	:'providedFunds',
-                    "Wheather Major / Minor"	:'fundType',
-                    "Status"	:'status',
-                    "Choose Year"	:'year',
+                ResearchProject: {
+                    "Scheme or Project Name": 'schemeName',
+                    "Program Title": 'programTitle',
+                    "Principal Invigilator Name": 'principalName',
+                    "Funding Agency Name": 'fundingName',
+                    "Wheather Government / Non-Government": 'isGov',
+                    "Department": 'department',
+                    "Award Year": 'awardYear',
+                    "Project Duration (In Year)": 'projectDuration',
+                    "Provided Funds (INR)": 'providedFunds',
+                    "Wheather Major / Minor": 'fundType',
+                    "Status": 'status',
+                    "Choose Year": 'year',
                 },
-                PostHeld:{
-                    "Designation":'designation',
-                    "Department":'department',
-                    "From":'joiningDate',
-                    "To":'leavingDate',
+                PostHeld: {
+                    "Designation": 'designation',
+                    "Department": 'department',
+                    "From": 'joiningDate',
+                    "To": 'leavingDate',
                 },
-                Lectures:{
-                    'Course/Paper':'course',
-                    'Level':'level',
-                    'Teaching Mode':'teachingMode',
-                    'No of classes alloted per week':'noOfClasses',
-                    '% of classes taken as per documented record':'percentageOfClasses',
-                    ' Year':'year',
+                Lectures: {
+                    'Course/Paper': 'course',
+                    'Level': 'level',
+                    'Teaching Mode': 'teachingMode',
+                    'No of classes alloted per week': 'noOfClasses',
+                    '% of classes taken as per documented record': 'percentageOfClasses',
+                    ' Year': 'year',
                 },
-                EContentDeveloped:{
-                    'Name of the Module / Course developed':'moduleName',
-                    'Type of Creation':'creationType',
-                    'Platform on which the module is developed':'platform',
-                    'Choose Year':'year',
-                    'Link to the content':'link',
+                EContentDeveloped: {
+                    'Name of the Module / Course developed': 'moduleName',
+                    'Type of Creation': 'creationType',
+                    'Platform on which the module is developed': 'platform',
+                    'Choose Year': 'year',
+                    'Link to the content': 'link',
                 },
-                ResearchPaper:{
-                    'Paper Title':'paperTitle',
-                    'Journal Name':'journalName',
-                    'Publication Year':'publicationYear',
-                    'ISSN Number':'issnNumber',
-                    'Choose Year':'year',
+                ResearchPaper: {
+                    'Paper Title': 'paperTitle',
+                    'Journal Name': 'journalName',
+                    'Publication Year': 'publicationYear',
+                    'ISSN Number': 'issnNumber',
+                    'Choose Year': 'year',
                 },
                 BookAndChapter: {
-                    'Teacher Name':'teacherName',
-                    'Title of Published Book':'titleOfBook',
-                    'Paper Title':'paperTitle',
-                    'Title of proceedings of the conference':'titleOfProceeding',
-                    'Conference Name':'conName',
-                    'Wheather National / International':'isNat',
-                    'Author / Editor / Translator':'authorEditor',
-                    'Year of Publication':'publicationYear',
-                    'ISBN/ISSN number of proceeding':'issnNumber',
-                    'School Name':'schoolName',
-                    'Affiliation Institute at the time of publication':'aff',
-                    'Choose Year':'year',
-                    'Publisher Name':'publisherName',
+                    'Teacher Name': 'teacherName',
+                    'Title of Published Book': 'titleOfBook',
+                    'Paper Title': 'paperTitle',
+                    'Title of proceedings of the conference': 'titleOfProceeding',
+                    'Conference Name': 'conName',
+                    'Wheather National / International': 'isNat',
+                    'Author / Editor / Translator': 'authorEditor',
+                    'Year of Publication': 'publicationYear',
+                    'ISBN/ISSN number of proceeding': 'issnNumber',
+                    'School Name': 'schoolName',
+                    'Affiliation Institute at the time of publication': 'aff',
+                    'Choose Year': 'year',
+                    'Publisher Name': 'publisherName',
                 },
-                PhdAwarded:{
-                    'Scholar Name':'scholarName',
-                    'Department Name':'departmentName',
-                    'Guide Name':'guideName',
-                    'Degree':'degreeName',
-                    'Awarded / Submitted':'awardSubmit',
-                    'Thesis Title':'thesisTitle',
-                    'Year of Scholar Registration':'yearOfScholar',
-                    'Year of Award':'phdAwardYear',
-                    'Choose Year':'year',
+                PhdAwarded: {
+                    'Scholar Name': 'scholarName',
+                    'Department Name': 'departmentName',
+                    'Guide Name': 'guideName',
+                    'Degree': 'degreeName',
+                    'Awarded / Submitted': 'awardSubmit',
+                    'Thesis Title': 'thesisTitle',
+                    'Year of Scholar Registration': 'yearOfScholar',
+                    'Year of Award': 'phdAwardYear',
+                    'Choose Year': 'year',
                 },
-                JrfSrf:{
-                    'Research Fellow Name':'researchName',
-                    'Enrolment Date':'enrolmentYear',
-                    'Fellowship Duration':'fellowshipDuration',
-                    'Fellowship Type':'fellowshipType',
-                    'Granting Agency':'grantingAgency',
-                    'Qualifying Exam (if any)':'qualifyingExam',
-                    'Choose Year':'year',
+                JrfSrf: {
+                    'Research Fellow Name': 'researchName',
+                    'Enrolment Date': 'enrolmentYear',
+                    'Fellowship Duration': 'fellowshipDuration',
+                    'Fellowship Type': 'fellowshipType',
+                    'Granting Agency': 'grantingAgency',
+                    'Qualifying Exam (if any)': 'qualifyingExam',
+                    'Choose Year': 'year',
                 },
-                AwardRecognition:{
-                    'Name of full-time teachers receiving award':'teacherName',
-                    'Award Date':'awardYear',
-                    'PAN':'pan',
-                    'Designation':'designation',
-                    'Name of the Award, Fellowship, received':'awardName',
-                    'Wheather National / International':'isNat',
-                    'Incentives/Type of incentive given by the HEI in recognition of the award':'incentive',
-                    'Award Agency Name':'agencyName',
-                    'Choose Year':'year',
+                AwardRecognition: {
+                    'Name of full-time teachers receiving award': 'teacherName',
+                    'Award Date': 'awardYear',
+                    'PAN': 'pan',
+                    'Designation': 'designation',
+                    'Name of the Award, Fellowship, received': 'awardName',
+                    'Wheather National / International': 'isNat',
+                    'Incentives/Type of incentive given by the HEI in recognition of the award': 'incentive',
+                    'Award Agency Name': 'agencyName',
+                    'Choose Year': 'year',
                 },
-                Patent:{
-                    'Patenter Name':'patenterName',
-                    'Patent Number':'patentNumber',
-                    'Patent Title':'patentTitle',
-                    'Wheather National / International':'isNat',
-                    'Award Year of Patent':'awardYear',
-                    'Choose Year':'year',
+                Patent: {
+                    'Patenter Name': 'patenterName',
+                    'Patent Number': 'patentNumber',
+                    'Patent Title': 'patentTitle',
+                    'Wheather National / International': 'isNat',
+                    'Award Year of Patent': 'awardYear',
+                    'Choose Year': 'year',
                 },
-                ConsultancyServices:{
-                    'Consultant Name':'cName',
-                    'Consultancy Project Name':'cProjectName',
-                    'Consulting / Sponsoring Agency with contact':'cAgency',
-                    'Consultancy Year':'cYear',
-                    'Revenue Generated(INR)':'revenue',
-                    'Year':'year',
+                ConsultancyServices: {
+                    'Consultant Name': 'cName',
+                    'Consultancy Project Name': 'cProjectName',
+                    'Consulting / Sponsoring Agency with contact': 'cAgency',
+                    'Consultancy Year': 'cYear',
+                    'Revenue Generated(INR)': 'revenue',
+                    'Year': 'year',
                 },
-                Collaboration:{
-                    'Title of the collaborative activity':'collabTitle',
-                    'Name of the collaborating agency with contact details':'agencyName',
-                    'Participant Name':'participantName',
-                    'Year of Collaboration':'collabYear',
-                    'Duration':'duration',
-                    'Nature of the activity':'activityNature',
-                    'Year':'year',
+                Collaboration: {
+                    'Title of the collaborative activity': 'collabTitle',
+                    'Name of the collaborating agency with contact details': 'agencyName',
+                    'Participant Name': 'participantName',
+                    'Year of Collaboration': 'collabYear',
+                    'Duration': 'duration',
+                    'Nature of the activity': 'activityNature',
+                    'Year': 'year',
                 },
-                InvitedTalk:{
-                    'Title of Lecture/Academic Session':'lectureTitle',
-                    'Title of Seminar, etc.':'seminarTitle',
-                    'Organized by':'organizedBy',
-                    'Type':'isNat',
-                    'Nature':'nature',
-                    'Year':'year',
+                InvitedTalk: {
+                    'Title of Lecture/Academic Session': 'lectureTitle',
+                    'Title of Seminar, etc.': 'seminarTitle',
+                    'Organized by': 'organizedBy',
+                    'Type': 'isNat',
+                    'Nature': 'nature',
+                    'Year': 'year',
                 },
-                ConferenceOrganized:{
-                    'Program Title':'programTitle',
-                    'School Name':'schoolName',
-                    'Funded By':'fundedBy',
-                    'National / International':'isNational',
-                    'No of Participants':'noOfParticipants',
-                    'Year':'year',
+                ConferenceOrganized: {
+                    'Program Title': 'programTitle',
+                    'School Name': 'schoolName',
+                    'Funded By': 'fundedBy',
+                    'National / International': 'isNational',
+                    'No of Participants': 'noOfParticipants',
+                    'Year': 'year',
                 },
-                Fellowship:{
-                    'Name of the teacher awarded national/international fellowship/financial support':'teacherName',
-                    'Name of the award/fellowship':'awardName',
-                    'Awarding Agency':'awardingAgency',
-                    'Award Year':'awardYear',
-                    'National / International':'isNat',
-                    'Year':'year',
+                Fellowship: {
+                    'Name of the teacher awarded national/international fellowship/financial support': 'teacherName',
+                    'Name of the award/fellowship': 'awardName',
+                    'Awarding Agency': 'awardingAgency',
+                    'Award Year': 'awardYear',
+                    'National / International': 'isNat',
+                    'Year': 'year',
 
                 },
-                Online:{
-                    'Program Title':'programTitle',
-                    'Organized by':'nameOfAttendedTeacher',
-                    'Duration From':'durationFrom',
-                    'Duration To':'durationTo',
-                    'Year':'year',
+                Online: {
+                    'Program Title': 'programTitle',
+                    'Organized by': 'nameOfAttendedTeacher',
+                    'Duration From': 'durationFrom',
+                    'Duration To': 'durationTo',
+                    'Year': 'year',
 
                 },
-                Financialsupport:{
-                    'Name of Conference':'nameOfConference',
-                    'Name of professional body Funds provided for':'feeprovider',
-                    'Amount of support':'amountOfSupport',
-                    'PAN No.':'pan',
-                    'Year':'year',
+                Financialsupport: {
+                    'Name of Conference': 'nameOfConference',
+                    'Name of professional body Funds provided for': 'feeprovider',
+                    'Amount of support': 'amountOfSupport',
+                    'PAN No.': 'pan',
+                    'Year': 'year',
                 },
-                Responsibilities:{
+                Responsibilities: {
                     'Name of the Committee': 'committeeName',
                     'Designation': 'designation',
                     'Hosting institute name': 'institute',
@@ -1177,33 +1180,33 @@ function initRoutes(app) {
                     'Funded By': 'fundedBy',
                     'National / International': 'isNational',
                     'Year': 'year',
-                },          
+                },
             }
 
-            let dateInputs = ["From","From Date", "To Date","Duration From","Duration To","Award Date","Enrolment Date"]
-               data.forEach((item)=>{
+            let dateInputs = ["From", "From Date", "To Date", "Duration From", "Duration To", "Award Date", "Enrolment Date"]
+            data.forEach((item) => {
                 Object.keys(excelObject[model]).forEach(key => {
-                    if(dateInputs.includes(key)){
-                        let d = new Date((item[key] - (25567 + 2))*86400*1000)
-                        fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
+                    if (dateInputs.includes(key)) {
+                        let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
+                        fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
                         sendData[excelObject[model][key]] = fullDate
                     }
-                    else{
+                    else {
                         sendData[excelObject[model][key]] = item[key]
                     }
                 })
-                const allData =  Object.assign(sendData, {userId: School })
+                const allData = Object.assign(sendData, { userId: School })
                 const obj = new models[model](allData);
-                obj.save(function(error){
-                    if(error){
+                obj.save(function (error) {
+                    if (error) {
                         res.status(500).send()
-                        console.log(error)  
+                        console.log(error)
                     }
                 })
             })
-             res.status(201).send(`Entry suceeed`)  
+            res.status(201).send(`Entry suceeed`)
         }
-        catch(err){
+        catch (err) {
             console.log(err);
             return res.status(500).send()
         }

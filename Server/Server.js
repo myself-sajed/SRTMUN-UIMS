@@ -10,7 +10,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const PORT = 4000;
+const PORT = 5000;
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -94,6 +94,10 @@ require('./utility/userAuthentication')(app, jwt)
 app.use(require('./utility/forgotPassword'));
 app.use(require('./utility/verifyOTP'));
 
+// pro (news) routes
+require('./routes/pro-routes/auth')(app, jwt)
+require('./routes/pro-routes/newsOperations')(app)
+
 
 
 // Database Configuration
@@ -165,6 +169,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     AAA: `./uploads/director-uploads/AAA-uploads/${filename}`,
     student: `./uploads/student-uploads/${filename}`,
     alumni: `./uploads/director-uploads/${filename}`,
+    news: `./uploads/news-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);

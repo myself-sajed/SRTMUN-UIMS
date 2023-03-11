@@ -666,14 +666,11 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
     }
 
-    useEffect(() => {
-        console.log('Tabname :', tabName)
-    }, [tabName])
+
 
     const handleChange = (event, value) => {
         console.log(event, value)
         setTabName(value.toString());
-        // Perform any necessary actions here
     };
 
 
@@ -709,10 +706,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                         <Wrapper title="2. Name of the Programs offered" className='mt-3'>
 
-                                            <NumberToTextField state={ugPrograms} setState={setUgPrograms} label="[A] Number of UG Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={ugPrograms} setState={setUgPrograms} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[A] Number of UG Programs offered" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "ugPrograms"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={ugPrograms}
                                                     setState={setUgPrograms} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="UG Programs offered"
@@ -720,10 +717,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                                 </AuditTable>
                                             </NumberToTextField>
-                                            <NumberToTextField state={pgPrograms} setState={setPgPrograms} label="[B] Number of PG Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={pgPrograms} setState={setPgPrograms} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[B] Number of PG Programs offered" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "pgPrograms"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={pgPrograms}
                                                     setState={setPgPrograms} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="PG Programs offered"
@@ -731,10 +728,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                                 </AuditTable>
                                             </NumberToTextField>
-                                            <NumberToTextField state={mphilProgramsSimple} setState={setMphilProgramsSimple} label="[C] Number of M.Phil Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={mphilProgramsSimple} setState={setMphilProgramsSimple} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[C] Number of M.Phil Programs offered" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "mphilProgramsSimple"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={mphilProgramsSimple}
                                                     setState={setMphilProgramsSimple} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="M.Phil Programs offered"
@@ -742,10 +739,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                                 </AuditTable>
                                             </NumberToTextField>
-                                            <NumberToTextField state={phdProgramsSimple} setState={setPhdProgramsSimple} label="[D] Number of Ph.D. Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={phdProgramsSimple} setState={setPhdProgramsSimple} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[D] Number of Ph.D. Programs offered" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "phdProgramsSimple"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={phdProgramsSimple}
                                                     setState={setPhdProgramsSimple} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="Ph.D. Programs offered"
@@ -753,10 +750,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                                 </AuditTable>
                                             </NumberToTextField>
-                                            <NumberToTextField state={diplomaPrograms} setState={setDiplomaPrograms} label="[E] Number of Diploma Programs offered" isForm={true} classes='my-3'
+                                            <NumberToTextField state={diplomaPrograms} setState={setDiplomaPrograms} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[E] Number of Diploma Programs offered" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "diplomaPrograms"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={diplomaPrograms}
                                                     setState={setDiplomaPrograms} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="Diploma Programs offered"
@@ -768,10 +765,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         </Wrapper>
 
                                         <Wrapper title="3. Name of the Programs introduced during the year" className='mt-3'>
-                                            <NumberToTextField state={programDuringYear} setState={setProgramDuringYear} label="Number of Programs offered during year" isForm={true} classes='my-3'
+                                            <NumberToTextField state={programDuringYear} setState={setProgramDuringYear} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Number of Programs offered during year" isForm={true} classes='my-3'
                                                 options={TableData.programs.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "programDuringYear"]}
                                             >
-                                                <AuditTable tableHead={TableData.programs.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programs.auditHead}
                                                     tableChildHead={TableData.programs.childHead} state={programDuringYear}
                                                     setState={setProgramDuringYear} cellAsInput={false}
                                                     options={TableData.programs.fieldOptions} isForm={true} editTitle="Programs offered during year"
@@ -782,7 +779,7 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         </Wrapper>
 
                                         <Wrapper title="4. Number of teaching posts sanctioned, filled and vacant" className='mt-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["cellAsInputTables", "teachingPosts"]} setState={setTeachingPosts} state={teachingPosts} >
-                                            <AuditTable tableHead={["Designation", "Sanctioned", "Filled", "Filled under CAS"]}>
+                                            <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={["Designation", "Sanctioned", "Filled", "Filled under CAS"]}>
 
                                                 <EditableTd state={teachingPosts} setState={setTeachingPosts} keyName='seniorProf' title='Senior Professor' />
                                                 <EditableTd state={teachingPosts} setState={setTeachingPosts} keyName='prof' title='Professor' />
@@ -805,9 +802,9 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         <Wrapper title="5. Faculty profile with name, qualification, designation, experience, nature of appointment (confirmed/ probation/temporary)" className='mt-3'  >
 
                                             {/* part A */}
-                                            <NumberToTextField state={appointmentGovtPost} setState={setAppointmentGovtPost} label="[A]  Appointed on Government Sanctioned Post (Enter number of post sanctioned under Government)" isForm={true} classes='my-3' options={TableData.appointmentGovtPost.fieldOptions}
+                                            <NumberToTextField state={appointmentGovtPost} setState={setAppointmentGovtPost} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[A]  Appointed on Government Sanctioned Post (Enter number of post sanctioned under Government)" isForm={true} classes='my-3' options={TableData.appointmentGovtPost.fieldOptions}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "appointmentGovtPost"]} >
-                                                <AuditTable tableHead={TableData.appointmentGovtPost.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.appointmentGovtPost.auditHead}
                                                     tableChildHead={TableData.appointmentGovtPost.childHead} state={appointmentGovtPost}
                                                     setState={setAppointmentGovtPost} cellAsInput={false}
                                                     options={TableData.appointmentGovtPost.fieldOptions} isForm={true} editTitle="Appointed on Government Sanctioned Post"
@@ -819,9 +816,9 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                             {/* part B */}
 
-                                            <NumberToTextField state={appointmentUniversityFund} setState={setAppointmentUniversityFund} label="[B]  Appointed from University Fund (Enter number of post sanctioned under University Fund)" isForm={true} classes='my-3' options={TableData.appointmentGovtPost.fieldOptions}
+                                            <NumberToTextField state={appointmentUniversityFund} setState={setAppointmentUniversityFund} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[B]  Appointed from University Fund (Enter number of post sanctioned under University Fund)" isForm={true} classes='my-3' options={TableData.appointmentGovtPost.fieldOptions}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "appointmentUniversityFund"]}>
-                                                <AuditTable tableHead={TableData.appointmentGovtPost.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.appointmentGovtPost.auditHead}
                                                     tableChildHead={TableData.appointmentGovtPost.childHead} state={appointmentUniversityFund}
                                                     setState={setAppointmentUniversityFund} cellAsInput={false}
                                                     options={TableData.appointmentGovtPost.fieldOptions}
@@ -832,7 +829,7 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                         <Wrapper title="6. List of Visiting Fellows/Teachers, Adjunct and Emeritus Professors" className='mt-3' input={listOfVisitingTeachers.input}>
 
-                                            <NumberToTextField state={listOfVisitingTeachers} setState={setListOfVisitingTeachers} label="Enter number of Fellows/Teachers, Adjunct and Emeritus Professors visited" isForm={true} classes='my-3'
+                                            <NumberToTextField state={listOfVisitingTeachers} setState={setListOfVisitingTeachers} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Fellows/Teachers, Adjunct and Emeritus Professors visited" isForm={true} classes='my-3'
                                                 options={[{ field: 'Text', keyName: "TeacherName", label: "Teacher Name" },
                                                 { field: 'Select', keyName: "Designation", label: "Choose Designation", options: ['Visiting', 'Adjunct', 'Emeritus'] },
                                                 { field: 'Text', keyName: "Qualification", label: "Qualification" },
@@ -840,7 +837,7 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                                 { field: 'Text', keyName: "InstituteAddress", label: "Institute Address", },
                                                 ]} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "listOfVisitingTeachers"]}>
 
-                                                <AuditTable tableHead={TableData.listOfVisitingTeachers.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.listOfVisitingTeachers.auditHead}
                                                     tableChildHead={TableData.listOfVisitingTeachers.childHead} state={listOfVisitingTeachers}
                                                     setState={setListOfVisitingTeachers} cellAsInput={false} options={[{ field: 'Text', keyName: "TeacherName", label: "Teacher Name" },
                                                     { field: 'Select', keyName: "Designation", label: "Choose Designation", options: ['Visiting', 'Adjunct', 'Emeritus'] },
@@ -856,14 +853,14 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                         <Wrapper title="7. Number of academic support staff (technical) and administrative staff sanctioned, filled and vacant" className='mt-3' >
 
-                                            <NumberToTextField state={academicSupportStaff} setState={setAcademicSupportStaff} label="Enter number of Staffs" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "academicSupportStaff"]}
+                                            <NumberToTextField state={academicSupportStaff} setState={setAcademicSupportStaff} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Staffs" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "academicSupportStaff"]}
                                                 options={[{ field: 'Text', keyName: "PostName", label: "Name of the Post" },
                                                 { field: 'Text', keyName: "SanctionedPost", label: "Number of Sanctioned Posts" },
                                                 { field: 'Text', keyName: "Filled", label: "Number of Filled Posts" },
                                                 { field: 'Text', keyName: "Vacant", label: "Number of Vacant Posts" },
                                                 ]}
                                             >
-                                                <AuditTable tableHead={TableData.academicSupportStaff.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.academicSupportStaff.auditHead}
                                                     tableChildHead={TableData.academicSupportStaff.childHead} state={academicSupportStaff}
                                                     setState={setAcademicSupportStaff} cellAsInput={false} options={[{ field: 'Text', keyName: "PostName", label: "Name of the Post" },
                                                     { field: 'Text', keyName: "SanctionedPost", label: "Number of Sanctioned Posts" },
@@ -877,10 +874,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         <Wrapper title="8. Information about research grants, projects completed and ongoing during the
                 year" className='mt-3' input={researchFundingAgency.input}>
 
-                                            <NumberToTextField state={researchFundingAgency} setState={setResearchFundingAgency} label="Enter number of research grants, projects completed and ongoing during the year" isForm={true} classes='my-3'
+                                            <NumberToTextField state={researchFundingAgency} setState={setResearchFundingAgency} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of research grants, projects completed and ongoing during the year" isForm={true} classes='my-3'
                                                 options={TableData.ResearchProject.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.ResearchProject.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ResearchProject.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'ResearchProject', school: directorUser?.department }} tableChildHead={TableData.ResearchProject.childHead}
                                                     state={researchFundingAgency} setState={setResearchFundingAgency}
                                                     isForm={true}
@@ -898,10 +895,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         <Wrapper title="9. Funds received at School level through DST-FIST; CSIR, UGC-SAP/CAS, DAE,
                         DBT, BRNS, ICSSR, AICTE, RGSTC" className='mt-3' input={ugcSap.input} >
 
-                                            <NumberToTextField state={ugcSap} setState={setUgcSap} label="Enter number of times Funds received" isForm={true} classes='my-3'
+                                            <NumberToTextField state={ugcSap} setState={setUgcSap} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of times Funds received" isForm={true} classes='my-3'
                                                 options={TableData.UgcSapCasDstFistDBTICSSR.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.UgcSapCasDstFistDBTICSSR.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.UgcSapCasDstFistDBTICSSR.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'UgcSapCasDstFistDBTICSSR', school: directorUser?.department }} tableChildHead={TableData.UgcSapCasDstFistDBTICSSR.childHead} fetchFrom='director' state={ugcSap} stateHead={TableData.UgcSapCasDstFistDBTICSSR.stateHead} setState={setUgcSap} isForm={true} editTitle='Funds received at School level through DST-FIST; CSIR, UGC-SAP/CAS, DAE,
                                         DBT, BRNS, ICSSR, AICTE, RGSTC'
                                                     options={TableData.UgcSapCasDstFistDBTICSSR.fieldOptions}>
@@ -915,10 +912,10 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                         <Wrapper title="10. Details of Research facilities available in the School and recognition received" className='mt-3' input={facilities.input}>
 
-                                            <NumberToTextField state={facilities} setState={setFacilities} label="Enter number of research facilities available" isForm={true} classes='my-3'
+                                            <NumberToTextField state={facilities} setState={setFacilities} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of research facilities available" isForm={true} classes='my-3'
                                                 options={TableData.facilities.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "facilities"]}
                                             >
-                                                <AuditTable tableHead={TableData.facilities.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.facilities.auditHead}
                                                     tableChildHead={TableData.facilities.childHead} state={facilities} setState={setFacilities} cellAsInput={false} isForm={true} editTitle='Details of Research facilities available in the School and recognition received'
                                                     options={TableData.facilities.fieldOptions} />
                                             </NumberToTextField>
@@ -935,12 +932,12 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                         <div >
                                             <Wrapper title="11. Publication Details" className='mt-3' input={publication.input}>
 
-                                                <NumberToTextField state={publication} setState={setPublication} label="Enter number of Publications" isForm={true} classes='my-3'
+                                                <NumberToTextField state={publication} setState={setPublication} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Publications" isForm={true} classes='my-3'
                                                     options={TableData.ResearchPaper.fieldOptions}>
 
 
 
-                                                    <AuditTable tableHead={TableData.ResearchPaper.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ResearchPaper.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'ResearchPaper', school: directorUser?.department }} tableChildHead={TableData.ResearchPaper.childHead} state={publication} setState={setPublication} isForm={true} editTitle='Publication Details'
                                                         options={TableData.ResearchPaper.fieldOptions}>
 
@@ -953,12 +950,12 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                             <Wrapper title="12. Patent Details" className='mt-3' input={patents.input}>
 
-                                                <NumberToTextField state={patents} setState={setPatents} label="Enter number of Patent Published" isForm={true} classes='my-3'
+                                                <NumberToTextField state={patents} setState={setPatents} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Patent Published" isForm={true} classes='my-3'
                                                     options={TableData.Patent.fieldOptions}>
 
 
 
-                                                    <AuditTable tableHead={TableData.Patent.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.Patent.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'Patent', school: directorUser?.department }} tableChildHead={TableData.Patent.childHead} state={patents} setState={setPatents} isForm={true} editTitle='Patent Details'
                                                         options={TableData.Patent.fieldOptions}>
 
@@ -971,12 +968,12 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
 
                                             <Wrapper title="13. Consultancy Details" className='mt-3' input={consultancy.input}>
 
-                                                <NumberToTextField state={consultancy} setState={setConsultancy} label="Enter number of Consultancies" isForm={true} classes='my-3'
+                                                <NumberToTextField state={consultancy} setState={setConsultancy} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Consultancies" isForm={true} classes='my-3'
                                                     options={TableData.ConsultancyServices.fieldOptions}>
 
 
 
-                                                    <AuditTable tableHead={TableData.ConsultancyServices.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ConsultancyServices.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'ConsultancyServices', school: directorUser?.department }} tableChildHead={TableData.ConsultancyServices.childHead} state={consultancy} setState={setConsultancy} isForm={true} editTitle='Consultancy Details'
                                                         options={TableData.ConsultancyServices.fieldOptions}>
 
@@ -990,12 +987,12 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                                             <Wrapper title="14. Details of teachers invited as resource persons for Refresher courses, Orientation
 courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.input}>
 
-                                                <NumberToTextField state={invitedTalks} setState={setInvitedTalks} label="Enter number of Invited Talks" isForm={true} classes='my-3'
+                                                <NumberToTextField state={invitedTalks} setState={setInvitedTalks} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Invited Talks" isForm={true} classes='my-3'
                                                     options={TableData.InvitedTalk.fieldOptions}>
 
 
 
-                                                    <AuditTable tableHead={TableData.InvitedTalk.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.InvitedTalk.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'InvitedTalk', school: directorUser?.department }} tableChildHead={TableData.InvitedTalk.childHead} state={invitedTalks} setState={setInvitedTalks} isForm={true} editTitle='Details of teachers invited as resource persons for Refresher courses, Orientation
         courses, Seminars, Workshops, Conferences'
                                                         options={TableData.InvitedTalk.fieldOptions}>
@@ -1009,10 +1006,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                             <Wrapper title="15. Program Participation Details" className='mt-3'>
 
-                                                <NumberToTextField state={onlineFDP} setState={setOnlineFDP} label="[A] Orientation / Refresher Course / Online FDP (Enter number of Orientation / Refresher Course / Online FDP)" isForm={true} classes='my-3'
+                                                <NumberToTextField state={onlineFDP} setState={setOnlineFDP} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[A] Orientation / Refresher Course / Online FDP (Enter number of Orientation / Refresher Course / Online FDP)" isForm={true} classes='my-3'
                                                     options={TableData.Online.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.Online.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.Online.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'Online', school: directorUser?.department }} tableChildHead={TableData.Online.childHead} state={onlineFDP} setState={setOnlineFDP} isForm={true} editTitle='Orientation / Refresher Course / Online FDP'
                                                         options={TableData.Online.fieldOptions}>
 
@@ -1020,10 +1017,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                                 </NumberToTextField>
 
-                                                <NumberToTextField state={financialSupport} setState={setFinancialSupport} label="[C] Financial Support To Attend Conferences (Enter number of Financial Support To Attend Conferences)" isForm={true} classes='my-3'
+                                                <NumberToTextField state={financialSupport} setState={setFinancialSupport} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[C] Financial Support To Attend Conferences (Enter number of Financial Support To Attend Conferences)" isForm={true} classes='my-3'
                                                     options={TableData.FinancialSupport.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.FinancialSupport.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.FinancialSupport.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'FinancialSupport', school: directorUser?.department }} tableChildHead={TableData.FinancialSupport.childHead} state={financialSupport} setState={setFinancialSupport} isForm={true} editTitle='Financial Support To Attend Conferences'
                                                         options={TableData.FinancialSupport.fieldOptions}>
 
@@ -1037,10 +1034,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                             <Wrapper title="16. Participation of teachers in various academic activities as members of committees" className='mt-3' input={academicActivityParticipation.input}>
 
-                                                <NumberToTextField state={academicActivityParticipation} setState={setAcademicActivityParticipation} label="Enter number of participation of teacher in academic activities" isForm={true} classes='my-3'
+                                                <NumberToTextField state={academicActivityParticipation} setState={setAcademicActivityParticipation} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of participation of teacher in academic activities" isForm={true} classes='my-3'
                                                     options={TableData.academicActivityParticipation.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'academicActivityParticipation']}
                                                 >
-                                                    <AuditTable tableHead={TableData.academicActivityParticipation.auditHead}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.academicActivityParticipation.auditHead}
                                                         tableChildHead={TableData.academicActivityParticipation.childHead} state={academicActivityParticipation}
                                                         setState={setAcademicActivityParticipation} cellAsInput={false}
                                                         isForm={true} editTitle='Participation of teachers in various academic activities as members of committees'
@@ -1051,12 +1048,12 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                             <Wrapper title="17. Awards / Prizes and recognitions received by teachers" className='mt-3' input={facultyAwards.input}>
 
-                                                <NumberToTextField state={facultyAwards} setState={setFacultyAwards} label="Enter number of Awards / Prices and recognitions" isForm={true} classes='my-3'
+                                                <NumberToTextField state={facultyAwards} setState={setFacultyAwards} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Awards / Prices and recognitions" isForm={true} classes='my-3'
                                                     options={TableData.AwardRecognition.fieldOptions}>
 
 
 
-                                                    <AuditTable tableHead={TableData.AwardRecognition.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.AwardRecognition.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'AwardRecognition', school: directorUser?.department }} tableChildHead={TableData.AwardRecognition.childHead}
                                                         state={facultyAwards} setState={setFacultyAwards} isForm={true} editTitle=' Awards / Prizes and recognitions received by teachers'
                                                         options={TableData.AwardRecognition.fieldOptions}>
@@ -1071,10 +1068,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                             {/* //Director fetch details */}
                                             <Wrapper title="18. Awards and Prizes received by students" className='mt-3' input={awardsAndPrizes.input} >
 
-                                                <NumberToTextField state={awardsAndPrizes} setState={setAwardsAndPrizes} label="Enter number of Awards and Prizes received by students" isForm={true} classes='my-3'
+                                                <NumberToTextField state={awardsAndPrizes} setState={setAwardsAndPrizes} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Awards and Prizes received by students" isForm={true} classes='my-3'
                                                     options={TableData.Award.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.Award.auditHead} fetchData={true} isForm={true} editTitle='Awards and Prizes received by students'
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.Award.auditHead} fetchData={true} isForm={true} editTitle='Awards and Prizes received by students'
                                                         fetchDetails={{ model: 'Award', school: directorUser?.department }} tableChildHead={TableData.Award.childHead} fetchFrom='director' state={awardsAndPrizes} stateHead={TableData.Award.stateHead} setState={setAwardsAndPrizes} options={TableData.Award.fieldOptions}>
 
                                                     </AuditTable>
@@ -1087,10 +1084,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                             {/* //Director fetch details */}
                                             <Wrapper title="19. Programs Organized" className='mt-3' >
 
-                                                <NumberToTextField state={schoolConference} setState={setSchoolConference} label="Enter number of Professional Development / Administrative Training Programs Organized" isForm={true} classes='my-3'
+                                                <NumberToTextField state={schoolConference} setState={setSchoolConference} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Professional Development / Administrative Training Programs Organized" isForm={true} classes='my-3'
                                                     options={TableData.TrainingProgramsOrganized.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.TrainingProgramsOrganized.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.TrainingProgramsOrganized.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'TrainingProgramsOrganized', school: directorUser?.department }} tableChildHead={TableData.TrainingProgramsOrganized.childHead} fetchFrom='director' state={schoolConference}
                                                         stateHead={TableData.TrainingProgramsOrganized.stateHead} setState={setSchoolConference} isForm={true} editTitle='Details of Seminars/ Conferences/Workshops organized'
                                                         options={TableData.TrainingProgramsOrganized.fieldOptions}
@@ -1100,10 +1097,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                                 </NumberToTextField>
 
-                                                <NumberToTextField state={schoolSeminarOrganized} setState={setSchoolSeminarOrganized} label="Enter number of Conferences / Seminar / Workshop Organized" isForm={true} classes='my-3'
+                                                <NumberToTextField state={schoolSeminarOrganized} setState={setSchoolSeminarOrganized} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Conferences / Seminar / Workshop Organized" isForm={true} classes='my-3'
                                                     options={TableData.ConferencesSemiWorkshopOrganized.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.ConferencesSemiWorkshopOrganized.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ConferencesSemiWorkshopOrganized.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'ConferencesSemiWorkshopOrganized', school: directorUser?.department }} tableChildHead={TableData.ConferencesSemiWorkshopOrganized.childHead} fetchFrom='director' state={schoolSeminarOrganized}
                                                         stateHead={TableData.ConferencesSemiWorkshopOrganized.stateHead} setState={setSchoolSeminarOrganized} isForm={true} editTitle='Details of Seminars/ Conferences/Workshops organized'
                                                         options={TableData.ConferencesSemiWorkshopOrganized.fieldOptions}
@@ -1119,10 +1116,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                             {/* //Director fetch details */}
                                             <Wrapper title="20. Detail of syllabus revision" className='mt-3' input={syllabusRevision.input} >
 
-                                                <NumberToTextField state={syllabusRevision} setState={setSyllabusRevision} label="Enter number of Syllabus Revision" isForm={true} classes='my-3'
+                                                <NumberToTextField state={syllabusRevision} setState={setSyllabusRevision} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Syllabus Revision" isForm={true} classes='my-3'
                                                     options={TableData.SyllabusRevision.fieldOptions}>
 
-                                                    <AuditTable tableHead={TableData.SyllabusRevision.auditHead} fetchData={true}
+                                                    <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.SyllabusRevision.auditHead} fetchData={true}
                                                         fetchDetails={{ model: 'SyllabusRevision', school: directorUser?.department }} tableChildHead={TableData.SyllabusRevision.childHead} fetchFrom='director' state={syllabusRevision} stateHead={TableData.SyllabusRevision.stateHead}
                                                         setState={setSyllabusRevision} options={TableData.SyllabusRevision.fieldOptions} editTitle="Detail of syllabus revision" isForm={true}>
 
@@ -1145,11 +1142,11 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         <Wrapper title="21. Courses in the syllabus which are identified as skill /entrepreneurship based
                     courses having attached activities during the semester" className='mt-3' input={employability.input} >
 
-                                            <NumberToTextField state={employability} setState={setEmployability} label="Enter number of Courses in the syllabus which are identified as skill /entrepreneurship based
+                                            <NumberToTextField state={employability} setState={setEmployability} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Courses in the syllabus which are identified as skill /entrepreneurship based
                         courses having attached activities during the semester" isForm={true} classes='my-3'
                                                 options={TableData.Employability.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.Employability.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.Employability.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'Employability', school: directorUser?.department }} tableChildHead={TableData.Employability.childHead} fetchFrom='director' state={employability}
                                                     stateHead={TableData.Employability.stateHead} setState={setEmployability} isForm={true} editTitle='Courses in the syllabus which are identified as skill /entrepreneurship based
                                         courses having attached activities during the semester'
@@ -1165,10 +1162,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="22. Value addition courses for imparting transferable and life skills offered offered" className='mt-3' input={valueAddedCourse.input} >
 
-                                            <NumberToTextField state={valueAddedCourse} setState={setValueAddedCourse} label="Enter number of Value added courses" isForm={true} classes='my-3'
+                                            <NumberToTextField state={valueAddedCourse} setState={setValueAddedCourse} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Value added courses" isForm={true} classes='my-3'
                                                 options={TableData.ValueAddedCource.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.ValueAddedCource.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ValueAddedCource.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'ValueAddedCource', school: directorUser?.department }} tableChildHead={TableData.ValueAddedCource.childHead} fetchFrom='director' state={valueAddedCourse} stateHead={TableData.ValueAddedCource.stateHead} setState={setValueAddedCourse} isForm={true} editTitle='Value addition courses for imparting transferable and life skills offered offered'
                                                     options={TableData.ValueAddedCource.fieldOptions}>
 
@@ -1183,7 +1180,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         <Wrapper title="23. Details of School incorporated topics/courses relevant to Professional Ethics, Gender,
                     Human Values, Environment and Sustainability into the Curriculum" className='mt-3' input={ethicsAdded.input}>
 
-                                            <NumberToTextField state={ethicsAdded} setState={setEthicsAdded} label="Enter number of Course added" isForm={true} classes='my-3'
+                                            <NumberToTextField state={ethicsAdded} setState={setEthicsAdded} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Course added" isForm={true} classes='my-3'
                                                 options={TableData.ethicsAdded.fieldOptions} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "ethicsAdded"]}
                                             ><AuditTable tableHead={TableData.ethicsAdded.auditHead}
                                                 tableChildHead={TableData.ethicsAdded.childHead} state={ethicsAdded}
@@ -1196,19 +1193,19 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="24. Program / Course Objectives & Outcomes" className='mt-3' input={programOutcomes.input}>
 
-                                            <NumberToTextField state={programOutcomes} setState={setProgramOutcomes} label="[A] Program Objectives and Outcomes (Enter number of programs)" isForm={true} classes='my-3'
+                                            <NumberToTextField state={programOutcomes} setState={setProgramOutcomes} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[A] Program Objectives and Outcomes (Enter number of programs)" isForm={true} classes='my-3'
                                                 options={TableData.programOutcomes.fieldOptions}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "programOutcomes"]}>
-                                                <AuditTable tableHead={TableData.programOutcomes.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.programOutcomes.auditHead}
                                                     tableChildHead={TableData.programOutcomes.childHead} state={programOutcomes}
                                                     setState={setProgramOutcomes} cellAsInput={false} isForm={true} editTitle='Program Objectives / Outcomes'
                                                     options={TableData.programOutcomes.fieldOptions} />
                                             </NumberToTextField>
 
 
-                                            <NumberToTextField state={courseOutcomes} setState={setCourseOutcomes} label="[B] Course Objectives and Outcomes (Enter number of Courses)" isForm={true} classes='my-3' options={TableData.courseOutcomes.fieldOptions}
+                                            <NumberToTextField state={courseOutcomes} setState={setCourseOutcomes} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[B] Course Objectives and Outcomes (Enter number of Courses)" isForm={true} classes='my-3' options={TableData.courseOutcomes.fieldOptions}
                                                 fileKeyName="proof" tableWithProof={true} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "courseOutcomes"]} >
-                                                <AuditTable tableHead={TableData.courseOutcomes.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.courseOutcomes.auditHead}
                                                     tableChildHead={TableData.courseOutcomes.childHead} state={courseOutcomes} options={TableData.courseOutcomes.fieldOptions} editTitle='Course Objectives / Outcomes' setState={setCourseOutcomes} cellAsInput={false} />
                                             </NumberToTextField>
 
@@ -1217,10 +1214,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="25. Details of students undertaking field Projects / Research projects / Internships" className='mt-3' input={projectAndInternships.input} >
 
-                                            <NumberToTextField state={projectAndInternships} setState={setProjectAndInternships} label="Enter number of Project / Research projects / Internships" isForm={true} classes='my-3'
+                                            <NumberToTextField state={projectAndInternships} setState={setProjectAndInternships} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Project / Research projects / Internships" isForm={true} classes='my-3'
                                                 options={TableData.ProjectsInternships.fieldOpions} >
 
-                                                <AuditTable tableHead={TableData.ProjectsInternships.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ProjectsInternships.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'ProjectsInternships', school: directorUser?.department }} tableChildHead={TableData.ProjectsInternships.childHead} fetchFrom='director' state={projectAndInternships} stateHead={TableData.ProjectsInternships.stateHead} setState={setProjectAndInternships} isForm={true} editTitle='Details of students undertaking field Projects / Research projects / Internships'
                                                     options={TableData.ProjectsInternships.fieldOpions} >
 
@@ -1256,10 +1253,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="28. Student profile programme-wise at UG and PG" className='mt-3' input={demandRatio.input} >
 
-                                            <NumberToTextField state={demandRatio} setState={setDemandRatio} label="Enter number of Student profile programme-wise at UG and PG" isForm={true} classes='my-3'
+                                            <NumberToTextField state={demandRatio} setState={setDemandRatio} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Student profile programme-wise at UG and PG" isForm={true} classes='my-3'
                                                 options={TableData.DemandRatio.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.DemandRatio.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.DemandRatio.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'DemandRatio', school: directorUser?.department }} tableChildHead={TableData.DemandRatio.childHead} fetchFrom='director' stateHead={TableData.DemandRatio.stateHead} state={demandRatio} setState={setDemandRatio} isForm={true} editTitle='Student profile programme-wise at UG and PG'
                                                     options={TableData.DemandRatio.fieldOptions} />
 
@@ -1270,10 +1267,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="29. Program-wise results of students" className='mt-3' input={yearWiseUGPG.input}>
 
-                                            <NumberToTextField state={yearWiseUGPG} setState={setYearWiseUGPG} label="Enter number of Year-wise results of students at UG and PG" isForm={true} classes='my-3'
+                                            <NumberToTextField state={yearWiseUGPG} setState={setYearWiseUGPG} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Year-wise results of students at UG and PG" isForm={true} classes='my-3'
                                                 options={TableData.yearWiseUGPG.fieldOptions}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "yearWiseUGPG"]}>
-                                                <AuditTable tableHead={TableData.yearWiseUGPG.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.yearWiseUGPG.auditHead}
                                                     tableChildHead={TableData.yearWiseUGPG.childHead} state={yearWiseUGPG}
                                                     setState={setYearWiseUGPG} cellAsInput={false} isForm={true} editTitle='Program-wise results of students'
                                                     options={TableData.yearWiseUGPG.fieldOptions} />
@@ -1283,10 +1280,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="30. JRF/SRF/Other fellowships details" className='mt-3' input={facultyJrfSrf.input}>
 
-                                            <NumberToTextField state={facultyJrfSrf} setState={setFacultyJrfSrf} label="Enter number of JRF/SRF/Other fellowships" isForm={true} classes='my-3'
+                                            <NumberToTextField state={facultyJrfSrf} setState={setFacultyJrfSrf} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of JRF/SRF/Other fellowships" isForm={true} classes='my-3'
                                                 options={TableData.JrfSrf.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.JrfSrf.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.JrfSrf.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'JrfSrf', school: directorUser?.department }} tableChildHead={TableData.JrfSrf.childHead} state={facultyJrfSrf} setState={setFacultyJrfSrf} isForm={true} editTitle='JRF/SRF/Other fellowships details'
                                                     options={TableData.JrfSrf.fieldOptions}>
 
@@ -1306,7 +1303,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                     tabName === '4' ? <div>
                                         <Wrapper title="31. Information about M.Phil programme" className='mt-3' input={mphilPrograms.input} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["cellAsInputTables", "mphilPrograms"]} state={mphilPrograms} setState={setMphilPrograms}>
 
-                                            <AuditTable tableHead={["Applications Received", "Intake", "Admissions", "Male", "Female", "Others", "Total"]}>
+                                            <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={["Applications Received", "Intake", "Admissions", "Male", "Female", "Others", "Total"]}>
 
 
                                                 <tr>
@@ -1336,7 +1333,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="32. Information about Ph.D. programme" className='mt-3' input={phdPrograms.input} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["cellAsInputTables", "phdPrograms"]} state={phdPrograms} setState={setPhdPrograms} >
 
-                                            <AuditTable tableHead={["Applications Received", "Intake", "Admissions", "Male", "Female", "Others", "Total"]}>
+                                            <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={["Applications Received", "Intake", "Admissions", "Male", "Female", "Others", "Total"]}>
 
 
 
@@ -1367,19 +1364,19 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="33. Program wise Student-Demand & Student-Teacher Ratio" className='mt-3' input={studentRatio.input} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={["schoolInfoTables", "studentRatio"]}>
 
-                                            <NumberToTextField state={studentRatio} setState={setStudentRatio} label="[A] Student-Demand Ratio (Enter number of Programs)" isForm={true} classes='my-3'
+                                            <NumberToTextField state={studentRatio} setState={setStudentRatio} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[A] Student-Demand Ratio (Enter number of Programs)" isForm={true} classes='my-3'
                                                 options={TableData.studentRatio.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.studentRatio.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.studentRatio.auditHead}
                                                     tableChildHead={TableData.studentRatio.childHead} state={studentRatio}
                                                     setState={setStudentRatio} cellAsInput={false} editTitle=" Student-Demand Ratio" options={TableData.studentRatio.fieldOptions} />
 
                                             </NumberToTextField>
 
-                                            <NumberToTextField state={teacherRatio} setState={setTeacherRatio} label="[B] Student-Teacher Ratio (Enter number of Programs)" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'teacherRatio']}
+                                            <NumberToTextField state={teacherRatio} setState={setTeacherRatio} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="[B] Student-Teacher Ratio (Enter number of Programs)" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'teacherRatio']}
                                                 options={TableData.teacherRatio.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.teacherRatio.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.teacherRatio.auditHead}
                                                     tableChildHead={TableData.teacherRatio.childHead} state={teacherRatio}
                                                     setState={setTeacherRatio} cellAsInput={false} editTitle="Student-Teacher Ratio" options={TableData.teacherRatio.fieldOptions} />
 
@@ -1389,7 +1386,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         </Wrapper>
 
                                         <Wrapper title="34. Number of students awarded M.Phil. & Ph.D. Degree" className='mt-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['cellAsInputTables', 'mphilPhd']} state={mphilPhd} setState={setMphilPhd} >
-                                            <AuditTable tableHead={["Degree", "Male", "Female", "Total"]}>
+                                            <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={["Degree", "Male", "Female", "Total"]}>
 
                                                 <EditableTd state={mphilPhd} setState={setMphilPhd} keyName='phd' title='Ph.D.' tableName='mphilphd' />
                                                 <EditableTd state={mphilPhd} setState={setMphilPhd} keyName='mphil' title='M.Phil.' tableName='mphilphd' />
@@ -1400,10 +1397,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="35. Exams Qualified (Number of students cleared Civil Services and Defense Services examinations, NET, SET, GATE and other competitive examinations)" className='mt-3' input={qualifiedExams.input} >
 
-                                            <NumberToTextField state={qualifiedExams} setState={setQualifiedExams} label="Enter number of Student qualified exam" isForm={true} classes='my-3'
+                                            <NumberToTextField state={qualifiedExams} setState={setQualifiedExams} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Student qualified exam" isForm={true} classes='my-3'
                                                 options={TableData.QualifiedExams.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.QualifiedExams.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.QualifiedExams.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'QualifiedExams', school: directorUser?.department }} tableChildHead={TableData.QualifiedExams.childHead} fetchFrom='director' stateHead={TableData.QualifiedExams.stateHead} state={qualifiedExams} setState={setQualifiedExams} isForm={true} editTitle='Qualified Exams'
                                                     options={TableData.QualifiedExams.fieldOptions} />
 
@@ -1416,10 +1413,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="36. Student progression / placement record: Number / percentage of students proceeded for higher studies Number / percentage of students placed" className='mt-3' >
 
-                                            <NumberToTextField state={progression} setState={setProgression} label="Enter number of Student Progressions to Higher Education" isForm={true} classes='my-3'
+                                            <NumberToTextField state={progression} setState={setProgression} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Student Progressions to Higher Education" isForm={true} classes='my-3'
                                                 options={TableData.ProgressionToHE.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.ProgressionToHE.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ProgressionToHE.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'ProgressionToHE', school: directorUser?.department }} tableChildHead={TableData.ProgressionToHE.childHead} fetchFrom='director' stateHead={TableData.ProgressionToHE.stateHead} state={progression} setState={setProgression} isForm={true} editTitle='Student Progression to Higher Education'
                                                     options={TableData.ProgressionToHE.fieldOptions} />
 
@@ -1427,10 +1424,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                             <p className='my-5'></p>
 
-                                            <NumberToTextField state={placement} setState={setPlacement} label="Enter number of Students placed" isForm={true} classes='my-3'
+                                            <NumberToTextField state={placement} setState={setPlacement} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Students placed" isForm={true} classes='my-3'
                                                 options={TableData.Placement.fieldOptions} qqq>
 
-                                                <AuditTable tableHead={TableData.Placement.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.Placement.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'Placement', school: directorUser?.department }} tableChildHead={TableData.Placement.childHead} fetchFrom='director' stateHead={TableData.Placement.stateHead} state={placement} setState={setPlacement} isForm={true} editTitle='Student profile programme-wise at UG and PG'
                                                     options={TableData.Placement.fieldOptions} />
 
@@ -1440,7 +1437,7 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         </Wrapper>
 
                                         <Wrapper title="37. Number of faculty who were awarded M.Phil., Ph.D., D.Sc. / D.Lit." className='mt-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['cellAsInputTables', 'facultyAwardsDegree']} state={facultyAwardsDegree} setState={setFacultyAwardsDegree} >
-                                            <AuditTable
+                                            <AuditTable setAutoSaveLoader={setAutoSaveLoader}
                                                 tableHead={["M.Phil.", "Ph.D.", "D.Sc.", "D.Lit."]}>
 
                                                 <tr>
@@ -1471,10 +1468,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
 
                                         <Wrapper title="39. List the distinguished alumni of the School (maximum 10)" className='mt-3' input={alumniList.input} >
 
-                                            <NumberToTextField state={alumniList} setState={setAlumniList} label="Enter number of Alumnis" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'alumniList']}
+                                            <NumberToTextField state={alumniList} setState={setAlumniList} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Alumnis" isForm={true} classes='my-3' fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'alumniList']}
                                                 options={TableData.alumniList.fieldOptions}
                                             >
-                                                <AuditTable tableHead={TableData.alumniList.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.alumniList.auditHead}
                                                     tableChildHead={TableData.alumniList.childHead} state={alumniList}
                                                     setState={setAlumniList} cellAsInput={false}
                                                     options={TableData.alumniList.fieldOptions} />
@@ -1486,18 +1483,18 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         <Wrapper title="40. Alumni activities for the year and alumni contribution in rupees" className='mt-3' input={alumniActivities.input}>
 
 
-                                            <NumberToTextField state={alumniActivities} setState={setAlumniActivities} label="Enter no of Alumni Activities" isForm={true} classes='my-3'
+                                            <NumberToTextField state={alumniActivities} setState={setAlumniActivities} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter no of Alumni Activities" isForm={true} classes='my-3'
                                                 options={TableData.alumniActivities.fieldOptions}
                                                 fileKeyName="proof" tableWithProof={true} fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'alumniActivities']} >
-                                                <AuditTable tableHead={TableData.alumniActivities.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.alumniActivities.auditHead}
                                                     tableChildHead={TableData.alumniActivities.childHead} state={alumniActivities} setState={setAlumniActivities} cellAsInput={false}
                                                     options={TableData.alumniActivities.fieldOptions} editTitle='Alumni activities' />
                                             </NumberToTextField>
 
-                                            <NumberToTextField state={alumniContribution} setState={setAlumniContribution} label="Enter number of Alumni Contributed" isForm={true} classes='my-3'
+                                            <NumberToTextField state={alumniContribution} setState={setAlumniContribution} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Alumni Contributed" isForm={true} classes='my-3'
                                                 options={TableData.AlumniContribution.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.AlumniContribution.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.AlumniContribution.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'AlumniContribution', school: directorUser?.department }} tableChildHead={TableData.AlumniContribution.childHead} fetchFrom='director' stateHead={TableData.AlumniContribution.stateHead} state={alumniContribution} setState={setAlumniContribution} isForm={true} editTitle='Alumni Contribution'
                                                     options={TableData.AlumniContribution.fieldOptions} />
 
@@ -1519,10 +1516,10 @@ courses, Seminars, Workshops, Conferences" className='mt-3' input={invitedTalks.
                                         {/* //Director fetch details */}
                                         <Wrapper title="41. Extension activities in the neighborhood community in terms of impact and sensitizing students to social issues and holistic development" className='mt-3' input={extentionActivities.input} >
 
-                                            <NumberToTextField state={extentionActivities} setState={setExtentionActivities} label="Enter number of Extension activities" isForm={true} classes='my-3'
+                                            <NumberToTextField state={extentionActivities} setState={setExtentionActivities} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Extension activities" isForm={true} classes='my-3'
                                                 options={TableData.ExtensionActivities.fieldOptions}>
 
-                                                <AuditTable tableHead={TableData.ExtensionActivities.auditHead} fetchData={true}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.ExtensionActivities.auditHead} fetchData={true}
                                                     fetchDetails={{ model: 'ExtensionActivities', school: directorUser?.department }} tableChildHead={TableData.ExtensionActivities.childHead} fetchFrom='director' stateHead={TableData.ExtensionActivities.stateHead} state={extentionActivities} setState={setExtentionActivities} isForm={true} editTitle='Extension activities in the neighborhood community'
                                                     options={TableData.ExtensionActivities.fieldOptions} />
 
@@ -1595,21 +1592,21 @@ Values, Tolerance and Harmony for the selected Academic Audit Year" className='m
                                         {/* Upload proof */}
                                         <Wrapper title="48. School Advisory Board" className='mt-3' input={sabMember.input}>
 
-                                            <NumberToTextField state={sabMember} setState={setSabMember} label="Enter number of Members" isForm={true} classes='my-3'
+                                            <NumberToTextField state={sabMember} setState={setSabMember} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Enter number of Members" isForm={true} classes='my-3'
                                                 options={TableData.sabMember.fieldOptions}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['schoolInfoTables', 'sabMember']} >
-                                                <AuditTable tableHead={TableData.sabMember.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.sabMember.auditHead}
                                                     tableChildHead={TableData.sabMember.childHead} state={sabMember}
                                                     setState={setSabMember} cellAsInput={false}
                                                     options={TableData.sabMember.fieldOptions} editTitle='Board Members' />
                                             </NumberToTextField>
 
-                                            <NumberToTextField state={meetingDetails} setState={setMeetingDetails} label="Meeting Details" isForm={true} classes='my-3'
+                                            <NumberToTextField state={meetingDetails} setState={setMeetingDetails} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Meeting Details" isForm={true} classes='my-3'
                                                 options={TableData.meetingDetails.fieldOptions}
                                                 fileKeyName="proof" tableWithProof={true}
                                                 fetchPreviousYears={true} allYearAAAData={allYearAAAData && allYearAAAData} tableToFetch={['fileFeedback', 'meetingDetails']}
                                             >
-                                                <AuditTable tableHead={TableData.meetingDetails.auditHead}
+                                                <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.meetingDetails.auditHead}
                                                     tableChildHead={TableData.meetingDetails.childHead} state={meetingDetails} setState={setMeetingDetails} cellAsInput={false}
                                                     options={TableData.meetingDetails.fieldOptions} editTitle='Meeting Details' />
                                             </NumberToTextField>

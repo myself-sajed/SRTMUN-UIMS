@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import GoBack from '../../../components/GoBack'
 import TableComponent from '../../../components/TableComponent'
 import sortByAcademicYear from '../../../js/sortByAcademicYear'
+import UserLoading from '../../../pages/UserLoading'
 import CASDataTable from '../../faculty/reports/cas/components/CASDataTable'
 import fetchData, { departmentWiseFetching } from '../js/fetchData'
 
@@ -22,10 +23,13 @@ const OtherDashboardData = () => {
 
     return (
         <div>
-            <GoBack backUrl={-1} pageTitle={`${pageTitle} of ${school} (${data?.data?.data?.length})`} />
+            <GoBack backUrl={-1} pageTitle={`${pageTitle} of ${school} 
+            ${!isLoading ? `(${data?.data?.data?.length})` : ''}  `} />
             <div className='mt-5'>
 
-                <TableComponent model={model && model} data={sortByAcademicYear(data?.data?.data, 'year')} takeFromModal={true} />
+                {
+                    isLoading ? <UserLoading title="Fetching data" /> : <TableComponent model={model && model} data={sortByAcademicYear(data?.data?.data, 'year')} takeFromModal={true} />
+                }
 
             </div>
         </div>
