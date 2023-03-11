@@ -139,7 +139,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
     return <div className="w-full">
         <form className="col g-3" onSubmit={publishNews} >
             <div className="my-3">
-                <label htmlFor="titleofthenews" className="form-label">Title / Headline of the News</label>
+                <label htmlFor="titleofthenews" className="form-label">Headline of the News ( बातमीचे शीर्षक )</label>
                 <input type="text" value={headline} onChange={(e) => { setHeadline(e.target.value) }} className="form-control" id="titleofthenews" placeholder='Title / Headline' required />
             </div>
 
@@ -148,9 +148,10 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined />
                     </p>
-                    <p className="ant-upload-text">Click file to this area to upload</p>
+                    <p className="ant-upload-text">Click file to this area to upload ( कृपया फोटो निवडण्यासाठी येथे क्लिक करा )</p>
                     <p className="ant-upload-hint">
                         Please ensure that the picture you are uploading is less than 1 MB in size.
+                        ( कृपया तुम्ही अपलोड करत असलेल्या फोटोचा आकार 1 MB पेक्षा कमी असल्याची खात्री करा. )
                     </p>
 
                 </Dragger>
@@ -163,7 +164,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
             </div>}
 
             <div className="my-3">
-                <label htmlFor="descofthenews" className="form-label">Description of the News (Optional)</label>
+                <label htmlFor="descofthenews" className="form-label">Description of the News ( बातमीचे वर्णन ) <span className='text-muted text-xs'>(Optional)</span></label>
                 <textarea type="text" value={desc} onChange={(e) => { setDesc(e.target.value) }} placeholder="News in brief..." className="form-control" id="descofthenews" />
             </div>
             <div className='flex items-center justify-start gap-2'>

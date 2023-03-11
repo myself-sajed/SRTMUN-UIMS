@@ -208,7 +208,7 @@ const SearchTable = ({ search, rangeDate, shouldFetchSearchData }) => {
         <span className='font-bold bg-blue-100 text-blue-700 rounded-lg py-1 px-3 md:text-base text-sm '>Search results {`(${searchNewsData?.length ? searchNewsData?.length : 0})`} </span>
 
         {
-            isLoading ? <UserLoading title="Getting search results" /> : <div>
+            newsLoading ? <UserLoading title="Getting search results" /> : <div>
                 <div className='table-responsive md:text-base text-sm' >
                     <table className="table mt-3 table-bordered ">
                         <NewsTableHead proUser={proUser} />

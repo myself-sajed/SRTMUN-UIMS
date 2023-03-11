@@ -41,7 +41,7 @@ const Header = ({ title = "News Bulletin", showSearch = true, backURL = -1, sear
         <div>
             <div className='py-1 border-b'>
 
-                <div className='flex flex-col md:flex-row md:items-center items-start justify-start gap-1'>
+                <div className='flex flex-col md:flex-row md:items-center items-start justify-between gap-1'>
 
                     <div className='flex items-center justify-start gap-2'>
                         <IconButton onClick={() => { navigate(backURL) }}>
@@ -53,7 +53,7 @@ const Header = ({ title = "News Bulletin", showSearch = true, backURL = -1, sear
                         <Filter search={search} setSearch={setSearch} setRangeDate={setRangeDate} />
                     </div>}
 
-                    <div className='float-right flex items-center justify-end gap-2 mr-2 md:ml-0'>
+                    <div className='float-right flex items-center justify-end gap-2 ml-2 md:ml-0'>
                         <div className='w-full float-right flex items-center justify-end'>
                             <div>
                                 <p>{formattedTime}</p>

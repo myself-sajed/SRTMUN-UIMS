@@ -240,7 +240,6 @@ const Index = () => {
 
                 </div>
 
-
                 <div className='mt-3 flex items-center justify-center'>
                     {/* LOGGED IN USERS */}
                     <LoggedInUsers />
