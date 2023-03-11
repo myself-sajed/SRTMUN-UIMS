@@ -352,7 +352,7 @@ const excelObject = {
         'fromDate': 'From',
         'toDate': 'To',
         'year': 'Year',
-    }
+    },
 }
 
 export default excelObject;

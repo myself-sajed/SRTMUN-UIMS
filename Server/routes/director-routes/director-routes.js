@@ -648,6 +648,13 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Percentage_of_content_added_or_replaced: srpocaor
         }
     }
+    //AlumniContribution
+    else if (model == 'AlumniContribution') {
+        const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
+        SendData = {
+            Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
+        }
+    }
 
     var alldata = null
     if (up) {
