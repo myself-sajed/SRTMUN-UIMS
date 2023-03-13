@@ -22,7 +22,6 @@ const newsOperations = (app) => {
 
             // creating slug
             const detectedLanguage = langdetect.detect(data.headline);
-            console.log("detectedLanguage", detectedLanguage);
             let slug;
             try {
                 if (detectedLanguage[0].lang === 'en') {
@@ -51,7 +50,6 @@ const newsOperations = (app) => {
                             res.send({ status: 'success', message: 'News published successfully' })
                         }
                         else {
-                            console.log('Failed to')
                             res.send({ status: 'error', message: 'Could not publish the news, try again' })
                         }
                     })
@@ -85,7 +83,6 @@ const newsOperations = (app) => {
         const { slug } = req.body
 
         NewsItem.findOne({ slug }).lean().then((news) => {
-            console.log('news', news)
             res.send({ status: 'success', data: news })
         }).catch((error) => {
             res.send({ status: 'error', message: 'Something went wrong...' })
@@ -150,7 +147,6 @@ const newsOperations = (app) => {
 
 
         } catch (error) {
-            console.log(error)
             res.send({ status: 'error', message: 'Something went wrong...' })
         }
 
@@ -193,7 +189,6 @@ const newsOperations = (app) => {
             if (err) {
                 res.send({ status: 'error', message: 'Something went wrong' });
             } else {
-                console.log(results)
                 res.send({ status: 'success', data: results });
             }
         });

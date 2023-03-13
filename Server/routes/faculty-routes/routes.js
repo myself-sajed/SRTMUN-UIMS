@@ -517,6 +517,8 @@ function initRoutes(app) {
                 journalName: data.journalName,
                 publicationYear: data.publicationYear,
                 issnNumber: data.issnNumber,
+                indexedIn: data.indexedIn,
+                indexData: data.indexData,
                 recLink: data.recLink,
                 year: data.year,
                 proof: req.file.filename,

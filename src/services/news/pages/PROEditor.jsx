@@ -143,6 +143,11 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                 <input type="text" value={headline} onChange={(e) => { setHeadline(e.target.value) }} className="form-control" id="titleofthenews" placeholder='Title / Headline' required />
             </div>
 
+            <div className="my-3">
+                <label htmlFor="descofthenews" className="form-label">Description of the News ( बातमीचे वर्णन ) <span className='text-muted text-xs'>(Optional)</span></label>
+                <textarea type="text" value={desc} onChange={(e) => { setDesc(e.target.value) }} placeholder="News in brief..." className="form-control" id="descofthenews" />
+            </div>
+
             <div className='my-3 w-full hover:border-blue-600 border-blue-300 border-2 border-dashed rounded-md cursor-pointer' onClick={() => document.getElementById('file').click()}>
                 <Dragger className='pointer-events-none border-none outline-none'>
                     <p className="ant-upload-drag-icon">
@@ -163,10 +168,6 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                 <div className='flex items-center justify-start gap-2'><span className='text-muted'>Selected File : </span> <span>{file.name || news.photoURL}</span></div> <IconButton onClick={() => setFile(null)}><DeleteRoundedIcon /></IconButton>
             </div>}
 
-            <div className="my-3">
-                <label htmlFor="descofthenews" className="form-label">Description of the News ( बातमीचे वर्णन ) <span className='text-muted text-xs'>(Optional)</span></label>
-                <textarea type="text" value={desc} onChange={(e) => { setDesc(e.target.value) }} placeholder="News in brief..." className="form-control" id="descofthenews" />
-            </div>
             <div className='flex items-center justify-start gap-2'>
                 {
                     !loading ? <div className="my-3">

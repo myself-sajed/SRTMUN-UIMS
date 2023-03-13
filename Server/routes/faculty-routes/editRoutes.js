@@ -640,6 +640,8 @@ function editRoutes(app) {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
                 publicationYear: data.publicationYear,
+                indexedIn: data.indexedIn,
+                indexData: data.indexData,
                 issnNumber: data.issnNumber,
                 year: data.year,
                 proof: req.file.filename,
@@ -673,6 +675,8 @@ function editRoutes(app) {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
                 publicationYear: data.publicationYear,
+                indexedIn: data.indexedIn,
+                indexData: data.indexData,
                 issnNumber: data.issnNumber,
                 year: data.year,
             }).then(function (data) {

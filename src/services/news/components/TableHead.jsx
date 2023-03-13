@@ -6,6 +6,7 @@ const NewsTableHead = ({ proUser }) => {
             <tr>
                 <th scope="col">Sr.</th>
                 <th scope="col">Date</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Headline</th>
                 <th scope="col">Brief</th>
                 {
