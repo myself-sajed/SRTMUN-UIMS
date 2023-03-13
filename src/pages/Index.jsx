@@ -180,8 +180,7 @@ const Index = () => {
             tokenId: 'faculty-token',
             loginUrl: '/sports-login'
         },
-
-
+       
     ]
 
     const sendFeedback = () => {
@@ -269,7 +268,7 @@ const Index = () => {
                     </div>
 
 
-                    <div className={`flex-wrap flex items-center mt-9 justify-between ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
+                    <div className={`flex-wrap flex items-center mt-9 gap-auto ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
                         {serviceList.map((item, index) => {
                             return <MainService data={item} key={index} />
                         })}

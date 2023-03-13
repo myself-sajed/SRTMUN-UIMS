@@ -25,7 +25,7 @@ function Awards({id, setState, yearFilter, schoolName, Heading}) {
  }, [data && data])
  
  return (
-   <AdminAcordinTable   Heading= {Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year_of_Award' module='director' />
+   <AdminAcordinTable   Heading= {Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year_of_Award' module='director' isLoading={isLoading} />
  );
 }
 

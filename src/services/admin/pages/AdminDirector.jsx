@@ -45,7 +45,7 @@ const AdminDirector = () => {
     },
     {
       element: <AlumniContribution id="alumnicontribution" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumni Contribution' />,
-      childData: childData?.alumnicontribution, filename: 'Alumni Contribution.csv', SendReq: "AlumniContribution", module: "director"
+      childData: childData?.alumnicontribution, filename: 'Alumni Contribution.csv', SendReq: "AlumniContribution", proof: "Upload_Proof", module: "director"
     },
     {
       element: <Awards id="awards" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Awards' />,
@@ -174,7 +174,7 @@ const AdminDirector = () => {
   return (
     <AdminDrower>
 
-      <div style={{ width: "100%", overflow: "hidden", background: "#9185b575" }} >
+      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <div className='col-12 p-1 col-md-4 col-lg-4'>
@@ -202,7 +202,7 @@ const AdminDirector = () => {
         </div>
         <div style={{ padding: "10px" }}>
 
-          <div style={{ border: "solid #4b0082 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "10px" }}>
+          <div style={{ border: "solid #822500 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "10px" }}>
 
             <div className='flex gap-auto flex-wrap'>
               {

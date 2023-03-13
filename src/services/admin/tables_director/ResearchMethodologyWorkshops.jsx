@@ -26,7 +26,7 @@ function ResearchMethodologyWorkshops({ id, setState, yearFilter, schoolName, He
     }, [data && data])
 
     return (
-        <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='year' module='director' />
+        <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='year' module='director' isLoading={isLoading} />
     );
 }
 export default ResearchMethodologyWorkshops;

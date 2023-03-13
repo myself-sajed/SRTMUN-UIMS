@@ -36,7 +36,7 @@ let filter = yearFilter === ""? null : {year: yearFilter}
 }, [data && data])
 
  return (
-      <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof="link" tableHead={tableHead} year='year' module='faculty'  />
+      <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof="link" tableHead={tableHead} year='year' module='faculty' isLoading={isLoading} />
  )
 }
 

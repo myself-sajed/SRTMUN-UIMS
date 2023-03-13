@@ -26,7 +26,7 @@ function TrainingProgramsOrganized({ id, setState, yearFilter, schoolName, Headi
   }, [data && data])
 
   return (
-    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year' module='director' />
+    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year' module='director' isLoading={isLoading} />
   );
 }
 export default TrainingProgramsOrganized;
