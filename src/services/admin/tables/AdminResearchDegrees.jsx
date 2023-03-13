@@ -10,9 +10,9 @@ const AdminResearchDegrees = () => {
 
             <>
 
-            <div> data disayalay</div>
+            {/* <div> data disayalay</div>
 
-                {/* <thead>
+                <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Full Name</th>

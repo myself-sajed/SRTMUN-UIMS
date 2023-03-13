@@ -49,6 +49,7 @@ const BooksAndChapters = () => {
                             var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
                             return dateB - dateA;
                         }).map((item, index) => {
+                            console.log(item)
                             return (
                                 <tr key={index}>
                                     <th scope="row">{index + 1}</th>
