@@ -1,9 +1,11 @@
 import Axios from 'axios'
 import toast from 'react-hot-toast'
 
-function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormOpen, isCAS=false) {
+function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormOpen, isCAS = false) {
 
     toast.success('Updating... Please wait.')
+
+    console.log('Form data is :', ...data)
 
     const url = `${process.env.REACT_APP_MAIN_URL}/api/edit/${model}`
 
@@ -12,7 +14,7 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
             toast.success('Item edited successfully')
             setLoading(false)
             setModal(false)
-            if(!isCAS){
+            if (!isCAS) {
                 setFormOpen(false)
             }
             refresh()
@@ -20,20 +22,20 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
         else {
             toast.error('Error editing item')
             setLoading(false)
-            if(!isCAS){
+            if (!isCAS) {
                 setFormOpen(false)
             }
             setModal(false)
         }
     }).catch((err) => {
         console.log('err', err)
-        if(!isCAS){
+        if (!isCAS) {
             setFormOpen(false)
         }
         setLoading(false)
         setModal(false)
         toast.error('Server error')
-            
+
     })
 
 }
