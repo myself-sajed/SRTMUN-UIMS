@@ -28,11 +28,8 @@ const Qualification = ({id, setState, yearFilter, schoolName}) => {
   }, [data && data])
 
   return (
-    <AdminAcordinTable  Heading='Qualification' data={data?.data} SendReq={SendReq} tableHead={tableHead} module='faculty'  />
-    // <div>
-    //   < AdminExcelExoprt data={data?.data} fileTitle="All Facultys Qualifications" SendReq={SendReq} />
-    //   <AdminTable data={data?.data} tableHead={tableHead} year="year" />
-    // </div>
+    <AdminAcordinTable  Heading='Qualification' data={data?.data} SendReq={SendReq} tableHead={tableHead} module='faculty' isLoading={isLoading} />
+    
   )
 }
 export default Qualification

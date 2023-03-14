@@ -457,6 +457,10 @@ const adminExcelObject = {
         "Amount_of_contribution": "Contribution Ammount in ₹",
         "Academic_Year": "Year of Contribution",
     },
+    //alumni
+    AlumniUsers: {
+        
+    }
 }
 
 export default adminExcelObject

@@ -25,11 +25,8 @@ const ResearchDegrees = ({id, setState, yearFilter, schoolName}) => {
   }, [data && data])
 
   return (
-      <AdminAcordinTable  Heading='Research Degrees' data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} module='faculty'  />
-    // <div>
-    //     < AdminExcelExoprt data={data?.data} fileTitle="All Faculties Research Degrees" module="faculty" SendReq={SendReq} />
-    //     <AdminTable  data={data?.data} tableHead={tableHead} year="awardDate" proof="proof" serviceName="faculty" />
-    // </div>
+      <AdminAcordinTable  Heading='Research Degrees' data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} module='faculty' isLoading={isLoading} />
+  
   )
 }
 

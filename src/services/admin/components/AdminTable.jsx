@@ -58,9 +58,10 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
             )}
           </tbody>
         </table>
+        {isLoading ? <Loader /> : ""}
+        {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
       </div>
-      {isLoading ? <Loader /> : ""}
-      {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
+      
     </>
   )
 }

@@ -1,6 +1,8 @@
 import { Avatar } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-query'
+import EmptyBox from '../../../components/EmptyBox'
+import Loader from '../../../components/Loader'
 import getReq from '../../../components/requestComponents/getReq'
 import AdminAcordinTable from '../components/AdminAcordinTable'
 
@@ -53,6 +55,8 @@ const Directors = ({id, setState, yearFilter, schoolName, Heading}) => {
                 }
               </tbody>
             </table>
+            {isLoading ? <Loader /> : ""}
+            {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
           </div>
         </AdminAcordinTable>
       )

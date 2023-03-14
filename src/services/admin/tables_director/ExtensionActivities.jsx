@@ -25,7 +25,7 @@ useEffect(() => {
 }, [data && data])
 
 return (
-  <AdminAcordinTable   Heading= {Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year_of_activity' module='director' />
+  <AdminAcordinTable   Heading= {Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Year_of_activity' module='director' isLoading={isLoading} />
 );
 }
 export default ExtensionActivities;

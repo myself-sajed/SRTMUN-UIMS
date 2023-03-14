@@ -129,7 +129,7 @@ const AdminDashboard = () => {
 
   return (
     <AdminDrower>
-      <div style={{ width: "100%", overflow: "hidden", background: "#9185b575" }} >
+      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
         <div className='table-responsive p-3' style={{ display: "flex", gap: "15px" }}>
           {
             categories?.map((item, index) => <button  onClick={() => {setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name)}} key={index} className={`adminDashbordCard ${activeButton === item.active  ? 'active-dashbord-card' : ''}`}  >
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
         <div>
           <div className='table-responsive' style={{ width: "100%", padding: "5px 20px 15px 20px", display: "flex" }}>
 
-            <div style={{ minWidth:"782px", padding: "10px 20px", background: "#dddddd", borderRadius: "20px", boxShadow: "7px 8px 7px #9185b5", display: "flex", gap: "13px", flexWrap: "wrap" }}>
+            <div style={{ minWidth:"782px", padding: "10px 20px", background: "#e3e3e3", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
               {
                 SubMenuCards?.map(ItemCards => <button onClick={()=>{setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name)}} className={`sub-menu-card ${activeButton === ItemCards.active  ? 'sub-menu-card-active' : ''}`}>
                   <div style={{ fontSize: "20px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>

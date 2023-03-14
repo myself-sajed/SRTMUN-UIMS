@@ -28,10 +28,8 @@ const Collaborations = ({id, setState, yearFilter, schoolName, Heading}) => {
   }, [data && data])
 
   return (
-    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty'  />
-    // <div>
-    //   < AdminExcelExoprt data={data?.data} fileTitle='Collaboration' module='faculty' SendReq={SendReq} />
-    // </div>
+    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty' isLoading={isLoading} />
+    
   )
 }
 

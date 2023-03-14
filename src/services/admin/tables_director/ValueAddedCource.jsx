@@ -25,7 +25,7 @@ function ValueAddedCource({ id, setState, yearFilter, schoolName, Heading }) {
   }, [data && data])
 
   return (
-    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Academic_year' module='director' />
+    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Academic_year' module='director' isLoading={isLoading} />
   );
 }
 export default ValueAddedCource;

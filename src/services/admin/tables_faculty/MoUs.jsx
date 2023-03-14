@@ -22,7 +22,7 @@ const MoUs = ({id, setState}) => {
 
   return (
     <div>
-      < AdminExcelExoprt data={data?.data} fileTitle='Research Degrees' module='faculty' SendReq={SendReq} />
+      < AdminExcelExoprt data={data?.data} fileTitle='Research Degrees' module='faculty' SendReq={SendReq} isLoading={isLoading} />
     </div>
   )
 }

@@ -10,7 +10,7 @@ function QualifiedExams({ id, setState, yearFilter, schoolName, Heading }) {
     const SendReq = 'QualifiedExams';
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { Acadmic_year: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { Acadmic_year: yearFilter, SchoolName: schoolName }
+    let filter = yearFilter === '' && schoolName === '' ? {AlumniId:{$exists:true ,$ne:"undefined"}} : yearFilter !== '' && schoolName === '' ? { Acadmic_year: yearFilter, AlumniId:{$exists:true ,$ne:"undefined"} } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"} } : { Acadmic_year: yearFilter, SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"} }
 
     const params = { model: SendReq, id: '', module, filter, }
 

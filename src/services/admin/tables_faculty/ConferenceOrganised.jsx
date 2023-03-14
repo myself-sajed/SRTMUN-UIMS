@@ -38,7 +38,7 @@ const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading}) =>
   }, [data && data])
 
   return (
-    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty'  />
+    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty' isLoading={isLoading} />
   )
 }
 

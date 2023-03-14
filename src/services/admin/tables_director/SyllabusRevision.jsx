@@ -25,7 +25,7 @@ function SyllabusRevision({ id, setState, yearFilter, schoolName, Heading }) {
   }, [data && data])
 
   return (
-    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Academic_Year' module='director' />
+    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} proof='Upload_Proof' tableHead={tableHead} year='Academic_Year' module='director' isLoading={isLoading} />
   );
 }
 
