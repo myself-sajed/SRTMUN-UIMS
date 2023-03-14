@@ -45,7 +45,7 @@ const MoUsFaculty = () => {
         e.preventDefault();
 
         setLoading(true)
-        addReq({ SchoolName: user?.department, FacultyID: user?._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setLoading, module)
+        addReq({ SchoolName: user?.department, userId: user?._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setLoading, module)
     }
 
     // make states together

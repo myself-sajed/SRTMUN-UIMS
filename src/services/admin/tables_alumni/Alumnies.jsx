@@ -36,7 +36,8 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
                 <th>School</th>
                 <th>Gender</th>
                 <th>Email</th>
-                <th>Designation</th>
+                <th>Programmes Graduated</th>
+                <th>Last progamme Graduated at</th>
   
               </tr>
             </thead>
@@ -46,10 +47,11 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
                   <td>{index + 1}</td>
                   <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/director`} /></td>
                   <td>{`${item.salutation} ${item.name}`}</td>
-                  <td>{item.department}</td>
+                  <td>{item.schoolName}</td>
                   <td>{item.gender}</td>
                   <td>{item.email}</td>
-                  <td>{item.designation}</td>
+                  <td>{item.programGraduated.map(program=>`${program}, `)}</td>
+                  <td>{item.doCompleted}</td>
                 </tr>
                 )
               }

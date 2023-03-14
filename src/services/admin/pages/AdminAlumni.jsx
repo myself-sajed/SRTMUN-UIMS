@@ -43,7 +43,7 @@ const AdminAlumni = () => {
   ]
   return (
     <AdminDrower>
-      <div style={{ width: "100%", background: "#b5968575" }} >
+      <div style={{ width: "100%", background: "#b5968575", minHeight: "68vh" }} >
       <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <div className='col-12 p-1 col-md-4 col-lg-4'>

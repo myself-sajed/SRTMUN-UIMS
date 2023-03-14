@@ -458,8 +458,12 @@ const adminExcelObject = {
         "Academic_Year": "Year of Contribution",
     },
     //alumni
-    AlumniUsers: {
-        
+    AlumniUser: {
+        "name": "Name",
+        "department": "School",
+        "gender": "Gender",
+        "email": "Email",
+        "designation": "Designation",
     }
 }
 
