@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Chart as ChartJs, ArcElement, Title, Legend, Tooltip } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Doughnut, Pie } from 'react-chartjs-2';
 import AdminDrower from './AdminDrower';
 import getDocumentCount from '../../../components/requestComponents/getDocumentCount';
 
@@ -85,24 +85,72 @@ const AdminDashboard = () => {
           data: [
             compCount, chemiCount, managementCount, eduCount, mathCount, phyCount, socialCount, earthCount, lifeCount, pharmaCount, mediaCount, fineCount, langCount, managementLaturCount, techLaturCount, socialLaturCount,
           ],
-          backgroundColor: ["#ea5545","#f46a9b","#ef9b20","#edbf33","#ede15b","#bdcf32","#87bc45","#27aeef","#b33dc6","#e60049","#0bb4ff","#50e991","#e6d800","#9b19f5","#ffa300","#dc0ab4",],
-          hoverOffset: 4,
+          backgroundColor: ["#FADADD","#F08080","#FFDAB9","#FFFACD","#FFFFE0","#98FB98","#B0E0E6","#87CEEB","#E6E6FA","#D8BFD8","#FFE4E1","#FDF5E6","#FAEBD7","#FFFFF0","#F5F5DC","#D3D3D3",],
+          borderColor: ["#F5A3AC","#CD5C5C","#FFC58A","#F0E68C","#EEDC82","#9ACD32","#ADD8E6","#6495ED","#BA55D3","#B57EDC","#FFC0CB","#ECD5C5","#FFE4B5","#F0E68C","#F5DEB3","#C0C0C0",],
+          hoverOffset: 5,
+          borderWidth: 2,
+          cutout: "75%",
+          borderRadius: 15,
+          offset: 8,
         },
     ],
   };
 
   const options = {
+    layout:{padding: 30},
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        display: false,
+        // position: 'right',
       },
       title: {
-        display: true,
-        text: `${activeName}`,
+        display: false,
+        // text: `${activeName}`,
       },
     },
   };
+
+  const DoughnutLabelsLine = {
+    id: "doughnutLabelsLine",
+    afterDraw(chart, args, options) {
+      const {ctx, chartArea:{top, bottom, left, right, width, height}} = chart;
+          const a = chart.getDatasetMeta(0).data[0].x
+          const b = chart.getDatasetMeta(0).data[0].y
+          ctx.fillText(chart.data.datasets[0].label,a,b)
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = '12px Arial';
+          ctx.fillStyle = "gray";
+      chart.data.datasets.forEach((dataset, i) => {
+        chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+          
+          if(dataset.data[index]!==0){
+            //line
+              const {x, y} = datapoint.tooltipPosition();
+              const halfWidth = width / 2;
+              const halfHeight = height / 2;
+              const xLine = x >= halfWidth ? x+40: x-40;
+              const yLine = y >= halfHeight ? y+40: y-40;
+              const extraLine = x >= halfWidth ? 20: -20;
+              ctx.beginPath();
+              ctx.moveTo(x , y );
+              ctx.lineTo(xLine , yLine );
+              ctx.lineTo(xLine+ extraLine , yLine );
+              ctx.strokeStyle ="gray";
+              ctx.stroke();
+            //labels
+              const halfTextWidth = ctx.measureText(chart.data.labels[index]).width/2;
+              const extraPadding = x >= halfWidth ? halfTextWidth+5 : -(halfTextWidth+5);
+              
+              ctx.fillText(chart.data.labels[index],  xLine + extraLine +extraPadding, yLine);
+          }
+        })
+      });
+    }
+  }
+
+  const plugins = [DoughnutLabelsLine];
 
   useEffect(() => {
     getDocumentCount({ model: 'User', setState: setFacultyCount })
@@ -165,7 +213,7 @@ const AdminDashboard = () => {
 
         <section className='section-pie'>
         <div >
-         <Pie data={data} options={options} style={{maxHeight:"550px"}} />
+         <Doughnut data={data} options={options} plugins={plugins} style={{maxHeight:"550px"}} />
          </div>
         </section>
 

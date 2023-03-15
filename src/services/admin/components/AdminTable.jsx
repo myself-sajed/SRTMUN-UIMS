@@ -32,7 +32,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
 
       <div className='table-responsive' style={{height: "100%" }}>
         <table class="table" >
-          <thead class="sticky-top" style={{ background: "#7f30b9", color: '#FFF' }}>
+          <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
             <tr>
               {
                 Object.values(tableHead)?.map(item => {
@@ -53,7 +53,6 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
               {
                 proof ? proof == "link" ? <td><a href={row[proof]} target="_blank" style={{ color: "blue" }}>{row[proof]}</a></td> : <td><FileViewer fileName={row[proof]} serviceName={serviceName} /></td> : ""
               }
-
             </tr>
             )}
           </tbody>

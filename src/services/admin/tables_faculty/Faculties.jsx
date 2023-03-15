@@ -30,7 +30,7 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
     <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >
       <div className='table-responsive' style={{height: "100%" }}>
         <table class="table">
-          <thead class="sticky-top" style={{ background: "#4b0082cc", color: '#FFF' }}>
+          <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
             <tr>
               <th>Sr. No.</th>
               <th>profile Pic</th>
