@@ -31,7 +31,7 @@ const dashboardCards = [
     },
     {
         id: 2,
-        title: 'Student',
+        title: 'Students',
         countModelName: 'StudentCount',
         color: 'orange',
         url: `/dashboard/select-department/students`,
@@ -121,24 +121,42 @@ const dashboardCards = [
 
 ]
 
+
 const Dashboard = () => {
 
     const newParam = { school: false }
-    const { data, isLoading, isError, } = useQuery([newParam.school, newParam],
+    const { data } = useQuery([newParam.school, newParam],
         () => { return fetchSchoolData(newParam) })
 
+    const [localData, setLocalData] = useState(null)
+
     useEffect(() => {
-        console.log('Data in dashboard is : ', data?.data?.data)
+
+        setLocalData(JSON.parse(localStorage.getItem('dashboardData')) || null)
+        console.log('dashboardData', localStorage.getItem('dashboardData'))
+
+    }, [])
+
+    useEffect(() => {
+
+        if (data) {
+            const filteredData = data?.data?.data
+            delete filteredData['Alumni']
+            delete filteredData['Student']
+            localStorage.setItem('dashboardData', JSON.stringify(filteredData))
+        }
+
     }, [data])
 
     return (
+
         <div>
 
 
 
             {
-                data?.data?.data ? <div className='flex items-center justify-between flex-wrap gap-8'>
-                    <DashboardCard data={data?.data?.data} />
+                localData ? <div className='flex items-center justify-between flex-wrap gap-8'>
+                    <DashboardCard data={localData} />
                 </div> : <div className='flex items-center justify-between flex-wrap gap-8'>
                     <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
                     <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
@@ -172,8 +190,8 @@ const DashboardCard = ({ data }) => {
                         onClick={() => { card.url && navigate(card.url) }}>
                         <div className='w-full'>
                             <div className='flex items-start justify-start gap-2 flex-col'>
-                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-4xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
-                                <p className='text-center'>{card.title}</p>
+                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-4xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
+                                <p className='text-center '>{card.title}</p>
                             </div>
                         </div>
                     </div>

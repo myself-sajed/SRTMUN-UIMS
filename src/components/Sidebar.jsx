@@ -54,76 +54,76 @@ const Sidebar = () => {
 
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='profile'
-                        icon={<PersonIcon className='text-blue-900' />} title='Profile' />
+                            icon={<PersonIcon className='text-blue-900' />} title='Profile' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='qualification'
-                        icon={<SchoolIcon className='text-blue-900' />} title='Qualification' />
+                            icon={<SchoolIcon className='text-blue-900' />} title='Qualification' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='degrees'
-                        icon={<WorkspacePremiumIcon className='text-blue-900' />} title='Research Degrees' />
+                            icon={<WorkspacePremiumIcon className='text-blue-900' />} title='Research Degrees' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='appointment_held_prior'
-                        icon={<CoPresentRoundedIcon className='text-blue-900' />} title='Appointments prior joining' />
+                            icon={<CoPresentRoundedIcon className='text-blue-900' />} title='Appointments prior joining' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='posts_held_after'
-                        icon={<AirlineSeatReclineNormalRoundedIcon className='text-blue-900' />} title='Posts held after joining' />
+                            icon={<AirlineSeatReclineNormalRoundedIcon className='text-blue-900' />} title='Posts held after joining' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='lectures_seminars'
-                        icon={<TvRoundedIcon className='text-blue-900' />} title='Lectures' />
+                            icon={<TvRoundedIcon className='text-blue-900' />} title='Lectures' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='online_fdp'
-                        icon={<SentimentVerySatisfiedRoundedIcon className='text-blue-900' />} title='Orientation/Refresher Course/FDP' />
-                                                
+                            icon={<SentimentVerySatisfiedRoundedIcon className='text-blue-900' />} title='Orientation/Refresher Course/FDP' />
+
                         <SidebarTile active={active} setActive={setActive} small={false} state='conference_participated'
-                        icon={<ConnectWithoutContactIcon className='text-blue-900' />} title='Conference Participated' />
+                            icon={<ConnectWithoutContactIcon className='text-blue-900' />} title='Conference Participated' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='financialsupport'
-                        icon={<CurrencyRupeeIcon className='text-blue-900' />} title='Financial Support' />
+                            icon={<CurrencyRupeeIcon className='text-blue-900' />} title='Financial Support' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='conference_organized'
-                        icon={<DuoRoundedIcon className='text-blue-900' />} title='Conference Organized' />
+                            icon={<DuoRoundedIcon className='text-blue-900' />} title='Conference Organized' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='responsibilities'
-                        icon={<SchoolIcon className='text-blue-900' />} title='Responsibilities' />
+                            icon={<SchoolIcon className='text-blue-900' />} title='Responsibilities' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='research_projects'
-                        icon={<ScienceRoundedIcon className='text-blue-900' />} title='Research Projects' />
+                            icon={<ScienceRoundedIcon className='text-blue-900' />} title='Research Projects' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='research_papers'
-                        icon={<FindInPageRoundedIcon className='text-blue-900' />} title='Research Papers' />
+                            icon={<FindInPageRoundedIcon className='text-blue-900' />} title='Research Papers' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='book_and_chapters'
-                        icon={<MenuBookRoundedIcon className='text-blue-900' />} title='Books / chapters' />
-                                            
+                            icon={<MenuBookRoundedIcon className='text-blue-900' />} title='Books / chapters' />
+
                         <SidebarTile active={active} setActive={setActive} small={false} state='jrf_srf'
-                        icon={<PersonSearchRoundedIcon className='text-blue-900' />} title='JRF, SRF, PDF' />
+                            icon={<PersonSearchRoundedIcon className='text-blue-900' />} title='JRF, SRF, PDF' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='phd_awarded'
-                        icon={<CardMembershipRoundedIcon className='text-blue-900' />} title='Ph.D. Awarded' />
+                            icon={<CardMembershipRoundedIcon className='text-blue-900' />} title='Research Guidance' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='e_content_development'
-                        icon={<CloudIcon className='text-blue-900' />} title='E-Content Developed' />
+                            icon={<CloudIcon className='text-blue-900' />} title='E-Content Developed' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='patents'
-                        icon={<DocumentScannerRoundedIcon className='text-blue-900' />} title='Patents' />
+                            icon={<DocumentScannerRoundedIcon className='text-blue-900' />} title='Patents' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='consultancy'
-                        icon={<ConnectWithoutContactRoundedIcon className='text-blue-900' />} title='Consultancy' />
+                            icon={<ConnectWithoutContactRoundedIcon className='text-blue-900' />} title='Consultancy' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='collab'
-                        icon={<GroupRoundedIcon className='text-blue-900' />} title='Collaborations' />
+                            icon={<GroupRoundedIcon className='text-blue-900' />} title='Collaborations' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='award_and_recognition'
-                        icon={<EmojiEventsRoundedIcon className='text-blue-900' />} title='Award / Recognition' />
+                            icon={<EmojiEventsRoundedIcon className='text-blue-900' />} title='Award / Recognition' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='fellowship'
-                        icon={<AttachMoneyRoundedIcon className='text-blue-900' />} title='Fellowship' />
+                            icon={<AttachMoneyRoundedIcon className='text-blue-900' />} title='Fellowship' />
 
                         <SidebarTile active={active} setActive={setActive} small={false} state='invited_talk'
-                        icon={<HeadsetMicRoundedIcon className='text-blue-900' />} title='Invited Talk' />
-                                            
+                            icon={<HeadsetMicRoundedIcon className='text-blue-900' />} title='Invited Talk' />
+
                         <SidebarTile active={active} setActive={setActive} small={false} state='foreign_visit'
-                        icon={<TourRoundedIcon className='text-blue-900' />} title='Foreign Visit' />
+                            icon={<TourRoundedIcon className='text-blue-900' />} title='Foreign Visit' />
 
 
                     </div> :

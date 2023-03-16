@@ -1,9 +1,18 @@
 :root {
   --indigo-bg-color: #4B0082;
+  --top-color-brown: #822500;
+  /* #4B0082 */
   --sidebar-btn-hover-bg: #ccc7dd;
+  --sidebar-btn-hover-bg2: #ddcdc7;
+  /* #ccc7dd */
   --sidebar-bg-color: #69358fe8;
+  --sidebar-bg2-color: #8f4835e8;
+  /* #69358fe8 */
   --dashboard-card-bg-color: #d8d2e7;
+  --dashboard-card-bg2-color: #e7d7d2;;
+  /* #d8d2e7 */
   --dashboard-card-txt-color: #70329d;
+  /* #70329d */
 }
 
 
@@ -26,7 +35,7 @@
 .main-header {
   display: flex;
   justify-content: space-between;
-  background: var(--indigo-bg-color);
+  background: var(--top-color-brown);
   color: white;
   height: 50px;
   align-items: center;
@@ -37,123 +46,99 @@
 
 /*Admin Drower*/
 .sidebar-admin-drower {
-  background: var(--sidebar-bg-color);
-  box-shadow: 10px 0px 7px grey;
-  min-width: 200px;
-  max-width: 200px;
+  display:flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: var(--sidebar-bg2-color);
+  width: 100%;
   padding-top: 8px;
   font-size: 14px;
-  border-radius: 0 0 0 10px;
 }
 
 /*pie card*/
 .section-pie {
-  padding: 20px;
-  padding-bottom: 40px;
-  display: flex;
-  gap: 10px;
+    margin: 0px 20px 20px 20px;
+    padding: 10px;
+    background: #e3e3e3;
+    border-radius: 20px;
+    /* box-shadow: rgb(145 133 181) 7px 7px 8px; */
 }
-
-.pie-main-card {
-  background-color: #dddddd;
-  min-width: 330px;
-  border-radius: 20px;
-  box-shadow: 10px 10px 7px #9185b5
-}
-
-.pie-card-heding {
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--indigo-bg-color);
-  padding: 15px 20px;
-}
-
-.category-diclaration {
-  color: var(--indigo-bg-color);
-  font-weight: bold;
-}
-
 
 /*Dashboard*/
-.active {
-  background: var(--sidebar-btn-hover-bg) !important;
-  color: var(--indigo-bg-color) !important;
-}
 
 .DashbordButtons {
   display: flex;
   padding: 9px;
-  width: 100%;
+  min-width: 150px;
   background: inherit;
   padding: 8px;
   margin-bottom: 2px;
   color: #fff;
 }
 
-.DashbordButtons:hover {
-  background: var(--sidebar-btn-hover-bg) !important;
-  color: var(--indigo-bg-color) !important;
+.DashbordButtons:hover, .active {
+  background: var(--sidebar-btn-hover-bg2) !important;
+  color: var(--top-color-brown) !important;
 }
 
 .adminDashbordCard {
   height: 100px;
-  background: #764799db;
+  background: var(--sidebar-bg2-color);
   border-radius: 10px 0;
-  box-shadow: 7px 8px 8px #8f6daa;
+  /* box-shadow: 7px 8px 8px #8f6daa; */
   color: #fff;
   min-width: 200px;
   cursor: pointer;
 
 }
 
-.adminDashbordCard:hover {
-  background: #9176a5db !important;
-  color: var(--indigo-bg-color) !important;
+.adminDashbordCard:hover, .active-dashbord-card {
+  background: #a57d76db !important;
+  color: var(--top-color-brown) !important;
 }
 
-.abc {
-  min-width: 180px;
-  max-width: 205px;
-  min-height: 110px;
-  max-height: 110px;
-  background: var(--dashboard-card-bg-color);
+.sub-menu-card {
+  min-width: 135px;
+  max-width: 185px;
+  min-height: 90px;
+  max-height: 100px;
+  background: var(--dashboard-card-bg2-color);
   border-radius: 5px;
-  /* box-shadow: 7px 7px 7px grey; */
-  box-shadow: 10px 10px 7px -3px rgb(0 0 0 / 20%);
+  /* box-shadow: 10px 10px 7px -3px rgb(0 0 0 / 20%); */
   padding: 5px;
-  font-size: 18px;
-  font-weight: 900;
-  font-family: cursive;
-  color: var(--dashboard-card-txt-color)
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--top-color-brown);
+  border: 1px solid var(--top-color-brown);
 }
 
-.abc:hover {
-  color: var(--indigo-bg-color) !important;
+.sub-menu-card:hover, .sub-menu-card-active{
+  color: var(--top-color-brown) !important;
   background-color: #d1cccc !important;
 
 }
 
-
-
-
-
-/* Set the scrollbar color */
+/* Set the scrollbar color*/
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
+  height: 10px;
   /* width of the scrollbar */
 }
 
 /* Set the background color of the scrollbar */
 ::-webkit-scrollbar-track {
-  background-color: #ccc7dd;
+  background-color: #d2d1d4;
 }
 
 /* Set the color of the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
-  background-color: #afa8c4;
+  background-color: rgb(196, 196, 196);
+  border-radius: 10px;
+  border:gray 1px solid;
 }
 
 /* Set the color of the scrollbar thumb on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
   background-color: #8e85a8;
-}
+}*/

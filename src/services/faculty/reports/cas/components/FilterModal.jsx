@@ -8,6 +8,7 @@ import CASDataTable from '../components/CASDataTable'
 const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom }) => {
 
   const [filterData, setFilterData] = useState([state?.dataMap])
+
   const recalculateScore = () => {
     let totalScore = 0
 
@@ -20,6 +21,8 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
     setState({ ...state, totalScore })
   }
 
+
+
   return (
     <div className='w-full'>
       <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore() }} fullWidth maxWidth='md'>
@@ -30,7 +33,10 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
           <FilterCheckBox data={data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore() }} sx={{ textTransform: "none" }}>Done</Button>
+          <Button onClick={() => {
+            setDataFilterModal({ ...dataFilterModal, isOpen: false });
+            recalculateScore();
+          }} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -42,11 +48,6 @@ export default FilterModal
 
 const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fetchFrom }) => {
 
-  useEffect(() => {
-    console.log('Data :', data)
-  }, [data])
-
-
   const [isAllChecked, setIsAllChecked] = useState(false)
   const DataTable = isConsolidated ? TableData : CASDataTable
 
@@ -54,7 +55,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
   const checkAll = () => {
     let arr = state?.dataMap ? state?.dataMap : []
     let newArray = []
-    let serverArr = !isConsolidated ? data?.data?.data?.filter(function (filterable) { return filterable.year === year; }) : data
+    let serverArr = !isConsolidated ? data?.data?.data?.filter(function (filterable) { return filterable.year === year; }) : data?.filter(function (filterable) {
+      return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
+    })
 
     serverArr.forEach(item => {
       newArray.push(item._id)
@@ -84,11 +87,13 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
 
 
   const verifyCheckAll = () => {
-    console.log('I have been called')
+    console.log('Running verifyCheckAll')
     if (!isConsolidated) {
       data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     } else {
-      data && data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
+      data && data?.filter(function (filterable) {
+        return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
+      })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     }
   }
 
@@ -134,7 +139,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                 return <th scope="col"><label htmlFor="selectAll">{head}</label></th>
               })
             }
-            <th scope="col">Academic Year</th>
+            {
+              isConsolidated && <th scope="col">Academic Year</th>
+            }
 
           </tr>
         </thead>
@@ -157,7 +164,6 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
           </tbody> :
             <tbody>
               {data && data?.filter(function (filterable) {
-                console.log('Filterable :', filterable, filterable.Year_of_activity, year)
                 return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
               })?.map((item, index) => {
                 return <tr key={index}>

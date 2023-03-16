@@ -3,17 +3,17 @@ const FacultyUser = require('../models/faculty-models/userModel')
 const DirectorUser = require('../models/director-models/directorUser')
 const StudentUser = require('../models/student-models/studentUserSchema')
 const AlumniUser = require('../models/alumni-models/alumniUserSchema')
+const PROUser = require('../models/pro-models/proUser')
 
-const models = {FacultyUser,DirectorUser,StudentUser,AlumniUser}
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser }
 
-const userAuthentication = (app, jwt)=>{
+const userAuthentication = (app, jwt) => {
 
     // faculty-user authentication handler
     app.post("/api/user/authentication", (req, res) => {
 
         // get data from body
-        const {token, model, filterName} = req.body
-
+        const { token, model, filterName } = req.body
         const decoded = jwt.verify(token, "SRTMUN");
         const filter = { [filterName]: decoded[filterName] }
         models[model].findOne(filter).then(function (user) {

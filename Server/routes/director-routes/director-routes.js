@@ -322,7 +322,7 @@ router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (r
         console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;
-        const { SchoolName, FacultyID } = data
+        const { SchoolName, userId } = data
         const up = req.file.filename;
 
 
@@ -341,7 +341,7 @@ router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (r
             }
         }
 
-        var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName: SchoolName, FacultyID: FacultyID })
+        var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName, userId })
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
@@ -370,7 +370,7 @@ router.post('/faculty/getData', async (req, res) => {
 
     const { model, id } = req.body
     try {
-        const fetch = await models[model].find({ FacultyID: id }).sort({ $natural: -1 });
+        const fetch = await models[model].find({ userId: id }).sort({ $natural: -1 });
         res.status(200).send(fetch);
     } catch (err) {
         console.log(err);
@@ -646,6 +646,13 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Year_of_Implimentation: sryoim,
             Year_of_Revision: sryor,
             Percentage_of_content_added_or_replaced: srpocaor
+        }
+    }
+    //AlumniContribution
+    else if (model == 'AlumniContribution') {
+        const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
+        SendData = {
+            Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
         }
     }
 

@@ -13,8 +13,7 @@ import Text from '../inputs/Text';
 import Select from '../inputs/Select';
 import Axios from 'axios'
 
-
-export default function EditModal({ openModal, setOpenModal, editTitle, inputName, item, itemIndex, state, setState, type, id, isForm = true, options }) {
+export default function EditModal({ openModal, setAutoSaveLoader, setOpenModal, editTitle, inputName, item, itemIndex, state, setState, type, id, isForm = true, options, }) {
 
     const [formState, setFormState] = useState(null)
     const [proof, setProof] = useState(null)
@@ -42,6 +41,7 @@ export default function EditModal({ openModal, setOpenModal, editTitle, inputNam
             arrayOfElements.splice(itemIndex, 0, formState)
             setState({ ...state, [id]: { ...state[id], [`${id}-data`]: arrayOfElements } })
             toast.success('Item edited successfully.')
+            setAutoSaveLoader(true)
         }
         else if (isForm) {
             console.log('Formstate', formState)
@@ -66,6 +66,8 @@ export default function EditModal({ openModal, setOpenModal, editTitle, inputNam
                                     arrayOfElements.splice(itemIndex, 0, { ...current, proof: res.data.data['AAAFile'][0].filename })
                                     setState({ ...state, data: arrayOfElements })
                                     toast.success('Item edited successfully.')
+                                    setAutoSaveLoader(true)
+
 
                                     return { ...current, proof: res.data.data['AAAFile'][0].filename }
                                 })
@@ -97,6 +99,8 @@ export default function EditModal({ openModal, setOpenModal, editTitle, inputNam
                     arrayOfElements.splice(itemIndex, 0, formState)
                     setState({ ...state, data: arrayOfElements })
                     toast.success('Item edited successfully.')
+                    setAutoSaveLoader(true)
+
                 }
             } else {
                 let arrayOfElements = state['data']
@@ -104,6 +108,8 @@ export default function EditModal({ openModal, setOpenModal, editTitle, inputNam
                 arrayOfElements.splice(itemIndex, 0, formState)
                 setState({ ...state, data: arrayOfElements })
                 toast.success('Item edited successfully.')
+                setAutoSaveLoader(true)
+
             }
         }
         setProof(null)

@@ -21,9 +21,10 @@ const moUsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    FacultyID: {
-        type: String,
-        required: false
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "users"
     }
 
 })

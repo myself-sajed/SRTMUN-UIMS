@@ -1,7 +1,7 @@
 // icons
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+// import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
-import AdminResearchDegrees from "../tables/AdminResearchDegrees"
+// import AdminResearchDegrees from "../tables/AdminResearchDegrees"
 
 
 import AdminFaculty from '../pages/AdminFaculty';
@@ -11,15 +11,46 @@ import AdminStudent from '../pages/AdminStudent';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminMore from '../pages/AdminMore';
 
+import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
+// import EContentDeveloped from '../tables/EContentDeveloped';
+// import Faculties from '../table2/Faculties';
+// import Qualification from '../table2/Qualification';
+
 
 const navcom = [
-    {
-        element: <AdminResearchDegrees />, 
-        icon: <EmojiEventsIcon style={{ fontSize: '18px', color:"#1E3A8A" }} />, 
-        name: 'FacultyResearchDegrees', 
-        value: 'Research Degrees',  
-    },
-    // ,{},{},{},{},{},{},{},
+    // {
+    //     element: <Faculties />, 
+    //     value: 'Faculties',  
+    // },
+    // ,{
+
+    //     element: <Qualification />,
+    //     value: 'Qualifications',
+    // },
+    // {
+    //     element: <EContentDeveloped/>,
+    //     value:'E-Content Developed',
+    // },
+    // {
+    //     element: <A/>,
+    //     value:'',
+    // },
+    // {
+    //     element: <A/>,
+    //     value:'',
+    // },
+    // {
+    //     element: <A/>,
+    //     value:'',
+    // },
+    // {
+    //     element: <A/>,
+    //     value:'',
+    // },
+    // {
+    //     element: <A/>,
+    //     value:'',
+    // },
 ]
 
 

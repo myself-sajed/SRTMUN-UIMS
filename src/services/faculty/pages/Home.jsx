@@ -13,13 +13,15 @@ import useScroll from '../../../hooks/useScroll'
 import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks'
 import serverLinks from '../../../js/serverLinks'
-import { dashboardObj, ShowDashboard } from '../../../templates/faculty/cas-report/Header'
+import { dashboardObj } from '../../../templates/faculty/cas-report/Header'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import PlaylistAddRoundedIcon from '@mui/icons-material/PlaylistAddRounded';
 import ModeEditOutlineRoundedIcon from '@mui/icons-material/ModeEditOutlineRounded';
 import ShowModal from '../../../components/ShowModal'
+import { setActive } from '../../../redux/slices/ActiveSlice'
+import { setPage } from '../../../redux/slices/NavbarSlice'
 
 
 const Home = () => {
@@ -29,6 +31,7 @@ const Home = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [modalOpen, setModalOpen] = useState(false)
+
 
     useScroll()
     title("Faculty Home")
@@ -48,9 +51,60 @@ const Home = () => {
 
     }, [user])
 
-    useEffect(() => {
-        console.log('Academic Data useeffect is :', academicData)
-    }, [academicData])
+    const urlLinks = {
+        ResearchProject: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('research_projects')); dispatch(setPage('research_projects'));
+            }
+        },
+        ResearchPaper: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('research_papers')); dispatch(setPage('research_papers'));
+            }
+        },
+        InvitedTalk: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('invited_talk')); dispatch(setPage('invited_talk'));
+            }
+        },
+        ConferenceOrganized: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('conference_organized')); dispatch(setPage('conference_organized'));
+            }
+        },
+        EContentDeveloped: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('e_content_development')); dispatch(setPage('e_content_development'));
+            }
+        },
+        BookAndChapter: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('book_and_chapters')); dispatch(setPage('book_and_chapters'));
+            }
+        },
+        PhdAwarded: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('phd_awarded')); dispatch(setPage('phd_awarded'));
+            }
+        },
+        Patent: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('patents')); dispatch(setPage('patents'));
+            }
+        },
+        Online: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('online_fdp')); dispatch(setPage('online_fdp'));
+            }
+        },
+        Responsibilities: {
+            onClickFunc: () => {
+                navigate(siteLinks.facultyProfile.link); dispatch(setActive('responsibilities')); dispatch(setPage('responsibilities'));
+            }
+        },
+    }
+
+
 
 
     return (
@@ -94,8 +148,8 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="lg:w-[50%]">
-                                {academicData && <ShowDashboard directorData={academicData && academicData}
-                                    dashboardObj={dashboardObj['faculty']} color="blue" bgColor="blue" />}
+                                {academicData && <ShowLocalDashboard directorData={academicData && academicData}
+                                    dashboardObj={dashboardObj['faculty']} color="blue" bgColor="blue" urlLinks={urlLinks} />}
                             </div>
                         </div>
 
@@ -107,9 +161,6 @@ const Home = () => {
                         <div className='flex items-center justify-between mx-4 my-2'>
                             <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             <div className='flex items-center justify-end gap-2'>
-                                {/* <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { setModalOpen(true) }} >
-                                    <PlaylistAddRoundedIcon /> Add More Fields
-                                </button> */}
                                 <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { navigate(siteLinks.facultyProfile.link) }}>
                                     <ModeEditOutlineRoundedIcon /> Edit Profile
                                 </button>
@@ -185,4 +236,27 @@ const DetailTile = ({ keyName, value }) => {
         </div>
     )
 }
+
+const ShowLocalDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColor = "green", onClickFunc = null, urlLinks }) => {
+
+    const navigate = useNavigate()
+
+    return <div className='flex items-center justify-between gap-3 flex-wrap'>
+        {
+            directorData && dashboardObj.map((item, index) => {
+                return (
+                    directorData?.[item.model]?.length > 0) &&
+                    <div key={index} className={`bg-${bgColor}-50 p-2 border border-green-100 rounded-md flex-auto hover:bg-${bgColor}-100 cursor-pointer`} onClick={() => { urlLinks[item.model].onClickFunc() }} >
+                        <div className={`flex items-center justify-start gap-2 ${color.includes('#') ? `text-${color}` : `text-${color}-800`}`}>
+                            {item.icon} <span className='font-bold text-xl'>{directorData?.[item.model]?.length}</span>
+                        </div>
+                        <p className='md:text-base text-sm'>{item.title}</p>
+                    </div>
+            })
+        }
+    </div>
+}
+
+export { ShowLocalDashboard }
+
 

@@ -36,7 +36,7 @@ const OnlyNav = ({ children, user, heading, li, logout, userType = 'faculty' }) 
 
                 {/* USER */}
                 {
-                    user ?
+                    user && user !== 'donotshow' ?
                         <div className='flex items-center justify-end gap-2'>
 
                             {/* // name of the user */}
@@ -71,12 +71,14 @@ const OnlyNav = ({ children, user, heading, li, logout, userType = 'faculty' }) 
                                 </div>
 
                             </div>
-                        </div> :
-                        <div className="flex items-center justify-end gap-2">
-                            <span className='text-gray-400'>Connecting...</span>
-                            <Skeleton variant="circular" width={40} height={40} />
+                        </div> : user === 'donotshow' ? <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <Avatar src="/assets/male.jpg" className="cursor-pointer" />
+                        </button> :
+                            <div className="flex items-center justify-end gap-2">
+                                <span className='text-gray-400'>Connecting...</span>
+                                <Skeleton variant="circular" width={40} height={40} />
 
-                        </div>
+                            </div>
                 }
 
 

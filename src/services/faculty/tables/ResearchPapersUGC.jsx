@@ -28,6 +28,7 @@ const ResearchPapersUGC = () => {
     const [authorName, setAuthorName] = useState('')
     const [teacherName, setTeacherName] = useState('')
     const [journalName, setJournalName] = useState('')
+    const [indexLink, setIndexLink] = useState(null)
     const [pubYear, setPubYear] = useState('')
     const [issn, setIssn] = useState('')
     const [ugc, setUgc] = useState('')
@@ -40,6 +41,9 @@ const ResearchPapersUGC = () => {
 
     const user = useSelector(state => state.user.user);
 
+    // indexedIn management
+    const [indexData, setIndexData] = useState([])
+
     //functions
 
     function handleSubmit(e) {
@@ -50,6 +54,8 @@ const ResearchPapersUGC = () => {
         formData.append('paperTitle', paperTitle)
         formData.append('journalName', journalName)
         formData.append('publicationYear', pubYear)
+        formData.append('indexedIn', indexData?.join(", "))
+        formData.append('indexData', indexData)
         formData.append('issnNumber', issn)
         formData.append('recLink', ugc)
         formData.append('year', year)
@@ -69,6 +75,8 @@ const ResearchPapersUGC = () => {
         formData.append('itemId', itemToDelete._id)
         formData.append('proof', itemToDelete.proof)
         formData.append('paperTitle', paperTitle)
+        formData.append('indexedIn', indexData?.join(", "))
+        formData.append('indexData', indexData)
         formData.append('journalName', journalName)
         formData.append('publicationYear', pubYear)
         formData.append('issnNumber', issn)
@@ -85,11 +93,15 @@ const ResearchPapersUGC = () => {
     function pencilClick(itemId) {
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
+
+                console.log('Item clicked :', item)
+
                 setPaperTitle(item.paperTitle)
                 setJournalName(item.journalName)
                 setPubYear(item.publicationYear)
                 setIssn(item.issnNumber)
                 setUgc(item.recLink)
+                setIndexData(item.indexedIn ? item.indexedIn.split(',').map(item => item.trim()) : [])
                 setYear(item.year)
                 setProof(item.file)
 
@@ -106,6 +118,7 @@ const ResearchPapersUGC = () => {
         setTeacherName('')
         setJournalName('')
         setPubYear('')
+        setIndexData([])
         setIssn('')
         setUgc('')
         setYear('')
@@ -121,7 +134,9 @@ const ResearchPapersUGC = () => {
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-
+    useEffect(() => {
+        console.log('Index data :', indexData)
+    }, [indexData])
 
 
     return (
@@ -146,6 +161,21 @@ const ResearchPapersUGC = () => {
                         <Text title='ISSN Number' state={issn} setState={setIssn} />
                         <Year state={year} setState={setYear} />
 
+                        <div className="col-md-4">
+                            <label htmlFor="indexedIn">Indexed in</label>
+                            <div id="indexedIn" className="border mt-2 p-1 rounded-sm border-gray-400">
+                                <FormCheck setIndexData={setIndexData} indexData={indexData} id="Scopus" />
+                                <FormCheck setIndexData={setIndexData} indexData={indexData} id="Web of Science" />
+                                <FormCheck setIndexData={setIndexData} indexData={indexData} id="UGC Care List" />
+                            </div>
+                        </div>
+
+                        {/* {
+                            indexedIn && <Text title={indexedIn === 'UGC CARE listed' ? 'UGC CARE Journal Number' : `${indexedIn} Link`} state={indexLink} setState={setIndexLink} />
+                        } */}
+
+
+
                         <File space='col-md-10' title='Upload Proof' setState={setProof} />
 
                     </FormWrapper>
@@ -161,19 +191,21 @@ const ResearchPapersUGC = () => {
                             <th scope="col">Journal Name</th>
                             <th scope="col">Publication Year</th>
                             <th scope="col">ISSN Number</th>
+                            <th scope="col">Indexed in</th>
                             <th scope="col"><div className="w-20">Year</div></th>
                             <th scope="col">Proof</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.paperTitle}</td>
                                     <td>{item.journalName}</td>
                                     <td>{item.publicationYear}</td>
                                     <td>{item.issnNumber}</td>
+                                    <td>{item?.indexedIn}</td>
                                     <td>{item.year}</td>
                                     <td> <View proof={item.proof} /></td>
                                     <td><Actions item={item} model="ResearchPaper" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setResearchPaperModal} /></td>
@@ -196,3 +228,16 @@ const ResearchPapersUGC = () => {
 }
 
 export default ResearchPapersUGC
+
+
+const FormCheck = ({ id, setIndexData, indexData }) => {
+    return <div class="form-check">
+        <input class="form-check-input" type="checkbox"
+            onChange={(e) => {
+                e.target.checked ? setIndexData([...indexData, id]) : setIndexData(indexData.filter(item => item !== id))
+            }} checked={indexData?.includes(id)} id={id} />
+        <label class="form-check-label" htmlFor={id}>
+            {id}
+        </label>
+    </div>
+}

@@ -29,6 +29,11 @@ const extensionActivitysSchema = new mongoose.Schema({
     SchoolName: {
         type: String,
         required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "users"
     }
 })
 

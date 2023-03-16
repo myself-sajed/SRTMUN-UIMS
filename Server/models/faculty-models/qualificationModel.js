@@ -18,8 +18,9 @@ const qualificationModel = new mongoose.Schema({
         required: true,
     },
     userId: {
-        type: 'string',
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "users"
     },
     institute: {
         type: 'string',

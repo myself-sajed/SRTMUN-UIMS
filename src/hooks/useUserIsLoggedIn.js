@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Axios from 'axios'
-import { setAdminUser, setDirectorUser, setUser, setAlumniUser, setStudentUser } from "../redux/slices/UserSlice"
+import { setAdminUser, setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser } from "../redux/slices/UserSlice"
 const useUserIsLoggedIn = () => {
 
     const dispatch = useDispatch()
@@ -39,7 +39,7 @@ const useUserIsLoggedIn = () => {
         const faculty_token = localStorage.getItem('faculty-token')
         if (faculty_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token:faculty_token, model:'FacultyUser', filterName : 'username' } )
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: faculty_token, model: 'FacultyUser', filterName: 'username' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setUser(res.data.user))
@@ -65,7 +65,7 @@ const useUserIsLoggedIn = () => {
         const director_token = localStorage.getItem('director-token')
         if (director_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token:director_token, model:'DirectorUser', filterName : 'department' })
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: director_token, model: 'DirectorUser', filterName: 'department' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setDirectorUser(res.data.user))
@@ -92,7 +92,7 @@ const useUserIsLoggedIn = () => {
         const student_token = localStorage.getItem('student-token')
         if (student_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token:student_token, model:'StudentUser', filterName : 'email' } )
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: student_token, model: 'StudentUser', filterName: 'email' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setStudentUser(res.data.user))
@@ -118,7 +118,7 @@ const useUserIsLoggedIn = () => {
         const alumni_token = localStorage.getItem('alumni-token')
         if (alumni_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token:alumni_token, model:'AlumniUser', filterName : 'email' } )
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: alumni_token, model: 'AlumniUser', filterName: 'email' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setAlumniUser(res.data.user))
@@ -140,7 +140,34 @@ const useUserIsLoggedIn = () => {
 
         }
 
-        
+
+        // pro
+        const pro_token = localStorage.getItem('pro-token')
+        if (pro_token) {
+
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: pro_token, model: 'PROUser', filterName: 'username' })
+                .then(res => {
+                    if (res.data.status === 'authenticated') {
+                        dispatch(setProUser(res.data.user))
+                    }
+                    else {
+                        dispatch(setProUser(null))
+                        localStorage.removeItem('pro-token')
+                    }
+                })
+                .catch(err => {
+                    dispatch(setProUser(null))
+                    localStorage.removeItem('pro-token')
+
+                })
+        }
+        else {
+            dispatch(setProUser(null))
+            localStorage.removeItem('pro-token')
+
+        }
+
+
 
 
     }, [])

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { PieChart } from 'react-minimal-pie-chart';
+
+import { Chart as ChartJs, ArcElement, Title, Legend, Tooltip } from 'chart.js';
+import { Doughnut, Pie } from 'react-chartjs-2';
 import AdminDrower from './AdminDrower';
 import getDocumentCount from '../../../components/requestComponents/getDocumentCount';
 
@@ -18,8 +20,11 @@ import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import SchoolsProgram from '../../../components/SchoolsProgram';
+import getDepartmentWiseDocumentCount from '../../../components/requestComponents/getDocumentDepartmentwise';
 
-
+ChartJs.register(
+  ArcElement, Title, Legend, Tooltip
+)
 
 const AdminDashboard = () => {
 
@@ -40,53 +45,112 @@ const AdminDashboard = () => {
   const [fellowshipCount, setFellowshipCount] = useState(0);
 
   //student Count States
-  const [compStudentCount, setCompStudentCount] = useState(7);
-  const [chemiStudentCount, setChemiStudentCount] = useState(2);
-  const [managementStudentCount, setManagementStudentCount] = useState(3);
-  const [eduStudentCount, setEduStudentCount] = useState(4);
-  const [mathStudentCount, setMathStudentCount] = useState(5);
-  const [phyStudentCount, setPhyStudentCount] = useState(6);
-  const [socialStudentCount, setSocialStudentCount] = useState(7);
-  const [socialLaturStudentCount, setSocialLaturStudentCount] = useState(8);
-  const [earthStudentCount, setEarthStudentCount] = useState(9);
-  const [lifeStudentCount, setLifeStudentCount] = useState(10);
-  const [mediaStudentCount, setMediaStudentCount] = useState(11);
-  const [pharmaStudentCount, setPharmaStudentCount] = useState(12);
-  const [fineStudentCount, setFineStudentCount] = useState(13);
-  const [langStudentCount, setLangStudentCount] = useState(14);
-  const [managementLaturStudentCount, setManagementLaturStudentCount] = useState(15);
-  const [techLaturStudentCount, setTechLaturStudentCount] = useState(16);
+  const studentDPartObj = { compCount: 0, chemiCount: 0, managementCount: 0, eduCount: 0, mathCount: 0, phyCount: 0, socialCount: 0, socialLaturCount: 0, earthCount: 0, lifeCount: 0, mediaCount: 0, pharmaCount: 0, fineCount: 0, langCount: 0, managementLaturCount: 0, techLaturCount: 0,}
 
+  const [ departmentWiseStudentCount, setDepartmentWiseStudentCount] = useState(studentDPartObj);
+
+  const { compCount, chemiCount, managementCount, eduCount, mathCount, phyCount, socialCount, socialLaturCount, earthCount, lifeCount, mediaCount, pharmaCount, fineCount, langCount, managementLaturCount, techLaturCount,}= departmentWiseStudentCount
+  
+  const [activeButton, setActiveButton] = useState("faculty");
+  const [activeModel, setActiveModel] = useState("User");
+  const [activeProperty, setActiveProperty] = useState("department");
+  const [activeName, setActiveName] = useState("Faculties");
 
   const categories = [
-    { name: "Faculties", title: `Faculties ${facltyCount}`, value: facltyCount, color: "#9185b5", icon: <PersonRoundedIcon style={{ fontSize: '35px', color: "#4B0082", }} /> },
-    { name: "Directors", title: `Directors ${directorCount}`, value: directorCount, color: "#c2bdd1", icon: <LocalLibraryRoundedIcon style={{ fontSize: '35px', color: "#4B0082", }} /> },
-    { name: "Alumnis", title: `Alumnis ${alumniCount}`, value: alumniCount, color: "#6e44d1", icon: <BoyRoundedIcon style={{ fontSize: '35px', color: "#4B0082", }} /> },
-    { name: "Students", title: `Students ${studentCount}`, value: studentCount, color: "#765fac", icon: <SchoolRoundedIcon style={{ fontSize: '35px', color: "#4B0082", }} /> }
+    { Icon: <PersonRoundedIcon style={{ fontSize: '35px',  }} />, name: "Faculties", Count: facltyCount, active : "faculty", model: "User", property: "department" },
+    { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '35px',  }} />, name: "Directors", Count: directorCount, active : "director", model: "DirectorUser", property: "department" },
+    { Icon: <BoyRoundedIcon style={{ fontSize: '35px',  }} />, name: "Alumnis", Count: alumniCount, active : "alumni", model: "AlumniUser", property: "schoolName" },
+    { Icon: <SchoolRoundedIcon style={{ fontSize: '35px',   }} />, name: "Students", Count: studentCount, active : "student", model: "StudentUser", property: "schoolName" }
   ]
 
-  // [, , , , , , , , ][, , , , , , , "#b3d4ff", "#00bfa0"]
-  const DepartmentWiseStudentCount = [
-    { name: Object.keys(SchoolsProgram)[0], title: `${Object.keys(SchoolsProgram)[0]} ${compStudentCount}`, value: compStudentCount, color: "#ea5545" },
-    { name: Object.keys(SchoolsProgram)[1], title: `${Object.keys(SchoolsProgram)[1]} ${chemiStudentCount}`, value: chemiStudentCount, color: "#f46a9b" },
-    { name: Object.keys(SchoolsProgram)[2], title: `${Object.keys(SchoolsProgram)[2]} ${managementStudentCount}`, value: managementStudentCount, color: "#ef9b20" },
-    { name: Object.keys(SchoolsProgram)[3], title: `${Object.keys(SchoolsProgram)[3]} ${eduStudentCount}`, value: eduStudentCount, color: "#edbf33" },
-    { name: Object.keys(SchoolsProgram)[4], title: `${Object.keys(SchoolsProgram)[4]} ${mathStudentCount}`, value: mathStudentCount, color: "#ede15b" },
-    { name: Object.keys(SchoolsProgram)[5], title: `${Object.keys(SchoolsProgram)[5]} ${phyStudentCount}`, value: phyStudentCount, color: "#bdcf32" },
-    { name: Object.keys(SchoolsProgram)[6], title: `${Object.keys(SchoolsProgram)[6]} ${socialStudentCount}`, value: socialStudentCount, color: "#87bc45" },
-    { name: Object.keys(SchoolsProgram)[7], title: `${Object.keys(SchoolsProgram)[7]} ${earthStudentCount}`, value: earthStudentCount, color: "#27aeef" },
-    { name: Object.keys(SchoolsProgram)[8], title: `${Object.keys(SchoolsProgram)[8]} ${lifeStudentCount}`, value: lifeStudentCount, color: "#b33dc6" },
-    { name: Object.keys(SchoolsProgram)[9], title: `${Object.keys(SchoolsProgram)[9]} ${pharmaStudentCount}`, value: pharmaStudentCount, color: "#e60049" },
-    { name: Object.keys(SchoolsProgram)[10], title: `${Object.keys(SchoolsProgram)[10]} ${mediaStudentCount}`, value: mediaStudentCount, color: "#0bb4ff" },
-    { name: Object.keys(SchoolsProgram)[11], title: `${Object.keys(SchoolsProgram)[11]} ${fineStudentCount}`, value: fineStudentCount, color: "#50e991" },
-    { name: Object.keys(SchoolsProgram)[12], title: `${Object.keys(SchoolsProgram)[12]} ${langStudentCount}`, value: langStudentCount, color: "#e6d800" },
-    { name: Object.keys(SchoolsProgram)[13], title: `${Object.keys(SchoolsProgram)[13]} ${managementLaturStudentCount}`, value: managementLaturStudentCount, color: "#9b19f5" },
-    { name: Object.keys(SchoolsProgram)[14], title: `${Object.keys(SchoolsProgram)[14]} ${techLaturStudentCount}`, value: techLaturStudentCount, color: "#ffa300" },
-    { name: Object.keys(SchoolsProgram)[15], title: `${Object.keys(SchoolsProgram)[15]} ${socialLaturStudentCount}`, value: socialLaturStudentCount, color: "#dc0ab4" },
-  ];
+  const SubMenuCards = [
+    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "35px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active : "bookchapters", model: "BooksAndChapters", property: "userId.department" },
+    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Papers", Count: researchPapersCount, active : "reserchpapers", model: "ResearchPaper", property: "userId.department" },
+    { Icon: <ScienceRoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Projects", Count: researchProjectsCount, active : "reserchprojects", model: "ResearchProject", property: "userId.department" },
+    { Icon: <LanguageRoundedIcon style={{ fontSize: "35px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active : "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
+    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "35px" }} />, name: "Petants Published", Count: petantCount, active : "petantspublished", model: "Patent", property: "userId.department" },
+    { Icon: <VideoChatRoundedIcon style={{ fontSize: "35px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active : "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
+    { Icon: <LightbulbRoundedIcon style={{ fontSize: "35px" }} />, name: "Invited Talks", Count: invitedTalkCount, active : "invitedtalks", model: "InvitedTalk", property: "userId.department" },
+    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Guidence", Count: researchGuidanceCount, active : "reserchguidence", model: "ResearchGuidance", property: "userId.department" },
+    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "35px" }} />, name: "Fellowships", Count: fellowshipCount, active : "fellowships", model: "Fellowship", property: "userId.department" },
+  ]
+  // const combinedArray = [...SubMenuCards, ...categories];
 
-  DepartmentWiseStudentCount.map(item => console.log(item.name))
 
+  const data = {
+    labels: Object.keys(SchoolsProgram),
+    datasets: [
+        {
+          label: `${activeName}`,
+          data: [
+            compCount, chemiCount, managementCount, eduCount, mathCount, phyCount, socialCount, earthCount, lifeCount, pharmaCount, mediaCount, fineCount, langCount, managementLaturCount, techLaturCount, socialLaturCount,
+          ],
+          backgroundColor: ["#FADADD","#F08080","#FFDAB9","#FFFACD","#FFFFE0","#98FB98","#B0E0E6","#87CEEB","#E6E6FA","#D8BFD8","#FFE4E1","#FDF5E6","#FAEBD7","#FFFFF0","#F5F5DC","#D3D3D3",],
+          borderColor: ["#F5A3AC","#CD5C5C","#FFC58A","#F0E68C","#EEDC82","#9ACD32","#ADD8E6","#6495ED","#BA55D3","#B57EDC","#FFC0CB","#ECD5C5","#FFE4B5","#F0E68C","#F5DEB3","#C0C0C0",],
+          hoverOffset: 5,
+          borderWidth: 2,
+          cutout: "75%",
+          borderRadius: 15,
+          offset: 8,
+        },
+    ],
+  };
+
+  const options = {
+    layout:{padding: 30},
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+        // position: 'right',
+      },
+      title: {
+        display: false,
+        // text: `${activeName}`,
+      },
+    },
+  };
+
+  const DoughnutLabelsLine = {
+    id: "doughnutLabelsLine",
+    afterDraw(chart, args, options) {
+      const {ctx, chartArea:{top, bottom, left, right, width, height}} = chart;
+          const a = chart.getDatasetMeta(0).data[0].x
+          const b = chart.getDatasetMeta(0).data[0].y
+          ctx.fillText(chart.data.datasets[0].label,a,b)
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = '12px Arial';
+          ctx.fillStyle = "gray";
+      chart.data.datasets.forEach((dataset, i) => {
+        chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+          
+          if(dataset.data[index]!==0){
+            //line
+              const {x, y} = datapoint.tooltipPosition();
+              const halfWidth = width / 2;
+              const halfHeight = height / 2;
+              const xLine = x >= halfWidth ? x+40: x-40;
+              const yLine = y >= halfHeight ? y+40: y-40;
+              const extraLine = x >= halfWidth ? 20: -20;
+              ctx.beginPath();
+              ctx.moveTo(x , y );
+              ctx.lineTo(xLine , yLine );
+              ctx.lineTo(xLine+ extraLine , yLine );
+              ctx.strokeStyle ="gray";
+              ctx.stroke();
+            //labels
+              const halfTextWidth = ctx.measureText(chart.data.labels[index]).width/2;
+              const extraPadding = x >= halfWidth ? halfTextWidth+5 : -(halfTextWidth+5);
+              
+              ctx.fillText(chart.data.labels[index],  xLine + extraLine +extraPadding, yLine);
+          }
+        })
+      });
+    }
+  }
+
+  const plugins = [DoughnutLabelsLine];
 
   useEffect(() => {
     getDocumentCount({ model: 'User', setState: setFacultyCount })
@@ -102,31 +166,25 @@ const AdminDashboard = () => {
     getDocumentCount({ model: 'ResearchGuidance', setState: setResearchGuidanceCount })
     getDocumentCount({ model: 'ResearchPapers', setState: setResearchPapersCount })
     getDocumentCount({ model: 'Fellowship', setState: setFellowshipCount })
+    
 
   }, []);
+      
+  useEffect(() => {
+    getDepartmentWiseDocumentCount({ model: activeModel, setState: setDepartmentWiseStudentCount , property: activeProperty})
 
-  const SubMenuCards = [
-    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "45px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount },
-    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "45px" }} />, name: "Reserch Papers", Count: researchPapersCount },
-    { Icon: <ScienceRoundedIcon style={{ fontSize: "45px" }} />, name: "Reserch Projects", Count: researchProjectsCount },
-    { Icon: <LanguageRoundedIcon style={{ fontSize: "45px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount },
-    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "45px" }} />, name: "Petants Published", Count: petantCount },
-    { Icon: <VideoChatRoundedIcon style={{ fontSize: "45px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount },
-    { Icon: <LightbulbRoundedIcon style={{ fontSize: "45px" }} />, name: "Invited Talks", Count: invitedTalkCount },
-    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "45px" }} />, name: "Reserch Guidence", Count: researchGuidanceCount },
-    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "45px" }} />, name: "Fellowships", Count: fellowshipCount },
-  ]
+  },[activeModel, activeProperty]);
 
   return (
     <AdminDrower>
-      <div style={{ borderRadius: "0 0 10px 0 ", width: "100%", overflow: "hidden", background: "#9185b575" }} >
+      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
         <div className='table-responsive p-3' style={{ display: "flex", gap: "15px" }}>
           {
-            categories?.map(item => <div className='adminDashbordCard' >
+            categories?.map((item, index) => <button  onClick={() => {setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name)}} key={index} className={`adminDashbordCard ${activeButton === item.active  ? 'active-dashbord-card' : ''}`}  >
 
               <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "10px" }}>
-                <div style={{ paddingLeft: "30PX", }}>{item.icon}</div>
-                <div style={{ paddingRight: "40PX", fontSize: "25px", fontWeight: 500, }}>{item.value}</div>
+                <div style={{ paddingLeft: "30PX", }}>{item.Icon}</div>
+                <div style={{ paddingRight: "40PX", fontSize: "25px", fontWeight: 500, }}>{item.Count}</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div></div>
@@ -134,96 +192,33 @@ const AdminDashboard = () => {
                   {item.name}
                 </div>
               </div>
-            </div>)
+            </button>)
           }
         </div>
         <div>
-          <div className='table-responsive' style={{ width: "100%", padding: "20px", display: "flex" }}>
+          <div className='table-responsive' style={{ width: "100%", padding: "5px 20px 15px 20px", display: "flex" }}>
 
-            <div style={{ minWidth: "650px", padding: "10px 20px", background: "#dddddd", borderRadius: "20px", boxShadow: "10px 10px 7px #9185b5", display: "flex", gap: "13px", flexWrap: "wrap" }}>
+            <div style={{ minWidth:"782px", padding: "10px 20px", background: "#e3e3e3", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
               {
-                SubMenuCards?.map(ItemCards => <div className='abc'>
-                  <div style={{ fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
+                SubMenuCards?.map(ItemCards => <button onClick={()=>{setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name)}} className={`sub-menu-card ${activeButton === ItemCards.active  ? 'sub-menu-card-active' : ''}`}>
+                  <div style={{ fontSize: "20px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
                   <div className='flex justify-center'><div>{ItemCards.name}</div></div>
-                </div>
+                </button>
                 )
               }
-              {/* <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>21</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>22</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>23</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>24</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>25</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>26</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>27</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div>
-            <div className='abc'>
-              <div style={{fontSize: "30px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between"}}><Icon/><div>28</div></div>
-              <div className='flex justify-center'><div>name</div></div>
-            </div> */}
+
             </div>
           </div>
         </div>
-        <section className='section-pie table-responsive'>
-          <div className='pie-main-card' >
-            <div className='pie-card-heding' >
-              Users Pie Diagram
-            </div>
-            <div className='p-2'>
-              <PieChart data={categories} />
-            </div>
-            <div className='flex justify-between gap-2 py-5 px-2 text-sm'>
-              {
-                categories.map(item => <div onClick={() => { }} className='category-diclaration' ><span style={{ background: `${item.color}`, padding: "0 6px", marginRight: "1px" }}></span>{item.name}</div>)
-              }
-            </div>
-          </div>
-          <div className='pie-main-card' >
-            <div className='pie-card-heding' >
-              Users Pie Diagram
-            </div>
-            <div className='p-2'>
-              <PieChart data={DepartmentWiseStudentCount} />
-            </div>
-            <div className='flex justify-between flex-wrap gap-2 py-5 px-2 text-sm'>
-              {
-                DepartmentWiseStudentCount.map(item => <div onClick={() => { }} className='category-diclaration' ><span style={{ background: `${item.color}`, padding: "0 6px", marginRight: "1px" }}></span>{item.value}</div>)
-              }
-            </div>
-          </div>
-          <div className='pie-main-card' >
-            <div className='pie-card-heding' >
-              Users Pie Diagram
-            </div>
-            <div className='p-2'>
-              <PieChart data={categories} />
-            </div>
-            <div className='flex justify-between gap-2 py-5 px-2 text-sm'>
-              {
-                categories.map(item => <div onClick={() => { }} className='category-diclaration' ><span style={{ background: `${item.color}`, padding: "0 6px", marginRight: "1px" }}></span>{item.name}</div>)
-              }
-            </div>
-          </div>
+
+        <section className='section-pie'>
+        <div >
+         <Doughnut data={data} options={options} plugins={plugins} style={{maxHeight:"550px"}} />
+         </div>
         </section>
+
+
+        
 
       </div>
     </AdminDrower>

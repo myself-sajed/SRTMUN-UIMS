@@ -10,7 +10,7 @@ function teacherRoute(app) {
         console.log('File name generated :', fileName);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        const link = `https://srtmun-uims.org/report/facultyReport/${userId}/${JSON.stringify(otherOptions)}`
+        const link = `http://localhost:3000/report/facultyReport/${userId}/${JSON.stringify(otherOptions)}`
         console.log('Link : ', link)
         await page.goto(link, { waitUntil: 'networkidle0' });
         await page.pdf({

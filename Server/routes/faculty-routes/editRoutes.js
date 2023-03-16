@@ -5,7 +5,7 @@ const multer = require('multer')
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const link = path.join(__dirname, `../../uploads/faculty-uploads/`)
-        cb(null,link)  
+        cb(null, link)
     },
     filename: (req, file, cb) => {
         cb(null, `${new Date().getTime()}-${file.originalname}`)
@@ -50,7 +50,7 @@ const fs = require('fs');
 
 async function deleteFile(filename, type, callback) {
     let paths = {
-        faculty : path.join(__dirname, `../../uploads/faculty-uploads/${filename}`)
+        faculty: path.join(__dirname, `../../uploads/faculty-uploads/${filename}`)
     }
     fs.unlink(paths[type], callback)
 
@@ -193,15 +193,15 @@ function editRoutes(app) {
                 leavingDate: data.leavingDate,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -240,9 +240,9 @@ function editRoutes(app) {
     })
 
     // Responsibities
-    app.post('/api/edit/Responsibilities',  upload.single('file'), (req, res) => {
+    app.post('/api/edit/Responsibilities', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
-        
+
         if (req.file) {
             Responsibilities.findOneAndUpdate({ _id: data.itemId }, {
                 committeeName: data.committeeName,
@@ -251,15 +251,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -293,7 +293,7 @@ function editRoutes(app) {
 
             )
         }
-       
+
 
     })
 
@@ -301,11 +301,11 @@ function editRoutes(app) {
     app.post('/api/edit/FinancialSupport', upload.single('file'), (req, res) => {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        const { nameOfConference, feeprovider, amountOfSupport, pan, year, } = data 
+        const { nameOfConference, feeprovider, amountOfSupport, pan, year, } = data
         if (req.file) {
-            
+
             FinancialSupport.findOneAndUpdate({ _id: data.itemId }, {
-                nameOfConference:nameOfConference,
+                nameOfConference: nameOfConference,
                 feeprovider: feeprovider,
                 amountOfSupport: amountOfSupport,
                 pan: pan,
@@ -329,7 +329,7 @@ function editRoutes(app) {
         else {
 
             FinancialSupport.findOneAndUpdate({ _id: data.itemId }, {
-                nameOfConference:nameOfConference,
+                nameOfConference: nameOfConference,
                 feeprovider: feeprovider,
                 amountOfSupport: amountOfSupport,
                 pan: pan,
@@ -422,15 +422,15 @@ function editRoutes(app) {
                 subject: data.subject,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -471,28 +471,28 @@ function editRoutes(app) {
     // lectures
     app.post('/api/edit/Lectures', upload.single('file'), (req, res) => {
 
-        const {data} = req.body
-        const {course,level,mode,noOfClasses,classesTaken,year} = data
-        
-            Lectures.findOneAndUpdate({ _id: data.itemId }, {
-                course: course,
-                level: level,
-                teachingMode: mode,
-                noOfClasses: noOfClasses,
-                percentageOfClasses: classesTaken,
-                year: year,
-            }).then(function (data) {
-                if (data) {
-                    res.send({ status: 'deleted' })
-                }
-                else {
-                    res.send({ status: 'error' })
-                }
-            }).catch(function (err) {
+        const { data } = req.body
+        const { course, level, mode, noOfClasses, classesTaken, year } = data
+
+        Lectures.findOneAndUpdate({ _id: data.itemId }, {
+            course: course,
+            level: level,
+            teachingMode: mode,
+            noOfClasses: noOfClasses,
+            percentageOfClasses: classesTaken,
+            year: year,
+        }).then(function (data) {
+            if (data) {
+                res.send({ status: 'deleted' })
+            }
+            else {
                 res.send({ status: 'error' })
             }
+        }).catch(function (err) {
+            res.send({ status: 'error' })
+        }
 
-            )
+        )
     })
 
     // online
@@ -509,15 +509,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -576,15 +576,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -640,19 +640,21 @@ function editRoutes(app) {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
                 publicationYear: data.publicationYear,
+                indexedIn: data.indexedIn,
+                indexData: data.indexData,
                 issnNumber: data.issnNumber,
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -673,6 +675,8 @@ function editRoutes(app) {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
                 publicationYear: data.publicationYear,
+                indexedIn: data.indexedIn,
+                indexData: data.indexData,
                 issnNumber: data.issnNumber,
                 year: data.year,
             }).then(function (data) {
@@ -712,15 +716,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -777,15 +781,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -834,19 +838,22 @@ function editRoutes(app) {
                 yearOfScholar: data.yearOfScholar,
                 degreeName: data.degreeName,
                 awardSubmit: data.awardSubmit,
+                rac: data.rac,
+                gender: data.gender,
+                category: data.category,
                 phdAwardYear: data.phdAwardYear,
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -871,6 +878,9 @@ function editRoutes(app) {
                 yearOfScholar: data.yearOfScholar,
                 degreeName: data.degreeName,
                 awardSubmit: data.awardSubmit,
+                rac: data.rac,
+                gender: data.gender,
+                category: data.category,
                 phdAwardYear: data.phdAwardYear,
                 year: data.year,
             }).then(function (data) {
@@ -904,15 +914,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -970,15 +980,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1038,15 +1048,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1107,15 +1117,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1170,15 +1180,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1234,15 +1244,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1296,15 +1306,15 @@ function editRoutes(app) {
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
@@ -1357,15 +1367,15 @@ function editRoutes(app) {
                 proof: req.file.filename,
                 userId: data.userId,
             }).then(function (docs) {
-                
-                deleteFile(data.proof, 'faculty', (err)=>{
-                    try {
-                       
 
-                        if(err){
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
                             throw 'File not found'
                         }
-                        
+
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')

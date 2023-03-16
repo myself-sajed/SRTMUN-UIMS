@@ -1,0 +1,69 @@
+import React, { useEffect } from 'react'
+import { Avatar } from '@mui/material';
+import { useQuery } from 'react-query';
+import getReq from '../../../components/requestComponents/getReq';
+import AdminAcordinTable from '../components/AdminAcordinTable';
+import Loader from '../../../components/Loader';
+import EmptyBox from '../../../components/EmptyBox';
+
+
+const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
+  const SendReq = "User"
+  const module = "Admin"
+
+  let filter = schoolName === ""? null : {department: schoolName}
+
+  const params = { model: SendReq, id: "", module, filter: filter }
+
+  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+
+  useEffect(() => {
+    setState((pri) => {
+      return {
+          ...pri,
+          [id]: data?.data
+      }
+  })
+  }, [data && data])
+
+  return (
+    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >
+      <div className='table-responsive' style={{height: "100%" }}>
+        <table class="table">
+          <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
+            <tr>
+              <th>Sr. No.</th>
+              <th>profile Pic</th>
+              <th>Name</th>
+              <th>Username</th>
+              <th>School</th>
+              <th>Gender</th>
+              <th>Email</th>
+              <th>Designation</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {
+              data?.data.map((item, index) => <tr>
+                <td>{index + 1}</td>
+                <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}`} /></td>
+                <td>{`${item.salutation} ${item.name}`}</td>
+                <td>{item.username}</td>
+                <td>{item.department}</td>
+                <td>{item.gender}</td>
+                <td>{item.email}</td>
+                <td>{item.designation}</td>
+              </tr>
+              )
+            }
+          </tbody>
+        </table>
+        {isLoading ? <Loader /> : ""}
+        {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
+      </div>
+    </AdminAcordinTable>
+  )
+}
+
+export default Faculties

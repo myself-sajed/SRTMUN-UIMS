@@ -30,6 +30,13 @@ let siteLinks = {
     studentRegistration: { title: "Student Registration", link: '/student-registration' },
     studentPasswordReset: { title: "Student Password Reset", link: '/services/forgot-password/student' },
     studentStatus: { title: "Student Status", link: '/student/student-status' },
+    allNews: { title: "All News", link: '/news' },
+    proLogin: { title: "PRO Login", link: '/pro-login' },
+    proEditor: { title: "PRO Editor", link: '/pro-editor' },
+    proHome: { title: "PRO Home", link: '/pro' },
+
+
+
     forgotPassword: { title: "Forgot Password", link: '' }
 }
 export default siteLinks;

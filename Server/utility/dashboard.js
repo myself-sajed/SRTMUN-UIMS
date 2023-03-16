@@ -100,23 +100,23 @@ function feedback(app) {
         // Note : Count takes the count / length of whole model documents. It does not take the count from filtered variable.
 
         // get user
-        const users = await User.find({})
+        const users = await User.find({}).lean()
         report.usersCount = users.length
 
 
 
         // get alumni
-        const alumni = await Alumni.find({})
+        const alumni = await Alumni.find({}).lean()
         report.AlumniCount = alumni.length
         report.Alumni = alumni
 
         // get alumni
-        const student = await Student.find({})
+        const student = await Student.find({}).lean()
         report.StudentCount = student.length
         report.Student = student
 
         // get qualifications
-        const qualifications = await Qualification.find({}).populate('userId')
+        const qualifications = await Qualification.find({}).populate('userId').lean()
         report.QualificationCount = qualifications.length
         if (school) {
             report.Qualification = qualifications.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -124,7 +124,7 @@ function feedback(app) {
 
 
         // get Experience
-        const experience = await Experience.find({}).populate('userId')
+        const experience = await Experience.find({}).populate('userId').lean()
         report.ExperienceCount = experience.length
         if (school) {
             report.Experience = experience.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -132,7 +132,7 @@ function feedback(app) {
 
 
         // get degrees
-        const degrees = await Degree.find({}).populate('userId')
+        const degrees = await Degree.find({}).populate('userId').lean()
         report.DegreeCount = degrees.length
         if (school) {
             report.Degree = degrees.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -140,7 +140,7 @@ function feedback(app) {
 
 
         // get appointmentsHeldPrior
-        const appointmentsHeldPrior = await AppointmentsHeldPrior.find({}).populate('userId')
+        const appointmentsHeldPrior = await AppointmentsHeldPrior.find({}).populate('userId').lean()
         report.AppointmentsHeldPriorCount = appointmentsHeldPrior.length
         if (school) {
             report.AppointmentsHeldPrior = appointmentsHeldPrior.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -148,7 +148,7 @@ function feedback(app) {
 
 
         // get post held
-        const postHeld = await PostHeld.find({}).populate('userId')
+        const postHeld = await PostHeld.find({}).populate('userId').lean()
         report.PostHeldCount = postHeld.length
         if (school) {
             report.PostHeld = postHeld.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -156,7 +156,7 @@ function feedback(app) {
 
 
         // get lectures
-        const lectures = await Lectures.find({}).populate('userId')
+        const lectures = await Lectures.find({}).populate('userId').lean()
         report.LecturesCount = lectures.length
         if (school) {
             report.Lectures = lectures.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -164,7 +164,7 @@ function feedback(app) {
 
 
         // get online fdp
-        const online = await Online.find({}).populate('userId')
+        const online = await Online.find({}).populate('userId').lean()
         report.OnlineCount = online.length
         if (school) {
             report.Online = online.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -172,7 +172,7 @@ function feedback(app) {
 
 
         // get ResearchProject
-        const researchProject = await ResearchProject.find({}).populate('userId')
+        const researchProject = await ResearchProject.find({}).populate('userId').lean()
         report.ResearchProjectCount = researchProject.length
         if (school) {
             report.ResearchProject = researchProject.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -180,7 +180,7 @@ function feedback(app) {
 
 
         // get ResearchProject
-        const researchPaper = await ResearchPaper.find({}).populate('userId')
+        const researchPaper = await ResearchPaper.find({}).populate('userId').lean()
         report.ResearchPaperCount = researchPaper.length
         if (school) {
             report.ResearchPaper = researchPaper.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -188,7 +188,7 @@ function feedback(app) {
 
 
         // get ResearchProject
-        const bookAndChapter = await BookAndChapter.find({}).populate('userId')
+        const bookAndChapter = await BookAndChapter.find({}).populate('userId').lean()
         report.BookAndChapterCount = bookAndChapter.length
         if (school) {
             report.BookAndChapter = bookAndChapter.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -196,28 +196,28 @@ function feedback(app) {
 
 
         // get ResearchProject
-        const researchGuidance = await ResearchGuidance.find({}).populate('userId')
+        const researchGuidance = await ResearchGuidance.find({}).populate('userId').lean()
         report.ResearchGuidanceCount = researchGuidance.length
         if (school) {
             report.ResearchGuidance = researchGuidance.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const phdAwarded = await PhdAwarded.find({}).populate('userId')
+        const phdAwarded = await PhdAwarded.find({}).populate('userId').lean()
         report.PhdAwardedCount = phdAwarded.length
         if (school) {
             report.PhdAwarded = phdAwarded.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const jrfSrf = await JrfSrf.find({}).populate('userId')
+        const jrfSrf = await JrfSrf.find({}).populate('userId').lean()
         report.JrfSrfCount = jrfSrf.length
         if (school) {
             report.JrfSrf = jrfSrf.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const awardRecognition = await AwardRecognition.find({}).populate('userId')
+        const awardRecognition = await AwardRecognition.find({}).populate('userId').lean()
         report.AwardRecognitionCount = awardRecognition.length
         if (school) {
             report.AwardRecognition = awardRecognition.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -225,56 +225,56 @@ function feedback(app) {
 
 
 
-        const patent = await Patent.find({}).populate('userId')
+        const patent = await Patent.find({}).populate('userId').lean()
         report.PatentCount = patent.length
         if (school) {
             report.Patent = patent.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const consultancyServices = await ConsultancyServices.find({}).populate('userId')
+        const consultancyServices = await ConsultancyServices.find({}).populate('userId').lean()
         report.ConsultancyServicesCount = consultancyServices.length
         if (school) {
             report.ConsultancyServices = consultancyServices.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const collaboration = await Collaboration.find({}).populate('userId')
+        const collaboration = await Collaboration.find({}).populate('userId').lean()
         report.CollaborationCount = collaboration.length
         if (school) {
             report.Collaboration = collaboration.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const invitedTalk = await InvitedTalk.find({}).populate('userId')
+        const invitedTalk = await InvitedTalk.find({}).populate('userId').lean()
         report.InvitedTalkCount = invitedTalk.length
         if (school) {
             report.InvitedTalk = invitedTalk.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const conferenceOrganized = await ConferenceOrganized.find({}).populate('userId')
+        const conferenceOrganized = await ConferenceOrganized.find({}).populate('userId').lean()
         report.ConferenceOrganizedCount = conferenceOrganized.length
         if (school) {
             report.ConferenceOrganized = conferenceOrganized.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const fellowship = await Fellowship.find({}).populate('userId')
+        const fellowship = await Fellowship.find({}).populate('userId').lean()
         report.FellowshipCount = fellowship.length
         if (school) {
             report.Fellowship = fellowship.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const eContentDeveloped = await EContentDeveloped.find({}).populate('userId')
+        const eContentDeveloped = await EContentDeveloped.find({}).populate('userId').lean()
         report.EContentDevelopedCount = eContentDeveloped.length
         if (school) {
             report.EContentDeveloped = eContentDeveloped.filter((doc) => doc.userId !== null && doc.userId.department === school)
         }
 
 
-        const policyDocuments = await PolicyDocuments.find({}).populate('userId')
+        const policyDocuments = await PolicyDocuments.find({}).populate('userId').lean()
         report.PolicyDocumentsCount = policyDocuments.length
         if (school) {
             report.PolicyDocuments = policyDocuments.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -293,7 +293,7 @@ function feedback(app) {
 
 
         // get alumni
-        const alumni = await Alumni.find(filterForAlumniModel).sort({ $natural: -1 })
+        const alumni = await Alumni.find(filterForAlumniModel).sort({ $natural: -1 }).lean()
 
         report.AlumniCount = alumni.length
         report.Alumni = alumni
@@ -302,22 +302,22 @@ function feedback(app) {
 
 
         // get Placement
-        const placements = await Placement.find(filterForOtherModels)
+        const placements = await Placement.find(filterForOtherModels).lean()
         report.PlacementCount = placements.length
         report.Placement = placements
 
         // get QualifiedExams
-        const exams = await QualifiedExams.find(filterForOtherModels)
+        const exams = await QualifiedExams.find(filterForOtherModels).lean()
         report.QualifiedExamsCount = exams.length
         report.QualifiedExams = exams
 
         // get ProgressionToHE
-        const education = await ProgressionToHE.find(filterForOtherModels)
+        const education = await ProgressionToHE.find(filterForOtherModels).lean()
         report.ProgressionToHECount = education.length
         report.ProgressionToHE = education
 
         // get AlumniContribution
-        const contribution = await AlumniContribution.find(filterForOtherModels)
+        const contribution = await AlumniContribution.find(filterForOtherModels).lean()
         report.AlumniContributionCount = contribution.reduce((sum, acc) => sum + acc.Amount_of_contribution, 0)
         report.AlumniContribution = contribution
 

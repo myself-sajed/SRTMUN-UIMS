@@ -36,7 +36,7 @@ const AdminLogin = () => {
             if (res.data.status === 'ok') {
                 dispatch(setAdminUser(res.data.adminUser))
                 localStorage.setItem('admin-token', res.data.token)
-                navigate('/admin/dashboard')
+                navigate('/admin')
                 toast.success('Logged in successfully')
             }
             else if (res.data.status === 'notok') {

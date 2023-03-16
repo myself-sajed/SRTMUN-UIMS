@@ -35,8 +35,8 @@ import Placements from "../../pages/Placements";
 import ProgressionToHE from "../../pages/ProgressionToHE";
 import TrainingProgramsOrganized from "../../pages/TrainingProgramsOrganized";
 import AlumniContribution from "../../pages/AlumniContribution";
-import ConferencesSemiWorkshopOrganized from '../../pages/conferencesSemiWorkshopOrganized';
-import SyllabusRevision from '../../pages/syllabusRevision';
+import ConferencesSemiWorkshopOrganized from '../../pages/ConferencesSemiWorkshopOrganized';
+import SyllabusRevision from '../../pages/SyllabusRevision';
 
 
 
