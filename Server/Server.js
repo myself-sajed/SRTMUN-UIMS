@@ -101,8 +101,8 @@ require('./routes/pro-routes/newsOperations')(app)
 
 
 // Database Configuration
-// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-const URL = `mongodb://localhost:27017/srtmun`
+const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+// const URL = `mongodb://localhost:27017/srtmun`
 mongoose
   .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
