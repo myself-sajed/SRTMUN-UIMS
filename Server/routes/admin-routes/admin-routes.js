@@ -135,27 +135,6 @@ const SchoolNames = [
     "School of Social Sciences, Sub-Campus, Latur",
 ]
 
-const dataSetter = {
-    StudentUser: {
-        "School of Computational Sciences": "compStudentCount",
-        "School of Chemical Sciences": "chemiStudentCount",
-        "School of Commerce and Management Sciences": "managementStudentCount",
-        "School of Educational Sciences": "eduStudentCount",
-        "School of Mathematical Sciences": "mathStudentCount",
-        "School of Physical Sciences": "phyStudentCount",
-        "School of Social Sciences": "socialStudentCount",
-        "School of Earth Sciences": "earthStudentCount",
-        "School of Life Sciences": "lifeStudentCount",
-        "School of Pharmacy": "pharmaStudentCount",
-        "School of Media Studies": "mediaStudentCount",
-        "School of Fine and Performing Arts": "fineStudentCount",
-        "School of Language, Literature and Culture Studies": "langStudentCount",
-        "School of Management Sciences, Sub-Campus, Latur": "managementLaturStudentCount",
-        "School of Technology, Sub-Campus, Latur": "techLaturStudentCount",
-        "School of Social Sciences, Sub-Campus, Latur": "socialLaturStudentCount",
-    }
-}
-
 
 router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
     const { model, property } = req.body
