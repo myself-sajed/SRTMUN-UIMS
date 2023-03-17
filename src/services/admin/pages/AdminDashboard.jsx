@@ -65,13 +65,13 @@ const AdminDashboard = () => {
 
   const SubMenuCards = [
     { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "35px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active: "bookchapters", model: "BooksAndChapters", property: "userId.department" },
-    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
-    { Icon: <ScienceRoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
+    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "35px" }} />, name: "Research Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
+    { Icon: <ScienceRoundedIcon style={{ fontSize: "35px" }} />, name: "Research Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
     { Icon: <LanguageRoundedIcon style={{ fontSize: "35px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active: "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
-    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "35px" }} />, name: "Petants Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
+    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "35px" }} />, name: "Patents Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
     { Icon: <VideoChatRoundedIcon style={{ fontSize: "35px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active: "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
     { Icon: <LightbulbRoundedIcon style={{ fontSize: "35px" }} />, name: "Invited Talks", Count: invitedTalkCount, active: "invitedtalks", model: "InvitedTalk", property: "userId.department" },
-    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "35px" }} />, name: "Reserch Guidence", Count: researchGuidanceCount, active: "reserchguidence", model: "ResearchGuidance", property: "userId.department" },
+    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "35px" }} />, name: "Research Guidance", Count: researchGuidanceCount, active: "reserchguidence", model: "PhdAwarded", property: "userId.department" },
     { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "35px" }} />, name: "Fellowships", Count: fellowshipCount, active: "fellowships", model: "Fellowship", property: "userId.department" },
   ]
 
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = '12px Arial';
-      ctx.fillStyle = "gray";
+      ctx.fillStyle = "#767474";
       chart.data.datasets.forEach((dataset, i) => {
         chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
 
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
               ctx.moveTo(x, y);
               ctx.lineTo(xLine, yLine);
               ctx.lineTo(xLine + extraLine, yLine);
-              ctx.strokeStyle = "gray";
+              ctx.strokeStyle = "#767474";
               ctx.stroke();
               //labels
               const halfTextWidth = ctx.measureText(chart.data.labels[index]).width / 2;
@@ -163,7 +163,7 @@ const AdminDashboard = () => {
     getDocumentCount({ model: 'Petant', setState: setPetantCount })
     getDocumentCount({ model: 'ConferenceOrganized', setState: setConferenceOrganizedCount })
     getDocumentCount({ model: 'InvitedTalk', setState: setInvitedTalkCount })
-    getDocumentCount({ model: 'ResearchGuidance', setState: setResearchGuidanceCount })
+    getDocumentCount({ model: 'PhdAwarded', setState: setResearchGuidanceCount })
     getDocumentCount({ model: 'ResearchPapers', setState: setResearchPapersCount })
     getDocumentCount({ model: 'Fellowship', setState: setFellowshipCount })
 

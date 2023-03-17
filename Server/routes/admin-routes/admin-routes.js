@@ -92,9 +92,10 @@ router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
         if (facultyModels.includes(model)) {
             let data = await models[model].find({}).populate("userId")
             for (const school of Object.keys(dataSetter)) {
+
                 let count = 0
                 for (const item of data) {
-                    if (item.userId.department === school) {
+                    if (item.userId !== null && item.userId.department === school) {
                         count += 1
                     }
                 }
