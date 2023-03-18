@@ -539,6 +539,7 @@ const CASDataTable = {
             "Journal Name",
             "Publication Year",
             "ISSN Number",
+            "Indexed in",
             "Year",
             "Proof",
         ],
@@ -547,6 +548,7 @@ const CASDataTable = {
             "journalName",
             "publicationYear",
             "issnNumber",
+            "indexedIn",
             "year",
             "proof"
         ],

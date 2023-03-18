@@ -64,10 +64,15 @@ import PROLogin from '../services/news/pages/PROLogin'
 import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
+import { useEffect } from 'react'
 
 
 
 const RoutesHandler = () => {
+
+    useEffect(() => {
+        console.log('Pathname :', window.location.pathname)
+    }, [window.location.pathname])
 
     return (
         <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
@@ -107,6 +112,8 @@ const RoutesHandler = () => {
                 <Route path='/admin' exact element={<AdminMain />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
+
+                {/* // tables for admin */}
                 {
                     adminTable.map((item, index) => {
                         return (

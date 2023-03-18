@@ -516,6 +516,10 @@ body {
   }
 }
 
+.dashboard-gradient {
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(90deg, #e66465, #f97316);
+}
+
 .ant-upload-list {
   display: none;
 }
