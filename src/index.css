@@ -389,7 +389,8 @@ body {
 .indexCard {
   width: 49%;
   height: 340px;
-  background-color: #fee2e2;
+  /* background-color: #fee2e2; */
+  background-color: rgb(233 183 183 / 40%);
   border-radius: 10px;
   margin: 10px 5px;
 }
@@ -419,7 +420,8 @@ body {
 }
 
 .indexCardPDown {
-  color: #6c757d;
+  /* color: #6c757d; */
+  color:#4b4f52;
   font-size: 14px;
   margin-top: 3%;
 }
