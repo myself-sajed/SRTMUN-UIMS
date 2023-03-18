@@ -10,9 +10,9 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
   const SendReq = "AlumniUser"
   const module = "Admin"
 
-  let filter = schoolName === ""? null : {department: schoolName}
+  let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== ''&& schoolName === ''?{doCompleted: yearFilter}: yearFilter === ''&& schoolName !== ''? {schoolName: schoolName} :{schoolName: schoolName, doCompleted: yearFilter}
 
-  const params = { model: SendReq, id: "", module, filter: filter }
+  const params = { model: SendReq, id: "", module, filter }
 
   const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
   useEffect(() => {
@@ -28,7 +28,7 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
       <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq}>
         <div className='table-responsive' style={{height: "100%" }}>
           <table class="table">
-            <thead class="sticky-top" style={{ background: "#4b0082cc", color: '#FFF' }}>
+            <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
               <tr>
                 <th>Sr. No.</th>
                 <th>profile Pic</th>

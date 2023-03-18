@@ -124,8 +124,8 @@ const AdminDirector = () => {
       childData: childData?.ugcsapcasdstfistdbticssr, filename: 'UGC-SAP, CAS, DST-FIST, DBT, ICSSR.csv', SendReq: "UgcSapCasDstFistDBTICSSR", module: "director", proof: "Upload_Proof",
     },
     {
-      element: <ValueAddedCource id="valueaddedcource" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Value Added Cource' />,
-      childData: childData?.valueaddedcource, filename: 'Value Added Cource.csv', SendReq: "ValueAddedCource", module: "director", proof: "Upload_Proof",
+      element: <ValueAddedCource id="valueaddedcource" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Value Added Course' />,
+      childData: childData?.valueaddedcource, filename: 'Value Added Course.csv', SendReq: "ValueAddedCource", module: "director", proof: "Upload_Proof",
     },
   ]
   useEffect(() => {

@@ -12,7 +12,7 @@ const onSearch = ()=> {
 const arr = ["2020-21","2021-22","2022-23"];//width: "100%"
   return (
     <div className='main-header'>
-      <div style={{display: "flex", justifyContent: "flex-start", width: "20%", fontFamily: "cursive" }}>Admin</div>
+      <div style={{display: "flex", justifyContent: "flex-start", width: "20%", }}>Admin</div>
       <div style={{display: "flex", justifyContent: "flex-end", width: "80%"}}>
         <div className='col-12' style={{display: "flex", justifyContent: "flex-end", flexDirection: "row", gap: "10px", alignItems: "center"}}>
           {/* <select className="form-select form-select-sm " style={{width: "100px"}}>

@@ -10,14 +10,14 @@ import QualifiedExams from '../tables_alumni/QualifiedExams'
 import AdminDrower from './AdminDrower'
 
 const AdminAlumni = () => {
-  const [childData, setChildData] = useState({ alumni: "", alumnicontribution: "", progressiontohe: "", qualifiedexams: "", jobs: "", buisness: "",})
+  const [childData, setChildData] = useState({ alumni: "", alumnicontribution: "", progressiontohe: "", qualifiedexams: "", jobs: "", buisness: "", })
   const [values, setValues] = useState({ yearFilter: "", schoolName: "" })
   const { yearFilter, schoolName } = values
 
   const allAlumniComponents = [
     {
-      element: <Alumnies id="alumni" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumnies' />,
-      childData: childData?.alumni, filename: 'Alumnies.csv', SendReq: "AlumniUsers", module: "director", proof: "Upload_Proof",
+      element: <Alumnies id="alumni" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumni' />,
+      childData: childData?.alumni, filename: 'Alumni.csv', SendReq: "AlumniUsers", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ProgressionToHE id="progressiontohe" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Progression To HE' />,
@@ -36,15 +36,15 @@ const AdminAlumni = () => {
       childData: childData?.jobs, filename: 'Alumni Jobs.csv', SendReq: "Placement", proof: "Upload_Proof", module: "director"
     },
     {
-      element: <AlumniBusiness id="buisness" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumni Buisness' />,
-      childData: childData?.buisness, filename: 'Alumni Buisness.csv', SendReq: "Placement", proof: "Upload_Proof", module: "director"
+      element: <AlumniBusiness id="buisness" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumni Business' />,
+      childData: childData?.buisness, filename: 'Alumni Business.csv', SendReq: "Placement", proof: "Upload_Proof", module: "director"
     },
-    
+
   ]
   return (
     <AdminDrower>
       <div style={{ width: "100%", background: "#b5968575", minHeight: "68vh" }} >
-      <div className='flex px-3 flex-wrap gap-2'>
+        <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <div className='col-12 p-1 col-md-4 col-lg-4'>
             <label htmlFor="choose" className="form-label" >Filter By School</label>

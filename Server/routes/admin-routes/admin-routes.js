@@ -92,9 +92,10 @@ router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
         if (facultyModels.includes(model)) {
             let data = await models[model].find({}).populate("userId")
             for (const school of Object.keys(dataSetter)) {
+
                 let count = 0
                 for (const item of data) {
-                    if (item.userId.department === school) {
+                    if (item.userId !== null && item.userId.department === school) {
                         count += 1
                     }
                 }
@@ -108,6 +109,43 @@ router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
         }
         res.send(report)
 
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
+
+const SchoolNames = [
+    "School of Computational Sciences",
+    "School of Chemical Sciences",
+    "School of Commerce and Management Sciences",
+    "School of Educational Sciences",
+    "School of Mathematical Sciences",
+    "School of Physical Sciences",
+    "School of Social Sciences",
+    "School of Earth Sciences",
+    "School of Life Sciences",
+    "School of Pharmacy",
+    "School of Media Studies",
+    "School of Fine and Performing Arts",
+    "School of Language, Literature and Culture Studies",
+    "School of Management Sciences, Sub-Campus, Latur",
+    "School of Technology, Sub-Campus, Latur",
+    "School of Social Sciences, Sub-Campus, Latur",
+]
+
+
+router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
+    const { model, property } = req.body
+    try {
+        let report = {}
+        for (const school of SchoolNames) {
+            let count = await models[model].countDocuments({ [property]: school })
+            report[dataSetter[model][school]] = count
+        }
+        res.send(report)
     }
     catch (err) {
         console.log(err);
@@ -130,48 +168,5 @@ router.post("/getDocumentCount", async (req, res) => {
         res.status(500).send();
     }
 })
-
-//Get Route
-router.post('/Admin/getData', async (req, res) => {
-
-    const { model, filter, filterConditios } = req.body
-    let fil = {};
-    let filc = {};
-    if (filterConditios !== null) {
-        filc = filterConditios
-    }
-    if (filter !== null) {
-        fil = filter
-    }
-    try {
-        if (facultyModels.includes(model)) {
-            models[model].find(fil).populate({
-                path: 'userId',
-                match: filc,
-                select: ('-password'),
-            }).exec(function (err, fetch) {
-                let filterData = []
-                if (err) {
-                    // throw err; 
-                    console.log(err);
-                }
-                for (item of fetch) {
-                    if (item.userId !== null) {
-                        filterData.push(item)
-                    }
-                }
-                res.status(200).send(filterData);
-            });
-        }
-        else {
-            const fetch = await models[model].find(fil).sort({ $natural: -1 });
-            res.status(200).send(fetch);
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-})
-
 
 module.exports = router;
