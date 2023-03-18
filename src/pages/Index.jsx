@@ -180,7 +180,7 @@ const Index = () => {
             tokenId: 'faculty-token',
             loginUrl: '/sports-login'
         },
-       
+
     ]
 
     const sendFeedback = () => {
@@ -204,10 +204,6 @@ const Index = () => {
     }
 
     const { data: news, isLoading, isError, error, refetch } = useQuery([], () => fetchIndexNews())
-
-    useEffect(() => {
-        console.log('news :', news)
-    }, [news])
 
 
     return (
@@ -258,11 +254,11 @@ const Index = () => {
                 </div>
 
 
-                <div className='mt-5 z-30 '>
+                <div className='mt-4 z-30 '>
 
 
                     <div className={`${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
-                        <div className='md:p-5 sm:p-4 p-3 bg-[#8080802e] rounded-lg mt-5'>
+                        <div className='md:p-5 sm:p-4 p-3 rounded-lg'>
                             <Dashboard />
                         </div>
                     </div>

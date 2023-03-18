@@ -221,8 +221,8 @@ const Profile = () => {
                                 <div className="bg-white border overflow-hidden sm:rounded-lg">
 
                                     <div className="px-4 py-2 sm:px-6">
-                                        <h3 className="sm:text-lg text-base leading-6 font-medium text-gray-900">Applicant Information</h3>
-                                        <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
+                                        <h3 className="sm:text-lg text-base leading-6 font-medium text-gray-900">Basic Information</h3>
+                                        <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details & basic information</p>
                                     </div>
 
                                     <div className="border-t border-gray-200 sm:flex items-start justify-start gap-1 flex-wrap">

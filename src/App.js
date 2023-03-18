@@ -5,16 +5,22 @@ import ScrollToTopButton from './components/ScrollToTopButton'
 import RoutesHandler from './pages/RoutesHandler'
 import './App.css'
 import { QueryClient, QueryClientProvider, } from 'react-query'
+import { useLocation } from 'react-router-dom'
+
 const App = () => {
+
   const queryClient = new QueryClient()
+  const location = useLocation()
+
+
   return (
-    <div>
-      <div className='fixed-bottom hidden sm:flex sm:justify-end -z-20'>
+    <div className={location.pathname === "/" && 'dashboard-gradient'}>
+      <div className='fixed-bottom hidden sm:flex sm:justify-end -z-20 '>
         <ScrollToTopButton />
       </div>
       <Toaster />
       <QueryClientProvider client={queryClient}>
-      <RoutesHandler />
+        <RoutesHandler />
       </QueryClientProvider>
     </div >
   )

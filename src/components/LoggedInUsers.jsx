@@ -9,10 +9,6 @@ const LoggedInUsers = () => {
 
     const users = useSelector((state) => state.user)
 
-    useEffect(() => {
-        console.log('Users :', users)
-    }, [users])
-
     const navigate = useNavigate()
 
     const redirectLinks = {
@@ -30,10 +26,10 @@ const LoggedInUsers = () => {
                     <div className='flex items-center justify-center gap-2'>
 
                         {
-                            Object.keys(users).map((serviceName) => {
-                                return users[serviceName] && <div className='cursor-pointer'
+                            Object.keys(users).map((serviceName, index) => {
+                                return users[serviceName] && <div key={index} className='cursor-pointer'
                                     onClick={() => navigate(redirectLinks[serviceName].homeLink)}>
-                                    <Avatar src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px' }} />
+                                    <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px' }} />
                                 </div>
                             })
                         }

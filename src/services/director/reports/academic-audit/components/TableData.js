@@ -203,12 +203,14 @@ const TableData = {
       "Journal Name",
       "Publication Year",
       "ISSN Number",
+      "Indexed in",
     ],
     childHead: [
       "paperTitle",
       "journalName",
       "publicationYear",
       "issnNumber",
+      "indexedIn",
     ],
     mainKey: {
       head: ['Full Name', 'Paper Title'],
