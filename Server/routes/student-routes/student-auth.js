@@ -57,24 +57,17 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
 
     try {
         const data = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP, abcNo, currentIn }= data;
+        const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn }= data;
 
         // otp authentication
         let isMatch = await bcrypt.compare(clientOTP, serverOTP)
         console.log(isMatch);
         if (isMatch) {
             const user = new StudentUser({
-                mobile: mobile,
-                salutation: salutation,
-                name: name,
-                schoolName: schoolName,
-                programGraduated: programGraduated,
-                password: password,
-                gender: gender,
+                mobile, salutation, name, schoolName, programGraduated, password, gender,
                 email: email.toLowerCase(),
                 photoURL: req.file.filename,
-                abcNo: abcNo,
-                currentIn: currentIn
+                abcNo,currentIn,country, cast, religion, programEnroledOn
             });
             user.save();
             res.send({ status: "success", message: "Registration Successfull" });

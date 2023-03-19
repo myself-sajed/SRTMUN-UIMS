@@ -19,6 +19,7 @@ import navcom from '../components/navcom'
 import serverLinks from '../../../js/serverLinks'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import handleAvatarChange from '../../../js/handleAvatar'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -39,7 +40,10 @@ const StudentHome = () => {
     useStudentAuth()
     title('Student Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", uploadProof: "" }
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "" }
+
+    const [avatar, setAvatar] = useState(null)
+    const [uploadProof, setUploadProof] = useState(null)
     const [guides, setGuides] = useState([])
     const [guidesData, setGuidesData] = useState([])
     const [programDuration, setProgramDuration] = useState(null)
@@ -55,7 +59,7 @@ const StudentHome = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        editReq({ id: itemToEdit, uploadProof: uploadProof }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
     }
 
     const onCancel = () => {
@@ -95,7 +99,7 @@ const StudentHome = () => {
     }, [ResearchGuide])
     useEffect(() => {
         if (itemToEdit && user) {
-            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn } = user
+            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, photoURL } = user
             if (user._id === itemToEdit) {
                 setEdit(true); setOpen(true);
                 setValues({ salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn })
@@ -160,7 +164,7 @@ const StudentHome = () => {
                         <div className='flex items-center justify-between mx-4 my-2'>
                             <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             <button className='flex items-center justify-end gap-2 text-blue-700 hover:bg-blue-200 p-2 rounded-xl' onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
-                            <EditRoundedIcon fontSize="small" />Edit Profile
+                                <EditRoundedIcon fontSize="small" />Edit Profile
                             </button>
                         </div>
                         <hr className='text-black' />
@@ -224,6 +228,25 @@ const StudentHome = () => {
             <DialogBox title="Edit Profile" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
                 {
                     <div className='flex flex-wrap'>
+
+                        <div className='flex-items-center justify-center flex-col w-full mb-4'>
+                            {
+                                uploadProof ?
+                                    <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
+                                    <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                            }
+                            <div className='flex items-center justify-center gap-3'>
+                                <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
+                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
+
+                                    handleAvatarChange(e, setAvatar, setUploadProof)
+                                }} />
+                                {
+                                    uploadProof && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
+                                }
+                            </div>
+                        </div>
+
                         <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
                         <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
                         <Text className='col-md-4 col-lg-4' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
@@ -236,7 +259,7 @@ const StudentHome = () => {
                         <Select className="col-lg-2 col-md-4" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
 
                         <Select className='col-lg-2 col-md-4' id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
-                        <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Chage profile photo" setState={setValues} />
+                        {/* <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Chage profile photo" setState={setValues} /> */}
                         <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
                         <Text className='col-md-6 col-lg-4' type="number" id="abcNo" value={abcNo} label="(ABC) Credit No." setState={setValues} />
                         {programGraduated.includes("Ph.D") ? <>

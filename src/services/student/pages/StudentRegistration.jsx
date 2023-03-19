@@ -15,6 +15,8 @@ import Select from '../../../components/formComponents/Select';
 import Text from '../../../components/formComponents/Text';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import checkPasswordStrength from '../../../js/passwordChecker';
+import countries from '../../director/components/FormComponents/country'
+import YearSelect from '../../../components/formComponents/YearSelect'
 
 const StudentRegistration = () => {
 
@@ -25,9 +27,11 @@ const StudentRegistration = () => {
     // all states
     const Salutations = ["Mr.", "Mrs.", , "Miss.", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '' }
+    const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
+    const religions = ["Hindu","muslim","Christian","Sikh","Buddh","Jain",]
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "" }
     const [values, setValues] = useState(initialState)
-    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn } = values
+    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn } = values
 
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
@@ -208,11 +212,19 @@ const StudentRegistration = () => {
 
                                 <Select className='col-md-5' id="schoolName" value={schoolName} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
 
-                                <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Current Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+                                <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Enrolled Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
 
                                 <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
 
-                                <Select className="col-md-2" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+                                <YearSelect className="col-md-3" id="programEnroledOn" value={programEnroledOn} label="Program Enroled On" setState={setValues} />
+
+                                <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+
+                                <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+
+                                <Select className='col-md-3' id='religion' value ={religion} label="Religion" setState={setValues} options={religions} />
+
+                                <Select className='col-md-2' id='cast' value={cast} label="Cast" setState={setValues} options={Casts} />
 
                                 <Text className="col-md-5" id="password" value={password} label="Create Password" type='password' setState={setValues} />
 

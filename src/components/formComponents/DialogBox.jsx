@@ -6,6 +6,7 @@ const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFuncti
     <Dialog open={isModalOpen} onClose={onCloseFunction} fullWidth maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
       <hr />
+      <form onSubmit={onClickFunction}>
       <DialogContent>{children}</DialogContent>
       <hr />
       <br />
@@ -16,14 +17,14 @@ const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFuncti
               backgroundColor: '#ff4545',
             }
           }}>{cancelButtonName}</Button>
-          <Button onClick={onClickFunction} sx={{
+          <Button type='submit' sx={{
             textTransform: "none", backgroundColor: 'blue', color: 'white', "&:hover": {
               backgroundColor: '#4646f6',
             }
           }}>{buttonName}</Button>
         </DialogActions>
       }
-
+      </form>
     </Dialog>
   )
 }

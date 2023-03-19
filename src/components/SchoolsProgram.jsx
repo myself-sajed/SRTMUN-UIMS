@@ -26,7 +26,7 @@ const SchoolsProgram = {
         ["Certificate Course in Industrial Safety,Health and Environmental Management (dual course with PG, M.Phil & Ph.D.)", 2]
     ],
     "School of Life Sciences": [
-        ["Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)",1],["M.Sc.(Biotechnology)", 2], ["M.Sc.(Zoology)", 2], ["M.Sc.(Botany)", 2], ["M.Sc.(Microbiology)", 2], ["M.Phil.(Biotechnology)", 2], ["M.Phil.(Zoology)", 2], ["M.Phil.(Botany)", 2], ["M.Phil.(Microbiology)", 2], ["Ph.D.(Biotechnology)", 7], ["Ph.D.(Zoology)", 7], ["Ph.D.(Botany)", 7], ["Ph.D.(Microbiology)", 7],
+        ["Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)",1],["M.Sc.(Biotechnology)", 2], ["M.Sc.(Zoology)", 2], ["M.Sc.(Botany)", 2], ["M.Sc.(Microbiology)", 2], ["M.Phil.(Biotechnology)", 2], ["M.Phil.(Zoology)", 2], ["M.Phil.(Botany)", 2], ["M.Phil.(Microbiology)", 2], ["Ph.D.(Biotechnology)", 7], ["Ph.D.(Zoology)", 7], ["Ph.D.(Botany)", 7], ["Ph.D.(Microbiology)", 7],["Ph.D.(Bioinformatics)", 7],
     ],
     "School of Pharmacy": [
         ["B.Pharm", 4], ["M.Pharm(Pharmaceutics)", 2], ["M.Pharm(Pharmaceutical Chemistry)", 2], ["M.Pharm(Pharmacology)", 2], ["M.Pharm(Quality Assurance)", 2], ["M.Pharm(Pharmaceutical Sciences)", 2], ["Ph.D.(Pharmaceutical Sciences)", 7]

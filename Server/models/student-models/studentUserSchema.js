@@ -31,7 +31,23 @@ const studentUserSchema = new mongoose.Schema({
     },
     programGraduated: {
         type: 'string',
-        required: false,
+        required: true,
+    },
+    programEnroledOn:{
+        type: 'string',
+        required: true,
+    },
+    cast:{
+        type: 'string',
+        required: true,
+    },
+    religion: {
+        type: 'string',
+        required: true,
+    },
+    country: {
+        type: 'string',
+        required: true,
     },
     schoolName: {
         type: 'string',
@@ -72,8 +88,7 @@ const studentUserSchema = new mongoose.Schema({
     ResearchGuideId: {
         type:'string',
         required: false,
-    }
-
+    },
 })
 
 const StudentUser = new mongoose.model('StudentUser', studentUserSchema);

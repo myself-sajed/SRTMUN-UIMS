@@ -391,6 +391,7 @@ body {
   height: 340px;
   /* background-color: #fee2e2; */
   background-color: rgb(233 183 183 / 40%);
+  border: solid #f89786 1px;
   border-radius: 10px;
   margin: 10px 5px;
 }
