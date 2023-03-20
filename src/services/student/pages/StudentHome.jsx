@@ -20,10 +20,14 @@ import serverLinks from '../../../js/serverLinks'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import handleAvatarChange from '../../../js/handleAvatar'
+import YearSelect from '../../../components/formComponents/YearSelect'
+import countries from '../../director/components/FormComponents/country'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
+    const Casts = ["Genral", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
+    const religions = ["Hindu", "muslim", "Christian", "Sikh", "Buddh", "Jain",]
     const model = "StudentUser"
     const module = 'student'
 
@@ -40,7 +44,7 @@ const StudentHome = () => {
     useStudentAuth()
     title('Student Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "" }
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", }
 
     const [avatar, setAvatar] = useState(null)
     const [uploadProof, setUploadProof] = useState(null)
@@ -48,7 +52,7 @@ const StudentHome = () => {
     const [guidesData, setGuidesData] = useState([])
     const [programDuration, setProgramDuration] = useState(null)
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn } = values
+    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn } = values
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
@@ -99,10 +103,10 @@ const StudentHome = () => {
     }, [ResearchGuide])
     useEffect(() => {
         if (itemToEdit && user) {
-            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, photoURL } = user
+            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, cast, country, religion, programEnroledOn, photoURL } = user
             if (user._id === itemToEdit) {
                 setEdit(true); setOpen(true);
-                setValues({ salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn })
+                setValues({ salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, cast, country, religion, programEnroledOn })
             }
         }
     }, [itemToEdit])
@@ -175,9 +179,12 @@ const StudentHome = () => {
 
                                     <div className='flex-1'>
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
-                                        <DetailTile keyName="Program Graduated " value={`${user && user.programGraduated}`} />
+                                        <DetailTile keyName="Program Enroled" value={`${user && user.programGraduated}`} />
                                         <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
                                         <DetailTile keyName="(ABC) Credit No." value={`${user && user.abcNo}`} />
+                                        <DetailTile keyName="Religion" value={`${user && user.religion}`} />
+                                        <DetailTile keyName="Cast" value={`${user && user.cast}`} />
+                                        <DetailTile keyName="Date Of Birth" value={`${user && user.dob == "" || user.dob == undefined ? "Not Added" : user.dob}`} />
                                         {user?.programGraduated.includes("Ph.D") ? <>
                                             <DetailTile keyName="Research Guide" value={`${user && user.ResearchGuide == "" || user.ResearchGuide == undefined ? "Not Added" : user.ResearchGuide}`} />
                                             <DetailTile keyName="Date of Rac" value={`${user && user.dateOfRac == "" || user.dateOfRac == undefined ? "Not Added" : user.dateOfRac}`} />
@@ -186,10 +193,11 @@ const StudentHome = () => {
                                     </div>
                                     <div className='flex-1'>
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile}`} />
+                                        <DetailTile keyName="Program Enroled On" value={`${user && user.programEnroledOn}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
                                         <DetailTile keyName="Admitted In" value={`${user && user.currentIn}`} />
+                                        <DetailTile keyName="Nationality" value={`${user && user.country}`} />
                                         <DetailTile keyName="Address" value={`${user && user.address == "" || user.address == undefined ? "Not Added" : user.address}`} />
-                                        <DetailTile keyName="Date Of Birth" value={`${user && user.dob == "" || user.dob == undefined ? "Not Added" : user.dob}`} />
                                         {user?.programGraduated.includes("Ph.D") ? <>
                                             <DetailTile keyName="Title" value={`${user && user.Title == "" || user.Title == undefined ? "Not Added" : user.Title}`} />
                                             <DetailTile keyName="Receives any Felloship" value={`${user && user.ReceivesFelloship == "" || user.ReceivesFelloship == undefined ? "Not Added" : user.ReceivesFelloship}`} />
@@ -258,12 +266,20 @@ const StudentHome = () => {
 
                         <Select className="col-lg-2 col-md-4" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
 
-                        <Select className='col-lg-2 col-md-4' id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+                        <YearSelect className="col-md-2" id="programEnroledOn" value={programEnroledOn} label="Program Enroled On" setState={setValues} />
                         {/* <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Chage profile photo" setState={setValues} /> */}
                         <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
                         <Text className='col-md-6 col-lg-4' type="number" id="abcNo" value={abcNo} label="(ABC) Credit No." setState={setValues} />
+                        <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+
+                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+
+                        <Select className='col-md-2' id='cast' value={cast} label="Cast" setState={setValues} options={Casts} />
+
+                        <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
+
                         {programGraduated.includes("Ph.D") ? <>
-                            <Select className='col-md-6 col-lg-4' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
+                            <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of Rac" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Felloship" setState={setValues} />
@@ -282,7 +298,7 @@ const DetailTile = ({ keyName, value }) => {
     return (
         <div className="row py-2 text-black">
             <div className="col-sm-3">
-                <p className="mb-0 text-sm sm:text-base">{keyName}</p>
+                <p className="mb-0 text-sm sm:text-base font-semibold">{keyName}</p>
             </div>
             <div className="col-sm-9">
                 <p className="mb-0 text-sm sm:text-base">{value}</p>
