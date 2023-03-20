@@ -212,7 +212,7 @@ const Index = () => {
 
                 {/* News */}
                 <div className='flex items-center justify-start mt-2'>
-                    <span className='whitespace-nowrap bg-orange-500 text-white px-2'>
+                    <span className='md:text-base text-xs whitespace-nowrap bg-orange-500 text-white px-1 md:px-2'>
                         <div className='flex items-center justify-start gap-1'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />News Bulletin</div></span>
                     <marquee className='bg-orange-100 text-orange-700' behavior="scroll" direction="left"
                     >
@@ -221,15 +221,15 @@ const Index = () => {
                                 <div className='flex items-center justify-start gap-4'>
 
                                     {news?.data?.data?.map((el) => {
-                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer' onClick={() => { navigate(`/news/${el.slug}`) }}>
+                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el.slug}`) }}>
                                             <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> {el.headline}
                                         </div>
                                     })}
 
-                                </div> : 'No Recent News'
+                                </div> : <p className="md:text-base text-sm">No Recent News</p>
                         }
                     </marquee>
-                    <span onClick={() => { navigate('/news') }} className='whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
+                    <span onClick={() => { navigate('/news') }} className='sm:block hidden text-sm md:text-base whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
                         <div className='flex items-center justify-start gap-1 cursor-pointer'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />Explore all News</div></span>
 
 

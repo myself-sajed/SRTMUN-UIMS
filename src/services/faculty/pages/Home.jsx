@@ -42,7 +42,6 @@ const Home = () => {
         if (user) {
             Axios.post(URL, { userId: user._id, fetchYears: 'all' })
                 .then((res) => {
-                    console.log('Academic Data is :', res.data.data)
                     res.data.status = 'success' && setAcademicData(res.data.data)
                 }).catch((err) => {
                     toast.error('Could not fetch dashboard data...')

@@ -29,7 +29,12 @@ const SingleNews = () => {
                             <div className='mt-3 bg-gray-100 p-2 border rounded-md'>
                                 <div className='flex items-start justify-between'>
                                     <p className="text-2xl font-semibold text-start">{data?.data?.data.headline}</p>
-                                    <p className='text-muted text-sm whitespace-nowrap mt-2'> Posted on: <b>{moment(data?.data?.data?.createdAt).format('DD/MM/YYYY')}</b> </p>
+                                    <p className='text-muted text-sm whitespace-nowrap mt-1 ml-5'> Posted on:
+                                        <div className='flex items-end flex-col'>
+                                            <b>{moment(data?.data?.data?.createdAt).format('DD/MM/YYYY')}</b>
+                                            <b>{moment(data?.data?.data?.createdAt).format('hh:mm A')}</b>
+                                        </div>
+                                    </p>
                                 </div>
 
                                 <div className='flex items-start justify-center gap-4 my-5 w-full'>
