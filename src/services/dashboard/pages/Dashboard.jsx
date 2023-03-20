@@ -183,7 +183,7 @@ const DashboardCard = ({ data }) => {
 
             {
                 dashboardCards.map((card, index) => {
-                    return <div className={`p-3 flex-auto rounded-md cursor-pointer bg-[#ffffff7a] duration-200 ease-in-out hover:bg-gray-50`} key={`dashboardCard-${index}`}
+                    return <div className={`p-3 flex-auto rounded-md cursor-pointer border border-[#d8d5d5] bg-[#f3eeee7a] duration-200 ease-in-out hover:bg-gray-50`} key={`dashboardCard-${index}`}
                         onClick={() => { card.url && navigate(card.url) }}>
                         <div className='w-full'>
                             <div className='flex items-start justify-start gap-2 flex-col'>
