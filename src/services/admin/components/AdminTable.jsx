@@ -30,8 +30,8 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
   return (
     <>
 
-      <div className='table-responsive' style={{height: "100%" }}>
-        <table class="table" >
+      <div className='table-responsive' style={{ height: "100%" }}>
+        <table class="table table-bordered" >
           <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
             <tr>
               {
@@ -60,7 +60,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
         {isLoading ? <Loader /> : ""}
         {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
       </div>
-      
+
     </>
   )
 }

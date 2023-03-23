@@ -29,7 +29,7 @@ ChartJs.register(
 const AdminDashboard = () => {
 
   //main dashboard Count ststes
-  const [count , setCount] = useState({ facltyCount: 0, directorCount: 0, alumniCount: 0, studentCount: 0, booksAndChaptersCount: 0, researchProjectsCount: 0, petantCount: 0, eContentDevelopedCount: 0, conferenceOrganizedCount: 0, invitedTalkCount: 0, researchGuidanceCount: 0, researchPapersCount: 0, fellowshipCount: 0 })
+  const [count, setCount] = useState({ facltyCount: 0, directorCount: 0, alumniCount: 0, studentCount: 0, booksAndChaptersCount: 0, researchProjectsCount: 0, petantCount: 0, eContentDevelopedCount: 0, conferenceOrganizedCount: 0, invitedTalkCount: 0, researchGuidanceCount: 0, researchPapersCount: 0, fellowshipCount: 0 })
 
   const { facltyCount, directorCount, alumniCount, studentCount, booksAndChaptersCount, researchProjectsCount, petantCount, eContentDevelopedCount, conferenceOrganizedCount, invitedTalkCount, researchGuidanceCount, researchPapersCount, fellowshipCount, } = count
 
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
   const categories = [
     { Icon: <PersonRoundedIcon style={{ fontSize: '35px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
     { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '35px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
-    { Icon: <BoyRoundedIcon style={{ fontSize: '35px', }} />, name: "Alumnis", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
+    { Icon: <BoyRoundedIcon style={{ fontSize: '35px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
     { Icon: <SchoolRoundedIcon style={{ fontSize: '35px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
   ]
 
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
   ]
 
   const data = {
-    labels: Object.keys(SchoolsProgram),
+    labels: ["Computational Sciences", "Chemical Sciences", "Commerce and Management Sciences", "Educational Sciences", "Mathematical Sciences", "Physical Sciences", "Social Sciences", "Earth Sciences", "Life Sciences", "Pharmacy", "Media Studies", "Fine and Performing Arts", "Language, Literature and Culture", "Management Sciences, Sub-Campus, Latur", "Technology, Sub-Campus, Latur", "Social Sciences, Sub-Campus, Latur"],
     datasets: [
       {
         label: `${activeName}`,
@@ -91,6 +91,7 @@ const AdminDashboard = () => {
       legend: {
         display: false,
         // position: 'right',
+
       },
       title: {
         display: false,
@@ -144,7 +145,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     getDocumentCount({ model: '', setState: setCount })
-  
+
   }, []);
 
   useEffect(() => {
