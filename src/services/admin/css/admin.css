@@ -13,6 +13,12 @@
   /* #d8d2e7 */
   --dashboard-card-txt-color: #70329d;
   /* #70329d */
+
+  --top-color-new: #ae7e28;
+  --top-background-color: #dee1e6;
+  --top-btn-background: #f1f3f4;
+  --cards-background: #f3e9d5;
+  --top-card-hover-background: #e6e4de;
 }
 
 
@@ -35,8 +41,8 @@
 .main-header {
   display: flex;
   justify-content: space-between;
-  background: var(--top-color-brown);
-  color: white;
+  background: #fff;
+  color: #000;
   height: 50px;
   align-items: center;
   font-size: 15px;
@@ -50,7 +56,8 @@
   gap: 5px;
   flex-wrap: wrap;
   padding: 10px;
-  background: var(--sidebar-bg2-color);
+  background: var(--top-background-color);
+  border: solid #cbc8c7 1px;
   width: 100%;
   padding-top: 8px;
   font-size: 14px;
@@ -60,7 +67,7 @@
 .section-pie {
     margin: 0px 20px 20px 20px;
     padding: 10px;
-    background: #e3e3e3;
+    background: var(--top-btn-background);
     border-radius: 20px;
     /* box-shadow: rgb(145 133 181) 7px 7px 8px; */
 }
@@ -71,31 +78,32 @@
   display: flex;
   padding: 9px;
   min-width: 150px;
-  background: inherit;
+  background: var(--top-color-new);
   padding: 8px;
   margin-bottom: 2px;
   color: #fff;
 }
 
 .DashbordButtons:hover, .active {
-  background: var(--sidebar-btn-hover-bg2) !important;
-  color: var(--top-color-brown) !important;
+  background: var(--top-btn-background) !important;
+  color: var(--top-color-new) !important;
 }
 
 .adminDashbordCard {
   height: 100px;
-  background: var(--sidebar-bg2-color);
+  background: var(--cards-background);
+  border: var(--top-color-new) solid 1px;
+  color: var(--top-color-new);
   border-radius: 10px 0;
   /* box-shadow: 7px 8px 8px #8f6daa; */
-  color: #fff;
   min-width: 200px;
   cursor: pointer;
 
 }
 
 .adminDashbordCard:hover, .active-dashbord-card {
-  background: #a57d76db !important;
-  color: var(--top-color-brown) !important;
+  background: var(--top-card-hover-background) !important;
+  color: var(--top-color-new) !important;
 }
 
 .sub-menu-card {
@@ -103,19 +111,19 @@
   max-width: 185px;
   min-height: 90px;
   max-height: 100px;
-  background: var(--dashboard-card-bg2-color);
+  background: var(--cards-background);
   border-radius: 5px;
   /* box-shadow: 10px 10px 7px -3px rgb(0 0 0 / 20%); */
   padding: 5px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--top-color-brown);
-  border: 1px solid var(--top-color-brown);
+  color: var(--top-color-new);
+  border: 1px solid var(--top-color-new);
 }
 
 .sub-menu-card:hover, .sub-menu-card-active{
-  color: var(--top-color-brown) !important;
-  background-color: #d1cccc !important;
+  color: var(--top-color-new) !important;
+  background-color: var(--top-card-hover-background) !important;
 
 }
 

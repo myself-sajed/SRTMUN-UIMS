@@ -29,20 +29,10 @@ ChartJs.register(
 const AdminDashboard = () => {
 
   //main dashboard Count ststes
+  const [count , setCount] = useState({ facltyCount: 0, directorCount: 0, alumniCount: 0, studentCount: 0, booksAndChaptersCount: 0, researchProjectsCount: 0, petantCount: 0, eContentDevelopedCount: 0, conferenceOrganizedCount: 0, invitedTalkCount: 0, researchGuidanceCount: 0, researchPapersCount: 0, fellowshipCount: 0 })
 
-  const [facltyCount, setFacultyCount] = useState(0);
-  const [directorCount, setDirectorCount] = useState(0);
-  const [alumniCount, setAlumniCount] = useState(0);
-  const [studentCount, setStudentCount] = useState(0);
-  const [booksAndChaptersCount, setBooksAndChaptersCount] = useState(0);
-  const [researchProjectsCount, setResearchProjectsCount] = useState(0);
-  const [petantCount, setPetantCount] = useState(0);
-  const [eContentDevelopedCount, setEContentDevelopedCount] = useState(0);
-  const [conferenceOrganizedCount, setConferenceOrganizedCount] = useState(0);
-  const [invitedTalkCount, setInvitedTalkCount] = useState(0);
-  const [researchGuidanceCount, setResearchGuidanceCount] = useState(0);
-  const [researchPapersCount, setResearchPapersCount] = useState(0);
-  const [fellowshipCount, setFellowshipCount] = useState(0);
+  const { facltyCount, directorCount, alumniCount, studentCount, booksAndChaptersCount, researchProjectsCount, petantCount, eContentDevelopedCount, conferenceOrganizedCount, invitedTalkCount, researchGuidanceCount, researchPapersCount, fellowshipCount, } = count
+
 
   //student Count States
   const studentDPartObj = { compCount: 0, chemiCount: 0, managementCount: 0, eduCount: 0, mathCount: 0, phyCount: 0, socialCount: 0, socialLaturCount: 0, earthCount: 0, lifeCount: 0, mediaCount: 0, pharmaCount: 0, fineCount: 0, langCount: 0, managementLaturCount: 0, techLaturCount: 0, }
@@ -88,8 +78,8 @@ const AdminDashboard = () => {
         hoverOffset: 5,
         borderWidth: 2,
         cutout: "75%",
-        borderRadius: 15,
-        offset: 8,
+        // borderRadius: 15,
+        // offset: 8,
       },
     ],
   };
@@ -141,7 +131,7 @@ const AdminDashboard = () => {
               //labels
               const halfTextWidth = ctx.measureText(chart.data.labels[index]).width / 2;
               const extraPadding = x >= halfWidth ? halfTextWidth + 5 : -(halfTextWidth + 5);
-
+              // console.log(chart.data.datasets[0].data[index]) //data of specfic chart
               ctx.fillText(chart.data.labels[index], xLine + extraLine + extraPadding, yLine);
             }
           }
@@ -153,21 +143,8 @@ const AdminDashboard = () => {
   const plugins = [DoughnutLabelsLine];
 
   useEffect(() => {
-    getDocumentCount({ model: 'User', setState: setFacultyCount })
-    getDocumentCount({ model: 'DirectorUser', setState: setDirectorCount })
-    getDocumentCount({ model: 'AlumniUser', setState: setAlumniCount })
-    getDocumentCount({ model: 'StudentUser', setState: setStudentCount })
-    getDocumentCount({ model: 'BooksAndChapters', setState: setBooksAndChaptersCount })
-    getDocumentCount({ model: 'ResearchProjects', setState: setResearchProjectsCount })
-    getDocumentCount({ model: 'EContentDeveloped', setState: setEContentDevelopedCount })
-    getDocumentCount({ model: 'Petant', setState: setPetantCount })
-    getDocumentCount({ model: 'ConferenceOrganized', setState: setConferenceOrganizedCount })
-    getDocumentCount({ model: 'InvitedTalk', setState: setInvitedTalkCount })
-    getDocumentCount({ model: 'PhdAwarded', setState: setResearchGuidanceCount })
-    getDocumentCount({ model: 'ResearchPapers', setState: setResearchPapersCount })
-    getDocumentCount({ model: 'Fellowship', setState: setFellowshipCount })
-
-
+    getDocumentCount({ model: '', setState: setCount })
+  
   }, []);
 
   useEffect(() => {
@@ -177,7 +154,7 @@ const AdminDashboard = () => {
 
   return (
     <AdminDrower>
-      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
+      <div style={{ width: "100%", overflow: "hidden", border: "solid #d8dadb 1px", background: "#FFF" }} >
         <div className='table-responsive p-3' style={{ display: "flex", gap: "15px" }}>
           {
             categories?.map((item, index) => <button onClick={() => { setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name) }} key={index} className={`adminDashbordCard ${activeButton === item.active ? 'active-dashbord-card' : ''}`}  >
@@ -198,7 +175,7 @@ const AdminDashboard = () => {
         <div>
           <div className='table-responsive' style={{ width: "100%", padding: "5px 20px 15px 20px", display: "flex" }}>
 
-            <div style={{ minWidth: "782px", padding: "10px 20px", background: "#e3e3e3", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
+            <div style={{ minWidth: "782px", padding: "10px 20px", background: "#f1f3f4", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
               {
                 SubMenuCards?.map(ItemCards => <button onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name) }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
                   <div style={{ fontSize: "20px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>

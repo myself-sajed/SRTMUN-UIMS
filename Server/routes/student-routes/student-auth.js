@@ -13,7 +13,7 @@ const multer = require('multer');
 
 const studentstorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const link = path.join(__dirname,`../../uploads/student-uploads/`)
+        const link = path.join(__dirname, `../../uploads/student-uploads/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
@@ -28,27 +28,27 @@ const models = { StudentUser }
 // student login auth route 
 router.post("/api/auth/student-login", (req, res) => {
     StudentUser.findOne({ email: req.body.username.toLowerCase() })
-            .then((user) => {
-                if (user) {
-                    if (req.body.password === user.password) {
-                        const token = jwt.sign({ email: user.email, id: user._id, }, "SRTMUN");
-                        res.send({ status: "ok", user, token });
-                    } else {
-                        res.send({
-                            status: "notok",
-                            message: "Please Enter correct username or password",
-                        });
-                    }
+        .then((user) => {
+            if (user) {
+                if (req.body.password === user.password) {
+                    const token = jwt.sign({ email: user.email, id: user._id, }, "SRTMUN");
+                    res.send({ status: "ok", user, token });
                 } else {
                     res.send({
                         status: "notok",
                         message: "Please Enter correct username or password",
                     });
                 }
-            })
-            .catch(function (err) {
-                res.send({ status: "notok", message: "Internal Server Error" });
-            });
+            } else {
+                res.send({
+                    status: "notok",
+                    message: "Please Enter correct username or password",
+                });
+            }
+        })
+        .catch(function (err) {
+            res.send({ status: "notok", message: "Internal Server Error" });
+        });
 })
 
 
@@ -57,7 +57,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
 
     try {
         const data = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn }= data;
+        const { salutation, name, programGraduated, schoolName, gender, password, cPassword, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn } = data;
 
         // otp authentication
         let isMatch = await bcrypt.compare(clientOTP, serverOTP)
@@ -67,7 +67,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 mobile, salutation, name, schoolName, programGraduated, password, gender,
                 email: email.toLowerCase(),
                 photoURL: req.file.filename,
-                abcNo,currentIn,country, cast, religion, programEnroledOn
+                abcNo, currentIn, country, cast, religion, programEnroledOn
             });
             user.save();
             res.send({ status: "success", message: "Registration Successfull" });
@@ -102,10 +102,10 @@ router.post("/api/auth/student", (req, res) => {
 router.get("/student/:filename", function (req, res) {
     const link = path.join(__dirname, `../../uploads/student-uploads/${req.params.filename}`);
     res.sendFile(link);
-  });
+});
 
 //Student User Edit Record
-router.post("/student/editRecord/",StudentUpload.single("uploadProof"), async(req, res)=>{
+router.post("/student/editRecord/", StudentUpload.single("uploadProof"), async (req, res) => {
 
     // const model = req.params.model
     const data = JSON.parse(JSON.stringify(req.body));
@@ -116,20 +116,20 @@ router.post("/student/editRecord/",StudentUpload.single("uploadProof"), async(re
         var up = req.file.filename
     }
 
-    Object.keys(data).map((item)=>{
-        if(data[item]=='undefined'){
+    Object.keys(data).map((item) => {
+        if (data[item] == 'undefined') {
             data[item] = ""
         }
-        
+
     })
     console.log(data)
-        const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn} = data
+    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn } = data
 
-        SendData = {  salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn }    
+    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn }
 
     var alldata = null
     if (up) {
-            alldata = Object.assign(SendData, { photoURL: up })
+        alldata = Object.assign(SendData, { photoURL: up })
     }
     else {
         alldata = SendData
