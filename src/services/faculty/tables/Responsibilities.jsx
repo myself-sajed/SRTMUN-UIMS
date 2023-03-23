@@ -62,7 +62,7 @@ const Responsibities = () => {
 
     // }
 
-    
+
     // make states together
     function handleChange(e) {
         e.preventDefault();
@@ -156,7 +156,7 @@ const Responsibities = () => {
                         </div>
                         <Year space="col-md-4" state={year} setState={setYear} />
                         <File space='col-md-8' title='Upload Proof' setState={setProof} />
-    
+
                     </FormWrapper>
                 </DialogContent>
             </Dialog>
@@ -169,8 +169,8 @@ const Responsibities = () => {
                     <thead className='table-dark'>
                         <tr>
                             <th scope="col">Sr.</th>
-                            <th scope="col">Name of the Committee</th>
                             <th scope="col">Designation</th>
+                            <th scope="col">Name of the Committee</th>
                             <th scope="col">Hosting institute name</th>
                             <th scope="col">Year</th>
                             <th scope="col">Uploaded Proof</th>
@@ -180,12 +180,12 @@ const Responsibities = () => {
 
                     <tbody>
 
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((Responsibities, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((Responsibities, index) => {
                             return (
                                 <tr key={Responsibities._id}>
                                     <th scope="row">{index + 1}</th>
-                                    <td>{Responsibities.committeeName}</td>
                                     <td>{Responsibities.designation}</td>
+                                    <td>{Responsibities.committeeName}</td>
                                     <td>{Responsibities.institute}</td>
                                     <td>{Responsibities.year}</td>
                                     <td><View proof={Responsibities.proof} /></td>

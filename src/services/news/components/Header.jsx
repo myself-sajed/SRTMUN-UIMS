@@ -43,21 +43,43 @@ const Header = ({ title = "News Bulletin", showSearch = true, backURL = -1, sear
 
                 <div className='flex flex-col md:flex-row md:items-center items-start justify-between gap-1'>
 
-                    <div className='flex items-center justify-start gap-2'>
-                        <IconButton onClick={() => { navigate(backURL) }}>
-                            <ArrowBackRoundedIcon />
-                        </IconButton>
-                        <span className='font-bold md:text-lg text-base whitespace-nowrap'>{title}</span>
+                    <div className='flex item-center justify-between w-full md:w-auto md:flex-none'>
+                        <div className='flex items-center justify-start gap-2'>
+                            <IconButton onClick={() => { navigate(backURL) }}>
+                                <ArrowBackRoundedIcon />
+                            </IconButton>
+                            <span className='font-bold md:text-lg text-base whitespace-nowrap'>{title}</span>
+                        </div>
+
+                        <div className='md:hidden float-right flex items-center justify-end gap-2 ml-2 md:ml-0'>
+                            <div className='w-full float-right flex items-center justify-end'>
+                                <div>
+                                    <p className='text-sm md:text-base' >{formattedTime}</p>
+                                    <p className='text-muted text-xs md:text-sm'>{formattedDate}</p>
+                                </div>
+                            </div>
+
+                            {
+                                proUser && <div className='w-full float-right flex items-center justify-end'
+                                    onClick={() => { dispatch(setProUser(null)); localStorage.removeItem('pro-token'); navigate('/') }}>
+                                    <IconButton>
+                                        <LogoutRoundedIcon />
+                                    </IconButton>
+                                </div>
+                            }
+
+                        </div>
                     </div>
+
                     {showSearch && <div className='w-full mr-3'>
                         <Filter search={search} setSearch={setSearch} setRangeDate={setRangeDate} />
                     </div>}
 
-                    <div className='float-right flex items-center justify-end gap-2 ml-2 md:ml-0'>
+                    <div className='hidden float-right md:flex items-center justify-end gap-2 ml-2 md:ml-0'>
                         <div className='w-full float-right flex items-center justify-end'>
                             <div>
-                                <p>{formattedTime}</p>
-                                <p className='text-muted text-sm'>{formattedDate}</p>
+                                <p className='text-sm md:text-base' >{formattedTime}</p>
+                                <p className='text-muted text-xs md:text-sm'>{formattedDate}</p>
                             </div>
                         </div>
 
@@ -71,9 +93,10 @@ const Header = ({ title = "News Bulletin", showSearch = true, backURL = -1, sear
                         }
 
                     </div>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
         </div>
     )
 }

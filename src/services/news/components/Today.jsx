@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd'
 import moment from 'moment'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -16,12 +17,18 @@ const Today = ({ news, proUser, refetch, index }) => {
                     className='object-cover cursor-pointer w-20 hover:brightness-75 ease-in-out duration-200 ' />
             </FileViewer></td>
             <td >
-                <Link to={`/news/${news?.slug}`} className='text-blue-500' >{news?.headline}</Link>
+                <Link to={`/news/${news?.slug}`} className='text-orange-700' >{news?.headline}</Link>
             </td>
             <td>{news.desc ?
                 news.desc.length > 80 ?
                     news.desc.slice(0, 80) : news.desc
-                : '--'} {news.desc.length > 80 && <span className='text-xs'><Link to={`/news/${news?.slug}`} className='text-blue-500' >...Read More</Link></span>} </td>
+                : '--'} {news.desc.length > 80 && <span className='text-xs'>
+                    <Link to={`/news/${news?.slug}`} className='text-blue-500' >
+                        <Tooltip title={news.desc} color="volcano">
+                            ...Hover or click to read more
+                        </Tooltip>
+
+                    </Link></span>} </td>
 
             {
                 proUser && <td><Actions news={news} refetch={refetch} /></td>
