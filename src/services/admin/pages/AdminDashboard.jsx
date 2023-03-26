@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-
-import { Chart as ChartJs, ArcElement, Title, Legend, Tooltip } from 'chart.js';
-import { Doughnut, Pie } from 'react-chartjs-2';
+import { Button, IconButton, Tooltip as Tt } from '@mui/material';
+import { styled } from '@mui/system';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import PieChartIcon from '@mui/icons-material/PieChart';
+import { Chart as ChartJs, BarElement, CategoryScale, LinearScale, ArcElement, Title, Legend, Tooltip } from 'chart.js';
+import { Doughnut, Bar } from 'react-chartjs-2';
 import AdminDrower from './AdminDrower';
 import getDocumentCount from '../../../components/requestComponents/getDocumentCount';
 
@@ -23,8 +26,12 @@ import SchoolsProgram from '../../../components/SchoolsProgram';
 import getDepartmentWiseDocumentCount from '../../../components/requestComponents/getDocumentDepartmentwise';
 
 ChartJs.register(
-  ArcElement, Title, Legend, Tooltip
+  ArcElement, Title, Legend, Tooltip, BarElement, CategoryScale, LinearScale,
 )
+
+const Btn = styled(Button)({
+  textTransform: 'none'
+});
 
 const AdminDashboard = () => {
 
@@ -45,24 +52,25 @@ const AdminDashboard = () => {
   const [activeModel, setActiveModel] = useState("User");
   const [activeProperty, setActiveProperty] = useState("department");
   const [activeName, setActiveName] = useState("Faculties");
+  const [activeChart, setActiveChart] = useState("bar");
 
   const categories = [
-    { Icon: <PersonRoundedIcon style={{ fontSize: '35px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
-    { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '35px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
-    { Icon: <BoyRoundedIcon style={{ fontSize: '35px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
-    { Icon: <SchoolRoundedIcon style={{ fontSize: '35px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
+    { Icon: <PersonRoundedIcon style={{ fontSize: '27px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
+    { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '27px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
+    { Icon: <BoyRoundedIcon style={{ fontSize: '27px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
+    { Icon: <SchoolRoundedIcon style={{ fontSize: '27px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
   ]
 
   const SubMenuCards = [
-    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "35px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active: "bookchapters", model: "BooksAndChapters", property: "userId.department" },
-    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "35px" }} />, name: "Research Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
-    { Icon: <ScienceRoundedIcon style={{ fontSize: "35px" }} />, name: "Research Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
-    { Icon: <LanguageRoundedIcon style={{ fontSize: "35px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active: "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
-    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "35px" }} />, name: "Patents Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
-    { Icon: <VideoChatRoundedIcon style={{ fontSize: "35px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active: "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
-    { Icon: <LightbulbRoundedIcon style={{ fontSize: "35px" }} />, name: "Invited Talks", Count: invitedTalkCount, active: "invitedtalks", model: "InvitedTalk", property: "userId.department" },
-    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "35px" }} />, name: "Research Guidance", Count: researchGuidanceCount, active: "reserchguidence", model: "PhdAwarded", property: "userId.department" },
-    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "35px" }} />, name: "Fellowships", Count: fellowshipCount, active: "fellowships", model: "Fellowship", property: "userId.department" },
+    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "25px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active: "bookchapters", model: "BooksAndChapters", property: "userId.department" },
+    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "25px" }} />, name: "Research Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
+    { Icon: <ScienceRoundedIcon style={{ fontSize: "25px" }} />, name: "Research Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
+    { Icon: <LanguageRoundedIcon style={{ fontSize: "25px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active: "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
+    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "25px" }} />, name: "Patents Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
+    { Icon: <VideoChatRoundedIcon style={{ fontSize: "25px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active: "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
+    { Icon: <LightbulbRoundedIcon style={{ fontSize: "25px" }} />, name: "Invited Talks", Count: invitedTalkCount, active: "invitedtalks", model: "InvitedTalk", property: "userId.department" },
+    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "25px" }} />, name: "Research Guidance", Count: researchGuidanceCount, active: "reserchguidence", model: "PhdAwarded", property: "userId.department" },
+    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "25px" }} />, name: "Fellowships", Count: fellowshipCount, active: "fellowships", model: "Fellowship", property: "userId.department" },
   ]
 
   const data = {
@@ -70,11 +78,15 @@ const AdminDashboard = () => {
     datasets: [
       {
         label: `${activeName}`,
+        // data :[876, 374, 421, 782, 652, 256, 390, 918, 312, 563, 849, 237, 666, 223, 621, 848], //dummy data for testing
         data: [
           compCount, chemiCount, managementCount, eduCount, mathCount, phyCount, socialCount, earthCount, lifeCount, pharmaCount, mediaCount, fineCount, langCount, managementLaturCount, techLaturCount, socialLaturCount,
         ],
-        backgroundColor: ["#FADADD", "#F08080", "#FFDAB9", "#FFFACD", "#FFFFE0", "#98FB98", "#B0E0E6", "#87CEEB", "#E6E6FA", "#D8BFD8", "#FFE4E1", "#FDF5E6", "#FAEBD7", "#FFFFF0", "#F5F5DC", "#D3D3D3",],
-        borderColor: ["#F5A3AC", "#CD5C5C", "#FFC58A", "#F0E68C", "#EEDC82", "#9ACD32", "#ADD8E6", "#6495ED", "#BA55D3", "#B57EDC", "#FFC0CB", "#ECD5C5", "#FFE4B5", "#F0E68C", "#F5DEB3", "#C0C0C0",],
+        backgroundColor: [ "#a57c1b", "#ffb400","#363445", "#5e569b", "#9080ff","#54bebe","#dedad2", "#e4bcad", "#df979e", "#d7658b","#63bff0","#e2e2e2","#e1a692", "#cbd6e4", "#df8879","#f4f100"
+        ],
+        // ["#FADADD", "#F08080", "#FFDAB9", "#FFFACD", "#FFFFE0", "#98FB98", "#B0E0E6", "#87CEEB", "#E6E6FA", "#D8BFD8", "#FFE4E1", "#FDF5E6", "#FAEBD7", "#FFFFF0", "#F5F5DC", "#D3D3D3",],
+        borderColor:[  "#704e10",  "#a87500",  "#1f1b27",  "#3e3773",  "#574daa",  "#319b9b",  "#a8a69f",  "#b1886d",  "#b2645a",  "#9e4e6c",  "#2b8ebc",  "#b0b0b0",  "#b87762",  "#8a9cb2",  "#b15a4a",  "#b2a000"], 
+        // ["#F5A3AC", "#CD5C5C", "#FFC58A", "#F0E68C", "#EEDC82", "#9ACD32", "#ADD8E6", "#6495ED", "#BA55D3", "#B57EDC", "#FFC0CB", "#ECD5C5", "#FFE4B5", "#F0E68C", "#F5DEB3", "#C0C0C0",],
         hoverOffset: 5,
         borderWidth: 2,
         cutout: "75%",
@@ -83,6 +95,19 @@ const AdminDashboard = () => {
       },
     ],
   };
+
+  const Scale= activeChart=="bar"? {
+    x: {
+    grid: {
+      display: false
+    }
+  },
+  y: {
+    grid: {
+      display: true
+    }
+  }}: ""
+
 
   const options = {
     layout: { padding: 30 },
@@ -98,6 +123,7 @@ const AdminDashboard = () => {
         // text: `${activeName}`,
       },
     },
+    scales: Scale
   };
 
   const DoughnutLabelsLine = {
@@ -156,17 +182,17 @@ const AdminDashboard = () => {
   return (
     <AdminDrower>
       <div style={{ width: "100%", overflow: "hidden", border: "solid #d8dadb 1px", background: "#FFF" }} >
-        <div className='table-responsive p-3' style={{ display: "flex", gap: "15px" }}>
+        <div className='table-responsive p-3' style={{ display: "flex", gap: "15px", margin: "13px 20px", background: "#f1f3f4", borderRadius: "25px" }}>
           {
             categories?.map((item, index) => <button onClick={() => { setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name) }} key={index} className={`adminDashbordCard ${activeButton === item.active ? 'active-dashbord-card' : ''}`}  >
 
               <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "10px" }}>
                 <div style={{ paddingLeft: "30PX", }}>{item.Icon}</div>
-                <div style={{ paddingRight: "40PX", fontSize: "25px", fontWeight: 500, }}>{item.Count}</div>
+                <div style={{ paddingRight: "40PX", fontSize: "21px", fontWeight: 500, }}>{item.Count}</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div></div>
-                <div style={{ paddingRight: "40PX", fontSize: "15px", fontWeight: 500, }}>
+                <div style={{ paddingRight: "40PX", fontSize: "14px", fontWeight: 500, }}>
                   {item.name}
                 </div>
               </div>
@@ -179,7 +205,7 @@ const AdminDashboard = () => {
             <div style={{ minWidth: "782px", padding: "10px 20px", background: "#f1f3f4", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
               {
                 SubMenuCards?.map(ItemCards => <button onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name) }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
-                  <div style={{ fontSize: "20px", fontWeight: 800, padding: "10px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
+                  <div style={{ fontSize: "17px", fontWeight: 800, padding: "3px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
                   <div className='flex justify-center'><div>{ItemCards.name}</div></div>
                 </button>
                 )
@@ -189,14 +215,18 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        <div className='chart-button-section'>
+          <Btn className={`${activeChart=="bar"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("bar")}} startIcon={<BarChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >
+            Bar Chart
+          </Btn>
+          <Btn className={`${activeChart=="pie"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("pie")}} startIcon={<PieChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >Pie Chart</Btn>
+        </div>
+
         <section className='section-pie'>
           <div >
-            <Doughnut data={data} options={options} plugins={plugins} style={{ maxHeight: "550px" }} />
+            {activeChart=="pie"?<Doughnut data={data} options={options} plugins={plugins} style={{ maxHeight: "550px" }} />:<Bar data={data} options={options}/>}
           </div>
         </section>
-
-
-
 
       </div>
     </AdminDrower>

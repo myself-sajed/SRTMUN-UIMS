@@ -10,7 +10,7 @@ function UgcSapCasDstFistDbtICssr({ id, setState, yearFilter, schoolName, Headin
     const SendReq = 'UgcSapCasDstFistDBTICSSR';
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { Year_of_Award: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { Year_of_Award: yearFilter, SchoolName: schoolName }
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length === 0 && schoolName === 'All Schools' ? { Year_of_Award: {$in:yearFilter} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName } : { Year_of_Award: {$in:yearFilter}, SchoolName: schoolName }
 
     const params = { model: SendReq, id: '', module, filter, }
 

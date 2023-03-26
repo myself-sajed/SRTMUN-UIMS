@@ -9,7 +9,7 @@ function CounselingAndGuidance({id, setState, yearFilter, schoolName, Heading}) 
     const SendReq = 'CounselingAndGuidance';
     const module = 'Admin'
     
-    let filter = yearFilter === ''&& schoolName === ''? null : yearFilter !== ''&& schoolName === ''?{Year_of_Activity: yearFilter}: yearFilter === ''&& schoolName !== ''? {SchoolName: schoolName} : {Year_of_Activity: yearFilter,SchoolName: schoolName}
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length !== 0  && schoolName === 'All Schools'?{Year_of_Activity: {$in:yearFilter}}: yearFilter.length === 0 && schoolName !== 'All Schools' ? {SchoolName: schoolName} : {Year_of_Activity: {$in:yearFilter},SchoolName: schoolName}
     
     const params = { model: SendReq, id: '', module, filter, }
     

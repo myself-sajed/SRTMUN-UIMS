@@ -4,7 +4,9 @@ import AdminDrower from './AdminDrower'
 const AdminStudent = () => {
   return (
     <AdminDrower>
-      <div>AdminStudent</div>
+      <div className='sub-main'>
+        
+      </div>
     </AdminDrower>
   )
 }

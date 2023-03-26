@@ -20,7 +20,7 @@ const useAdminAuth = (shouldNavigate) => {
                         dispatch(setAdminUser(res.data.admin))
 
                         if (shouldNavigate === false) {
-                            navigate('/admin/dashboard')
+                            navigate('/admin')
                         }
                     }
                     else {

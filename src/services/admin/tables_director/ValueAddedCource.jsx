@@ -9,7 +9,7 @@ function ValueAddedCource({ id, setState, yearFilter, schoolName, Heading }) {
   const SendReq = 'ValueAddedCource'
   const module = 'Admin'
 
-  let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { Academic_year: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { Academic_year: yearFilter, SchoolName: schoolName }
+  let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length !== 0 && schoolName === 'All Schools' ? { Academic_year: {$in:yearFilter} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName } : { Academic_year: {$in:yearFilter}, SchoolName: schoolName }
 
   const params = { model: SendReq, id: '', module, filter, }
 

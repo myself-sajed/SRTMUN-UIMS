@@ -10,7 +10,7 @@ function ConferencesSemiWorkshopOrganized({id, setState, yearFilter, schoolName,
  const SendReq = 'ConferencesSemiWorkshopOrganized';
  const module = 'Admin'
  
- let filter = yearFilter === ''&& schoolName === ''? null : yearFilter !== ''&& schoolName === ''?{Year: yearFilter}: yearFilter === ''&& schoolName !== ''? {SchoolName: schoolName} : {Year: yearFilter,SchoolName: schoolName}
+ let filter = yearFilter.length === 0 && schoolName === 'All Schools'? null : yearFilter.length !== 0 && schoolName === 'All Schools' ?{Year: {$in:yearFilter}}: yearFilter.length === 0 && schoolName !== 'All Schools'? {SchoolName: schoolName} : {Year: {$in:yearFilter},SchoolName: schoolName}
  
  const params = { model: SendReq, id: '', module, filter, }
  

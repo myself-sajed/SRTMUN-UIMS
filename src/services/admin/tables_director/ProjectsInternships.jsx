@@ -10,7 +10,7 @@ function ProjectsInternships({ id, setState, yearFilter, schoolName, Heading }) 
     const SendReq = "ProjectsInternships"
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { Academic_Year: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { Academic_Year: yearFilter, SchoolName: schoolName }
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length !== 0 && schoolName === 'All Schools' ? { Academic_Year: {$in:yearFilter} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName } : { Academic_Year: {$in:yearFilter}, SchoolName: schoolName }
 
     const params = { model: SendReq, id: '', module, filter, }
 

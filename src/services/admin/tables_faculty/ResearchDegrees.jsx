@@ -9,7 +9,7 @@ const ResearchDegrees = ({id, setState, yearFilter, schoolName}) => {
     const SendReq = "Degree"
   const module = "Admin"
 
-  let condition = schoolName===""? null :{department: schoolName}
+  let condition = schoolName==='All Schools'? null :{department: schoolName}
 
   const params = { model: SendReq, id: "", module, filterConditios: condition }
 

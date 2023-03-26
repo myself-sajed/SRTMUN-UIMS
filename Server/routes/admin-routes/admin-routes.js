@@ -60,8 +60,9 @@ const ValueAddedCource = require('../../models/director-models/valueAddedCourceS
 
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
 
-const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "PostHeld", "Lectures", "ResearchPaper", "PhdAwarded", "JrfSrf", "Patent", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship"]
+const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "PostHeld", "Lectures", "ResearchPaper", "PhdAwarded", "JrfSrf", "Patent", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
+const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopOrganized", "CounselingAndGuidance", "DemandRatio", "Employability", "ExtensionActivities", "IctClassrooms", "MoUs", "Placement", "ProgressionToHE", "ProjectsInternships", "QualifiedExams", "ResearchMethodologyWorkshops", "ReservedSeats", "SkillsEnhancementInitiatives", "StudentSatisfactionSurvey", "SyllabusRevision", "TrainingProgramsOrganized", "UgcSapCasDstFistDBTICSSR", "ValueAddedCource"]
 
 const dataSetter = {
     "School of Computational Sciences": "compCount",
@@ -140,6 +141,8 @@ router.post("/getDocumentCount", async (req, res) => {
 router.post('/Admin/getData', async (req, res) => {
 
     const { model, filter, filterConditios } = req.body
+    let school = directorModels.includes(model)? "SchoolName": model==="AlumniUser"||model==="StudentUser"?"schoolName": model==='DirectorUser'||model=== 'User'? "department":""
+
     let fil = {};
     let filc = {};
     if (filterConditios !== null) {
@@ -169,7 +172,7 @@ router.post('/Admin/getData', async (req, res) => {
             });
         }
         else {
-            const fetch = await models[model].find(fil).sort({ $natural: -1 });
+            const fetch = await models[model].find(fil).sort({[school]:1});
             res.status(200).send(fetch);
         }
     } catch (err) {

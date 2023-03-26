@@ -10,7 +10,7 @@ function MoUs({ id, setState, yearFilter, schoolName, Heading }) {
     const SendReq = "MoUs"
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { Year_of_signing_MoU: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { Year_of_signing_MoU: yearFilter, SchoolName: schoolName }
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length !== 0 && schoolName === 'All Schools' ? { Year_of_signing_MoU: {$in:yearFilter} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName } : { Year_of_signing_MoU: {$in:yearFilter}, SchoolName: schoolName }
 
     const params = { model: SendReq, id: '', module, filter, }
 

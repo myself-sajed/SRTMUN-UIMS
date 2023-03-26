@@ -10,7 +10,7 @@ const Directors = ({id, setState, yearFilter, schoolName, Heading}) => {
     const SendReq = "DirectorUser"
     const module = "Admin"
   
-    let filter = schoolName === ""? null : {department: schoolName}
+    let filter = schoolName === 'All Schools' ? null : {department: schoolName}
   
     const params = { model: SendReq, id: "", module, filter: filter }
   
@@ -28,7 +28,7 @@ const Directors = ({id, setState, yearFilter, schoolName, Heading}) => {
         <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq}>
           <div className='table-responsive' style={{height: "100%" }}>
             <table class="table">
-              <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
+              <thead class="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
                 <tr>
                   <th>Sr. No.</th>
                   <th>profile Pic</th>

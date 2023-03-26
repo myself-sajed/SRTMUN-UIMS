@@ -10,7 +10,7 @@ function IctClassrooms({ id, setState, yearFilter, schoolName, Heading }) {
   const SendReq = 'IctClassrooms';
   const module = 'Admin'
 
-  let filter = schoolName === '' ? null : { SchoolName: schoolName }
+  let filter = schoolName === 'All Schools' ? null : { SchoolName: schoolName }
 
   const params = { model: SendReq, id: '', module, filter, }
 

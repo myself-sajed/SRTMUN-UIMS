@@ -10,7 +10,7 @@ function ResearchMethodologyWorkshops({ id, setState, yearFilter, schoolName, He
     const SendReq = 'ResearchMethodologyWorkshops';
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== '' && schoolName === '' ? { year: yearFilter } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName } : { year: yearFilter, SchoolName: schoolName }
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? null : yearFilter.length !== 0 && schoolName === 'All Schools' ? { year: {$in:yearFilter} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName } : { year: {$in:yearFilter}, SchoolName: schoolName }
 
     const params = { model: SendReq, id: '', module, filter, }
 

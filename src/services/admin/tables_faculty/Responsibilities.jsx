@@ -5,6 +5,9 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
+   'userId.username': 'Username',
+   'userId.name': 'Faculty Name',
+   'userId.department': 'Faculty School',
    committeeName: 'Name of the Committee',
    designation: 'Designation',
    institute: 'Hosting institute name',
@@ -16,8 +19,8 @@ const Responsibilities = ({id, setState, yearFilter, schoolName, Heading}) => {
   const SendReq = 'Responsibilities'
   const module = 'Admin'
   
-let condition = schoolName===""? null :{department: schoolName}
-let filter = yearFilter === ""? null : {year: yearFilter}
+let condition = schoolName==='All Schools'? null :{department: schoolName}
+let filter = yearFilter.length === 0? null : {year: {$in:yearFilter}}
 
 const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   

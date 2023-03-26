@@ -2,14 +2,12 @@ import React from 'react'
 import "../css/admin.css"
 import { Input, Space } from 'antd';
 import { Avatar } from '@mui/material';
+import useAdminAuth from '../../../hooks/useAdminAuth';
 const { Search } = Input;
 
 
 const AdminHeader = () => {
-const onSearch = ()=> {
-
-};
-const arr = ["2020-21","2021-22","2022-23"];//width: "100%"
+  useAdminAuth()
   return (
     <div className='main-header'>
       <div style={{display: "flex", justifyContent: "flex-start", width: "20%", }}>Admin</div>
