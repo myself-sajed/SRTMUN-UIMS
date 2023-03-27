@@ -169,4 +169,46 @@ router.post("/getDocumentCount", async (req, res) => {
     }
 })
 
+//Get Route
+router.post('/Admin/getData', async (req, res) => {
+
+    const { model, filter, filterConditios } = req.body
+    let fil = {};
+    let filc = {};
+    if (filterConditios !== null) {
+        filc = filterConditios
+    }
+    if (filter !== null) {
+        fil = filter
+    }
+    try {
+        if (facultyModels.includes(model)) {
+            models[model].find(fil).populate({
+                path: 'userId',
+                match: filc,
+                select: ('-password'),
+            }).exec(function (err, fetch) {
+                let filterData = []
+                if (err) {
+                    // throw err; 
+                    console.log(err);
+                }
+                for (item of fetch) {
+                    if (item.userId !== null) {
+                        filterData.push(item)
+                    }
+                }
+                res.status(200).send(filterData);
+            });
+        }
+        else {
+            const fetch = await models[model].find(fil).sort({ $natural: -1 });
+            res.status(200).send(fetch);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
 module.exports = router;
