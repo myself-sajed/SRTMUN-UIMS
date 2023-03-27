@@ -28,12 +28,13 @@ import SyllabusRevision from '../tables_director/SyllabusRevision';
 import TrainingProgramsOrganized from '../tables_director/TrainingProgramsOrganized';
 import UgcSapCasDstFistDbtICssr from '../tables_director/UgcSapCasDstFistDBTICSSR';
 import ValueAddedCource from '../tables_director/ValueAddedCource';
+import AdminSchoolSelect from '../components/AdminSchoolSelect';
 
 
 const AdminDirector = () => {
 
   const [childData, setChildData] = useState({ director: "", alumnicontribution: "", awards: "", conferencessemiworkshoporganized: "", counselingandguidance: "", awardrecognition: "", employability: "", extensionactivities: "", ictclassrooms: "", mous: "", placements: "", progressiontohe: "", projectsinternships: "", qualifiedexams: "", researchmethodologyworkshops: "", reservedseats: "", skillsenhancementinitiatives: "", studentsatisfactionsurvey: "", syllabusrevision: "", trainingprogramsorganized: "", ugcsapcasdstfistdbticssr: "", valueaddedcource: "", })
-  const [values, setValues] = useState({ yearFilter: "", schoolName: "" })
+  const [values, setValues] = useState({ yearFilter: [], schoolName: "All Schools" })
   const { yearFilter, schoolName } = values
 
 
@@ -174,35 +175,15 @@ const AdminDirector = () => {
   return (
     <AdminDrower>
 
-      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
+      <div className='sub-main'>
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
-          <div className='col-12 p-1 col-md-4 col-lg-4'>
-            <label htmlFor="choose" className="form-label" >Filter By School</label>
-            <select className="form-select" id="schoolName" required="true"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setValues((pri) => {
-                  return {
-                    ...pri,
-                    schoolName: e.target.value
-                  }
-                })
-              }
-              } value={values.schoolName}>
-              <option selected value="">All School</option>
-              {
-                Object.keys(SchoolsProgram)?.map((e) => {
-                  return <option value={e}>{e}</option>
-                })
-              }
-            </select>
-          </div>
-          <button className='col-md-3 col-lg-3 col-12 btn btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
+          <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
+          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 
-          <div style={{ border: "solid #822500 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "10px" }}>
+          <div className='button-wraper'>
 
             <div className='flex gap-auto flex-wrap'>
               {

@@ -1,0 +1,9 @@
+db.responsibilities.find({userId: {$type: 'string'}}).forEach(function(doc) {
+... db.responsibilities.updateOne(
+..... { _id: doc._id },
+..... { $set: { userId: ObjectId(doc.userId) } }
+..... );
+... })
+
+
+db.qualifications.find({ userId: { $type: 'string' } }).forEach(function (doc) { db.qualifications.updateOne( { _id: doc._id }, { $set: { userId: ObjectId(doc.userId) } }); })

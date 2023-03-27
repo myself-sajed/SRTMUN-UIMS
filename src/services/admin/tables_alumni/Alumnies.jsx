@@ -10,7 +10,7 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
   const SendReq = "AlumniUser"
   const module = "Admin"
 
-  let filter = yearFilter === '' && schoolName === '' ? null : yearFilter !== ''&& schoolName === ''?{doCompleted: yearFilter}: yearFilter === ''&& schoolName !== ''? {schoolName: schoolName} :{schoolName: schoolName, doCompleted: yearFilter}
+  let filter = yearFilter.length === 0  && schoolName === 'All Schools' ? null : yearFilter.length !== 0 && schoolName === 'All Schools'?{doCompleted: {$in:yearFilter}}: yearFilter.length === 0 && schoolName !== 'All Schools'? {schoolName: schoolName} :{schoolName: schoolName, doCompleted: {$in:yearFilter}}
 
   const params = { model: SendReq, id: "", module, filter }
 
@@ -28,7 +28,7 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
       <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq}>
         <div className='table-responsive' style={{height: "100%" }}>
           <table class="table">
-            <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
+            <thead class="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
               <tr>
                 <th>Sr. No.</th>
                 <th>profile Pic</th>
@@ -45,7 +45,7 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
               {
                 data?.data.map((item, index) => <tr>
                   <td>{index + 1}</td>
-                  <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/director`} /></td>
+                  <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/faculty`} /></td>
                   <td>{`${item.salutation} ${item.name}`}</td>
                   <td>{item.schoolName}</td>
                   <td>{item.gender}</td>

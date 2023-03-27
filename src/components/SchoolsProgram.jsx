@@ -22,11 +22,11 @@ const SchoolsProgram = {
         ["MSW", 2], ["M.A.(Applied Economics)", 2], ["M.A.(Sociology)", 2], ["M.A.(Human Rights)", 2], ["M.Phil(Social Work)", 2], ["M.Phil(Sociology)", 2], ["M.Phil(Human Rights)", 2], ["Ph.D.(Social Work)", 7], ["Ph.D.(Sociology)", 7], ["Ph.D.(Applied Economics)", 7], ["Ph.D.(Human Rights)", 7], ["P.G.Diploma in Women's Studies", 1], ["Interdisciplinary Certificate Course in Women's Studies", 1]
     ],
     "School of Earth Sciences": [
-        ["M.Sc.(Geology)", 2], ["M.Sc.(Environmental Science)", 2], ["M.A/M.Sc.(Geography)", 2], ["M.Sc.(Geophysics)", 2], ["M.Phil.(Geology)", 2], ["M.Phil.(Environmental Science)", 2], ["M.Phil.(Geography)", 2], ["Ph.D.(Geology)",7], ["Ph.D.(Environmental Science)",7], ["Ph.D.(Geography)",7], ["Ph.D.(Geophysics)", 7], ["Post-Graduate Diploma in Geoinformatics", 2],
+        ["M.Sc.(Geology)", 2], ["M.Sc.(Environmental Science)", 2], ["M.A/M.Sc.(Geography)", 2], ["M.Sc.(Geophysics)", 2], ["M.Phil.(Geology)", 2], ["M.Phil.(Environmental Science)", 2], ["M.Phil.(Geography)", 2], ["Ph.D.(Geology)", 7], ["Ph.D.(Environmental Science)", 7], ["Ph.D.(Geography)", 7], ["Ph.D.(Geophysics)", 7], ["Post-Graduate Diploma in Geoinformatics", 2],
         ["Certificate Course in Industrial Safety,Health and Environmental Management (dual course with PG, M.Phil & Ph.D.)", 2]
     ],
     "School of Life Sciences": [
-        ["Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)",1],["M.Sc.(Biotechnology)", 2], ["M.Sc.(Zoology)", 2], ["M.Sc.(Botany)", 2], ["M.Sc.(Microbiology)", 2], ["M.Phil.(Biotechnology)", 2], ["M.Phil.(Zoology)", 2], ["M.Phil.(Botany)", 2], ["M.Phil.(Microbiology)", 2], ["Ph.D.(Biotechnology)", 7], ["Ph.D.(Zoology)", 7], ["Ph.D.(Botany)", 7], ["Ph.D.(Microbiology)", 7],["Ph.D.(Bioinformatics)", 7],
+        ["Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)", 1], ["M.Sc.(Biotechnology)", 2], ["M.Sc.(Zoology)", 2], ["M.Sc.(Botany)", 2], ["M.Sc.(Microbiology)", 2], ["M.Phil.(Biotechnology)", 2], ["M.Phil.(Zoology)", 2], ["M.Phil.(Botany)", 2], ["M.Phil.(Microbiology)", 2], ["Ph.D.(Biotechnology)", 7], ["Ph.D.(Zoology)", 7], ["Ph.D.(Botany)", 7], ["Ph.D.(Microbiology)", 7], ["Ph.D.(Bioinformatics)", 7],
     ],
     "School of Pharmacy": [
         ["B.Pharm", 4], ["M.Pharm(Pharmaceutics)", 2], ["M.Pharm(Pharmaceutical Chemistry)", 2], ["M.Pharm(Pharmacology)", 2], ["M.Pharm(Quality Assurance)", 2], ["M.Pharm(Pharmaceutical Sciences)", 2], ["Ph.D.(Pharmaceutical Sciences)", 7]
@@ -44,13 +44,11 @@ const SchoolsProgram = {
         ["M.B.A", 2], ["M.Com", 2], ["PGDDM", 2], ["M.Phil(Management Sciences)", 2], ["Ph.D(Management Sciences)", 7], ["Certificate Course in Goods and Service Tax (GST)", 7]
     ],
     "School of Technology, Sub-Campus, Latur": [
-        ["B.Voc.(Software Development)", 3], ["M.Sc.(Computer Science Integrated)", 2], ["M.Sc.(Computer Science)", 2], ["M.Sc.(Bioinformatics)", 2], ["M.Phil.(Computer Science)", 2], ["Ph.D.(Computer Science)", 7], ["Ph.D.(Bioinformatics)",7]
+        ["B.Voc.(Software Development)", 3], ["M.Sc.(Computer Science Integrated)", 2], ["M.Sc.(Computer Science)", 2], ["M.Sc.(Bioinformatics)", 2], ["M.Phil.(Computer Science)", 2], ["Ph.D.(Computer Science)", 7], ["Ph.D.(Bioinformatics)", 7]
     ],
     "School of Social Sciences, Sub-Campus, Latur": [
         ["M.A.(Economics)", 2], ["M.A.(Sociology)", 2], ["M.S.W.", 2], ["Ph.D.(Social Science)", 7], ["Data Interpretation Using MS-Excel and SPSS", 1],
     ],
-    // "Latur Sub Center School of Languages and Literature": [
-    //     "","","","","","","",
-    // ],
+
 }
 export default SchoolsProgram

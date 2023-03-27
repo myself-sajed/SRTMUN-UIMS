@@ -30,14 +30,15 @@ import FinancialSupport from '../tables_faculty/FinancialSupport';
 import Responsibilities from '../tables_faculty/Responsibilities';
 import ForaginVisit from '../tables_faculty/ForaginVisit';
 import adminExcelObject from '../components/adminExcelObject';
+import AdminSchoolSelect from '../components/AdminSchoolSelect';
 
 
 const AdminFaculty = () => {
 
   const [childData, setChildData] = useState({ faculty: "", qualification: "", researchdegrees: "", econtentdeveloped: "", appointmentspriorjoining: "", awardrecognition: "", booksandchapters: "", collaborations: "", conferenceorganised: "", conferencepartipeted: "", consultancy: "", fellowship: "", researchprojects: "", postheldafterjoining: "", lectures: "", researchpapers: "", phdawarded: "", jrfsrfpdf: "", patents: "", invitedtalks: "", orientationrefreshercourse: "", financialsupport: "", responsibilities: "", foraginvisit: "", })
-  const [values, setValues] = useState({ yearFilter: "", schoolName: "" })
+  const [values, setValues] = useState({ yearFilter: [], schoolName: "All Schools" })
   const { yearFilter, schoolName } = values
-
+  // console.log (yearFilter)
 
   const allFacultyComponents = [
     {
@@ -137,13 +138,6 @@ const AdminFaculty = () => {
       childData: childData?.foraginvisit, filename: 'Foreign Visits.csv', SendReq: "ForeignVisit", module: "faculty"
     },
   ]
-  useEffect(() => {
-    const dataFacher = async () => {
-      allFacultyComponents.map((component) => {
-        console.log(component)
-      })
-    }
-  }, [])
 
   const downloadCSV = async () => {
     const zip = new JSZip();
@@ -171,9 +165,6 @@ const AdminFaculty = () => {
         }
         itemdata.push(newdata)
       })
-
-
-      // console.log(data)
       zip.file(filename, Papa.unparse(itemdata));
     });
 
@@ -190,36 +181,16 @@ const AdminFaculty = () => {
   return (
     <AdminDrower>
 
-      <div style={{ width: "100%", overflow: "hidden", background: "#b5968575" }} >
+      <div className='sub-main' >
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
-          {/* <Select className='col-md-4 col-lg-4 col-12' id="schoolName" value={schoolName} label="Filter By School" setState={setValues} options={} /> */}
-          <div className='col-12 p-1 col-md-4 col-lg-4'>
-            <label htmlFor="choose" className="form-label" >Filter By School</label>
-            <select className="form-select" id="schoolName" required="true"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setValues((pri) => {
-                  return {
-                    ...pri,
-                    schoolName: e.target.value
-                  }
-                })
-              }
-              } value={values.schoolName}>
-              <option selected value="">All School</option>
-              {
-                Object.keys(SchoolsProgram)?.map((e) => {
-                  return <option value={e}>{e}</option>
-                })
-              }
-            </select>
-          </div>
-          <button className='col-md-3 col-lg-3 col-12 btn btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
+          <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
+         
+          <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 
-          <div style={{ border: "solid #822500 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "10px" }}>
+          <div className='button-wraper'>
 
             <div className='flex gap-auto flex-wrap'>
               {

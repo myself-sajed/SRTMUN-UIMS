@@ -9,7 +9,7 @@ const AlumniContribution = ({id, setState, yearFilter, schoolName, Heading}) => 
     const SendReq = "AlumniContribution";
     const module = "Admin"
     
-    let filter = yearFilter === ""&& schoolName === ""? {AlumniId:{$exists:true ,$ne:"undefined"}} : yearFilter !== ""&& schoolName === ""?{Academic_Year: yearFilter,AlumniId:{$exists:true ,$ne:"undefined"}}: yearFilter === ""&& schoolName !== ""? {SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"}} : {Academic_Year: yearFilter,SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"}}
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools'? {AlumniId:{$exists:true ,$ne:"undefined"}} : yearFilter.length !== 0  && schoolName === 'All Schools' ?{Academic_Year: {$in:yearFilter},AlumniId:{$exists:true ,$ne:"undefined"}}: yearFilter.length === 0 && schoolName !== 'All Schools'? {SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"}} : {Academic_Year: {$in:yearFilter},SchoolName: schoolName, AlumniId:{$exists:true ,$ne:"undefined"}}
 
     const params = { model: SendReq, id: '', module, filter: filter, }
 

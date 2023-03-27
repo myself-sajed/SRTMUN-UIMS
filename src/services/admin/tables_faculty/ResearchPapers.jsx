@@ -20,8 +20,8 @@ const ResearchPapers = ({id, setState, yearFilter, schoolName, Heading}) => {
   const SendReq = 'ResearchPaper'
   const module = 'Admin'
   
-let condition = schoolName===""? null :{department: schoolName}
-let filter = yearFilter === ""? null : {year: yearFilter}
+let condition = schoolName==='All Schools'? null :{department: schoolName}
+let filter = yearFilter.length === 0? null : {year: {$in:yearFilter}}
 
  const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   

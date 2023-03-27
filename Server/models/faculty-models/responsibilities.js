@@ -22,8 +22,9 @@ const responsibilitiesSchema = new mongoose.Schema({
         required: false,
     },
     userId: {
-        type: 'string',
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "users"
     },
 
 }, { timestamps: true });

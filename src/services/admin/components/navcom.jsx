@@ -18,39 +18,7 @@ import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
 
 
 const navcom = [
-    // {
-    //     element: <Faculties />, 
-    //     value: 'Faculties',  
-    // },
-    // ,{
-
-    //     element: <Qualification />,
-    //     value: 'Qualifications',
-    // },
-    // {
-    //     element: <EContentDeveloped/>,
-    //     value:'E-Content Developed',
-    // },
-    // {
-    //     element: <A/>,
-    //     value:'',
-    // },
-    // {
-    //     element: <A/>,
-    //     value:'',
-    // },
-    // {
-    //     element: <A/>,
-    //     value:'',
-    // },
-    // {
-    //     element: <A/>,
-    //     value:'',
-    // },
-    // {
-    //     element: <A/>,
-    //     value:'',
-    // },
+    
 ]
 
 
@@ -59,7 +27,7 @@ const DashbordButtons = [
     {element: <AdminDashboard/>, title:"Dashboard", name:"Dashboard", }, 
     {element: <AdminFaculty/>, title:"Faculties", name:"Faculties", }, 
     {element: <AdminDirector/>, title:"Directors", name:"Directors", }, 
-    {element: <AdminAlumni/>, title:"Alumnis", name:"Alumnis", }, 
+    {element: <AdminAlumni/>, title:"Alumni", name:"Alumnis", }, 
     {element: <AdminStudent/>, title:"Students", name:"Students", },
     {element: <AdminMore/>, title:"More", name:"More", },
 ]

@@ -254,6 +254,9 @@ const adminExcelObject = {
         'year': 'Year',
     },
     Responsibilities: {
+        'userId.username': 'Username',
+        'userId.name': 'Faculty Name',
+        'userId.department': 'Faculty School',
         'committeeName': 'Name of the Committee',
         'designation': 'Designation',
         'institute': 'Hosting institute name',

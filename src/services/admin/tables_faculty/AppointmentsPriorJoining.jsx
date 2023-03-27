@@ -8,7 +8,7 @@ const tableHead = { index: 'Sr.No.', "userId.username": "Username", "userId.name
 const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Heading }) => {
   const SendReq = "AppointmentsHeldPrior"
   const module = "Admin"
-  let condition = schoolName===""? null :{department: schoolName}
+  let condition = schoolName=== "All Schools"? null :{department: schoolName}
 
   const params = { model: SendReq, id: "", module, filterConditios: condition }
 

@@ -11,7 +11,7 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
   const SendReq = "User"
   const module = "Admin"
 
-  let filter = schoolName === ""? null : {department: schoolName}
+  let filter = schoolName === 'All Schools'? null : {department: schoolName}
 
   const params = { model: SendReq, id: "", module, filter: filter }
 
@@ -30,7 +30,7 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
     <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >
       <div className='table-responsive' style={{height: "100%" }}>
         <table class="table">
-          <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
+          <thead class="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
             <tr>
               <th>Sr. No.</th>
               <th>profile Pic</th>
@@ -47,7 +47,7 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
             {
               data?.data.map((item, index) => <tr>
                 <td>{index + 1}</td>
-                <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}`} /></td>
+                <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/faculty`} /></td>
                 <td>{`${item.salutation} ${item.name}`}</td>
                 <td>{item.username}</td>
                 <td>{item.department}</td>

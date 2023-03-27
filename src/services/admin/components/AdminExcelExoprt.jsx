@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';
-import { Button } from '@mui/material';
+import { styled } from '@mui/system';
 import { IconButton } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import adminExcelObject from './adminExcelObject'
 import { CSVLink } from 'react-csv';
+
+const IBtn = styled(IconButton)({
+  padding: "3px"
+});
 
 const AdminExcelExoprt = ({ data, SendReq, fileTitle, proof, module }) => {
 
@@ -35,9 +39,9 @@ const AdminExcelExoprt = ({ data, SendReq, fileTitle, proof, module }) => {
 
   return (
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-      <IconButton sx={{background: "#c5c2c2", borderRadius: "10px",}}>
-        <CSVLink className='text-green-900' data={lastData} filename={fileTitle}><FileDownloadOutlinedIcon/></CSVLink>
-      </IconButton>
+      <IBtn sx={{background: "#dee1e6", borderRadius: "5px",}}>
+        <CSVLink className='text-[#2f9163]' data={lastData} filename={fileTitle}><FileDownloadOutlinedIcon/></CSVLink>
+      </IBtn>
       {/* <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100, marginBottom: "10px" }}>
         <CSVLink className='text-white' data={lastData} filename={fileTitle}>Export As Excel</CSVLink>
       </Button> */}

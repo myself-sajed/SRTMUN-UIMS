@@ -185,6 +185,7 @@ const StudentHome = () => {
                                         <DetailTile keyName="Religion" value={`${user && user.religion}`} />
                                         <DetailTile keyName="Cast" value={`${user && user.cast}`} />
                                         <DetailTile keyName="Date Of Birth" value={`${user && user.dob == "" || user.dob == undefined ? "Not Added" : user.dob}`} />
+                                        <DetailTile keyName="Gender" value={`${user && user.gender}`} />
                                         {user?.programGraduated.includes("Ph.D") ? <>
                                             <DetailTile keyName="Research Guide" value={`${user && user.ResearchGuide == "" || user.ResearchGuide == undefined ? "Not Added" : user.ResearchGuide}`} />
                                             <DetailTile keyName="Date of Rac" value={`${user && user.dateOfRac == "" || user.dateOfRac == undefined ? "Not Added" : user.dateOfRac}`} />

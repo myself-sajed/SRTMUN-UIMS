@@ -30,9 +30,9 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
   return (
     <>
 
-      <div className='table-responsive' style={{height: "100%" }}>
-        <table class="table" >
-          <thead class="sticky-top" style={{ background: "#823600", color: '#FFF' }}>
+      <div className='table-responsive' style={{ height: "100%" }}>
+        <table class="table table-bordered" >
+          <thead class="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
             <tr>
               {
                 Object.values(tableHead)?.map(item => {
@@ -60,7 +60,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
         {isLoading ? <Loader /> : ""}
         {!isLoading && data?.length === 0 ? <EmptyBox /> : ""}
       </div>
-      
+
     </>
   )
 }

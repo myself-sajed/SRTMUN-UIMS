@@ -9,7 +9,7 @@ function ExtensionActivities({id, setState, yearFilter, schoolName, Heading}) {
 const SendReq = 'ExtensionActivities';
 const module = 'Admin'
 
-let filter = yearFilter === ''&& schoolName === ''? null : yearFilter !== ''&& schoolName === ''?{Year_of_activity: yearFilter}: yearFilter === ''&& schoolName !== ''? {SchoolName: schoolName} : {Year_of_activity: yearFilter,SchoolName: schoolName}
+let filter = yearFilter.length === 0 && schoolName === 'All Schools'? null : yearFilter.length !== 0 && schoolName === 'All Schools'?{Year_of_activity: {$in:yearFilter}}: yearFilter.length === 0 && schoolName !== 'All Schools'? {SchoolName: schoolName} : {Year_of_activity: {$in:yearFilter},SchoolName: schoolName}
 
 const params = { model: SendReq, id: '', module, filter, }
 

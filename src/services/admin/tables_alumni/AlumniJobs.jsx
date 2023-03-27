@@ -11,7 +11,7 @@ function AlumniJobs({ id, setState, yearFilter, schoolName, Heading }) {
     const SendReq = "Placement";
     const module = 'Admin'
 
-    let filter = yearFilter === '' && schoolName === '' ? {Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"}} : yearFilter !== '' && schoolName === '' ? { Academic_Year: yearFilter, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} } : yearFilter === '' && schoolName !== '' ? { SchoolName: schoolName, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} } : { Academic_Year: yearFilter, SchoolName: schoolName, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} }
+    let filter = yearFilter.length === 0 && schoolName === 'All Schools' ? {Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"}} : yearFilter.length !== 0 && schoolName === 'All Schools' ? { Academic_Year: {$in:yearFilter}, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} } : yearFilter.length === 0 && schoolName !== 'All Schools' ? { SchoolName: schoolName, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} } : { Academic_Year: {$in:yearFilter}, SchoolName: schoolName, Type_Of_Placement: "Placement",AlumniId:{$exists:true ,$ne:"undefined"} }
 
     const params = { model: SendReq, id: '', module, filter, }
 
