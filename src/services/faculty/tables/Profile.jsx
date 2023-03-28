@@ -28,6 +28,8 @@ const Profile = () => {
     const [userData, setUserData] = useState({});
     // useAuth()
 
+    const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
+
     //state
     const [salutation, setSalutation] = useState()
     const [name, setName] = useState()
@@ -40,6 +42,8 @@ const Profile = () => {
     const [specialization, setSpecialization] = useState('')
     const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
+    const [racDate, setRacDate] = useState('')
+    const [cast, setCast] = useState('')
 
     useAuth(false)
 
@@ -87,7 +91,7 @@ const Profile = () => {
     // handle edit button
     function handleEdit(e) {
         e.preventDefault()
-        const editData = { salutation, name, designation, department, id: user._id, promotionDate: promotion, gradePay, address, mobile, email, dob, specialization }
+        const editData = { salutation, name, designation, department, id: user._id, promotionDate: promotion, gradePay, address, mobile, email, dob, specialization, racDate, cast }
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/editProfile`, { editData }).then(function (response) {
             if (response.data.status === 'edited') {
                 setUserData(new Date().getTime())
@@ -237,6 +241,9 @@ const Profile = () => {
                                         <DetailTile sr="Email" value={user && user.email} />
                                         <DetailTile sr="Permanent Address" value={user && user.address} />
                                         <DetailTile sr="Mobile Number" value={user && user.mobile} />
+                                        <DetailTile sr="Gender" value={user && user.gender} />
+                                        <DetailTile sr="Cast" value={user && user.cast} />
+                                        <DetailTile sr="Date of Rac" value={user && user.racDate} />
                                     </div>
                                 </div>
 
@@ -323,8 +330,22 @@ const Profile = () => {
                                 <textarea type="text" value={address} onChange={(e) => { setAddress(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
                             </div>
 
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom05" className="form-label">Date of Rac</label>
+                                <input type="date" value={racDate} onChange={(e) => { setRacDate(e.target.value) }} className="form-control" id="validationCustom05" />
+                            </div>
 
-
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom05" className="form-label">Cast</label>
+                                <select className={`form-select`} value={cast} onChange={(e) => { setCast(e.target.value) }} required>
+                                    <option selected disabled value="">Choose Cast</option>
+                                    {
+                                        Casts.map(item => {
+                                        return <option>{item}</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
 
                             <div className="col-12 mb-3 flex items-center justify-start gap-2">
                                 <button type='submit' className="bg-blue-600 hover:bg-blue-700 text-white

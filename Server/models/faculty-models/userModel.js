@@ -46,6 +46,14 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    racDate: {
+        type: 'string',
+        required: false,
+    },
+    cast: {
+        type: 'string',
+        required: false,
+    },
     designation: {
         type: 'string',
         required: true,

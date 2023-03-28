@@ -9,7 +9,7 @@ import useAlumniAuth from '../../../hooks/useAlumniAuth'
 import title from '../../../js/title'
 import OnlyNav from '../../../components/OnlyNav'
 import siteLinks from '../../../components/siteLinks'
-import DialogBox from '../../../components/DialogBox'
+import DialogBox from '../../../components/formComponents/DialogBox'
 import Select from '../../../components/formComponents/Select'
 import Text from '../../../components/formComponents/Text'
 import UploadFile from '../../../components/formComponents/UploadFile'
@@ -139,23 +139,17 @@ const Home = () => {
                                 user &&
                                 <div className="card-body sm:flex">
 
-                                    <div className='flex-1'>
+                                    <div className='flex flex-wrap'>
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
-                                        <DetailTile keyName="Program Graduated " value={`${user && user.programGraduated.map((item)=>{return (`${item}`)})}`} />
-                                        <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
-                                        <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} />
-                                        
-
-
-                                    </div>
-                                    <div className='flex-1'>
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile}`} />
+                                        <DetailTile keyName="Program Graduated " value={`${user && user.programGraduated.map((item)=>{return (`${item}`)})}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
+                                        <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined || user.address === '' ? "Not Added" : user.address}`} />
+                                        <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} />
                                         <DetailTile keyName="Date Of Birth" value={`${user && user.dob == undefined || user.dob == '' ? "Not Added" : user.dob}`} />
                                         <DetailTile keyName="Completed Programs" value={`${user && user.doCompleted=== undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
                                     </div>
-
                                 </div>
                             }
 
@@ -243,7 +237,7 @@ export default Home
 
 const DetailTile = ({ keyName, value }) => {
     return (
-        <div className="row py-2 text-black">
+        <div className="row py-2 text-black col-12 col-md-6 col-lg-6">
             <div className="col-sm-3">
                 <p className="mb-0 text-sm sm:text-base">{keyName}</p>
             </div>
