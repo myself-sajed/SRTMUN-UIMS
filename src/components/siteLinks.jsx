@@ -1,5 +1,6 @@
 let siteLinks = {
     welcome: { title: 'Welcome', link: '/' },
+    adminHome: { title: 'Admin Dashboard', link: '/admin' },
     facultyHome: { title: 'Faculty Home', link: '/faculty' },
     facultyProfile: { title: 'Faculty Profile', link: '/faculty/faculty-profile' },
     facultyReport: { title: 'Faculty Report', link: '/faculty/service/generateFacultyReport' },

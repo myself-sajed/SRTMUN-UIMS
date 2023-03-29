@@ -24,7 +24,7 @@ const Today = ({ news, proUser, refetch, index }) => {
                     news.desc.slice(0, 80) : news.desc
                 : '--'} {news.desc.length > 80 && <span className='text-xs'>
                     <Link to={`/news/${news?.slug}`} className='text-blue-500' >
-                        <Tooltip title={news.desc} color="volcano">
+                        <Tooltip title={news.desc} color="black">
                             ...Hover or click to read more
                         </Tooltip>
 

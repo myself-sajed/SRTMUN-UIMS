@@ -17,6 +17,7 @@ const LoggedInUsers = () => {
         studentUser: { homeLink: siteLinks.studentHome.link, serviceName: 'student' },
         alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'faculty' },
         proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news' },
+        adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin' },
     }
 
     return (
