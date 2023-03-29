@@ -15,7 +15,7 @@ import ShowImage from './ShowImage'
 import SchoolsPrograms from '../../../components/SchoolsProgram'
 
 
-const AllStudents = () => {
+const AllStudents = ({ showImage = false }) => {
 
     const { school } = useParams()
     title(`About Students of ${school}`)
@@ -33,7 +33,7 @@ const AllStudents = () => {
         if (school) {
             setStudentData(data?.data?.data?.filter((item) => item.programGraduated === activeProgram))
         }
-    }, [activeProgram, data])
+    }, [activeProgram])
 
     return (
         <div>
@@ -82,7 +82,9 @@ const AllStudents = () => {
                             <thead className='bg-blue-600 text-white'>
                                 <tr>
                                     <th scope="col">Sr No.</th>
-                                    {/* <th scope="col">Photo</th> */}
+                                    {
+                                        showImage && <th scope="col">Photo</th>
+                                    }
                                     <th scope="col">Student Name</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Enrolled Program</th>
@@ -98,6 +100,9 @@ const AllStudents = () => {
                                     studentData?.map((item) => {
                                         return <tr>
                                             <td className='font-bold'></td>
+                                            {
+                                                showImage && <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'student'} /></td>
+                                            }
                                             <td>{item?.name}</td>
                                             <td>{item?.gender}</td>
                                             <td>{item?.programGraduated}</td>
