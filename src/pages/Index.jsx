@@ -31,6 +31,7 @@ import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded
 import { fetchIndexNews } from '../services/news/js/fetchNews';
 import { useQuery } from 'react-query';
 import LoggedInUsers from '../components/LoggedInUsers';
+import VisitorCount from '../services/dashboard/components/VisitorCount';
 
 const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }
@@ -271,7 +272,9 @@ const Index = () => {
                     </div>
 
 
+                    {/* Website visitor count and footer area */}
                     <div className="mt-40">
+                        <VisitorCount />
                         <Footer />
                     </div>
 

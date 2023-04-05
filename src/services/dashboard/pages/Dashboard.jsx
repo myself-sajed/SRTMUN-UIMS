@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { fetchSchoolData } from '../js/fetchData';
 import { useEffect } from 'react';
-import { Skeleton } from '@mui/material';
+import { Skeleton, useStepContext } from '@mui/material';
 
 const dashboardCards = [
     {
@@ -135,12 +135,17 @@ const Dashboard = () => {
     }, [])
 
     useEffect(() => {
+        console.log('Local Data :', localData)
+    }, [localData])
+
+    useEffect(() => {
 
         if (data) {
             const filteredData = data?.data?.data
             delete filteredData['Alumni']
             delete filteredData['Student']
             localStorage.setItem('dashboardData', JSON.stringify(filteredData))
+            setLocalData(filteredData)
         }
 
     }, [data])
