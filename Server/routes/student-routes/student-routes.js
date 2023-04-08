@@ -102,8 +102,8 @@ router.post('/student/deleteRecord', async (req, res) => {
         console.log(Record);
         
         await models[model].deleteOne({ _id: id })
-        const Filename = Record.Upload_Proof;
-        const link = path.join(__dirname,`../../uploads/director-uploads/${Filename}`);
+        const Filename = model=="StudentUser"? Record.photoURL : Record.Upload_Proof;
+        const link = model=="StudentUser"?path.join(__dirname,`../../uploads/student-uploads/${Filename}`):path.join(__dirname,`../../uploads/director-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {
                 console.error(err);

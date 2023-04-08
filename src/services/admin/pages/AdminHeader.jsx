@@ -3,17 +3,20 @@ import "../css/admin.css"
 import { Input, Space } from 'antd';
 import { Avatar } from '@mui/material';
 import useAdminAuth from '../../../hooks/useAdminAuth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAdminUser } from '../../../redux/slices/UserSlice';
 import siteLinks from '../../../components/siteLinks';
+import Bred from '../../../components/Bred';
 
 
 const AdminHeader = () => {
+  const AdminActive = useSelector(state => state.adminActive.adminActive)
   const navigate = useNavigate()
     const dispatch = useDispatch()
   useAdminAuth()
   return (
+    <>
     <div className='main-header'>
       <div style={{display: "flex", justifyContent: "flex-start", width: "20%", }}>Admin</div>
       <div style={{display: "flex", justifyContent: "flex-end", width: "80%"}}>
@@ -32,6 +35,10 @@ const AdminHeader = () => {
         </div>
       </div>
     </div>
+    <div className='mt-2 border-t py-3'>
+      <Bred links={[siteLinks.welcome, siteLinks.adminDashboard, { title: AdminActive, link: '' }]} />
+    </div>
+    </>
   )
 }
 

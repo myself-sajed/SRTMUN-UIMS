@@ -34,7 +34,9 @@ const Login = () => {
     const [facultyType, setFacultyType] = useState(null)
     const [step, setStep] = useState(1)
 
-    const linkLine = step === 1 ? null : <p className='text-center'>Don't have an account ? <Link to={facultyType === 'Regular' ? siteLinks.facultyRegistration.link : siteLinks.contractualFacultyRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now</Link> | <Link to={siteLinks.facultyPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
+    const linkLine = step === 1 ? null : <p className='text-center'>
+        {/* Don't have an account ? <Link to={facultyType === 'Regular' ? siteLinks.facultyRegistration.link : siteLinks.contractualFacultyRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now</Link> |  */}
+        <Link to={siteLinks.facultyPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
 
     // handle submit
     function handleSubmit(e) {

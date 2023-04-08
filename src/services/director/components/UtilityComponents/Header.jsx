@@ -40,7 +40,7 @@ export default function Header() {
         <div>
             <OnlyNav user={user} logout={{ token: 'director-token', link: siteLinks.welcome.link }}
                 heading={{ title: 'Back to Director Home', link: siteLinks.directorHome.link }}
-                li={[siteLinks.directorHome, siteLinks.aaa]} userType="director"
+                li={[siteLinks.directorHome,siteLinks.ssm, siteLinks.aaa]} userType="director"
 
             />
 

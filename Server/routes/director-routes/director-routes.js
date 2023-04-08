@@ -23,6 +23,8 @@ const Placement = require('../../models/director-models/placementSchema');
 const SyllabusRevision = require('../../models/director-models/syllabusRevisionSchema');
 const AlumniContribution = require('../../models/director-models/alumniContributionSchema');
 const ConferencesSemiWorkshopOrganized = require('../../models/director-models/conferencesSemiWorkshopOrganizedSchema')
+const StudentUser = require('../../models/student-models/studentUserSchema')
+const StudentIdCount = require('../../models/student-models/studentIdCountSchema')
 
 // multer configuration director 
 
@@ -53,7 +55,7 @@ const excelStorage = multer.diskStorage({
 })
 const excelUpload = multer({ storage: excelStorage })
 
-let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized }
+let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser }
 
 //Set Route
 
@@ -63,8 +65,8 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;
-        const { School } = data
-        const up = req.file.filename;
+        const { School, schoolName } = data
+        const up = req.file?req.file.filename:"";
         //Award
         if (model == 'Award') {
             const { atoti, anota, anotaa, acda, ayoa, ac } = data
@@ -305,10 +307,13 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
             }
         }
+        
         var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName: School })
+      
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
+        
     } catch (err) {
         console.log(err)
         res.status(500).send()
@@ -355,9 +360,10 @@ router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (r
 //Get Route
 router.post('/director/getData', async (req, res) => {
 
-    const { model, id } = req.body
+    const { model, id , filter} = req.body
     try {
-        const fetch = await models[model].find({ SchoolName: id }).sort({ $natural: -1 });
+        const fil = id === ""?filter: {SchoolName: id}
+        const fetch = await models[model].find(fil).sort({ $natural: -1 });
         res.status(200).send(fetch);
     } catch (err) {
         console.log(err);
