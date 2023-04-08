@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require('dotenv')
+const mixpanel = require('mixpanel')
 dotenv.config()
 const { json } = require("express");
 const jwt = require("jsonwebtoken");
@@ -98,6 +99,8 @@ app.use(require('./utility/verifyOTP'));
 require('./routes/pro-routes/auth')(app, jwt)
 require('./routes/pro-routes/newsOperations')(app)
 
+// visitor routes
+require('./utility/visitorCount')(app)
 
 
 // Database Configuration
@@ -192,6 +195,8 @@ app.post("/api/deleteFile", (req, res) => {
     }
   })
 })
+
+
 
 
 // SERVING SECTION
