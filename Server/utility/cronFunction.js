@@ -1,32 +1,48 @@
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 const exec = require('child_process').exec;
 const path = require("path");
+const { By, Key, Builder } = require('selenium-webdriver');
+require('geckodriver')
 const C_Date = new Date();
 
+
+async function Network_Connect() {
+  try {
+    let driver = await new Builder().forBrowser('firefox').build();
+    await driver.get("http://172.16.1.10:8090/httpclient.html");
+    await driver.findElement(By.id('username')).sendKeys('comp21019');
+    await driver.findElement(By.id('password')).sendKeys('Havells@26');
+    await driver.findElement(By.id('loginbutton')).click();
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
 function Delete_Excels() {
-    
+
   const EXCEL_Path = path.join(__dirname, "../../excels/*")
   console.log(EXCEL_Path);
 
-  exec('rm '+ EXCEL_Path, function(err,stdout,stderr){     
-    if(err)
-       console.log('Directory Empty', err);
+  exec('rm ' + EXCEL_Path, function (err, stdout, stderr) {
+    if (err)
+      console.log('Directory Empty', err);
     else
-       console.log("Files Deleted");
+      console.log("Files Deleted");
   });
 
 }
 
 function Delete_Pdfs() {
-    const PDF_Path = path.join(__dirname, "../../pdfs/*")
-    console.log(PDF_Path);
-    exec('rm '+ PDF_Path, function(err,stdout,stderr){     
-      if(err)
-         console.log('Directory Empty', err);
-      else
-         console.log("Files Deleted");
-    });
-    
+  const PDF_Path = path.join(__dirname, "../../pdfs/*")
+  console.log(PDF_Path);
+  exec('rm ' + PDF_Path, function (err, stdout, stderr) {
+    if (err)
+      console.log('Directory Empty', err);
+    else
+      console.log("Files Deleted");
+  });
+
 }
 
 // DB Backups configurations
@@ -50,4 +66,4 @@ function DB_Backups() {
     else console.log("Backup is successful")
   })
 }
-module.exports = { Delete_Pdfs, DB_Backups, Delete_Excels }
+module.exports = { Delete_Pdfs, DB_Backups, Delete_Excels, Network_Connect }
