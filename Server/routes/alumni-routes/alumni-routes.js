@@ -52,7 +52,6 @@ router.post("/alumni/newRecord/:model", upload.single("Upload_Proof"), async (re
             SendData = {
                 Name_of_student_enrolling, Program_graduated_from, Name_of_institution_admitted, Name_of_programme_admitted, Academic_Year
             }
-
         }
         //Placement
         else if (model == 'Placement') {
@@ -141,15 +140,25 @@ router.post('/alumni/getData', async (req, res) => {
 
 
 // alumni user route
-router.post('/alumni/editRecord', uploads.single('Upload_Proof'), async (req, res) => {
+router.post('/alumni/editRecord', uploads.fields([{name: "Upload_Proof", maxCount: 1},{name: "Upload_Proof2", maxCount: 1}]), async (req, res) => {
     const data = JSON.parse(JSON.stringify(req.body));
     SendData = null;
     const { id } = data
-    const isfile = req.file
-    if (isfile) {
-        console.log('file found: ' + isfile)
-        var up = req.file.filename
-    }
+    // console.log(req.files)
+    // console.log(req.files["Upload_Proof"])
+    // console.log(req.files["Upload_Proof2"])
+    const isFiles = req.files
+    const isFileProfile = isFiles&& isFiles["Upload_Proof"]? req.files["Upload_Proof"][0]: ""
+    const isFileProof = isFiles&& isFiles["Upload_Proof2"]? req.files["Upload_Proof2"][0]: ""
+    // const  = req.files[""][0]
+    // if (isFileProfile) {
+    //     console.log('fileprofile found: ' + isFileProfile)
+        // var up = req.file.filename
+    // }
+    // if (isFileProof) {
+    //     console.log('fileproof found: ' + isFileProof)
+        // var up = req.file.filename
+    // }
 
     Object.keys(data).map((item) => {
         if (data[item] == 'undefined') {
@@ -157,17 +166,25 @@ router.post('/alumni/editRecord', uploads.single('Upload_Proof'), async (req, re
         }
 
     })
-
-    if (isfile) {
-        var up = req.file.filename
+    if (isFileProof !== ""){
+        var proof = req.files["Upload_Proof2"][0].filename
+    }
+    if (isFileProfile !== "") {
+        var up = req.files["Upload_Proof"][0].filename
     }
 
     const programGraduated = data.array;
-    const { salutation, name, address, mobile, schoolName, gender, dob, doCompleted, doStarted } = data
-    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doCompleted, doStarted }
+    const { salutation, name, address, mobile, schoolName, gender, dob, doCompleted, doStarted, country } = data
+    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doCompleted, doStarted, country }
 
-    if (up) {
+    if (up && proof) {
+        alldata = Object.assign(SendData, { photoURL: up }, { Upload_Proof: proof})
+    }
+    else if (up && !proof) {
         alldata = Object.assign(SendData, { photoURL: up })
+    }
+    else if (!up && proof) {
+        alldata = Object.assign(SendData, { Upload_Proof: proof})
     }
     else {
         alldata = SendData;

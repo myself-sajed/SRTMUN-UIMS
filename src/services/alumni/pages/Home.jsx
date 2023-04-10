@@ -9,7 +9,7 @@ import useAlumniAuth from '../../../hooks/useAlumniAuth'
 import title from '../../../js/title'
 import OnlyNav from '../../../components/OnlyNav'
 import siteLinks from '../../../components/siteLinks'
-import DialogBox from '../../../components/DialogBox'
+import DialogBox from '../../../components/formComponents/DialogBox'
 import Select from '../../../components/formComponents/Select'
 import Text from '../../../components/formComponents/Text'
 import UploadFile from '../../../components/formComponents/UploadFile'
@@ -25,6 +25,8 @@ import handleAvatarChange from '../../../js/handleAvatar'
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import Year from '../../../inputs/Year'
 import YearSelect from '../../../components/formComponents/YearSelect'
+import FileViewer from '../../../components/FileViewer'
+import countries from '../../director/components/FormComponents/country'
 
 const Home = () => {
 
@@ -50,9 +52,9 @@ const Home = () => {
     useAlumniAuth()
     title('Alumni Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", schoolName: "", gender: "", dob: "", doStarted: "", doCompleted: ""}
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", schoolName: "", gender: "", dob: "", doStarted: "", doCompleted: "", country: "", Upload_Proof2: ""}
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted } = values
+    const { salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country} = values
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: "AlumniUser" })
@@ -65,7 +67,7 @@ const Home = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit, Upload_Proof: File }, '', initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, programGraduated)
+        editReq({ id: itemToEdit, Upload_Proof: file }, '', initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, programGraduated)
     }
 
     const onCancel = () => {
@@ -75,10 +77,10 @@ const Home = () => {
 
     useEffect(() => {
         if (itemToEdit && user) {
-            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doStarted, doCompleted } = user
+            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country} = user
             if (user._id === itemToEdit) {
                 setEdit(true); setOpen(true);
-                setValues({ salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted })
+                setValues({ salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country })
                 setProgramGraduated(programGraduated)
             }
         }
@@ -139,23 +141,19 @@ const Home = () => {
                                 user &&
                                 <div className="card-body sm:flex">
 
-                                    <div className='flex-1'>
+                                    <div className='flex flex-wrap'>
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
-                                        <DetailTile keyName="Program Graduated " value={`${user && user.programGraduated.map((item)=>{return (`${item}`)})}`} />
-                                        <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
-                                        <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} />
-                                        
-
-
-                                    </div>
-                                    <div className='flex-1'>
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
+                                        <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
+                                        <DetailTile keyName="Last Program Graduated " value={`${user && user.programGraduated.map((item)=>{return (`${item}`)})}`} />
+                                        <DetailTile keyName="year of Last Program Completed" value={`${user && user.doCompleted=== undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined || user.address === '' ? "Not Added" : user.address}`} />
+                                        {/* <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} /> */}
                                         <DetailTile keyName="Date Of Birth" value={`${user && user.dob == undefined || user.dob == '' ? "Not Added" : user.dob}`} />
-                                        <DetailTile keyName="Completed Programs" value={`${user && user.doCompleted=== undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
+                                        <DetailTile keyName="Nationality" value={`${user && user.country == undefined || user.country == '' ? "Not Added" : user.country}`} />
+                                        <DetailTile keyName="Alumni Proof" value={user && user.Upload_Proof=== undefined || user.Upload_Proof === '' ? "Not Added" :<FileViewer fileName={user.Upload_Proof} serviceName="faculty"/>} />
                                     </div>
-
                                 </div>
                             }
 
@@ -173,6 +171,26 @@ const Home = () => {
                 </div>
 
             </div>
+
+            <div style={{ background: "#a8bae7", width: "100%", height: "50px", marginTop: "10px", borderRadius: "10px 10px 0 0", color: "#FFF", display: "flex", alignItems: "center", fontWeight: "600" }}><span style={{ margin: "0 30px" }}>Previous Details</span></div>
+            <div style={{ border: "solid #a8bae7 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "0 0 10px 10px" }}>
+
+                <div class="accordion" id="accordionExample1">
+                    <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                        <h2 class="accordion-header" id={`heading`}>
+                                    <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse1`} aria-expanded="false" aria-controls={`collapse1`}>
+                                    Past Qualification
+                                    </button>
+                                </h2>
+                                <div id={`collapse1`} class="accordion-collapse collapse" aria-labelledby={`heading`} data-bs-parent="#accordionExample1">
+                                    <div class="accordion-body">
+                                        <div> Element</div> 
+                                    </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+
             <div style={{ background: "#a8bae7", width: "100%", height: "50px", marginTop: "10px", borderRadius: "10px 10px 0 0", color: "#FFF", display: "flex", alignItems: "center", fontWeight: "600" }}><span style={{ margin: "0 30px" }}>Current Status</span></div>
             <div style={{ border: "solid #a8bae7 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "0 0 10px 10px" }}>
 
@@ -203,7 +221,7 @@ const Home = () => {
                             {
                                 file ?
                                     <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                                    <img src={serverLinks.showFile(user?.photoURL, 'director')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                                    <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
@@ -222,9 +240,10 @@ const Home = () => {
                         <DynamicCheckboxes id='programGraduated' value={programGraduated} label="Programs Graduated" setState={setProgramGraduated} state={programGraduated} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
 
                         <Select className='col-md-6 col-lg-4' id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
-                        {/* <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} /> */}
+                        <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof2" label="Upload Alumni Proof" setState={setValues} required={false} />
                         <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
-                        <YearSelect className='col-md-6 col-lg-4' id="doStarted" value={doStarted} label="Admited In School" setState={setValues} />
+                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+                        {/* <YearSelect className='col-md-6 col-lg-4' id="doStarted" value={doStarted} label="Admited In School" setState={setValues} /> */}
                         <YearSelect className='col-md-6 col-lg-4' id="doCompleted" value={doCompleted} label="Completed Programs" setState={setValues} />
                     </div>
                 }
@@ -243,9 +262,9 @@ export default Home
 
 const DetailTile = ({ keyName, value }) => {
     return (
-        <div className="row py-2 text-black">
+        <div className="row py-2 text-black col-12 col-md-6 col-lg-6">
             <div className="col-sm-3">
-                <p className="mb-0 text-sm sm:text-base">{keyName}</p>
+                <p className="mb-0 text-sm sm:text-base font-semibold">{keyName}</p>
             </div>
             <div className="col-sm-9">
                 <p className="mb-0 text-sm sm:text-base">{value}</p>

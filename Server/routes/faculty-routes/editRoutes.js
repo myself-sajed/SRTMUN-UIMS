@@ -84,6 +84,8 @@ function editRoutes(app) {
                 mobile: editData.mobile,
                 email: editData.email,
                 dob: editData.dob,
+                racDate: editData.racDate,
+                cast: editData.cast
             }
         )
             .then(function (user) {

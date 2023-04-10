@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react'
-import DialogBox from './DialogBox'
+import DialogBox from './formComponents/DialogBox'
 import excelReq from './requestComponents/excelReq';
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';

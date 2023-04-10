@@ -30,3 +30,11 @@
   border-radius: 5px;
   padding: 10px;
 }
+
+.ButtonDirectorSsmTop {
+  margin: 5px !important;
+}
+.ButtonDirectorSsmTop:hover, .activeSsmTopBtn{
+  color: #1976d2 !important;
+  background: #ecebeb !important;
+}

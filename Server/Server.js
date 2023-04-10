@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require('dotenv')
+const mixpanel = require('mixpanel')
 dotenv.config()
 const { json } = require("express");
 const jwt = require("jsonwebtoken");
@@ -101,11 +102,14 @@ app.use(require('./utility/verifyOTP'));
 require('./routes/pro-routes/auth')(app, jwt)
 require('./routes/pro-routes/newsOperations')(app)
 
+// visitor routes
+require('./utility/visitorCount')(app)
 
 
 // Database Configuration
 const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
 // const URL = `mongodb://localhost:27017/srtmun`
+
 mongoose
   .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -173,6 +177,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     student: `./uploads/student-uploads/${filename}`,
     alumni: `./uploads/director-uploads/${filename}`,
     news: `./uploads/news-uploads/${filename}`,
+    admin: `./uploads/admin-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
@@ -194,6 +199,8 @@ app.post("/api/deleteFile", (req, res) => {
     }
   })
 })
+
+
 
 
 // SERVING SECTION

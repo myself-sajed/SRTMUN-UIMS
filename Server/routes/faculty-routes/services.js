@@ -393,19 +393,33 @@ function services(app) {
         });
     })
 
+    // // check if eligibility number is already regitered by student
+    // app.post('/service/student-eligibility', function (req, res) {
+    //     const { eligibility } = req.body;
+    //     // check if mail already taken
+    //     StudentUser.findOne({ eligibility }, (err, user) => {
+    //         if (user) {
+    //             res.send({ status: 'taken', message: 'Student Already Registered With Eligibility No.' });
+    //         }
+    //         else {
+    //             res.send({ status: 'available' })
+    //         }
+    //     });
+    // })
+
     // check if email is already taken by student
-    app.post('/service/student-checkAndEmail', function (req, res) {
-        const { email } = req.body;
-        // check if mail already taken
-        StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
-            if (user) {
-                res.send({ status: 'taken', message: 'Email already taken' });
-            }
-            else {
-                res.send({ status: 'available' })
-            }
-        });
-    })
+    // app.post('/service/student-checkAndEmail', function (req, res) {
+    //     const { email } = req.body;
+    //     // check if mail already taken
+    //     StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
+    //         if (user) {
+    //             res.send({ status: 'taken', message: 'Email already taken' });
+    //         }
+    //         else {
+    //             res.send({ status: 'available' })
+    //         }
+    //     });
+    // })
 
     // update profile
     app.post('/api/edit-profile/:modelName/:filter', upload.single('file'), async (req, res) => {

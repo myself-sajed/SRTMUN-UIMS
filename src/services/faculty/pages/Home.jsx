@@ -172,19 +172,23 @@ const Home = () => {
                                 user &&
                                 <div className="card-body sm:flex">
 
-                                    <div className='flex-1'>
+                                    <div className='flex flex-wrap'>
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
-                                        <DetailTile keyName="Designation" value={`${user && user.designation}`} />
-                                        <DetailTile keyName="School" value={`${user && user.department}`} />
-                                        <DetailTile keyName="Employee ID" value={`${user.designation === 'Contractual' || user.username.includes('UFTG') ? '' : 'TG-'}${user && user.username}`} />
-                                    </div>
-                                    <div className='flex-1'>
                                         <DetailTile keyName="Date of Birth" value={`${user && user.dob === undefined ? 'Not Added' : user.dob}`} />
+                                        <DetailTile keyName="Designation" value={`${user && user.designation}`} />
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile === undefined ? 'Not Added' : user.mobile}`} />
+                                        <DetailTile keyName="School" value={`${user && user.department}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email === undefined ? 'Not Added' : user.email}`} />
+                                        <DetailTile keyName="Employee ID" value={`${user.designation === 'Contractual' || user.username.includes('UFTG') ? '' : 'TG-'}${user && user.username}`} />
                                         <DetailTile keyName="Specialization" value={`${user && user.specialization === undefined ? 'Not Added' : user.specialization}`} />
+                                        <DetailTile keyName="Gender" value={user && user.gender} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined ? 'Not Added' : user.address}`} />
+                                        <DetailTile keyName="Cast" value={`${user && user.cast === undefined ? 'Not Added' : user.cast}`} />
+                                        <DetailTile keyName="Date of Rac" value={`${user && user.racDate === undefined ? 'Not Added' : user.racDate}`} />
+
                                     </div>
+                                    {/* <div className='flex-1'>
+                                    </div> */}
 
                                 </div>
                             }
@@ -225,9 +229,9 @@ export default Home
 
 const DetailTile = ({ keyName, value }) => {
     return (
-        <div className="row py-2 text-black">
+        <div className="row py-2 col-12 col-md-6 col-lg-6 text-black">
             <div className="col-sm-3">
-                <p className="mb-0 text-sm sm:text-base">{keyName}</p>
+                <p className="mb-0 text-sm sm:text-base font-semibold">{keyName}</p>
             </div>
             <div className="col-sm-9">
                 <p className="mb-0 text-sm sm:text-base font-normal">{value}</p>

@@ -9,7 +9,7 @@ import useStudentAuth from '../../../hooks/useStudentAuth'
 import title from '../../../js/title'
 import OnlyNav from '../../../components/OnlyNav'
 import siteLinks from '../../../components/siteLinks'
-import DialogBox from '../../../components/DialogBox'
+import DialogBox from '../../../components/formComponents/DialogBox'
 import Select from '../../../components/formComponents/Select'
 import Text from '../../../components/formComponents/Text'
 import UploadFile from '../../../components/formComponents/UploadFile'
@@ -177,7 +177,7 @@ const StudentHome = () => {
                                 user &&
                                 <div className="card-body sm:flex">
 
-                                    <div className='flex-1'>
+                                    <div className='flex flex-wrap' >
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
                                         <DetailTile keyName="Program Enroled" value={`${user && user.programGraduated}`} />
                                         <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
@@ -186,13 +186,6 @@ const StudentHome = () => {
                                         <DetailTile keyName="Cast" value={`${user && user.cast}`} />
                                         <DetailTile keyName="Date Of Birth" value={`${user && user.dob == "" || user.dob == undefined ? "Not Added" : user.dob}`} />
                                         <DetailTile keyName="Gender" value={`${user && user.gender}`} />
-                                        {user?.programGraduated.includes("Ph.D") ? <>
-                                            <DetailTile keyName="Research Guide" value={`${user && user.ResearchGuide == "" || user.ResearchGuide == undefined ? "Not Added" : user.ResearchGuide}`} />
-                                            <DetailTile keyName="Date of Rac" value={`${user && user.dateOfRac == "" || user.dateOfRac == undefined ? "Not Added" : user.dateOfRac}`} />
-                                        </> : null}
-
-                                    </div>
-                                    <div className='flex-1'>
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile}`} />
                                         <DetailTile keyName="Program Enroled On" value={`${user && user.programEnroledOn}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
@@ -200,11 +193,13 @@ const StudentHome = () => {
                                         <DetailTile keyName="Nationality" value={`${user && user.country}`} />
                                         <DetailTile keyName="Address" value={`${user && user.address == "" || user.address == undefined ? "Not Added" : user.address}`} />
                                         {user?.programGraduated.includes("Ph.D") ? <>
+                                            <DetailTile keyName="Research Guide" value={`${user && user.ResearchGuide == "" || user.ResearchGuide == undefined ? "Not Added" : user.ResearchGuide}`} />
+                                            <DetailTile keyName="Date of Rac" value={`${user && user.dateOfRac == "" || user.dateOfRac == undefined ? "Not Added" : user.dateOfRac}`} />
                                             <DetailTile keyName="Title" value={`${user && user.Title == "" || user.Title == undefined ? "Not Added" : user.Title}`} />
                                             <DetailTile keyName="Receives any Felloship" value={`${user && user.ReceivesFelloship == "" || user.ReceivesFelloship == undefined ? "Not Added" : user.ReceivesFelloship}`} />
                                         </> : null}
-                                    </div>
 
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -297,7 +292,7 @@ export default StudentHome
 
 const DetailTile = ({ keyName, value }) => {
     return (
-        <div className="row py-2 text-black">
+        <div className="row py-2 text-black col-12 col-md-6 col-lg-6">
             <div className="col-sm-3">
                 <p className="mb-0 text-sm sm:text-base font-semibold">{keyName}</p>
             </div>

@@ -315,12 +315,27 @@ const Home = () => {
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
-                                        <h5>School Management System</h5>
+                                        <h5>School Data Management</h5>
                                         <p className="prices">SDM</p>
                                     </div>
                                     <div className='flex items-center justify-center gap-2'>
                                         <Link to={siteLinks.sdm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Profile</Link>
                                         <Link to="#" className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Generate Report</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-3 flex-1 w-full">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
+                                        <h5>School student Management</h5>
+                                        <p className="prices">SSM</p>
+                                    </div>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.ssm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Go to SSM</Link>
+                                        {/* <Link to="#" className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Generate Report</Link> */}
                                     </div>
                                 </div>
                             </div>

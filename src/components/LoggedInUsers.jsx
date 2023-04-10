@@ -17,6 +17,7 @@ const LoggedInUsers = () => {
         studentUser: { homeLink: siteLinks.studentHome.link, serviceName: 'student' },
         alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'faculty' },
         proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news' },
+        adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin' },
     }
 
     return (
@@ -29,7 +30,7 @@ const LoggedInUsers = () => {
                             Object.keys(users).map((serviceName, index) => {
                                 return users[serviceName] && <div key={index} className='cursor-pointer'
                                     onClick={() => navigate(redirectLinks[serviceName].homeLink)}>
-                                    <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px' }} />
+                                    <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px', }} />
                                 </div>
                             })
                         }

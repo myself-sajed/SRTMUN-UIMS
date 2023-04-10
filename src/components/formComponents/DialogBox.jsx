@@ -1,7 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton';
 import React from 'react'
 
-const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFunction = null, onCancel, isModalOpen, setIsModalOpen, maxWidth = 'md', cancelButtonName = "Cancel", showActions = true }) => {
+const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFunction = null, onCancel, isModalOpen, setIsModalOpen, maxWidth = 'md', cancelButtonName = "Cancel", showActions = true, loading }) => {
   return (
     <Dialog open={isModalOpen} onClose={onCloseFunction} fullWidth maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
@@ -17,11 +18,10 @@ const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFuncti
               backgroundColor: '#ff4545',
             }
           }}>{cancelButtonName}</Button>
-          <Button type='submit' sx={{
-            textTransform: "none", backgroundColor: 'blue', color: 'white', "&:hover": {
-              backgroundColor: '#4646f6',
-            }
-          }}>{buttonName}</Button>
+          <LoadingButton  color="primary" variant="contained" type='submit' loading={loading}
+                loadingPosition="center" sx={{
+            textTransform: "none",
+          }}>{buttonName}</LoadingButton>
         </DialogActions>
       }
       </form>

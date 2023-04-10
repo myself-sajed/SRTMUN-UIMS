@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const studentUserSchema = new mongoose.Schema({
+    username: {
+        type: 'string',
+        required: true,
+    },
+    status: {
+        type: 'string',
+        required: true,
+    },
     salutation: {
         type: 'string',
         required: true,
@@ -49,6 +57,10 @@ const studentUserSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    eligibility: {
+        type: 'string',
+        required: false,
+    },
     schoolName: {
         type: 'string',
         required: true,
@@ -88,6 +100,10 @@ const studentUserSchema = new mongoose.Schema({
     ResearchGuideId: {
         type:'string',
         required: false,
+    },
+    createdBy: {
+        type:'string',
+        required: true,
     },
 })
 
