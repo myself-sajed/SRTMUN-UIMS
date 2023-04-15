@@ -3,11 +3,7 @@ const UniqueVisitor = require('../models/visitors/visitorSchema')
 function visits(app) {
 
     app.post('/api/unique-visitors', async (req, res) => {
-        console.log('hit')
         const id = req.body.id || req.cookies.id;
-
-        console.log(`visit ${id}`)
-
         if (!id) {
             return res.status(400).json({ error: 'ID not provided.' });
         }
@@ -15,7 +11,6 @@ function visits(app) {
         const existingVisitor = await UniqueVisitor.findOne({ id });
 
         if (!existingVisitor) {
-            console.log('Could not found the id')
             const newVisitor = new UniqueVisitor({ id });
 
             try {
