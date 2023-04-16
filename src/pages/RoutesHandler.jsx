@@ -65,9 +65,6 @@ import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
 import { useEffect } from 'react'
-import Gallery from '../services/photogallery/pages/Gallery'
-import AddEvent from '../services/photogallery/pages/AddEvent'
-import EventsPage from '../services/photogallery/pages/EventsPage'
 
 
 
@@ -128,6 +125,7 @@ const RoutesHandler = () => {
 
                 <Route path='/director' element={<DirectorHome />} />
                 <Route path='/director/sdm' element={<DirectorMain />} />
+                <Route path='/director/ssm' element={<DirectorSSM />} />
                 <Route path='/director-registration' element={<DirectorRegistration />} />
 
                 {/* report routes */}

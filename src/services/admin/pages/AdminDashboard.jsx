@@ -56,7 +56,7 @@ const AdminDashboard = () => {
 
   const categories = [
     { Icon: <PersonRoundedIcon style={{ fontSize: '27px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
-    { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '27px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
+    // { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '27px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
     { Icon: <BoyRoundedIcon style={{ fontSize: '27px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
     { Icon: <SchoolRoundedIcon style={{ fontSize: '27px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
   ]

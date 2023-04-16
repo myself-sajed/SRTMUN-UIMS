@@ -46,6 +46,10 @@ const alumniUserSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    country: {
+        type: 'string',
+        required: false,
+    },
     gender: {
         type: 'string',
         required: true,

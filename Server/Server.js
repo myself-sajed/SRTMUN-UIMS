@@ -1,6 +1,6 @@
 // all imports
 const cron = require('node-cron');
-const { Delete_Pdfs, DB_Backups, Delete_Excels } = require('./utility/cronFunction');
+const { Delete_Pdfs, DB_Backups, Delete_Excels, Network_Connect } = require('./utility/cronFunction');
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -27,6 +27,9 @@ cron.schedule('45 0 * * *', () => {
   Delete_Pdfs();
 });
 cron.schedule('30 0 * * *', () => DB_Backups());
+
+//netwok connection
+cron.schedule('0 0 * * 1,4', () => Network_Connect());
 
 
 app.use(function (req, res, next) {
@@ -107,8 +110,9 @@ require('./routes/photogallery-routes/event')(app)
 
 
 // Database Configuration
-// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-const URL = `mongodb://localhost:27017/srtmun`
+const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+// const URL = `mongodb://localhost:27017/srtmun`
+
 mongoose
   .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

@@ -231,7 +231,7 @@ const DetailTile = ({ keyName, value }) => {
     return (
         <div className="row py-2 col-12 col-md-6 col-lg-6 text-black">
             <div className="col-sm-3">
-                <p className="mb-0 text-sm sm:text-base">{keyName}</p>
+                <p className="mb-0 text-sm sm:text-base font-semibold">{keyName}</p>
             </div>
             <div className="col-sm-9">
                 <p className="mb-0 text-sm sm:text-base font-normal">{value}</p>

@@ -6,7 +6,6 @@ function Select({ className = "col-md-6", id, label, setState, value, required =
             <label htmlFor="choose" className="form-label" >{label}</label>
             <select className="form-select" id={id} required={required}
                 onChange={(e) => {
-                    console.log(e.target.value);
                     setState((pri) => {
                         return {
                             ...pri,

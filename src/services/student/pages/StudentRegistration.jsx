@@ -17,6 +17,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram';
 import checkPasswordStrength from '../../../js/passwordChecker';
 import countries from '../../director/components/FormComponents/country'
 import YearSelect from '../../../components/formComponents/YearSelect'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 const StudentRegistration = () => {
 
@@ -29,9 +30,9 @@ const StudentRegistration = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
     const religions = ["Hindu","muslim","Christian","Sikh","Buddh","Jain",]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "" }
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "",createdBy: "Self",}
     const [values, setValues] = useState(initialState)
-    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn } = values
+    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn,  } = values
 
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
@@ -90,18 +91,31 @@ const StudentRegistration = () => {
 
             setLoading(true)
 
-            // check if username already exists
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
-                if (res.data.status === 'taken') {
-                    toast.error(res.data.message)
-                    setLoading(false)
-                    return
-                }
-                else {
-                    console.log('Before send otp');
+            // check if Eligibility already exists
+            // Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-eligibility`, { eligibility}).then((res) => {
+            //     if (res.data.status === 'taken') {
+            //         toast.error(res.data.message)
+            //         setLoading(false)
+            //         return
+            //     }
+            //     else{
                     sendOTP()
-                }
-            })
+            //     }
+            // })
+
+            // check if username already exists
+
+            // Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
+            //     if (res.data.status === 'taken') {
+            //         toast.error(res.data.message)
+            //         setLoading(false)
+            //         return
+            //     }
+            //     else {
+            //         console.log('Before send otp');
+                    
+            //     }
+            // })
         } else {
             setLoading(false)
             toast.error('Please select a photo')
@@ -126,9 +140,12 @@ const StudentRegistration = () => {
 
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
+            console.log(response.data.username)
             if (response.data.status === 'success') {
-                navigate(siteLinks.studentLogin.link)
+                // navigate(siteLinks.studentLogin.link)
                 toast.success(response.data.message)
+                // setUser
+                setStep(4)
             }
             else {
                 toast.error(response.data.message)
@@ -185,9 +202,9 @@ const StudentRegistration = () => {
             <div className='mt-3 flex items-center justify-center mb-4'>
                 <div className='w-[750px] p-3 rounded-xl bg-gray-100'>
 
-                    <div className='my-4 mx-2'>
+                    {/* <div className='my-4 mx-2'>
                         {
-                            (step !== 1 && step !== 2) && otp.serverOTP && <Alert severity="success" sx={{ borderRadius: '5px', border: '2px solid green' }}>
+                            (step !== 1 && step !== 2 && step !== 4) && otp.serverOTP && <Alert severity="success" sx={{ borderRadius: '5px', border: '2px solid green' }}>
                                 <AlertTitle>Success</AlertTitle>
                                 OTP has been successfully sent on — <strong>{email}</strong>
                             </Alert>
@@ -198,10 +215,10 @@ const StudentRegistration = () => {
                                 {errorMessage}
                             </Alert>
                         }
-                    </div>
+                    </div> */}
 
 
-                    {
+                    {/*
                         step === 1 ?
 
                             <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
@@ -209,7 +226,7 @@ const StudentRegistration = () => {
                                 <Select className="col-md-2" id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
 
                                 <Text className="col-md-10" id="name" value={name} setState={setValues} label="Full Name" />
-
+                                
                                 <Select className='col-md-5' id="schoolName" value={schoolName} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
 
                                 <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Enrolled Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
@@ -265,6 +282,18 @@ const StudentRegistration = () => {
 
                                                     <div className="col-md-10 mx-auto mt-3">
 
+                                                    {/* <div className="col-12 p-1" >
+                                                        <label htmlFor="eligibility" className='form-label' >PRN/ELIGIBILITY Number</label>
+                                                        <input type="text" className='form-control' onChange={(e) => {
+                                                            setValues((pri) => {
+                                                                return {
+                                                                    ...pri,
+                                                                    eligibility: e.target.value
+                                                                }
+                                                            })
+                                                        }} pattern="^[A-Z0-9]{4}[A-Z0-9/()]{0,8}[\d/]{11,13}" minlength="9" maxlength="23" required />
+                                                    </div> }
+
                                                         <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
 
                                                         <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputClass="py-3" />
@@ -301,7 +330,7 @@ const StudentRegistration = () => {
                                         </div>
                                     </div>
                                 </div>
-                                :
+                                :step == 3?
                                 <div >
                                     <div className="w-full flex items-center justify-center h-52">
                                         <form className="row g-3 needs-validation" onSubmit={handleRegistration} type="multipart/form-data">
@@ -351,7 +380,25 @@ const StudentRegistration = () => {
                                         </form>
                                     </div>
                                 </div>
-                    }
+                                : <div className="w-full flex items-center justify-center h-67">
+                                <div>
+                                    <div className='flex flex-col items-center justify-center'>
+                                        <CheckCircleRoundedIcon className='text-green-700'
+                                            sx={{ fontSize: 65 }} />
+
+                                        Congratulations! Your account has been successfully Registered at  <b>SRTMUN-UIMS</b>
+                                    </div>
+                                    <div className='text-center mb-3 mt-5'>
+                                        {
+                                           <div>
+                                                Remember your password that you entered. Once your Account is activated, You will receive a <strong>Username</strong> via Email. <br />Go to <Link to={siteLinks.welcome.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>Welcome</span></Link> Page.
+                                            </div> 
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                                    */}
+                    <p className='text-center my-4 text-xl text-[#c2410c]'>The student registration is suspended for a period</p>
                     <p className='text-center mt-2'>Already have an account? <Link to={siteLinks.studentLogin.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Login Now.</Link></p>
                 </div>
             </div>

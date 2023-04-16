@@ -20,6 +20,7 @@ let siteLinks = {
     directorLogin: { title: 'Director Login', link: '/director-login' },
     directorRegistration: { title: 'Director Registration', link: '/director-registration' },
     sdm: { title: 'SDM', link: '/director/sdm' },
+    ssm: { title: 'SSM', link: '/director/ssm' },
     aaa: { title: 'Academic Audit  ', link: '/director/service/academic-audit' },
     alumniLogin: { title: 'Alumni Login', link: '/alumni-login' },
     alumniHome: { title: 'Alumni Home', link: '/alumni' },
@@ -35,9 +36,7 @@ let siteLinks = {
     proLogin: { title: "PRO Login", link: '/pro-login' },
     proEditor: { title: "PRO Editor", link: '/pro-editor' },
     proHome: { title: "PRO Home", link: '/pro' },
-
-
-
+    adminDashboard: { title: "Admin Dashboard", link: '/admin' },
     forgotPassword: { title: "Forgot Password", link: '' }
 }
 export default siteLinks;
