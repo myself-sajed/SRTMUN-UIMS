@@ -58,6 +58,9 @@ const TrainingProgramsOrganized = require('../../models/director-models/training
 const UgcSapCasDstFistDBTICSSR = require('../../models/director-models/ugcSapCasDstFistDBTICSSRSchema')
 const ValueAddedCource = require('../../models/director-models/valueAddedCourceSchema')
 
+//admin
+const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
+
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "PostHeld", "Lectures", "ResearchPaper", "PhdAwarded", "JrfSrf", "Patent", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
@@ -221,6 +224,19 @@ router.post('/Admin/getData', async (req, res) => {
         console.log(err);
         res.status(500).send();
     }
+})
+
+//registration page Enable/ Disable
+router.post('/Registration/pageToggler', async (req, res) => {
+    // console.log(req)
+    const {name, state} = req.body
+    await IsRegistration.updateOne({name: "isRegToggle"}, { $set: {[`idObject.${name}`]: state }})
+    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+    res.send(status.idObject)
+})
+router.post('/Registration/pageStatus', async (req, res) => {
+    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+    res.send(status.idObject)
 })
 
 module.exports = router;

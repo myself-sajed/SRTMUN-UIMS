@@ -13,8 +13,20 @@ router.post("/developer/excelsclear", () => {
 router.post("/developer/pdfsclear", () => {
     Delete_Pdfs();
 })
-router.post("/developer/networkConnect", () => {
-    Network_Connect();
+router.post("/developer/networkConnect", (req,res) => {
+    if(req.body!=null){
+        const {i_username, i_password} = req.body
+        const status = Network_Connect(i_username, i_password)
+        if(status){
+            res.send({status: true})
+        }
+    }
+    else{
+        const status = Network_Connect();
+        if(status){
+            res.send({status: true})
+        }
+    }
 })
 
 module.exports = router;

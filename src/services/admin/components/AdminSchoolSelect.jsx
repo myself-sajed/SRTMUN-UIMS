@@ -13,7 +13,6 @@ const AdminSchoolSelect = ({ className = "col-md-6", id, label, setState, value,
         })
         setOptions(options)
     }, [])
-    console.log(options)
     
     const selectProps = {
       mode: "single",

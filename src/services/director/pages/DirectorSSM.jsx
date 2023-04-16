@@ -143,8 +143,8 @@ const DirectorSSM = () => {
               </Box>
             </Drawer>
           </div>
-          <div className='flex justify-center w-full'><img src='/website-under-maintenance.webp' /></div>
-          {/* <div>{ssmBtn.element}</div> */}
+          {/* <div className='flex justify-center w-full'><img src='/website-under-maintenance.webp' /></div> */}
+          <div>{ssmBtn.element}</div>
 
     </div>
   )

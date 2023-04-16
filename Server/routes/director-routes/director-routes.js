@@ -924,4 +924,19 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
         return res.status(500).send()
     }
 })
+
+//Activate Diactivate Student
+router.post('/inactive-active/student', async (req, res) => {
+    const {status,itemToEdit} = req.body
+    try{
+        await StudentUser.updateOne({_id: itemToEdit},{$set:{status}});
+        const username = await StudentUser.findOne({_id: itemToEdit})
+        res.send({status:"success"})
+    }
+    catch(err) {
+        console.log(err)
+        res.send({status:"error"})
+    }
+}) 
+
 module.exports = router;

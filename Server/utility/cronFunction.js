@@ -6,16 +6,18 @@ require('geckodriver')
 const C_Date = new Date();
 
 
-async function Network_Connect() {
+async function Network_Connect(username='comp21019', password='Havells@26') {
   try {
     let driver = await new Builder().forBrowser('firefox').build();
     await driver.get("http://172.16.1.10:8090/httpclient.html");
-    await driver.findElement(By.id('username')).sendKeys('comp21019');
-    await driver.findElement(By.id('password')).sendKeys('Havells@26');
+    await driver.findElement(By.id('username')).sendKeys(username);
+    await driver.findElement(By.id('password')).sendKeys(password);
     await driver.findElement(By.id('loginbutton')).click();
+    return (true)
   }
   catch (e) {
     console.log(e);
+    return (false)
   }
 }
 
