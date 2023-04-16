@@ -529,3 +529,7 @@ body {
 .ant-upload-drag {
   border: none;
 }
+
+.ant-image-preview-img {
+  display: inline;
+}

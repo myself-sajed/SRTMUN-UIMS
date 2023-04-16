@@ -65,7 +65,6 @@ import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
 import { useEffect } from 'react'
-import DirectorSSM from '../services/director/pages/DirectorSSM'
 
 
 
@@ -155,8 +154,10 @@ const RoutesHandler = () => {
                 <Route path='/pro-editor' exact element={<PROEditor />} />
                 <Route path='/news/:slug' exact element={<SingleNews />} />
 
-
-
+                {/* Photo Gallery */}
+                <Route path='/event/:eventId' exact element={<Gallery />} />
+                <Route path='/upload-event' exact element={<AddEvent />} />
+                <Route path='/events' exact element={<EventsPage />} />
 
             </Routes>
 

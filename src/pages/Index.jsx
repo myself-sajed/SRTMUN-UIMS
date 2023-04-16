@@ -342,9 +342,8 @@ const MainService = ({ data }) => {
                         dispatch(data.dispatchFunction(null))
                         localStorage.removeItem(data.tokenId)
                         navigate('/')
-
-                    }} className='indexBtn indexBtnHalf duration-200 ease-in-out' style={{ backgroundColor: "#f88e7b" }}>
-                        Logout
+                    }} className='indexBtn indexBtnHalf duration-200 ease-in-out'
+                        style={{ backgroundColor: "#f88e7b" }}> Logout
                     </button>
                     }
                 </div>

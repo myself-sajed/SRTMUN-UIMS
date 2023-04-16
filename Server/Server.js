@@ -105,6 +105,9 @@ require('./routes/pro-routes/newsOperations')(app)
 // visitor routes
 require('./utility/visitorCount')(app)
 
+// photo gallery routes
+require('./routes/photogallery-routes/event')(app)
+
 
 // Database Configuration
 // const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
@@ -177,6 +180,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     student: `./uploads/student-uploads/${filename}`,
     alumni: `./uploads/director-uploads/${filename}`,
     news: `./uploads/news-uploads/${filename}`,
+    event: `./uploads/event-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
   }
 
