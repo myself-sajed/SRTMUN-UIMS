@@ -65,6 +65,7 @@ import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
 import { useEffect } from 'react'
+import DirectorSSM from '../services/director/pages/DirectorSSM'
 
 
 
