@@ -105,11 +105,30 @@
 .DashbordButtons {
   display: flex;
   padding: 9px;
-  min-width: 150px;
   background: var(--top-color-new);
   padding: 8px;
   margin-bottom: 2px;
   color: #fff;
+}
+@media screen and (min-width: 0px) {
+  .DashbordButtons{
+    width: 100% !important;
+  }
+}
+@media screen and (min-width:350px ) {
+  .DashbordButtons{
+    width: 49% !important;
+  }
+}
+@media screen and (min-width:650px ) {
+  .DashbordButtons{
+    width: 32% !important;
+  }
+}
+@media screen and (min-width:1050px ) {
+  .DashbordButtons{
+    width: 150px !important;
+  }
 }
 
 .DashbordButtons:hover, .active {
@@ -173,4 +192,4 @@
 /* Set the color of the scrollbar thumb on hover */
 /* ::-webkit-scrollbar-thumb:hover {
   background-color: #8e85a8;
-}*/
+}*/ 

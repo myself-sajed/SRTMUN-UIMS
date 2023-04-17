@@ -49,7 +49,7 @@ function TableComponent(props) {
                                         }
                                         
                                         {Object.keys(props?.tableHead).includes("Upload_Proof"||"Proof") ?<TblView val={props.getproof?row[props.getproof]:row.Upload_Proof} module={props.proof?props.proof:props.module} />: ""}
-                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} />
+                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} />
                                     </TableRow>
                                 ))
                             }

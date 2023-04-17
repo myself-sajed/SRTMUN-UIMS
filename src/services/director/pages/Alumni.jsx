@@ -2,7 +2,7 @@ import React from 'react'
 
 const Alumni = () => {
   return (
-    <div>Alumni</div>
+    <div className='flex justify-center w-full'><img src='/website-under-maintenance.webp' /></div>
   )
 }
 

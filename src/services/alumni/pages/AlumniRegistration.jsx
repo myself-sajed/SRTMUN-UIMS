@@ -16,6 +16,7 @@ import Text from '../../../components/formComponents/Text';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import DynamicCheckboxes from '../../../components/formComponents/DynamicChackboxes';
 import checkPasswordStrength from '../../../js/passwordChecker';
+import Skeleton from '@mui/material/Skeleton';
 
 const AlumniRegistration = () => {
 
@@ -37,7 +38,18 @@ const AlumniRegistration = () => {
     const [otp, setOtp] = useState({ serverOTP: null, clientOTP: null })
     const [verifyLoading, setVerifyLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
+    const [isRegActive, setIsRegActive] = useState(null)
 
+
+    useEffect(() => {
+        async function fetchData() {
+          const response = await Axios.post(`${process.env.REACT_APP_MAIN_URL}/Registration/pageStatus`)
+          console.log(response.data)
+          setIsRegActive(response.data.isAlumniRegistration);
+        }
+        fetchData()
+        setInterval(fetchData,30*60*1000);
+    },[])
 
     // send otp
     function sendOTP() {
@@ -191,6 +203,7 @@ const AlumniRegistration = () => {
 
 
                     {
+                        isRegActive===true?
                         step === 1 ?
 
                             <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
@@ -329,7 +342,7 @@ const AlumniRegistration = () => {
                                             </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div>: isRegActive === false? <p className='text-center my-4 text-xl text-[#c2410c]'>The Alumni registration is suspended for period of time</p>:<><Skeleton height={50} /><Skeleton height={50} /><Skeleton height={50} /></>
                     }
                     <p className='text-center mt-2'><Link to="" className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> | Already have an account? <Link to={siteLinks.alumniLogin.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Login Now.</Link></p>
                 </div>

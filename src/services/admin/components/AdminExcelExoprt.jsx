@@ -14,8 +14,8 @@ const AdminExcelExoprt = ({ data, SendReq, fileTitle, proof, module }) => {
 
   const [lastData, setLastData] = useState([]);
 
-  let itemdata = []
   useEffect(() => {
+    let itemdata = []
     data?.forEach((data, index) => {
       let newdata = {};
 

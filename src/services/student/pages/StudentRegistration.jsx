@@ -18,6 +18,7 @@ import checkPasswordStrength from '../../../js/passwordChecker';
 import countries from '../../director/components/FormComponents/country'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import Skeleton from '@mui/material/Skeleton';
 
 const StudentRegistration = () => {
 
@@ -41,6 +42,7 @@ const StudentRegistration = () => {
     const [programDuration, setProgramDuration] = useState(null)
     const [verifyLoading, setVerifyLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
+    const [isRegActive, setIsRegActive] = useState(null)
 
 
     // send otp
@@ -123,6 +125,16 @@ const StudentRegistration = () => {
         }
     }
 
+    useEffect(() => {
+        async function fetchData() {
+          const response = await Axios.post(`${process.env.REACT_APP_MAIN_URL}/Registration/pageStatus`)
+          console.log(response.data)
+          setIsRegActive(response.data.isStudentRegistration);
+        }
+        fetchData()
+        setInterval(fetchData,30*60*1000);
+    },[])
+
     // Handle Registration Form
     function handleRegistration(e) {
         e.preventDefault()
@@ -202,7 +214,7 @@ const StudentRegistration = () => {
             <div className='mt-3 flex items-center justify-center mb-4'>
                 <div className='w-[750px] p-3 rounded-xl bg-gray-100'>
 
-                    {/* <div className='my-4 mx-2'>
+                    <div className='my-4 mx-2'>
                         {
                             (step !== 1 && step !== 2 && step !== 4) && otp.serverOTP && <Alert severity="success" sx={{ borderRadius: '5px', border: '2px solid green' }}>
                                 <AlertTitle>Success</AlertTitle>
@@ -215,10 +227,11 @@ const StudentRegistration = () => {
                                 {errorMessage}
                             </Alert>
                         }
-                    </div> */}
+                    </div>
 
 
-                    {/*
+                    {
+                        isRegActive === true ?
                         step === 1 ?
 
                             <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
@@ -282,7 +295,7 @@ const StudentRegistration = () => {
 
                                                     <div className="col-md-10 mx-auto mt-3">
 
-                                                    {/* <div className="col-12 p-1" >
+                                                     <div className="col-12 p-1" >
                                                         <label htmlFor="eligibility" className='form-label' >PRN/ELIGIBILITY Number</label>
                                                         <input type="text" className='form-control' onChange={(e) => {
                                                             setValues((pri) => {
@@ -292,7 +305,7 @@ const StudentRegistration = () => {
                                                                 }
                                                             })
                                                         }} pattern="^[A-Z0-9]{4}[A-Z0-9/()]{0,8}[\d/]{11,13}" minlength="9" maxlength="23" required />
-                                                    </div> }
+                                                    </div> 
 
                                                         <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
 
@@ -396,9 +409,8 @@ const StudentRegistration = () => {
                                         }
                                     </div>
                                 </div>
-                            </div>
-                                    */}
-                    <p className='text-center my-4 text-xl text-[#c2410c]'>The student registration is suspended for a period</p>
+                            </div>: isRegActive === false?<p className='text-center my-4 text-xl text-[#c2410c]'>The student registration is suspended for period of time</p>:<><Skeleton height={50} /><Skeleton height={50} /><Skeleton height={50} /></>
+                                    }
                     <p className='text-center mt-2'>Already have an account? <Link to={siteLinks.studentLogin.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Login Now.</Link></p>
                 </div>
             </div>
