@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSingleEvent } from '../js/fetchEvents';
 import serverLinks from '../../../js/serverLinks';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+
 
 const images = [
     { src: '/assets/male.jpg', caption: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla, sapiente!' },
@@ -77,13 +79,20 @@ function Gallery() {
             </div>
 
             {selectedImage !== null && (
-                <div className="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center">
+                <div className="fixed top-0 left-0 right-0 bottom-0 h-full w-full bg-[#00000096] z-50 flex shadow-md border items-center justify-center">
                     <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-                        <p className='mt-3 text-muted text-sm text-center px-3'>Note: You can use Keyboard arrow keys to navigate between the images</p>
+                        <div className='flex items-center justify-between mt-3 mx-3 gap-2'>
+                            <p className='text-muted text-xs text-center'>Note: You can use Keyboard arrow keys to navigate between the images</p>
+
+                            <IconButton onClick={handleClose}>
+                                <CloseRoundedIcon />
+                            </IconButton>
+                        </div>
+
                         <img
                             src={serverLinks.showFile(data?.data?.data?.photos[selectedImage].file, 'event')}
                             alt={data?.data?.data?.photos[selectedImage].caption}
-                            className="object-cover w-[400px] mx-auto mt-3"
+                            className="object-cover w-[300px] mx-auto mt-3"
                         />
                         <div className="p-4 flex justify-between items-center">
                             <IconButton className='border mx-5' onClick={handlePrevClick}>
@@ -96,9 +105,6 @@ function Gallery() {
                                 <ArrowForwardIosRoundedIcon />
                             </IconButton>
                         </div>
-                        <button onClick={handleClose} className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800">
-                            Close
-                        </button>
                     </div>
                 </div>
             )}

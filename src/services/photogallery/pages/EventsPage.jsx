@@ -4,6 +4,7 @@ import fetchEvents from '../js/fetchEvents'
 import serverLinks from '../../../js/serverLinks'
 import { useNavigate } from 'react-router-dom'
 import GoBack from '../../../components/GoBack'
+import moment from 'moment'
 
 const EventsPage = () => {
     let params = { filter: {} }
@@ -17,13 +18,17 @@ const EventsPage = () => {
 
     return <div className="w-full">
 
-        <GoBack pageTitle="All events" />
+        <GoBack pageTitle="All Events" />
 
         <div className="flex flex-wrap gap-3 mt-3">
             {
                 data?.data?.data?.map((event) => {
                     return event && <div className='bg-gray-200 border hover:bg-gray-100 ease-in-out duration-200 cursor-pointer p-3 rounded-lg flex-auto' onClick={() => navigate(`/event/${event._id}`)}>
-                        <p className='font-semibold w-full'>{event.eventTitle}</p>
+                        <div className=" items-start">
+                            <p className='font-semibold w-full'>{event.eventTitle}</p>
+                            <p className='whitespace-nowrap text-[12px] text-muted'>{moment(event?.createdAt).
+                                format('DD MMM YYYY')}</p>
+                        </div>
                         <div className='flex items-center justify-start my-2 gap-3'>
                             {
                                 event.photos.map((photo) => {
