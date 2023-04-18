@@ -121,10 +121,10 @@ router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
 })
 
 router.post("/getDocumentCount", async (req, res) => {
-    const mod = { 'User': 'facltyCount', 'DirectorUser': 'directorCount', 'AlumniUser': 'alumniCount', 'StudentUser': 'studentCount', 'BooksAndChapters': 'booksAndChaptersCount', 'ResearchProjects': 'researchProjectsCount', 'EContentDeveloped': 'eContentDevelopedCount', 'Petant': 'petantCount', 'ConferenceOrganized': 'conferenceOrganizedCount', 'InvitedTalk': 'invitedTalkCount', 'PhdAwarded': 'researchGuidanceCount', 'ResearchPapers': 'researchPapersCount', 'Fellowship': 'fellowshipCount',  }
+    const mod = { 'User': 'facltyCount', 'DirectorUser': 'directorCount', 'AlumniUser': 'alumniCount', 'StudentUser': 'studentCount', 'BooksAndChapters': 'booksAndChaptersCount', 'ResearchProjects': 'researchProjectsCount', 'EContentDeveloped': 'eContentDevelopedCount', 'Petant': 'petantCount', 'ConferenceOrganized': 'conferenceOrganizedCount', 'InvitedTalk': 'invitedTalkCount', 'PhdAwarded': 'researchGuidanceCount', 'ResearchPapers': 'researchPapersCount', 'Fellowship': 'fellowshipCount', }
 
     let report = {};
-    
+
     try {
         for (const model of Object.keys(mod)) {
             // console.log(model)
@@ -144,7 +144,7 @@ router.post("/getDocumentCount", async (req, res) => {
 router.post('/Admin/getData', async (req, res) => {
 
     const { model, filter, filterConditios } = req.body
-    let school = directorModels.includes(model)? "SchoolName": model==="AlumniUser"||model==="StudentUser"?"schoolName": model==='DirectorUser'||model=== 'User'? "department":""
+    let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : model === 'DirectorUser' || model === 'User' ? "department" : ""
 
     let fil = {};
     let filc = {};
@@ -175,7 +175,7 @@ router.post('/Admin/getData', async (req, res) => {
             });
         }
         else {
-            const fetch = await models[model].find(fil).sort({[school]:1});
+            const fetch = await models[model].find(fil).sort({ [school]: 1 });
             res.status(200).send(fetch);
         }
     } catch (err) {
@@ -229,14 +229,14 @@ router.post('/Admin/getData', async (req, res) => {
 //registration page Enable/ Disable
 router.post('/Registration/pageToggler', async (req, res) => {
     // console.log(req)
-    const {name, state} = req.body
-    await IsRegistration.updateOne({name: "isRegToggle"}, { $set: {[`idObject.${name}`]: state }})
-    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+    const { name, state } = req.body
+    await IsRegistration.updateOne({ name: "isRegToggle" }, { $set: { [`idObject.${name}`]: state } })
+    const status = await IsRegistration.findOne({ name: "isRegToggle" }, { idObject: 1 })
     res.send(status.idObject)
 })
-router.post('/Registration/pageStatus', async (req, res) => {
-    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
-    res.send(status.idObject)
-})
+// router.post('/Registration/pageStatus', async (req, res) => {
+//     const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+//     res.send(status.idObject)
+// })
 
 module.exports = router;

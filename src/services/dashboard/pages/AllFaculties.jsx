@@ -44,7 +44,7 @@ const AllFaculties = () => {
     return (
         <div>
             <div className="sticky-top bg-white">
-                <GoBack backUrl={-1} pageTitle={`About ${school}`} />
+                <GoBack backUrl={-1} pageTitle={`Faculties of ${school}`} />
             </div>
 
             <div>

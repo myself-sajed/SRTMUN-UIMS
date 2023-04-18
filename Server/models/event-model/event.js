@@ -7,6 +7,14 @@ const eventSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    eventSummary: {
+        type: 'string',
+        required: true
+    },
+    eventDuration: {
+        type: 'string',
+        required: true
+    },
     photos: {
         type: [{ type: Object }],
         required: true,

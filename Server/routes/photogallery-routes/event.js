@@ -28,6 +28,8 @@ function event(app) {
             // saving the event
             const newEvent = new Event({
                 eventTitle: data.eventTitle,
+                eventSummary: data.eventSummary,
+                eventDuration: data.eventDuration,
                 photos: photos,
                 schoolName: 'School of Mathematical Sciences'
             })

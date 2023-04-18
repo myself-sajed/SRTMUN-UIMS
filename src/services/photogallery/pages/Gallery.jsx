@@ -66,8 +66,14 @@ function Gallery() {
 
     return (
         <div className="mx-auto">
-            <GoBack pageTitle={data?.data?.data?.eventTitle} />
-            <div className="flex items-center justify-start flex-wrap gap-2 rounded-md p-3 mt-3">
+            <GoBack pageTitle={data?.data?.data?.eventTitle} ><p>
+                <span className='text-muted'> Duration:</span> <span className="font-semibold">
+                    {data?.data?.data?.eventDuration}</span>
+            </p></GoBack>
+            <div className='mt-3'>
+                <p>{data?.data?.data?.eventSummary}</p>
+            </div>
+            <div className="flex items-center justify-start flex-wrap gap-2 rounded-md mt-3">
                 {data?.data?.data?.photos?.map((image, index) => (
                     <div key={image.id} className="relative border" onClick={() => handleImageClick(index)}>
                         <img src={serverLinks.showFile(image?.file, 'event')} alt={image.caption} className="w-60 h-60 object-cover hover:brightness-90 cursor-pointer" />
@@ -82,7 +88,7 @@ function Gallery() {
                 <div className="fixed top-0 left-0 right-0 bottom-0 h-full w-full bg-[#00000096] z-50 flex shadow-md border items-center justify-center">
                     <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
                         <div className='flex items-center justify-between mt-3 mx-3 gap-2'>
-                            <p className='text-muted text-xs text-center'>Note: You can use Keyboard arrow keys to navigate between the images</p>
+                            <p className='text-muted text-xs text-center'>Note: You can use keyboard arrow keys to navigate between the images</p>
 
                             <IconButton onClick={handleClose}>
                                 <CloseRoundedIcon />

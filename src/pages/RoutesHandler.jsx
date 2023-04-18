@@ -65,14 +65,14 @@ import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
 import { useEffect } from 'react'
-
+import DirectorSSM from '../services/director/pages/DirectorSSM'
+import Gallery from '../services/photogallery/pages/Gallery'
+import AddEvent from '../services/photogallery/pages/AddEvent'
+import EventsPage from '../services/photogallery/pages/EventsPage'
+import SchoolInformation from '../services/dashboard/pages/SchoolInformation'
 
 
 const RoutesHandler = () => {
-
-    useEffect(() => {
-        console.log('Pathname :', window.location.pathname)
-    }, [window.location.pathname])
 
     return (
         <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
@@ -140,6 +140,7 @@ const RoutesHandler = () => {
                 <Route path="/dashboard/faculty/:userId" exact element={<Faculty />} />
                 <Route path="/dashboard/:school/students" exact element={<AllStudents />} />
                 <Route path="/dashboard/:school/alumni" exact element={<AllAlumni />} />
+                <Route path="/dashboard/schoolInformation/:schoolName" exact element={<SchoolInformation />} />
                 <Route path="/dashboard/alumni/:school/:model/:title" exact element={<AlumniModelWise />} />
                 <Route path="/dashboard/information/:school/:model/:title" exact element={<OtherDashboardData />} />
                 <Route path="/dashboard/director/information/:school/:model/:title" exact element={<DirectorDashboardData />} />

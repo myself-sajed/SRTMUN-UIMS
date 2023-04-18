@@ -34,11 +34,11 @@ const SchoolsProgram = {
     "School of Media Studies": [
         ["M.A./M.Sc(Electronic Media)", 2], ["M.A.(Mass Communication & Journalism)", 2], ["M.Phil.(Mass Communication & Journalism)", 2], ["Ph.D.(Mass Communication & Journalism)", 7],
     ],
-    "School of Fine and Performing Arts": [
-        ["Bachalor in Performing Arts", 3], ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2]
-    ],
     "School of Language, Literature and Culture Studies": [
         ["M.A.(English)", 2], ["M.A.(Marathi)", 2], ["M.Phil.(English)", 2], ["M.Phil.(Marathi)", 2], ["Ph.D.(English)", 7], ["Ph.D.(Marathi)", 7], ["Certificate Course  in French Language", 2], ["Diploma Course in French Language", 2], ["Advance Diploma in French Language", 2], ["Certificate Course  in Spanish Language", 2], ["Diploma Course in Spanish Language", 2], ["Advance Diploma in Spanish Language", 2],
+    ],
+    "School of Fine and Performing Arts": [
+        ["Bachalor in Performing Arts", 3], ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2]
     ],
     "School of Management Sciences, Sub-Campus, Latur": [
         ["M.B.A", 2], ["M.Com", 2], ["PGDDM", 2], ["M.Phil(Management Sciences)", 2], ["Ph.D(Management Sciences)", 7], ["Certificate Course in Goods and Service Tax (GST)", 7]

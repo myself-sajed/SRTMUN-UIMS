@@ -14,6 +14,7 @@ import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalen
 import LightbulbRoundedIcon from '@mui/icons-material/LightbulbRounded';
 import CardMembershipRoundedIcon from '@mui/icons-material/CardMembershipRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { fetchSchoolData } from '../js/fetchData';
@@ -22,12 +23,20 @@ import { Skeleton, useStepContext } from '@mui/material';
 
 const dashboardCards = [
     {
+        id: 0,
+        title: 'Schools',
+        countModelName: 'SchoolCount',
+        color: 'cyan',
+        url: `/dashboard/select-department/schoolInformation`,
+        icon: <MapsHomeWorkRoundedIcon sx={{ color: 'red', fontSize: '38px' }} />
+    },
+    {
         id: 1,
         title: 'Faculties',
         countModelName: 'usersCount',
         color: 'cyan',
         url: `/dashboard/select-department/info`,
-        icon: <GroupsRoundedIcon sx={{ color: 'green', fontSize: '45px' }} />
+        icon: <GroupsRoundedIcon sx={{ color: 'green', fontSize: '42px' }} />
     },
     {
         id: 2,
@@ -35,7 +44,7 @@ const dashboardCards = [
         countModelName: 'StudentCount',
         color: 'orange',
         url: `/dashboard/select-department/students`,
-        icon: <GroupRoundedIcon sx={{ color: 'orange', fontSize: '45px' }} />
+        icon: <GroupRoundedIcon sx={{ color: 'orange', fontSize: '42px' }} />
     },
     {
         id: 3,
@@ -43,8 +52,7 @@ const dashboardCards = [
         countModelName: 'AlumniCount',
         color: 'cyan',
         url: `/dashboard/select-department/alumni`,
-        // url: `/dashboard/alumni-information`,
-        icon: <Diversity3RoundedIcon sx={{ color: 'red', fontSize: '45px' }} />
+        icon: <Diversity3RoundedIcon sx={{ color: 'red', fontSize: '38px' }} />
     },
     {
         id: 5,
@@ -52,7 +60,7 @@ const dashboardCards = [
         countModelName: 'BookAndChapterCount',
         url: `/dashboard/select-department/BookAndChapter`,
         color: 'pink',
-        icon: <AutoStoriesRoundedIcon sx={{ color: 'purple', fontSize: '45px' }} />
+        icon: <AutoStoriesRoundedIcon sx={{ color: 'purple', fontSize: '38px' }} />
     },
     {
         id: 6,
@@ -134,9 +142,6 @@ const Dashboard = () => {
         setLocalData(JSON.parse(localStorage.getItem('dashboardData')) || null)
     }, [])
 
-    useEffect(() => {
-        console.log('Local Data :', localData)
-    }, [localData])
 
     useEffect(() => {
 
@@ -144,6 +149,7 @@ const Dashboard = () => {
             const filteredData = data?.data?.data
             delete filteredData['Alumni']
             delete filteredData['Student']
+            filteredData['SchoolCount'] = 16
             localStorage.setItem('dashboardData', JSON.stringify(filteredData))
             setLocalData(filteredData)
         }
@@ -182,6 +188,7 @@ export default Dashboard
 
 const DashboardCard = ({ data }) => {
     const navigate = useNavigate()
+
     return (
 
         <>
@@ -192,7 +199,7 @@ const DashboardCard = ({ data }) => {
                         onClick={() => { card.url && navigate(card.url) }}>
                         <div className='w-full'>
                             <div className='flex items-start justify-start gap-2 flex-col'>
-                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-4xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
+                                <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-3xl font-bold'>{data[card.countModelName] ? data[card.countModelName] : 0}</span></div>
                                 <p className='text-center '>{card.title}</p>
                             </div>
                         </div>

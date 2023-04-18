@@ -19,6 +19,12 @@ const AllDepartments = () => {
     const { serviceName } = useParams()
 
     const serviceMap = {
+        schoolInformation: {
+            model: 'User',
+            select: 'department',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#fc4829' }} />,
+            fieldName: ['Faculty', 'Faculties']
+        },
         info: {
             model: 'User',
             select: 'department',
@@ -127,7 +133,8 @@ const AllDepartments = () => {
                     {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
                         <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#ffe6e5] hover:bg-[#f7d8d6]" onClick={() => {
                             navigate(serviceName === 'info' ? `/dashboard/${nameOfTheSchool}` :
-                                serviceMap[serviceName].type === 'faculty' ? `/dashboard/information/${nameOfTheSchool}/${serviceName}/${serviceMap[serviceName].title}` : `/dashboard/${nameOfTheSchool}/${serviceName}`)
+                                serviceName === 'schoolInformation' ? `/dashboard/schoolInformation/${nameOfTheSchool}` :
+                                    serviceMap[serviceName].type === 'faculty' ? `/dashboard/information/${nameOfTheSchool}/${serviceName}/${serviceMap[serviceName].title}` : `/dashboard/${nameOfTheSchool}/${serviceName}`)
                         }}>
                             <div>
                                 <div className='flex items-start justify-start gap-2'>
@@ -135,7 +142,7 @@ const AllDepartments = () => {
                                     <div className='flex flex-col justify-start '>
                                         <p className='font-medium text-[#fc4829]'>{nameOfTheSchool.replace('School of', '')}</p>
                                         {
-                                            (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ? <p className='text-muted'>
+                                            serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ? <p className='text-muted'>
 
                                                 {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length} {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]
                                                 }</p>

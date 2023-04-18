@@ -10,20 +10,43 @@ import Footer from '../../../components/Footer';
 import { default as pageTitle } from '../../../js/title';
 import Axios from 'axios'
 import { toast } from 'react-hot-toast';
+import { DatePicker, Space } from 'antd';
+
 
 const AddEvent = () => {
 
     pageTitle("Add an Event")
+    const { RangePicker } = DatePicker;
 
     const [eventTitle, setEventTitle] = useState("")
+    const [eventSummary, setEventSummary] = useState("")
+    const [eventDuration, setEventDuration] = useState(null)
+    const [picker, setPicker] = useState(null)
     const [imageList, setImageList] = useState([{ id: 1, file: null, caption: '' }]);
     const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        if (picker) {
+            setEventDuration(`${picker[0]['$D']}-${picker[0]['$M'] + 1}-${picker[0]['$y']} to ${picker[1]['$D']}-${picker[1]['$M'] + 1}-${picker[1]['$y']}`)
+        }
+    }, [picker])
+
     function addTheEvent(e) {
         e.preventDefault();
+
+        console.log('eventDuration :', eventDuration)
+
+        if (eventDuration === null || eventDuration === undefined || eventDuration === "") {
+            toast.error('Please choose the event duration')
+            return
+        }
+
+
         setLoading(true)
         const formData = new FormData()
         formData.append('eventTitle', eventTitle)
+        formData.append('eventSummary', eventSummary)
+        formData.append('eventDuration', eventDuration)
 
         imageList.forEach((image) => {
             if (image.file && (image.caption !== undefined || image.caption !== null || image.caption !== "")) {
@@ -52,6 +75,10 @@ const AddEvent = () => {
 
     }
 
+    useEffect(() => {
+        console.log('Duration is :', picker)
+    }, [picker])
+
 
     return (
         <div>
@@ -60,25 +87,40 @@ const AddEvent = () => {
             <div className="mt-4">
                 <form onSubmit={addTheEvent} encType='multipart/form-data' >
 
-                    {/* 1.TITLE */}
-                    <div>
-                        <div className="mb-3">
-                            <label htmlFor="title" className="form-label">1. Title of the event</label>
-                            <div className="flex items-center justify-between flex-auto gap-4">
-                                <input type="text" required placeholder='Title goes here...' maxLength={100} value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} className="form-control" id="title" aria-describedby="emailHelp" />
-                                <CircularProgress variant="determinate" value={eventTitle ? eventTitle.length : 0} />
+                    <div className="bg-gray-200 rounded-md border p-3 ">
+                        <div className='flex items-start gap-3 justify-between'>
+                            <div className="mb-3 flex-auto">
+                                <label htmlFor="title" className="form-label">Title of the event</label>
+                                <input type="text" required placeholder='Title goes here...' maxLength={200} value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} className="form-control" id="title" aria-describedby="emailHelp" />
+                                <div id="titleHelp" className="form-text">The event title should not exceed 200 characters.</div>
                             </div>
-                            <div id="titleHelp" className="form-text">The event title should not exceed 100 characters.</div>
+
+                            <div className='flex-auto'>
+                                <div className="mb-3">
+                                    <label htmlFor="title" className="form-label">Duration of the event </label>
+                                    <div>
+                                        <RangePicker onChange={(e) => setPicker(e)} className='border border-black p-2' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="mb-3">
+                                <label htmlFor="title" className="form-label">Brief event summary </label>
+                                <textarea required placeholder='Write about the event in brief...' maxLength={1200} value={eventSummary} onChange={(e) => setEventSummary(e.target.value)} className="form-control" id="title" aria-describedby="emailHelp" />
+                            </div>
                         </div>
                     </div>
 
-                    <div>
-                        {/* 2. UPLOAD BUTTON */}
-                        <div className='mt-4'>
-                            <label htmlFor="photos" className="form-label">2. Choose event photographs</label>
+
+
+                    <div className="bg-gray-200 rounded-md border p-3 mt-3">
+                        <div>
+                            <label htmlFor="photos" className="form-label">Choose event photographs</label>
                             <div id="photoHelp" className="form-text">Note: Select a photo in the input to add another photo. (You can add maximum of 5 photos of an event.)</div>
                             <div id="photoHelp" className="form-text mb-2"></div>
-                            <div className="border-l-4">
+                            <div className="border-l-4 border-gray-400">
                                 <div className="ml-5">
                                     <ImageUploader setImageList={setImageList} imageList={imageList} />
                                 </div>
@@ -86,9 +128,8 @@ const AddEvent = () => {
                         </div>
                     </div>
 
-                    {/* 3. SELECTED FILES */}
-                    <div>
-                        <label htmlFor="choosen" className="form-label mt-4">3. Upload Event</label>
+                    <div className="bg-gray-200 rounded-md border p-3 mt-3">
+                        <label htmlFor="choosen" className="form-label">Upload Event</label>
                         <div className="d-grid gap-2">
                             {
                                 !loading ?
@@ -160,7 +201,7 @@ function ImageUploader({ imageList, setImageList }) {
                                 onChange={(event) => handleImageChange(event, image.id)} />
                         </div>
                         <div className='flex-auto'>
-                            <input placeholder="About the photo..." type="text" required maxLength={100}
+                            <input placeholder="Caption the photo..." type="text" required maxLength={100}
                                 value={image.caption} className="form-control" id="title" aria-describedby="emailHelp"
                                 onChange={(event) => handleCaptionChange(event, image.id)}
                             />
