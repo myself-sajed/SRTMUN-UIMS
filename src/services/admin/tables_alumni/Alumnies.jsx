@@ -15,6 +15,7 @@ const Alumnies = ({id, setState, yearFilter, schoolName, Heading}) => {
   const params = { model: SendReq, id: "", module, filter }
 
   const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  
   useEffect(() => {
       setState((pri) => {
         return {

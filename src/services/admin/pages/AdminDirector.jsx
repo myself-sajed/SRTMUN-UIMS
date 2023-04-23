@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import AdminDrower from './AdminDrower'
 import JSZip from "jszip";
 import Papa from 'papaparse';
@@ -6,7 +6,6 @@ import Papa from 'papaparse';
 import Directors from '../tables_director/Directors';
 import adminExcelObject from '../components/adminExcelObject';
 import AcadmicYearSelect from '../components/AcadmicYearSelect';
-import SchoolsProgram from '../../../components/SchoolsProgram';
 import AlumniContribution from '../tables_director/AlumniContribution';
 import Awards from '../tables_director/Awards';
 import ConferencesSemiWorkshopOrganized from '../tables_director/ConferencesSemiWorkshopOrganized';
@@ -129,13 +128,6 @@ const AdminDirector = () => {
       childData: childData?.valueaddedcource, filename: 'Value Added Course.csv', SendReq: "ValueAddedCource", module: "director", proof: "Upload_Proof",
     },
   ]
-  useEffect(() => {
-    const dataFacher = async () => {
-      allDirectorComponents.map((component) => {
-        console.log(component)
-      })
-    }
-  }, [])
 
   const downloadCSV = async () => {
     const zip = new JSZip();
@@ -158,7 +150,7 @@ const AdminDirector = () => {
         }
         itemdata.push(newdata)
       })
-
+      
       zip.file(filename, Papa.unparse(itemdata));
     });
 
@@ -166,7 +158,7 @@ const AdminDirector = () => {
     const content = await zip.generateAsync({ type: 'blob' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(content);
-    link.setAttribute('download', 'allDirectorExcel.zip');
+    link.setAttribute('download', 'allDirectorCSV.zip');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

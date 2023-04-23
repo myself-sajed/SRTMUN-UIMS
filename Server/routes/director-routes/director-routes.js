@@ -24,6 +24,7 @@ const SyllabusRevision = require('../../models/director-models/syllabusRevisionS
 const AlumniContribution = require('../../models/director-models/alumniContributionSchema');
 const ConferencesSemiWorkshopOrganized = require('../../models/director-models/conferencesSemiWorkshopOrganizedSchema')
 const StudentUser = require('../../models/student-models/studentUserSchema')
+const AlumniUser = require('../../models/alumni-models/alumniUserSchema')
 const StudentIdCount = require('../../models/student-models/studentIdCountSchema')
 
 // multer configuration director 
@@ -55,7 +56,7 @@ const excelStorage = multer.diskStorage({
 })
 const excelUpload = multer({ storage: excelStorage })
 
-let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser }
+let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser }
 
 //Set Route
 
@@ -937,6 +938,6 @@ router.post('/inactive-active/student', async (req, res) => {
         console.log(err)
         res.send({status:"error"})
     }
-}) 
+})
 
 module.exports = router;

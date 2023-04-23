@@ -463,10 +463,20 @@ const adminExcelObject = {
     //alumni
     AlumniUser: {
         "name": "Name",
-        "department": "School",
+        "schoolName": "School",
         "gender": "Gender",
         "email": "Email",
-        "designation": "Designation",
+        "programGraduated": "Program graduated",
+        "doCompleted" : "Last prpgram form university on"
+    },
+    //students
+    StudentUser: {
+        "name": "Name",
+        "schoolName": "School",
+        "gender": "Gender",
+        "email": "Email",
+        "programGraduated": "Eanroled Program",
+        "programEnroledOn" : "Program Enroled on"
     }
 }
 

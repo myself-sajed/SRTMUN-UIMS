@@ -1,11 +1,14 @@
 import { Box, Button, Drawer, IconButton, Tooltip } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import PersonAddDisabledRoundedIcon from '@mui/icons-material/PersonAddDisabledRounded';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import BoyIcon from '@mui/icons-material/Boy';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setSsmActive } from '../../../redux/slices/DirectorActiveSlice';
 import { styled } from '@mui/system';
 import Bred from '../../../components/Bred'
 import OnlyNav from '../../../components/OnlyNav'
@@ -28,7 +31,11 @@ const Btn = styled(Button)({
 const DirectorSSM = () => {
   useDirectorAuth()
 
-  const [ssmBtn, setSsmBtn] = useState({ name:"newStudent", value: "New student", element: <NewStudent/> })
+  const dispatch = useDispatch()
+  const SsmActive = useSelector(state => state.directorActive.ssmActive)  
+
+  const [ssmBtn, setSsmBtn] = useState({ name: "activeStudent", element: <ActiveStudent />,value: "Verifyed student" })
+
   const [isDrowerOpen, setIsDrowerOpen] = useState(false)
   
   const user = useSelector(state => state.user.directorUser)
@@ -36,17 +43,26 @@ const DirectorSSM = () => {
 
   const ButtonObject = [
     {
+      name: "activeStudent", icon: <VerifiedIcon />, element: <ActiveStudent />,value: "Verifyed student"
+    },{
+      name: "InactiveStudent", icon: <PlaylistAddCheckIcon />, element: <InActiveStudent />,value: "Verify student"
+    },{
       name: "newStudent", icon: <PersonAddAltRoundedIcon />, element: <NewStudent />,value: "New student"
     },{
-      name: "InactiveStudent", icon: <PersonAddDisabledRoundedIcon />, element: <InActiveStudent />,value: "Inactive student"
-    },{
-      name: "activeStudent", icon: <SchoolRoundedIcon />, element: <ActiveStudent />,value: "Activated student"
+      name: "alumni", icon: <BoyIcon />, element: <Alumni/>,value: "Alumni"
     },{
       name: "studentAlumni", icon: <ManageAccountsRoundedIcon />, element: <StudentToAlumni />,value: "Student to Alumni"
-    },{
-      name: "alumni", icon: <BoyIcon />, element: <Alumni/>,value: "Alumni"
     },
   ]
+
+  useEffect(() =>{
+    ButtonObject.forEach(item=>{
+      const { name, value, element } = item;
+      if(name === SsmActive){
+        setSsmBtn({name, value, element})
+      }
+    })
+  },[SsmActive])
   
   return (
     <div>
@@ -74,8 +90,8 @@ const DirectorSSM = () => {
 
                    <div style={{ width: '100%', display: 'flex', flexFlow: 'row wrap', justifyContent: "center" }}>
                    {ButtonObject.map((e, index) => {
-                      const {element, value, icon, name } = e;
-                      return<div onClick={()=>{setSsmBtn({name,value,element})}} key={index} className={`flex items-center duration-200 ease-in-out cursor-pointer hover:bg-blue-200 justify-start gap-2 px-2 py-2 text-sm rounded-full mx-1 my-1 ${ssmBtn.name === name ? 'bg-blue-200' : 'bg-blue-100'}`}>
+                      const {value, icon, name } = e;
+                      return<div onClick={()=>{dispatch(setSsmActive(name))}} key={index} className={`flex items-center duration-200 ease-in-out cursor-pointer hover:bg-blue-200 justify-start gap-2 px-2 py-2 text-sm rounded-full mx-1 my-1 ${ssmBtn.name === name ? 'bg-blue-200' : 'bg-blue-100'}`}>
                         <div className='text-blue-900' >{icon}</div>
                         <p className='text-blue-900'>{value}</p>
                       </div>

@@ -127,11 +127,11 @@ router.post("/getDocumentCount", async (req, res) => {
 
     try {
         for (const model of Object.keys(mod)) {
-            // console.log(model)
+
             const fatch = await models[model].countDocuments({})
             report[mod[model]] = fatch
         }
-        // console.log(report)
+
         res.status(200).send({ report })
     }
     catch (err) {
@@ -185,58 +185,58 @@ router.post('/Admin/getData', async (req, res) => {
 })
 
 //Get Route
-router.post('/Admin/getData', async (req, res) => {
+// router.post('/Admin/getData', async (req, res) => {
 
-    const { model, filter, filterConditios } = req.body
-    let fil = {};
-    let filc = {};
-    if (filterConditios !== null) {
-        filc = filterConditios
-    }
-    if (filter !== null) {
-        fil = filter
-    }
-    try {
-        if (facultyModels.includes(model)) {
-            models[model].find(fil).populate({
-                path: 'userId',
-                match: filc,
-                select: ('-password'),
-            }).exec(function (err, fetch) {
-                let filterData = []
-                if (err) {
-                    // throw err; 
-                    console.log(err);
-                }
-                for (item of fetch) {
-                    if (item.userId !== null) {
-                        filterData.push(item)
-                    }
-                }
-                res.status(200).send(filterData);
-            });
-        }
-        else {
-            const fetch = await models[model].find(fil).sort({ $natural: -1 });
-            res.status(200).send(fetch);
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-})
+//     const { model, filter, filterConditios } = req.body
+//     let fil = {};
+//     let filc = {};
+//     if (filterConditios !== null) {
+//         filc = filterConditios
+//     }
+//     if (filter !== null) {
+//         fil = filter
+//     }
+//     try {
+//         if (facultyModels.includes(model)) {
+//             models[model].find(fil).populate({
+//                 path: 'userId',
+//                 match: filc,
+//                 select: ('-password'),
+//             }).exec(function (err, fetch) {
+//                 let filterData = []
+//                 if (err) {
+//                     // throw err; 
+//                     console.log(err);
+//                 }
+//                 for (item of fetch) {
+//                     if (item.userId !== null) {
+//                         filterData.push(item)
+//                     }
+//                 }
+//                 res.status(200).send(filterData);
+//             });
+//         }
+//         else {
+//             const fetch = await models[model].find(fil).sort({ $natural: -1 });
+//             res.status(200).send(fetch);
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send();
+//     }
+// })
 
 //registration page Enable/ Disable
 router.post('/Registration/pageToggler', async (req, res) => {
-    // console.log(req)
+
     const { name, state } = req.body
     await IsRegistration.updateOne({ name: "isRegToggle" }, { $set: { [`idObject.${name}`]: state } })
     const status = await IsRegistration.findOne({ name: "isRegToggle" }, { idObject: 1 })
     res.send(status.idObject)
 })
-// router.post('/Registration/pageStatus', async (req, res) => {
-//     const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
-//     res.send(status.idObject)
-// })
+router.post('/Registration/pageStatus', async (req, res) => {
+    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+    res.send(status.idObject)
+})
 
 module.exports = router;
