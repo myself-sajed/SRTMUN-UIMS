@@ -121,10 +121,7 @@ mongoose
   .catch((err) => console.log("Database connection failed"));
 
 
-
-
 // FILE MANAGEMENT SECTION
-
 
 // 1. File Deletion function
 async function deleteFile(fileName, desiredPath, callback) {

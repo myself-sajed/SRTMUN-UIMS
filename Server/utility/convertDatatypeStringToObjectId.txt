@@ -18,26 +18,31 @@ db object isregistration table
                 isFacultyRegistration : false,
                 isAlumniRegistration : false,
 
+db.isregistrations.insert({ name: "isRegToggle", idObject: { isStudentRegistration: false, isFacultyRegistration: false, isAlumniRegistration: false } })
+                
+
 studentIdCount table 
     name : studentidcounts
         id : _id,
         name : "year";//i.e. ex:- 2022
         idObject : 
-                comp : 1
-                comm : 0
-                educ : 1
-                phys : 0
-                math : 4
-                soci : 0
-                eart : 0
-                life : 0
-                phar : 0
-                medi : 0
-                fine : 0
-                lang : 0
-                mana : 0
-                tech : 0
-                sosc : 0
+                comp : 0,
+                comm : 0,
+                educ : 0,
+                phys : 0,
+                math : 0,
+                soci : 0,
+                eart : 0,
+                life : 0,
+                phar : 0,
+                medi : 0,
+                fine : 0,
+                lang : 0,
+                mana : 0,
+                tech : 0,
+                sosc : 0,
+
+ db.studentidcounts.insert({ name: 2022, idObject: { comp: 0, comm: 0, educ: 0, phys: 0, math: 0, soci: 0, eart: 0, life: 0, phar: 0, medi: 0, fine: 0, lang: 0, mana: 0, tech: 0, sosc: 0 } })
 
 
 set active all students
