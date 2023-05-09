@@ -17,6 +17,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram';
 import DynamicCheckboxes from '../../../components/formComponents/DynamicChackboxes';
 import checkPasswordStrength from '../../../js/passwordChecker';
 import Skeleton from '@mui/material/Skeleton';
+import ProfileCroper from '../../../components/ProfileCroper';
 
 const AlumniRegistration = () => {
 
@@ -39,6 +40,7 @@ const AlumniRegistration = () => {
     const [verifyLoading, setVerifyLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
     const [isRegActive, setIsRegActive] = useState(null)
+    const [open, setOpen] = useState(false)
 
 
     useEffect(() => {
@@ -159,8 +161,10 @@ const AlumniRegistration = () => {
     function handleAvatarChange(e) {
         setAvatar(null)
         const file = e.target.files[0];
-        if (e.target.files[0].size >= 999900) {
-            toast.error('Photo size should be less than 1 MB')
+        setOpen(true)
+        if (e.target.files[0].size >= 10485760) {
+            toast.error('Photo size should be less than 10 MB')
+            setOpen(false)
             return
         }
         const reader = new FileReader();
@@ -245,8 +249,10 @@ const AlumniRegistration = () => {
 
                                             }
                                             <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-200 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Required)*</p>
-                                            <div className='text-xs text-muted text-center my-2'>Photo size should be less than 1MB</div>
+                                            <div className='text-xs text-muted text-center my-2'>Photo size should be less than 10MB</div>
                                         </div>
+
+                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile ={setFile} setAvatar={setAvatar} />
 
 
                                         <div className="w-full flex items-center justify-center ">
