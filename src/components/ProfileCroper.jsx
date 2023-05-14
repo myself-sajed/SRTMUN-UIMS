@@ -70,7 +70,7 @@ const onSubmit =async(e) =>{
   )
 }
 
-const SubImageResizer = (img) => {
+const SubImageResizer = (img, WIDTH = 2000) => {
   let reader = new FileReader();
   reader.readAsDataURL(img);
   reader.onload = () => {
@@ -78,8 +78,7 @@ const SubImageResizer = (img) => {
       let image = document.createElement('img');
       image.src = img_url
 
-      image.onload = (e) => {
-          const WIDTH = e.target.width>2000? e.target.width/2 > 2000 ? 2000 : e.target.width/2 :1000;
+      image.onload = async(e) => {
           let canvas = document.createElement('canvas');
           let ratio = WIDTH / e.target.width
           canvas.width = WIDTH;
@@ -87,8 +86,14 @@ const SubImageResizer = (img) => {
           const contaxt = canvas.getContext('2d');
           contaxt.drawImage(image, 0, 0, canvas.width, canvas.height);
           let new_Img_Url = contaxt.canvas.toDataURL('image/jpeg',100);
-          const newfile = urlToFile(new_Img_Url);
-          return newfile
+          const newfile = await urlToFile(new_Img_Url);
+          console.log(newfile);
+          if (newfile.size > 1048576){
+            let newWidth = WIDTH-100
+            SubImageResizer(newfile, newWidth)
+          }
+          return(newfile);
+          
       }
     }
 }
