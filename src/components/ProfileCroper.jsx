@@ -71,7 +71,7 @@ const onSubmit =async(e) =>{
 }
 
 const ImageResizer = (file) => {
-  const [newfile, setNewfile ] = useState(file)
+  const [newfile, setNewfile] = useState(file);
   let count = 0
   let WIDTH = 2000
   const ResizeImmage =(img, WIDTH)=>{
@@ -92,6 +92,7 @@ const ImageResizer = (file) => {
           contaxt.drawImage(image, 0, 0, canvas.width, canvas.height);
           let new_Img_Url = contaxt.canvas.toDataURL('image/jpeg',100);
           const newfile = await urlToFile(new_Img_Url);
+          console.log(newfile)
           return(newfile);
       }
     }

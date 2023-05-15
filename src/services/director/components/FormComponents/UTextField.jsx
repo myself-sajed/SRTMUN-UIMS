@@ -9,7 +9,6 @@ import { toast } from "react-hot-toast";
 
 function UTextField(props) {
    const [fileName, setFileName] = useState("");
-   const type = "image/jpeg"
    const HandleChange = async (e) => {
 
   const file = e.target.files[0];
