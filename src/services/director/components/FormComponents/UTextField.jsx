@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Grid, Button } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FormHelperText from '@mui/material/FormHelperText';
-import { SubImageResizer } from "../../../../components/ProfileCroper";
+import { ImageResizer } from "../../../../components/ProfileCroper";
 import { toast } from "react-hot-toast";
 
 
@@ -24,7 +24,7 @@ function UTextField(props) {
       file.type === "image/jpeg" ||
       file.type === "image/png"
     ) {
-      value = await SubImageResizer(file)
+      value = await ImageResizer(file)
          console.log(value)
          setFileName(value.name);
          onValueset(value, props.id);

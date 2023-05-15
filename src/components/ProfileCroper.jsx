@@ -70,10 +70,15 @@ const onSubmit =async(e) =>{
   )
 }
 
-const SubImageResizer = (img, WIDTH = 2000) => {
-  let reader = new FileReader();
-  reader.readAsDataURL(img);
-  reader.onload = () => {
+const ImageResizer = (file) => {
+  const [newfile, setNewfile ] = useState(file)
+  let count = 0
+  let WIDTH = 2000
+  const ResizeImmage =(img, WIDTH)=>{
+    count++;
+    let reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
       let img_url = reader.result
       let image = document.createElement('img');
       image.src = img_url
@@ -87,15 +92,16 @@ const SubImageResizer = (img, WIDTH = 2000) => {
           contaxt.drawImage(image, 0, 0, canvas.width, canvas.height);
           let new_Img_Url = contaxt.canvas.toDataURL('image/jpeg',100);
           const newfile = await urlToFile(new_Img_Url);
-          console.log(newfile);
-          if (newfile.size > 1048576){
-            let newWidth = WIDTH-100
-            SubImageResizer(newfile, newWidth)
-          }
           return(newfile);
-          
       }
     }
+  }
+  while (newfile.size > 1048576){
+        let newWidth = count==0?WIDTH: WIDTH-100
+        setNewfile(ResizeImmage(newfile, newWidth))
+  }
+  return(newfile)
+
 }
 
 const urlToFile = (Url) => {
@@ -119,5 +125,5 @@ const urlToFile = (Url) => {
   // URL.revokeObjectURL(url); 
 }
 
-export {SubImageResizer}
+export {ImageResizer}
 export default ProfileCroper 
