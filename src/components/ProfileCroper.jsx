@@ -55,7 +55,7 @@ const onSubmit =async(e) =>{
 }
 
   return (
-    <DialogBox  buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} maxWidth='lg' onClickFunction={onSubmit} onCancel={onCancel}>
+    <DialogBox  buttonName="Crop" isModalOpen={open} setIsModalOpen={setOpen} maxWidth='lg' onClickFunction={onSubmit} onCancel={onCancel}>
       <div className='flex flex-wrap'>
       { Img && <>
                     <ReactCrop src={Img} onImageLoaded={setImage} crop={crop} onChange={(e)=>{setCrop(e); getCroppedImg()}} style={{maxWidth: "600px",minWidth: "600px" }} />
