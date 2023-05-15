@@ -31,6 +31,8 @@ const StudentIdCount = require('../../models/student-models/studentIdCountSchema
 
 const multer = require('multer');
 const path = require('path');
+const { sendMail } = require('../faculty-routes/services');
+const emailTemplate = require('../../email/emailTemplate');
 // const { Sync } = require('@mui/icons-material');
 const dirstorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -931,8 +933,26 @@ router.post('/inactive-active/student', async (req, res) => {
     const {status,itemToEdit} = req.body
     try{
         await StudentUser.updateOne({_id: itemToEdit},{$set:{status}});
-        const username = await StudentUser.findOne({_id: itemToEdit})
-        res.send({status:"success"})
+        const userdetails = await StudentUser.findOne({_id: itemToEdit});
+
+        const {username, email, schoolName, status:state } = userdetails
+        const activestate = state=="Active"? "Activated":"Disabled";
+        subjectForEmail = `Your account is ${activestate} by director of ${schoolName} at SRTMUN-UIMS.`
+
+        // message to send on res
+        const statematter = state=="Active"? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
+        let message = { status: 'success', message: 'Email sent successfully, Please check your Email Account'}
+
+        let htmlMatter = `<div>
+                            <h2>Your student account ${activestate} by Director of ${schoolName}</h2>
+                            <p style="font-size: 14px; line-height: 140%;">
+                            <strong>${username}</strong> is your username that is <strong>${activestate}</strong> ${statematter}.
+                            </p>
+                        </div>`
+                        console.log(htmlMatter);
+
+        // send mail
+        sendMail(req, res, email, subjectForEmail, 'html', emailTemplate(htmlMatter), message);
     }
     catch(err) {
         console.log(err)

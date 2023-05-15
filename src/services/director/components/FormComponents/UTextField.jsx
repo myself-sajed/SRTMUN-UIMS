@@ -3,21 +3,48 @@ import TextField from '@mui/material/TextField';
 import { Grid, Button } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FormHelperText from '@mui/material/FormHelperText';
+import { SubImageResizer } from "../../../../components/ProfileCroper";
+import { toast } from "react-hot-toast";
 
 
 function UTextField(props) {
    const [fileName, setFileName] = useState("");
-   const HandleChange = (e) => {
-      const filename = e.target.files[0];
-      const value = filename
-      const id = props.id
-      props.onch((pri) => {
-         return {
-           ...pri, [id]: value
-         }
-       })
-      setFileName(e.target.files[0].name)
-   }
+   const type = "image/jpeg"
+   const HandleChange = async (e) => {
+
+  const file = e.target.files[0];
+  let value = "";
+  if (file.size < 1048576) {
+    value = file;
+    setFileName(file.name);
+    onValueset(value, props.id);
+  } else {
+    if (
+      file.type === "image/jpg" ||
+      file.type === "image/jpeg" ||
+      file.type === "image/png"
+    ) {
+      value = await SubImageResizer(file)
+         console.log(value)
+         setFileName(value.name);
+         onValueset(value, props.id);
+    } else {
+      toast.error("pdf must be less than 1MB");
+      value = "";
+      setFileName("");
+      onValueset(value, props.id);
+    }
+  }
+};
+
+const onValueset = (value, id) => {
+   props.onch((pri) => {
+     return {
+       ...pri,
+       [id]: value,
+     };
+   });
+};
 
    return (
       <>
@@ -34,6 +61,7 @@ function UTextField(props) {
                   id={props.id}
                   label={props.label}
                   type="file"
+                  inputProps={{accept:"application/pdf,image/jpg,image/png,image/jpeg,"}}
                   required={props.required}
                   size="large"
                   variant="standard"
