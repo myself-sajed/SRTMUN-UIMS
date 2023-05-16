@@ -70,36 +70,37 @@ const onSubmit =async(e) =>{
   )
 }
 
-const ImageResizer = (file) => {
-  const [newfile, setNewfile] = useState(file);
+const ImageResizer = async(file) => {
+  let newfile = file;
   let count = 0
   let WIDTH = 2000
   const ResizeImmage =(img, WIDTH)=>{
-    count++;
+    return new Promise((resolve) => {
     let reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = () => {
-      let img_url = reader.result
+      let img_url = reader.result;
       let image = document.createElement('img');
-      image.src = img_url
+      image.src = img_url;
 
-      image.onload = async(e) => {
-          let canvas = document.createElement('canvas');
-          let ratio = WIDTH / e.target.width
-          canvas.width = WIDTH;
-          canvas.height = e.target.height * ratio;
-          const contaxt = canvas.getContext('2d');
-          contaxt.drawImage(image, 0, 0, canvas.width, canvas.height);
-          let new_Img_Url = contaxt.canvas.toDataURL('image/jpeg',100);
-          const newfile = await urlToFile(new_Img_Url);
-          console.log(newfile)
-          return(newfile);
-      }
-    }
-  }
+      image.onload = async (e) => {
+        let canvas = document.createElement('canvas');
+        let ratio = WIDTH / e.target.width;
+        canvas.width = WIDTH;
+        canvas.height = e.target.height * ratio;
+        const context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        let new_Img_Url = context.canvas.toDataURL('image/jpeg', 100);
+        const genfile = await urlToFile(new_Img_Url);
+        console.log(genfile);
+        resolve(genfile);
+      };
+    };
+  });
+}
   while (newfile.size > 1048576){
-        let newWidth = count==0?WIDTH: WIDTH-100
-        setNewfile(ResizeImmage(newfile, newWidth))
+        WIDTH = count==0?WIDTH: WIDTH-100
+        newfile = await ResizeImmage(newfile, WIDTH)
   }
   return(newfile)
 
@@ -115,7 +116,6 @@ const urlToFile = (Url) => {
       dataArr[n] = dataStr.charCodeAt(n)
   }
   let file = new File([dataArr], 'CropedImage.jpg', {type:type})
-  return(file)
   // const url = URL.createObjectURL(file);
   // const link = document.createElement('a');
   // link.href = url;
@@ -124,7 +124,9 @@ const urlToFile = (Url) => {
   // link.click();
   // document.body.removeChild(link);
   // URL.revokeObjectURL(url); 
+  return(file)
+  
 }
 
-export {ImageResizer}
+export { ImageResizer }
 export default ProfileCroper 

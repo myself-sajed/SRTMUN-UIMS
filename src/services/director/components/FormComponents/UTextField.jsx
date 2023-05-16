@@ -19,14 +19,13 @@ function UTextField(props) {
     onValueset(value, props.id);
   } else {
     if (
-      file.type === "image/jpg" ||
       file.type === "image/jpeg" ||
       file.type === "image/png"
     ) {
-      value = await ImageResizer(file)
-         console.log(value)
-         setFileName(value.name);
-         onValueset(value, props.id);
+      value = await ImageResizer(file);
+      console.log(value);
+      setFileName(value.name);
+      onValueset(value, props.id);
     } else {
       toast.error("pdf must be less than 1MB");
       value = "";

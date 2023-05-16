@@ -38,8 +38,9 @@ function SyllabusRevision() {
 
   //--------------values useState---------------
   const initialState = { srpc: "", srpn: "", sray: "", sryoi: "", srsoioce: "", sryoim: "", sryor: "", srpocaor: "", Upload_Proof: "" }
+  
   const [values, setvalues] = useState(initialState);
-
+console.log(values.Upload_Proof)
   //---------------edit state-------------------
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
