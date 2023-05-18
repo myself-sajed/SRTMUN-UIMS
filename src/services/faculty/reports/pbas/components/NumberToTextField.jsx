@@ -46,10 +46,6 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
     let param = { model, userId: user?._id, year: casYearState }
     const { data, isLoading, isError, error, refetch, isFetching } = useQuery([param.model, param], () => refresh(param))
 
-    useEffect(() => {
-        console.log(model, '  : Data  : ', data?.data?.data)
-    }, [data])
-
 
 
     // handle add new item
@@ -544,7 +540,6 @@ const SaveCancelButtons = ({ state, setState, setShowInputs, setLoading, model, 
     const cancelData = (e) => {
         e.preventDefault();
         setShowInputs(false);
-        console.log('Your state : ', state)
         // clear inputs
         if (state !== null) {
             setState((prev) => {

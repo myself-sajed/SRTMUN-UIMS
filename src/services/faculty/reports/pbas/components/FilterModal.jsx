@@ -20,7 +20,6 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
     setState({ ...state, totalScore })
   }
 
-  console.log('Data in filter :', data)
 
   return (
     <div className='w-full'>
@@ -82,7 +81,6 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
 
 
   const verifyCheckAll = () => {
-    console.log('I have been called')
     if (!isConsolidated) {
       data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     } else {

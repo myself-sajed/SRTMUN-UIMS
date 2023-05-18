@@ -4,17 +4,17 @@ import { Remark } from '../../../services/faculty/reports/cas/content/Teaching';
 import { ViewFile } from './Tables';
 
 
-const SummarySheet = ({ casArray }) => {
+const SummarySheet = ({ casArray, title = "CAS" }) => {
     return (
         <div className='academic-start'>
-            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">CAS Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
+            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">{title} Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
 
             <div>
                 {/* Table 1 */}
                 <Teaching casArray={casArray} />
 
                 {/* Table 2 */}
-                <ResearchScore casArray={casArray} />
+                <ResearchScore casArray={casArray} title={title} />
 
 
             </div>
@@ -155,7 +155,7 @@ const Teaching = ({ casArray }) => {
 }
 
 
-const ResearchScore = ({ casArray }) => {
+const ResearchScore = ({ casArray, title }) => {
 
     let allYearTotalSum = 0;
     let allYearTotalCappedSum = 0;
@@ -538,7 +538,7 @@ const ResearchScore = ({ casArray }) => {
             </div>
 
 
-            <p className='text-center text-muted mb-10 mt-28'>Note: <strong>Submit the hard copy of Summary Sheet along with the CAS Proposal</strong></p>
+            <p className='text-center text-muted mb-10 mt-28'>Note: <strong>Submit the hard copy of Summary Sheet along with the {title} Proposal</strong></p>
 
         </div >
     )

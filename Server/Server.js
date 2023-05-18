@@ -43,7 +43,9 @@ app.use(function (req, res, next) {
 // middlewares
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(express.json({ limit: '10mb' })); // Adjust the limit as per your requirements
+
 app.use(cookieParser());
 
 
@@ -110,8 +112,8 @@ require('./routes/photogallery-routes/event')(app)
 
 
 // Database Configuration
-const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-// const URL = `mongodb://localhost:27017/srtmun`
+// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+const URL = `mongodb://localhost:27017/srtmun`
 
 mongoose
   .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -127,7 +129,8 @@ mongoose
 async function deleteFile(fileName, desiredPath, callback) {
   let paths = {
     faculty: path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
-    CAS: path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`)
+    CAS: path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`),
+    PBAS: path.join(__dirname, `./uploads/faculty-uploads/PBAS-uploads/${fileName}`)
   }
   fs.unlink(paths[desiredPath], callback)
 }
