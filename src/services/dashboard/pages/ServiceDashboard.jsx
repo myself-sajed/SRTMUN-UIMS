@@ -9,14 +9,14 @@ import UserLoading from '../../../pages/UserLoading'
 import { iconDataObj } from '../../../templates/faculty/cas-report/Header'
 import { useState } from 'react'
 import EmptyBox from '../../../components/EmptyBox'
+import { useMemo } from 'react'
 
-const ServiceDashboard = ({ data, iconDataObj, isLoading }) => {
+const ServiceDashboard = ({ data, iconDataObj, isLoading, showHeading = true, detailsPage = false }) => {
 
     const [isAnalytics, setIsAnalytics] = useState(true)
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log('data :', data)
         let emptyCount = 0
         iconDataObj.forEach((item) => {
             data?.data?.data?.[item.model]?.length === 0 && emptyCount++;
@@ -28,6 +28,30 @@ const ServiceDashboard = ({ data, iconDataObj, isLoading }) => {
 
     }, [data])
 
+    const listForDetailsPage = useMemo(() => {
+        return data?.data?.data && iconDataObj.map((item, index) => {
+            return data?.data?.data?.[item.model]?.length > 0 &&
+                <div key={index} className='p-2 flex-auto bg-white border rounded-md px-3' onClick={() => { item?.url && navigate(item.url) }}>
+                    <div className='flex items-center justify-start gap-2'>
+                        {item.icon} <span className='font-bold text-xl'>{data?.data?.data?.[item.model].length}</span>
+                    </div>
+                    <p className="">{item.title}</p>
+                </div>
+        })
+    }, [data]);
+
+    const listForFacultyPage = useMemo(() => {
+        return data?.data?.data && iconDataObj.map((item, index) => {
+            return data?.data?.data?.[item.model]?.length > 0 && <div key={index} className='bg-blue-700 p-2 border border-blue-100 rounded-md px-3 hover:bg-blue-600 text-white' onClick={() => { item?.url && navigate(item.url) }}>
+                <div className='flex items-center justify-start gap-2'>
+                    {item.icon} <span className='font-bold text-xl'>{data?.data?.data?.[item.model].length}</span>
+                </div>
+                <p>{item.title}</p>
+            </div>
+        })
+    }, [data]);
+
+
     return (
         <div>
 
@@ -35,20 +59,15 @@ const ServiceDashboard = ({ data, iconDataObj, isLoading }) => {
             <div>
 
                 <div className='w-full'>
-                    <ServiceDashboardHeading title="1. Analytics" />
+                    {showHeading ? <ServiceDashboardHeading title="1. Analytics" /> : null}
+
                     {isLoading ? <UserLoading title="Getting the School Analytics" /> :
-                        isAnalytics ? <div className='flex items-center justify-center flex-wrap gap-4'>
-                            {
-                                data?.data?.data && iconDataObj.map((item, index) => {
-                                    return data?.data?.data?.[item.model]?.length > 0 && <div key={index} className='bg-blue-700 p-2 border border-blue-100 rounded-md px-3 hover:bg-blue-600 text-white' onClick={() => { item?.url && navigate(item.url) }}>
-                                        <div className='flex items-center justify-start gap-2'>
-                                            {item.icon} <span className='font-bold text-xl'>{data?.data?.data?.[item.model].length}</span>
-                                        </div>
-                                        <p>{item.title}</p>
-                                    </div>
-                                })
-                            }
-                        </div> : <EmptyBox />
+                        detailsPage ? isAnalytics ? <div className='flex items-center justify-between cursor-pointer flex-wrap gap-2'>
+                            {listForDetailsPage}
+                        </div> : <EmptyBox /> :
+                            isAnalytics ? <div className='flex items-center justify-center flex-wrap gap-4'>
+                                {listForFacultyPage}
+                            </div> : <EmptyBox />
                     }
                 </div>
 

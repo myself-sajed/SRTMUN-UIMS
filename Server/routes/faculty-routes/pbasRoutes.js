@@ -10,13 +10,13 @@ function casRoutes(app) {
     // multer configuration
     const multer = require('multer')
     const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const link = path.join(__dirname, `../../uploads/faculty-uploads/PBAS-uploads/`)
-        cb(null, link)
-    },
-    filename: (req, file, cb) => {
-        cb(null, `PBAS-TeachingActivity-${new Date().getTime()}-${file.originalname}`)
-    },
+        destination: (req, file, cb) => {
+            const link = path.join(__dirname, `../../uploads/faculty-uploads/PBAS-uploads/`)
+            cb(null, link)
+        },
+        filename: (req, file, cb) => {
+            cb(null, `PBAS-TeachingActivity-${new Date().getTime()}-${file.originalname}`)
+        },
     })
     const upload = multer({ storage: storage })
 
@@ -31,8 +31,8 @@ function casRoutes(app) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         console.log('Link : ', `http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
-        await page.goto(`http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`, 
-        {waitUntil: 'networkidle0'});
+        await page.goto(`http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`,
+            { waitUntil: 'networkidle0' });
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,
@@ -111,7 +111,6 @@ function casRoutes(app) {
     // for fetching cas data
     app.post("/getPBASData", (req, res) => {
         const { userId } = req.body;
-        console.log(userId)
         CASModel.findOne({ userId: userId }).populate("userId").exec().then((cas, err) => {
             if (err) {
                 console.log(err)
@@ -133,22 +132,22 @@ function casRoutes(app) {
 
 
     // for uploading teaching related activity files
-    const arrayOfFields = [{name: 'file-A', maxCount: 1}, {name: 'file-B', maxCount: 1}, 
-    {name: 'file-C', maxCount: 1}, {name: 'file-D', maxCount: 1}, {name: 'file-E', maxCount: 1}, 
-    {name: 'file-F', maxCount: 1}, {name: 'file-G', maxCount: 1}, {name : 'attendance', maxCount: 1},
-    {name : 'refereed', maxCount: 1},{name : 'impactFactor', maxCount: 1}, {name : 'stage1FDP', maxCount: 1},
-    {name : 'stage1MultiProof', maxCount: 1},{name : 'phdDegree', maxCount: 1},{name : 'stage2File1', maxCount: 1},{name : 'stage2File2', maxCount: 1},
-    {name : 'guideProof1', maxCount: 1},{name : 'guideProof2', maxCount: 1}, {name : 'guideProof', maxCount: 1},
-    {name : 'phdProof1', maxCount: 1},{name : 'phdProof2', maxCount: 1},{name : 'stage2File1', maxCount: 1},
-]
+    const arrayOfFields = [{ name: 'file-A', maxCount: 1 }, { name: 'file-B', maxCount: 1 },
+    { name: 'file-C', maxCount: 1 }, { name: 'file-D', maxCount: 1 }, { name: 'file-E', maxCount: 1 },
+    { name: 'file-F', maxCount: 1 }, { name: 'file-G', maxCount: 1 }, { name: 'attendance', maxCount: 1 },
+    { name: 'refereed', maxCount: 1 }, { name: 'impactFactor', maxCount: 1 }, { name: 'stage1FDP', maxCount: 1 },
+    { name: 'stage1MultiProof', maxCount: 1 }, { name: 'phdDegree', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 }, { name: 'stage2File2', maxCount: 1 },
+    { name: 'guideProof1', maxCount: 1 }, { name: 'guideProof2', maxCount: 1 }, { name: 'guideProof', maxCount: 1 },
+    { name: 'phdProof1', maxCount: 1 }, { name: 'phdProof2', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 },
+    ]
 
-    app.post("/api/faculty/PBAS-Report/saveTeachingActivityDocs", upload.fields(arrayOfFields), (req, res)=>{
-        res.send({ status: 'success', data : req.files})
+    app.post("/api/faculty/PBAS-Report/saveTeachingActivityDocs", upload.fields(arrayOfFields), (req, res) => {
+        res.send({ status: 'success', data: req.files })
     })
 
 
     // showing file to file viewer
-    app.get('/viewer/PBASFiles/showFile/:filename', (req, res)=>{
+    app.get('/viewer/PBASFiles/showFile/:filename', (req, res) => {
         const link = path.join(__dirname, `../../uploads/faculty-uploads/PBAS-uploads/${req.params.filename}`)
         res.sendFile(link);
     })

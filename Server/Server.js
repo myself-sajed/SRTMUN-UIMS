@@ -181,6 +181,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     alumni: `./uploads/director-uploads/${filename}`,
     news: `./uploads/news-uploads/${filename}`,
     event: `./uploads/event-uploads/${filename}`,
+    school: `./uploads/school-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
   }
 

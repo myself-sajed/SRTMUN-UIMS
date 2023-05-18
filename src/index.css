@@ -533,3 +533,8 @@ body {
 .ant-image-preview-img {
   display: inline;
 }
+
+.new__gradient {
+  background: rgb(131, 58, 180);
+  background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 0.5012861834186799) 0%, rgba(252, 176, 69, 0.49848506297050066) 100%);
+}

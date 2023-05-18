@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { fetchSingleEvent } from '../js/fetchEvents';
 import serverLinks from '../../../js/serverLinks';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 
 const images = [
     { src: '/assets/male.jpg', caption: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla, sapiente!' },
@@ -66,10 +66,16 @@ function Gallery() {
 
     return (
         <div className="mx-auto">
-            <GoBack pageTitle={data?.data?.data?.eventTitle} ><p>
-                <span className='text-muted'> Duration:</span> <span className="font-semibold">
-                    {data?.data?.data?.eventDuration}</span>
-            </p></GoBack>
+            <GoBack pageTitle={data?.data?.data?.eventTitle} >
+                <p className='flex items-start gap-2'>
+                    <span>
+                        <CalendarMonthRoundedIcon sx={{ fontSize: '32px', marginTop: '0px' }} />
+                    </span>
+                    <span className="font-semibold font-sm leading-4">
+                        <p>{data?.data?.data?.eventDuration}</p>
+                        <p className='text-xs text-muted font-normal'>Event Duration</p>
+                    </span>
+                </p></GoBack>
             <div className='mt-3'>
                 <p>{data?.data?.data?.eventSummary}</p>
             </div>
