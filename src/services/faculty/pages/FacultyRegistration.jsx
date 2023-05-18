@@ -18,6 +18,8 @@ import title from '../../../js/title';
 import CredInput from '../../../inputs/CredInput';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import checkPasswordStrength from '../../../js/passwordChecker';
+import ProfileCroper from '../../../components/ProfileCroper';
+import {SubImageResizer} from '../../../components/ProfileCroper';
 
 const FacultyRegistration = () => {
 
@@ -43,6 +45,7 @@ const FacultyRegistration = () => {
     const [otp, setOtp] = useState({ serverOTP: null, clientOTP: null })
     const [serverUsername, setServerUsername] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [open, setOpen] = useState(false)
 
 
     // send otp
@@ -110,8 +113,7 @@ const FacultyRegistration = () => {
 
     // Handle Registration Form
     function handleRegistration(e) {
-        e.preventDefault()
-
+        e.preventDefault();
         setVerifyLoading(true)
 
         // upload file
@@ -163,8 +165,10 @@ const FacultyRegistration = () => {
     function handleAvatarChange(e) {
         setAvatar(null)
         const file = e.target.files[0];
-        if (e.target.files[0].size >= 999900) {
-            toast.error('Photo size should be less than 1 MB')
+        setOpen(true)
+        if (e.target.files[0].size >= 10485760) {
+            toast.error('Photo size should be less than 10 MB')
+            setOpen(false)
             return
         }
         const reader = new FileReader();
@@ -244,7 +248,7 @@ const FacultyRegistration = () => {
 
                                 <div className="col-md-2">
                                     <label htmlFor="validationCustom04" className="form-label" >Gender</label>
-                                    <GenderSelect id="selectGender" state={gender} setState={setGender} />
+                                    <GenderSelect className="col=2" id="selectGender" state={gender} setState={setGender} />
 
 
                                 </div>
@@ -282,8 +286,10 @@ const FacultyRegistration = () => {
 
                                             }
                                             <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-200 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Required)*</p>
-                                            <div className='text-xs text-muted text-center my-2'>Photo size should be less than 1MB</div>
+                                            <div className='text-xs text-muted text-center my-2'>Photo size should be less than 10MB</div>
                                         </div>
+
+                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile ={setFile} setAvatar={setAvatar} />
 
 
                                         <div className="w-full flex items-center justify-center ">
@@ -327,9 +333,7 @@ const FacultyRegistration = () => {
                                                                         <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Sending OTP...
                                                                     </button>
-
                                                                     :
-
                                                                     <button className="flex items-center justify-start mt-3 gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" type="submit" >
                                                                         Send OTP
                                                                     </button>

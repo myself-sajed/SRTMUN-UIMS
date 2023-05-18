@@ -25,7 +25,7 @@ import { Button, Dropdown } from 'antd'
 import Loading from '../../admin/components/Loading'
 import { setAuditYear } from '../../../redux/slices/AuditSlice'
 import { ShowLocalDashboard } from '../../faculty/pages/Home'
-import { setDirectorActive } from '../../../redux/slices/DirectorActiveSlice'
+import { setDirectorActive, setSsmActive } from '../../../redux/slices/DirectorActiveSlice'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -106,12 +106,12 @@ const Home = () => {
         },
         Student: {
             onClickFunc: () => {
-                navigate(`/dashboard/${user.department}/students`);
+                navigate(siteLinks.ssm.link); dispatch(setSsmActive('activeStudent'));
             }
         },
         Alumni: {
             onClickFunc: () => {
-                navigate(`/dashboard/${user.department}/alumni`);
+                navigate(siteLinks.ssm.link); dispatch(setSsmActive('alumni'));
             }
         },
         QualifiedExams: {
@@ -121,7 +121,7 @@ const Home = () => {
         },
         Placement: {
             onClickFunc: () => {
-                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('Placement'));
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('Placements'));
             }
         },
         Award: {
@@ -131,12 +131,12 @@ const Home = () => {
         },
         AlumniContribution: {
             onClickFunc: () => {
-                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('AlumniContribution'));
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('alumniContribution'));
             }
         },
         TrainingProgramsOrganized: {
             onClickFunc: () => {
-                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('TrainingProgramsOrganized'));
+                navigate(siteLinks.sdm.link); dispatch(setDirectorActive('TrainingProgramsConferencesWorkshopsOrganized'));
             }
         },
         ConferencesSemiWorkshopOrganized: {
