@@ -299,7 +299,7 @@ const StudentRegistration = () => {
 
                                                     <div className="col-md-10 mx-auto mt-3">
 
-                                                     <div className="col-12 p-1" >
+                                                     {/* <div className="col-12 p-1" >
                                                         <label htmlFor="eligibility" className='form-label' >PRN/ELIGIBILITY Number</label>
                                                         <input type="text" className='form-control' onChange={(e) => {
                                                             setValues((pri) => {
@@ -309,7 +309,7 @@ const StudentRegistration = () => {
                                                                 }
                                                             })
                                                         }} pattern="^[A-Z0-9]{4}[A-Z0-9/()]{0,8}[\d/]{11,13}" minlength="9" maxlength="23" required />
-                                                    </div> 
+                                                    </div>  */}
 
                                                         <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
 

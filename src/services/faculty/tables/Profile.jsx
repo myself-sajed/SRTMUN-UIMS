@@ -18,6 +18,8 @@ import DesignationSelect from '../../../inputs/DesignationSelect';
 import DeptSelect from '../../../inputs/DeptSelect';
 import siteLinks from '../../../components/siteLinks';
 import serverLinks from '../../../js/serverLinks';
+import handleAvatarChange from '../../../js/handleAvatar';
+import ProfileCroper from '../../../components/ProfileCroper';
 
 
 const Profile = () => {
@@ -44,6 +46,9 @@ const Profile = () => {
     const [email, setEmail] = useState('')
     const [racDate, setRacDate] = useState('')
     const [cast, setCast] = useState('')
+    const [file, setFile] = useState(null)
+    const [avatar, setAvatar] = useState(null)
+    const [openCroper, setOpenCroper] = useState(false)
 
     useAuth(false)
 
@@ -91,8 +96,25 @@ const Profile = () => {
     // handle edit button
     function handleEdit(e) {
         e.preventDefault()
-        const editData = { salutation, name, designation, department, id: user._id, promotionDate: promotion, gradePay, address, mobile, email, dob, specialization, racDate, cast }
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/editProfile`, { editData }).then(function (response) {
+        
+        // const editData = { salutation, name, designation, department, id: user._id, promotionDate: promotion, gradePay, address, mobile, email, dob, specialization, racDate, cast }
+        let formData = new FormData()
+        formData.append('salutation', salutation)
+        formData.append('name', name)
+        formData.append('designation', designation)
+        formData.append('department', department)
+        formData.append('promotionDate', promotion)
+        formData.append('gradePay', gradePay)
+        formData.append('address', address)
+        formData.append('mobile', mobile)
+        formData.append('email', email)
+        formData.append('dob', dob)
+        formData.append('specialization', specialization)
+        formData.append('racDate', racDate)
+        formData.append('cast', cast)
+        formData.append('file', file)
+        formData.append('userId', user._id)
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/editProfile`, formData).then(function (response) {
             if (response.data.status === 'edited') {
                 setUserData(new Date().getTime())
                 toast.success('Profile Updated Successfully')
@@ -263,6 +285,21 @@ const Profile = () => {
                         <p className='text-2xl font-bold my-3'>Edit Details</p>
 
                         <form className="row g-3 needs-validation mb-3" onSubmit={handleEdit}>
+                            <div className='flex-items-center justify-center flex-col w-full mb-4'>
+                                {
+                                    file ?
+                                        <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
+                                        <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                                }
+                                <div className='flex items-center justify-center gap-3'>
+                                    <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
+                                    <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => { handleAvatarChange(e, setAvatar, setFile, setOpenCroper) }} />
+                                    {
+                                        file && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setFile(null); }}>Reset Picture</button>
+                                    }
+                                </div>
+                            </div>
+                            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
                             <div className="col-md-4">
                                 <label htmlhtmlFor="validationCustom04" className="form-label">Salutation </label>
                                 <select className="form-select" id="validationCustom04" required
@@ -275,7 +312,6 @@ const Profile = () => {
                                     <option value="Mr.">Mr.</option>
                                     <option value="Mrs.">Mrs.</option>
                                 </select>
-
                             </div>
                             <div className="col-md-8">
                                 <label htmlFor="validationCustom01" className="form-label">Full Name</label>

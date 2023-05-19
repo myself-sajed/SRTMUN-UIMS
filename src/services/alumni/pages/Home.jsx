@@ -27,6 +27,7 @@ import Year from '../../../inputs/Year'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import FileViewer from '../../../components/FileViewer'
 import countries from '../../director/components/FormComponents/country'
+import ProfileCroper from '../../../components/ProfileCroper'
 
 const Home = () => {
 
@@ -42,6 +43,7 @@ const Home = () => {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
+    const [openCroper, setOpenCroper] = useState(false)
 
     const [alumniProof, setAlumniProoof] = useState(null)
 
@@ -225,12 +227,15 @@ const Home = () => {
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
-                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => { handleAvatarChange(e, setAvatar, setFile) }} />
+                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => { handleAvatarChange(e, setAvatar, setFile, setOpenCroper) }} />
                                 {
                                     file && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setFile(null); }}>Reset Picture</button>
                                 }
                             </div>
                         </div>
+                        
+                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
+
                         <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
                         <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
                         <Text className='col-md-6 col-lg-4' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
