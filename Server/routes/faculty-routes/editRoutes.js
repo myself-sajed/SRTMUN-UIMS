@@ -69,24 +69,13 @@ function editRoutes(app) {
 
     // edit personal profile Configuration
     app.post("/api/editProfile", upload.single('file'), (req, res) => {
-        const { editData } = req.body;
+        const editData = JSON.parse(JSON.stringify(req.body));
+        const {salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, userId } = editData;
        if(req.file){
         User.findOneAndUpdate(
-            { _id: editData.id },
+            { _id: userId },
             {
-                salutation: editData.salutation,
-                name: editData.name,
-                designation: editData.designation,
-                department: editData.department,
-                promotionDate: editData.promotionDate,
-                gradePay: editData.gradePay,
-                specialization: editData.specialization,
-                address: editData.address,
-                mobile: editData.mobile,
-                email: editData.email,
-                dob: editData.dob,
-                racDate: editData.racDate,
-                cast: editData.cast,
+                salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast,
                 photoURL: req.file.filename,
             }
             ).then(function (user) {
@@ -97,21 +86,9 @@ function editRoutes(app) {
             });
        }else{
         User.findOneAndUpdate(
-            { _id: editData.id },
+            { _id: userId },
             {
-                salutation: editData.salutation,
-                name: editData.name,
-                designation: editData.designation,
-                department: editData.department,
-                promotionDate: editData.promotionDate,
-                gradePay: editData.gradePay,
-                specialization: editData.specialization,
-                address: editData.address,
-                mobile: editData.mobile,
-                email: editData.email,
-                dob: editData.dob,
-                racDate: editData.racDate,
-                cast: editData.cast
+                salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast,
             }
         ).then(function (user) {
                 res.send({ status: "edited", user: user });
