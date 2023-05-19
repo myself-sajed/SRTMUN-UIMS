@@ -22,6 +22,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import handleAvatarChange from '../../../js/handleAvatar'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import countries from '../../director/components/FormComponents/country'
+import ProfileCroper from '../../../components/ProfileCroper'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -51,6 +52,7 @@ const StudentHome = () => {
     const [guides, setGuides] = useState([])
     const [guidesData, setGuidesData] = useState([])
     const [programDuration, setProgramDuration] = useState(null)
+    const [openCroper, setOpenCroper] = useState(false)
     const [values, setValues] = useState(initialstate);
     const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn } = values
 
@@ -242,14 +244,15 @@ const StudentHome = () => {
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
                                 <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
-
-                                    handleAvatarChange(e, setAvatar, setUploadProof)
+                                    handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
                                 }} />
                                 {
                                     uploadProof && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
                                 }
                             </div>
                         </div>
+                        
+                       
 
                         <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
                         <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
@@ -283,6 +286,7 @@ const StudentHome = () => {
                     </div>
                 }
             </DialogBox>
+            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile ={setUploadProof} setAvatar={setAvatar} />
             <Footer />
         </div>
     )

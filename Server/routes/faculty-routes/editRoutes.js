@@ -68,8 +68,34 @@ function editRoutes(app) {
 
 
     // edit personal profile Configuration
-    app.post("/api/editProfile", (req, res) => {
+    app.post("/api/editProfile", upload.single('file'), (req, res) => {
         const { editData } = req.body;
+       if(req.file){
+        User.findOneAndUpdate(
+            { _id: editData.id },
+            {
+                salutation: editData.salutation,
+                name: editData.name,
+                designation: editData.designation,
+                department: editData.department,
+                promotionDate: editData.promotionDate,
+                gradePay: editData.gradePay,
+                specialization: editData.specialization,
+                address: editData.address,
+                mobile: editData.mobile,
+                email: editData.email,
+                dob: editData.dob,
+                racDate: editData.racDate,
+                cast: editData.cast,
+                photoURL: req.file.filename,
+            }
+            ).then(function (user) {
+                res.send({ status: "edited", user: user });
+            })
+            .catch(function (err) {
+                res.send({ status: "error" });
+            });
+       }else{
         User.findOneAndUpdate(
             { _id: editData.id },
             {
@@ -87,13 +113,13 @@ function editRoutes(app) {
                 racDate: editData.racDate,
                 cast: editData.cast
             }
-        )
-            .then(function (user) {
+        ).then(function (user) {
                 res.send({ status: "edited", user: user });
             })
             .catch(function (err) {
                 res.send({ status: "error" });
             });
+       }
     });
 
     // Qualification
@@ -155,8 +181,6 @@ function editRoutes(app) {
         )
 
     })
-
-
 
     // experience
     app.post('/api/edit/Experience', (req, res) => {

@@ -26,6 +26,7 @@ import Loading from '../../admin/components/Loading'
 import { setAuditYear } from '../../../redux/slices/AuditSlice'
 import { ShowLocalDashboard } from '../../faculty/pages/Home'
 import { setDirectorActive, setSsmActive } from '../../../redux/slices/DirectorActiveSlice'
+import ProfileCroper from '../../../components/ProfileCroper'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -46,6 +47,7 @@ const Home = () => {
     const [serverAuditData, setServerAuditData] = useState(null)
     const [auditError, setAuditError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [openCroper, setOpenCroper] = useState(false)
 
 
     // handle edit button
@@ -182,12 +184,13 @@ const Home = () => {
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
-                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => { handleAvatarChange(e, setAvatar, setFile) }} />
+                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => { handleAvatarChange(e, setAvatar, setFile, setOpenCroper) }} />
                                 {
                                     file && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setFile(null); }}>Reset Picture</button>
                                 }
                             </div>
                         </div>
+                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
                         <div className='mt-4'>
                             <form className="row g-3 needs-validation mb-3" onSubmit={handleEdit}>
                                 <div className="col-md-4">

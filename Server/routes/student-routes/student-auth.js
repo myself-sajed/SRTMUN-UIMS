@@ -82,8 +82,9 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
         console.log(req.file.filename)
 
         const year = programEnroledOn.slice(0,4);
-        
+        console.log(year);
         let dataId = await StudentIdCount.findOne({name : year})
+        console.log(dataId);
         let NextRoll= dataId.idObject[SchoolFourCharacter[schoolName]]+1;
 
         // return res.StudentIdCount
