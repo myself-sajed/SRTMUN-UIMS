@@ -5,8 +5,6 @@ function auth(app, jwt) {
 
         const { username } = req.body
 
-        console.log(username, req.body.password)
-
         PROUser.findOne({ username: username })
             .then((user) => {
                 if (user) {

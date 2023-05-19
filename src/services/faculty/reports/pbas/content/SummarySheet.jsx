@@ -260,39 +260,12 @@ const ResearchScore = ({ data }) => {
                 </table>
             </div>
 
-            {/* // Grand total */}
-            {/* // GRAND TOTAL */}
-            <div className='border-2 border-blue-700 rounded-lg p-3 text-center'>
-                <div className='flex items-center justify-center gap-4'>
-                    <p>Total Score  :
-                        <span className='ml-4 text-xl font-bold text-blue-700'>{
-                            totalScore && totalScore.toFixed(2)
-                        }</span>
-                    </p>
-                    <div className='text-muted'>|</div>
-                    <p>Total Capped Score  :
-                        <span className='ml-4 text-xl font-bold text-blue-700'>{
-                            totalCappedScore && totalCappedScore.toFixed(2)
-                        }</span>
-                    </p>
-                </div>
-                <hr className='my-3' />
-                <p className='text-lg'>Grand Total Score  :
-                    <span className='ml-4 text-2xl font-bold text-blue-700'>{
-                        totalCappedScore && totalCappedScore.toFixed(2)
-                    }</span>
-                </p>
-            </div>
+            <p>Total Score  :
+                <span className='ml-4 text-xl font-bold text-blue-700'>{
+                    totalScore && totalScore.toFixed(2)
+                }</span>
+            </p>
 
-            <div className='border-2 text-lg border-blue-700 rounded-lg p-3 text-center mt-3'>
-                <p>The above Grand Total Score is from <span className='font-bold'>{count}</span> out of <span className='font-bold'>6</span> Categories.</p>
-
-
-                {count < 3 &&
-                    <p className='mt-2 bg-red-50 font-bold rounded-xl p-2 text-red-900 text-lg'>{
-                        "Therefore you are not eligible for PBAS Promotion."}</p>
-                }
-            </div>
 
         </div>
     )

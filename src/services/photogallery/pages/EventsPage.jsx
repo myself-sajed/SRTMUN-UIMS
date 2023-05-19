@@ -9,11 +9,6 @@ import moment from 'moment'
 const EventsPage = () => {
     let params = { filter: {} }
     const { data, isLoading, isError, error, refetch } = useQuery([params, params.filter], () => fetchEvents(params))
-
-    useEffect(() => {
-        console.log('Data :', data)
-    }, [data])
-
     const navigate = useNavigate()
 
     return <div className="w-full">

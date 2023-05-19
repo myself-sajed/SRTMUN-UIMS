@@ -25,7 +25,6 @@ const CASReport = () => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/getPBASData`
         Axios.post(URL, { userId })
             .then((res) => {
-                console.log(res)
                 if (res.data.status === 'success') {
                     setCasData(res.data.data)
                 }
@@ -52,7 +51,6 @@ const CASReport = () => {
                 oldCasArray.forEach(item => {
                     if (item.casYear === year) {
                         newCasArray.push(item)
-                        console.log('CAS Item :', item)
                     }
                 }
                 )
@@ -83,11 +81,6 @@ const CASReport = () => {
 
     }, [fetchYears])
 
-    useEffect(() => {
-        if (casData) {
-            console.log('CAS Data :', academicData)
-        }
-    }, [academicData])
 
 
 
@@ -97,9 +90,9 @@ const CASReport = () => {
                 <>
                     <Header user={casData.userId} title="Performance Based Appraisal System (PBAS)"
                         subTitle={`PBAS Report of year ${casArray?.map((cas) => cas.casYear).join(', ')}`}
-                        academicData={academicData} userType="faculty" />
+                        directorData={academicData} userType="faculty" />
                     <BasicIntro academicData={academicData} />
-                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" />
+                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" />
                     <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" />
                 </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
             }
