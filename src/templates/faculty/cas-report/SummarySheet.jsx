@@ -485,7 +485,7 @@ const ResearchScore = ({ casArray, title }) => {
             </div >
 
             {/* TOTAL SCORE */}
-            <div>
+            <div className='relative'>
                 {/* // Heading */}
                 <p className='text-center bg-[#00987936] text-[#009879] mt-28 mb-2 p-2 '>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
 
@@ -495,7 +495,9 @@ const ResearchScore = ({ casArray, title }) => {
                         <tr>
                             <th scope="col">Year(s)</th>
                             <th scope="col">Total Score</th>
-                            <th scope="col">Total Capped Score</th>
+                            {
+                                title === "CAS" && <th scope="col">Total Capped Score</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -506,7 +508,9 @@ const ResearchScore = ({ casArray, title }) => {
                                 <tr>
                                     <th scope="row">{item.casYear}</th>
                                     <td>{item.totalScore}</td>
-                                    <td>{item.totalCappedScore}</td>
+                                    {
+                                        title === "CAS" && <td>{item.totalCappedScore}</td>
+                                    }
                                 </tr>
 
                             )
@@ -517,23 +521,27 @@ const ResearchScore = ({ casArray, title }) => {
 
                 <div className="my-2 flex items-center justify-center gap-4">
                     <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum}</span></div>
-                    <span className='text-3xl text-muted'>|</span>
-                    <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum}</span></div>
-                </div>
-            </div>
 
-            <div className='flex items-center justify-around mt-72'>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the Candidate</p>
+
+                    {
+                        title === "CAS" && <> <span className='text-3xl text-muted'>|</span>
+                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum}</span></div></>
+                    }
                 </div>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the Director</p>
-                </div>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the IQAC Director</p>
+
+                <div className='flex items-center justify-around absolute bottom-0'>
+                    <div className='text-center mb-5'>
+                        <p className='mb-5'>Signature</p>
+                        <p>Name of the Candidate</p>
+                    </div>
+                    <div className='text-center mb-5'>
+                        <p className='mb-5'>Signature</p>
+                        <p>Name of the Director</p>
+                    </div>
+                    <div className='text-center mb-5'>
+                        <p className='mb-5'>Signature</p>
+                        <p>Name of the IQAC Director</p>
+                    </div>
                 </div>
             </div>
 

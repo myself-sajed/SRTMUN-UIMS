@@ -31,7 +31,7 @@ function casRoutes(app) {
         console.log('File name generated :', fileName);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        const link = `https://srtmun-uims.org/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`
+        const link = `http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`
         console.log('Link : ', link)
         await page.goto(link,
             { waitUntil: 'networkidle0' });
@@ -156,8 +156,6 @@ function casRoutes(app) {
     app.post("/api/faculty/PBAS-Report/saveTeachingActivityDocsSingle", upload.single('activity-file'), (req, res) => {
         try {
             const data = JSON.parse(JSON.stringify(req.body));
-
-            console.log('Data :', data)
             res.send({ status: 'success', data: req.file })
         } catch (error) {
             console.log('Error')

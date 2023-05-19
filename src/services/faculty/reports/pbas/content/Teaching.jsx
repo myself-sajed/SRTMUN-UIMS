@@ -346,33 +346,19 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
 const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading }) => {
 
 
-    useEffect(() => {
-        console.log('teachingData :', teachingData)
-    }, [teachingData])
-
-
-
     const submitActivityFiles = (e, fileTagName) => {
         e.preventDefault();
         setIsLoading(true)
 
         const formData = new FormData();
-        console.log('teachingData :', teachingData.uploadInputs?.[`file-${fileTagName}`])
-
-
 
         formData.append('activity-file', teachingData.uploadInputs?.[`file-${fileTagName}`]);
         formData.append('fileTagName', fileTagName)
-
-        console.log(...formData)
-
-
 
         const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/PBAS-Report/saveTeachingActivityDocsSingle`
         Axios.post(url, formData)
             .then((res) => {
                 if (res.data.status === 'success') {
-                    console.log(res.data)
                     setTeachingData({
                         ...teachingData, uploadedFiles: {
                             ...teachingData.uploadedFiles,
@@ -415,7 +401,6 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading }) =>
     const deleteFile = (fileName, fileId) => {
 
         const url = `${process.env.REACT_APP_MAIN_URL}/api/deleteFile`
-        console.log('Filename :', fileName)
         Axios.post(url, { fileName, path: 'PBAS' })
             .then((res) => {
                 if (res.data.status === 'deleted') {
