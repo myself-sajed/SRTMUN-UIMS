@@ -41,6 +41,9 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
                         { field: 'Select', keyName: "degreeName", label: "Degree Name", options: ['Ph.D.', 'M.Phil.', 'PG Dissertation'] },
                         { field: 'Select', keyName: "awardSubmit", label: "Awarded / Submitted", options: ['Awarded', 'Submitted'] },
                         { field: 'Text', keyName: "yearOfScholar", label: "Year of Scholar Registration" },
+                        { field: 'Text', keyName: "rac", label: "Date of Registration (RAC)" },
+                        { field: 'Text', keyName: "gender", label: "Gender" },
+                        { field: 'Text', keyName: "category", label: "Category" },
                         { field: 'Text', keyName: "phdAwardYear", label: "Year of Award" },
                         { field: 'Year', keyName: "year", label: "Academic Year", },
                         { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}

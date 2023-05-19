@@ -138,7 +138,7 @@ const CASActivities = [
 const Table = ({ academicData, casArray }) => {
     return <>
         {/* // HEADING */}
-        <p className="academic-start"></p>
+        {/* <p className="academic-start"></p> */}
         <p className='text-center bg-[#00987936] text-[#009879] p-2'>
             <span className="font-bold">Academic & Research Score</span></p>
 
