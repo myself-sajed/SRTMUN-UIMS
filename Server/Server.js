@@ -11,7 +11,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const PORT = 5000;
+const PORT = 4000;
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -139,8 +139,6 @@ async function deleteFile(fileName, desiredPath, callback) {
 
 
 app.get("/downloadPdf/:fileName", (req, res) => {
-
-
   const fileName = req.params.fileName
 
   const link = path.join(__dirname, `../pdfs/${fileName}`);
