@@ -485,7 +485,7 @@ const ResearchScore = ({ casArray, title }) => {
             </div >
 
             {/* TOTAL SCORE */}
-            <div className='relative'>
+            <div>
                 {/* // Heading */}
                 <p className='text-center bg-[#00987936] text-[#009879] mt-28 mb-2 p-2 '>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
 
@@ -528,20 +528,20 @@ const ResearchScore = ({ casArray, title }) => {
                             <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum}</span></div></>
                     }
                 </div>
+            </div>
 
-                <div className='flex items-center justify-around absolute bottom-0'>
-                    <div className='text-center mb-5'>
-                        <p className='mb-5'>Signature</p>
-                        <p>Name of the Candidate</p>
-                    </div>
-                    <div className='text-center mb-5'>
-                        <p className='mb-5'>Signature</p>
-                        <p>Name of the Director</p>
-                    </div>
-                    <div className='text-center mb-5'>
-                        <p className='mb-5'>Signature</p>
-                        <p>Name of the IQAC Director</p>
-                    </div>
+            <div className='flex items-center justify-around mt-72'>
+                <div className='text-center mb-5'>
+                    <p className='mb-5'>Signature</p>
+                    <p>Name of the Candidate</p>
+                </div>
+                <div className='text-center mb-5'>
+                    <p className='mb-5'>Signature</p>
+                    <p>Name of the Director</p>
+                </div>
+                <div className='text-center mb-5'>
+                    <p className='mb-5'>Signature</p>
+                    <p>Name of the IQAC Director</p>
                 </div>
             </div>
 
