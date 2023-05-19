@@ -4,14 +4,14 @@ import { Remark } from '../../../services/faculty/reports/cas/content/Teaching';
 import { ViewFile } from './Tables';
 
 
-const SummarySheet = ({ casArray, title = "CAS" }) => {
+const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL" }) => {
     return (
         <div className='academic-start'>
             <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">{title} Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
 
             <div>
                 {/* Table 1 */}
-                <Teaching casArray={casArray} />
+                <Teaching casArray={casArray} showFileURL={showFileURL} />
 
                 {/* Table 2 */}
                 <ResearchScore casArray={casArray} title={title} />
@@ -28,7 +28,7 @@ const SummarySheet = ({ casArray, title = "CAS" }) => {
 export default SummarySheet
 
 
-const Teaching = ({ casArray }) => {
+const Teaching = ({ casArray, showFileURL }) => {
 
     return (
         <div>
@@ -85,7 +85,7 @@ const Teaching = ({ casArray }) => {
                                         <Remark title={item?.teachingData?.teachingRemark} color={item?.teachingData?.teachingRemarkColor} />
                                         <div className='my-4'>
                                             {
-                                                item?.teachingData?.uploadedAttendance ? <ViewFile fileName={item?.teachingData?.uploadedAttendance?.file[0].filename} attendance={true} type="casDirURL" /> : <p className='text-red-600'>Director Certificate N/A</p>
+                                                item?.teachingData?.uploadedAttendance ? <ViewFile fileName={item?.teachingData?.uploadedAttendance?.file[0]?.filename} attendance={true} type={showFileURL} /> : <p className='text-red-600'>Director Certificate N/A</p>
                                             }
                                         </div>
 
@@ -112,7 +112,7 @@ const Teaching = ({ casArray }) => {
                                                     <b> {checkBoxId} </b>
                                                     <div>
                                                         {
-                                                            item?.teachingData?.uploadedFiles?.[`file-${checkBoxId}`]?.[0].filename ? <ViewFile fileName={item?.teachingData?.uploadedFiles?.[`file-${checkBoxId}`][0].filename} type="casDirURL" small={true} /> : <p className='text-red-600'>Proof N/A</p>
+                                                            item?.teachingData?.uploadedFiles?.[`file-${checkBoxId}`]?.filename ? <ViewFile fileName={item?.teachingData?.uploadedFiles?.[`file-${checkBoxId}`]?.filename} type={showFileURL} small={true} /> : <p className='text-red-600'>Proof N/A</p>
                                                         }
 
                                                     </div>
@@ -477,7 +477,7 @@ const ResearchScore = ({ casArray, title }) => {
                         < ResearchTableRow diff={true} casArray={casArray} color={true} bold={true} td1={7} td2='Year-wise Total Score'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.totalScore}</div> </td>);
+                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.totalScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
                     </tbody>
@@ -507,9 +507,9 @@ const ResearchScore = ({ casArray, title }) => {
                             return (
                                 <tr>
                                     <th scope="row">{item.casYear}</th>
-                                    <td>{item.totalScore}</td>
+                                    <td>{item.totalScore.toFixed(2)}</td>
                                     {
-                                        title === "CAS" && <td>{item.totalCappedScore}</td>
+                                        title === "CAS" && <td>{item.totalCappedScore.toFixed(2)}</td>
                                     }
                                 </tr>
 
@@ -520,12 +520,12 @@ const ResearchScore = ({ casArray, title }) => {
                 </table>
 
                 <div className="my-2 flex items-center justify-center gap-4">
-                    <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum}</span></div>
+                    <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum.toFixed(2)}</span></div>
 
 
                     {
                         title === "CAS" && <> <span className='text-3xl text-muted'>|</span>
-                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum}</span></div></>
+                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum.toFixed(2)}</span></div></>
                     }
                 </div>
             </div>
