@@ -3,6 +3,7 @@ import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
 import { Alert, CircularProgress } from '@mui/material';
 import { generateCASReport } from '../PBASServices';
 import { useNavigate } from 'react-router-dom';
+import ShowModal from '../../../../../components/ShowModal';
 
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
     const [selectedYear, setSelectedYear] = useState([])
@@ -10,13 +11,13 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
         return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
     })
     const navigate = useNavigate()
+    const [forPrintOut, setForPrintOut] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
-    useEffect(() => {
-        console.log('selectedYear : ', selectedYear)
-    }, [selectedYear])
-
-
-
+    const handleGeneration = () => {
+        setReportLoading(true);
+        generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+    }
 
     return (
         <div>
@@ -33,7 +34,22 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setReportLoading(true); generateCASReport(casData, userData, selectedYear, setReportLoading) }}>
+                            <ShowModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked onChange={(e) => { setForPrintOut(false) }} />
+                                    <label class="form-check-label" htmlFor="flexRadioDefault1">
+                                        Standard Report
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={(e) => { setForPrintOut(true) }} />
+                                    <label class="form-check-label" htmlFor="flexRadioDefault2">
+                                        Printable Report (Specially designed for printing purposes)
+                                    </label>
+                                </div>
+                            </ShowModal>
+
+                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setIsModalOpen(true) }}>
                                 <EngineeringRoundedIcon /> Generate PBAS Report
                             </button>}
                         </div>

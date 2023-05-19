@@ -54,7 +54,7 @@ const dashboardObj = {
     ]
 }
 
-const Header = ({ user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
+const Header = ({ forPrintOut, user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
 
 
 
@@ -62,7 +62,7 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
     return (
         <div className='font-sans mx-auto mt-16'>
 
-            <div className='text-center bg-[#009879] text-white p-2 mt-3 rounded-md'>
+            <div className={`text-center ${forPrintOut === 'false' ? "bg-[#009879] text-white" : 'border'} p-2 mt-3 rounded-md`}>
                 <p className='lg:text-2xl text-base'><strong>{title}</strong></p>
                 <p className='text-sm mt-2'>{subTitle}</p>
             </div>
@@ -70,7 +70,7 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
             <div className='mt-12'>
 
                 <div className='md:flex-row items-start justify-around gap-4 flex-col flex'>
-                    <div className='md:w-[80%] w-full bg-green-50 p-2 border border-green-100 rounded-md hover:bg-green-100 '>
+                    <div className={`md:w-[80%] w-full ${forPrintOut === 'false' && "bg-green-50"} p-2 border border-green-100 rounded-md hover:bg-green-100`}>
 
                         {
                             otherOptions ? otherOptions.Photo ? <img src={serverLinks.showFile(user?.photoURL, userType)} className="w-32 h-32 object-cover rounded-full mx-auto border-2 p-1 border-[#009879]" alt={`${user.salutation} ${user.name}`} draggable={false} /> : null : <img src={serverLinks.showFile(user?.photoURL, userType)} className="w-32 h-32 object-cover rounded-full mx-auto border-2 p-1 border-[#009879]" alt={`${user.salutation} ${user.name}`} draggable={false} />
@@ -89,7 +89,7 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
 
                     <div>
                         <ShowDashboard directorData={directorData && directorData}
-                            dashboardObj={dashboardObj[userType]} type={type} academicYear={academicYear} user={user} />
+                            dashboardObj={dashboardObj[userType]} type={type} academicYear={academicYear} user={user} bgColor={forPrintOut === 'true' ? "white" : 'green'} />
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
                         <div className="my-5 mx-auto">
                             <div className="bg-white border overflow-hidden sm:rounded-lg">
 
-                                <div className="px-4 py-2 sm:px-6 bg-[#009879]">
+                                <div className={`px-4 py-2 sm:px-6 ${forPrintOut === 'false' && "bg-[#009879]"}`}>
                                     <h3 className="sm:text-lg text-base leading-6 font-medium text-white">Applicant Information</h3>
                                     <p className="max-w-2xl text-sm text-white">Personal details and application.</p>
                                 </div>
@@ -122,9 +122,9 @@ const Header = ({ user, title, subTitle, directorData, otherOptions = false, use
                         </div> : null : <div className="my-5 mx-auto">
                         <div className="bg-white border overflow-hidden sm:rounded-lg">
 
-                            <div className="px-4 py-2 sm:px-6 bg-[#009879]">
-                                <h3 className="sm:text-lg text-base leading-6 font-medium text-white">Applicant Information</h3>
-                                <p className="max-w-2xl text-sm text-white">Personal details and application.</p>
+                            <div className={`px-4 py-2 sm:px-6 ${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
+                                <h3 className="sm:text-lg text-base leading-6 font-medium">Applicant Information</h3>
+                                <p className="max-w-2xl text-sm">Personal details and application.</p>
                             </div>
 
                             <div className="border-t border-gray-200 sm:flex items-start justify-between flex-wrap">

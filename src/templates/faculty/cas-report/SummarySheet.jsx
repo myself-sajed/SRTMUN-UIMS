@@ -4,17 +4,17 @@ import { Remark } from '../../../services/faculty/reports/cas/content/Teaching';
 import { ViewFile } from './Tables';
 
 
-const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL" }) => {
+const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL", forPrintOut }) => {
     return (
         <div className='academic-start'>
             <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">{title} Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
 
             <div>
                 {/* Table 1 */}
-                <Teaching casArray={casArray} showFileURL={showFileURL} />
+                <Teaching casArray={casArray} showFileURL={showFileURL} forPrintOut={forPrintOut} />
 
                 {/* Table 2 */}
-                <ResearchScore casArray={casArray} title={title} />
+                <ResearchScore casArray={casArray} title={title} forPrintOut={forPrintOut} />
 
 
             </div>
@@ -28,17 +28,17 @@ const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL" }) =>
 export default SummarySheet
 
 
-const Teaching = ({ casArray, showFileURL }) => {
+const Teaching = ({ casArray, showFileURL, forPrintOut }) => {
 
     return (
         <div>
 
             {/* // HEADING */}
-            <p className='text-center bg-[#00987936] text-[#009879] my-2 p-2'>Table 1 : <span className="font-bold">Teaching and Teaching Related Activities</span></p>
+            <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} my-2 p-2`}>Table 1 : <span className="font-bold">Teaching and Teaching Related Activities</span></p>
 
             {/* // Activity Reference Sheet */}
             <div className="p-2 border-2 rounded-md my-3">
-                <h5 className="card-title bg-[#009879] font-bold p-2 rounded-md text-white" >Student / Research related activities : </h5>
+                <h5 className={`card-title ${forPrintOut === 'false' && "bg-[#009879] text-white"} font-bold p-2 rounded-md`} >Student / Research related activities : </h5>
                 <hr />
                 <p className="card-text w-[70%] mt-3">
                     <strong>[A]</strong> Administrative responsibilities such as Head / Chairperson / Dean / Director /
@@ -65,8 +65,8 @@ const Teaching = ({ casArray, showFileURL }) => {
 
             {/* // TABLE */}
             <div>
-                <table className="table mx-auto mt-3 table-bordered text-sm md:text-base">
-                    <thead className='bg-[#009879] text-white'>
+                <table className={`table mx-auto mt-3 table-bordered text-sm md:text-base ${forPrintOut === 'true' && "border-dark"}`}>
+                    <thead className={`${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
                         <tr>
                             <th scope="col" className='w-16'>Sr No.</th>
                             <th scope="col">Activity</th>
@@ -128,17 +128,17 @@ const Teaching = ({ casArray, showFileURL }) => {
                                                         <Remark title='Not-Satisfactory' color='red' />
                                             }
                                         </div>
-                                    </td>
+                                    </td >
                                 })}
 
-                        </tr>
+                        </tr >
 
-                    </tbody>
-                </table>
-            </div>
+                    </tbody >
+                </table >
+            </div >
 
             {/* // GRAND TOTAL */}
-            <div>
+            <div div >
                 {/* <p className='p-3 border-2 border-[#009879] rounded-lg'>Grand Total / Remark :
                     <span className='ml-4'>{
                         data?.teachingGrade >= 80 && data?.checkBoxCount > 0 ?
@@ -149,13 +149,13 @@ const Teaching = ({ casArray, showFileURL }) => {
 
                     }</span>
                 </p> */}
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
 
-const ResearchScore = ({ casArray, title }) => {
+const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
     let allYearTotalSum = 0;
     let allYearTotalCappedSum = 0;
@@ -210,12 +210,12 @@ const ResearchScore = ({ casArray, title }) => {
         <div>
 
             {/* // Heading */}
-            <p className='text-center bg-[#00987936] text-[#009879] mt-28 mb-2 p-2 '>Table 2 : <span className="font-bold">Academic / Research Score</span></p>
+            <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2`}>Table 2 : <span className="font-bold">Academic / Research Score</span></p>
 
             {/* Table */}
             <div>
-                <table className="table mx-auto mt-3 table-bordered text-sm md:text-base">
-                    <thead className='bg-[#009879] text-white'>
+                <table className={`table mx-auto mt-3 table-bordered text-sm md:text-base  ${forPrintOut === 'true' && "border-dark"} `}>
+                    <thead className={`${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
                         <tr>
                             <th scope="col" className='w-16'>Sr No.</th>
                             <th scope="col">Activity</th>
@@ -227,11 +227,11 @@ const ResearchScore = ({ casArray, title }) => {
                     <tbody>
 
                         {/* // 1 Papers */}
-                        <ResearchTableRow casArray={casArray} color={true} bold={true} td1={1} td2={'Research Papers in Peer-Reviewed or UGC listed Journals'}
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={1} td2={'Research Papers in Peer-Reviewed or UGC listed Journals'}
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
-                                        <td> <div className={'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.academicData.researchPaper.totalScore.toFixed(2)}</div> </td>);
+                                        <td> <div className={`${forPrintOut === 'false' && "bg-[#00987936]"} p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.academicData.researchPaper.totalScore.toFixed(2)}</div> </td>);
                                 })}
                             </>} />
 
@@ -239,16 +239,16 @@ const ResearchScore = ({ casArray, title }) => {
 
 
                         {/* // 2 Publication */}
-                        <ResearchTableRow casArray={casArray} color={true} bold={true} td1={2} td2='Publication (Other than Research Papers)'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={2} td2='Publication (Other than Research Papers)'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
-                                        <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.academicData.publicationData.totalScore.toFixed(2)}</div> </td>);
+                                        <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.academicData.publicationData.totalScore.toFixed(2)}</div> </td>);
                                 })}
                             </>} />
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[A] Authored Books'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[A] Authored Books'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
@@ -257,14 +257,14 @@ const ResearchScore = ({ casArray, title }) => {
                         />
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[B] Chapters in Edited Book'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Chapters in Edited Book'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.editorPoints === undefined ? 0 : item.academicData.publicationData.editorPoints}</div> </td>);
                                 })}</>} />
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[C] Translation Work'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Translation Work'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
@@ -275,20 +275,20 @@ const ResearchScore = ({ casArray, title }) => {
 
 
                         {/* // 3. ICT */}
-                        <ResearchTableRow casArray={casArray} color={true} bold={true} td1={3} td2='Creation of ICT (Information and Communication Technology)' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={3} td2='Creation of ICT (Information and Communication Technology)' td3={<>
                             {casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item?.academicData.ictData.totalScore.toFixed(2)}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item?.academicData.ictData.totalScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[A] Developed Innovative Pedagogy'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[A] Developed Innovative Pedagogy'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.ictData?.pedScore === undefined ? 0 : item?.academicData.ictData?.pedScore}</div> </td>);
                                 })}</>} />
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[B] Designed new Curricula or Course'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Designed new Curricula or Course'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
@@ -298,7 +298,7 @@ const ResearchScore = ({ casArray, title }) => {
 
 
                         {/* MOOCS */}
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[C] Massive Open Online Course (MOOC)'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Massive Open Online Course (MOOC)'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
@@ -306,25 +306,25 @@ const ResearchScore = ({ casArray, title }) => {
                                 })}</>} />
 
                         {/* MOOCS Options */}
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Developed Complete MOOCs in 4 Quadrants'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Developed Complete MOOCs in 4 Quadrants'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.moocComplete === undefined ? 0 : item?.academicData?.ictData?.moocComplete}</div> </td>);
                                 })}</>} />
-                        <ResearchTableRow casArray={casArray} td1={null} td2='MOOCs (Developed in 4 Quadrants) per Module / Lecture'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='MOOCs (Developed in 4 Quadrants) per Module / Lecture'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.moocModule === undefined ? 0 : item?.academicData?.ictData?.moocModule}</div> </td>);
                                 })}</>} />
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Content Writer / Subject matter exper for each module of MOOCs'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Content Writer / Subject matter exper for each module of MOOCs'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.moocContent === undefined ? 0 : item?.academicData?.ictData?.moocContent}</div> </td>);
                                 })}</>} />
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Course Coordinator fo MOOCs'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Course Coordinator fo MOOCs'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
@@ -333,31 +333,31 @@ const ResearchScore = ({ casArray, title }) => {
 
                         {/* 3.4 E-content */}
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[D] E-Content Development' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[D] E-Content Development' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.econScore === undefined ? 0 : item?.academicData?.ictData?.econScore}</div> </td>);
                             })}</>} />
 
                         {/* OPTIONS */}
-                        <ResearchTableRow casArray={casArray} td1={null} td2=' Developed Complete e-Content in 4 Quadrants'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2=' Developed Complete e-Content in 4 Quadrants'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
                                         <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.econComplete === undefined ? 0 : item?.academicData?.ictData?.econComplete}</div> </td>);
                                 })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='E-Content (Developed in 4 Quadrants) per Module / Lecture' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='E-Content (Developed in 4 Quadrants) per Module / Lecture' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.econModule === undefined ? 0 : item?.academicData?.ictData?.econModule}</div> </td>);
                             })}</>} />
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Contribution to development of e-Content module in complete course / Paper / e-Book' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Contribution to development of e-Content module in complete course / Paper / e-Book' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.econPaper === undefined ? 0 : item?.academicData?.ictData?.econPaper}</div> </td>);
                             })}</>} />
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Editor of e-Content for Complete Course / Paper / e-Book' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Editor of e-Content for Complete Course / Paper / e-Book' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.ictData?.econCourse === undefined ? 0 : item?.academicData?.ictData?.econCourse}</div> </td>);
@@ -366,45 +366,45 @@ const ResearchScore = ({ casArray, title }) => {
 
 
                         {/* // 4. Research Guidance */}
-                        <ResearchTableRow casArray={casArray} color={true} bold={true} td1={4} td2='Research Guidance and Projects' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={4} td2='Research Guidance and Projects' td3={<>
                             {casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.totalGuidanceProjectScore.toFixed(2)}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.totalGuidanceProjectScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
                         {/* OPTIONS */}
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[A] Research Guidance' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[A] Research Guidance' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.researchGuide.totalScore === undefined ? 0 : item?.academicData?.researchGuide.totalScore}</div> </td>);
                             })}</>} />
 
                         {/* 4.1 guide */}
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Ph.D.' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Ph.D.' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchGuide.phdScore === undefined ? 0 : item?.academicData.researchGuide.phdScore}</div> </td>);
                             })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='M.Phil / P.G. Dissertation' td3={<>
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='M.Phil / P.G. Dissertation' td3={<>
                             {casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchGuide.mphilScore === undefined ? 0 : item?.academicData.researchGuide.mphilScore}</div> </td>);
                             })}</>} />
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[B] Completed Research Projects'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Completed Research Projects'
                             td3={<>{casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.completePoints === undefined ? 0 : item?.academicData.researchProjects.completePoints}</div> </td>);
                             })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='More than 10 Lacks' td3={<>{casArray.map((item) => {
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='More than 10 Lacks' td3={<>{casArray.map((item) => {
                             return (
                                 <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.completeMorePoints === undefined ? 0 : item?.academicData.researchProjects.completeMorePoints}</div> </td>);
                         })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Less than 10 Lacks' td3={<>{casArray.map((item) => {
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Less than 10 Lacks' td3={<>{casArray.map((item) => {
                             return (
                                 <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.completeLessPoints === undefined ? 0 : item?.academicData.researchProjects.completeLessPoints}</div> </td>);
                         })}</>} />
@@ -413,45 +413,45 @@ const ResearchScore = ({ casArray, title }) => {
 
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[C] Ongoing Research Projects'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Ongoing Research Projects'
                             td3={<>{casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.ongoingPoints === undefined ? 0 : item?.academicData.researchProjects.ongoingPoints}</div> </td>);
                             })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='More than 10 Lacks' td3={<>{casArray.map((item) => {
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='More than 10 Lacks' td3={<>{casArray.map((item) => {
                             return (
                                 <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.ongoingMorePoints === undefined ? 0 : item?.academicData.researchProjects.ongoingMorePoints}</div> </td>);
                         })}</>} />
 
-                        <ResearchTableRow casArray={casArray} td1={null} td2='Less than 10 Lacks' td3={<>{casArray.map((item) => {
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} td1={null} td2='Less than 10 Lacks' td3={<>{casArray.map((item) => {
                             return (
                                 <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.researchProjects.ongoingLessPoints === undefined ? 0 : item?.academicData.researchProjects.ongoingLessPoints}</div> </td>);
                         })}</>} />
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[D] Consultancy' td3={<>{casArray.map((item) => {
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[D] Consultancy' td3={<>{casArray.map((item) => {
                             return (
                                 <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.consultancy.totalScore === undefined ? 0 : item?.academicData.consultancy.totalScore}</div> </td>);
                         })}</>} />
 
 
                         {/* // 5. Patents */}
-                        <ResearchTableRow casArray={casArray} color={true} bold={true} td1={5}
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={5}
                             td2='Patents, Policy Documents & Awards / Fellowship'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item?.totalPatentPolicyScore.toFixed(2)}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item?.totalPatentPolicyScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
                         {/* OPTIONS */}
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[A] Patents Published'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[A] Patents Published'
                             td3={<>{casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.patents.totalScore}</div> </td>);
                             })}</>} />
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[B] Policy Documents'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Policy Documents'
                             td3={<>{casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{`${item?.academicData?.policyDocuments.totalScore} | Capped Score : 
@@ -459,7 +459,7 @@ const ResearchScore = ({ casArray, title }) => {
                             })}</>} />
 
 
-                        <ResearchTableRow casArray={casArray} bold={true} td1={null} td2='[C] Awards / Fellowships'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Awards / Fellowships'
                             td3={<>{casArray.map((item) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.awards.totalScore + item?.academicData.fellow.totalScore}</div> </td>);
@@ -467,17 +467,17 @@ const ResearchScore = ({ casArray, title }) => {
 
 
                         {/* // 6. Invited talks */}
-                        < ResearchTableRow casArray={casArray} color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
+                        < ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{`${item?.academicData.invitedTalks.totalScore.toFixed(2)} |   Capped Score : ${item?.talkCapScore}`}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{`${item?.academicData.invitedTalks.totalScore.toFixed(2)} |   Capped Score : ${item?.talkCapScore}`}</div> </td>);
                             })}</>} />
 
                         {/* // grand total */}
-                        < ResearchTableRow diff={true} casArray={casArray} color={true} bold={true} td1={7} td2='Year-wise Total Score'
+                        < ResearchTableRow forPrintOut={forPrintOut} diff={true} casArray={casArray} color={true} bold={true} td1={7} td2='Year-wise Total Score'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{true && <LabelImportantRoundedIcon />}{item.totalScore.toFixed(2)}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"} p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.totalScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
                     </tbody>
@@ -487,11 +487,11 @@ const ResearchScore = ({ casArray, title }) => {
             {/* TOTAL SCORE */}
             <div>
                 {/* // Heading */}
-                <p className='text-center bg-[#00987936] text-[#009879] mt-28 mb-2 p-2 '>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
+                <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
 
 
-                <table className="table table-bordered">
-                    <thead className="text-white bg-[#009879]">
+                <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
+                    <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
                         <tr>
                             <th scope="col">Year(s)</th>
                             <th scope="col">Total Score</th>
@@ -552,10 +552,10 @@ const ResearchScore = ({ casArray, title }) => {
     )
 }
 
-const ResearchTableRow = ({ color = false, bold = false, td1, td2, td3, diff = false }) => {
+const ResearchTableRow = ({ color = false, bold = false, td1, td2, td3, diff = false, forPrintOut }) => {
     return (
         <tr className={`${(color && diff === false) && 'text-[#009879]'} ${bold && 'font-bold'} 
-        ${diff && 'bg-[#009879] text-white'}`}>
+        ${diff && `${forPrintOut === 'false' && "bg-[#009879] text-white"}`}`}>
             <td>{td1}</td>
             <td>
                 <div>

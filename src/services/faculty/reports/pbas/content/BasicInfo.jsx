@@ -2,6 +2,7 @@ import { SignalCellularNullRounded } from '@mui/icons-material'
 import React, { useState } from 'react'
 import NumberToTextField from '../components/NumberToTextField'
 import { BGPad } from './Teaching'
+import Note from '../../../../director/reports/academic-audit/components/Note'
 
 const BasicInfo = () => {
 
@@ -121,6 +122,47 @@ const BasicInfo = () => {
             <div className='my-3 text-lg'>
                 <p className='font-bold text-xl'>Basic Information</p>
             </div>
+
+            {/* // Academic Identity */}
+            <BGPad>
+                <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
+                    <div className='flex items-center justify-start gap-2'>
+                        <p><span className='font-bold ml-3'>#. Academic Identity</span></p>
+                    </div>
+
+
+                </div>
+                <div className='mt-4'>
+                    <form className="row g-3">
+                        <div className="col-md-6">
+                            <label for="orchidId" className="form-label">Orchid ID</label>
+                            <input type="text" className="form-control" id="orchidId" />
+                        </div>
+                        <div className="col-md-6">
+                            <label for="scopusId" className="form-label">Scopus ID</label>
+                            <input type="text" className="form-control" id="scopusId" />
+                        </div>
+                        <div className="col-md-6">
+                            <label for="researchId" className="form-label">Research ID</label>
+                            <input type="text" className="form-control" id="researchId" />
+                        </div>
+                        <div className="col-md-6">
+                            <label for="inputPassword4" className="form-label">Google Scholar ID</label>
+                            <input type="text" className="form-control" id="inputPassword4" />
+                        </div>
+                        <div className="col-12">
+                            <label for="inputAddress" className="form-label">Personal Website Link</label>
+                            <input type="text" className="form-control" id="inputAddress" placeholder="https://www.examplename.com" />
+                        </div>
+
+                        <div className="col-12">
+                            <button type="submit" className="btn btn-primary bg-primary">Add Details to Profile</button>
+                            <Note title="No need to add if you've already filled the details." />
+                        </div>
+                    </form>
+                </div>
+            </BGPad>
+
 
 
             {/* // INTRO Tables */}

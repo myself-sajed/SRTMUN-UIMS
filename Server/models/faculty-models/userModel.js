@@ -66,6 +66,26 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    orchidId: {
+        type: 'string',
+        required: true,
+    },
+    scopusId: {
+        type: 'string',
+        required: true,
+    },
+    researchId: {
+        type: 'string',
+        required: true,
+    },
+    googleScholarId: {
+        type: 'string',
+        required: true,
+    },
+    personalWebsiteLink: {
+        type: 'string',
+        required: true,
+    },
     password: {
         type: 'string',
         required: true

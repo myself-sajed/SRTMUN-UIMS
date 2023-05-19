@@ -24,14 +24,14 @@ function casRoutes(app) {
     // for generating cas report
     app.post("/generatePBASReport", async (req, res) => {
 
-        const { userData, casData, selectedYear } = req.body;
+        const { userData, casData, selectedYear, forPrintOut } = req.body;
         console.log(selectedYear)
 
         const fileName = `PBASReport-${new Date().getTime()}.pdf`
         console.log('File name generated :', fileName);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        const link = `http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}`
+        const link = `http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
         console.log('Link : ', link)
         await page.goto(link,
             { waitUntil: 'networkidle0' });

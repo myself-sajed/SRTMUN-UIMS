@@ -10,7 +10,7 @@ import Table from '../cas-report/Tables'
 
 const CASReport = () => {
 
-    const { selectedYear, userId } = useParams()
+    const { selectedYear, userId, forPrintOut } = useParams()
     const [casData, setCasData] = useState(null)
     const [casError, setCasError] = useState(null)
     const [casArray, setCasArray] = useState(null)
@@ -90,10 +90,10 @@ const CASReport = () => {
                 <>
                     <Header user={casData.userId} title="Performance Based Appraisal System (PBAS)"
                         subTitle={`PBAS Report of year ${casArray?.map((cas) => cas.casYear).join(', ')}`}
-                        directorData={academicData} userType="faculty" />
-                    <BasicIntro academicData={academicData} />
-                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" />
-                    <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" />
+                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
+                    <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
+                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
+                    <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" forPrintOut={forPrintOut} />
                 </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
             }
         </div>

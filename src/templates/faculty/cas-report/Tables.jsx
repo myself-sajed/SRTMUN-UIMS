@@ -135,28 +135,28 @@ const CASActivities = [
     },
 ]
 
-const Table = ({ academicData, casArray }) => {
+const Table = ({ academicData, casArray, forPrintOut }) => {
     return <>
         {/* // HEADING */}
         {/* <p className="academic-start"></p> */}
-        <p className='text-center bg-[#00987936] text-[#009879] p-2'>
+        <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} p-2`}>
             <span className="font-bold">Academic & Research Score</span></p>
 
         {/* // form activity 1-3 */}
         <div className="mx-auto">
             {CASActivities.map((activity) => {
-                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5">
+                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5 border">
 
                     {
                         activity?.hasSubActivity &&
-                        <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                            <div className="p-2 bg-[#009879] text-white">
-                                <h3 className="sm:text-lg text-base leading-6 font-medium text-white">
+                        <div className={`p-2 ${forPrintOut === 'false' && "bg-[#009879] text-white"} flex items-center justify-between`}>
+                            <div className={`p-2 ${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
+                                <h3 className="sm:text-lg text-base leading-6 font-medium">
                                     {activity.mainActivityName}</h3>
-                                <p className="max-w-2xl text-sm text-white pb-3">{activity.mainActivityDesc}</p>
+                                <p className="max-w-2xl text-sm pb-3">{activity.mainActivityDesc}</p>
                             </div>
                             <div className="bg-[#ffffff41] rounded-lg w-[30%] text-center">
-                                <p className='p-2 text-white'>
+                                <p className='p-2'>
                                     Total Activity Score : <span className="font-bold">
                                         {(casArray.reduce((sum, element) => sum + activity.subCasNames.reduce((newSum, subCasName) => newSum + element.academicData[subCasName].totalScore, 0), 0)).toFixed(2)}</span>
                                 </p>
@@ -164,21 +164,21 @@ const Table = ({ academicData, casArray }) => {
                         </div>
                     }
                     <hr />
-                    <div className="p-2 bg-[#009879] text-white flex items-center justify-between">
-                        <div><h3 className="sm:text-lg text-base leading-6 font-medium text-white">
+                    <div className={`p-2 ${forPrintOut === 'false' && "bg-[#009879] text-white"} flex items-center justify-between`}>
+                        <div><h3 className="sm:text-lg text-base leading-6 font-medium">
                             {activity.activityName}</h3>
-                            <p className="text-sm text-white pb-3">{activity.desc}</p>
+                            <p className="text-sm pb-3">{activity.desc}</p>
                         </div>
                         <div className="bg-[#ffffff41] rounded-lg w-[30%] text-center">
-                            <p className='p-2 text-white'>
+                            <p className='p-2'>
                                 Total {activity?.hasSubActivity ? 'Sub-Activity' : 'Activity'} Score : <span className="font-bold">{(casArray.reduce((sum, element) => sum + element.academicData[activity.casName].totalScore, 0)).toFixed(2)}</span>
                             </p>
                         </div>
                     </div>
 
-                    <div>
-                        <table className="table table-bordered">
-                            <thead className="bg-[#009879] text-white">
+                    <div className={`${forPrintOut === 'true' && "px-1"}`}>
+                        <table className={`table table-bordered`}>
+                            <thead className={`${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
                                 <tr>
                                     <th scope="col">Year</th>
                                     <th scope="col">{activity.colName}</th>
@@ -192,8 +192,8 @@ const Table = ({ academicData, casArray }) => {
                                             <th scope="row" className='w-20 text-sm text-[#009879]'>{casItem.casYear}</th>
                                             <td>
 
-                                                <table className="table table-bordered">
-                                                    <thead className="bg-[#009879] text-white">
+                                                <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
+                                                    <thead className={`${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
                                                         <tr>
                                                             <th scope="col">Sr.</th>
                                                             {activity.activityTables.tableHeads.map((item) => { return (<th>{item}</th>); })}
@@ -224,8 +224,8 @@ const Table = ({ academicData, casArray }) => {
                                                         }
                                                     </tbody>
                                                 </table>
-                                                <div className="bg-[#00987936] w-full rounded-lg flex items-center justify-end">
-                                                    <p className='p-2 text-[#009879] text-center'>
+                                                <div className={`${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} w-full rounded-lg flex items-center justify-end`}>
+                                                    <p className='p-2 text-center'>
                                                         Total Score : <span className="font-bold">
                                                             {casItem.academicData[activity.casName].totalScore.toFixed(2)}</span>
                                                     </p>

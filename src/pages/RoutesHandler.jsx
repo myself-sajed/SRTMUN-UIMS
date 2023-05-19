@@ -130,7 +130,7 @@ const RoutesHandler = () => {
 
                 {/* report routes */}
                 <Route path="/report/CASReport/:userId/:selectedYear" exact element={<CASReport />} />
-                <Route path="/report/PBASReport/:userId/:selectedYear" exact element={<PBASReport />} />
+                <Route path="/report/PBASReport/:userId/:selectedYear/:forPrintOut" exact element={<PBASReport />} />
                 <Route path="/report/facultyReport/:userId/:otherOptions" exact element={<FacultyReport />} />
                 <Route path="/report/AAAReport/:department/:selectedYear" exact element={<AAAReport />} />
 
