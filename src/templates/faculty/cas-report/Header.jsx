@@ -69,38 +69,19 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
 
             <div className='mt-8'>
 
-                <div className={`w-full p-2 border border-green-100 rounded-md hover:bg-green-100 flex items-center justify-between`}>
-                    <div className='flex items-start justify-start gap-2'> <img src="/assets/scopus.png" className="bg-blend-screen bg-white w-10" />
-                        <div>
-                            <p className='text-md leading-5'>Scopus ID</p>
-                            <p className='text-sm text-muted'>{user?.scopusId}</p>
-                        </div>
-                    </div>
-                    <div className='flex items-start justify-start gap-2'> <img src="/assets/orcid.png" className="bg-blend-screen bg-white w-10" />
-                        <div>
-                            <p className='text-md leading-5'>Orcid ID</p>
-                            <p className='text-sm text-muted'>{user?.orcidId}</p>
-                        </div>
-                    </div>
-                    <div className='flex items-start justify-start gap-2'> <img src="/assets/researcher.png" className="bg-blend-screen bg-white w-10" />
-                        <div>
-                            <p className='text-md leading-5'>Researcher ID</p>
-                            <p className='text-sm text-muted'>{user?.researcherId}</p>
-                        </div>
-                    </div>
-                    <div className='flex items-start justify-start gap-2'> <img src="/assets/google.png" className="bg-blend-screen bg-white w-10" />
-                        <div>
-                            <p className='text-md leading-5'>Google Scholar ID</p>
-                            <p className='text-sm text-muted'>{user?.googleScholarId}</p>
-                        </div>
-                    </div>
-                    <div className='flex items-start justify-start gap-2'> <img src="/assets/website.png" className="bg-blend-screen bg-white w-10" />
-                        <div>
-                            <p className='text-md leading-5'>Personal Website</p>
-                            <p className='text-sm text-muted'>{user?.personalWebsiteLink}</p>
-                        </div>
-                    </div>
-                </div>
+
+                {
+                    user['scopusId'] || user['orcidId'] || user['researcherId'] || user['googleScholarId']
+                        || user['personalWebsiteLink'] ? <div className={`w-full p-2 border border-green-100 rounded-md hover:bg-green-100 flex items-center justify-between`}>
+
+                        <IDTile title="Scopus ID" keyId="scopusId" photoURL="scopus.png" user={user} />
+                        <IDTile title="Orcid ID" keyId="orcidId" photoURL="orcid.png" user={user} />
+                        <IDTile title="Researcher ID" keyId="researcherId" photoURL="researcher.png" user={user} />
+                        <IDTile title="Google Scholar ID" keyId="googleScholarId" photoURL="google.png" user={user} />
+                        <IDTile title="Personal Website" keyId="personalWebsiteLink" photoURL="website.png" user={user} link={true} />
+
+                    </div> : null
+                }
 
                 <div className='md:flex-row items-start justify-around gap-4 flex-col flex mt-3'>
                     <div className={`md:w-[80%] w-full ${forPrintOut === 'false' && "bg-green-50"} p-2 border border-green-100 rounded-md hover:bg-green-100`}>
@@ -232,3 +213,20 @@ const ShowDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColo
 }
 
 export { ShowDashboard }
+
+
+const IDTile = ({ photoURL, title, keyId, user, link = false }) => {
+
+    return <>
+        {
+            user[keyId] ? <div className='flex items-start justify-start gap-2'> <img src={`/assets/${photoURL}`} className="bg-blend-screen bg-white w-10" />
+                <div>
+                    <p className='text-md leading-5'>{title}</p>
+                    {
+                        link ? <a className="text-sm text-blue-500 leading-6" href={user?.[keyId]}>{user?.[keyId]}</a> : <p className='text-sm text-muted'>{user?.[keyId]}</p>
+                    }
+                </div>
+            </div> : null
+        }
+    </>
+}
