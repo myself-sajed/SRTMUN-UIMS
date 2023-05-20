@@ -52,6 +52,8 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
     const saveData = (e) => {
         e.preventDefault();
 
+        console.log('function called')
+
         if (isFile) {
             let formData = new FormData()
 
@@ -64,6 +66,8 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
                 }
             })
             formData.append('userId', user._id)
+
+            console.log(...formData)
 
             submitWithFile(formData, model, refetch, setLoading, setShowInputs)
         } else {

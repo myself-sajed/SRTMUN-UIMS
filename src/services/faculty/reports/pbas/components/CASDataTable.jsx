@@ -443,6 +443,7 @@ const CASDataTable = {
         tableHeads: [
             "Degree",
             "Title",
+            "Subject",
             "University",
             "Award Year",
             "Proof",
@@ -450,6 +451,7 @@ const CASDataTable = {
         tableCells: [
             "degreeName",
             "title",
+            "subject",
             "university",
             "awardDate",
             "proof",

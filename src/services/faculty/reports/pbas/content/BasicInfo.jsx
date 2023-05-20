@@ -53,6 +53,7 @@ const BasicInfo = () => {
             options: [
                 { field: 'Text', keyName: "degreeName", label: "Degree" },
                 { field: 'Text', keyName: "title", label: "Title" },
+                { field: 'Text', keyName: "subject", label: "Subject" },
                 { field: 'Text', keyName: "university", label: "University" },
                 { field: 'Text', keyName: "awardDate", label: "Award Year" },
                 { field: 'File', keyName: "proof", label: "Proof" },
