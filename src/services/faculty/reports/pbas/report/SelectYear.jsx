@@ -34,7 +34,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            <ShowModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
+                            <ShowModal okText={"Generate Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked onChange={(e) => { setForPrintOut(false) }} />
                                     <label class="form-check-label" htmlFor="flexRadioDefault1">

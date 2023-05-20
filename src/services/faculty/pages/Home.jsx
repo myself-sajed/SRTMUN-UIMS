@@ -183,7 +183,7 @@ const Home = () => {
                                         <DetailTile keyName="Specialization" value={`${user && user.specialization === undefined ? 'Not Added' : user.specialization}`} />
                                         <DetailTile keyName="Gender" value={user && user.gender} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined ? 'Not Added' : user.address}`} />
-                                        <DetailTile keyName="Cast" value={`${user && user.cast === undefined ? 'Not Added' : user.cast}`} />
+                                        <DetailTile keyName="Caste" value={`${user && user.cast === undefined ? 'Not Added' : user.cast}`} />
                                         <DetailTile keyName="Date of Rac" value={`${user && user.racDate === undefined ? 'Not Added' : user.racDate}`} />
 
                                     </div>

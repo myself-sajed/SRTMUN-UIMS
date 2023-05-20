@@ -70,34 +70,45 @@ function editRoutes(app) {
     // edit personal profile Configuration
     app.post("/api/editProfile", upload.single('file'), (req, res) => {
         const editData = JSON.parse(JSON.stringify(req.body));
-        const {salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, userId } = editData;
-       if(req.file){
-        User.findOneAndUpdate(
-            { _id: userId },
-            {
-                salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast,
-                photoURL: req.file.filename,
-            }
+        const { salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, userId, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink } = editData;
+        if (req.file) {
+            User.findOneAndUpdate(
+                { _id: userId },
+                {
+                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink,
+                    photoURL: req.file.filename,
+                }
             ).then(function (user) {
                 res.send({ status: "edited", user: user });
             })
-            .catch(function (err) {
-                res.send({ status: "error" });
-            });
-       }else{
-        User.findOneAndUpdate(
-            { _id: userId },
-            {
-                salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast,
-            }
-        ).then(function (user) {
+                .catch(function (err) {
+                    res.send({ status: "error" });
+                });
+        } else {
+            User.findOneAndUpdate(
+                { _id: userId },
+                {
+                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink
+                }
+            ).then(function (user) {
                 res.send({ status: "edited", user: user });
             })
+                .catch(function (err) {
+                    res.send({ status: "error" });
+                });
+        }
+    });
+
+    app.post('/api/editProfile/withFormData', upload.single('file'), (req, res) => {
+        const editData = JSON.parse(JSON.stringify(req.body));
+        const { userId } = editData
+        User.findOneAndUpdate({ _id: userId }, editData).then(function (user) {
+            res.send({ status: "edited", user: user });
+        })
             .catch(function (err) {
                 res.send({ status: "error" });
             });
-       }
-    });
+    })
 
     // Qualification
     app.post('/api/edit/Qualification', (req, res) => {

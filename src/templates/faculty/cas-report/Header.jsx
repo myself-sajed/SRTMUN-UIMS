@@ -54,7 +54,7 @@ const dashboardObj = {
     ]
 }
 
-const Header = ({ forPrintOut, user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
+const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
 
 
 
@@ -67,9 +67,42 @@ const Header = ({ forPrintOut, user, title, subTitle, directorData, otherOptions
                 <p className='text-sm mt-2'>{subTitle}</p>
             </div>
 
-            <div className='mt-12'>
+            <div className='mt-8'>
 
-                <div className='md:flex-row items-start justify-around gap-4 flex-col flex'>
+                <div className={`w-full p-2 border border-green-100 rounded-md hover:bg-green-100 flex items-center justify-between`}>
+                    <div className='flex items-start justify-start gap-2'> <img src="/assets/scopus.png" className="bg-blend-screen bg-white w-10" />
+                        <div>
+                            <p className='text-md leading-5'>Scopus ID</p>
+                            <p className='text-sm text-muted'>{user?.scopusId}</p>
+                        </div>
+                    </div>
+                    <div className='flex items-start justify-start gap-2'> <img src="/assets/orcid.png" className="bg-blend-screen bg-white w-10" />
+                        <div>
+                            <p className='text-md leading-5'>Orcid ID</p>
+                            <p className='text-sm text-muted'>{user?.orcidId}</p>
+                        </div>
+                    </div>
+                    <div className='flex items-start justify-start gap-2'> <img src="/assets/researcher.png" className="bg-blend-screen bg-white w-10" />
+                        <div>
+                            <p className='text-md leading-5'>Researcher ID</p>
+                            <p className='text-sm text-muted'>{user?.researcherId}</p>
+                        </div>
+                    </div>
+                    <div className='flex items-start justify-start gap-2'> <img src="/assets/google.png" className="bg-blend-screen bg-white w-10" />
+                        <div>
+                            <p className='text-md leading-5'>Google Scholar ID</p>
+                            <p className='text-sm text-muted'>{user?.googleScholarId}</p>
+                        </div>
+                    </div>
+                    <div className='flex items-start justify-start gap-2'> <img src="/assets/website.png" className="bg-blend-screen bg-white w-10" />
+                        <div>
+                            <p className='text-md leading-5'>Personal Website</p>
+                            <p className='text-sm text-muted'>{user?.personalWebsiteLink}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='md:flex-row items-start justify-around gap-4 flex-col flex mt-3'>
                     <div className={`md:w-[80%] w-full ${forPrintOut === 'false' && "bg-green-50"} p-2 border border-green-100 rounded-md hover:bg-green-100`}>
 
                         {

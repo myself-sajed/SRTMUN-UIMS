@@ -30,7 +30,7 @@ const Profile = () => {
     const [userData, setUserData] = useState({});
     // useAuth()
 
-    const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
+    const Casts = ["Genral", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
 
     //state
     const [salutation, setSalutation] = useState()
@@ -46,6 +46,11 @@ const Profile = () => {
     const [email, setEmail] = useState('')
     const [racDate, setRacDate] = useState('')
     const [cast, setCast] = useState('')
+    const [orcidId, setorcidId] = useState(null)
+    const [scopusId, setScopusId] = useState(null)
+    const [researcherId, setresearcherId] = useState(null)
+    const [googleScholarId, setGoogleScholarId] = useState(null)
+    const [personalWebsiteLink, setPersonalWebsiteLink] = useState(null)
     const [file, setFile] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [openCroper, setOpenCroper] = useState(false)
@@ -67,6 +72,11 @@ const Profile = () => {
                     setName(response.data.user.name)
                     setDepartment(response.data.user.department)
                     setDesignation(response.data.user.designation)
+                    setorcidId(response.data.user.orcidId)
+                    setScopusId(response.data.user.scopusId)
+                    setresearcherId(response.data.user.researcherId)
+                    setGoogleScholarId(response.data.user.googleScholarId)
+                    setPersonalWebsiteLink(response.data.user.personalWebsiteLink)
                     setPromotion(response.data.user.promotionDate)
                     setSpecialization(response.data.user.specialization)
                     setGradePay(response.data.user.gradePay)
@@ -96,7 +106,7 @@ const Profile = () => {
     // handle edit button
     function handleEdit(e) {
         e.preventDefault()
-        
+
         // const editData = { salutation, name, designation, department, id: user._id, promotionDate: promotion, gradePay, address, mobile, email, dob, specialization, racDate, cast }
         let formData = new FormData()
         formData.append('salutation', salutation)
@@ -104,6 +114,11 @@ const Profile = () => {
         formData.append('designation', designation)
         formData.append('department', department)
         formData.append('promotionDate', promotion)
+        formData.append('orcidId', orcidId)
+        formData.append('scopusId', scopusId)
+        formData.append('researcherId', researcherId)
+        formData.append('googleScholarId', googleScholarId)
+        formData.append('personalWebsiteLink', personalWebsiteLink)
         formData.append('gradePay', gradePay)
         formData.append('address', address)
         formData.append('mobile', mobile)
@@ -264,7 +279,12 @@ const Profile = () => {
                                         <DetailTile sr="Permanent Address" value={user && user.address} />
                                         <DetailTile sr="Mobile Number" value={user && user.mobile} />
                                         <DetailTile sr="Gender" value={user && user.gender} />
-                                        <DetailTile sr="Cast" value={user && user.cast} />
+                                        <DetailTile sr="orcid ID" value={user && user.orcidId} />
+                                        <DetailTile sr="Scopus ID" value={user && user.scopusId} />
+                                        <DetailTile sr="Research ID" value={user && user.researcherId} />
+                                        <DetailTile sr="Google Scholar ID" value={user && user.googleScholarId} />
+                                        <DetailTile sr="Personal Website Link" value={user && user.personalWebsiteLink} />
+                                        <DetailTile sr="Caste" value={user && user.cast} />
                                         <DetailTile sr="Date of Rac" value={user && user.racDate} />
                                     </div>
                                 </div>
@@ -299,7 +319,7 @@ const Profile = () => {
                                     }
                                 </div>
                             </div>
-                            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
+                            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile={setFile} setAvatar={setAvatar} />
                             <div className="col-md-4">
                                 <label htmlhtmlFor="validationCustom04" className="form-label">Salutation </label>
                                 <select className="form-select" id="validationCustom04" required
@@ -371,13 +391,53 @@ const Profile = () => {
                                 <input type="date" value={racDate} onChange={(e) => { setRacDate(e.target.value) }} className="form-control" id="validationCustom05" />
                             </div>
 
+
+
                             <div className="col-md-4">
-                                <label htmlFor="validationCustom05" className="form-label">Cast</label>
+                                <label htmlFor="validationCustom06" className="form-label">orcid ID</label>
+                                <textarea type="text" value={orcidId} onChange={(e) => { setorcidId(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
+                            </div>
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom06" className="form-label">Scopus ID</label>
+                                <textarea type="text" value={scopusId} onChange={(e) => { setScopusId(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
+                            </div>
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom06" className="form-label">Research ID</label>
+                                <textarea type="text" value={researcherId} onChange={(e) => { setresearcherId(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
+                            </div>
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom06" className="form-label">Google Scholar ID</label>
+                                <textarea type="text" value={googleScholarId} onChange={(e) => { setGoogleScholarId(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
+                            </div>
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom06" className="form-label">Personal Website Link</label>
+                                <textarea type="text" value={personalWebsiteLink} onChange={(e) => { setPersonalWebsiteLink(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div className="col-md-4">
+                                <label htmlFor="validationCustom05" className="form-label">Caste</label>
                                 <select className={`form-select`} value={cast} onChange={(e) => { setCast(e.target.value) }} required>
-                                    <option selected disabled value="">Choose Cast</option>
+                                    <option selected disabled value="">Choose Caste</option>
                                     {
                                         Casts.map(item => {
-                                        return <option>{item}</option>
+                                            return <option>{item}</option>
                                         })
                                     }
                                 </select>

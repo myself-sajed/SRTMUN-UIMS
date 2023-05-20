@@ -66,7 +66,7 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    orchidId: {
+    orcidId: {
         type: 'string',
         required: true,
     },
@@ -74,7 +74,7 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    researchId: {
+    researcherId: {
         type: 'string',
         required: true,
     },
