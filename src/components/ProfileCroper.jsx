@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DialogBox from './formComponents/DialogBox'
+import DialogBox from './DialogBox'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 
@@ -61,7 +61,7 @@ const onSubmit =async(e) =>{
                     <ReactCrop src={Img} onImageLoaded={setImage} crop={crop} onChange={(e)=>{setCrop(e); getCroppedImg()}} style={{maxWidth: "600px",minWidth: "600px" }} />
                 </> }
             { result && <div className='flex flex-col m-auto'>
-                            <p className='text-xl font-semibold '>Priview</p>
+                            <p className='text-xl font-semibold '>Preview</p>
                             <img src={result} alt="" style={{borderRadius:"50%",border:"solid 1px", width: "300px", height:"300px"}} />
                             {/* <button className='btn btn-outline-danger' onClick={()=>{urlToFile(result)}}>download Coped</button> */}
                         </div> } 

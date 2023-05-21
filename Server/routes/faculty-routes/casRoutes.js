@@ -1,4 +1,5 @@
 const CASModel = require("../../models/faculty-models/casModel")
+require('dotenv').config();
 var pdf = require("html-pdf");
 // var options = { format: "A4" };
 var options = { format: "A4", timeout: 60000, border: { top: "0.4in", right: "0in", bottom: "0.4in", left: "0in" }, };
@@ -29,8 +30,8 @@ function casRoutes(app) {
         try {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
-            console.log('Link : ', `https://srtmun-uims.org/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
-            await page.goto(`https://srtmun-uims.org/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`,
+            console.log('Link : ', `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
+            await page.goto(`${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`,
                 { waitUntil: 'networkidle0' });
             await page.pdf({
                 path: `pdfs/${fileName}`,

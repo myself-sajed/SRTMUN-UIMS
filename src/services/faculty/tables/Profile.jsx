@@ -270,22 +270,22 @@ const Profile = () => {
                                         <DetailTile sr="Name" value={`${user && user.salutation.toUpperCase()} ${user && user.name.toUpperCase()}`} />
                                         <DetailTile sr="School" value={user && user.department} />
                                         <DetailTile sr="Current Designation" value={user && user.designation} />
+                                        <DetailTile sr="Date of joining" value={user && user.racDate} />
                                         <DetailTile sr="Date of Last Promotion" value={user && user.promotionDate} />
                                         <DetailTile sr="Grade Pay" value={user && user.gradePay} />
                                         <DetailTile sr="Date of Birth" value={user && user.dob} />
-                                        <DetailTile sr="Specialization" value={user && user.specialization} />
-                                        <DetailTile sr="Address of Correspondence" value={`${user && user.department}, Swami Ramanand Teerth Marathwada University, Vishnupuri, Nanded-431 606`} />
                                         <DetailTile sr="Email" value={user && user.email} />
-                                        <DetailTile sr="Permanent Address" value={user && user.address} />
                                         <DetailTile sr="Mobile Number" value={user && user.mobile} />
                                         <DetailTile sr="Gender" value={user && user.gender} />
+                                        <DetailTile sr="Caste" value={user && user.cast} />
+                                        <DetailTile sr="Specialization" value={user && user.specialization} />
+                                        <DetailTile sr="Address of Correspondence" value={`${user && user.department}, Swami Ramanand Teerth Marathwada University, Vishnupuri, Nanded-431 606`} />
+                                        <DetailTile sr="Permanent Address" value={user && user.address} />
                                         <DetailTile sr="orcid ID" value={user && user.orcidId} />
                                         <DetailTile sr="Scopus ID" value={user && user.scopusId} />
                                         <DetailTile sr="Research ID" value={user && user.researcherId} />
                                         <DetailTile sr="Google Scholar ID" value={user && user.googleScholarId} />
                                         <DetailTile sr="Personal Website Link" value={user && user.personalWebsiteLink} />
-                                        <DetailTile sr="Caste" value={user && user.cast} />
-                                        <DetailTile sr="Date of Rac" value={user && user.racDate} />
                                     </div>
                                 </div>
 
@@ -352,6 +352,11 @@ const Profile = () => {
                             </div>
 
                             <div className="col-md-4">
+                                <label htmlFor="validationCustom05" className="form-label">Date of Joining</label>
+                                <input type="date" value={racDate} onChange={(e) => { setRacDate(e.target.value) }} className="form-control" id="validationCustom05" />
+                            </div>
+
+                            <div className="col-md-4">
                                 <label htmlFor="validationCustom05" className="form-label">Date of Last Promotion</label>
                                 <input type="date" value={promotion} onChange={(e) => { setPromotion(e.target.value) }} className="form-control" id="validationCustom05" />
                             </div>
@@ -377,6 +382,18 @@ const Profile = () => {
                             </div>
 
                             <div className="col-md-4">
+                                <label htmlFor="validationCustom05" className="form-label">Caste</label>
+                                <select className={`form-select`} value={cast} onChange={(e) => { setCast(e.target.value) }} required>
+                                    <option selected disabled value="">Choose Caste</option>
+                                    {
+                                        Casts.map(item => {
+                                            return <option>{item}</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
+
+                            <div className="col-md-4">
                                 <label htmlFor="validationCustom06" className="form-label">Specialization</label>
                                 <textarea type="text" value={specialization} onChange={(e) => { setSpecialization(e.target.value) }} placeholder="Enter your field of specialization" className="form-control" id="validationCustom06" />
                             </div>
@@ -385,13 +402,6 @@ const Profile = () => {
                                 <label htmlFor="validationCustom06" className="form-label">Address</label>
                                 <textarea type="text" value={address} onChange={(e) => { setAddress(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
                             </div>
-
-                            <div className="col-md-4">
-                                <label htmlFor="validationCustom05" className="form-label">Date of Rac</label>
-                                <input type="date" value={racDate} onChange={(e) => { setRacDate(e.target.value) }} className="form-control" id="validationCustom05" />
-                            </div>
-
-
 
                             <div className="col-md-4">
                                 <label htmlFor="validationCustom06" className="form-label">orcid ID</label>
@@ -412,35 +422,6 @@ const Profile = () => {
                             <div className="col-md-4">
                                 <label htmlFor="validationCustom06" className="form-label">Personal Website Link</label>
                                 <textarea type="text" value={personalWebsiteLink} onChange={(e) => { setPersonalWebsiteLink(e.target.value) }} placeholder="Please enter your address" className="form-control" id="validationCustom06" />
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div className="col-md-4">
-                                <label htmlFor="validationCustom05" className="form-label">Caste</label>
-                                <select className={`form-select`} value={cast} onChange={(e) => { setCast(e.target.value) }} required>
-                                    <option selected disabled value="">Choose Caste</option>
-                                    {
-                                        Casts.map(item => {
-                                            return <option>{item}</option>
-                                        })
-                                    }
-                                </select>
                             </div>
 
                             <div className="col-12 mb-3 flex items-center justify-start gap-2">
