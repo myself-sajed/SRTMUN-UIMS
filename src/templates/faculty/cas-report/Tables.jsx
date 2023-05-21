@@ -135,6 +135,7 @@ const CASActivities = [
     },
 ]
 
+
 const Table = ({ academicData, casArray, forPrintOut }) => {
     return <>
         {/* // HEADING */}
@@ -269,3 +270,5 @@ const ViewFile = ({ fileName, type = "proofURL", attendance = false, small = fal
 export default Table
 
 export { ViewFile }
+
+export { CASActivities }

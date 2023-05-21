@@ -7,6 +7,7 @@ import Header from '../cas-report/Header'
 import BasicIntro from '../cas-report/BasicIntro'
 import SummarySheet from '../cas-report/SummarySheet'
 import Table from '../cas-report/Tables'
+import ShowProofs from './ShowProofs'
 
 const CASReport = () => {
 
@@ -94,6 +95,7 @@ const CASReport = () => {
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
                     <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
                     <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" forPrintOut={forPrintOut} />
+                    {/* <ShowProofs academicData={academicData} casArray={casArray} /> */}
                 </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
             }
         </div>
