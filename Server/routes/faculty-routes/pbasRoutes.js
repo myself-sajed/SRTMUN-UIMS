@@ -1,4 +1,5 @@
 const CASModel = require("../../models/faculty-models/pbasModel")
+require('dotenv').config();
 var pdf = require("html-pdf");
 // var options = { format: "A4" };
 var options = { format: "A4", timeout: 60000, border: { top: "0.4in", right: "0in", bottom: "0.4in", left: "0in" }, };
@@ -31,7 +32,7 @@ function casRoutes(app) {
         console.log('File name generated :', fileName);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        const link = `http://localhost:3000/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
+        const link = `${process.env.Report_Main_URL}/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
         console.log('Link : ', link)
         await page.goto(link,
             { waitUntil: 'networkidle0' });

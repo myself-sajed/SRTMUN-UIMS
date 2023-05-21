@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 const AAAModel = require('../../../models/director-models/academic-audit-models/academicAuditModel.js');
 const path = require('path');
 const puppeteer = require('puppeteer')
@@ -182,8 +183,8 @@ router.post("/generateAAAReport", async (req, res) => {
     try {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        console.log('Link : ', `http://localhost:3000/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`)
-        await page.goto(`http://localhost:3000/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`, {waitUntil: 'networkidle0'});
+        console.log('Link : ', `${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`)
+        await page.goto(`${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`, {waitUntil: 'networkidle0'});
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,
