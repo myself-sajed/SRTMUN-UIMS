@@ -76,6 +76,7 @@ const ImageResizer = async(file) => {
   let WIDTH = 2000
   const ResizeImmage =(img, WIDTH)=>{
     return new Promise((resolve) => {
+    count++;
     let reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = () => {
@@ -99,7 +100,13 @@ const ImageResizer = async(file) => {
   });
 }
   while (newfile.size > 1048576){
-        WIDTH = count==0?WIDTH: WIDTH-100
+        if(count > 0){
+          WIDTH -= 100;
+          if(WIDTH === 1200){
+              newfile = null;
+              break;
+          }
+        }
         newfile = await ResizeImmage(newfile, WIDTH)
   }
   return(newfile)
