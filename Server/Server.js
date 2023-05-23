@@ -11,7 +11,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const PORT = 4000;
+const PORT = 5000;
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -114,7 +114,7 @@ require('./routes/photogallery-routes/event')(app)
 // Database Configuration
 // const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
 
-const URL = `mongodb://localhost:27017/test`
+const URL = `mongodb://localhost:27017/srtmun`
 
 
 mongoose

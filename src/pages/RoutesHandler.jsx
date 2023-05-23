@@ -70,6 +70,7 @@ import Gallery from '../services/photogallery/pages/Gallery'
 import AddEvent from '../services/photogallery/pages/AddEvent'
 import EventsPage from '../services/photogallery/pages/EventsPage'
 import SchoolInformation from '../services/dashboard/pages/SchoolInformation'
+import StudentFeedback from '../services/feedback/pages/StudentFeedback'
 
 
 const RoutesHandler = () => {
@@ -159,6 +160,11 @@ const RoutesHandler = () => {
                 <Route path='/event/:eventId' exact element={<Gallery />} />
                 <Route path='/upload-event' exact element={<AddEvent />} />
                 <Route path='/events' exact element={<EventsPage />} />
+
+
+                {/* Feedback System */}
+                <Route path='/feedback/student' exact element={<StudentFeedback />} />
+
 
             </Routes>
 
