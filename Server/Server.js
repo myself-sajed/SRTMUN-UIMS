@@ -11,7 +11,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const PORT = 4000;
+// const PORT = 4000;
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -110,15 +110,8 @@ require('./utility/visitorCount')(app)
 // photo gallery routes
 require('./routes/photogallery-routes/event')(app)
 
-
-// Database Configuration
-// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-
-const URL = `mongodb://localhost:27017/test`
-
-
 mongoose
-  .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Database connection successful");
   })
@@ -227,6 +220,6 @@ app.get("*", (req, res) => {
 })
 
 
-app.listen(PORT, function () {
-  console.log(`Server started successfully at ${PORT}.`);
+app.listen(process.env.PORT, function () {
+  console.log(`Server started successfully at ${process.env.PORT}.`);
 });
