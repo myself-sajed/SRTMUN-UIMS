@@ -11,11 +11,7 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-<<<<<<< HEAD
-const PORT = 5000;
-=======
-// const PORT = 4000;
->>>>>>> 857bf1baf80aa9a5bdfdb5a217e1fbabe6d7c313
+
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
@@ -114,16 +110,6 @@ require('./utility/visitorCount')(app)
 // photo gallery routes
 require('./routes/photogallery-routes/event')(app)
 
-<<<<<<< HEAD
-
-// Database Configuration
-// const URL = `mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
-
-const URL = `mongodb://localhost:27017/srtmun`
-
-
-=======
->>>>>>> 857bf1baf80aa9a5bdfdb5a217e1fbabe6d7c313
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
