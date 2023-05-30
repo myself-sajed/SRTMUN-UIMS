@@ -540,6 +540,7 @@ const CASDataTable = {
             "Publication Year",
             "ISSN Number",
             "Indexed in",
+            "Links",
             "Year",
             "Proof",
         ],
@@ -549,6 +550,7 @@ const CASDataTable = {
             "publicationYear",
             "issnNumber",
             "indexedIn",
+            "indexLink",
             "year",
             "proof"
         ],

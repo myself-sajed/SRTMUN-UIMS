@@ -111,6 +111,12 @@ const TableData = {
     ]
   },
 
+  otherInfo: {
+    auditHead: ["Sr. No.", "Details (Mention Year, Value etc where relevant)", "Action"],
+    childHead: ["details"],
+    fieldOptions: [{ field: 'Text', keyName: "details", label: "Write about the contribution, credential or award received which is not mentioned earlier" },]
+  },
+
   courseOutcomes: {
     auditHead: ["Sr. No.", "Relevant Documents / Proofs stating Course Objectives & Outcomes", "Action"],
     childHead: ["proof"],

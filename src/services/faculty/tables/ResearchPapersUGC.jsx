@@ -28,7 +28,7 @@ const ResearchPapersUGC = () => {
     const [authorName, setAuthorName] = useState('')
     const [teacherName, setTeacherName] = useState('')
     const [journalName, setJournalName] = useState('')
-    const [indexLink, setIndexLink] = useState(null)
+    const [indexLink, setIndexLink] = useState([])
     const [pubYear, setPubYear] = useState('')
     const [issn, setIssn] = useState('')
     const [ugc, setUgc] = useState('')
@@ -43,6 +43,7 @@ const ResearchPapersUGC = () => {
 
     // indexedIn management
     const [indexData, setIndexData] = useState([])
+    const [indexLinkData, setIndexLinkData] = useState({})
 
     //functions
 
@@ -56,6 +57,8 @@ const ResearchPapersUGC = () => {
         formData.append('publicationYear', pubYear)
         formData.append('indexedIn', indexData?.join(", "))
         formData.append('indexData', indexData)
+        formData.append('indexLink', Object.entries(indexLinkData).map(([key, value]) => `${key}: ${value}`).join(", "))
+        formData.append('indexLinkData', indexLinkData)
         formData.append('issnNumber', issn)
         formData.append('recLink', ugc)
         formData.append('year', year)
@@ -63,6 +66,9 @@ const ResearchPapersUGC = () => {
         formData.append('userId', user._id)
 
         submitWithFile(formData, 'ResearchPaper', refetch, setLoading, setResearchPaperModal, setIsFormOpen)
+
+        console.log('Indexed In :', indexData)
+        console.log('Indexed In Links :', indexLinkData)
     }
 
     // make states together
@@ -77,6 +83,8 @@ const ResearchPapersUGC = () => {
         formData.append('paperTitle', paperTitle)
         formData.append('indexedIn', indexData?.join(", "))
         formData.append('indexData', indexData)
+        formData.append('indexLink', Object.entries(indexLinkData).map(([key, value]) => `${key}: ${value}`).join(", "))
+        formData.append('indexLinkData', indexLinkData)
         formData.append('journalName', journalName)
         formData.append('publicationYear', pubYear)
         formData.append('issnNumber', issn)
@@ -93,15 +101,14 @@ const ResearchPapersUGC = () => {
     function pencilClick(itemId) {
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
-
-                console.log('Item clicked :', item)
-
                 setPaperTitle(item.paperTitle)
                 setJournalName(item.journalName)
                 setPubYear(item.publicationYear)
                 setIssn(item.issnNumber)
                 setUgc(item.recLink)
-                setIndexData(item.indexedIn ? item.indexedIn.split(',').map(item => item.trim()) : [])
+                setIndexData(item.indexedIn ? item.indexedIn?.split(', ')?.map(item => item.trim()) : [])
+                setIndexLinkData(item.indexLink ? item.indexLink?.split(', ')?.reduce((acc, entry) => (parts => (acc[parts[0].trim()] = parts[1].trim(), acc))(entry.split(': ')), {})
+                    : {})
                 setYear(item.year)
                 setProof(item.file)
 
@@ -119,6 +126,7 @@ const ResearchPapersUGC = () => {
         setJournalName('')
         setPubYear('')
         setIndexData([])
+        setIndexLinkData({})
         setIssn('')
         setUgc('')
         setYear('')
@@ -133,10 +141,6 @@ const ResearchPapersUGC = () => {
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
-
-    useEffect(() => {
-        console.log('Index data :', indexData)
-    }, [indexData])
 
 
     return (
@@ -170,11 +174,13 @@ const ResearchPapersUGC = () => {
                             </div>
                         </div>
 
-                        {/* {
-                            indexedIn && <Text title={indexedIn === 'UGC CARE listed' ? 'UGC CARE Journal Number' : `${indexedIn} Link`} state={indexLink} setState={setIndexLink} />
-                        } */}
+                        <div class="row g-2">
 
+                            <IndexLink placeholder="Enter Scopus Link" indexLinkData={indexLinkData} setIndexLinkData={setIndexLinkData} id="Scopus" indexData={indexData} />
+                            <IndexLink placeholder="Enter Web of Science Link" indexLinkData={indexLinkData} setIndexLinkData={setIndexLinkData} id="Web of Science" indexData={indexData} />
+                            <IndexLink placeholder="Enter UGC Care List Link" indexLinkData={indexLinkData} setIndexLinkData={setIndexLinkData} id="UGC Care List" indexData={indexData} />
 
+                        </div>
 
                         <File space='col-md-10' title='Upload Proof' setState={setProof} />
 
@@ -192,6 +198,7 @@ const ResearchPapersUGC = () => {
                             <th scope="col">Publication Year</th>
                             <th scope="col">ISSN Number</th>
                             <th scope="col">Indexed in</th>
+                            <th scope="col">Links</th>
                             <th scope="col"><div className="w-20">Year</div></th>
                             <th scope="col">Proof</th>
                             <th scope="col">Action</th>
@@ -206,6 +213,7 @@ const ResearchPapersUGC = () => {
                                     <td>{item.publicationYear}</td>
                                     <td>{item.issnNumber}</td>
                                     <td>{item?.indexedIn}</td>
+                                    <td>{item?.indexLink}</td>
                                     <td>{item.year}</td>
                                     <td> <View proof={item.proof} /></td>
                                     <td><Actions item={item} model="ResearchPaper" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setResearchPaperModal} /></td>
@@ -239,5 +247,16 @@ const FormCheck = ({ id, setIndexData, indexData }) => {
         <label class="form-check-label" htmlFor={id}>
             {id}
         </label>
+    </div>
+}
+
+const IndexLink = ({ placeholder, id, indexLinkData, setIndexLinkData, indexData }) => {
+    useEffect(() => {
+        console.log('indexLinkData:', indexLinkData)
+    }, [indexLinkData])
+    return <div class="col">
+        <input type="text" value={indexLinkData[id]} className='form-control col-md-4' onChange={(e) => {
+            setIndexLinkData({ ...indexLinkData, [id]: e.target.value })
+        }} placeholder={placeholder} disabled={!indexData.includes(id)} />
     </div>
 }

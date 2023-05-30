@@ -18,7 +18,7 @@ import FormWrapper from '../components/FormWrapper';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const InvitedTalk = () => {
+const InvitedTalk = ({ filterByAcademicYear = false, academicYear }) => {
     const [talkModal, setTalkModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -108,7 +108,7 @@ const InvitedTalk = () => {
 
     }
 
-    let param = { model: 'InvitedTalk', userId: user._id }
+    let param = { model: 'InvitedTalk', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
@@ -193,7 +193,7 @@ const InvitedTalk = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear).map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.lectureTitle}</td>

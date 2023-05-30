@@ -8,6 +8,8 @@ import BasicIntro from '../cas-report/BasicIntro'
 import SummarySheet from '../cas-report/SummarySheet'
 import Table from '../cas-report/Tables'
 import ShowProofs from './ShowProofs'
+import OtherInfo from '../cas-report/OtherInfo'
+import Instructions from '../cas-report/Instructions'
 
 const CASReport = () => {
 
@@ -93,9 +95,10 @@ const CASReport = () => {
                         subTitle={`PBAS Report of year ${casArray?.map((cas) => cas.casYear).join(', ')}`}
                         directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
-                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
                     <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" forPrintOut={forPrintOut} />
-                    {/* <ShowProofs academicData={academicData} casArray={casArray} /> */}
+                    <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
+                    <OtherInfo casArray={casArray} forPrintOut={forPrintOut} />
+                    <Instructions forPrintOut={forPrintOut} />
                 </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
             }
         </div>

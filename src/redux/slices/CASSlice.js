@@ -6,6 +6,7 @@ export const CASSlice = createSlice({
         casYear: null,
         teachingData: null,
         academicData: null,
+        otherInfo: null,
         fetchYears: null,
     },
     reducers: {
@@ -14,6 +15,9 @@ export const CASSlice = createSlice({
         },
         setAcademicTable: (state, action) => {
             state.academicData = action.payload
+        },
+        setOtherInfoTable: (state, action) => {
+            state.otherInfo = action.payload
         },
         setCasYear: (state, action) => {
             state.casYear = action.payload
@@ -26,6 +30,6 @@ export const CASSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTeachingTable, setAcademicTable, setCasYear, setFetchYears } = CASSlice.actions
+export const { setTeachingTable, setAcademicTable, setOtherInfoTable, setCasYear, setFetchYears } = CASSlice.actions
 
 export default CASSlice.reducer

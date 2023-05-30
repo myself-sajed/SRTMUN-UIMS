@@ -137,19 +137,6 @@ const Teaching = ({ casArray, showFileURL, forPrintOut }) => {
                 </table >
             </div >
 
-            {/* // GRAND TOTAL */}
-            <div div >
-                {/* <p className='p-3 border-2 border-[#009879] rounded-lg'>Grand Total / Remark :
-                    <span className='ml-4'>{
-                        data?.teachingGrade >= 80 && data?.checkBoxCount > 0 ?
-                            <Remark title='Good' color={'green'} /> :
-                            (data?.teachingGrade >= 70 && data?.teachingGrade < 80) && (data?.checkBoxCount > 0) ?
-                                <Remark title='Satisfactory' color='yellow' /> :
-                                <Remark title='Not-Satisfactory' color='red' />
-
-                    }</span>
-                </p> */}
-            </div >
         </div >
     )
 }
@@ -454,8 +441,11 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Policy Documents'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{`${item?.academicData?.policyDocuments.totalScore} | Capped Score : 
-                                ${item?.policyCapScore}`}</div> </td>);
+                                    <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>
+                                        {false && <LabelImportantRoundedIcon />}
+                                        {title === "CAS" ? `${item?.academicData?.policyDocuments.totalScore} | Capped Score : 
+                                ${item?.policyCapScore}` : item?.academicData?.policyDocuments.totalScore}
+                                    </div> </td>);
                             })}</>} />
 
 
@@ -470,7 +460,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         < ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{`${item?.academicData.invitedTalks.totalScore.toFixed(2)} |   Capped Score : ${item?.talkCapScore}`}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{title === "CAS" ? `${item?.academicData.invitedTalks.totalScore.toFixed(2)} |   Capped Score : ${item?.talkCapScore}` : item?.academicData.invitedTalks.totalScore.toFixed(2)}</div> </td>);
                             })}</>} />
 
                         {/* // grand total */}
@@ -484,69 +474,118 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                 </table >
             </div >
 
-            {/* TOTAL SCORE */}
-            <div>
-                {/* // Heading */}
-                <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
+            {/* TOTAL SCORE FOR CAS & PBAS*/}
+            {
+                title === "CAS" ?
+                    <div>
+                        {/* // Heading */}
+                        <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
 
 
-                <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
-                    <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
-                        <tr>
-                            <th scope="col">Year(s)</th>
-                            <th scope="col">Total Score</th>
-                            {
-                                title === "CAS" && <th scope="col">Total Capped Score</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        {casArray.map((item) => {
-                            return (
+                        <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
+                            <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
                                 <tr>
-                                    <th scope="row">{item.casYear}</th>
-                                    <td>{item.totalScore.toFixed(2)}</td>
+                                    <th scope="col">Year(s)</th>
+                                    <th scope="col">Total Score</th>
+                                    <th scope="col">Total Capped Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                {casArray.map((item) => {
+                                    return (
+                                        <tr>
+                                            <th scope="row">{item.casYear}</th>
+                                            <td>{item.totalScore.toFixed(2)}</td>
+                                            <td>{item.totalCappedScore.toFixed(2)}</td>
+                                        </tr>
+
+                                    )
+                                })}
+
+                            </tbody>
+                        </table>
+
+                        <div className="my-2 flex items-center justify-center gap-4">
+                            <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum.toFixed(2)}</span></div>
+
+
+                            <span className='text-3xl text-muted'>|</span>
+                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum.toFixed(2)}</span></div>
+                        </div>
+                    </div> :
+                    <div>
+                        <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Summary of API Scores</span></p>
+
+                        <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
+                            <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
+                                <tr>
+                                    <th scope="col">Sr.</th>
+                                    <th scope="col">Criteria</th>
+                                    <th scope="col">Last Academic Year</th>
+                                    <th scope="col">Total API Score for Assessment Period</th>
+                                    <th scope="col">Annual Avg. API Score for Assessment Period</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <th>1.</th>
+                                    <td>Teaching, Learning and Evaluation related activities</td>
+                                    <td></td>
+
                                     {
-                                        title === "CAS" && <td>{item.totalCappedScore.toFixed(2)}</td>
+                                        casArray.map((item) => {
+                                            return <td>
+                                                <Remark title={item?.teachingData?.teachingRemark} color={item?.teachingData?.teachingRemarkColor} />
+                                                <p className='text-muted text-sm mt-2'>(Among Good, Satisfactory, Not-Satisfactory)</p>
+                                            </td>
+                                        })
                                     }
+
+                                    <td></td>
+
+                                </tr>
+                                <tr>
+                                    <th>2.</th>
+                                    <td>Co-curricular, Extension, Profession developement, etc.</td>
+                                    <td></td>
+                                    {
+                                        casArray.map((item) => {
+                                            return <td className='text-[#009879]'>Involved in <span className='font-bold'>{item?.teachingData?.checkBoxCount}</span> {item?.teachingData?.checkBoxCount > 1 ? 'Activities' : 'Activity'}  <br />
+                                                <div className="mt-2">
+                                                    {
+                                                        item?.teachingData?.checkBoxCount > 2 ?
+                                                            <Remark title='Good' color='green' /> :
+                                                            item?.teachingData?.checkBoxCount >= 1 ?
+                                                                <Remark title='Satisfactory' color='yellow' /> :
+                                                                <Remark title='Not-Satisfactory' color='red' />
+                                                    }
+                                                </div>
+                                                <p className='text-muted text-sm mt-2'>(Among Good, Satisfactory, Not-Satisfactory)</p>
+                                            </td >
+                                        })}
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>3.</th>
+
+                                    <td>Research and Academic Contribution</td>
+                                    <td></td>
+                                    <td><b>{allYearTotalSum.toFixed(2)}</b></td>
+                                    <td></td>
                                 </tr>
 
-                            )
-                        })}
-
-                    </tbody>
-                </table>
-
-                <div className="my-2 flex items-center justify-center gap-4">
-                    <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum.toFixed(2)}</span></div>
 
 
-                    {
-                        title === "CAS" && <> <span className='text-3xl text-muted'>|</span>
-                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum.toFixed(2)}</span></div></>
-                    }
-                </div>
-            </div>
 
-            <div className='flex items-center justify-around mt-72'>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the Candidate</p>
-                </div>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the Director</p>
-                </div>
-                <div className='text-center mb-5'>
-                    <p className='mb-5'>Signature</p>
-                    <p>Name of the IQAC Director</p>
-                </div>
-            </div>
+                            </tbody>
+                        </table>
 
+                    </div>
+            }
 
-            <p className='text-center text-muted mb-10 mt-28'>Note: <strong>Submit the hard copy of Summary Sheet along with the {title} Proposal</strong></p>
 
         </div >
     )

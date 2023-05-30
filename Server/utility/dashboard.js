@@ -54,17 +54,19 @@ const Alumni = require('../models/alumni-models/alumniUserSchema')
 // 4. Student Models
 const Student = require('../models/student-models/studentUserSchema')
 
+// 5. Feedback Models
+const StudentFeedback = require('../models/feedback-models/studentFeedbackModel')
+
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,
     DirectorUser, Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey,
-    Alumni, Student, AlumniContribution
+    Alumni, Student, AlumniContribution, StudentFeedback
 }
 
 function feedback(app) {
 
     app.post('/api/get/dashboardData', function (req, res) {
         const { model, filter } = req.body
-        console.log(model, filter)
         models[model].find(filter).lean().sort({ $natural: -1 }).then((data) => {
             if (data) {
                 res.send({ status: 'success', data: data })

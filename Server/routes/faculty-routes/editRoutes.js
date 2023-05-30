@@ -656,6 +656,8 @@ function editRoutes(app) {
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,
+                indexLink: data.indexLink,
+                indexLinkData: data.indexLinkData,
                 issnNumber: data.issnNumber,
                 year: data.year,
                 proof: req.file.filename,
@@ -691,6 +693,8 @@ function editRoutes(app) {
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,
+                indexLink: data.indexLink,
+                indexLinkData: data.indexLinkData,
                 issnNumber: data.issnNumber,
                 year: data.year,
             }).then(function (data) {

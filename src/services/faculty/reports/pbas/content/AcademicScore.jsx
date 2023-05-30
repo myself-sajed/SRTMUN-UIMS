@@ -3,13 +3,14 @@ import AddPaper from './AddPaper';
 import { BGPad, Remark } from './Teaching';
 import Publications from './Publications';
 import { useDispatch, useSelector, } from 'react-redux';
-import { setAcademicTable, setCasYear, setTeachingTable } from '../../../../../redux/slices/CASSlice';
+import { setAcademicTable, setCasYear, setOtherInfoTable, setTeachingTable } from '../../../../../redux/slices/CASSlice';
 import { SaveButton } from '../PbasReportHome';
 import ContentCreated from './ContentCreated';
 import ResearchGuide from './ResearchGuide';
 import PolicyDocuments from './PolicyDocuments';
 import InvitedLectures from './InvitedLectures';
 import { saveCASDetails } from '../PBASServices';
+import OtherInfo from './OtherInfo';
 
 
 const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, teachingData, saveLoader, setSaveLoader }) => {
@@ -45,6 +46,8 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
 
     const [invitedTalks, setInvitedTalks] = useState({ scoreMap: {}, dataMap: [], totalScore: 0 })
 
+    const [otherInfo, setOtherInfo] = useState([])
+
 
     // setting researchPaper with serverCasData
     useEffect(() => {
@@ -76,6 +79,9 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
         setInvitedTalks(serverCasData ? serverCasData?.academicData?.invitedTalks : { scoreMap: {}, dataMap: [], totalScore: 0, })
 
 
+        setOtherInfo(serverCasData ? serverCasData?.otherInfo : [])
+
+
 
     }, [serverCasData && serverCasData, casYearState])
 
@@ -87,13 +93,11 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
             casYear: casYearState,
             fetchYears: fetchYears && fetchYears,
             teachingData,
+            otherInfo,
             academicData: {
                 researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks
-            }
+            },
         }
-
-        console.log('CAS Schema : ', casSchema)
-
 
 
         let academicData = {
@@ -104,6 +108,7 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
         dispatch(setCasYear(casYearState))
         dispatch(setTeachingTable(teachingData))
         dispatch(setAcademicTable(academicData))
+        dispatch(setOtherInfoTable(otherInfo))
 
         user && saveCASDetails(casSchema, user?._id, setSaveLoader)
     }
@@ -158,6 +163,15 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
                 <div>
                     <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} />
                 </div>
+
+                <div>
+                    <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} />
+                </div>
+
+                <div>
+                    <OtherInfo setOtherInfo={setOtherInfo} otherInfo={otherInfo} />
+                </div>
+
 
 
 

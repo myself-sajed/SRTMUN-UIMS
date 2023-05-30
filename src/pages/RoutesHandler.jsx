@@ -71,6 +71,7 @@ import AddEvent from '../services/photogallery/pages/AddEvent'
 import EventsPage from '../services/photogallery/pages/EventsPage'
 import SchoolInformation from '../services/dashboard/pages/SchoolInformation'
 import StudentFeedback from '../services/feedback/pages/StudentFeedback'
+import Response from '../services/feedback/pages/Response'
 
 
 const RoutesHandler = () => {
@@ -163,7 +164,8 @@ const RoutesHandler = () => {
 
 
                 {/* Feedback System */}
-                <Route path='/feedback/student' exact element={<StudentFeedback />} />
+                <Route path='/feedback/student/:academicYear/:schoolName' exact element={<StudentFeedback />} />
+                <Route path='/feedback/response/:academicYear/:schoolName' exact element={<Response />} />
 
 
             </Routes>
