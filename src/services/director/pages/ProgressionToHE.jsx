@@ -22,7 +22,7 @@ import SchoolsProgram from "../../../components/SchoolsProgram";
 
 const tableHead = { index: "Sr. no.", Name_of_student_enrolling: "Name of student enrolling", Program_graduated_from: "Program graduated from", Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", Academic_Year: "Academic Year", Upload_Proof: "Upload Proof", Action: "Action" }
 
-function ProgressionToHE() {
+function ProgressionToHE({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = "ProgressionToHE";
     const module = 'director'
@@ -90,8 +90,8 @@ function ProgressionToHE() {
             </Dialog>
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProgressionToHEDirector${directorUser.department}`} title='Progression To HE' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-            
-            <Table TB={data?.data} module={module} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

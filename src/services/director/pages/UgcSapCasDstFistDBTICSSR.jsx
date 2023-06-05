@@ -20,10 +20,10 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no." ,  Name_of_the_Scheme_Project_Endowments_Chairs: "Name of the Scheme/Project/ Endowments/ Chairs" ,  Name_of_the_Principal_Investigator_Co_Investigator: "Name of the Principal Investigator/ Co Investigator" ,  Name_of_the_Funding_agency: "Name of the Funding agency " ,  Type_of_Agency: "Type of Agency" ,  Name_of_Department: "Name of Department" ,  Year_of_Award: "Year of Award" ,  Funds_provided_in_lakhs: "Funds provided ( ₹ / in lakhs)" ,  Duration_of_the_project_in_Years: "Duration of the project (in Years)" ,  Upload_Proof: "Upload proof" ,  Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_the_Scheme_Project_Endowments_Chairs: "Name of the Scheme/Project/ Endowments/ Chairs", Name_of_the_Principal_Investigator_Co_Investigator: "Name of the Principal Investigator/ Co Investigator", Name_of_the_Funding_agency: "Name of the Funding agency ", Type_of_Agency: "Type of Agency", Name_of_Department: "Name of Department", Year_of_Award: "Year of Award", Funds_provided_in_lakhs: "Funds provided ( ₹ / in lakhs)", Duration_of_the_project_in_Years: "Duration of the project (in Years)", Upload_Proof: "Upload proof", Action: "Action" }
 
-const TyofAgency = [ "Government" , "Non-Government" ]
-function UgcSapCasDstFistDbtICssr() {
+const TyofAgency = ["Government", "Non-Government"]
+function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = 'UgcSapCasDstFistDBTICSSR';
     const module = 'director';
@@ -70,13 +70,13 @@ function UgcSapCasDstFistDbtICssr() {
             <AddButton onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-                <DialogContent dividers sx={{background:"#e5eaf0" }}>
+                <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField label="Name of the Scheme/Project/ Endowments/ Chairs" type="text" value={values.uscnotspec} id="uscnotspec" onch={setvalues} required="true" />
@@ -96,7 +96,7 @@ function UgcSapCasDstFistDbtICssr() {
             </Dialog>
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='UgcSapCasDstFistDBTICSSRDirector' title='UGC-SAP, CAS, DST-FIST, DBT, ICSSR' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-            <Table TB={data?.data} module={module} year="Year_of_Award" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Award" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

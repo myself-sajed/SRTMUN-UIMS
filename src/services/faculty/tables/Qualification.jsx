@@ -14,7 +14,8 @@ import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const Qualification = () => {
+const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
+
 
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
@@ -32,12 +33,14 @@ const Qualification = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
 
+    const [filteredItems, setFilteredItems] = useState([])
+
 
     // handle addQualification
     function handleAddQualification(e) {
         e.preventDefault();
         setLoading(true)
-        const data = { exam, subjects, institute, year, percentage, userId: user._id }
+        const data = { exam, subjects, institute, year, percentage, userId: user?._id }
         submit(data, 'Qualification', refetch, setLoading, setQualificationModal, setIsFormOpen)
 
     }
@@ -73,7 +76,7 @@ const Qualification = () => {
         setSubjects('')
     }
 
-    let param = { model: 'Qualification', userId: user._id }
+    let param = { model: 'Qualification', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
@@ -83,12 +86,16 @@ const Qualification = () => {
         window.scrollTo(0, 150)
     }, [])
 
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
+
     return (
         <div className="">
 
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="Qualification" editState={setEditModal} clearStates={clearStates} state={setQualificationModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Qualifications" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Qualification" editState={setEditModal} clearStates={clearStates} state={setQualificationModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Qualifications" />
 
             <BulkExcel data={data?.data?.data} sampleFile='QualificationFaculty' title='Qualification' SendReq='Qualification' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
@@ -151,7 +158,7 @@ const Qualification = () => {
 
                     <tbody>
 
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((qualification, index) => {
+                        {data && filteredItems.map((qualification, index) => {
                             return (
                                 <tr key={qualification._id}>
                                     <th scope="row">{index + 1}</th>
@@ -178,7 +185,7 @@ const Qualification = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
 

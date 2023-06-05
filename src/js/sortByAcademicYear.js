@@ -1,9 +1,6 @@
 
 const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear = false, academicYear) => {
 
-
-    console.log(filterByAcademicYear, academicYear, arrayToSort)
-
     if (arrayToSort?.length > 0) {
         if (filterByAcademicYear) {
             // Filter the array based on the provided academicYear

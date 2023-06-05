@@ -24,7 +24,7 @@ const tableHead = { index: "Sr. no.", Programme_Code: "Programme Code", Programm
 
 const CE = ["CBCS", "ECS"]
 
-function SyllabusRevision() {
+function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
   const SendReq = 'SyllabusRevision';
   const module = 'director';
 
@@ -38,16 +38,15 @@ function SyllabusRevision() {
 
   //--------------values useState---------------
   const initialState = { srpc: "", srpn: "", sray: "", sryoi: "", srsoioce: "", sryoim: "", sryor: "", srpocaor: "", Upload_Proof: "" }
-  
+
   const [values, setvalues] = useState(initialState);
-console.log(values.Upload_Proof)
   //---------------edit state-------------------
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
   useEffect(() => {
     if (itemToEdit && data.data) {
-      data?.data.forEach((item) => {
+      data?.data?.forEach((item) => {
         if (item?._id === itemToEdit) {
           setEdit(true); setAdd(true);
           setvalues({
@@ -77,7 +76,7 @@ console.log(values.Upload_Proof)
             setLoading(true)
             edit ?
               EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+              PostReq({ School: directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <CTextField label="Programme Code" value={values.srpc} id="srpc" type="text" onch={setvalues} required={true} />
@@ -95,9 +94,9 @@ console.log(values.Upload_Proof)
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data}  proof='Upload_Proof' sampleFile='SyllabusRevisionDirector' title='Syllabus Revision' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='SyllabusRevisionDirector' title='Syllabus Revision' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-      <Table TB={data?.data} module={module} year='Academic_Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+      <Table TB={data?.data} module={module} year='Academic_Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} />
     </>
   )
 }

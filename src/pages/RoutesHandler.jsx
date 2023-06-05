@@ -12,12 +12,9 @@ import NavTools from '../components/NavTools'
 import ViewFile from './ViewFile'
 import PageNotFound from './PageNotFound'
 import Index from './Index'
-import IndexNavbar from '../components/IndexNavbar'
 import LoadingPage from '../components/LoadingPage'
 import CasReportHome from '../services/faculty/reports/cas/CasReportHome'
 import GenerateCASPage from '../services/faculty/reports/cas/report/GenerateCASPage'
-import navcom from '../services/director/components/UtilityComponents/navcom'
-import Header from '../services/director/components/UtilityComponents/Header'
 import DirectorViewFile from '../services/director/pages/DirectorViewFile'
 import DirectorLogin from '../services/director/pages/DirectorLogin'
 import AdminLogin from '../services/admin/pages/AdminLogin'
@@ -64,14 +61,21 @@ import PROLogin from '../services/news/pages/PROLogin'
 import PROEditor from '../services/news/pages/PROEditor'
 import SingleNews from '../services/news/pages/SingleNews'
 import PROHome from '../services/news/pages/PROHome'
-import { useEffect } from 'react'
 import DirectorSSM from '../services/director/pages/DirectorSSM'
 import Gallery from '../services/photogallery/pages/Gallery'
 import AddEvent from '../services/photogallery/pages/AddEvent'
 import EventsPage from '../services/photogallery/pages/EventsPage'
 import SchoolInformation from '../services/dashboard/pages/SchoolInformation'
 import StudentFeedback from '../services/feedback/pages/StudentFeedback'
-import Response from '../services/feedback/pages/Response'
+import AQARHome from '../services/faculty/reports/aqar/pages/AQARHome'
+import useAuth from '../hooks/useAuth'
+import useDirectorAuth from '../hooks/useDirectorAuth'
+import TeacherFeedback from '../services/feedback/pages/TeacherFeedback'
+import AlumniFeedback from '../services/feedback/pages/AlumniFeedback'
+import ParentFeedback from '../services/feedback/pages/ParentFeedback'
+import EmployerFeedback from '../services/feedback/pages/EmployerFeedback'
+import StudentResponse from '../services/feedback/pages/StudentResponse'
+import OtherReponses from '../services/feedback/pages/OtherReponses'
 
 
 const RoutesHandler = () => {
@@ -125,6 +129,7 @@ const RoutesHandler = () => {
                     })
                 }
 
+
                 <Route path='/director' element={<DirectorHome />} />
                 <Route path='/director/sdm' element={<DirectorMain />} />
                 <Route path='/director/ssm' element={<DirectorSSM />} />
@@ -163,9 +168,24 @@ const RoutesHandler = () => {
                 <Route path='/events' exact element={<EventsPage />} />
 
 
-                {/* Feedback System */}
+                {/* Feedback System: PART I : QUESTIONS */}
                 <Route path='/feedback/student/:academicYear/:schoolName' exact element={<StudentFeedback />} />
-                <Route path='/feedback/response/:academicYear/:schoolName' exact element={<Response />} />
+                <Route path='/feedback/teacher/:academicYear/:schoolName' exact element={<TeacherFeedback />} />
+                <Route path='/feedback/alumni/:academicYear/:schoolName' exact element={<AlumniFeedback />} />
+                <Route path='/feedback/parent/:academicYear/:schoolName' exact element={<ParentFeedback />} />
+                <Route path='/feedback/employer/:academicYear/:schoolName' exact element={<EmployerFeedback />} />
+
+
+
+                {/* Feedback System: PART II : RESPONSE */}
+                <Route path='/feedback/response/student/:academicYear/:schoolName' exact element={<StudentResponse />} />
+                <Route path='/feedback/response/:responseType/:academicYear/:schoolName' exact element={<OtherReponses />} />
+
+                {/* AQAR  */}
+                <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
+                <Route path="/director/service/aqar-report" exact element={<AQARHome userType='director' auth={useDirectorAuth} />} />
+
+
 
 
             </Routes>

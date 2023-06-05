@@ -20,7 +20,7 @@ import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const Lectures = () => {
+const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
     const [lectureModal, setLectureModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -38,12 +38,14 @@ const Lectures = () => {
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const [filteredItems, setFilteredItems] = useState([])
+
     const user = useSelector(state => state.user.user);
 
     // function handleAddQualification(e) {
     //     e.preventDefault();
     //     setLoading(true)
-    //     const data = { exam, subjects, institute, year, percentage, userId: user._id }
+    //     const data = { exam, subjects, institute, year, percentage, userId: user?._id }
     //     submit(data, 'Qualification', refetch, setLoading, setQualificationModal, setIsFormOpen)
 
     // }
@@ -52,8 +54,8 @@ const Lectures = () => {
         e.preventDefault();
 
         setLoading(true)
-        
-        const data = { course, level, mode, noOfClasses, classesTaken, year, userId: user._id }
+
+        const data = { course, level, mode, noOfClasses, classesTaken, year, userId: user?._id }
         submit(data, 'lectures', refetch, setLoading, setLectureModal, setIsFormOpen)
 
         // let formData = new FormData()
@@ -64,7 +66,7 @@ const Lectures = () => {
         // formData.append('classesTaken', classesTaken)
         // // formData.append('file', proof)
         // formData.append('year', year)
-        // formData.append('userId', user._id)
+        // formData.append('userId', user?._id)
 
         // submitWithFile(formData, 'lectures', refetch, setLoading, setLectureModal, setIsFormOpen)
     }
@@ -76,8 +78,8 @@ const Lectures = () => {
 
         const theItem = { itemId: itemToDelete._id, course, level, mode, noOfClasses, classesTaken, year, }
         handleEdit(theItem, 'Lectures', setEditModal, refetch, setLoading, setIsFormOpen)
-        
-        
+
+
         // // arrange form Data
         // let formData = new FormData()
         // formData.append('itemId', itemToDelete._id)
@@ -125,20 +127,22 @@ const Lectures = () => {
     }
 
 
-    let param = { model: 'Lectures', userId: user._id }
+    let param = { model: 'Lectures', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
 
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div>
             {/* // 1. HEADER */}
 
 
-            <Header exceldialog={setOpen} add="Lectures/Seminars" editState={setEditModal} clearStates={clearStates} state={setLectureModal} icon={<TvRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Lectures, Seminars, Tutorials, Practicals, Contact Hours" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Lectures/Seminars" editState={setEditModal} clearStates={clearStates} state={setLectureModal} icon={<TvRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Lectures, Seminars, Tutorials, Practicals, Contact Hours" />
 
             <BulkExcel data={data?.data?.data} sampleFile='LecturesFaculty' title='Lectures, Seminars' SendReq='Lectures' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -196,7 +200,7 @@ const Lectures = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
@@ -221,7 +225,7 @@ const Lectures = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

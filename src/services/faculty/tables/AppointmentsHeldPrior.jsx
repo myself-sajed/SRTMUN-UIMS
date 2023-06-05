@@ -163,7 +163,7 @@ const AppointmentsHeldPrior = () => {
 
 
 
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.designation}</td>

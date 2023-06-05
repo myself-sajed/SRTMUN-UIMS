@@ -17,7 +17,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const PostHeldAppointment = () => {
+const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -35,6 +35,8 @@ const PostHeldAppointment = () => {
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const [filteredItems, setFilteredItems] = useState([])
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -45,7 +47,7 @@ const PostHeldAppointment = () => {
         formData.append('joiningDate', joiningDate)
         formData.append('leavingDate', leavingDate)
         formData.append('file', proof)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'PostHeld', refetch, setLoading, setPostsModal, setIsFormOpen)
     }
@@ -97,19 +99,21 @@ const PostHeldAppointment = () => {
 
     }
 
-    let param = { model: 'PostHeld', userId: user._id }
+    let param = { model: 'PostHeld', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div>
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} add="Posts" editState={setEditModal} state={setPostsModal} clearStates={clearStates} icon={<AirlineSeatReclineNormalRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Posts held after appointments at this institution" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Posts" editState={setEditModal} state={setPostsModal} clearStates={clearStates} icon={<AirlineSeatReclineNormalRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Posts held after appointments at this institution" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PostHeldFaculty' title='Posts held after appointments' SendReq='PostHeld' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -158,7 +162,7 @@ const PostHeldAppointment = () => {
 
 
 
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.designation}</td>
@@ -184,7 +188,7 @@ const PostHeldAppointment = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

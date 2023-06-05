@@ -19,7 +19,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear'
 import GenderSelect, { CasteSelect } from '../../../inputs/GenderSelect';
 
-const PHDAwarded = () => {
+const PHDAwarded = ({ filterByAcademicYear = false, academicYear }) => {
     const [phdModal, setPhdModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -42,6 +42,7 @@ const PHDAwarded = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
+    const [filteredItems, setFilteredItems] = useState([])
 
     const [res, setRes] = useState('')
 
@@ -65,7 +66,7 @@ const PHDAwarded = () => {
         formData.append('phdAwardYear', awardYear)
         formData.append('year', year)
         formData.append('file', proof)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'PhdAwarded', refetch, setLoading, setPhdModal, setIsFormOpen)
     }
@@ -140,18 +141,20 @@ const PHDAwarded = () => {
 
     }
 
-    let param = { model: 'PhdAwarded', userId: user._id }
+    let param = { model: 'PhdAwarded', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Guidance" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Guidance" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PhdAwardedFaculty' title='Ph.D. Awarded' SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -232,7 +235,7 @@ const PHDAwarded = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.scholarName}</td>
@@ -259,7 +262,7 @@ const PHDAwarded = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
 

@@ -16,6 +16,7 @@ import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 //components
+import SyllabusRevision from '../../pages/SyllabusRevision';
 import Employability from "../../pages/Employability";
 import ValueAddedCource from "../../pages/ValueAddedCource";
 import ProjectsInternships from "../../pages/ProjectsInternships";
@@ -36,7 +37,6 @@ import ProgressionToHE from "../../pages/ProgressionToHE";
 import TrainingProgramsOrganized from "../../pages/TrainingProgramsOrganized";
 import AlumniContribution from "../../pages/AlumniContribution";
 import ConferencesSemiWorkshopOrganized from '../../pages/ConferencesSemiWorkshopOrganized';
-import SyllabusRevision from '../../pages/SyllabusRevision';
 
 
 
@@ -251,4 +251,8 @@ const navcom = [
 
     }
 ]
+
+console.log('navcom :', navcom)
+
+
 export default navcom;

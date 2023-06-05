@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -18,9 +18,9 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
-const tableHead = { index: "Sr. no." ,  Name_of_the_activity: "Name of the activity" ,  Organising_unit: "Organising unit/ agency/ collaborating agency" ,  Name_of_the_scheme: "Name of the scheme" ,  Year_of_activity: "Year of the activity " ,  Number_of_students: "Number of students participated in such activities" ,  Upload_Proof: "Proof" ,  Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_the_activity: "Name of the activity", Organising_unit: "Organising unit/ agency/ collaborating agency", Name_of_the_scheme: "Name of the scheme", Year_of_activity: "Year of the activity ", Number_of_students: "Number of students participated in such activities", Upload_Proof: "Proof", Action: "Action" }
 
-function ExtensionActivities() {
+function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
   const SendReq = "ExtensionActivities"
   const module = 'director'
 
@@ -63,13 +63,13 @@ function ExtensionActivities() {
       <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-        <DialogContent dividers sx={{background:"#e5eaf0" }}>
+        <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-              PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+              EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <CTextField label="Name of the activity" type="text" value={values.eanota} id="eanota" required={true} onch={setvalues} />
@@ -86,7 +86,7 @@ function ExtensionActivities() {
 
       <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivitiesDirector' title='Extension Activities' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-      <Table TB={data?.data} module={module} fatchdata={refetch} year="Year_of_activity" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
+      <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="Year_of_activity" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>
   )
 }

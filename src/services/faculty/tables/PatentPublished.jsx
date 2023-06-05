@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const PatentPublished = () => {
+const PatentPublished = ({ filterByAcademicYear = false, academicYear }) => {
     const [patentModal, setPatentModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -35,6 +35,8 @@ const PatentPublished = () => {
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const [filteredItems, setFilteredItems] = useState([])
+
     const user = useSelector(state => state.user.user);
 
     function handleSubmit(e) {
@@ -48,7 +50,7 @@ const PatentPublished = () => {
         formData.append('awardYear', awardYear)
         formData.append('file', proof)
         formData.append('year', year)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'Patent', refetch, setLoading, setPatentModal, setIsFormOpen)
     }
@@ -105,17 +107,19 @@ const PatentPublished = () => {
         setProof(null)
     }
 
-    let param = { model: 'Patent', userId: user._id }
+    let param = { model: 'Patent', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
 
     return (
         <div>
             {/* // HEADER */}
-            <Header exceldialog={setOpen} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Patents published / awarded" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Patents published / awarded" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PatentFaculty' title='Patents published / awarded' SendReq='Patent' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -171,7 +175,7 @@ const PatentPublished = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear).map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.patenterName}</td>
@@ -195,7 +199,7 @@ const PatentPublished = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

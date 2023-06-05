@@ -18,9 +18,9 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
-const tableHead = { index: "Sr. no." ,  Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed" ,  Duration_of_MoU: "Duration of MoU" ,  Year_of_signing_MoU: "Year of signing MoU" , Upload_Proof:"Actual activity list",  Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed", Duration_of_MoU: "Duration of MoU", Year_of_signing_MoU: "Year of signing MoU", Upload_Proof: "Actual activity list", Action: "Action" }
 
-function MoUs() {
+function MoUs({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = "MoUs"
     const module = "director"
@@ -31,7 +31,7 @@ function MoUs() {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const params = { model: SendReq, id: directorUser?.department , module}
+    const params = { model: SendReq, id: directorUser?.department, module }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
     const initialState = { munoowwms: "", mudom: "", muyosm: "", Upload_Proof: "" }
@@ -63,13 +63,13 @@ function MoUs() {
             <AddButton onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-                <DialogContent dividers sx={{background:"#e5eaf0" }}>
+                <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField label="Name of Organisation with whome mou signed" type="text" value={values.munoowwms} id="munoowwms" required={!edit} onch={setvalues} />
@@ -83,7 +83,7 @@ function MoUs() {
             </Dialog>
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUsDirector' title='MoUs' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-            <Table TB={data?.data} module={module} year="Year_of_signing_MoU" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_signing_MoU" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

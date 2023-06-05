@@ -111,7 +111,7 @@ require('./utility/visitorCount')(app)
 require('./routes/photogallery-routes/event')(app)
 
 // feedback routes
-require('./routes/feedback-routes/studentFeedbackRoutes')(app)
+require('./routes/feedback-routes/feedbackRoutes')(app)
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

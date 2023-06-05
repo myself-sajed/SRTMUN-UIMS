@@ -135,14 +135,20 @@ const Home = () => {
                                     <p className='text-xs sm:text-sm'>{user && user.department},</p>
                                     <p className='text-xs sm:text-sm'><p className='text-xs sm:text-sm'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p></p>
 
-                                    <div className='flex items-center justify-start gap-3 mt-4'>
+                                    <div className='flex items-start justify-start gap-2 mt-4 flex-wrap'>
                                         <button onClick={() => { navigate(siteLinks.facultyProfile.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
                                             Go to Profile
                                         </button>
 
-                                        <button onClick={() => { dispatch(setUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('faculty-token'); }} className='p-2 text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
+                                        <button onClick={() => { navigate(siteLinks.facultyReport.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
+                                            Faculty Report
+                                        </button>
+
+                                        <button onClick={() => { dispatch(setUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('faculty-token'); }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
                                             Logout
                                         </button>
+
+
                                     </div>
                                 </div>
                             </div>

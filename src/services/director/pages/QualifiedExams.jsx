@@ -23,7 +23,7 @@ const tableHead = { index: "Sr. no.", Registration_number_roll_number: "Registra
 
 const exam = ["NET", "SLET", "GATE", "GMAT", "GPAT", "NIPER", "CAT", "GRE", "JAM", "IELTS", "TOEFL", "Civil Services", "State Gov exams", "Any Such Other Exams"]
 
-function QualifiedExams() {
+function QualifiedExams({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = 'QualifiedExams';
     const module = 'director'
@@ -87,7 +87,7 @@ function QualifiedExams() {
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='QualifiedExamsDirector' title='Qualified Exams' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-            <Table TB={data?.data} module={module} year="Acadmic_year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Acadmic_year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

@@ -32,6 +32,7 @@ import { fetchIndexNews } from '../services/news/js/fetchNews';
 import { useQuery } from 'react-query';
 import LoggedInUsers from '../components/LoggedInUsers';
 import VisitorCount from '../services/dashboard/components/VisitorCount';
+import navcom from '../services/director/components/UtilityComponents/navcom';
 
 const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }
@@ -43,6 +44,7 @@ const Index = () => {
     useUserIsLoggedIn()
     title("Welcome")
     const navigate = useNavigate()
+
 
     let serviceList = [
         {

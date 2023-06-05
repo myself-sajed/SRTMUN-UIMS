@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, Skeleton, Typography } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
@@ -18,7 +18,7 @@ const OnlyNav = ({ children, user, heading, li, logout, userType = 'faculty' }) 
     const navigate = useNavigate()
 
     return (
-        <div>
+        <div >
             {/* Navtools */}
             <div className="py-1 gap-2 flex items-center justify-between text-base border-b">
 

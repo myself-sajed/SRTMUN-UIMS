@@ -1,5 +1,7 @@
 import React from 'react'
 
+const designations = ['Assistant Professor', 'Associate Professor', "Professor", "Professor & Director", "Senior Professor"]
+
 const DesignationSelect = ({ id, state, setState }) => {
     return (
         <select className="form-select" id={id} required
@@ -15,3 +17,5 @@ const DesignationSelect = ({ id, state, setState }) => {
 }
 
 export default DesignationSelect
+
+export { designations }

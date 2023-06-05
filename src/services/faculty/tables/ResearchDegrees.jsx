@@ -20,7 +20,7 @@ import { toast } from 'react-hot-toast';
 import { ImageResizer } from '../../../components/ProfileCroper';
 
 
-const ResearchDegrees = () => {
+const ResearchDegrees = ({ filterByAcademicYear = false, academicYear }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
@@ -41,6 +41,8 @@ const ResearchDegrees = () => {
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const [filteredItems, setFilteredItems] = useState([])
+
     // add new content
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -52,7 +54,7 @@ const ResearchDegrees = () => {
         formData.append('title', title)
         formData.append('university', university)
         formData.append('awardDate', awardDate)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
         formData.append('file', degree)
         formData.append('subject', subject)
 
@@ -107,11 +109,14 @@ const ResearchDegrees = () => {
 
     }
 
-    let param = { model: 'Degree', userId: user._id }
+    let param = { model: 'Degree', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     const HandleImageChange = async (e) => {
 
@@ -120,22 +125,22 @@ const ResearchDegrees = () => {
         if (file.size < 1048576) {
             setDegree(file);
         } else {
-          if (
-            file.type === "image/jpeg" ||
-            file.type === "image/png"
-          ) {
-            value = await ImageResizer(file);
-            if (value === null) {
-                toast.error("Unfortunately, the sizereducer is unable to reduce the size of this file. May be it will break the file.");
+            if (
+                file.type === "image/jpeg" ||
+                file.type === "image/png"
+            ) {
+                value = await ImageResizer(file);
+                if (value === null) {
+                    toast.error("Unfortunately, the sizereducer is unable to reduce the size of this file. May be it will break the file.");
+                }
+                console.log(value);
+                setDegree(value);
+            } else {
+                toast.error("pdf must be less than 1MB");
+                setDegree(null);
             }
-            console.log(value);
-            setDegree(value);
-          } else {
-            toast.error("pdf must be less than 1MB");
-            setDegree(null);
-          }
         }
-      };
+    };
 
     return (
         <div className="">
@@ -144,9 +149,10 @@ const ResearchDegrees = () => {
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='DegreeFaculty' title='Research Degrees' SendReq='Degree' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+
             {/* // 2. FIELDS */}
 
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
@@ -184,7 +190,7 @@ const ResearchDegrees = () => {
 
                         <div className="col-md-4">
                             <label htmlFor="inputGroupFile01" className="form-label">Upload Degree<p className='text-sm text-gray'>{editModal ? "(Your previously uploaded degree is available, if you want to replace it with new one, please select)" : ""}</p></label>
-                            <input type="file" name="file" onChange={HandleImageChange} className="form-control" id="inputGroupFile01"  accept= "application/pdf,image/jpg,image/png,image/jpeg,"/>
+                            <input type="file" name="file" onChange={HandleImageChange} className="form-control" id="inputGroupFile01" accept="application/pdf,image/jpg,image/png,image/jpeg," />
                         </div>
 
                     </FormWrapper>
@@ -211,7 +217,7 @@ const ResearchDegrees = () => {
                     </thead>
                     <tbody>
 
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <th scope="row">{index + 1}</th>
@@ -237,7 +243,7 @@ const ResearchDegrees = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
 

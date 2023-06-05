@@ -18,7 +18,7 @@ import handleEditWithFile from '../js/handleEditWithFile';
 import View from './View';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const Responsibities = () => {
+const Responsibities = ({ filterByAcademicYear = false, academicYear }) => {
 
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
@@ -35,7 +35,7 @@ const Responsibities = () => {
     const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
-
+    const [filteredItems, setFilteredItems] = useState([])
 
 
     function handleSubmit(e) {
@@ -48,7 +48,7 @@ const Responsibities = () => {
         formData.append('institute', institute)
         formData.append('year', year)
         formData.append('file', proof)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
     }
@@ -57,7 +57,7 @@ const Responsibities = () => {
     // function handleAddResponsibities(e) {
     //     e.preventDefault();
     //     setLoading(true)
-    //     const data = { committeeName, designation, institute, year, userId: user._id }
+    //     const data = { committeeName, designation, institute, year, userId: user?._id }
     //     submit(data, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
 
     // }
@@ -113,22 +113,21 @@ const Responsibities = () => {
         setYear('')
     }
 
-    let param = { model: 'Responsibilities', userId: user._id }
+    let param = { model: 'Responsibilities', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-    // useeffect for scroll to top
     useEffect(() => {
-        window.scrollTo(0, 150)
-    }, [])
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div className="">
 
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResponsibilitiesFaculty' title='Administrative / Academic Responsibilities' SendReq='Responsibilities' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
@@ -180,7 +179,7 @@ const Responsibities = () => {
 
                     <tbody>
 
-                        {data && sortByAcademicYear(data?.data?.data, 'year').map((Responsibities, index) => {
+                        {data && filteredItems.map((Responsibities, index) => {
                             return (
                                 <tr key={Responsibities._id}>
                                     <th scope="row">{index + 1}</th>
@@ -207,7 +206,7 @@ const Responsibities = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
 

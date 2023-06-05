@@ -56,11 +56,15 @@ const Student = require('../models/student-models/studentUserSchema')
 
 // 5. Feedback Models
 const StudentFeedback = require('../models/feedback-models/studentFeedbackModel')
+const TeacherFeedback = require('../models/feedback-models/teacherFeedbackModel')
+const AlumniFeedback = require('../models/feedback-models/alumniFeedbackModel')
+const ParentFeedback = require('../models/feedback-models/parentFeedbackModel')
+const EmployerFeedback = require('../models/feedback-models/employerFeedbackModel')
 
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,
     DirectorUser, Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey,
-    Alumni, Student, AlumniContribution, StudentFeedback
+    Alumni, Student, AlumniContribution, StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback
 }
 
 function feedback(app) {

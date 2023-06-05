@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = false, dynamicValue }) => {
 
@@ -9,7 +9,19 @@ const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = fa
                 question.type === 'text' && <div className="mb-5 bg-blue-50 rounded-md p-2 border-t-4 border-t-blue-500" id={dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question} >
                     <div className="w-full">
                         <label htmlFor={`${question.question}`} className="form-label font-semibold">{dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}</label>
+
                         <input type="text" value={formData?.[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question] ? formData[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question] : null}
+                            onChange={(e) => { setFormData({ ...formData, [dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question]: e.target.value }) }} className="form-control w-full" id={`${question.question}`} placeholder="Your answer" />
+
+                    </div>
+                </div>
+            }
+
+            {
+                question.type === 'date' && <div className="mb-5 bg-blue-50 rounded-md p-2 border-t-4 border-t-blue-500" id={dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question} >
+                    <div className="w-full">
+                        <label htmlFor={`${question.question}`} className="form-label font-semibold">{dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}</label>
+                        <input type="date" value={formData?.[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question] ? formData[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question] : null}
                             onChange={(e) => { setFormData({ ...formData, [dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question]: e.target.value }) }} className="form-control w-full" id={`${question.question}`} placeholder="Your answer" />
                     </div>
                 </div>
@@ -45,7 +57,6 @@ const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = fa
                             question.options.map((option) => {
                                 return <div>
                                     <input
-
                                         checked={formData && formData[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question] && formData[dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question].includes(option)}
 
                                         className="form-check-input" type="checkbox" name={dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question} id={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`} value={option} onChange={(e) => {

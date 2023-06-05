@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const AwardRecognition = () => {
+const AwardRecognition = ({ filterByAcademicYear = false, academicYear }) => {
     const [awardModal, setAwardModal] = useState('')
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -37,6 +37,7 @@ const AwardRecognition = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
+    const [filteredItems, setFilteredItems] = useState([])
 
     const [res, setRes] = useState('')
 
@@ -57,7 +58,7 @@ const AwardRecognition = () => {
         formData.append('agencyName', agencyName)
         formData.append('year', year)
         formData.append('file', Proof)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'AwardRecognition', refetch, setLoading, setAwardModal, setIsFormOpen)
     }
@@ -121,16 +122,20 @@ const AwardRecognition = () => {
 
     }
 
-    let param = { model: 'AwardRecognition', userId: user._id }
+    let param = { model: 'AwardRecognition', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Awards and Recognition" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Awards and Recognition" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='AwardRecognitionFaculty' title='Award Recognition' SendReq='AwardRecognition' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -198,7 +203,7 @@ const AwardRecognition = () => {
                     </thead>
 
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.teacherName}</td>
@@ -228,7 +233,7 @@ const AwardRecognition = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

@@ -15,7 +15,7 @@ function TableComponent(props) {
 
     useEffect(() => {
         let tblCells = [];
-        const cellsrm = ["index","propic", "Upload_Proof", "Proof", "Action"]
+        const cellsrm = ["index", "propic", "Upload_Proof", "Proof", "Action"]
         Object.keys(props?.tableHead).map((e) => {
             tblCells.push(e)
         })
@@ -38,18 +38,18 @@ function TableComponent(props) {
                         <TblCellH TblH={props.tableHead} />
                         <TableBody>
                             {
-                                props.TB && sortByAcademicYear(props.TB, props.year).map((row, index) => (
-                                    <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0} }}>
+                                props.TB && sortByAcademicYear(props.TB, props.year, props.filterByAcademicYear, props.academicYear).map((row, index) => (
+                                    <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                         <TblCell val={index + 1} />
-                                        {Object.keys(props?.tableHead).includes("propic") ?<TblCell val={<Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${row[props.propic]}/${props.proof?props.proof:props.module}`} />}/>:""}
+                                        {Object.keys(props?.tableHead).includes("propic") ? <TblCell val={<Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${row[props.propic]}/${props.proof ? props.proof : props.module}`} />} /> : ""}
                                         {
                                             tblCells?.map((key) => {
                                                 return <TblCell val={row[key]} />
                                             })
                                         }
-                                        
-                                        {Object.keys(props?.tableHead).includes("Upload_Proof"||"Proof") ?<TblView val={props.getproof?row[props.getproof]:row.Upload_Proof} module={props.proof?props.proof:props.module} />: ""}
-                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled= {props.EditDisabled} />
+
+                                        {Object.keys(props?.tableHead).includes("Upload_Proof" || "Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
+                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} />
                                     </TableRow>
                                 ))
                             }

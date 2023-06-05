@@ -13,7 +13,7 @@ const useDirectorAuth = (shouldNavigate) => {
         const director_token = localStorage.getItem('director-token')
         if (director_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`,  { token:director_token, model:'DirectorUser', filterName : 'department' })
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: director_token, model: 'DirectorUser', filterName: 'department' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setDirectorUser(res.data.user))

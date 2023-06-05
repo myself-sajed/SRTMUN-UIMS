@@ -24,7 +24,7 @@ import SchoolsProgram from "../../../components/SchoolsProgram";
 const tableHead = { index: "Sr. no.", Name_of_student_placed: "Name of student placed/started Business", Program_graduated_from: "Program graduated from", Name_of_the_employer: "Name of the employer/business", Employer_contact_details: "Employer/business contact details", Pay_package_annum: "Pay package ( ₹ / annum)", Academic_Year: "Year of Placement", Type_Of_Placement: "Type of placemnt", Upload_Proof: "Upload Proof", Action: "Action" }
 const typesOfPlacements = ["Placement", "Business Started"];
 
-function Placements() {
+function Placements({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = "Placement";
     const module = 'director';
@@ -91,7 +91,7 @@ function Placements() {
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`PlacementsDirector${directorUser.department}`} title='Placements' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-            <Table TB={data?.data} module={module} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

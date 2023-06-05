@@ -3,7 +3,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import useAuth from '../../../hooks/useAuth';
 
-const Header = ({ icon, title, state, font = 'text-lg', add, editState, clearStates, setIsFormOpen, exceldialog}) => {
+const Header = ({ icon, title, state, font = 'text-lg', add, editState, clearStates, setIsFormOpen, exceldialog, dataCount }) => {
 
 
     useAuth(false)
@@ -15,10 +15,13 @@ const Header = ({ icon, title, state, font = 'text-lg', add, editState, clearSta
                     <div className='flex items-center justify-start gap-2'>
                         {icon}
                         <p className={font}>{title}</p>
+                        <span className="px-2 rounded-md bg-blue-200 text-blue-900 font-semibold">
+                            {dataCount ? dataCount : 0}
+                        </span>
                     </div>
                 </div>
 
-                <button onClick={() => {exceldialog(true)}} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
+                <button onClick={() => { exceldialog(true) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
 
                     <UploadFileIcon className='text-green-800' />
                     Excel </button>

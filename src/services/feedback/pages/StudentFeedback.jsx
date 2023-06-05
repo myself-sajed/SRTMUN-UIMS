@@ -6,12 +6,10 @@ import fetchData from '../../dashboard/js/fetchData'
 import { useQuery } from 'react-query'
 import UserLoading from '../../../pages/UserLoading'
 import SchoolsProgram from '../../../components/SchoolsProgram'
-import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
-import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
-import { Popconfirm } from 'antd'
-import Axios from 'axios'
-import { toast } from 'react-hot-toast'
 import GoBack from '../../../components/GoBack'
+import { submitResponse } from '../js/validateAndSubmit'
+import ActionButtons from '../components/ActionButtons'
+import Header from '../components/Header'
 
 
 const StudentFeedback = () => {
@@ -31,11 +29,11 @@ const StudentFeedback = () => {
     }, [data])
 
     useEffect(() => {
-        shouldUpdate && localStorage.setItem(`FormData-${academicYear}-${schoolName}`, JSON.stringify(formData))
+        shouldUpdate && localStorage.setItem(`studentFeedback-FormData-${academicYear}-${schoolName}`, JSON.stringify(formData))
     }, [formData])
 
     useEffect(() => {
-        setFormData(JSON.parse(localStorage.getItem(`FormData-${academicYear}-${schoolName}`)) ? JSON.parse(localStorage.getItem(`FormData-${academicYear}-${schoolName}`)) : {})
+        setFormData(JSON.parse(localStorage.getItem(`studentFeedback-FormData-${academicYear}-${schoolName}`)) ? JSON.parse(localStorage.getItem(`studentFeedback-FormData-${academicYear}-${schoolName}`)) : {})
         setShouldUpdate(true)
     }, [])
 
@@ -155,27 +153,6 @@ const StudentFeedback = () => {
         },
     ]
 
-    const submitResponse = () => {
-        setLoading(true)
-        const link = `${process.env.REACT_APP_MAIN_URL}/feedback/studentFeedback/collectResponse`
-        Axios.post(link, { response: formData, academicYear, schoolName })
-            .then((res) => {
-                if (res.data.status === 'success') {
-                    toast.success('Your response was successfully submitted.')
-                    setLoading(false)
-                    handleReset()
-                    navigate('/')
-                } else {
-                    toast.error(res.data.error)
-                    setLoading(false)
-                }
-            }).catch((err) => {
-                toast.error('Could not submit the form. Try again later...')
-                setLoading(false)
-            })
-    }
-
-
 
     const validateForm = (e) => {
         e.preventDefault()
@@ -233,15 +210,8 @@ const StudentFeedback = () => {
         })
 
         if (generalValidation === true && teacherValidation === true) {
-            submitResponse()
+            submitResponse(setLoading, 'studentFeedback', formData, setFormData, { schoolName, academicYear }, navigate)
         }
-    }
-
-    const handleReset = () => {
-        setFormData({})
-        localStorage.setItem('formData', JSON.stringify({}))
-        window.location.reload()
-        window.scrollTo(0, 0)
     }
 
 
@@ -261,14 +231,9 @@ const StudentFeedback = () => {
                             Sorry could not load the form, please try again later...
                         </div> : teachers?.length > 0 ?
                             <div className='w-full'>
-                                <div className='border-t-[7px] border-t-blue-700 rounded-md mt-3'>
-                                    <div className='text-center rounded-b-md p-2 bg-blue-50'>
-                                        <p className='text-2xl pb-2 border-b font-semibold '>Student Feedback Form ({academicYear})</p>
-                                        <p className='py-2'>{schoolName}</p>
-                                        <p className="text-xs text-muted">Form is saved automatically. You will not lose your progress.</p>
-                                    </div>
-                                </div>
-                                <form onSubmit={validateForm} className='w-full'>
+                                <Header title='Student Feedback Form' />
+
+                                <form onSubmit={validateForm} className='w-full mt-5'>
 
                                     <div id="part-1" >
                                         <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full mt-3'>General Questions</p>
@@ -301,34 +266,11 @@ const StudentFeedback = () => {
                                             })
                                         }
                                     </div>
+                                    <br /><br /><br /><br />
 
-                                    <div className='fixed bottom-0 bg-[#ffffff9c] py-2 w-full'>
-                                        <div className='flex item-center justify-start gap-2'>
-
-                                            {
-                                                !loading ? <button type="submit" className="bg-primary btn btn-primary flex items-center justify-center gap-2"><SaveRoundedIcon />Submit Form</button>
-                                                    :
-
-                                                    <button className="btn btn-primary bg-primary" type="button">
-                                                        <span className="mr-2 spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                        Submitting...
-                                                    </button>
-
-                                            }
+                                    <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="studentFeedback" />
 
 
-                                            <Popconfirm
-                                                title="Are you sure you want to Reset the form?"
-                                                onConfirm={handleReset}
-                                                onCancel={() => { }}
-                                                okText="Yes, Reset"
-                                                cancelText="Cancel"
-                                                okButtonProps={{ "type": "default" }}>
-
-                                                <button type="button" className="bg-danger btn btn-danger flex items-center justify-center gap-2"><RestartAltRoundedIcon />Reset Form</button>
-                                            </Popconfirm>
-                                        </div>
-                                    </div>
 
                                 </form>
                             </div>

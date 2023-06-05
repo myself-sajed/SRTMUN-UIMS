@@ -18,7 +18,7 @@ import YearSelect from '../../../components/formComponents/YearSelect';
 import editReq from '../../../components/requestComponents/editReq';
 import UploadFile from '../../../components/formComponents/UploadFile';
 
-const MoUsFaculty = () => {
+const MoUsFaculty = ({ filterByAcademicYear = false, academicYear }) => {
     const module = "faculty";
     const model = "MoUs"
 
@@ -29,6 +29,8 @@ const MoUsFaculty = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
+
+    const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
 
@@ -76,12 +78,16 @@ const MoUsFaculty = () => {
 
     }
 
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data, 'Year_of_signing_MoU', filterByAcademicYear, academicYear))
+    }, [data])
+
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUsFaculty' title='MoUs' SendReq='MoUs' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -121,7 +127,7 @@ const MoUsFaculty = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data && sortByAcademicYear(data?.data, 'Year_of_signing_MoU').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.Name_of_Organisation_with_whome_mou_signed}</td>
@@ -140,7 +146,7 @@ const MoUsFaculty = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data === undefined) && <EmptyBox />
+                    (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

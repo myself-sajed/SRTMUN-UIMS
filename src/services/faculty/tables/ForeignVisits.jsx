@@ -18,7 +18,7 @@ import DateRPicker from '../../../inputs/DateRPicker';
 import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ForeignVisits = () => {
+const ForeignVisits = ({ filterByAcademicYear = false, academicYear }) => {
     const [orgModal, setOrgModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -33,7 +33,7 @@ const ForeignVisits = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
-
+    const [filteredItems, setFilteredItems] = useState([])
 
     const [res, setRes] = useState('')
 
@@ -43,7 +43,7 @@ const ForeignVisits = () => {
         e.preventDefault();
 
         setLoading(true)
-        const data = { userId: user._id, purposeOfVisit, nameOfTheInstitutionVisited, fromDate, toDate, year }
+        const data = { userId: user?._id, purposeOfVisit, nameOfTheInstitutionVisited, fromDate, toDate, year }
 
         submit(data, 'ForeignVisit', refetch, setLoading, setOrgModal, setIsFormOpen)
     }
@@ -84,18 +84,20 @@ const ForeignVisits = () => {
     }
 
 
-    let param = { model: 'ForeignVisit', userId: user._id }
+    let param = { model: 'ForeignVisit', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
 
             <BulkExcel data={data?.data?.data} sampleFile='ForeignVisitFaculty' title='Foreign Visits' SendReq='ForeignVisit' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -112,9 +114,9 @@ const ForeignVisits = () => {
 
                         <Text title='Name Of The Institution Visited' space='col-md-6' state={nameOfTheInstitutionVisited} setState={SetNameOfTheInstitutionVisited} />
 
-                       <DateRPicker title="From" id='From_Date' space='col-md-4' state={fromDate} setState={setFromDate} />
+                        <DateRPicker title="From" id='From_Date' space='col-md-4' state={fromDate} setState={setFromDate} />
 
-                       <DateRPicker title="To" id='To_Date' space='col-md-4' state={toDate} setState={setToDate} />
+                        <DateRPicker title="To" id='To_Date' space='col-md-4' state={toDate} setState={setToDate} />
 
                         <Year state={year} space='col-md-4' setState={setYear} />
 
@@ -141,7 +143,7 @@ const ForeignVisits = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.purposeOfVisit}</td>
@@ -164,7 +166,7 @@ const ForeignVisits = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

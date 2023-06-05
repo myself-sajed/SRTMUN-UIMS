@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ResearchProjects = () => {
+const ResearchProjects = ({ filterByAcademicYear = false, academicYear }) => {
     const [projectModal, setProjectModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -40,6 +40,7 @@ const ResearchProjects = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
+    const [filteredItems, setFilteredItems] = useState([])
 
 
     const [res, setRes] = useState('')
@@ -64,7 +65,7 @@ const ResearchProjects = () => {
         formData.append('projectDuration', duration)
         formData.append('year', year)
         formData.append('file', proof)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'ResearchProject', refetch, setLoading, setProjectModal, setIsFormOpen)
     }
@@ -141,19 +142,21 @@ const ResearchProjects = () => {
 
     }
 
-    let param = { model: 'ResearchProject', userId: user._id }
+    let param = { model: 'ResearchProject', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
     return (
         <div>
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Projects" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Projects" />
 
             {/* // 2. FIELDS */}
 
@@ -250,7 +253,7 @@ const ResearchProjects = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.schemeName}</td>
@@ -279,7 +282,7 @@ const ResearchProjects = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

@@ -190,7 +190,7 @@ const Home = () => {
                                 }
                             </div>
                         </div>
-                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
+                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile={setFile} setAvatar={setAvatar} />
                         <div className='mt-4'>
                             <form className="row g-3 needs-validation mb-3" onSubmit={handleEdit}>
                                 <div className="col-md-4">
@@ -258,7 +258,7 @@ const Home = () => {
 
                                     <div className='flex items-center justify-start gap-3 mt-4'>
                                         <button onClick={() => { navigate(siteLinks.sdm.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
-                                            Go to Profile
+                                            Go to SDM
                                         </button>
 
                                         <button onClick={() => { dispatch(setDirectorUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('director-token'); }} className='p-2 text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
@@ -283,7 +283,7 @@ const Home = () => {
                                 <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             </div>
                             <div>
-                                <button className='flex items-center justify-end gap-2 text-blue-700 hover:bg-blue-200 p-2 rounded-xl' onClick={() => { setEditModal(true) }}><EditRoundedIcon fontSize="small" />Edit Profile</button>
+                                <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { setEditModal(true) }}><EditRoundedIcon fontSize="small" />Edit Profile</button>
                             </div>
 
                         </div>
@@ -314,7 +314,8 @@ const Home = () => {
                     <p className='ml-4 font-bold sm:text-xl text-black text-base'>Services</p>
                     <hr className='text-black' />
                     <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
-                        <div className="p-3 flex-1 w-full">
+
+                        <div className="p-3 flex-auto sm:w-full lg:w-fit">
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
@@ -329,7 +330,7 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="p-3 flex-1 w-full">
+                        <div className="p-3 flex-auto sm:w-full lg:w-fit">
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
@@ -344,7 +345,22 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="p-3 flex-1 w-full">
+                        <div className="p-3 flex-auto sm:w-full lg:w-fit">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
+                                        <h5>Annual Quality Assurance Report</h5>
+                                        <p className="prices">AQAR</p>
+                                    </div>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.directorAqar.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="p-3 flex-auto sm:w-full lg:w-fit">
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
@@ -388,6 +404,8 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
+
+
 
                     </div>
                 </div>

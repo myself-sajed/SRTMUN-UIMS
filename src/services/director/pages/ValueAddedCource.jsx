@@ -19,12 +19,12 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
-const tableHead = { index: "Sr. no." , Name_of_the_value_added_courses_offered: "Name of the value added courses offered" ,Course_Code_if_any: "Course Code (if any)" , Academic_year: "Academic year" , Year_of_offering: "Year of offering" , No_of_times_offered_during_the_same_year: "No. of times offered during the same year" , Duration_of_the_course: "Duration of the course (in Months)" , Number_of_students_enrolled: "Number of students enrolled" , Number_of_Students_completing_the_course: "Number of Students completing the course" , Upload_Proof: "Upload proof" , Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_the_value_added_courses_offered: "Name of the value added courses offered", Course_Code_if_any: "Course Code (if any)", Academic_year: "Academic year", Year_of_offering: "Year of offering", No_of_times_offered_during_the_same_year: "No. of times offered during the same year", Duration_of_the_course: "Duration of the course (in Months)", Number_of_students_enrolled: "Number of students enrolled", Number_of_Students_completing_the_course: "Number of Students completing the course", Upload_Proof: "Upload proof", Action: "Action" }
 
-function ValueAddedCource() {
-  const SendReq= 'ValueAddedCource'
+function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
+  const SendReq = 'ValueAddedCource'
   const module = 'director';
-   
+
   //--------------fetch data from db----------
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
@@ -64,16 +64,16 @@ function ValueAddedCource() {
   //--------------Frant end ui------------
   return (
     <>
-      <AddButton onclick={setAdd} exceldialog={setOpen}/>
+      <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-        <DialogContent dividers sx={{background:"#e5eaf0" }}>
+        <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-              PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+              EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <CTextField label="Name of the value added courses offered" type="text" value={values.vacnotvaco} id="vacnotvaco" required={true} onch={setvalues} />
@@ -93,7 +93,7 @@ function ValueAddedCource() {
 
       <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ValueAddedCourceDirector' title='Value Added Cource' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-      <Table TB={data?.data} module={module} year='Academic_year' fatchdata={refetch} isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
+      <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year='Academic_year' fatchdata={refetch} isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>
   )
 }

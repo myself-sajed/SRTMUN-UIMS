@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import GoBack from '../../../components/GoBack'
 
-const Response = () => {
+const StudentResponse = () => {
 
     const { schoolName, academicYear } = useParams()
     const [res, setRes] = useState([])
@@ -135,7 +135,7 @@ const Response = () => {
         <div>
 
             <div>
-                <GoBack pageTitle={`Student Feedback Response ${res.length > 0 ? `(${res.length})` : 0}`} />
+                <GoBack pageTitle={`Student Feedback Response ${res.length > 0 ? `(${res.length})` : `(0)`}`} />
             </div>
 
 
@@ -208,7 +208,7 @@ const Response = () => {
     )
 }
 
-export default Response
+export default StudentResponse
 
 
 
@@ -228,6 +228,13 @@ const ResponseHandler = ({ question, resItem, dynamic = false, dynamicValue }) =
             question.type === 'text' ? <div>
                 <p className='text-sm font-semibold text-green-700'>
                     {resItem[dynamic ? dynamicValue : question.question]}</p>
+            </div> : null
+        }
+
+        {
+            question.type === 'date' ? <div>
+                <div className='flex flex-col justify-start'>
+                    <span className='text-sm font-semibold text-green-700 '>{resItem[dynamic ? dynamicValue : question.question]}</span>  <span className="text-[10px] text-muted">(YYYY-MM-DD)</span></div>
             </div> : null
         }
 
@@ -253,3 +260,5 @@ const ResponseHandler = ({ question, resItem, dynamic = false, dynamicValue }) =
         }
     </div>
 }
+
+export { ResponseHandler }

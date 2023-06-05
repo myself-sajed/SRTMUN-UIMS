@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -21,12 +21,12 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SYTextField from "../components/FormComponents/SYTextField";
 
-const tableHead = { index: "Sr. no." ,  Year: "Year" ,  From_Date: "From Date" ,  To_Date: "To Date" ,Title_Of_the_Program: "Title Of the Program" ,Type_of_staff: "Type of staff" ,Number_of_Participants: "Number of Participants" ,Upload_Proof: "Upload proof" , Action: "Action" }
+const tableHead = { index: "Sr. no.", Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Type_of_staff: "Type of staff", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", Action: "Action" }
 
-const StaffType = [ "Teaching staff" ,  "Non-Teaching Staff" ]
-const level = [ "University" ,  "State" ]
+const StaffType = ["Teaching staff", "Non-Teaching Staff"]
+const level = ["University", "State"]
 
-function TrainingProgramsOrganized() {
+function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear }) {
 
   const SendReq = 'TrainingProgramsOrganized';
   const module = 'director';
@@ -71,13 +71,13 @@ function TrainingProgramsOrganized() {
       <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-        <DialogContent dividers sx={{background:"#e5eaf0" }}>
+        <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-              PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+              EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <SYTextField label="Year" value={values.tpoy} id="tpoy" required={true} onch={setvalues} />
@@ -95,8 +95,8 @@ function TrainingProgramsOrganized() {
       </Dialog>
 
       <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='TrainingProgramsOrganizedDirector' title='Training Programs Organized' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-      
-      <Table TB={data?.data} module={module} year='Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+
+      <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year='Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>
   )
 }

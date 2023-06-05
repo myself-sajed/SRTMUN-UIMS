@@ -18,141 +18,147 @@ import YearSelect from '../../../components/formComponents/YearSelect';
 import editReq from '../../../components/requestComponents/editReq';
 import UploadFile from '../../../components/formComponents/UploadFile';
 
-const ExtensionActivityFaculty = () => {
-  const module = "faculty";
-  const model = "ExtensionActivities";
+const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear }) => {
+    const module = "faculty";
+    const model = "ExtensionActivities";
 
-  const [orgModal, setOrgModal] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(false);
+    const [orgModal, setOrgModal] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false);
 
-  const [editModal, setEditModal] = useState(false)
-  const [itemToDelete, setItemToDelete] = useState('')
-  const [isFormOpen, setIsFormOpen] = useState(false)
+    const [editModal, setEditModal] = useState(false)
+    const [itemToDelete, setItemToDelete] = useState('')
+    const [isFormOpen, setIsFormOpen] = useState(false)
+    const [filteredItems, setFilteredItems] = useState([])
 
-  const user = useSelector(state => state.user.user);
+    const user = useSelector(state => state.user.user);
 
-  //states
-  const initialstate = { Name_of_the_activity: "", Organising_unit: "", Name_of_the_scheme: "", Year_of_activity: "", Number_of_students: "", Upload_Proof: "" }
-  const [values, setValues] = useState(initialstate)
-  const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = values
+    //states
+    const initialstate = { Name_of_the_activity: "", Organising_unit: "", Name_of_the_scheme: "", Year_of_activity: "", Number_of_students: "", Upload_Proof: "" }
+    const [values, setValues] = useState(initialstate)
+    const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = values
 
-  const params = { model: model, id: user?._id, module: module }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
-
-
-  function handleSubmit(e) {
-      e.preventDefault();
-
-      setLoading(true)
-      addReq({ SchoolName: user?.department, userId: user?._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setLoading, module)
-  }
-
-  // make states together
-  function handleChange(e) {
-      e.preventDefault();
-      setLoading(true)
-
-      editReq({ id: itemToDelete._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setEditModal, setItemToDelete, setLoading, module)
-  }
-
-  function pencilClick(itemId) {
-      data?.data?.forEach(function (item) {
-          if (item._id === itemId) {
-              const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = item
-              setValues({
-                Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
-              })
-              setIsFormOpen(true)
-              setItemToDelete(item)
-
-          }
-      })
-  }
-
-  // function to clear states to '' 
-  function clearStates() {
-      setValues(initialstate);
-
-  }
+    const params = { model: model, id: user?._id, module: module }
+    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
 
-  return (
-      <div>
-          {/* // HEADER */}
+    function handleSubmit(e) {
+        e.preventDefault();
 
-          <Header exceldialog={setOpen} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Extension Activities" />
+        setLoading(true)
+        addReq({ SchoolName: user?.department, userId: user?._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setLoading, module)
+    }
 
-          <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivitiesFaculty' title='Extension Activities' SendReq={model} refetch={refetch} module={module} department={user?._id} open={open} setOpen={setOpen} />
+    // make states together
+    function handleChange(e) {
+        e.preventDefault();
+        setLoading(true)
 
-          {/* // 2. FIELDS */}
+        editReq({ id: itemToDelete._id }, model, initialstate, values, setValues, refetch, setIsFormOpen, setEditModal, setItemToDelete, setLoading, module)
+    }
 
-          {/* , , , ,  */}
-          <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
-              <DialogContent >
-                  <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setOrgModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
-                      <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Extension Activity' : 'Add New Extension Activity'}</p>
+    function pencilClick(itemId) {
+        data?.data?.forEach(function (item) {
+            if (item._id === itemId) {
+                const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = item
+                setValues({
+                    Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
+                })
+                setIsFormOpen(true)
+                setItemToDelete(item)
 
-                      <Text className='col-md-6 col-lg-4' id="Name_of_the_activity" value={Name_of_the_activity} label="Name of Activity" setState={setValues} />
-                      
-                      <Text className='col-md-6 col-lg-4' id="Organising_unit" value={Organising_unit} label="Organising unit/ agency/ collaborating agency" setState={setValues} />
+            }
+        })
+    }
 
-                      <Text className='col-md-6 col-lg-4' id="Name_of_the_scheme" value={Name_of_the_scheme} label="Name of the Scheme" setState={setValues} />
+    // function to clear states to '' 
+    function clearStates() {
+        setValues(initialstate);
 
-                      <YearSelect className='col-md-6 col-lg-4' id="Year_of_activity" value={Year_of_activity} label="Year Of Activity" setState={setValues} />
-
-                      <Text className='col-md-6 col-lg-4' id="Number_of_students" value={Number_of_students} label="Number of students participated in such activities" type='number' setState={setValues} />
-
-                      <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" required={!editModal} label="Upload actual activity list" setState={setValues} />
-
-                  </FormWrapper>
-              </DialogContent>
-          </Dialog>
-
+    }
 
 
-          {/* TABLE */}
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data, 'Year_of_activity', filterByAcademicYear, academicYear))
+    }, [data])
 
-          <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-              <table className="table table-bordered table-hover">
-                  <thead className='table-dark'>
-                      <tr>
-                          <th scope="col">Name of Activity</th>
-                          <th scope="col">Organising unit/ agency/ collaborating agency</th>
-                          <th scope="col">Name of the Scheme</th>
-                          <th scope="col">Year Of Activity</th>
-                          <th scope="col">Number of students participated in such activities</th>
-                          <th scope="col">Upload actual activity list</th>
-                          <th scope="col">Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {data && sortByAcademicYear(data?.data, 'Year_of_activity').map((item, index) => {
-                          return (
-                              <tr key={index}>
-                                  <td>{item.Name_of_the_activity}</td>
-                                  <td>{item.Organising_unit}</td>
-                                  <td>{item.Name_of_the_scheme}</td>
-                                  <td>{item.Year_of_activity}</td>
-                                  <td>{item.Number_of_students}</td>
-                                  <td><View proof={item.Upload_Proof} serviceName="director" /></td>
-                                  <td> <Actions item={item} model={model} refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
-                              </tr>
-                          )
-                      })}
 
-                  </tbody>
-              </table>
+    return (
+        <div>
+            {/* // HEADER */}
 
-              {
-                  isLoading && <Loader />
-              }
-              {
-                  (data && data?.data === undefined) && <EmptyBox />
-              }
-          </div>
-      </div>
-  )
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Extension Activities" />
+
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivitiesFaculty' title='Extension Activities' SendReq={model} refetch={refetch} module={module} department={user?._id} open={open} setOpen={setOpen} />
+
+            {/* // 2. FIELDS */}
+
+            {/* , , , ,  */}
+            <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
+                <DialogContent >
+                    <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setOrgModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
+                        <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Extension Activity' : 'Add New Extension Activity'}</p>
+
+                        <Text className='col-md-6 col-lg-4' id="Name_of_the_activity" value={Name_of_the_activity} label="Name of Activity" setState={setValues} />
+
+                        <Text className='col-md-6 col-lg-4' id="Organising_unit" value={Organising_unit} label="Organising unit/ agency/ collaborating agency" setState={setValues} />
+
+                        <Text className='col-md-6 col-lg-4' id="Name_of_the_scheme" value={Name_of_the_scheme} label="Name of the Scheme" setState={setValues} />
+
+                        <YearSelect className='col-md-6 col-lg-4' id="Year_of_activity" value={Year_of_activity} label="Year Of Activity" setState={setValues} />
+
+                        <Text className='col-md-6 col-lg-4' id="Number_of_students" value={Number_of_students} label="Number of students participated in such activities" type='number' setState={setValues} />
+
+                        <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" required={!editModal} label="Upload actual activity list" setState={setValues} />
+
+                    </FormWrapper>
+                </DialogContent>
+            </Dialog>
+
+
+
+            {/* TABLE */}
+
+            <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                <table className="table table-bordered table-hover">
+                    <thead className='table-dark'>
+                        <tr>
+                            <th scope="col">Name of Activity</th>
+                            <th scope="col">Organising unit/ agency/ collaborating agency</th>
+                            <th scope="col">Name of the Scheme</th>
+                            <th scope="col">Year Of Activity</th>
+                            <th scope="col">Number of students participated in such activities</th>
+                            <th scope="col">Upload actual activity list</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data && filteredItems.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{item.Name_of_the_activity}</td>
+                                    <td>{item.Organising_unit}</td>
+                                    <td>{item.Name_of_the_scheme}</td>
+                                    <td>{item.Year_of_activity}</td>
+                                    <td>{item.Number_of_students}</td>
+                                    <td><View proof={item.Upload_Proof} serviceName="director" /></td>
+                                    <td> <Actions item={item} model={model} refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
+                                </tr>
+                            )
+                        })}
+
+                    </tbody>
+                </table>
+
+                {
+                    isLoading && <Loader />
+                }
+                {
+                    (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                }
+            </div>
+        </div>
+    )
 }
 
 export default ExtensionActivityFaculty

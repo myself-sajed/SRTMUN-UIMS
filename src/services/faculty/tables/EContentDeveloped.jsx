@@ -17,7 +17,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const EContentDeveloped = () => {
+const EContentDeveloped = ({ filterByAcademicYear = false, academicYear }) => {
     const [eCont, setECont] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ const EContentDeveloped = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
-
+    const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
 
@@ -39,7 +39,7 @@ const EContentDeveloped = () => {
         e.preventDefault();
         setLoading(true)
 
-        const data = { userId: user._id, moduleName, platform, year, link, creationType }
+        const data = { userId: user?._id, moduleName, platform, year, link, creationType }
         submit(data, 'EContentDeveloped', refetch, setLoading, setECont, setIsFormOpen)
     }
 
@@ -79,17 +79,21 @@ const EContentDeveloped = () => {
 
     }
 
-    let param = { model: 'EContentDeveloped', userId: user._id }
+    let param = { model: 'EContentDeveloped', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="Content" editState={setEditModal} clearStates={clearStates} state={setECont} icon={<CloudIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="E-Content Developed" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Content" editState={setEditModal} clearStates={clearStates} state={setECont} icon={<CloudIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="E-Content Developed" />
 
             <BulkExcel data={data?.data?.data} sampleFile='EContentDevelopedFaculty' title='EContent Developed' SendReq='EContentDeveloped' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -148,7 +152,7 @@ const EContentDeveloped = () => {
                     </thead>
 
                     <tbody>
-                    {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.moduleName}</td>
@@ -172,7 +176,7 @@ const EContentDeveloped = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

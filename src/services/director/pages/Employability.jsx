@@ -21,7 +21,7 @@ import BulkExcel from '../../../components/BulkExcel';
 
 const tableHead = { index: "Sr. no.", Course_Code: "Course Code", Name_of_the_Course: "Course name", Academic_Year: "Academic Year", Year_of_introduction: "Year of introduction", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "Activities / Content with direct bearing on Employability / Entrepreneurship / Skill development", Upload_Proof: "Proof", Action: "Action" }
 
-function Employability() {
+function Employability({ filterByAcademicYear = false, academicYear }) {
 
     const SendReq = "Employability";
     const module = 'director';
@@ -87,7 +87,7 @@ function Employability() {
             </Dialog>
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='EmployabilityDirector' title='Employability' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
-            <Table TB={data?.data} module={module} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
 }

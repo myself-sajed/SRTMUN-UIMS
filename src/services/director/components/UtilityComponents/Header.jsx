@@ -40,7 +40,7 @@ export default function Header() {
         <div>
             <OnlyNav user={user} logout={{ token: 'director-token', link: siteLinks.welcome.link }}
                 heading={{ title: 'Back to Director Home', link: siteLinks.directorHome.link }}
-                li={[siteLinks.directorHome,siteLinks.ssm, siteLinks.aaa]} userType="director"
+                li={[siteLinks.directorHome, siteLinks.ssm, siteLinks.aaa]} userType="director"
 
             />
 
@@ -62,7 +62,7 @@ export default function Header() {
                                 <div className='flex items-center justify-center gap-2 flex-wrap'>
 
                                     <div style={{ width: '100%', display: 'flex', flexFlow: 'row wrap', justifyContent: "center" }}>
-                                        {navcom.map((e, index) => (
+                                        {navcom?.map((e, index) => (
 
                                             <div onClick={() => { dispatch(setDirectorActive(e.name)) }} key={index} className={`flex items-center duration-200 ease-in-out cursor-pointer hover:bg-blue-200 justify-start gap-2 px-2 py-2 text-sm rounded-full mx-1 my-1 ${DirectorActive === e.name ? 'bg-blue-200' : 'bg-blue-100'}`}>
                                                 {e.icon}

@@ -35,6 +35,8 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear }) => {
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
+    const [filteredItems, setFilteredItems] = useState([])
+
     const user = useSelector(state => state.user.user);
 
     function handleSubmit(e) {
@@ -113,14 +115,16 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear }) => {
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
-
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="Invited Talk" editState={setEditModal} clearStates={clearStates} state={setTalkModal} icon={<HeadsetMicRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Invited Talk / Resource Person" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Invited Talk" editState={setEditModal} clearStates={clearStates} state={setTalkModal} icon={<HeadsetMicRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Invited Talk / Resource Person" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='InvitedTalkFaculty' title='Invited Talk' SendReq='InvitedTalk' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -193,7 +197,7 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data && sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear).map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.lectureTitle}</td>
@@ -214,7 +218,7 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear }) => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
 

@@ -19,7 +19,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const ConferenceOrganized = () => {
+const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear }) => {
     const [orgModal, setOrgModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ const ConferenceOrganized = () => {
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
-
+    const [filteredItems, setFilteredItems] = useState([])
 
     const [res, setRes] = useState('')
 
@@ -53,7 +53,7 @@ const ConferenceOrganized = () => {
         formData.append('noOfParticipants', noOfParticipants)
         formData.append('file', proof)
         formData.append('year', year)
-        formData.append('userId', user._id)
+        formData.append('userId', user?._id)
 
         submitWithFile(formData, 'ConferenceOrganized', refetch, setLoading, setOrgModal, setIsFormOpen)
     }
@@ -110,18 +110,21 @@ const ConferenceOrganized = () => {
     }
 
 
-    let param = { model: 'ConferenceOrganized', userId: user._id }
+    let param = { model: 'ConferenceOrganized', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
+    useEffect(() => {
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+    }, [data])
 
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<DuoRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Conference / Workshop / Seminar Organized" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<DuoRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Conference / Workshop / Seminar Organized" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConferenceOrganizedFaculty' title='Conference Organized' SendReq='ConferenceOrganized' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -185,7 +188,7 @@ const ConferenceOrganized = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                        {data && filteredItems.map((item, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{item.programTitle}</td>
@@ -210,7 +213,7 @@ const ConferenceOrganized = () => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
+                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
             </div>
         </div>

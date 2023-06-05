@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -20,9 +20,9 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
 
-const TOP = [ "UG",  "PG",  "Ph.D",  "Diploma",  "PG Diploma",  "Certificate"]
-const tableHead = { index: "Sr. no." ,  Programme_Code: "Programme Code" ,  Programme_name: "Programme name" ,  Academic_Year: "Academic Year" , Type_of_program: "Type of Program",  Number_of_seats_available: "Number of seats available" ,  Number_of_eligible_applications: "Number of eligible applications" ,  Number_of_Students_admitted: "Number of Students admitted" ,  Upload_Proof: "Proof" ,  Action: "Action" }
-function DemandRatio() {
+const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
+const tableHead = { index: "Sr. no.", Programme_Code: "Programme Code", Programme_name: "Programme name", Academic_Year: "Academic Year", Type_of_program: "Type of Program", Number_of_seats_available: "Number of seats available", Number_of_eligible_applications: "Number of eligible applications", Number_of_Students_admitted: "Number of Students admitted", Upload_Proof: "Proof", Action: "Action" }
+function DemandRatio({ filterByAcademicYear = false, academicYear }) {
 
   const SendReq = "DemandRatio"
   const module = "director"
@@ -66,13 +66,13 @@ function DemandRatio() {
       <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-        <DialogContent dividers sx={{background:"#e5eaf0" }}>
+        <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading,module) :
-              PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading,module)
+              EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
               <CTextField label="Programme Code" value={values.drpc} type="text" id="drpc" required={true} onch={setvalues} />
@@ -91,7 +91,7 @@ function DemandRatio() {
 
       <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='DemandRatioDirector' title='Demand Ratio' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
-      <Table TB={data?.data} module={module} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+      <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>
   )
 }
