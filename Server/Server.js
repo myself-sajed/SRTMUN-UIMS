@@ -113,6 +113,11 @@ require('./routes/photogallery-routes/event')(app)
 // feedback routes
 require('./routes/feedback-routes/feedbackRoutes')(app)
 
+// AQAR routes
+require('./routes/director-routes/directorAqarRoutes')(app)
+require('./routes/faculty-routes/facultyAqarRoutes')(app)
+
+
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

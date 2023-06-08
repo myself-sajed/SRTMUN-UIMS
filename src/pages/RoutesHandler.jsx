@@ -76,6 +76,7 @@ import ParentFeedback from '../services/feedback/pages/ParentFeedback'
 import EmployerFeedback from '../services/feedback/pages/EmployerFeedback'
 import StudentResponse from '../services/feedback/pages/StudentResponse'
 import OtherReponses from '../services/feedback/pages/OtherReponses'
+import GenerateAQARReport from '../services/faculty/reports/aqar/pages/GenerateAQARReport'
 
 
 const RoutesHandler = () => {
@@ -184,6 +185,7 @@ const RoutesHandler = () => {
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
                 <Route path="/director/service/aqar-report" exact element={<AQARHome userType='director' auth={useDirectorAuth} />} />
+                <Route path="/:userType/service/generateAQARReport" exact element={<GenerateAQARReport auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
 
 
 

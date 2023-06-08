@@ -354,6 +354,8 @@ const Home = () => {
                                     </div>
                                     <div className='flex items-center justify-center gap-2'>
                                         <Link to={siteLinks.directorAqar.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
+                                        <Link to={siteLinks.directorAqarReport.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Download AQAR Data </Link>
+
                                     </div>
                                 </div>
                             </div>

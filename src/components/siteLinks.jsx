@@ -16,6 +16,7 @@ let siteLinks = {
     aqar: { title: 'Faculty AQAR Report', link: '/faculty/service/aqar-report' },
     aqarReport: { title: 'Generate AQAR Report', link: '/faculty/service/generateAQARReport' },
     directorAqar: { title: 'Director AQAR Report', link: '/director/service/aqar-report' },
+    directorAqarReport: { title: 'Generate AQAR Report', link: '/director/service/generateAQARReport' },
     aaaReport: { title: 'Academic & Administrative Audit Report', link: '/director/service/generateAAAReport' },
     directorReport: { title: 'Director Report', link: '/director/service/generateDirectorReport' },
     directorPasswordReset: { title: "Director Password Reset", link: '/services/forgot-password/director' },

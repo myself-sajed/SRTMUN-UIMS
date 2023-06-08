@@ -12,6 +12,28 @@ const TableData = {
 
   },
 
+  aqarPrograms: {
+    auditHead: ["Sr.No.", "Program Code", "Name of the Program", "Action"],
+    childHead: ["ProgramCode", "ProgramName",],
+    fieldOptions: [
+      { field: 'Text', keyName: "ProgramCode", label: "Program Code" },
+      { field: 'Text', keyName: "ProgramName", label: "Program Name" },
+    ]
+
+  },
+
+  aqarCourse: {
+    auditHead: ["Sr.No.", "Program Code", "Name of the Program", "Course Code", "Course Name", "Action"],
+    childHead: ["ProgramCode", "ProgramName", "CourseCode", "CourseName"],
+    fieldOptions: [
+      { field: 'Text', keyName: "ProgramCode", label: "Program Code" },
+      { field: 'Text', keyName: "ProgramName", label: "Program Name" },
+      { field: 'Text', keyName: "CourseCode", label: "Course Code" },
+      { field: 'Text', keyName: "CourseName", label: "Course Name" },
+    ]
+
+  },
+
   // new tables head and child (complex)
   appointmentGovtPost: {
     auditHead: ["Sr.No.", "Name", "Designation", "Qualification", "Nature of Appointment", "Action"],

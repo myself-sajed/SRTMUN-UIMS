@@ -4,6 +4,7 @@ import { Alert, CircularProgress } from '@mui/material';
 import { generateCASReport } from '../PBASServices';
 import { useNavigate } from 'react-router-dom';
 import ShowModal from '../../../../../components/ShowModal';
+import siteLinks from '../../../../../components/siteLinks';
 
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
     const [selectedYear, setSelectedYear] = useState([])
@@ -66,7 +67,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                                 error !== null &&
                                 <div className='flex flex-col gap-1 items-center justify-center'>
                                     <Alert severity="error"><span className='text-red-600'>{error.message}</span></Alert>
-                                    <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { navigate('/service/pbas-report') }}>
+                                    <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { navigate(siteLinks.pbasReport) }}>
                                         Fill PBAS Form
                                     </button>
                                 </div>

@@ -80,6 +80,7 @@ const DirectorAck = ({ user, aqarYear }) => {
                 <li class="list-group-item">16. Progression to Higher Education</li>
                 <li class="list-group-item">16. Alumni Contribution</li>
                 <li class="list-group-item">17. Professional Development / Administrative Training Programs Organized</li>
+                <li class="list-group-item">18. Extended Profile</li>
             </ul>
         </div>
     </div>

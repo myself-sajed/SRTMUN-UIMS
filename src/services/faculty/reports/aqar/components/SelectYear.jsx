@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
 import { Alert, CircularProgress } from '@mui/material';
-import { generateCASReport } from '../CASServices';
 import { useNavigate } from 'react-router-dom';
+import generateReport from '../../../../director/reports/aqar/js/generateReport';
 import siteLinks from '../../../../../components/siteLinks';
 
-const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
-    console.log('CAS Year', casYear && casYear)
+const SelectYear = ({ userType, aqarYear, aqarData, setReportLoading, error }) => {
+
     const [selectedYear, setSelectedYear] = useState([])
-    let sortedYear = casYear && casYear.sort((a, b) => {
-        return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
+
+    let sortedYear = aqarYear && aqarYear.sort((a, b) => {
+        return parseInt(JSON.parse(a).aqarYear.slice(0, 4)) - parseInt(JSON.parse(b).aqarYear.slice(0, 4));
     })
+
     const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log('selectedYear : ', selectedYear)
-    }, [selectedYear])
-
-
 
 
     return (
@@ -27,7 +23,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                 {
                     sortedYear ?
                         <div>
-                            <p className='text-base md:text-lg text-center'>Select Year(s) of which CAS Report to be generated</p>
+                            <p className='text-base md:text-lg text-center'>Select Year(s) of which AQAR Report to be downloaded</p>
                             <p className='text-center text-blue-900 text-xs md:text-sm'>Click on the respective year to select, click again to unselect.</p>
                             <div className='flex items-center justify-center gap-3 mt-3'>
 
@@ -35,8 +31,8 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setReportLoading(true); generateCASReport(casData, userData, selectedYear, setReportLoading) }}>
-                                <EngineeringRoundedIcon /> Generate CAS Report
+                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { generateReport(aqarData, selectedYear, setReportLoading) }}>
+                                <EngineeringRoundedIcon /> Generate AQAR Report
                             </button>}
                         </div>
                         :
@@ -47,9 +43,9 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                             {
                                 error !== null &&
                                 <div className='flex flex-col gap-1 items-center justify-center'>
-                                    <Alert severity="error"><span className='text-red-600'>{error.message}</span></Alert>
-                                    <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { navigate(siteLinks.casReport) }}>
-                                        Fill CAS Form
+                                    <Alert severity="error"><span className='text-red-600'>No AQAR records found. Please fill the AQAR Form & Download data</span></Alert>
+                                    <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { navigate(userType === 'faculty' ? siteLinks.aqar.link : siteLinks.directorAqar.link) }}>
+                                        Fill AQAR Form
                                     </button>
                                 </div>
                             }
@@ -86,11 +82,11 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
 
                 return (
 
-                    <div className="form-check sm:px-8 py-2" key={JSON.parse(item).casYear}>
-                        <input className="form-check-input text-lg" type="checkbox" value="" id={JSON.parse(item).casYear}
+                    <div className="form-check sm:px-8 py-2" key={JSON.parse(item).aqarYear}>
+                        <input className="form-check-input text-lg" type="checkbox" value="" id={JSON.parse(item).aqarYear}
                             onChange={(e) => { selectCheckBox(e.target.id) }} />
-                        <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).casYear}>
-                            {JSON.parse(item).casYear}
+                        <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).aqarYear}>
+                            {JSON.parse(item).aqarYear}
                         </label>
                     </div>
                 )

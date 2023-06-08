@@ -46,7 +46,7 @@ import TrainingProgramsOrganized from '../../../../director/pages/TrainingProgra
 
 const AQARForm = ({ userType = 'faculty' }) => {
 
-    const [expandedAccordion, setExpandedAccordion] = useState(0);
+    const [expandedAccordion, setExpandedAccordion] = useState();
 
     const handleChangeAccordion = (index) => {
         setExpandedAccordion(index === expandedAccordion ? null : index);
