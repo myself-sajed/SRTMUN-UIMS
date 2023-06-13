@@ -29,35 +29,45 @@ const StatusPage = () => {
     return (
         <div className='mt-2'>
 
-            <TabBox value={value} setValue={setValue} />
+            <div className='flex items-start justify-start mb-5'>
+                <div className='w-1/2'>
+                    <SchoolList school={school} setSchool={setSchool} />
+                </div>
 
-            <div className='flex items-start justify-start my-5'>
-                <SchoolList school={school} setSchool={setSchool} />
 
-                <div className='rounded-[4px] ml-3 p-3 w-full mt-3 border'>
-                    <div className='flex items-center justify-between pb-2 border-b'>
-                        <p className='text-lg'>{school} </p>
-                        <div className={`${value === 3 || value === 4 ? 'hidden p-2' : 'block'}`}>
-                            <div>
-                                <select className="form-select" id="validationCustom04" required onChange={
-                                    (e) => { setYear(e.target.value); }} value={year}>
-                                    <option selected disabled value="">Choose</option>
+                <div className='w-full border p-3 mt-3 rounded-[4px]'>
+                    <TabBox value={value} setValue={setValue} />
+                    <br />
+                    <hr />
 
-                                    {listOfYears.map((year, index) => {
-                                        return <option key={index} value={year}>{year}</option>
-                                    })}
-                                </select>
+                    <div >
+
+                        <div className='ml-3 w-full mt-3 '>
+                            <div className='flex items-center justify-between pb-2'>
+                                <p className='text-lg'>{school} </p>
+                                <div className={`${value === 3 || value === 4 ? 'hidden p-2' : 'block'}`}>
+                                    <div>
+                                        <select className="form-select" id="validationCustom04" required onChange={
+                                            (e) => { setYear(e.target.value); }} value={year}>
+                                            <option selected disabled value="">Choose</option>
+
+                                            {listOfYears.map((year, index) => {
+                                                return <option key={index} value={year}>{year}</option>
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
+                            {
+                                (value === 0 || value === 1 || value === 2)
+                                    ?
+                                    <FacultyRelatedService teachers={teachers} teacherLoading={teacherLoading} serviceName={serviceName[value]} year={year} school={school} />
+                                    :
+                                    <DirectorRelatedService serviceName={serviceName[value]} year={year} school={school} />
+                            }
                         </div>
                     </div>
-
-                    {
-                        (value === 0 || value === 1 || value === 2)
-                            ?
-                            <FacultyRelatedService teachers={teachers} teacherLoading={teacherLoading} serviceName={serviceName[value]} year={year} school={school} />
-                            :
-                            <DirectorRelatedService serviceName={serviceName[value]} year={year} school={school} />
-                    }
                 </div>
             </div>
 

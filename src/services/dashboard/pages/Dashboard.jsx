@@ -104,7 +104,7 @@ const dashboardCards = [
     },
     {
         id: 6,
-        title: 'Total Invited Talks ',
+        title: 'Invited Talks ',
         countModelName: 'InvitedTalkCount',
         url: `/dashboard/select-department/InvitedTalk`,
         color: 'fuchsia',

@@ -10,7 +10,7 @@ const Service = () => {
                 <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
 
 
-                    <div className="p-3 flex-auto sm:w-full lg:w-fit">
+                    <div className="p-3 flex-auto w-full lg:w-fit">
                         <div className="wrap-price">
                             <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                 <div>
@@ -26,7 +26,7 @@ const Service = () => {
                         </div>
                     </div>
 
-                    <div className="p-3 flex-auto sm:w-full lg:w-fit">
+                    <div className="p-3 flex-auto w-full lg:w-fit">
                         <div className="wrap-price">
                             <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                 <div>
@@ -42,7 +42,7 @@ const Service = () => {
                         </div>
                     </div>
 
-                    <div className="p-3 flex-auto sm:w-full lg:w-fit">
+                    <div className="p-3 flex-auto w-full lg:w-fit">
                         <div className="wrap-price">
                             <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                 <div>
@@ -58,7 +58,7 @@ const Service = () => {
                         </div>
                     </div>
 
-                    <div className="p-3 flex-auto sm:w-full lg:w-fit">
+                    <div className="p-3 flex-auto w-full lg:w-fit">
                         <div className="wrap-price">
                             <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                 <div>

@@ -2,7 +2,6 @@ import Axios from 'axios'
 import { toast } from 'react-hot-toast';
 
 const getAQARData = (setData, getByYear, filter, aqarYear, userType = 'faculty') => {
-    console.log('getting...')
     const link = `${process.env.REACT_APP_MAIN_URL}/service/${userType}/report/aqar/getData`;
 
     Axios.post(link, { filter })

@@ -136,11 +136,11 @@ const Home = () => {
                                     <p className='text-xs sm:text-sm'><p className='text-xs sm:text-sm'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p></p>
 
                                     <div className='flex items-start justify-start gap-2 mt-4 flex-wrap'>
-                                        <button onClick={() => { navigate(siteLinks.facultyProfile.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
+                                        <button onClick={() => { navigate(siteLinks.facultyProfile.link) }} className='p-2 rounded-full flex-auto border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
                                             Go to Profile
                                         </button>
 
-                                        <button onClick={() => { navigate(siteLinks.facultyReport.link) }} className='p-2 rounded-full border-2 text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
+                                        <button onClick={() => { navigate(siteLinks.facultyReport.link) }} className='p-2 rounded-full border-2 flex-auto text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
                                             Faculty Report
                                         </button>
 

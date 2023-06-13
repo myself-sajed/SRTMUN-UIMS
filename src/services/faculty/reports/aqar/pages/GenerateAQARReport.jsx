@@ -40,6 +40,7 @@ const GenerateAQARReport = ({ auth }) => {
         },
     }
 
+
     const [reportLoading, setReportLoading] = useState(false)
 
     useEffect(() => {
@@ -51,8 +52,6 @@ const GenerateAQARReport = ({ auth }) => {
     useEffect(() => {
         userType && getAQARData(setAqarDataFromServer, false, userSpecificDetails[userType]?.filter, null, userType);
     }, [userType])
-
-
 
     return (
         <div >
