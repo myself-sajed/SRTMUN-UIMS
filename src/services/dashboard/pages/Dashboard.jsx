@@ -24,7 +24,7 @@ import { Skeleton, useStepContext } from '@mui/material';
 const dashboardCards = [
     {
         id: 0,
-        title: 'Schools',
+        title: 'Schools & Map',
         countModelName: 'SchoolCount',
         color: 'cyan',
         url: `/dashboard/select-department/schoolInformation`,
