@@ -6,6 +6,7 @@ import getReq from '../../../components/requestComponents/getReq';
 import Table from '../../../components/tableComponents/TableComponent'
 import axios from 'axios';
 import { toast } from 'react-hot-toast'
+import useDirectorAuth from '../../../hooks/useDirectorAuth';
 
 const tableHead = { index: "Sr. no.",propic: "Profile Pic", username: "Username", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programEnroledOn: "Program Enroled On", Action: "Action" }
 
@@ -14,17 +15,17 @@ const ActiveStudent = () => {
   const model = "StudentUser"
 
   const user = useSelector(state => state.user.directorUser)
-  const schoolName = user? user.department : null
+  const schoolName = user ? user.department: null
   
   const filter =  {schoolName,status:"Active"}
   const params = { model: model, id: "", module, filter: filter, }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params)) 
 
-  const [activeProgram, setActiveProgram] = useState(SchoolsProgram[schoolName][0][0])
+  const [activeProgram, setActiveProgram] = useState(SchoolsProgram && SchoolsProgram[schoolName][0][0])
   const [itemToEdit, setItemToEdit] = useState(null)
 
   const filteredData = data?.data.filter((students) => students.programGraduated === activeProgram)
-  
+ 
   useEffect(() =>{
     if(itemToEdit && data.data){
       axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {status: "InActive",itemToEdit  })

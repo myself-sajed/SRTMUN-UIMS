@@ -44,12 +44,12 @@ function TableComponent(props) {
                                         {Object.keys(props?.tableHead).includes("propic") ? <TblCell val={<Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${row[props.propic]}/${props.proof ? props.proof : props.module}`} />} /> : ""}
                                         {
                                             tblCells?.map((key) => {
-                                                return <TblCell val={row[key]} />
+                                                return <TblCell key={key} val={row[key]} />
                                             })
                                         }
 
                                         {Object.keys(props?.tableHead).includes("Upload_Proof" || "Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
-                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} />
+                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} CheckBox={props.CheckBox} checkedData={props.checkedData} setCheckedData={props.setCheckedData} />
                                     </TableRow>
                                 ))
                             }
