@@ -85,7 +85,29 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
 
 }
 
+const getTotalPBASData = (setData, setError) => {
+    try {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/getTotalPBASData`,)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setData(res.data.data);
+                }
+                else {
+                    setData(null)
+                    setError({ error: true, message: 'PBAS Data Not Found. Please fill PBAS Form to generate report!' })
+                }
+            }).catch((err) => {
+                toast.error('Failed fetching data')
+            })
+    } catch (error) {
+        toast.error('Internal Server error');
+    }
+}
 
 
 
-export { saveCASDetails, generateCASReport, getCASData, }
+
+
+
+
+export { saveCASDetails, generateCASReport, getCASData, getTotalPBASData }

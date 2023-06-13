@@ -131,6 +131,25 @@ function casRoutes(app) {
         )
     })
 
+    // for fetching cas data
+    app.post("/getTotalPBASData", (req, res) => {
+        CASModel.find({}).lean().populate("userId").exec().then((cas, err) => {
+            if (err) {
+                console.log(err)
+                res.send({ status: "error", message: "Internal server error" })
+            }
+            else {
+                if (cas) {
+                    res.send({ status: 'success', data: cas });
+                }
+                else {
+                    res.send({ status: 'error', message: "No data found" });
+                }
+            }
+        }
+        )
+    })
+
 
 
 

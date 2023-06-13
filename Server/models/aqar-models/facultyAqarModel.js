@@ -5,6 +5,7 @@ const facultyAQAR = new mongoose.Schema({
     userId: {
         type: 'string',
         required: true,
+        ref: "users"
     },
     aqarData: {
         type: [{ type: String }],

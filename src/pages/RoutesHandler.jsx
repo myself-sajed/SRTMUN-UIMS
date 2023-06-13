@@ -77,6 +77,7 @@ import EmployerFeedback from '../services/feedback/pages/EmployerFeedback'
 import StudentResponse from '../services/feedback/pages/StudentResponse'
 import OtherReponses from '../services/feedback/pages/OtherReponses'
 import GenerateAQARReport from '../services/faculty/reports/aqar/pages/GenerateAQARReport'
+import StatusPage from '../services/status/pages/StatusPage'
 
 
 const RoutesHandler = () => {
@@ -187,6 +188,8 @@ const RoutesHandler = () => {
                 <Route path="/director/service/aqar-report" exact element={<AQARHome userType='director' auth={useDirectorAuth} />} />
                 <Route path="/:userType/service/generateAQARReport" exact element={<GenerateAQARReport auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
 
+                {/* SERVICE STATUS */}
+                <Route path="/service/status" exact element={<StatusPage />} />
 
 
 

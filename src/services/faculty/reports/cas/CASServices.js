@@ -80,12 +80,29 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
     } catch (error) {
         toast.error('Internal Server error');
     }
+}
 
-
+const getTotalCASData = (setData, setError) => {
+    try {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/getTotalCASData`,)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setData(res.data.data);
+                }
+                else {
+                    setData(null)
+                    setError({ error: true, message: 'CAS Data Not Found. Please fill CAS Form to generate report!' })
+                }
+            }).catch((err) => {
+                toast.error('Failed fetching data')
+            })
+    } catch (error) {
+        toast.error('Internal Server error');
+    }
 }
 
 const saveEligibilityData = (stageNumber, userId, eligibilityData) => {
-    console.log('Elig data in server is :',eligibilityData)
+    console.log('Elig data in server is :', eligibilityData)
     try {
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/saveEligibilityData`, { stageNumber, userId, eligibilityData })
@@ -106,4 +123,4 @@ const saveEligibilityData = (stageNumber, userId, eligibilityData) => {
 }
 
 
-export { saveCASDetails, generateCASReport, getCASData, saveEligibilityData }
+export { saveCASDetails, generateCASReport, getCASData, saveEligibilityData, getTotalCASData }

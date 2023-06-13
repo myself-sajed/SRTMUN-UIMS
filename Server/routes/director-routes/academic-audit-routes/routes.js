@@ -73,7 +73,7 @@ const Alumni = require('../../../models/alumni-models/alumniUserSchema')
 const Student = require('../../../models/student-models/studentUserSchema')
 
 let models = {
-    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped,FinancialSupport, Award, CounselingAndGuidance, DemandRatio, ProjectsInternships, Employability, ExtensionActivities, IctClassrooms, MoUs, ValueAddedCource, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, UgcSapCasDstFistDBTICSSR, TrainingProgramsOrganized, ResearchMethodologyWorkshops, ReservedSeats, QualifiedExams, ProgressionToHE, Placement, SyllabusRevision,AlumniContribution, ConferencesSemiWorkshopOrganized, Alumni, Student, 
+    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, FinancialSupport, Award, CounselingAndGuidance, DemandRatio, ProjectsInternships, Employability, ExtensionActivities, IctClassrooms, MoUs, ValueAddedCource, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, UgcSapCasDstFistDBTICSSR, TrainingProgramsOrganized, ResearchMethodologyWorkshops, ReservedSeats, QualifiedExams, ProgressionToHE, Placement, SyllabusRevision, AlumniContribution, ConferencesSemiWorkshopOrganized, Alumni, Student,
 }
 
 router.post('/api/director/academic-audit/getData/facultyData', async (req, res) => {
@@ -101,57 +101,57 @@ router.post('/api/director/academic-audit/getData/directorData', async (req, res
     }
 })
 
-router.post('/api/director/academic-audit/saveAAAData', (req, res)=>{
-    const {AAAData, schoolName} = req.body
+router.post('/api/director/academic-audit/saveAAAData', (req, res) => {
+    const { AAAData, schoolName } = req.body
 
-    if(AAAData.auditYear){
+    if (AAAData.auditYear) {
         // check if AAA data for this school already exists
-    AAAModel.findOne({ schoolName }, (err, data) => {
-        if (err) {
-            res.send({ status: "error", message: "Internal server error" })
-        }
-        else {
-            if (data) {
-                // if aaa data exist only push into that array
-                // remove aaa array item with same year as in AAAData
-
-                data.AAAData.forEach((item, index) => {
-                    if (JSON.parse(item).auditYear === AAAData.auditYear) {
-                        data.AAAData.splice(index, 1);
-                    }
-                })
-
-                data.AAAData.push(JSON.stringify(AAAData));
-                data.save((err, item) => {
-                    if (err) {
-                        res.send({ status: "error", message: "Error saving data" })
-                    }
-                    else {
-                        res.send({ status: 'success', data: item });
-                    }
-                }
-                )
+        AAAModel.findOne({ schoolName }, (err, data) => {
+            if (err) {
+                res.send({ status: "error", message: "Internal server error" })
             }
             else {
-                // if aaa data does not exist create new one
-                const newData = new AAAModel({
-                    schoolName : schoolName,
-                    AAAData: [JSON.stringify(AAAData)]
-                });
-                newData.save((err, item) => {
-                    if (err) {
-                        res.send({ status: "error", message: "Error saving data" })
-                    }
-                    else {
-                        res.send({status : 'success', message : 'Your progress saved...'})
-                        // res.send({ status: 'success', data: item });
+                if (data) {
+                    // if aaa data exist only push into that array
+                    // remove aaa array item with same year as in AAAData
 
+                    data.AAAData.forEach((item, index) => {
+                        if (JSON.parse(item).auditYear === AAAData.auditYear) {
+                            data.AAAData.splice(index, 1);
+                        }
+                    })
+
+                    data.AAAData.push(JSON.stringify(AAAData));
+                    data.save((err, item) => {
+                        if (err) {
+                            res.send({ status: "error", message: "Error saving data" })
+                        }
+                        else {
+                            res.send({ status: 'success', data: item });
+                        }
                     }
+                    )
                 }
-                )
+                else {
+                    // if aaa data does not exist create new one
+                    const newData = new AAAModel({
+                        schoolName: schoolName,
+                        AAAData: [JSON.stringify(AAAData)]
+                    });
+                    newData.save((err, item) => {
+                        if (err) {
+                            res.send({ status: "error", message: "Error saving data" })
+                        }
+                        else {
+                            res.send({ status: 'success', message: 'Your progress saved...' })
+                            // res.send({ status: 'success', data: item });
+
+                        }
+                    }
+                    )
+                }
             }
-        }
-    })
+        })
     }
     // res.send({status : 'success', message : 'Your progress saved...'})
 })
@@ -159,6 +159,23 @@ router.post('/api/director/academic-audit/saveAAAData', (req, res)=>{
 router.post("/api/director/academic-audit/getAAAData", (req, res) => {
     const { schoolName } = req.body;
     AAAModel.findOne({ schoolName }, (err, data) => {
+        if (err) {
+            res.send({ status: "error", message: "Internal server error" })
+        }
+        else {
+            if (data) {
+                res.send({ status: 'success', data });
+            }
+            else {
+                res.send({ status: 'error', message: "No data found" });
+            }
+        }
+    }
+    )
+})
+
+router.post("/api/director/academic-audit/getTotalAAAData", (req, res) => {
+    AAAModel.find({}).lean().then((data, err) => {
         if (err) {
             res.send({ status: "error", message: "Internal server error" })
         }
@@ -184,7 +201,7 @@ router.post("/generateAAAReport", async (req, res) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         console.log('Link : ', `${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`)
-        await page.goto(`${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`, {waitUntil: 'networkidle0'});
+        await page.goto(`${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`, { waitUntil: 'networkidle0' });
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,
@@ -196,9 +213,9 @@ router.post("/generateAAAReport", async (req, res) => {
             footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
         });
         await browser.close()
-        res.send({ status: "generated", fileName });    
+        res.send({ status: "generated", fileName });
     } catch (error) {
-        res.send({ status: "error", message : 'Could not generate report, please try again later...' });      
+        res.send({ status: "error", message: 'Could not generate report, please try again later...' });
     }
 
 });
@@ -206,7 +223,7 @@ router.post("/generateAAAReport", async (req, res) => {
 // generateReport for user
 router.post('/api/getAllData/director', async (req, res) => {
 
-    const {department, filter} = req.body
+    const { department, filter } = req.body
     const report = {};
     // const filteredReponse = response
 
