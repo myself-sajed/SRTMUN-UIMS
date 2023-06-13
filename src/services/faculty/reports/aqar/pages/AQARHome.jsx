@@ -79,7 +79,6 @@ const AQARHome = ({ userType = 'faculty', auth }) => {
         Axios.post(link, { userId: user?._id, academicYear: aqarYearState })
             .then((res) => {
                 if (res) {
-                    console.log('Saved data successfully :', res)
                     toast.success('Data saved successfully...')
                 } else {
                     toast.error('Failed to save data')

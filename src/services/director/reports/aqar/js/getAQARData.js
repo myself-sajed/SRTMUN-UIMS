@@ -2,7 +2,6 @@ import Axios from 'axios'
 import { toast } from 'react-hot-toast';
 
 const getAQARData = (setData, getByYear, filter, aqarYear, userType = 'faculty') => {
-    console.log('getting...')
     const link = `${process.env.REACT_APP_MAIN_URL}/service/${userType}/report/aqar/getData`;
 
     Axios.post(link, { filter })
@@ -27,6 +26,51 @@ const getAQARData = (setData, getByYear, filter, aqarYear, userType = 'faculty')
         })
 }
 
+const getTotalFacultyAQARData = (setData, setError) => {
+    try {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/faculty/report/aqar/getTotalData`,)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setData(res.data.data);
+                }
+                else {
+                    setData(null)
+                    setError({ error: true, message: 'Faculy AQAR Data Not Found. Please fill Faculy AQAR Form to generate report!' })
+                }
+            }).catch((err) => {
+                toast.error('Failed fetching data')
+            })
+    } catch (error) {
+        toast.error('Internal Server error');
+    }
+}
+
+
+const getTotalDirectorAQARData = (setData, setLoading, setError) => {
+    try {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/director/report/aqar/getTotalData`,)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setData(res.data.data);
+                    setLoading(false)
+                }
+                else {
+                    setData(null)
+                    setLoading(false)
+                    setError({ error: true, message: 'Director AQAR Data Not Found. Please fill Director AQAR Form to generate report!' })
+                }
+            }).catch((err) => {
+                toast.error('Failed fetching data')
+                setLoading(false)
+            })
+    } catch (error) {
+        toast.error('Internal Server error');
+        setLoading(false)
+    }
+}
+
+
 
 export default getAQARData
+export { getTotalFacultyAQARData, getTotalDirectorAQARData }
 

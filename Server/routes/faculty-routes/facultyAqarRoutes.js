@@ -77,6 +77,26 @@ function facultyAqarRoutes(app) {
         )
     })
 
+    app.post('/service/faculty/report/aqar/getTotalData', (req, res) => {
+
+
+        FacultyAQAR.find({}).lean().populate("userId").exec().then((aqar, err) => {
+            if (err) {
+                console.log(err)
+                res.send({ status: "error", message: "Internal server error" })
+            }
+            else {
+                if (aqar) {
+                    res.send({ status: 'success', data: aqar });
+                }
+                else {
+                    res.send({ status: 'error', message: "No data found" });
+                }
+            }
+        }
+        )
+    })
+
 
 
 }

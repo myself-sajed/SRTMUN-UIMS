@@ -34,3 +34,25 @@ const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numb
 }
 
 export default Year
+
+const currentDate = new Date().getUTCFullYear();
+const listOfYears = Array(currentDate - (currentDate - 30)).fill('').map((v, idx) => `${currentDate - (idx + 1)}-${(currentDate - idx).toString().slice(2, 4)}`);
+
+export { listOfYears }
+
+const academicYearGenerator = (numberOfYearsToDisplay, showCurrentYear = true) => {
+    // generate years
+    let now;
+    if (showCurrentYear) {
+        now = new Date().getUTCFullYear();
+    } else {
+        now = new Date().getUTCFullYear() - 1
+    }
+
+
+    const arrayOfYears = Array(now - (now - numberOfYearsToDisplay)).fill('').map((v, idx) => `${now - (idx + 1)}-${(now - idx).toString().slice(2, 4)}`);
+
+    return arrayOfYears
+}
+
+export { academicYearGenerator }

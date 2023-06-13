@@ -133,9 +133,31 @@ const generateAAAReport = (userData, selectedYear, setReportLoading) => {
 
 }
 
+const getTotalAAAData = (setData, setLoading, setError) => {
+    try {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/director/academic-audit/getTotalAAAData`,)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setData(res.data.data);
+                    setLoading(false)
+                }
+                else {
+                    setData(null)
+                    setLoading(false)
+                    setError({ error: true, message: 'AAA Data Not Found. Please fill AAA Form to generate report!' })
+                }
+            }).catch((err) => {
+                toast.error('Failed fetching data')
+                setLoading(false)
+            })
+    } catch (error) {
+        toast.error('Internal Server error');
+        setLoading(false)
+    }
+}
 
 
 
 
 export default getData
-export { getDirectorData, saveAAAData, getAuditData, generateAAAReport }
+export { getDirectorData, saveAAAData, getAuditData, generateAAAReport, getTotalAAAData }

@@ -58,9 +58,29 @@ function directorAqarRoutes(app) {
 
     app.post('/service/director/report/aqar/getData', (req, res) => {
 
-        const { schoolName } = req.body
+        const { filter } = req.body
 
-        DirectorAQAR.findOne({ schoolName }).then((aqar, err) => {
+        DirectorAQAR.findOne({ filter }).then((aqar, err) => {
+            if (err) {
+                console.log(err)
+                res.send({ status: "error", message: "Internal server error" })
+            }
+            else {
+                if (aqar) {
+                    res.send({ status: 'success', data: aqar });
+                }
+                else {
+                    res.send({ status: 'error', message: "No data found" });
+                }
+            }
+        }
+        )
+    })
+
+    app.post('/service/director/report/aqar/getTotalData', (req, res) => {
+
+
+        DirectorAQAR.find({}).lean().then((aqar, err) => {
             if (err) {
                 console.log(err)
                 res.send({ status: "error", message: "Internal server error" })

@@ -252,7 +252,5 @@ const navcom = [
     }
 ]
 
-console.log('navcom :', navcom)
-
 
 export default navcom;
