@@ -63,7 +63,6 @@ const CASDataTable = {
     },
     TrimmedBookAndChapter: {
         tableHeads: [
-            "Teacher Name",
             "Title of Published Book",
             "Paper Title",
             "Title of proceedings",
@@ -74,12 +73,10 @@ const CASDataTable = {
             "SBN/ISSN number",
             "Affiliation Institute at the time of publication",
             "Publisher Name",
-            "School Name",
             "Year",
             "Uploaded Proof",
         ],
         tableCells: [
-            "teacherName",
             "titleOfBook",
             "paperTitle",
             "titleOfProceeding",
@@ -90,7 +87,6 @@ const CASDataTable = {
             "issnNumber",
             "aff",
             "publisherName",
-            "schoolName",
             "year",
             "proof",
         ],
@@ -456,6 +452,38 @@ const CASDataTable = {
             "scholarName",
             "departmentName",
             "guideName",
+            "thesisTitle",
+            "degreeName",
+            "rac",
+            "gender",
+            "category",
+            "awardSubmit",
+            "yearOfScholar",
+            "phdAwardYear",
+            "year",
+            "proof",
+        ],
+        mainKey: {
+            head: ['Thesis Title'],
+            keyName: ['thesisTitle']
+        }
+    },
+    TrimmedPhdAwarded: {
+        tableHeads: [
+            "Scholar Name",
+            "Thesis Title",
+            "Degree",
+            "Date of RAC",
+            "Gender",
+            "Category",
+            "Awarded / Submitted / Ongoing",
+            "Year of Scholar Registration",
+            "Year of Award",
+            "Year",
+            "Uploaded Degree",
+        ],
+        tableCells: [
+            "scholarName",
             "thesisTitle",
             "degreeName",
             "rac",

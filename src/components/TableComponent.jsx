@@ -3,15 +3,15 @@ import CASDataTable from '../services/faculty/reports/cas/components/CASDataTabl
 import { ViewFile } from '../templates/faculty/cas-report/Tables'
 import EmptyBox from './EmptyBox'
 
-const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = 'bg-blue-700', showProof = false, takeFromModal = false, model = null }) => {
+const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = 'bg-blue-700', showProof = false, takeFromModal = false, model = null, color = "text-white", tableCSS = "" }) => {
 
 
 
     return (
         <div>
             <div className="table-responsive">
-                <table class="table table-bordered css-serial">
-                    <thead className={`${tableColor} text-white`}>
+                <table className={`table table-bordered css-serial ${tableCSS}`}>
+                    <thead className={`${tableColor} ${color}`}>
                         <tr>
                             <th scope="col">Sr. No.</th>
                             {

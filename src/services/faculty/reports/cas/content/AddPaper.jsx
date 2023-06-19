@@ -10,26 +10,20 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Popconfirm, Tooltip } from 'antd';
 
 
-const AddPaper = ({ researchPaper, setResearchPaper, casYearState }) => {
+const AddPaper = ({ researchPaper, setResearchPaper, casYearState, saveLoader, setSaveLoader }) => {
 
 
 
     return (
         <BGPad classes='mt-3'>
+
             <div>
                 <div className='mt-2 text-sm md:text-base'>
 
 
-                    <NumberToTextField
+                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="ResearchPapersUGC"
                         state={researchPaper} setState={setResearchPaper} casYearState={casYearState}
                         isForm={true} activity="Activity 1" classes='my-3' model="ResearchPaper" addName="Research Paper" activityName="Research Paper"
-                        options={[
-                            { field: 'Text', keyName: "paperTitle", label: "Paper Title" },
-                            { field: 'Text', keyName: "journalName", label: "Name of the Journal" },
-                            { field: 'Text', keyName: "publicationYear", label: "Year of Publication" },
-                            { field: 'Text', keyName: "issnNumber", label: "ISSN Number" },
-                            { field: 'Year', keyName: "year", label: "Academic Year", },
-                            { field: 'File', keyName: "proof", label: "Upload Proof", },]}
                     >
 
                     </NumberToTextField>
@@ -350,179 +344,4 @@ const FileViewWithDelete = ({ fileName, onDeleteClick, otherParams }) => {
 
 
 export { FileViewWithDelete }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <div className='mt-3'>
-                        <div className="form-check items-center gap-2 ">
-                            <input className="form-check-input" type="checkbox" value="" id="reserchPaperCheck"
-                                onChange={(e) => { setResearchPaper({ ...researchPaper, check: e.target.checked }) }} checked={researchPaper?.check} />
-                            <label className="form-check-label flex items-center justify-between" htmlFor="reserchPaperCheck">
-                                <div>
-                                    Research Papers in Peer-Reviewed or UGC listed Journals
-                                </div>
-                                <div className="flex items-center justify-end gap-3">
-                                    <Remark title='05' color='blue' />
-                                    <p>Score : <span className='text-green-900 font-bold'>{researchPaper?.check ? researchPaper?.totalScore : 0}</span> </p>
-                                </div>
-                            </label>
-                        </div>
-
-                        {
-                            researchPaper?.check &&
-                            <div className="bg-white p-3 rounded-xl mt-3">
-                                <div>
-                                    <label htmlFor="inputZip" className="form-label text-muted">Enter no of Research Papers</label>
-                                    <input type="number" min={0} className="form-control w-full md:w-[8%]" id="researchPaperInput" value={researchPaper?.input === 0 ? null : researchPaper?.input} onChange={(e) => { setResearchPaper({ ...researchPaper, input: e.target.value, }); }} />
-                                </div>
-
-                                <div className="mt-3">
-                                    <div>
-                                        {
-                                            [...Array(researchPaper?.input === '' ? 0 :
-                                                parseInt(researchPaper?.input))].map((e, i) => {
-
-                                                    return <div className="w-full border p-3 rounded-xl my-4">
-
-                                                        <p className='float-right'>Individual Score : <span className='text-green-900 font-bold '>
-                                                            {
-                                                                paperScore[`paper`] ? paperScore[`paper`] : 0
-
-                                                            }
-                                                        </span> </p>
-
-                                                        <div>
-                                                            <TextField
-                                                                key={i} id={`researchPaper`} label={`${i + 1}. Title`}
-                                                                fullWidth variant="standard" className="my-2"
-                                                                value={researchPaper?.titles[`researchPaper`] ?
-                                                                    researchPaper?.titles[`researchPaper`] : null}
-                                                                onChange={(e) => {
-                                                                    setResearchPaper({ ...researchPaper, titles: { ...researchPaper?.titles, [e.target.id]: e.target.value } })
-                                                                }}
-                                                            />
-                                                        </div>
-
-                                                        <div className="w-full mt-2 gap-3 flex flex-col ">
-                                                            <div className='w-full md:w-[30%]'>
-                                                                <select className="form-select" id={`researchPaper`} required onChange={(e) => { setResearchPaper({ ...researchPaper, faculty: { ...researchPaper?.faculty, [`researchPaper`]: e.target.value } }) }}
-
-                                                                    value={researchPaper?.faculty[`researchPaper`] ?
-                                                                        researchPaper?.faculty[`researchPaper`] : null} >
-                                                                    <option disabled selected>Choose Faculty</option>
-                                                                    {facultyList.map((item, index) => {
-                                                                        return <option value={index} key={index}>{item.title}</option>
-                                                                    })}
-
-                                                                </select>
-                                                            </div>
-
-                                                            <div className='w-full md:w-[30%]'>
-                                                                <select className="form-select" id={`researchPaperType`} required onChange={(e) => { setResearchPaper({ ...researchPaper, paperType: { ...researchPaper?.paperType, [`researchPaperType`]: e.target.value } }) }}
-
-                                                                    value={researchPaper?.paperType[`researchPaperType`] ?
-                                                                        researchPaper?.paperType[`researchPaperType`] : null}>
-
-                                                                    <option selected disabled>Choose Paper Type</option>
-
-                                                                    {
-                                                                        impactFactorList.map((item, index) => {
-                                                                            return <option key={index}
-                                                                                value={index}>{item.title}</option>
-                                                                        })
-                                                                    }
-
-
-                                                                </select>
-                                                            </div>
-
-                                                            <div className='w-full md:w-[30%]'>
-                                                                <select className="form-select" id={`researchPaperAuthor`} required onChange={(e) => { setResearchPaper({ ...researchPaper, authorType: { ...researchPaper?.authorType, [`researchPaperAuthor`]: e.target.value } }) }}
-
-                                                                    value={researchPaper?.authorType[`researchPaperAuthor`] ?
-                                                                        researchPaper?.authorType[`researchPaperAuthor`] : null}>
-
-                                                                    <option selected disabled>Choose Author Type</option>
-
-                                                                    <option value="Single">Single</option>
-                                                                    <option value="Two">Two</option>
-                                                                    <option value="Multiple">Multiple</option>
-
-
-                                                                </select>
-                                                            </div>
-
-
-
-                                                            {
-                                                                researchPaper?.authorType[`researchPaperAuthor`] === 'Multiple' ?
-                                                                    <div className='w-full md:w-[30%]'>
-                                                                        <select className="form-select" id={`researchPaperMultiple`} required onChange={(e) => { setResearchPaper({ ...researchPaper, multipleAuthorType: { ...researchPaper?.multipleAuthorType, [`researchPaperMultiple`]: e.target.value } }) }}
-
-                                                                            value={researchPaper?.multipleAuthorType[`researchPaperMultiple`] ?
-                                                                                researchPaper?.multipleAuthorType[`researchPaperMultiple`] : null}>
-
-                                                                            <option selected disabled>Choose Multiple Author Type</option>
-
-                                                                            <option value={'First'}>First / Principal / Corresponding Author / Guide</option>
-
-                                                                            <option value={'Other'}>Other</option>
-
-
-                                                                        </select>
-                                                                    </div> : null
-                                                            }
-                                                        </div>
-
-
-
-                                                    </div>
-
-
-                                                }
-
-
-
-                                                )
-                                        }
-                                    </div>
-
-
-
-
-                                </div>
-
-                            </div>
-                        }
-                    </div> */}
-
 

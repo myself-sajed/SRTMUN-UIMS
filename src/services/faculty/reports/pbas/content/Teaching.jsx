@@ -1,8 +1,6 @@
 import { IconButton, TextField, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import HttpsRoundedIcon from '@mui/icons-material/HttpsRounded';
-import { useDispatch, useSelector } from 'react-redux';
-import { setTeachingTable } from '../../../../../redux/slices/CASSlice';
 import { SaveButton } from '../PbasReportHome';
 import toast from 'react-hot-toast';
 import FileViewer from '../../../../../components/FileViewer';
@@ -81,6 +79,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                             }, selectedAttendance: null
 
                         })
+                        savingFunction()
                         toast.success('Director Certificate Uploaded Successfully')
                     }
                     else {
@@ -102,22 +101,31 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                     setTeachingData({
                         ...teachingData, uploadedAttendance: null
                     })
-
+                    savingFunction()
                     toast.success('File deleted successfully')
                 } else {
                     toast.error('Error deleting File')
                 }
             })
+
+
     }
+
+    const savingFunction = () => {
+        setSaveLoader(true)
+    }
+
 
 
 
     return (
         <div className="w-full">
+
             {/* <p className="p-2 border-l-green-600 border-l-4 mt-3 text-lg">Teaching and Teaching related activities</p> */}
 
             <div className='my-3 text-lg'>
                 <p className='font-bold text-xl'>Teaching Activities</p>
+
 
                 {/* TEACHING */}
                 <BGPad classes='mt-2 w-full'>
@@ -234,7 +242,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                                 {
                                     activitiesInvolved.map((activity, index) => {
                                         return (
-                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} setIsLoading={setIsLoading} />
+                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} setIsLoading={setIsLoading} savingFunction={savingFunction} />
                                         )
                                     })
                                 }
@@ -324,7 +332,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
             </div>
 
             <div className='mt-4'>
-                <SaveButton title="Save and Proceed" onClickFunction={() => { handleNext(); setTabName('second'); setSaveLoader(true) }} />
+                <SaveButton title="Save and Proceed" onClickFunction={() => { handleNext(); setTabName('second'); }} />
             </div>
 
         </div>
@@ -343,7 +351,7 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
 }
 
 
-const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading }) => {
+const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savingFunction }) => {
 
 
     const submitActivityFiles = (e, fileTagName) => {
@@ -365,6 +373,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading }) =>
                             [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
                         }
                     })
+                    savingFunction()
                     setIsLoading(false)
                     toast.success('Files uploaded successfully')
                 }
@@ -499,6 +508,8 @@ const BGPad = ({ children, classes }) => {
 }
 
 export { BGPad }
+
+
 
 
 

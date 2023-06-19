@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const PatentPublished = ({ filterByAcademicYear = false, academicYear }) => {
+const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [patentModal, setPatentModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -119,7 +119,7 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear }) => {
     return (
         <div>
             {/* // HEADER */}
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Patents published / awarded" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Patents published / awarded" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PatentFaculty' title='Patents published / awarded' SendReq='Patent' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -157,51 +157,55 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Patenter Name</th>
-                            <th scope="col">Patent Number</th>
-                            <th scope="col">Patent Title</th>
-                            <th scope="col">National / International</th>
-                            <th scope="col">Award Year of Patent </th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-
-                            <th scope="col">Uploaded Proof </th>
-                            <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear).map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.patenterName}</td>
-                                    <td>{item.patentNumber}</td>
-                                    <td>{item.patentTitle}</td>
-                                    <td>{item.isNat}</td>
-                                    <td>{item.awardYear}</td>
-                                    <td>{item.year}</td>
-                                    <td> <View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="Patent" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setPatentModal} /></td>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Patenter Name</th>
+                                <th scope="col">Patent Number</th>
+                                <th scope="col">Patent Title</th>
+                                <th scope="col">National / International</th>
+                                <th scope="col">Award Year of Patent </th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+
+                                <th scope="col">Uploaded Proof </th>
+                                <th scope="col">Action</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear).map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.patenterName}</td>
+                                        <td>{item.patentNumber}</td>
+                                        <td>{item.patentTitle}</td>
+                                        <td>{item.isNat}</td>
+                                        <td>{item.awardYear}</td>
+                                        <td>{item.year}</td>
+                                        <td> <View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="Patent" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setPatentModal} /></td>
 
 
 
-                                </tr>
-                            )
-                        })}
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

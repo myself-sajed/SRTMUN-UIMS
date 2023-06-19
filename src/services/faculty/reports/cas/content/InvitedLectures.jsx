@@ -2,24 +2,18 @@ import React, { useEffect } from 'react'
 import NumberToTextField from '../components/NumberToTextField'
 import { BGPad } from './Teaching'
 
-const InvitedLectures = ({ setInvitedTalks, invitedTalks, casYearState, }) => {
+const InvitedLectures = ({ setInvitedTalks, invitedTalks, casYearState, saveLoader, setSaveLoader }) => {
     return (
         <BGPad classes='mt-3'>
             <div>
                 <div className='mt-2 text-sm md:text-base'>
 
 
-                    <NumberToTextField
+                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                        facultyTableAvailable="InvitedTalk"
                         state={invitedTalks} setState={setInvitedTalks} casYearState={casYearState}
                         isForm={true} activity="Activity 6" classes='my-3' model="InvitedTalk" addName="Invited Talk" activityName="Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings"
-                        options={[
-                            { field: 'Text', keyName: "lectureTitle", label: "Title of Lecture/Academic Session" },
-                            { field: 'Text', keyName: "seminarTitle", label: "Title of Seminar" },
-                            { field: 'Text', keyName: "organizedBy", label: "Organized by" },
-                            { field: 'Select', keyName: "isNat", label: "Type", options: ["State/University", "National", "International (within country)", "International (Abroad)"] },
-                            { field: 'Select', keyName: "nature", label: "Nature ", options: ["Invited Talk", "Resource Person", "Paper Presentation"] },
-                            { field: 'Year', keyName: "year", label: "Academic Year", },
-                            { field: 'File', keyName: "proof", label: "Upload Proof", },]}
+
                     >
 
                     </NumberToTextField>

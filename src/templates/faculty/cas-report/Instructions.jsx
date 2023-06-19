@@ -13,7 +13,7 @@ const Instructions = ({ forPrintOut }) => {
                 <br /><br /><br /><br />
                 <br /><br /><br /><br />
 
-                <div>
+                <div className='mr-36'>
                     <p className="text-right mr-14">Signature</p>
                     <p className="text-right">(Faculty with designation)</p>
 
@@ -172,7 +172,7 @@ const Instructions = ({ forPrintOut }) => {
 
 
 
-            <div className="flex flex-col justify-end w-full">
+            <div className="mr-36">
                 <p className="text-right mr-12">Signature </p>
                 <p className="text-right">(Head / School Director)</p>
             </div>
@@ -184,7 +184,7 @@ const Instructions = ({ forPrintOut }) => {
             <br /><br /><br /><br />
             <br /><br /><br /><br />
 
-            <div className="flex flex-col justify-end w-full">
+            <div className="mr-36">
                 <p className="text-right mr-7">Signature </p>
                 <p className="text-right">(Vice-Chancellor)</p>
             </div>

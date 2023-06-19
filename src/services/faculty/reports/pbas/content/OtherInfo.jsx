@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { BGPad } from './Teaching'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { useState } from 'react';
@@ -7,9 +7,10 @@ import Actions from '../../../../director/reports/academic-audit/components/Acti
 import { IconButton, Tooltip } from '@mui/material';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import { toast } from 'react-hot-toast';
 
 
-const OtherInfo = ({ otherInfo, setOtherInfo }) => {
+const OtherInfo = ({ otherInfo, setOtherInfo, setSaveLoader }) => {
     const [showInputs, setShowInputs] = useState(false)
     const [showEditInputs, setShowEditInputs] = useState(false)
     const [entry, setEntry] = useState('')
@@ -17,10 +18,15 @@ const OtherInfo = ({ otherInfo, setOtherInfo }) => {
 
     const saveData = (e) => {
         e.preventDefault()
-        let newArray = otherInfo
-        newArray.unshift(entry)
-        setOtherInfo([...newArray])
-        setEntry(null)
+        if (entry) {
+            let newArray = [...otherInfo]
+            newArray.unshift(entry)
+            setOtherInfo([...newArray])
+            setSaveLoader(true)
+            setShowInputs(false)
+        } else {
+            toast.error('Please fill the field before adding...')
+        }
     }
 
 
@@ -33,12 +39,12 @@ const OtherInfo = ({ otherInfo, setOtherInfo }) => {
 
     const handleChange = (e) => {
         e.preventDefault()
-        let newArray = otherInfo
+        let newArray = [...otherInfo]
         newArray[deleteIndex] = entry
         setOtherInfo([...newArray])
         setEntry(null)
         setShowEditInputs(false)
-
+        setSaveLoader(true)
     }
 
     const handleDelete = (itemIndex) => {
@@ -54,11 +60,11 @@ const OtherInfo = ({ otherInfo, setOtherInfo }) => {
                     <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between sm:gap-2'>
                         <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
                             <div className='flex items-center justify-start gap-2'>
-                                <p>Activity 7: <span className='font-bold ml-3'> Details of any other credential, significatnt contribution, award received etc. not mentioned earlier</span></p>
+                                <p>Activity 7: <span className='font-bold ml-3'> Details of any other credential, significant contribution, award received etc. not mentioned earlier</span></p>
                             </div>
                         </div>
 
-                        <button onClick={() => { setShowInputs(true); setShowEditInputs(false) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
+                        <button onClick={() => { setShowInputs(true); setShowEditInputs(false); setEntry('') }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
 
                             <AddRoundedIcon className='text-green-800' />
                             Add </button>
@@ -76,7 +82,7 @@ const OtherInfo = ({ otherInfo, setOtherInfo }) => {
 
                                     <div class="mb-3">
                                         <label for="exampleFormControlTextarea1" class="form-label">Add details</label>
-                                        <textarea placeholder="Your details goes here..." class="form-control" value={entry} onChange={(e) => setEntry(e.target.value)} id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea placeholder="Your details goes here..." className="form-control" value={entry} onChange={(e) => setEntry(e.target.value)} id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
 
                                 </div>

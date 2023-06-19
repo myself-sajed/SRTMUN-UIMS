@@ -30,7 +30,7 @@ const CASActivities = [
     },
     {
         activityName: 'Activity 4.1: Research Guidance',
-        activityTables: CASDataTable.PhdAwarded,
+        activityTables: CASDataTable.TrimmedPhdAwarded,
         model: 'PhdAwarded',
         desc: 'Research Guidance : Ph.D, M.Phil / PG Dissertation Awarded or Submitted',
         colName: 'Research Guidance',
@@ -43,7 +43,7 @@ const CASActivities = [
     },
     {
         activityName: 'Activity 4.2: Research Projects',
-        activityTables: CASDataTable.TrimmedResearchProject,
+        activityTables: CASDataTable.ResearchProject,
         model: 'ResearchProject',
         desc: 'Research Projects : Completed or Ongoing / Major or Minor Projects',
         colName: 'Research Projects',
@@ -146,7 +146,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
         {/* // form activity 1-3 */}
         <div className="mx-auto">
             {CASActivities.map((activity) => {
-                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5 border">
+                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5 border" style={{ pageBreakInside: 'avoid' }}>
 
                     {
                         activity?.hasSubActivity &&
@@ -178,7 +178,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
                     </div>
 
                     <div className={`${forPrintOut === 'true' && "px-1"}`}>
-                        <table className={`table table-bordered`}>
+                        <table className={`table table-bordered text-sm`}>
                             <thead className={`${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>
                                 <tr>
                                     <th scope="col">Year</th>
@@ -262,7 +262,7 @@ const ViewFile = ({ fileName, type = "proofURL", attendance = false, small = fal
 
     return <div className={`my-2`}>
         <a href={link[type]}
-            className={`bg-blue-100 text-sm rounded-lg text-blue-900 ${small ? 'text-sm p-1' : 'p-2'}`} target="_blank" rel="noreferrer">
+            className={`bg-blue-100 text-sm whitespace-nowrap rounded-lg text-blue-900 ${small ? 'text-sm p-1' : 'p-2'}`} target="_blank" rel="noreferrer">
             {type === "linkURL" ? `${fileName.slice(0, 30)}${fileName.length > 30 && '...'}` : (type === "casDirURL" && attendance === true) ? 'View Director Certificate' : type === "casDirURL" ? 'View Proof' : customTitle}</a>
     </div>
 }

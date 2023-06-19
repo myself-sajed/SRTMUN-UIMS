@@ -78,6 +78,8 @@ import StudentResponse from '../services/feedback/pages/StudentResponse'
 import OtherReponses from '../services/feedback/pages/OtherReponses'
 import GenerateAQARReport from '../services/faculty/reports/aqar/pages/GenerateAQARReport'
 import StatusPage from '../services/status/pages/StatusPage'
+import GenerateFeedbackLink from '../services/feedback/pages/GenerateFeedbackLink'
+import GoToResponse from '../services/feedback/pages/GoToResponse'
 
 
 const RoutesHandler = () => {
@@ -138,7 +140,7 @@ const RoutesHandler = () => {
                 <Route path='/director-registration' element={<DirectorRegistration />} />
 
                 {/* report routes */}
-                <Route path="/report/CASReport/:userId/:selectedYear" exact element={<CASReport />} />
+                <Route path="/report/CASReport/:userId/:selectedYear/:forPrintOut" exact element={<CASReport />} />
                 <Route path="/report/PBASReport/:userId/:selectedYear/:forPrintOut" exact element={<PBASReport />} />
                 <Route path="/report/facultyReport/:userId/:otherOptions" exact element={<FacultyReport />} />
                 <Route path="/report/AAAReport/:department/:selectedYear" exact element={<AAAReport />} />
@@ -182,6 +184,10 @@ const RoutesHandler = () => {
                 {/* Feedback System: PART II : RESPONSE */}
                 <Route path='/feedback/response/student/:academicYear/:schoolName' exact element={<StudentResponse />} />
                 <Route path='/feedback/response/:responseType/:academicYear/:schoolName' exact element={<OtherReponses />} />
+
+                {/* Feedback System: PART III : Pages */}
+                <Route path="/director/service/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
+                <Route path="/director/service/goToResponse" exact element={<GoToResponse />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />

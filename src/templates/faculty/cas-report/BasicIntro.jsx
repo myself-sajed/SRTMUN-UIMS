@@ -54,7 +54,7 @@ const BasicIntro = ({ academicData, forPrintOut }) => {
 
             {
                 introTables.map((item, index) => {
-                    return <div className="my-5 mx-auto" key={index}>
+                    return <div className="my-5 mx-auto" key={index} style={{ pageBreakInside: 'avoid' }}>
                         <div className={`bg-white overflow-hidden sm:rounded-lg border ${forPrintOut === 'true' && "border-dark"}`}>
 
                             <div className={`px-4 py-2 sm:px-6 ${forPrintOut === 'false' && "bg-[#009879] text-white"}`}>

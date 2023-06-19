@@ -70,12 +70,12 @@ function editRoutes(app) {
     // edit personal profile Configuration
     app.post("/api/editProfile", upload.single('file'), (req, res) => {
         const editData = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, userId, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink } = editData;
+        const { salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, userId, orcidId, scopusId, googleScholarId, researcherId, personalWebsiteLink } = editData;
         if (req.file) {
             User.findOneAndUpdate(
                 { _id: userId },
                 {
-                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink,
+                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScholarId, researcherId, personalWebsiteLink,
                     photoURL: req.file.filename,
                 }
             ).then(function (user) {
@@ -88,7 +88,7 @@ function editRoutes(app) {
             User.findOneAndUpdate(
                 { _id: userId },
                 {
-                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScolarId, researcherId, personalWebsiteLink
+                    salutation, name, designation, department, promotionDate, gradePay, address, mobile, email, dob, specialization, racDate, cast, orcidId, scopusId, googleScholarId, researcherId, personalWebsiteLink
                 }
             ).then(function (user) {
                 res.send({ status: "edited", user: user });

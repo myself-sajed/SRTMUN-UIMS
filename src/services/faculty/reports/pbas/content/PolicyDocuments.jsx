@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NumberToTextField from '../components/NumberToTextField'
 import { BGPad, Remark } from './Teaching'
 
-const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, patents, setPatents, awards, setAwards, fellow, setFellow }) => {
+const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, patents, setPatents, awards, setAwards, fellow, setFellow, saveLoader, setSaveLoader }) => {
 
     const [totalActivityScore, setTotalActivityScore] = useState(0)
 
@@ -28,17 +28,10 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-2 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    facultyTableAvailable="PatentPublished"
                     state={patents} setState={setPatents} casYearState={casYearState}
                     classes='my-3' model="Patent" addName="Patent" activityName="Patents Published" activity="Sub-Activity 1"
-                    options={[
-                        { field: 'Text', keyName: "patenterName", label: "Patenter Name" },
-                        { field: 'Text', keyName: "patentNumber", label: "Patent Number" },
-                        { field: 'Text', keyName: "patentTitle", label: "Patent Title" },
-                        { field: 'Select', keyName: "isNat", label: "National / International", options: ['National', 'International'] },
-                        { field: 'Text', keyName: "awardYear", label: "Award Year of Patent" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
 
                 </NumberToTextField>
@@ -49,7 +42,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                     state={policyDocuments} setState={setPolicyDocuments} casYearState={casYearState}
                     classes='my-3' model="PolicyDocuments" addName="Policy Documents" activityName="Policy Documents" activity="Sub-Activity 2"
                     options={[
@@ -71,23 +64,9 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField
-                    state={awards} setState={setAwards} casYearState={casYearState}
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="AwardRecognition"
                     classes='my-3' model="AwardRecognition" addName="Awards" activityName="Awards & Recognitions" activity="Sub-Activity 3 [A]"
-                    options={[
-                        { field: 'Text', keyName: "teacherName", label: "Name of full-time teachers receiving award" },
-                        { field: 'Text', keyName: "awardYear", label: "Award Date" },
-                        { field: 'Text', keyName: "pan", label: "PAN" },
-                        { field: 'Text', keyName: "designation", label: "Designation" },
-                        { field: 'Text', keyName: "awardName", label: "Name of the Award, Fellowship, received" },
-                        { field: 'Text', keyName: "agencyName", label: "Award Agency Name" },
-
-                        { field: 'Select', keyName: "isNat", label: "National / International", options: ['National', 'International'] },
-                        { field: 'Text', keyName: "incentive", label: "Incentives/Type of incentive given by the HEI in recognition of the award" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
-
                 </NumberToTextField>
 
             </div>
@@ -96,17 +75,10 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    facultyTableAvailable="Fellowship"
                     state={fellow} setState={setFellow} casYearState={casYearState}
                     classes='my-3' model="Fellowship" addName="Fellowship" activityName="Fellowship" activity="Sub-Activity 3 [B]"
-                    options={[
-                        { field: 'Text', keyName: "teacherName", label: "Name of the teacher awarded fellowship/financial support" },
-                        { field: 'Text', keyName: "awardName", label: "Name of the award/fellowship" },
-                        { field: 'Text', keyName: "awardYear", label: "Award Year" },
-                        { field: 'Select', keyName: "isNat", label: "National / International", options: ['National', 'International'] },
-                        { field: 'Text', keyName: "awardingAgency", label: "Awarding Agency" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
 
                 </NumberToTextField>

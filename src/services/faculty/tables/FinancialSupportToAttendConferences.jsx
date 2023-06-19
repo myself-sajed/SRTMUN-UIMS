@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, academicYear }) => {
+const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [jrfModal, setJrfModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -115,7 +115,7 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<CurrencyRupeeIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Financial Support To Attend Conferences" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<CurrencyRupeeIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Financial Support To Attend Conferences"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='FinancialSupportToAttendConferencesFaculty' title='Financial Support To Attend Conferences' SendReq='Financialsupport' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -141,46 +141,50 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Name of conference/ workshop attended for which financial support provided</th>
-                            <th scope="col">Name of professional body Funds provided for</th>
-                            <th scope="col">Amount of support</th>
-                            <th scope="col">PAN No.</th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.nameOfConference}</td>
-                                    <td>{item.feeprovider}</td>
-                                    <td>{item.amountOfSupport}</td>
-                                    <td>{item.pan}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td> <Actions item={item} model="Financialsupport" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Name of conference/ workshop attended for which financial support provided</th>
+                                <th scope="col">Name of professional body Funds provided for</th>
+                                <th scope="col">Amount of support</th>
+                                <th scope="col">PAN No.</th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
 
-                                </tr>
-                            )
-                        })}
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.nameOfConference}</td>
+                                        <td>{item.feeprovider}</td>
+                                        <td>{item.amountOfSupport}</td>
+                                        <td>{item.pan}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td> <Actions item={item} model="Financialsupport" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
+
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
 
         </div>
     )

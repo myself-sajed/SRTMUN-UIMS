@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear }) => {
+const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [researchPaperModal, setResearchPaperModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -155,7 +155,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear }) => {
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Research Paper" editState={setEditModal} clearStates={clearStates} state={setResearchPaperModal} icon={<FindInPageRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Papers in the Journals notified by UGC" />
+            <Header exceldialog={setOpen} showTable={showTable} dataCount={filteredItems ? filteredItems.length : 0} add="Research Paper" editState={setEditModal} clearStates={clearStates} state={setResearchPaperModal} icon={<FindInPageRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Papers in the Journals notified by UGC"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResearchPaperFaculty' title='Research Paper' SendReq='ResearchPaper' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -196,48 +196,50 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear }) => {
             </Dialog>
 
             {/* Table */}
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Paper Title</th>
-                            <th scope="col">Journal Name</th>
-                            <th scope="col">Publication Year</th>
-                            <th scope="col">ISSN Number</th>
-                            <th scope="col">Indexed in</th>
-                            <th scope="col">Links</th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-                            <th scope="col">Proof</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems?.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.paperTitle}</td>
-                                    <td>{item.journalName}</td>
-                                    <td>{item.publicationYear}</td>
-                                    <td>{item.issnNumber}</td>
-                                    <td>{item?.indexedIn}</td>
-                                    <td>{item?.indexLink}</td>
-                                    <td>{item.year}</td>
-                                    <td> <View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="ResearchPaper" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setResearchPaperModal} /></td>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Paper Title</th>
+                                <th scope="col">Journal Name</th>
+                                <th scope="col">Publication Year</th>
+                                <th scope="col">ISSN Number</th>
+                                <th scope="col">Indexed in</th>
+                                <th scope="col">Links</th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Proof</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems?.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.paperTitle}</td>
+                                        <td>{item.journalName}</td>
+                                        <td>{item.publicationYear}</td>
+                                        <td>{item.issnNumber}</td>
+                                        <td>{item?.indexedIn}</td>
+                                        <td>{item?.indexLink}</td>
+                                        <td>{item.year}</td>
+                                        <td> <View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="ResearchPaper" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setResearchPaperModal} /></td>
 
-                                </tr>
-                            )
-                        })}
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

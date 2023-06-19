@@ -7,6 +7,7 @@ import { ViewFile } from './Tables';
 const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL", forPrintOut }) => {
     return (
         <div className='academic-start'>
+            <p className="academic-start"></p>
             <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">{title} Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
 
             <div>
@@ -147,6 +148,9 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
     let allYearTotalSum = 0;
     let allYearTotalCappedSum = 0;
 
+    let policyAndTalkTotalScore = 0;
+
+
     casArray.forEach((item) => {
         let totalGuidanceProjectScore = item?.academicData.researchGuide.totalScore + item?.academicData.researchProjects.totalScore + item?.academicData.consultancy.totalScore
 
@@ -158,6 +162,8 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
         let totalScore = item?.academicData.researchPaper.totalScore + item?.academicData.publicationData.totalScore + item?.academicData.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + item?.academicData.invitedTalks.totalScore
 
+
+        // this is main total score 
         item.totalScore = totalScore
 
         // capping
@@ -170,6 +176,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
         let talkCapScore = 0
 
         item.academicData?.policyDocuments.totalScore > cappedScore ? policyCapScore = cappedScore : policyCapScore = item.academicData?.policyDocuments.totalScore
+
         item.academicData?.invitedTalks.totalScore > cappedScore ? talkCapScore = cappedScore : talkCapScore = item.academicData?.invitedTalks.totalScore
 
         item.policyCapScore = policyCapScore
@@ -188,7 +195,25 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
         allYearTotalSum += totalScore
         allYearTotalCappedSum += totalCappedScore
 
+        // 5b + 6 for all years
+
+        policyAndTalkTotalScore += item?.academicData?.policyDocuments.totalScore + item?.academicData?.invitedTalks.totalScore
+
     })
+
+    let cappedScore = (allYearTotalSum * 30) / 100
+
+    let allYearTotalCappedScore = 0
+    if (policyAndTalkTotalScore > cappedScore) {
+        allYearTotalCappedScore = cappedScore
+    } else {
+        allYearTotalCappedScore = policyAndTalkTotalScore
+    }
+
+    let mainCappedScoreResult = allYearTotalSum - policyAndTalkTotalScore + allYearTotalCappedScore
+
+
+
 
 
 
@@ -478,6 +503,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
             {
                 title === "CAS" ?
                     <div>
+                        <p className="academic-start"></p>
                         {/* // Heading */}
                         <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Total & Capped Score</span></p>
 
@@ -487,7 +513,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                 <tr>
                                     <th scope="col">Year(s)</th>
                                     <th scope="col">Total Score</th>
-                                    <th scope="col">Total Capped Score</th>
+                                    {/* <th scope="col">Total Capped Score</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -498,7 +524,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                         <tr>
                                             <th scope="row">{item.casYear}</th>
                                             <td>{item.totalScore.toFixed(2)}</td>
-                                            <td>{item.totalCappedScore.toFixed(2)}</td>
+                                            {/* <td>{item.totalCappedScore.toFixed(2)}</td> */}
                                         </tr>
 
                                     )
@@ -512,9 +538,62 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
 
                             <span className='text-3xl text-muted'>|</span>
-                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalCappedSum.toFixed(2)}</span></div>
+                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{mainCappedScoreResult.toFixed(2)}</span></div>
                         </div>
-                    </div> :
+
+
+                        <div>
+                            <br /><br /><br /><br />
+                            <br /><br /><br /><br />
+                            <div>
+                                <div className='flex items-center justify-between'>
+                                    <p>Signature of Principal / Director</p>
+                                    <p>Signature of Applicant</p>
+                                </div>
+
+                                <div>
+                                    <p className="font-semibold mt-16 mb-2"> I. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: For Stage ________ to ________ AGP: ________ </p>
+
+                                    <br /><br /><br /><br /><br /><br />
+                                    <p className='flex items-center justify-between'>
+                                        <span> 1. The Principal / Director</span>
+                                        <span>2. Govt. Nominee</span>
+                                        <span>3. Head of the concerned department</span>
+                                        <span>4.Subject expert I</span>
+                                        <span>5. Subject expert II</span>
+                                    </p>
+                                </div>
+
+                                <br /><br /><br /><br />
+                                <br /><br /><br /><br />
+
+                                <div>
+                                    <p className="font-semibold mt-5 mb-2"> II. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: For Stage ________ to ________ AGP: ________ </p>
+
+                                    <br /><br /><br /><br /><br /><br />
+                                    <p className='flex items-center justify-between flex-wrap'>
+                                        <span> 1. The Chairperson of the Governing Body or his or her nominee</span>
+                                        <span> 2. The Principal / Director</span>
+                                        <span>3. Govt. Nominee</span>
+                                        <span>4. Head of the concerned department</span>
+
+                                    </p>
+                                    <br /><br /><br /><br /><br /><br />
+                                    <p className='grid grid-cols-3 gap-10'>
+                                        <span>5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
+                                            Development Council or equivalent position in the University, and the other must be expert in the concerned subject
+                                        </span>
+                                        <span>6.Subject expert I</span>
+                                        <span>7. Subject expert II</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    :
                     <div>
                         <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Summary of API Scores</span></p>
 

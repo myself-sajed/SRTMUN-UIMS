@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const OnlineFDP = ({ filterByAcademicYear = false, academicYear }) => {
+const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
     const [onlineFDPModal, setOnlineFDPModal] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -118,7 +118,7 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Programmes" editState={setEditModal} clearStates={clearStates} state={setOnlineFDPModal} icon={<SentimentVerySatisfiedRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Online/Face-to-face Faculty Development Programmes(FDP)" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Programmes" editState={setEditModal} clearStates={clearStates} state={setOnlineFDPModal} icon={<SentimentVerySatisfiedRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Online/Face-to-face Faculty Development Programmes(FDP)"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='OnlineORFasetoFaseFDPFaculty' title='Online/Face-to-face Faculty Development Programmes(FDP)' SendReq='Online' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -151,46 +151,50 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear }) => {
 
 
             {/* // TABLE */}
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Program Title</th>
-                            <th scope="col">Organized by</th>
-                            <th scope="col"><div className="w-28">Duration From</div></th>
-                            <th scope="col"><div className="w-28">Duration To</div></th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-                            <th scope="col">Certificate</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.programTitle}</td>
-                                    <td>{item.nameOfAttendedTeacher}</td>
-                                    <td>{item.durationFrom}</td>
-                                    <td>{item.durationTo}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="Online" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOnlineFDPModal} /></td>
+
+
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Program Title</th>
+                                <th scope="col">Organized by</th>
+                                <th scope="col"><div className="w-28">Duration From</div></th>
+                                <th scope="col"><div className="w-28">Duration To</div></th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Certificate</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.programTitle}</td>
+                                        <td>{item.nameOfAttendedTeacher}</td>
+                                        <td>{item.durationFrom}</td>
+                                        <td>{item.durationTo}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="Online" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOnlineFDPModal} /></td>
 
 
 
-                                </tr>
-                            )
-                        })}
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

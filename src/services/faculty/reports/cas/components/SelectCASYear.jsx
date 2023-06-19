@@ -5,11 +5,12 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
 
-const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDuration, firstYear, setFirstYear, lastYear, setLastYear }) => {
+const SelectCASYear = ({ casYearState, setCasYearState, firstYear, setFirstYear, lastYear, setLastYear, casDate, setCasDate }) => {
     const [normalDuration, setNormalDuration] = useState(null)
     const [currentYear, setCurrentYear] = useState(null)
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
+    const [dateInfo, setDateInfo] = useState({ wholeYear: null, startYearCount: null, lastYearCount: null })
 
     useEffect(() => {
         if (casYearState) {
@@ -17,11 +18,26 @@ const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDur
             let startYearCount = casYearState.toString().slice(0, -5)
             let lastYearCount = casYearState.toString().slice(5)
             let duration = `1st July ${wholeYear} to 30th June ${startYearCount}${lastYearCount}`
+            setDateInfo({ wholeYear, startYearCount, lastYearCount })
             setCurrentYear(wholeYear)
             setNormalDuration(duration)
         }
     }, [casYearState])
 
+    useEffect(() => {
+        if (firstYear && lastYear) {
+
+            // user cas duration
+            let date = `${firstYear?.day} ${firstYear?.month} ${dateInfo?.wholeYear} to ${lastYear?.day} ${lastYear?.month} ${dateInfo?.startYearCount}${dateInfo?.lastYearCount}`
+
+
+
+            setCasDate(() => {
+                return { casDuration: date, firstYear, lastYear, academicYear: casYearState }
+            })
+
+        }
+    }, [firstYear, lastYear, dateInfo])
 
 
 
@@ -52,7 +68,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDur
                     <div id="casDate" className='flex items-center justify-center'>
                         <div className='flex items-center justify-center gap-1'>
                             <div>
-                                <select className="form-select" id="validationCustom04" onChange={(e) => {
+                                <select value={firstYear?.day} className="form-select" id="validationCustom04" onChange={(e) => {
                                     setFirstYear({ ...firstYear, day: e.target.value })
                                 }} required>
                                     <option selected disabled value="">Day</option>
@@ -64,7 +80,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDur
                                 </select>
                             </div>
                             <div>
-                                <select className="form-select" id="validationCustom04" required onChange={(e) => {
+                                <select value={firstYear?.month} className="form-select" id="validationCustom04" required onChange={(e) => {
                                     setFirstYear({ ...firstYear, month: e.target.value })
                                 }}>
                                     <option selected disabled value="">Month</option>
@@ -82,7 +98,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDur
                         <span className="font-bold mx-3">to</span>
                         <div className='flex items-center justify-center gap-1'>
                             <div>
-                                <select className="form-select" id="validationCustom04" required onChange={(e) => {
+                                <select value={lastYear?.day} className="form-select" id="validationCustom04" required onChange={(e) => {
                                     setLastYear({ ...lastYear, day: e.target.value })
                                 }} >
                                     <option selected disabled value="">Day</option>
@@ -94,7 +110,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, userDuration, setUserDur
                                 </select>
                             </div>
                             <div>
-                                <select className="form-select" id="validationCustom04" required onChange={(e) => {
+                                <select value={lastYear?.month} className="form-select" id="validationCustom04" required onChange={(e) => {
                                     setLastYear({ ...lastYear, month: e.target.value })
                                 }}>
                                     <option selected disabled value="">Month</option>

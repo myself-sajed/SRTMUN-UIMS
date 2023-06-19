@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ConsultancyServices = ({ filterByAcademicYear = false, academicYear }) => {
+const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [conModal, setConModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -123,7 +123,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear }) => 
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Consultancy Service" editState={setEditModal} clearStates={clearStates} state={setConModal} icon={<ConnectWithoutContactRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Consultancy Services" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Consultancy Service" editState={setEditModal} clearStates={clearStates} state={setConModal} icon={<ConnectWithoutContactRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Consultancy Services"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConsultancyServicesFaculty' title='Consultancy Services' SendReq='ConsultancyServices' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -153,7 +153,9 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear }) => 
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base '>
+
+
+            {showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base '>
                 <table className="table table-bordered table-hover">
                     <thead className='table-dark'>
                         <tr>
@@ -195,7 +197,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear }) => 
                 {
                     (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
                 }
-            </div>
+            </div>}
 
 
         </div>

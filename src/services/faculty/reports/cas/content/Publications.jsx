@@ -10,7 +10,7 @@ import NumberToTextField from '../components/NumberToTextField';
 
 
 
-const AddPublication = ({ publicationData, setPublicationData, casYearState }) => {
+const AddPublication = ({ publicationData, setPublicationData, casYearState, saveLoader, setSaveLoader }) => {
 
 
 
@@ -21,24 +21,10 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState }) =
                 <div className='mt-2 text-sm md:text-base'>
 
 
-                    <NumberToTextField
+                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="BooksAndChapters"
                         state={publicationData} setState={setPublicationData} casYearState={casYearState}
                         isForm={true} classes='my-3' model="BookAndChapter" addName="Books, Chapters & Translation Work" activityName="Books, Chapters & Translation Work" activity="Activity 2"
-                        options={[
-                            { field: 'Text', keyName: "teacherName", label: "Teacher Name" },
-                            { field: 'Text', keyName: "titleOfBook", label: "Title of Published Book" },
-                            { field: 'Text', keyName: "paperTitle", label: "Paper Title" },
-                            { field: 'Text', keyName: "titleOfProceeding", label: "Title of proceedings" },
-                            { field: 'Select', keyName: "authorEditor", label: "Author / Editor / Translator", options: ['Author', 'Editor', 'Translator'] },
-                            { field: 'Text', keyName: "conName", label: "Conference Name" },
-                            { field: 'Select', keyName: "isNat", label: "National / International", options: ['National', 'International'] },
-                            { field: 'Text', keyName: "publicationYear", label: "Publication Year" },
-                            { field: 'Text', keyName: "issnNumber", label: "SBN/ISSN number" },
-                            { field: 'Text', keyName: "aff", label: "Affiliation Institute at the time of publication" },
-                            { field: 'Text', keyName: "publisherName", label: "Publisher Name" },
-                            { field: 'Text', keyName: "schoolName", label: "School Name" },
-                            { field: 'Year', keyName: "year", label: "Academic Year", },
-                            { field: 'File', keyName: "proof", label: "Upload Proof", },]}
+
                     >
 
                     </NumberToTextField>

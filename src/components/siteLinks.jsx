@@ -41,6 +41,8 @@ let siteLinks = {
     proEditor: { title: "PRO Editor", link: '/pro-editor' },
     proHome: { title: "PRO Home", link: '/pro' },
     adminDashboard: { title: "Admin Dashboard", link: '/admin' },
-    forgotPassword: { title: "Forgot Password", link: '' }
+    forgotPassword: { title: "Forgot Password", link: '' },
+    generateFeedbackLinksDirector: { title: "Generate Feedback Links", link: '/director/service/generateFeebackLinks' },
+    goToResponse: { title: "Select Response", link: '/director/service/goToResponse' },
 }
 export default siteLinks;

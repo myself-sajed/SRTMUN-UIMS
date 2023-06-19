@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const AwardRecognition = ({ filterByAcademicYear = false, academicYear }) => {
+const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [awardModal, setAwardModal] = useState('')
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -135,7 +135,7 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Awards and Recognition" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Awards and Recognition"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='AwardRecognitionFaculty' title='Award Recognition' SendReq='AwardRecognition' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -181,61 +181,63 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-responsive table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col"><div className="w-96">Name of full-time teachers receiving award</div></th>
-                            <th scope="col"><div className='w-24'>Award Date</div></th>
-                            <th scope="col">PAN</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col"><div className='w-60'>Name of the Award, Fellowship, received</div></th>
-                            <th scope="col">National / International</th>
-                            <th scope="col"><div className="w-32">Award Agency Name</div></th>
-                            <th scope="col"><div className='w-96'>Incentives/Type of incentive given by the HEI in recognition of the award</div></th>
-                            <th scope="col"><div className="w-20">Year</div></th>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-responsive table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col"><div className="w-96">Name of full-time teachers receiving award</div></th>
+                                <th scope="col"><div className='w-24'>Award Date</div></th>
+                                <th scope="col">PAN</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col"><div className='w-60'>Name of the Award, Fellowship, received</div></th>
+                                <th scope="col">National / International</th>
+                                <th scope="col"><div className="w-32">Award Agency Name</div></th>
+                                <th scope="col"><div className='w-96'>Incentives/Type of incentive given by the HEI in recognition of the award</div></th>
+                                <th scope="col"><div className="w-20">Year</div></th>
 
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
-
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.teacherName}</td>
-                                    <td>{item.awardYear}</td>
-                                    <td>{item.pan}</td>
-                                    <td>{item.designation}</td>
-                                    <td>{item.awardName}</td>
-                                    <td>{item.isNat}</td>
-                                    <td>{item.agencyName}</td>
-                                    <td>{item.incentive}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="AwardRecognition" refreshFunction={() => { refetch() }} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setAwardModal} /></td>
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
 
 
+                            </tr>
+                        </thead>
 
-                                </tr>
-                            )
-                        })}
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.teacherName}</td>
+                                        <td>{item.awardYear}</td>
+                                        <td>{item.pan}</td>
+                                        <td>{item.designation}</td>
+                                        <td>{item.awardName}</td>
+                                        <td>{item.isNat}</td>
+                                        <td>{item.agencyName}</td>
+                                        <td>{item.incentive}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="AwardRecognition" refreshFunction={() => { refetch() }} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setAwardModal} /></td>
 
-                    </tbody>
 
 
-                </table>
+                                    </tr>
+                                )
+                            })}
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                        </tbody>
+
+
+                    </table>
+
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

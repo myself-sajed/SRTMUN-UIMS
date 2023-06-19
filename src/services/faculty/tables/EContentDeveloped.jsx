@@ -17,7 +17,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const EContentDeveloped = ({ filterByAcademicYear = false, academicYear }) => {
+const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [eCont, setECont] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -93,7 +93,7 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Content" editState={setEditModal} clearStates={clearStates} state={setECont} icon={<CloudIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="E-Content Developed" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Content" editState={setEditModal} clearStates={clearStates} state={setECont} icon={<CloudIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "E-Content Developed"} />
 
             <BulkExcel data={data?.data?.data} sampleFile='EContentDevelopedFaculty' title='EContent Developed' SendReq='EContentDeveloped' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -136,49 +136,53 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Name of the Module / Course developed</th>
-                            <th scope="col">Type of Creation</th>
-                            <th scope="col">Platform on which the module is developed</th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-                            <th scope="col"><div className="w-64">Link to content</div></th>
-                            <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Name of the Module / Course developed</th>
+                                <th scope="col">Type of Creation</th>
+                                <th scope="col">Platform on which the module is developed</th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col"><div className="w-64">Link to content</div></th>
+                                <th scope="col">Action</th>
 
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.moduleName}</td>
-                                    <td>{item.creationType}</td>
-                                    <td>{item.platform}</td>
-                                    <td>{item.year}</td>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.moduleName}</td>
+                                        <td>{item.creationType}</td>
+                                        <td>{item.platform}</td>
+                                        <td>{item.year}</td>
 
 
-                                    <td><a href={item.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
-                                        {item.link.slice(0, 30)}{item.link.length > 30 && `...`}</a></td>
+                                        <td><a href={item.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
+                                            {item.link.slice(0, 30)}{item.link.length > 30 && `...`}</a></td>
 
-                                    <td><Actions item={item} model="EContentDeveloped" refreshFunction={refetch} editState={setEditModal} addState={setECont} pencilClick={() => pencilClick(item._id)} /></td>
-                                </tr>
-                            )
-                        })}
+                                        <td><Actions item={item} model="EContentDeveloped" refreshFunction={refetch} editState={setEditModal} addState={setECont} pencilClick={() => pencilClick(item._id)} /></td>
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
+                        </tbody>
 
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

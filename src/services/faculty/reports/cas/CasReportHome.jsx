@@ -63,6 +63,7 @@ const CasReportHome = () => {
     const [level, setLevel] = useState(null)
     const [eligData, setEligData] = useState({ supervisor: 'Main Supervisor' })
     const [fullCASData, setFullCASData] = useState(null)
+    const [casDate, setCasDate] = useState(null)
     const [supervisor, setSupervisor] = useState('Main Supervisor')
 
 
@@ -193,6 +194,14 @@ const CasReportHome = () => {
         getCASData(user?._id, setFullCASData, setServerCasError, false, casYearState)
     }, [level])
 
+    useEffect(() => {
+        if (serverCasData) {
+            setFirstYear(serverCasData?.casDuration ? serverCasData?.casDuration?.firstYear : { day: null, month: null })
+            setLastYear(serverCasData?.casDuration ? serverCasData?.casDuration?.lastYear : { day: null, month: null })
+
+        }
+    }, [serverCasData])
+
 
 
 
@@ -219,15 +228,19 @@ const CasReportHome = () => {
                         <span className="sm:text-sm md:text-lg font-bold">CAS Report Form {casYearState && <span>({casYearState})</span>}</span>
 
                         {
-                            tabName === 'first' || tabName === 'second' || tabName === 'final' ? (saveLoader ? <div className='flex items-center justify-start gap-2 border-l-2 pl-5 ml-7'>
+                            tabName === 'first' || tabName === 'second' || tabName === 'final' ? (saveLoader ? <div className='flex items-center justify-start gap-2 border-l-2 pl-5 ml-5'>
                                 <Tooltip placement="bottom" title="Saving...">
-                                    <LoadingOutlined style={{ fontSize: 20, }} spin />
+                                    <div className='flex items-center justify-start gap-2 cursor-pointer bg-gray-100 rounded-md p-2'>
+                                        <LoadingOutlined style={{ fontSize: 20, }} spin />
+                                        <span>Saving...</span>
+                                    </div>
                                 </Tooltip>
                             </div> : <div className='border-l-2 pl-5 ml-5'>
                                 <Tooltip title='Save Progress' placement='bottom'>
-                                    <IconButton onClick={() => { setSaveLoader(true) }}>
+                                    <div onClick={() => { setSaveLoader(true) }} className='flex items-center justify-start gap-2 cursor-pointer bg-blue-100 hover:bg-blue-200 ease-in-out duration-200 text-blue-800 rounded-md p-2'>
                                         <SaveRoundedIcon />
-                                    </IconButton>
+                                        <span className='font-medium'>Save</span>
+                                    </div>
                                 </Tooltip>
                             </div>) : null
                         }
@@ -263,11 +276,7 @@ const CasReportHome = () => {
                 </div>
             </div>
 
-
-
-
             {/* CONTENT */}
-
             <div className={`${tabName === 'year' ? 'block' : 'hidden'}`}>
                 <div className='mt-3 flex-col items-center justify-center gap-3 w-full text-center h-screen'>
 
@@ -275,7 +284,7 @@ const CasReportHome = () => {
                         e.preventDefault();
                         setAgreePopup(true);
                     }}>
-                        <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose CAS Year" lastYear={lastYear} setLastYear={setLastYear} firstYear={firstYear} setFirstYear={setFirstYear} userAllDuration={{ firstYear, lastYear }} />
+                        <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose CAS Year" lastYear={lastYear} setLastYear={setLastYear} firstYear={firstYear} setFirstYear={setFirstYear} userAllDuration={{ firstYear, lastYear }} serverCasData={serverCasData} casDate={casDate} setCasDate={setCasDate} />
 
                         <div className='mt-5'>
                             <SaveButton title={'Save and Proceed'}
@@ -284,7 +293,7 @@ const CasReportHome = () => {
 
                     </form>
                     {
-                        casYearState && <AgreePopup agreePopup={agreePopup} setAgreePopup={setAgreePopup} setTabName={setTabName} handleNext={handleNext} fetchYears={fetchYears} casYearState={casYearState} duration={{ firstYear, lastYear }} />
+                        casYearState && <AgreePopup agreePopup={agreePopup} setAgreePopup={setAgreePopup} setTabName={setTabName} handleNext={handleNext} fetchYears={fetchYears} casYearState={casYearState} duration={{ firstYear, lastYear }} setSaveLoader={setSaveLoader} />
                     }
                 </div>
             </div>
@@ -294,7 +303,7 @@ const CasReportHome = () => {
             </div>
 
             <div className={`${tabName === 'second' ? 'block' : 'hidden'}`}>
-                <AcademicScore setTabName={setTabName} tabName={tabName} handleNext={handleNext} serverCasData={serverCasData && serverCasData} casYearState={casYearState} teachingData={teachingData} setTeachingData={setTeachingData} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
+                <AcademicScore setTabName={setTabName} tabName={tabName} handleNext={handleNext} serverCasData={serverCasData && serverCasData} casYearState={casYearState} teachingData={teachingData} setTeachingData={setTeachingData} saveLoader={saveLoader} setSaveLoader={setSaveLoader} casDate={casDate} />
             </div>
 
             <div className={`${tabName === 'final' ? 'block' : 'hidden'}`}>

@@ -13,7 +13,7 @@ import NumberToTextField from '../components/NumberToTextField';
 
 
 
-const ContentCreated = ({ ictData, setIctData, casYearState }) => {
+const ContentCreated = ({ ictData, setIctData, casYearState, saveLoader, setSaveLoader }) => {
 
 
 
@@ -23,16 +23,11 @@ const ContentCreated = ({ ictData, setIctData, casYearState }) => {
             <div>
                 <div className='mt-2 text-sm md:text-base'>
 
-                    <NumberToTextField
+                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                        facultyTableAvailable="EContentDeveloped"
                         state={ictData} setState={setIctData} casYearState={casYearState}
                         isForm={true} classes='my-3' model="EContentDeveloped" addName="ICT" activityName="ICT (Information & Communication Technology)" activity="Activity 3"
-                        options={[
-                            { field: 'Text', keyName: "moduleName", label: "Name of the Module / Course developed" },
-                            { field: 'Select', keyName: "creationType", label: "Type of Creation", options: ['Development of Innovative Pedagogy', 'Design of new curriculla & courses', 'MOOCS', 'E-Content'] },
 
-                            { field: 'Text', keyName: "platform", label: "Platform on which the module is developed" },
-                            { field: 'Year', keyName: "year", label: "Academic Year", },
-                            { field: 'Text', keyName: "link", label: "Content Link", },]}
                     >
 
                     </NumberToTextField>

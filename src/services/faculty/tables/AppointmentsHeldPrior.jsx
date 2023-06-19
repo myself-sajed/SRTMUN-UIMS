@@ -15,7 +15,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const AppointmentsHeldPrior = () => {
+const AppointmentsHeldPrior = ({ showTable }) => {
 
     const dispatch = useDispatch()
     const [appointmentModal, setAppointmentModal] = useState(false)
@@ -145,52 +145,56 @@ const AppointmentsHeldPrior = () => {
 
             {/* // 3. TABLE */}
 
-            <div className='mt-2 overflow-auto  change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-hover table-bordered">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Employer Name</th>
-                            <th scope="col">From</th>
-                            <th scope="col">To </th>
-                            <th scope="col">Salary with Grade</th>
-                            <th scope="col">Leaving Reason</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
 
 
+            {
+                showTable && <div className='mt-2 overflow-auto  change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-hover table-bordered">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Employer Name</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To </th>
+                                <th scope="col">Salary with Grade</th>
+                                <th scope="col">Leaving Reason</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
 
-                        {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.designation}</td>
-                                    <td>{item.employerName}</td>
-                                    <td>{item.joiningDate}</td>
-                                    <td>{item.leavingDate}</td>
-                                    <td>{item.salaryWithGrade}</td>
-                                    <td>{item.leavingReason}</td>
+                        <tbody>
 
-                                    <td>
-                                        <Actions item={item} model="AppointmentsHeldPrior" refreshFunction={() => { refetch() }} editState={setEditModal} addState={setAppointmentModal} pencilClick={() => pencilClick(item._id)} />
 
-                                    </td>
-                                </tr>
-                            )
-                        })}
 
-                    </tbody>
-                </table>
+                            {data && sortByAcademicYear(data?.data?.data, 'year').map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.designation}</td>
+                                        <td>{item.employerName}</td>
+                                        <td>{item.joiningDate}</td>
+                                        <td>{item.leavingDate}</td>
+                                        <td>{item.salaryWithGrade}</td>
+                                        <td>{item.leavingReason}</td>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined) && <EmptyBox />
-                }
-            </div>
+                                        <td>
+                                            <Actions item={item} model="AppointmentsHeldPrior" refreshFunction={() => { refetch() }} editState={setEditModal} addState={setAppointmentModal} pencilClick={() => pencilClick(item._id)} />
+
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+                    </table>
+
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined) && <EmptyBox />
+                    }
+                </div>
+            }
 
         </div >
     )

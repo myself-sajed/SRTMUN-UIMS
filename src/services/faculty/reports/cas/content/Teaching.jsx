@@ -11,6 +11,7 @@ import Note from '../../../../director/reports/academic-audit/components/Note';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Popconfirm } from 'antd';
 
+
 const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData, setChangeTeaching, changeTeaching, teachingData, setTeachingData, saveLoader, setSaveLoader }) => {
 
 
@@ -60,58 +61,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
     }, [serverCasData])
 
 
-    const submitActivityFiles = (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-
-        const formData = new FormData();
-
-        formData.append('file-A', teachingData.uploadInputs?.['file-A']);
-        formData.append('file-B', teachingData.uploadInputs?.['file-B']);
-        formData.append('file-C', teachingData.uploadInputs?.['file-C']);
-        formData.append('file-D', teachingData.uploadInputs?.['file-D']);
-        formData.append('file-E', teachingData.uploadInputs?.['file-E']);
-        formData.append('file-F', teachingData.uploadInputs?.['file-F']);
-        formData.append('file-G', teachingData.uploadInputs?.['file-G']);
-
-
-
-
-        const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/CAS-Report/saveTeachingActivityDocs`
-        Axios.post(url, formData)
-            .then((res) => {
-                if (res.data.status === 'success') {
-                    setTeachingData({
-                        ...teachingData, uploadedFiles: {
-                            'file-A': res.data?.data?.['file-A'] ? res.data?.data?.['file-A'] : teachingData?.uploadedFiles?.['file-A'],
-                            'file-B': res.data?.data?.['file-B'] ? res.data?.data?.['file-B'] : teachingData?.uploadedFiles?.['file-B'],
-                            'file-C': res.data?.data?.['file-C'] ? res.data?.data?.['file-C'] : teachingData?.uploadedFiles?.['file-C'],
-                            'file-D': res.data?.data?.['file-D'] ? res.data?.data?.['file-D'] : teachingData?.uploadedFiles?.['file-D'],
-                            'file-F': res.data?.data?.['file-F'] ? res.data?.data?.['file-F'] : teachingData?.uploadedFiles?.['file-F'],
-                            'file-E': res.data?.data?.['file-E'] ? res.data?.data?.['file-E'] : teachingData?.uploadedFiles?.['file-E'],
-                            'file-G': res.data?.data?.['file-G'] ? res.data?.data?.['file-G'] : teachingData?.uploadedFiles?.['file-G'],
-                        }
-                    })
-
-
-
-
-                    setIsLoading(false)
-                    toast.success('Files uploaded successfully')
-                }
-                else {
-                    console.log('Failed...')
-                    setIsLoading(false)
-                    toast.error('Could not upload files, please try again...')
-                }
-            }).catch(function (err) {
-                console.log(err)
-                setIsLoading(false)
-                toast.error('Failed due to Internal Server error')
-            })
-
-    }
-
 
     const submitAttendance = (e) => {
         if (!teachingData.selectedAttendance) {
@@ -133,6 +82,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                             }, selectedAttendance: null
 
                         })
+                        savingFunction()
                         toast.success('Director Certificate Uploaded Successfully')
                     }
                     else {
@@ -154,22 +104,31 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                     setTeachingData({
                         ...teachingData, uploadedAttendance: null
                     })
-
+                    savingFunction()
                     toast.success('File deleted successfully')
                 } else {
                     toast.error('Error deleting File')
                 }
             })
+
+
     }
+
+    const savingFunction = () => {
+        setSaveLoader(true)
+    }
+
 
 
 
     return (
         <div className="w-full">
+
             {/* <p className="p-2 border-l-green-600 border-l-4 mt-3 text-lg">Teaching and Teaching related activities</p> */}
 
             <div className='my-3 text-lg'>
                 <p className='font-bold text-xl'>Teaching Activities</p>
+
 
                 {/* TEACHING */}
                 <BGPad classes='mt-2 w-full'>
@@ -281,31 +240,18 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
 
 
-                            <form encType="multipart/form" onSubmit={submitActivityFiles}>
+                            <div>
 
                                 {
                                     activitiesInvolved.map((activity, index) => {
                                         return (
-                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} />
+                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} setIsLoading={setIsLoading} savingFunction={savingFunction} />
                                         )
                                     })
                                 }
 
-                                {<div>
-                                    <hr />
-                                    <div className="mt-4">
-                                        {isLoading ? <button className="p-2 rounded-md text-white bg-blue-500 text-base" type="button" disabled>
-                                            <span className="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
-                                            Uploading Proofs...
-                                        </button> : <button type="submit" className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base"
-                                        >Upload Proofs</button>}
 
-                                        <Note title="Select all of your desired activities with respective proof, click on Upload Proofs button to Upload them." classes="mt-2" />
-                                    </div>
-                                </div>}
-
-
-                            </form>
+                            </div>
                         </div>
 
                     </div>
@@ -389,7 +335,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
             </div>
 
             <div className='mt-4'>
-                <SaveButton title="Save and Proceed" onClickFunction={() => { handleNext(); setTabName('second'); setSaveLoader(true) }} />
+                <SaveButton title="Save and Proceed" onClickFunction={() => { handleNext(); setTabName('second'); }} />
             </div>
 
         </div>
@@ -408,7 +354,45 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
 }
 
 
-const CheckBox = ({ title, id, setTeachingData, teachingData, tabName }) => {
+const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savingFunction }) => {
+
+
+    const submitActivityFiles = (e, fileTagName) => {
+        e.preventDefault();
+        setIsLoading(true)
+
+        const formData = new FormData();
+
+        formData.append('activity-file', teachingData.uploadInputs?.[`file-${fileTagName}`]);
+        formData.append('fileTagName', fileTagName)
+
+        const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/CAS-Report/saveTeachingActivityDocsSingle`
+        Axios.post(url, formData)
+            .then((res) => {
+                if (res.data.status === 'success') {
+                    setTeachingData({
+                        ...teachingData, uploadedFiles: {
+                            ...teachingData.uploadedFiles,
+                            [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
+                        }
+                    })
+                    savingFunction()
+                    setIsLoading(false)
+                    toast.success('Files uploaded successfully')
+                }
+                else {
+                    console.log('Failed...')
+                    setIsLoading(false)
+                    toast.error('Could not upload files, please try again...')
+                }
+            }).catch(function (err) {
+                console.log(err)
+                setIsLoading(false)
+                toast.error('Failed due to Internal Server error')
+            })
+
+    }
+
     const selectCheckBox = (checkBoxId) => {
 
         // Check if the checkbox is checked 
@@ -447,7 +431,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, tabName }) => {
 
 
     return (
-        <div className="my-4 w-[100%] md:w-[75%] text-sm md:text-base p-2 " >
+        <form className="my-4 w-[100%] md:w-[75%] text-sm md:text-base p-2" onSubmit={(e) => { submitActivityFiles(e, id) }} encType="multipart/form">
             <div className='form-check'>
                 <input className="form-check-input" type="checkbox" id={id} onChange={() => { selectCheckBox(id) }} checked={teachingData && teachingData.checkBoxSelected?.includes(id)} />
                 <label className="form-check-label mx-2" htmlFor={id}>
@@ -459,7 +443,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, tabName }) => {
                 {teachingData && teachingData.checkBoxSelected?.includes(id) && <div className="mx-2 md:text-base text-sm w-[50%]">
 
                     <div className="input-group">
-                        <input className="form-control" type="file" id={`formFile${id}`} placeholder="Choose proof" name={`file-${id}`} onChange={
+                        <input className="form-control" type="file" id={`formFile${id}`} placeholder="Choose proof" name="activity-file" onChange={
                             (e) => { setTeachingData({ ...teachingData, uploadInputs: { ...teachingData.uploadInputs, [`file-${id}`]: e.target.files[0] } }) }} accept="application/pdf" />
                         <Note title="In case you're involved in more than one activity, please upload it in a single PDF file." />
 
@@ -467,16 +451,24 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, tabName }) => {
                 </div>
                 }
 
+
+                {
+                    teachingData && teachingData.uploadInputs?.[`file-${id}`] &&
+                    <button type="submit" className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base"
+                    >Upload Proof</button>
+                }
+
+
                 {
                     teachingData.uploadedFiles?.[`file-${id}`] &&
                     <div className='flex items-center justify-start gap-2 bg-blue-100 rounded-md px-2'>
                         <FileViewer serviceName="CAS"
-                            fileName={teachingData.uploadedFiles?.[`file-${id}`]?.[0].filename} />
+                            fileName={teachingData.uploadedFiles?.[`file-${id}`]?.filename} />
 
                         <Popconfirm
                             title="Do you want to delete this item?"
                             onConfirm={() => {
-                                deleteFile(teachingData.uploadedFiles?.[`file-${id}`]?.[0].filename, `file-${id}`)
+                                deleteFile(teachingData.uploadedFiles?.[`file-${id}`]?.filename, `file-${id}`)
                             }}
                             onCancel={() => { }}
                             okText="Yes, Delete"
@@ -495,7 +487,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, tabName }) => {
 
 
             </div>
-        </div>
+        </form>
     )
 }
 
@@ -519,7 +511,4 @@ const BGPad = ({ children, classes }) => {
 }
 
 export { BGPad }
-
-
-
 

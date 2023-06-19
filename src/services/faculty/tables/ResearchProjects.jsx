@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ResearchProjects = ({ filterByAcademicYear = false, academicYear }) => {
+const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [projectModal, setProjectModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -156,7 +156,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear }) => {
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Projects" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Projects"} />
 
             {/* // 2. FIELDS */}
 
@@ -231,60 +231,64 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear }) => {
 
 
             {/* // TABLE */}
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                {/* <div className=' overflow-auto change__scrollbar mb-2 '> */}
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col"><div className='w-44'>Scheme/Project Name</div></th>
-                            <th scope="col"><div className='w-44'>Program Title</div></th>
-                            <th scope="col"><div className='w-44'>Principal Invigilator Name</div></th>
-                            <th scope="col"><div className='w-44'>Funding Agency Name</div></th>
-                            <th scope="col">Government / Non-Government</th>
-                            <th scope="col">Department</th>
-                            <th scope="col">Award Year</th>
-                            <th scope="col"><div className='w-44'>Provided Funds (INR)</div></th>
-                            <th scope="col">Major/Minor</th>
-                            <th scope="col">Project Status</th>
-                            <th scope="col">Project Duration</th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-                            <th scope="col">Proof of Sactioned Project</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.schemeName}</td>
-                                    <td>{item.programTitle}</td>
-                                    <td>{item.principalName}</td>
-                                    <td>{item.fundingName}</td>
-                                    <td>{item.isGov}</td>
-                                    <td>{item.department}</td>
-                                    <td>{item.awardYear}</td>
-                                    <td>{item.providedFunds}</td>
-                                    <td>{item.fundType}</td>
-                                    <td>{item.status}</td>
-                                    <td>{item.projectDuration}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="ResearchProject" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setProjectModal} /></td>
 
 
-                                </tr>
-                            )
-                        })}
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    {/* <div className=' overflow-auto change__scrollbar mb-2 '> */}
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col"><div className='w-44'>Scheme/Project Name</div></th>
+                                <th scope="col"><div className='w-44'>Program Title</div></th>
+                                <th scope="col"><div className='w-44'>Principal Invigilator Name</div></th>
+                                <th scope="col"><div className='w-44'>Funding Agency Name</div></th>
+                                <th scope="col">Government / Non-Government</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Award Year</th>
+                                <th scope="col"><div className='w-44'>Provided Funds (INR)</div></th>
+                                <th scope="col">Major/Minor</th>
+                                <th scope="col">Project Status</th>
+                                <th scope="col">Project Duration</th>
+                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Proof of Sactioned Project</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.schemeName}</td>
+                                        <td>{item.programTitle}</td>
+                                        <td>{item.principalName}</td>
+                                        <td>{item.fundingName}</td>
+                                        <td>{item.isGov}</td>
+                                        <td>{item.department}</td>
+                                        <td>{item.awardYear}</td>
+                                        <td>{item.providedFunds}</td>
+                                        <td>{item.fundType}</td>
+                                        <td>{item.status}</td>
+                                        <td>{item.projectDuration}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="ResearchProject" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setProjectModal} /></td>
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

@@ -17,7 +17,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear }) => {
+const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
     const [open, setOpen] = useState(false);
 

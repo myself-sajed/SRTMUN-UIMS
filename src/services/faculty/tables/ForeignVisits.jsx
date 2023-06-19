@@ -18,7 +18,7 @@ import DateRPicker from '../../../inputs/DateRPicker';
 import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const ForeignVisits = ({ filterByAcademicYear = false, academicYear }) => {
+const ForeignVisits = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [orgModal, setOrgModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -97,7 +97,7 @@ const ForeignVisits = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
 
             <BulkExcel data={data?.data?.data} sampleFile='ForeignVisitFaculty' title='Foreign Visits' SendReq='ForeignVisit' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -128,47 +128,51 @@ const ForeignVisits = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Purpose Of Visit</th>
-                            <th scope="col">Name Of The Institution Visited</th>
-                            <th scope="col">From</th>
-                            <th scope="col">To</th>
-                            <th scope="col">Year</th>
-                            <th scope="col">Action</th>
+
+            {
+                showTable &&
+                <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Purpose Of Visit</th>
+                                <th scope="col">Name Of The Institution Visited</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.purposeOfVisit}</td>
-                                    <td>{item.nameOfTheInstitutionVisited}</td>
-                                    <td>{item.fromDate}</td>
-                                    <td>{item.toDate}</td>
-                                    <td>{item.year}</td>
-                                    <td> <Actions item={item} model="ForeignVisit" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.purposeOfVisit}</td>
+                                        <td>{item.nameOfTheInstitutionVisited}</td>
+                                        <td>{item.fromDate}</td>
+                                        <td>{item.toDate}</td>
+                                        <td>{item.year}</td>
+                                        <td> <Actions item={item} model="ForeignVisit" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
 
 
 
-                                </tr>
-                            )
-                        })}
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

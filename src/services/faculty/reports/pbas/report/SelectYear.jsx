@@ -20,10 +20,6 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
         generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
     }
 
-    useEffect(() => {
-        console.log('For Print out :', forPrintOut)
-    }, [forPrintOut])
-
     return (
         <div>
 
@@ -99,6 +95,11 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
 
 
     }
+
+    useEffect(() => {
+        console.log('Selected Year :', selectedYear)
+    }, [selectedYear])
+
     return (
         <div className="flex flex-col sm:flex-row items-center justify-center mt-2  flex-wrap">
             {sortedYear && sortedYear.map((item) => {
@@ -106,11 +107,13 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
                 return (
 
                     <div className="form-check sm:px-8 py-2" key={JSON.parse(item).casYear}>
-                        <input className="form-check-input text-lg" type="checkbox" value="" id={JSON.parse(item).casYear}
-                            onChange={(e) => { selectCheckBox(e.target.id) }} />
-                        <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).casYear}>
-                            {JSON.parse(item).casYear}
-                        </label>
+
+                        <div class="form-check">
+                            <input className="form-check-input text-lg border-2 border-blue-500" type="radio" name="flexRadioDefault" id={JSON.parse(item).casYear} checked={selectedYear?.includes(JSON.parse(item).casYear)} onChange={() => { setSelectedYear([JSON.parse(item).casYear]) }} />
+                            <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).casYear}>
+                                {JSON.parse(item).casYear}
+                            </label>
+                        </div>
                     </div>
                 )
 

@@ -26,6 +26,9 @@ const GeneratePBASPage = () => {
         user && getCASData(user && user._id, setCasDataFromServer, setError);
     }, [user])
 
+    useAuth(false)
+
+
 
 
     useEffect(() => {

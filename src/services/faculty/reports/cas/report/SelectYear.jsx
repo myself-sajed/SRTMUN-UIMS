@@ -4,21 +4,21 @@ import { Alert, CircularProgress } from '@mui/material';
 import { generateCASReport } from '../CASServices';
 import { useNavigate } from 'react-router-dom';
 import siteLinks from '../../../../../components/siteLinks';
+import ShowModal from '../../../../../components/ShowModal';
 
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
-    console.log('CAS Year', casYear && casYear)
+
     const [selectedYear, setSelectedYear] = useState([])
     let sortedYear = casYear && casYear.sort((a, b) => {
         return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
     })
     const navigate = useNavigate()
+    const [forPrintOut, setForPrintOut] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
-    useEffect(() => {
-        console.log('selectedYear : ', selectedYear)
-    }, [selectedYear])
-
-
-
+    const handleGeneration = () => {
+        setReportLoading(true); generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+    }
 
     return (
         <div>
@@ -35,7 +35,22 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setReportLoading(true); generateCASReport(casData, userData, selectedYear, setReportLoading) }}>
+                            <ShowModal okText={"Generate Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked onClick={(e) => { setForPrintOut(false) }} />
+                                    <label class="form-check-label" htmlFor="flexRadioDefault1">
+                                        Standard Report
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onClick={(e) => { setForPrintOut(true) }} />
+                                    <label class="form-check-label" htmlFor="flexRadioDefault2">
+                                        Printable Report (Specially designed for printing purposes)
+                                    </label>
+                                </div>
+                            </ShowModal>
+
+                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setIsModalOpen(true); setForPrintOut(false) }}>
                                 <EngineeringRoundedIcon /> Generate CAS Report
                             </button>}
                         </div>
@@ -87,7 +102,7 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
                 return (
 
                     <div className="form-check sm:px-8 py-2" key={JSON.parse(item).casYear}>
-                        <input className="form-check-input text-lg" type="checkbox" value="" id={JSON.parse(item).casYear}
+                        <input className="form-check-input text-lg border-2 border-blue-500" type="checkbox" value="" id={JSON.parse(item).casYear}
                             onChange={(e) => { selectCheckBox(e.target.id) }} />
                         <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).casYear}>
                             {JSON.parse(item).casYear}

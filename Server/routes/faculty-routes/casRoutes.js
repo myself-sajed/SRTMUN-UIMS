@@ -24,14 +24,18 @@ function casRoutes(app) {
     // for generating cas report
     app.post("/generateCASReport", async (req, res) => {
 
-        const { userData, casData, selectedYear } = req.body;
+        const { userData, casData, selectedYear, forPrintOut } = req.body;
 
         const fileName = `CASReport-${new Date().getTime()}.pdf`
         try {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
-            console.log('Link : ', `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`)
-            await page.goto(`${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}`,
+
+            const link = `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
+
+            console.log('CAS Report Link : ', link)
+
+            await page.goto(link,
                 { waitUntil: 'networkidle0' });
             await page.pdf({
                 path: `pdfs/${fileName}`,
@@ -67,7 +71,7 @@ function casRoutes(app) {
                 if (cas) {
                     // if cas data exist only push into that array
                     // remove cas array item with same year as in casData
-
+                    cas.casDuration = JSON.stringify(casData.casDuration) ? JSON.stringify(casData.casDuration) : null
                     cas.casData.forEach((item, index) => {
                         if (JSON.parse(item).casYear === casData.casYear) {
                             cas.casData.splice(index, 1);
@@ -75,6 +79,8 @@ function casRoutes(app) {
                     })
 
                     cas.casData.push(JSON.stringify(casData));
+
+
                     cas.save((err, cas) => {
                         if (err) {
                             console.log(err);
@@ -90,6 +96,7 @@ function casRoutes(app) {
                     // if cas data does not exist create new one
                     const newCAS = new CASModel({
                         userId: userId,
+                        casDuration: casData.duration,
                         casData: [JSON.stringify(casData)]
                     });
                     newCAS.save((err, cas) => {
@@ -212,12 +219,24 @@ function casRoutes(app) {
     { name: 'file-F', maxCount: 1 }, { name: 'file-G', maxCount: 1 }, { name: 'attendance', maxCount: 1 },
     { name: 'refereed', maxCount: 1 }, { name: 'impactFactor', maxCount: 1 }, { name: 'stage1FDP', maxCount: 1 },
     { name: 'stage1MultiProof', maxCount: 1 }, { name: 'phdDegree', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 }, { name: 'stage2File2', maxCount: 1 },
-    { name: 'guideProof1', maxCount: 1 }, { name: 'guideProof2', maxCount: 1 }, { name: 'guideProof', maxCount: 1 },
-    { name: 'phdProof1', maxCount: 1 }, { name: 'phdProof2', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 },
+    { name: 'guideProof1', maxCount: 1 }, { name: 'guideProof2', maxCount: 1 }, { name: 'guideProof', maxCount: 1 }, { name: 'phdProof1', maxCount: 1 }, { name: 'phdProof2', maxCount: 1 }, { name: 'stage2File1', maxCount: 1 },
     ]
 
     app.post("/api/faculty/CAS-Report/saveTeachingActivityDocs", upload.fields(arrayOfFields), (req, res) => {
-        res.send({ status: 'success', data: req.files })
+        try {
+            res.send({ status: 'success', data: req.files })
+        } catch (error) {
+            console.log('Error')
+        }
+    })
+
+    app.post("/api/faculty/CAS-Report/saveTeachingActivityDocsSingle", upload.single('activity-file'), (req, res) => {
+        try {
+            const data = JSON.parse(JSON.stringify(req.body));
+            res.send({ status: 'success', data: req.file })
+        } catch (error) {
+            console.log('Error')
+        }
     })
 
 

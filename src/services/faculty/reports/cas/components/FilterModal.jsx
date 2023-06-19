@@ -4,8 +4,10 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import TableData from '../../../../director/reports/academic-audit/components/TableData';
 import CASDataTable from '../components/CASDataTable'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
-const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom }) => {
+
+const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, saveLoader, setSaveLoader }) => {
 
   const [filterData, setFilterData] = useState([state?.dataMap])
 
@@ -25,10 +27,14 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
 
   return (
     <div className='w-full'>
-      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore() }} fullWidth maxWidth='md'>
-        <DialogTitle><div className='flex items-start justify-between text-base'>
-          <p className='w-[60%]'>Filter : <b>{title}</b> </p>
-          <p className='w-[25%]'> Academic Year : <b>{dataFilterModal.year}</b></p></div></DialogTitle>
+      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore(); setSaveLoader(true); }} fullWidth maxWidth='md'>
+        <DialogTitle>
+          <div className='flex items-start justify-between text-base'>
+            <p className='w-[60%]'>Filter : <b>{title}</b> </p>
+            <p> Academic Year : <b>{dataFilterModal.year}</b></p>
+            <p className='flex items-center justify-start gap-2 p-1 bg-blue-100 hover:bg-blue-200 rounded-md cursor-pointer' onClick={refetch}> <RefreshRoundedIcon /> Refresh</p>
+          </div>
+        </DialogTitle>
         <DialogContent>
           <FilterCheckBox data={data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
         </DialogContent>
@@ -36,6 +42,7 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
           <Button onClick={() => {
             setDataFilterModal({ ...dataFilterModal, isOpen: false });
             recalculateScore();
+            setSaveLoader(true);
           }} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
         </DialogActions>
       </Dialog>
@@ -87,7 +94,6 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
 
 
   const verifyCheckAll = () => {
-    console.log('Running verifyCheckAll')
     if (!isConsolidated) {
       data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     } else {

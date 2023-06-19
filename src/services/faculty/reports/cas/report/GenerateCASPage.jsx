@@ -21,6 +21,7 @@ const GenerateCASPage = () => {
     const user = useSelector((state) => state.user.user)
     const [reportLoading, setReportLoading] = useState(false)
     const [error, setError] = useState(null)
+    useAuth(false)
 
     useEffect(() => {
         user && getCASData(user && user._id, setCasDataFromServer, setError);
@@ -31,8 +32,8 @@ const GenerateCASPage = () => {
     useEffect(() => {
         // scroll top on refresh
         window.scrollTo(0, 0)
-
     }, [])
+
 
 
 

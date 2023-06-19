@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Actions from '../../../../director/reports/academic-audit/components/Actions'
-import Select from '../../../../director/reports/academic-audit/inputs/Select'
-import Text from '../../../../director/reports/academic-audit/inputs/Text'
 import refresh, { getData } from '../../../js/refresh'
 import CASDataTable from './CASDataTable'
-import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Tooltip } from '@mui/material'
 import FileViewer from '../../../../../components/FileViewer'
 import { PaperPoints } from '../content/AddPaper'
@@ -27,8 +23,35 @@ import { AwardPoints, FellowPoints, PatentPoints, PolicyPoints } from '../conten
 import { InvitedTalkPoints } from '../content/InvitedLectures'
 import FilterModal from './FilterModal'
 
+// models
+import ResearchPapersUGC from '../../../tables/ResearchPapersUGC'
+import BooksAndChapters from '../../../tables/BooksAndChapters'
+import EContentDeveloped from '../../../tables/EContentDeveloped'
+import PHDAwarded from '../../../tables/PHDAwarded'
+import ResearchProjects from '../../../tables/ResearchProjects'
+import ConsultancyServices from '../../../tables/ConsultancyServices'
+import PatentPublished from '../../../tables/PatentPublished'
+import AwardRecognition from '../../../tables/AwardRecognition'
+import Fellowship from '../../../tables/Fellowship'
+import InvitedTalk from '../../../tables/InvitedTalk'
 
-const NumberToTextField = ({ label, activity, state, setState, classes = "", isForm = false, options, model, casYearState, activityName, addName, isFile = true, calculateScore = true, addOnce = false }) => {
+
+
+let FacultyTables = {
+    ResearchPapersUGC: <ResearchPapersUGC title="Activity 1: Research Paper" showTable={false} />,
+    BooksAndChapters: <BooksAndChapters title="Activity 2: Books, Chapters & Translation Work" showTable={false} />,
+    EContentDeveloped: <EContentDeveloped title="Activity 3: ICT (Information & Communication Technology)" showTable={false} />,
+    PHDAwarded: <PHDAwarded title="Sub-Activity 1: Research Guidance" showTable={false} />,
+    ResearchProjects: <ResearchProjects title="Sub-Activity 2: Research Projects" showTable={false} />,
+    ConsultancyServices: <ConsultancyServices title="Sub-Activity 3: Consultancy Services" showTable={false} />,
+    PatentPublished: <PatentPublished title="Sub-Activity 1: Patents Published" showTable={false} />,
+    AwardRecognition: <AwardRecognition title="Sub-Activity 3 [A]: Awards & Recognitions" showTable={false} />,
+    Fellowship: <Fellowship title="Sub-Activity 3 [B]: Fellowship" showTable={false} />,
+    InvitedTalk: <InvitedTalk title="Activity 6: Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings" showTable={false} />,
+
+}
+
+const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setState, classes = "", isForm = false, options, model, casYearState, activityName, addName, isFile = true, calculateScore = true, addOnce = false, saveLoader, setSaveLoader }) => {
 
     const [showInputs, setShowInputs] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(null)
@@ -43,7 +66,7 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
     const [dataFilterModal, setDataFilterModal] = useState({ isOpen: false, year: null })
 
 
-    let param = { model, userId: user?._id, year: casYearState }
+    let param = { model, userId: user?._id, year: fetchYears && fetchYears }
     const { data, isLoading, isError, error, refetch, isFetching } = useQuery([param.model, param], () => refresh(param))
 
 
@@ -51,8 +74,6 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
     // handle add new item
     const saveData = (e) => {
         e.preventDefault();
-
-        console.log('function called')
 
         if (isFile) {
             let formData = new FormData()
@@ -66,8 +87,6 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
                 }
             })
             formData.append('userId', user._id)
-
-            console.log(...formData)
 
             submitWithFile(formData, model, refetch, setLoading, setShowInputs)
         } else {
@@ -147,261 +166,271 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
     return (
         <div id={label}>
 
+
+
             {/* <p className='bg-blue-300 text-blue-800 p-3 rounded-full text-md'></p> */}
 
-            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between sm:gap-2'>
-                <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
-                    <div className='flex items-center justify-start gap-2'>
-                        <p>{activity && `${activity}:`} <span className='font-bold ml-3'> {activityName}</span></p>
-                    </div>
-                </div>
+            <div>
 
-                {/* {
-                    (!addOnce && (data?.data?.data?.length === 0 || undefined)) && 
-                } */}
+                {/* // Heading and form */}
 
                 {
-                    addOnce === false && <button onClick={() => { setShowInputs(true); setShowEditInputs(false) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
+                    facultyTableAvailable ?
+                        <div className='my-3'>
+                            {FacultyTables?.[facultyTableAvailable]}
+                        </div>
+                        :
+                        <div>
+                            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between sm:gap-2'>
+                                <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
+                                    <div className='flex items-center justify-start gap-2'>
+                                        <p>{activity && `${activity}:`} <span className='font-bold ml-3'> {activityName}</span></p>
+                                    </div>
+                                </div>
 
-                        <AddRoundedIcon className='text-green-800' />
-                        Add {addName}</button>
-                }
-
-                {
-                    addOnce === true ? data?.data?.data?.length === 0 || data?.data?.data === undefined ? <button onClick={() => { setShowInputs(true); setShowEditInputs(false) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
-
-                        <AddRoundedIcon className='text-green-800' />
-                        Add {addName}</button> : null : null
-                }
-
-            </div>
-
-
-
-            {/* For Form */}
-            <div className={`${classes}`}>
-
-
-
-                {/* // Add Item */}
-                {showInputs === true && <form onSubmit={saveData} encType="multipart/form-data" className='mb-4 needs-validation'>
-                    <div className="w-full mt-10 my-3 bg-blue-100 border-blue-400 border-2 rounded-xl p-3">
-
-
-                        <div className=''>
-                            <p className='text-xl font-bold my-3'>Add {addName}</p>
-
-
-                            <div className='w-full flex justify-between gap-2 items-center flex-wrap '>
                                 {
-                                    options.map((element, index) => {
-                                        return <div key={index} className='w-full md:w-[45%] my-2'>
-                                            {element.field === 'Text' || element.field === 'Number' ?
+                                    addOnce === false && <button onClick={() => { setShowInputs(true); setShowEditInputs(false) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
 
-                                                <>
-                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
-                                                    <input type={element.type} className="form-control" id={element.label} required value={(state?.[element.keyName] && state?.[element.keyName]) || null} focused
-                                                        onChange={(e) => {
-                                                            setState({ ...state, [element.keyName]: e.target.value })
-                                                        }} />
-                                                </>
-
-                                                : null}
-
-
-
-
-                                            {element.field === 'Select' ?
-                                                <div className={`w-full ${classes}`}>
-                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
-                                                    <select className="form-select" required id={element.label}
-                                                        onChange={(e) => {
-                                                            setState({ ...state, [element.keyName]: e.target.value })
-                                                        }}
-                                                        value={(state?.[element.keyName] && state?.[element.keyName]) || null} >
-                                                        <option disabled selected>Choose</option>
-                                                        {element.options.map((item, index) => {
-                                                            return <option value={item} key={index}>{item}</option>
-                                                        })}
-
-                                                    </select>
-
-                                                </div> : null}
-
-                                            {element.field === 'Year' ?
-                                                <div className={`w-full`}>
-                                                    <label htmlFor="academicYear" className="form-label">Academic Year</label>
-                                                    <select className="form-select" required id="academicYear"
-                                                        onChange={(e) => {
-                                                            setState({ ...state, [element.keyName]: e.target.value })
-                                                        }}
-                                                        value={(state?.[element.keyName] && state?.[element.keyName]) || null} >
-                                                        <option disabled selected>Choose</option>
-                                                        {Years.map((item, index) => {
-                                                            return <option value={item} key={index}>{item}</option>
-                                                        })}
-
-                                                    </select>
-
-                                                </div> : null}
-
-                                            {element.field === 'File' ?
-                                                <div>
-                                                    <label for="proof" className="form-label">Upload Proof</label>
-                                                    <input className="form-control" required type="file" id="proof" name="file"
-                                                        onChange={(e) => { setState({ ...state, [element.keyName]: e.target.files[0] }) }}
-                                                    />
-                                                </div> : null}
-
-
-                                        </div>
-                                    })
+                                        <AddRoundedIcon className='text-green-800' />
+                                        Add {addName}</button>
                                 }
+
+                                {
+                                    addOnce === true ? data?.data?.data?.length === 0 || data?.data?.data === undefined ? <button onClick={() => { setShowInputs(true); setShowEditInputs(false) }} className='bg-green-100 px-5 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 p-1 rounded-full'>
+
+                                        <AddRoundedIcon className='text-green-800' />
+                                        Add {addName}</button> : null : null
+                                }
+
                             </div>
 
-                        </div>
-
-
-                        <div className='mt-4'>
-                            <SaveCancelButtons
-                                setShowInputs={setShowInputs}
-                                isForm={isForm}
-                                setInputToZero={() => {
-                                    setState({ ...state, input: 0 })
-                                }}
-                                label={label}
-                                setState={setState}
-                                state={state}
-                                setLoading={setLoading}
-                                loading={loading}
-                                model={model}
-                                refetch={refetch}
-                            />
-                        </div>
+                            {/* For Form */}
+                            <div className={`${classes}`}>
 
 
 
+                                {/* // Add Item */}
+                                {showInputs === true && <form onSubmit={saveData} encType="multipart/form-data" className='mb-4 needs-validation'>
+                                    <div className="w-full mt-10 my-3 bg-blue-100 border-blue-400 border-2 rounded-xl p-3">
 
 
-
-                    </div>
-                </form>
-                }
+                                        <div className=''>
+                                            <p className='text-xl font-bold my-3'>Add {addName}</p>
 
 
-                {/* Edit Item */}
-                {showEditInputs === true && <form encType="multipart/form-data" onSubmit={handleChange} className='mb-4 needs-validation'>
-                    <div className="w-full mt-10 my-3 bg-blue-100 border-blue-400 border-2 rounded-xl p-3">
+                                            <div className='w-full flex justify-between gap-2 items-center flex-wrap '>
+                                                {
+                                                    options.map((element, index) => {
+                                                        return <div key={index} className='w-full md:w-[45%] my-2'>
+                                                            {element.field === 'Text' || element.field === 'Number' ?
 
+                                                                <>
+                                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
+                                                                    <input type={element.type} className="form-control" id={element.label} required value={(state?.[element.keyName] && state?.[element.keyName]) || null} focused
+                                                                        onChange={(e) => {
+                                                                            setState({ ...state, [element.keyName]: e.target.value })
+                                                                        }} />
+                                                                </>
 
-                        <div className=''>
-                            <p className='text-xl font-bold my-3'>Edit {addName}</p>
-
-
-                            <div className='w-full flex justify-between gap-2 items-center flex-wrap '>
-                                {
-                                    options.map((element, index) => {
-                                        return <div key={index} className='w-full md:w-[45%] my-2'>
-                                            {element.field === 'Text' || element.field === 'Number' ?
-
-                                                <>
-                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
-                                                    <input type={element.type} className="form-control" id={element.label} required value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} focused
-                                                        onChange={(e) => {
-                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
-                                                        }} />
-                                                </>
-
-                                                : null}
+                                                                : null}
 
 
 
 
-                                            {element.field === 'Select' ?
-                                                <div className={`w-full ${classes}`}>
-                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
-                                                    <select className="form-select" required id={element.label}
-                                                        onChange={(e) => {
-                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
-                                                        }}
-                                                        value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} >
-                                                        <option disabled selected>Choose</option>
-                                                        {element.options.map((item, index) => {
-                                                            return <option value={item} key={index}>{item}</option>
-                                                        })}
+                                                            {element.field === 'Select' ?
+                                                                <div className={`w-full ${classes}`}>
+                                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
+                                                                    <select className="form-select" required id={element.label}
+                                                                        onChange={(e) => {
+                                                                            setState({ ...state, [element.keyName]: e.target.value })
+                                                                        }}
+                                                                        value={(state?.[element.keyName] && state?.[element.keyName]) || null} >
+                                                                        <option disabled selected>Choose</option>
+                                                                        {element.options.map((item, index) => {
+                                                                            return <option value={item} key={index}>{item}</option>
+                                                                        })}
 
-                                                    </select>
+                                                                    </select>
 
-                                                </div> : null}
+                                                                </div> : null}
 
-                                            {element.field === 'Year' ?
-                                                <div className={`w-full`}>
-                                                    <label htmlFor="academicYear" className="form-label">Academic Year</label>
-                                                    <select className="form-select" required id="academicYear"
-                                                        onChange={(e) => {
-                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
-                                                        }}
-                                                        value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} >
-                                                        <option disabled selected>Choose</option>
-                                                        {Years.map((item, index) => {
-                                                            return <option value={item} key={index}>{item}</option>
-                                                        })}
+                                                            {element.field === 'Year' ?
+                                                                <div className={`w-full`}>
+                                                                    <label htmlFor="academicYear" className="form-label">Academic Year</label>
+                                                                    <select className="form-select" required id="academicYear"
+                                                                        onChange={(e) => {
+                                                                            setState({ ...state, [element.keyName]: e.target.value })
+                                                                        }}
+                                                                        value={(state?.[element.keyName] && state?.[element.keyName]) || null} >
+                                                                        <option disabled selected>Choose</option>
+                                                                        {Years.map((item, index) => {
+                                                                            return <option value={item} key={index}>{item}</option>
+                                                                        })}
 
-                                                    </select>
+                                                                    </select>
 
-                                                </div> : null}
+                                                                </div> : null}
 
-                                            {element.field === 'File' ?
-                                                <div>
-                                                    <label htmlFor="proof" className="form-label">Upload Proof</label>
-                                                    <input className="form-control" type="file" id="proof" name="file"
-                                                        onChange={(e) => { setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.files[0], }) }}
-                                                    />
-                                                </div> : null}
+                                                            {element.field === 'File' ?
+                                                                <div>
+                                                                    <label for="proof" className="form-label">Upload Proof</label>
+                                                                    <input className="form-control" required type="file" id="proof" name="file"
+                                                                        onChange={(e) => { setState({ ...state, [element.keyName]: e.target.files[0] }) }}
+                                                                    />
+                                                                </div> : null}
 
+
+                                                        </div>
+                                                    })
+                                                }
+                                            </div>
 
                                         </div>
-                                    })
-                                }
-                            </div>
 
+
+                                        <div className='mt-4'>
+                                            <SaveCancelButtons
+                                                setShowInputs={setShowInputs}
+                                                isForm={isForm}
+                                                setInputToZero={() => {
+                                                    setState({ ...state, input: 0 })
+                                                }}
+                                                label={label}
+                                                setState={setState}
+                                                state={state}
+                                                setLoading={setLoading}
+                                                loading={loading}
+                                                model={model}
+                                                refetch={refetch}
+                                            />
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+                                </form>
+                                }
+
+
+                                {/* Edit Item */}
+                                {showEditInputs === true && <form encType="multipart/form-data" onSubmit={handleChange} className='mb-4 needs-validation'>
+                                    <div className="w-full mt-10 my-3 bg-blue-100 border-blue-400 border-2 rounded-xl p-3">
+
+
+                                        <div className=''>
+                                            <p className='text-xl font-bold my-3'>Edit {addName}</p>
+
+
+                                            <div className='w-full flex justify-between gap-2 items-center flex-wrap '>
+                                                {
+                                                    options.map((element, index) => {
+                                                        return <div key={index} className='w-full md:w-[45%] my-2'>
+                                                            {element.field === 'Text' || element.field === 'Number' ?
+
+                                                                <>
+                                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
+                                                                    <input type={element.type} className="form-control" id={element.label} required value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} focused
+                                                                        onChange={(e) => {
+                                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
+                                                                        }} />
+                                                                </>
+
+                                                                : null}
+
+
+
+
+                                                            {element.field === 'Select' ?
+                                                                <div className={`w-full ${classes}`}>
+                                                                    <label htmlFor={element.label} className="form-label">{element.label}</label>
+                                                                    <select className="form-select" required id={element.label}
+                                                                        onChange={(e) => {
+                                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
+                                                                        }}
+                                                                        value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} >
+                                                                        <option disabled selected>Choose</option>
+                                                                        {element.options.map((item, index) => {
+                                                                            return <option value={item} key={index}>{item}</option>
+                                                                        })}
+
+                                                                    </select>
+
+                                                                </div> : null}
+
+                                                            {element.field === 'Year' ?
+                                                                <div className={`w-full`}>
+                                                                    <label htmlFor="academicYear" className="form-label">Academic Year</label>
+                                                                    <select className="form-select" required id="academicYear"
+                                                                        onChange={(e) => {
+                                                                            setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.value })
+                                                                        }}
+                                                                        value={(itemToEdit?.[element.keyName] && itemToEdit?.[element.keyName]) || null} >
+                                                                        <option disabled selected>Choose</option>
+                                                                        {Years.map((item, index) => {
+                                                                            return <option value={item} key={index}>{item}</option>
+                                                                        })}
+
+                                                                    </select>
+
+                                                                </div> : null}
+
+                                                            {element.field === 'File' ?
+                                                                <div>
+                                                                    <label htmlFor="proof" className="form-label">Upload Proof</label>
+                                                                    <input className="form-control" type="file" id="proof" name="file"
+                                                                        onChange={(e) => { setItemToEdit({ ...itemToEdit, [element.keyName]: e.target.files[0], }) }}
+                                                                    />
+                                                                </div> : null}
+
+
+                                                        </div>
+                                                    })
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <div className='mt-4'>
+                                            <SaveCancelButtons
+                                                setShowInputs={setShowEditInputs}
+                                                isForm={isForm}
+                                                setInputToZero={() => {
+                                                    setState({ ...state, input: 0 })
+                                                }}
+                                                label={label}
+                                                setState={setState}
+                                                state={state}
+                                                setLoading={setLoading}
+                                                loading={loading}
+                                                model={model}
+                                                refetch={refetch}
+                                            />
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+
+
+                            </div>
                         </div>
-                        <div className='mt-4'>
-                            <SaveCancelButtons
-                                setShowInputs={setShowEditInputs}
-                                isForm={isForm}
-                                setInputToZero={() => {
-                                    setState({ ...state, input: 0 })
-                                }}
-                                label={label}
-                                setState={setState}
-                                state={state}
-                                setLoading={setLoading}
-                                loading={loading}
-                                model={model}
-                                refetch={refetch}
-                            />
-                        </div>
-                    </div>
-                </form>
                 }
 
 
             </div>
 
             {
-                calculateScore && <div className=" flex items-center justify-between mb-3 bg-blue-100 rounded-lg p-2 border-2 border-blue-700">
-                    <p className='text-muted text-sm'>{data ? 'Data fetched from your Faculty Profile' : 'No data available'}</p>
+                calculateScore && <div className=" flex items-center justify-end mb-3 bg-blue-100 rounded-lg p-2 border-2 border-blue-700">
                     <div className='flex flex-col items-end justify-start'>
                         <div className="btn-group" role="group" aria-label="Fetch years">
                             <button type="button" className="btn border-blue-900 border bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ isOpen: true, year: casYearState }); }}>Fetch {casYearState} Data</button>
                         </div>
-                        <p className='text-muted text-xs'>You can Fetch & Filter specific items by clicking on this button.</p>
+                        <p className='text-muted text-xs text-right'>Note: When you add a new item to the table it will be available in the filter section above. Please click the respective button above, if the item does not show up, hit Refresh button at top-right corner.</p>
                     </div>
 
                 </div>
             }
-
 
 
             <div className='table-responsive'>
@@ -522,13 +551,13 @@ const NumberToTextField = ({ label, activity, state, setState, classes = "", isF
 
             {
                 calculateScore &&
-                <CalculateModal setCalculateModal={setCalculateModal} calculateModal={calculateModal}
+                <CalculateModal saveLoader={saveLoader} setSaveLoader={setSaveLoader} setCalculateModal={setCalculateModal} calculateModal={calculateModal}
                     calculateItem={calculateItem} state={state} setState={setState} serverData={data} isFetching={isFetching} model={model} />
             }
 
             {/* Filter Modal */}
             {
-                calculateScore && <FilterModal title={activityName} data={data} setDataFilterModal={setDataFilterModal} dataFilterModal={dataFilterModal} model={model} state={state} setState={setState} />
+                calculateScore && <FilterModal saveLoader={saveLoader} setSaveLoader={setSaveLoader} title={activityName} data={data} setDataFilterModal={setDataFilterModal} dataFilterModal={dataFilterModal} model={model} state={state} setState={setState} refetch={refetch} />
             }
 
         </div>
@@ -544,11 +573,14 @@ const SaveCancelButtons = ({ state, setState, setShowInputs, setLoading, model, 
     const cancelData = (e) => {
         e.preventDefault();
         setShowInputs(false);
+        console.log('Your state : ', state)
         // clear inputs
         if (state !== null) {
             setState((prev) => {
-                CASDataTable[model].tableCells.forEach((key, index) => {
-                    prev[key] = null
+                CASDataTable?.[model]?.tableCells.forEach((key, index) => {
+                    if (prev[key]) {
+                        prev[key] = null
+                    }
                 })
                 return { ...prev }
             })
@@ -575,10 +607,11 @@ const SaveCancelButtons = ({ state, setState, setShowInputs, setLoading, model, 
     )
 }
 
-const CalculateModal = ({ content, setCalculateModal, calculateModal, calculateItem, model, state, setState, isFetching, serverData }) => {
+const CalculateModal = ({ content, setCalculateModal, calculateModal, calculateItem, model, state, setState, isFetching, serverData, saveLoader, setSaveLoader }) => {
     return <div className='w-full'>
-        <Dialog open={calculateModal} onClose={() => { setCalculateModal(false) }} fullWidth maxWidth='md'>
+        <Dialog open={calculateModal} onClose={() => { setCalculateModal(false); setSaveLoader(true) }} fullWidth maxWidth='md'>
             <DialogTitle>
+
                 <p className="text-base font-bold bg-blue-100 p-2 rounded-xl text-blue-800">Calculate Score</p>
                 <table class="table text-base mt-3 table-bordered">
                     <thead className="bg-light text-black">
@@ -615,7 +648,7 @@ const CalculateModal = ({ content, setCalculateModal, calculateModal, calculateI
 
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { setCalculateModal(false) }} sx={{ textTransform: "none" }}>Done</Button>
+                <Button onClick={() => { setCalculateModal(false); setSaveLoader(true) }} sx={{ textTransform: "none" }}>Done</Button>
             </DialogActions>
         </Dialog>
     </div>

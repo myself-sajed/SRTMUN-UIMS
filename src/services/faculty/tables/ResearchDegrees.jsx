@@ -20,7 +20,7 @@ import { toast } from 'react-hot-toast';
 import { ImageResizer } from '../../../components/ProfileCroper';
 
 
-const ResearchDegrees = ({ filterByAcademicYear = false, academicYear }) => {
+const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable = true, }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
@@ -149,7 +149,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear }) => {
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='DegreeFaculty' title='Research Degrees' SendReq='Degree' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -199,53 +199,55 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear }) => {
 
 
 
-            {/* // TABLE OF QUALIFICATIONS */}
+            {/* // Table of Degree */}
 
-            <div className='mt-2 overflow-auto change__scrollbar text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Sr.</th>
-                            <th scope="col">Research Degree</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Subject</th>
-                            <th scope="col">University</th>
-                            <th scope="col">Award Year</th>
-                            <th scope="col">Degree</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Sr.</th>
+                                <th scope="col">Research Degree</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">University</th>
+                                <th scope="col">Award Year</th>
+                                <th scope="col">Degree</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{item.degreeName}</td>
-                                    <td>{item.title}</td>
-                                    <td>{item.subject}</td>
-                                    <td>{item.university}</td>
-                                    <td>{item.awardDate}</td>
-                                    <td>
-                                        <View proof={item.proof} />
-                                    </td>
-                                    <td>
-                                        <Actions item={item} model="Degree" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setDegreeModal} />
-                                    </td>
-                                </tr>
-                            )
-                        })
-                        }
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{item.degreeName}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.subject}</td>
+                                        <td>{item.university}</td>
+                                        <td>{item.awardDate}</td>
+                                        <td>
+                                            <View proof={item.proof} />
+                                        </td>
+                                        <td>
+                                            <Actions item={item} model="Degree" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setDegreeModal} />
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
 
 
         </div>

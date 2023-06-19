@@ -18,7 +18,7 @@ import handleEditWithFile from '../js/handleEditWithFile';
 import View from './View';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const Responsibities = ({ filterByAcademicYear = false, academicYear }) => {
+const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
@@ -127,7 +127,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResponsibilitiesFaculty' title='Administrative / Academic Responsibilities' SendReq='Responsibilities' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
@@ -163,53 +163,56 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* // TABLE OF ResponsibitiesS */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2 text-sm sm:text-base'>
-                <table className="table table-hover table-bordered">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Sr.</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Name of the Committee</th>
-                            <th scope="col">Hosting institute name</th>
-                            <th scope="col">Year</th>
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
+            {
+                showTable &&
+                <div className='mt-2 overflow-auto change__scrollbar mb-2 text-sm sm:text-base'>
+                    <table className="table table-hover table-bordered">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Sr.</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Name of the Committee</th>
+                                <th scope="col">Hosting institute name</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
 
-                        {data && filteredItems.map((Responsibities, index) => {
-                            return (
-                                <tr key={Responsibities._id}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{Responsibities.designation}</td>
-                                    <td>{Responsibities.committeeName}</td>
-                                    <td>{Responsibities.institute}</td>
-                                    <td>{Responsibities.year}</td>
-                                    <td><View proof={Responsibities.proof} /></td>
-                                    <td>
-                                        <Actions item={Responsibities} model="Responsibilities" editState={setEditModal} addState={setResponsibitiesModal} refreshFunction={refetch} pencilClick={() => pencilClick(Responsibities._id)} />
-                                    </td>
-                                </tr>
+                        <tbody>
 
-                            )
-                        })
-                        }
+                            {data && filteredItems.map((Responsibities, index) => {
+                                return (
+                                    <tr key={Responsibities._id}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{Responsibities.designation}</td>
+                                        <td>{Responsibities.committeeName}</td>
+                                        <td>{Responsibities.institute}</td>
+                                        <td>{Responsibities.year}</td>
+                                        <td><View proof={Responsibities.proof} /></td>
+                                        <td>
+                                            <Actions item={Responsibities} model="Responsibilities" editState={setEditModal} addState={setResponsibitiesModal} refreshFunction={refetch} pencilClick={() => pencilClick(Responsibities._id)} />
+                                        </td>
+                                    </tr>
+
+                                )
+                            })
+                            }
 
 
 
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
-
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
 
         </div>
     )

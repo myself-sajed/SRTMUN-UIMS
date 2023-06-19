@@ -124,15 +124,19 @@ const PbasReportHome = () => {
                         <span className="sm:text-sm md:text-lg font-bold">PBAS Report Form {casYearState && <span>({casYearState})</span>}</span>
 
                         {
-                            tabName === 'first' || tabName === 'second' || tabName === 'final' ? (saveLoader ? <div className='flex items-center justify-start gap-2 border-l-2 pl-5 ml-7'>
+                            tabName === 'first' || tabName === 'second' || tabName === 'final' ? (saveLoader ? <div className='flex items-center justify-start gap-2 border-l-2 pl-5 ml-5'>
                                 <Tooltip placement="bottom" title="Saving...">
-                                    <LoadingOutlined style={{ fontSize: 20, }} spin />
+                                    <div className='flex items-center justify-start gap-2 cursor-pointer bg-gray-100 rounded-md p-2'>
+                                        <LoadingOutlined style={{ fontSize: 20, }} spin />
+                                        <span>Saving...</span>
+                                    </div>
                                 </Tooltip>
                             </div> : <div className='border-l-2 pl-5 ml-5'>
                                 <Tooltip title='Save Progress' placement='bottom'>
-                                    <IconButton onClick={() => { setSaveLoader(true) }}>
+                                    <div onClick={() => { setSaveLoader(true) }} className='flex items-center justify-start gap-2 cursor-pointer bg-blue-100 hover:bg-blue-200 ease-in-out duration-200 text-blue-800 rounded-md p-2'>
                                         <SaveRoundedIcon />
-                                    </IconButton>
+                                        <span className='font-medium'>Save</span>
+                                    </div>
                                 </Tooltip>
                             </div>) : null
                         }
@@ -169,6 +173,7 @@ const PbasReportHome = () => {
                     <form className='flex flex-col items-center justify-center mt-5' onSubmit={(e) => {
                         e.preventDefault();
                         setTabName('first');
+                        handleNext()
                     }}>
                         <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose PBAS Year" />
 

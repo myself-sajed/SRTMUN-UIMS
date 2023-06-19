@@ -365,6 +365,23 @@ const Home = () => {
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
+                                        <h5>Student, Parent, Employee Feedback</h5>
+                                        <p className="prices">FEEDBACK</p>
+                                    </div>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.goToResponse.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Feedback Response </Link>
+                                        <Link to={siteLinks.generateFeedbackLinksDirector.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Generate Links</Link>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-3 flex-auto w-full lg:w-fit">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
                                         <h5>Academic & Administrative Audit</h5>
                                         <p className="prices">AAA</p>
                                     </div>

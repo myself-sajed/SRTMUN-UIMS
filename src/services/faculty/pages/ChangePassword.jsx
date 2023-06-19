@@ -21,7 +21,8 @@ const ChangePassword = () => {
     const user = useSelector(state => state.user.user)
     // const [email, setEmail] = useState('')
     const navigate = useNavigate()
-    let links = [{ name: 'Welcome', link: '/' }, { name: 'Home', link: '/home' }, { name: 'Faculty Profile', link: '/faculty-profile' }, { name: 'Change Password', link: '/change-password' }]
+    let links = [siteLinks.welcome, siteLinks.facultyHome, siteLinks.facultyChangePass,]
+
 
 
 

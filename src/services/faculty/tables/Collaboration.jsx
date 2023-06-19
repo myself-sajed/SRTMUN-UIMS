@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const Collaboration = ({ filterByAcademicYear = false, academicYear }) => {
+const Collaboration = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [collModal, setCollModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -131,7 +131,7 @@ const Collaboration = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Collaboration" editState={setEditModal} clearStates={clearStates} state={setCollModal} icon={<GroupRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Collaborations" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Collaboration" editState={setEditModal} clearStates={clearStates} state={setCollModal} icon={<GroupRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Collaborations"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='CollaborationFaculty' title='Collaborations' SendReq='Collaboration' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -170,57 +170,61 @@ const Collaboration = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col"><div className="w-52">Title of the collaborative activity</div></th>
-                            <th scope="col"><div className="w-52">Name of the collaborating agency with contact details</div></th>
-                            <th scope="col">Participant Name</th>
-                            <th scope="col">Year of Collaboration</th>
-                            <th scope="col">Duration</th>
-                            <th scope="col"><div className="w-24">Nature of the activity</div></th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col"><div className="w-52">Title of the collaborative activity</div></th>
+                                <th scope="col"><div className="w-52">Name of the collaborating agency with contact details</div></th>
+                                <th scope="col">Participant Name</th>
+                                <th scope="col">Year of Collaboration</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col"><div className="w-24">Nature of the activity</div></th>
+                                <th scope="col"><div className="w-20">Year</div></th>
 
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.collabTitle}</td>
-                                    <td>{item.agencyName}</td>
-                                    <td>{item.participantName}</td>
-                                    <td>{item.collabYear}</td>
-                                    <td>{item.duration}</td>
-                                    <td>{item.activityNature}</td>
-                                    <td>{item.year}</td>
-                                    <td> <View proof={item.proof} /></td>
-                                    <td> <Actions item={item} model="Collaboration" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setCollModal} /></td>
-
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
 
 
-                                </tr>
-                            )
-                        })}
+                            </tr>
+                        </thead>
 
-                    </tbody>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.collabTitle}</td>
+                                        <td>{item.agencyName}</td>
+                                        <td>{item.participantName}</td>
+                                        <td>{item.collabYear}</td>
+                                        <td>{item.duration}</td>
+                                        <td>{item.activityNature}</td>
+                                        <td>{item.year}</td>
+                                        <td> <View proof={item.proof} /></td>
+                                        <td> <Actions item={item} model="Collaboration" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setCollModal} /></td>
 
-                </table>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
 
-            </div>
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+
+                    </table>
+
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+
+                </div>
+            }
         </div>
     )
 }

@@ -117,6 +117,20 @@ const Home = () => {
                 <Bred links={[siteLinks.welcome, siteLinks.facultyHome]} />
             </div>
 
+
+            <div>
+                <div className="alert bg-blue-100 alert-dismissible fade show mt-2" role="alert">
+                    <p>Dear <strong>{user?.salutation} {user?.name}</strong>, please submit
+
+                        <strong className="text-blue-600 cursor-pointer hover:text-blue-800" onClick={() => navigate(`/feedback/teacher/2021-22/${user?.department}`)}> Teacher Feedback (2021-22)</strong> and
+
+                        <strong className="text-blue-600 cursor-pointer hover:text-blue-800" onClick={() => navigate(`/feedback/teacher/2022-23/${user?.department}`)}> Teacher Feedback (2022-23)</strong> Form. Kindly, click on the links to proceed. </p>
+                    <button type="button" className="btn-close text-black font-semibold text-xl" data-bs-dismiss="alert" aria-label="Close">&#10005;</button>
+                </div>
+            </div>
+
+
+
             <div className='mt-3 border rounded-xl gray'>
                 {/* PROFILE */}
                 <div className='rounded-xl '>

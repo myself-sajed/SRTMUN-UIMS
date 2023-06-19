@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const BooksAndChapters = ({ filterByAcademicYear = false, academicYear }) => {
+const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [bookModal, setBookModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -164,7 +164,8 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />} title="Books and Chapters published and papers in national/international conference proceedings" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />}
+                title={title ? title : "Books and Chapters published and papers in national/international conference proceedings"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -221,68 +222,70 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
 
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Teacher Name</th>
-                            <th scope="col"><div className="w-32">Title of Published Book</div></th>
-                            <th scope="col">Paper Title</th>
-                            <th scope="col">Author / Editor / Translator</th>
-                            <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
-                            <th scope="col">Conference Name</th>
-                            <th scope="col">National / International</th>
-                            <th scope="col">Year of Publication</th>
-                            <th scope="col"><div className="w-40">ISBN/ISSN number of proceeding</div></th>
-                            <th scope="col"><div className="w-48">Affiliation Institute at the time of publication</div></th>
-                            <th scope="col">Publisher Name</th>
-                            <th scope="col">School Name</th>
-                            <th scope="col"><div className="w-24">Year</div></th>
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
-
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.teacherName}</td>
-                                    <td>{item.titleOfBook}</td>
-                                    <td>{item.paperTitle}</td>
-                                    <td>{item.authorEditor}</td>
-                                    <td>{item.titleOfProceeding}</td>
-                                    <td>{item.conName}</td>
-                                    <td>{item.isNat}</td>
-                                    <td>{item.publicationYear}</td>
-                                    <td>{item.issnNumber}</td>
-                                    <td>{item.aff}</td>
-                                    <td>{item.publisherName}</td>
-                                    <td>{item.schoolName}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td><Actions item={item} model="BookAndChapter" refreshFunction={() => { refetch() }} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setBookModal} /></td>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Teacher Name</th>
+                                <th scope="col"><div className="w-32">Title of Published Book</div></th>
+                                <th scope="col">Paper Title</th>
+                                <th scope="col">Author / Editor / Translator</th>
+                                <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
+                                <th scope="col">Conference Name</th>
+                                <th scope="col">National / International</th>
+                                <th scope="col">Year of Publication</th>
+                                <th scope="col"><div className="w-40">ISBN/ISSN number of proceeding</div></th>
+                                <th scope="col"><div className="w-48">Affiliation Institute at the time of publication</div></th>
+                                <th scope="col">Publisher Name</th>
+                                <th scope="col">School Name</th>
+                                <th scope="col"><div className="w-24">Year</div></th>
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
 
 
+                            </tr>
+                        </thead>
 
-                                </tr>
-                            )
-                        })}
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.teacherName}</td>
+                                        <td>{item.titleOfBook}</td>
+                                        <td>{item.paperTitle}</td>
+                                        <td>{item.authorEditor}</td>
+                                        <td>{item.titleOfProceeding}</td>
+                                        <td>{item.conName}</td>
+                                        <td>{item.isNat}</td>
+                                        <td>{item.publicationYear}</td>
+                                        <td>{item.issnNumber}</td>
+                                        <td>{item.aff}</td>
+                                        <td>{item.publisherName}</td>
+                                        <td>{item.schoolName}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td><Actions item={item} model="BookAndChapter" refreshFunction={() => { refetch() }} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setBookModal} /></td>
 
-                    </tbody>
 
-                </table>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+
+                    </table>
+
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

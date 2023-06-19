@@ -7,23 +7,27 @@ const casReportSchema = new mongoose.Schema({
         required: true,
         ref: "users"
     },
-    stage1 : {
+    stage1: {
         type: 'string',
         required: false,
     },
-    stage2 : {
+    stage2: {
         type: 'string',
         required: false,
     },
-    stage3 : {
+    stage3: {
         type: 'string',
         required: false,
     },
-    stage4 : {
+    stage4: {
         type: 'string',
         required: false,
     },
-    stage5 : {
+    stage5: {
+        type: 'string',
+        required: false,
+    },
+    casDuration: {
         type: 'string',
         required: false,
     },

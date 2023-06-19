@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const JRFSRF = ({ filterByAcademicYear = false, academicYear }) => {
+const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [jrfModal, setJrfModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -125,7 +125,7 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellow" editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<PersonSearchRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="JRF, SRF, Post Doctoral Fellows, Research Associate" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellow" editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<PersonSearchRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "JRF, SRF, Post Doctoral Fellows, Research Associate"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='JrfSrfFaculty' title='JRF, SRF, Post Doctoral Fellows, Research Associate' SendReq='JrfSrf' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -154,51 +154,55 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Research Fellow Name</th>
-                            <th scope="col">Enrolment Year</th>
-                            <th scope="col">Fellowship Duration</th>
-                            <th scope="col">Fellowship Type</th>
-                            <th scope="col">Granting Agency</th>
-                            <th scope="col">Qualifying Exam (if any)</th>
-                            <th scope="col"><div className="w-20">Year</div></th>
-
-                            <th scope="col">Uploaded Proof</th>
-                            <th scope="col">Action</th>
 
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && data ? filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.researchName}</td>
-                                    <td>{item.enrolmentYear}</td>
-                                    <td>{item.fellowshipDuration}</td>
-                                    <td>{item.fellowshipType}</td>
-                                    <td>{item.grantingAgency}</td>
-                                    <td>{item.qualifyingExam}</td>
-                                    <td>{item.year}</td>
-                                    <td><View proof={item.proof} /></td>
-                                    <td> <Actions item={item} model="JrfSrf" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
+            {
+                showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Research Fellow Name</th>
+                                <th scope="col">Enrolment Year</th>
+                                <th scope="col">Fellowship Duration</th>
+                                <th scope="col">Fellowship Type</th>
+                                <th scope="col">Granting Agency</th>
+                                <th scope="col">Qualifying Exam (if any)</th>
+                                <th scope="col"><div className="w-20">Year</div></th>
 
-                                </tr>
-                            )
-                        }) : []}
+                                <th scope="col">Uploaded Proof</th>
+                                <th scope="col">Action</th>
 
-                    </tbody>
-                </table>
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && data ? filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.researchName}</td>
+                                        <td>{item.enrolmentYear}</td>
+                                        <td>{item.fellowshipDuration}</td>
+                                        <td>{item.fellowshipType}</td>
+                                        <td>{item.grantingAgency}</td>
+                                        <td>{item.qualifyingExam}</td>
+                                        <td>{item.year}</td>
+                                        <td><View proof={item.proof} /></td>
+                                        <td> <Actions item={item} model="JrfSrf" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
+
+                                    </tr>
+                                )
+                            }) : []}
+
+                        </tbody>
+                    </table>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
 
         </div>
     )

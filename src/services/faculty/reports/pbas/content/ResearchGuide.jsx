@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NumberToTextField from '../components/NumberToTextField'
 import { BGPad } from './Teaching'
 
-const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, researchProjects, setResearchProjects, setConsultancy, consultancy }) => {
+const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, researchProjects, setResearchProjects, setConsultancy, consultancy, saveLoader, setSaveLoader }) => {
 
     const [totalActivityScore, setTotalActivityScore] = useState(0)
 
@@ -30,23 +30,10 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         <div>
             <div className='mt-2 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    facultyTableAvailable="PHDAwarded"
                     state={researchGuide} setState={setResearchGuide} casYearState={casYearState}
                     classes='my-3' model="PhdAwarded" addName="Degree" activityName="Research Guidance" activity="Sub-Activity 1"
-                    options={[
-                        { field: 'Text', keyName: "scholarName", label: "Scholar Name" },
-                        { field: 'Text', keyName: "departmentName", label: "Department Name" },
-                        { field: 'Text', keyName: "guideName", label: "Guide Name" },
-                        { field: 'Text', keyName: "thesisTitle", label: "Thesis Title" },
-                        { field: 'Select', keyName: "degreeName", label: "Degree Name", options: ['Ph.D.', 'M.Phil.', 'PG Dissertation'] },
-                        { field: 'Select', keyName: "awardSubmit", label: "Awarded / Submitted", options: ['Awarded', 'Submitted'] },
-                        { field: 'Text', keyName: "yearOfScholar", label: "Year of Scholar Registration" },
-                        { field: 'Text', keyName: "rac", label: "Date of Registration (RAC)" },
-                        { field: 'Text', keyName: "gender", label: "Gender" },
-                        { field: 'Text', keyName: "category", label: "Category" },
-                        { field: 'Text', keyName: "phdAwardYear", label: "Year of Award" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
 
                 </NumberToTextField>
@@ -55,26 +42,11 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
 
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    facultyTableAvailable="ResearchProjects"
                     state={researchProjects} setState={setResearchProjects} casYearState={casYearState}
                     classes='my-3' model="ResearchProject" addName="Project" activityName="Research Project" activity="Sub-Activity 2"
-                    options={[
-                        { field: 'Text', keyName: "schemeName", label: "Scheme/Project Name" },
-                        { field: 'Text', keyName: "programTitle", label: "Program Title" },
-                        { field: 'Text', keyName: "principalName", label: "Principal Invigilator Name" },
-                        { field: 'Text', keyName: "fundingName", label: "Funding Agency Name" },
-                        { field: 'Select', keyName: "isGov", label: "Government / Non-Government", options: ['Government', 'Non-Government'] },
 
-                        { field: 'Text', keyName: "department", label: "Department" },
-                        { field: 'Text', keyName: "awardYear", label: "Award Year" },
-                        { field: 'Text', keyName: "providedFunds", label: "Provided Funds (INR)" },
-                        { field: 'Select', keyName: "fundType", label: "Major/Minor", options: ['Major', 'Minor'] },
-
-                        { field: 'Select', keyName: "status", label: "Project Status", options: ['Completed', 'Ongoing'] },
-
-                        { field: 'Text', keyName: "projectDuration", label: "Project Duration" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
 
                 </NumberToTextField>
@@ -83,17 +55,10 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
 
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    facultyTableAvailable="ConsultancyServices"
                     state={consultancy} setState={setConsultancy} casYearState={casYearState}
                     classes='my-3' model="ConsultancyServices" addName="Consultancy" activityName="Consultancy Services" activity="Sub-Activity 3"
-                    options={[
-                        { field: 'Text', keyName: "cName", label: "Consultant Name" },
-                        { field: 'Text', keyName: "cProjectName", label: "Consultancy Project Name" },
-                        { field: 'Text', keyName: "cAgency", label: "Consulting / Sponsoring Agency" },
-                        { field: 'Text', keyName: "cYear", label: "Consultancy Year" },
-                        { field: 'Text', keyName: "revenue", label: "Revenue Generated(INR)" },
-                        { field: 'Year', keyName: "year", label: "Academic Year", },
-                        { field: 'File', keyName: "proof", label: "Uploaded Proof", },]}
                 >
 
                 </NumberToTextField>

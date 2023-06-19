@@ -35,7 +35,7 @@ const dashboardObj = {
         { id: 4, title: 'Seminars organized', model: 'ConferenceOrganized', icon: <LaptopChromebookRoundedIcon /> },
         { id: 6, title: 'ICT Created', model: 'EContentDeveloped', icon: <LanguageRoundedIcon /> },
         { id: 7, title: 'Books & Chapters', model: 'BookAndChapter', icon: <MenuBookRoundedIcon /> },
-        { id: 8, title: 'Ph.D. Awarded', model: 'PhdAwarded', icon: <CardMembershipRoundedIcon /> },
+        { id: 8, title: 'Research Guidance', model: 'PhdAwarded', icon: <CardMembershipRoundedIcon /> },
         { id: 9, title: 'Patents', model: 'Patent', icon: <DocumentScannerRoundedIcon /> },
         { id: 10, title: 'Orientation / FDP', model: 'Online', icon: <RecordVoiceOverRoundedIcon /> },
         { id: 11, title: 'Administrative Responsibilities', model: 'Responsibilities', icon: <ManageAccountsIcon /> },
@@ -63,7 +63,7 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
         <div className='font-sans mx-auto mt-16'>
 
             <div className={`text-center ${forPrintOut === 'false' ? "bg-[#009879] text-white" : 'border'} p-2 mt-3 rounded-md`}>
-                <p className='lg:text-2xl text-base'><strong>{title}</strong></p>
+                <p className='lg:text-2xl text-lg'><strong>{title}</strong></p>
                 <p className='text-sm mt-2'>{subTitle}</p>
             </div>
 

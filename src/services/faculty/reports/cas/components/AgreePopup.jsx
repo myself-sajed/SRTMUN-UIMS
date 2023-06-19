@@ -1,7 +1,7 @@
 import React from 'react'
 import DialogBox from '../../../../../components/DialogBox'
 
-const AgreePopup = ({ agreePopup, setAgreePopup, setTabName, handleNext, fetchYears, duration, casYearState, userDuration }) => {
+const AgreePopup = ({ setSaveLoader, agreePopup, setAgreePopup, setTabName, handleNext, fetchYears, duration, casYearState, userDuration }) => {
 
     let wholeYear = casYearState.toString().slice(0, -3)
     let startYearCount = casYearState.toString().slice(0, -5)
@@ -11,7 +11,7 @@ const AgreePopup = ({ agreePopup, setAgreePopup, setTabName, handleNext, fetchYe
 
     return (
         <DialogBox title="Confirmation" buttonName="Ok, I Agree" isModalOpen={agreePopup} setIsModalOpen={setAgreePopup}
-            onClickFunction={() => { setAgreePopup(false); setTabName('first'); handleNext() }} >
+            onClickFunction={() => { setAgreePopup(false); setTabName('first'); handleNext(); setSaveLoader(true); }} >
 
             <div className='w-full'>
                 <p>Please note that, the data to be fetched from

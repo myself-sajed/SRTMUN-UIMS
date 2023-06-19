@@ -3,7 +3,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import useAuth from '../../../hooks/useAuth';
 
-const Header = ({ icon, title, state, font = 'text-lg', add, editState, clearStates, setIsFormOpen, exceldialog, dataCount }) => {
+const Header = ({ showTable, icon, title, state, font = 'text-lg', add, editState, clearStates, setIsFormOpen, exceldialog, dataCount }) => {
 
 
     useAuth(false)
@@ -15,9 +15,11 @@ const Header = ({ icon, title, state, font = 'text-lg', add, editState, clearSta
                     <div className='flex items-center justify-start gap-2'>
                         {icon}
                         <p className={font}>{title}</p>
-                        <span className="px-2 rounded-md bg-blue-200 text-blue-900 font-semibold">
-                            {dataCount ? dataCount : 0}
-                        </span>
+                        {
+                            showTable && <span className="px-2 rounded-md bg-blue-200 text-blue-900 font-semibold">
+                                {dataCount ? dataCount : 0}
+                            </span>
+                        }
                     </div>
                 </div>
 

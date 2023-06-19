@@ -1,10 +1,10 @@
 import Axios from "axios"
 import { toast } from 'react-hot-toast'
 
-const generateCASReport = (casData, userData, selectedYear, setReportLoading) => {
+const generateCASReport = (casData, userData, selectedYear, setReportLoading, forPrintOut) => {
     try {
 
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { casData, userData, selectedYear })
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { casData, userData, selectedYear, forPrintOut })
             .then(function (res) {
                 if (res.data.status === 'generated') {
                     setReportLoading(false)

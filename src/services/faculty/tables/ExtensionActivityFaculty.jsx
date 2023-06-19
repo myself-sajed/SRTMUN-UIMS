@@ -18,7 +18,7 @@ import YearSelect from '../../../components/formComponents/YearSelect';
 import editReq from '../../../components/requestComponents/editReq';
 import UploadFile from '../../../components/formComponents/UploadFile';
 
-const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear }) => {
+const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const module = "faculty";
     const model = "ExtensionActivities";
 
@@ -87,7 +87,7 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear }
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Extension Activities" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Extension Activities"} />
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivitiesFaculty' title='Extension Activities' SendReq={model} refetch={refetch} module={module} department={user?._id} open={open} setOpen={setOpen} />
 
@@ -119,44 +119,48 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear }
 
             {/* TABLE */}
 
-            <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Name of Activity</th>
-                            <th scope="col">Organising unit/ agency/ collaborating agency</th>
-                            <th scope="col">Name of the Scheme</th>
-                            <th scope="col">Year Of Activity</th>
-                            <th scope="col">Number of students participated in such activities</th>
-                            <th scope="col">Upload actual activity list</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.Name_of_the_activity}</td>
-                                    <td>{item.Organising_unit}</td>
-                                    <td>{item.Name_of_the_scheme}</td>
-                                    <td>{item.Year_of_activity}</td>
-                                    <td>{item.Number_of_students}</td>
-                                    <td><View proof={item.Upload_Proof} serviceName="director" /></td>
-                                    <td> <Actions item={item} model={model} refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
-                                </tr>
-                            )
-                        })}
+            {
+                showTable &&
+                <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Name of Activity</th>
+                                <th scope="col">Organising unit/ agency/ collaborating agency</th>
+                                <th scope="col">Name of the Scheme</th>
+                                <th scope="col">Year Of Activity</th>
+                                <th scope="col">Number of students participated in such activities</th>
+                                <th scope="col">Upload actual activity list</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.Name_of_the_activity}</td>
+                                        <td>{item.Organising_unit}</td>
+                                        <td>{item.Name_of_the_scheme}</td>
+                                        <td>{item.Year_of_activity}</td>
+                                        <td>{item.Number_of_students}</td>
+                                        <td><View proof={item.Upload_Proof} serviceName="director" /></td>
+                                        <td> <Actions item={item} model={model} refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
+                                    </tr>
+                                )
+                            })}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+
+            }
         </div>
     )
 }

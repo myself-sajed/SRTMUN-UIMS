@@ -18,7 +18,7 @@ import YearSelect from '../../../components/formComponents/YearSelect';
 import editReq from '../../../components/requestComponents/editReq';
 import UploadFile from '../../../components/formComponents/UploadFile';
 
-const MoUsFaculty = ({ filterByAcademicYear = false, academicYear }) => {
+const MoUsFaculty = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const module = "faculty";
     const model = "MoUs"
 
@@ -87,7 +87,7 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear }) => {
         <div>
             {/* // HEADER */}
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
 
             <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUsFaculty' title='MoUs' SendReq='MoUs' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -115,40 +115,44 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear }) => {
 
             {/* TABLE */}
 
-            <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                <table className="table table-bordered table-hover">
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">Name of Organisation with whome mou signed</th>
-                            <th scope="col">Duration of MoU</th>
-                            <th scope="col">Year Of Signing Mou</th>
-                            <th scope="col">Upload Proof</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && filteredItems.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.Name_of_Organisation_with_whome_mou_signed}</td>
-                                    <td>{item.Duration_of_MoU}</td>
-                                    <td>{item.Year_of_signing_MoU}</td>
-                                    <td><View proof={item.Upload_Proof} serviceName="director" /></td>
-                                    <td> <Actions item={item} model="MoUs" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
-                                </tr>
-                            )
-                        })}
 
-                    </tbody>
-                </table>
 
-                {
-                    isLoading && <Loader />
-                }
-                {
-                    (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
-                }
-            </div>
+            {
+                showTable && <div className=' mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
+                    <table className="table table-bordered table-hover">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">Name of Organisation with whome mou signed</th>
+                                <th scope="col">Duration of MoU</th>
+                                <th scope="col">Year Of Signing Mou</th>
+                                <th scope="col">Upload Proof</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && filteredItems.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.Name_of_Organisation_with_whome_mou_signed}</td>
+                                        <td>{item.Duration_of_MoU}</td>
+                                        <td>{item.Year_of_signing_MoU}</td>
+                                        <td><View proof={item.Upload_Proof} serviceName="director" /></td>
+                                        <td> <Actions item={item} model="MoUs" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setOrgModal} /></td>
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+                    </table>
+
+                    {
+                        isLoading && <Loader />
+                    }
+                    {
+                        (data && data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    }
+                </div>
+            }
         </div>
     )
 }

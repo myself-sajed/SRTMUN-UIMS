@@ -12,7 +12,7 @@ import './CAS.css'
 
 const CASReport = () => {
 
-    const { selectedYear, userId } = useParams()
+    const { selectedYear, userId, forPrintOut } = useParams()
     const [casData, setCasData] = useState(null)
     const [casError, setCasError] = useState(null)
     const [casArray, setCasArray] = useState(null)
@@ -20,13 +20,16 @@ const CASReport = () => {
     const [fetchYears, setFetchYears] = useState([])
     const [eligData, setEligData] = useState(null)
     const [level, setLevel] = useState(null)
+    const [userCasDuration, setUserCasDuration] = useState(null)
+
+
+
 
     // get cas data from userID
     useEffect(() => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/getCASData`
         Axios.post(URL, { userId })
             .then((res) => {
-                console.log(res)
                 if (res.data.status === 'success') {
                     setCasData(res.data.data)
                 }
@@ -55,7 +58,6 @@ const CASReport = () => {
                     if (item.casYear === year) {
                         newCasArray.push(item)
                         years.push(...item.fetchYears)
-                        console.log('CAS Item :', item)
                     }
                 }
                 )
@@ -78,7 +80,6 @@ const CASReport = () => {
     // get all the academic data for tables
     useEffect(() => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/api/getAllData`
-        console.log('All fetch years are :', [...fetchYears])
         Axios.post(URL, { selectedYear, userId, fetchYears: [...fetchYears] })
             .then((res) => {
                 res.data.status = 'success' ? setAcademicData(res.data.data) : setCasError('No data found')
@@ -87,12 +88,6 @@ const CASReport = () => {
             })
 
     }, [fetchYears])
-
-    useEffect(() => {
-        if (casData) {
-            console.log('CAS Data :',)
-        }
-    }, [casData])
 
     useEffect(() => {
         // creating eligibility details
@@ -114,21 +109,37 @@ const CASReport = () => {
         }
     }, [casData])
 
+
+    // calculate CAS Duration here
     useEffect(() => {
-        console.log("eligData :", eligData)
-    }, [eligData])
+        if (casData) {
+            console.log('casData :', casData)
+            if (casData.casDuration && casArray) {
+                let casDuration = JSON.parse(casData.casDuration)
+                let startWholeYear = casArray[0].casYear.toString().slice(0, -3)
+                let lastPrefix = casArray[casArray.length - 1].casYear.toString().slice(0, -5)
+                let lastSuffix = casArray[casArray.length - 1].casYear.toString().slice(5)
+                let lastWholeYear = lastPrefix + lastSuffix
+
+                let date = `${casDuration.firstYear?.day} ${casDuration.firstYear?.month} ${startWholeYear} to ${casDuration.lastYear?.day} ${casDuration.lastYear?.month} ${lastWholeYear}`
+
+                setUserCasDuration(date)
+
+            }
+        }
+    }, [casData, casArray])
 
     return (
         <div className='mx-auto w-full font-sans'>
             {(casArray && academicData && eligData && level) ?
                 <>
                     <Header user={casData.userId} title="Career Advancement Scheme (CAS)"
-                        subTitle={`CAS Report of year ${casArray?.map((cas) => cas.casYear).join(', ')}`}
-                        directorData={academicData} userType="faculty" />
-                    <Eligibility eligData={eligData} level={level} />
-                    <BasicIntro academicData={academicData} />
-                    <SummarySheet casArray={casArray} />
-                    <Table academicData={academicData} casArray={casArray} />
+                        subTitle={userCasDuration ? `CAS Duration: ${userCasDuration}` : ""}
+                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
+                    <Eligibility eligData={eligData} level={level} forPrintOut={forPrintOut} userCasDuration={userCasDuration} />
+                    <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
+                    <Table academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />
+                    <SummarySheet casArray={casArray} forPrintOut={forPrintOut} />
                 </> : <p className='my-5'>Sorry You're not eligible for CAS Promotion</p>
             }
         </div>

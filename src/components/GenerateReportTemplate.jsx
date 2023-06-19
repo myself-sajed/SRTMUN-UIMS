@@ -11,12 +11,7 @@ const GenerateReportTemplate = ({ bredLinks, backLink, title, loading, children,
     return (
         <div>
 
-            <div className='mt-2'>
-                <Bred links={bredLinks} />
-            </div>
-
-
-            <div className='flex items-center justify-between border-t border-b mt-3 py-1 my-2'>
+            <div className='flex items-center justify-between border-b py-1 mb-2'>
                 <div className='flex items-center justify-start gap-2 text-base sm:text-xl' >
                     <IconButton onClick={() => { navigate(backLink) }}><ArrowBackRoundedIcon /></IconButton>
                     <p className=' text-sm md:text-lg text-blue-500 mb-1 font-bold'>{title}</p>
@@ -25,6 +20,13 @@ const GenerateReportTemplate = ({ bredLinks, backLink, title, loading, children,
                     {navRightChild}
                 </div>
             </div>
+
+            <div>
+                <Bred links={bredLinks} />
+            </div>
+
+
+
 
             {/* // report gen loading */}
 

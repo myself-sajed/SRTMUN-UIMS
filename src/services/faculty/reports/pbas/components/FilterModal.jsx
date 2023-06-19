@@ -4,10 +4,13 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import TableData from '../../../../director/reports/academic-audit/components/TableData';
 import CASDataTable from '../components/CASDataTable'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
-const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom }) => {
+
+const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, saveLoader, setSaveLoader }) => {
 
   const [filterData, setFilterData] = useState([state?.dataMap])
+
   const recalculateScore = () => {
     let totalScore = 0
 
@@ -21,17 +24,26 @@ const FilterModal = ({ title, data, setDataFilterModal, dataFilterModal, model, 
   }
 
 
+
   return (
     <div className='w-full'>
-      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore() }} fullWidth maxWidth='md'>
-        <DialogTitle><div className='flex items-start justify-between text-base'>
-          <p className='w-[60%]'>Filter : <b>{title}</b> </p>
-          <p className='w-[25%]'> Academic Year : <b>{dataFilterModal.year}</b></p></div></DialogTitle>
+      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore(); setSaveLoader(true); }} fullWidth maxWidth='md'>
+        <DialogTitle>
+          <div className='flex items-start justify-between text-base'>
+            <p className='w-[60%]'>Filter : <b>{title}</b> </p>
+            <p> Academic Year : <b>{dataFilterModal.year}</b></p>
+            <p className='flex items-center justify-start gap-2 p-1 bg-blue-100 hover:bg-blue-200 rounded-md cursor-pointer' onClick={refetch}> <RefreshRoundedIcon /> Refresh</p>
+          </div>
+        </DialogTitle>
         <DialogContent>
           <FilterCheckBox data={data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore() }} sx={{ textTransform: "none" }}>Done</Button>
+          <Button onClick={() => {
+            setDataFilterModal({ ...dataFilterModal, isOpen: false });
+            recalculateScore();
+            setSaveLoader(true);
+          }} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -43,7 +55,6 @@ export default FilterModal
 
 const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fetchFrom }) => {
 
-
   const [isAllChecked, setIsAllChecked] = useState(false)
   const DataTable = isConsolidated ? TableData : CASDataTable
 
@@ -51,7 +62,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
   const checkAll = () => {
     let arr = state?.dataMap ? state?.dataMap : []
     let newArray = []
-    let serverArr = !isConsolidated ? data?.data?.data?.filter(function (filterable) { return filterable.year === year; }) : data
+    let serverArr = !isConsolidated ? data?.data?.data?.filter(function (filterable) { return filterable.year === year; }) : data?.filter(function (filterable) {
+      return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
+    })
 
     serverArr.forEach(item => {
       newArray.push(item._id)
@@ -84,7 +97,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
     if (!isConsolidated) {
       data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     } else {
-      data && data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
+      data && data?.filter(function (filterable) {
+        return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
+      })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
     }
   }
 
@@ -130,6 +145,9 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                 return <th scope="col"><label htmlFor="selectAll">{head}</label></th>
               })
             }
+            {
+              isConsolidated && <th scope="col">Academic Year</th>
+            }
 
           </tr>
         </thead>
@@ -152,7 +170,7 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
           </tbody> :
             <tbody>
               {data && data?.filter(function (filterable) {
-                return fetchFrom === "faculty" ? filterable.year === year : filterable
+                return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
               })?.map((item, index) => {
                 return <tr key={index}>
                   <td>
@@ -166,6 +184,7 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                       return key === 'name' ? <td><label htmlFor={item._id}>{item.userId.name}</label></td> : <td><label htmlFor={item._id}>{item?.[key]}</label></td>
                     })
                   }
+                  <td>{item?.year || item?.Academic_Year || item?.Academic_year || item?.Acadmic_Year || item?.Year_of_activity || item?.Year_of_Award || item?.Acadmic_year || item?.Year || 'NA'}</td>
                 </tr>
 
               })}

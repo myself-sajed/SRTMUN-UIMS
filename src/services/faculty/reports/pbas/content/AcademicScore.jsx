@@ -127,26 +127,27 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
 
                 {/* 1.Research papers */}
                 <div>
+
                     <AddPaper setResearchPaper={setResearchPaper} researchPaper={researchPaper}
-                        casYearState={casYearState} />
+                        casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
 
                 {/* 2.Publications */}
 
                 <div classes='mt-4'>
-                    <Publications setPublicationData={setPublicationData} publicationData={publicationData} casYearState={casYearState} />
+                    <Publications setPublicationData={setPublicationData} publicationData={publicationData} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
 
                 {/* 3. Creation of ICT */}
                 <div classes='mt-4'>
-                    <ContentCreated setIctData={setIctData} ictData={ictData} serverCasData={serverCasData} casYearState={casYearState} />
+                    <ContentCreated setIctData={setIctData} ictData={ictData} serverCasData={serverCasData} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
                 {/* 4. Research Guidance & Projects */}
                 <div classes='mt-4'>
-                    <ResearchGuide setResearchGuide={setResearchGuide} researchGuide={researchGuide} serverCasData={serverCasData} casYearState={casYearState} setResearchProjects={setResearchProjects} researchProjects={researchProjects} setConsultancy={setConsultancy} consultancy={consultancy} />
+                    <ResearchGuide setResearchGuide={setResearchGuide} researchGuide={researchGuide} serverCasData={serverCasData} setResearchProjects={setResearchProjects} researchProjects={researchProjects} setConsultancy={setConsultancy} consultancy={consultancy} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
 
@@ -155,21 +156,17 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
                     <PolicyDocuments setPolicyDocuments={setPolicyDocuments} policyDocuments={policyDocuments} patents={patents}
                         setPatents={setPatents} setAwards={setAwards}
                         awards={awards} fellow={fellow} setFellow={setFellow}
-                        serverCasData={serverCasData} casYearState={casYearState} />
+                        serverCasData={serverCasData} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
 
                 {/* 6. Invited Talks */}
                 <div>
-                    <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} />
+                    <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
                 <div>
-                    <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} />
-                </div>
-
-                <div>
-                    <OtherInfo setOtherInfo={setOtherInfo} otherInfo={otherInfo} />
+                    <OtherInfo setOtherInfo={setOtherInfo} otherInfo={otherInfo} setSaveLoader={setSaveLoader} />
                 </div>
 
 
@@ -185,7 +182,7 @@ const AcademicScore = ({ setTabName, handleNext, serverCasData, casYearState, te
 
                         <div className='mt-4'>
                             <SaveButton title="Save and Proceed"
-                                onClickFunction={() => { setTabName('final'); handleNext(); setSaveLoader(true) }} />
+                                onClickFunction={() => { setTabName('final'); handleNext(); }} />
                         </div>
                     </div>
                 </BGPad>
