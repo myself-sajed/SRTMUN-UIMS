@@ -31,8 +31,20 @@ export default function TblEditDelete(Props) {
   });    
   }
 
+  const chackHandler = (e) => {
+    if(e.target.checked===true){
+      Props.setCheckedData(pri=>[...pri,e.target.value])
+    }
+    else if(e.target.checked === false){
+      Props.setCheckedData(Props.checkedData.filter(value=>value!==e.target.value))
+    }
+  }
+
   return (
     <TableCell sx={{ fontSize: "12px" }}>
+      {
+        Props.CheckBox == true ? <input className='form-check-input' style={{margin:'5px'}} type="checkbox" checked={Props.checkedData.includes(Props.val)?true:false} onChange={(e)=>{chackHandler(e)}} value={Props.val} />:""
+      }
       {
         Props.EditDisabled== true?"":<IconButton onClick={() => Props.setItemToEdit(Props.val)} sx={{ color: "primary" }}>
           {Props?.editIcon=="Active"?<CheckCircleOutlineIcon sx={{color: "#33a733"}} />:Props?.editIcon=="InActive"?<CancelOutlinedIcon sx={{color: "#c75d5d"}}/>:<EditIcon />}

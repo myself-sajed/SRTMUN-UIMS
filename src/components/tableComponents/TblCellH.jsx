@@ -8,7 +8,7 @@ export default function TblCellH(Props) {
             <TableRow sx={{ "& th": { color: "#1a2421", backgroundColor: "#e7f1ff" } }}>
                 {
                     Object.values(Props.TblH).map((e) => (
-                        <TableCell sx={{ fontSize: "12px", fontWeight: "bold"  }}>{e}</TableCell>
+                        <TableCell key={e} sx={{ fontSize: "12px", fontWeight: "bold"  }}>{e}</TableCell>
                     ))
                 }
             </TableRow>

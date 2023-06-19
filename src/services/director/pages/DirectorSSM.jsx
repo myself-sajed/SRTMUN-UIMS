@@ -29,7 +29,7 @@ const Btn = styled(Button)({
 });
 
 const DirectorSSM = () => {
-  useDirectorAuth()
+  
 
   const dispatch = useDispatch()
   const SsmActive = useSelector(state => state.directorActive.ssmActive)
@@ -40,6 +40,9 @@ const DirectorSSM = () => {
 
   const user = useSelector(state => state.user.directorUser)
   let nevigate = useNavigate()
+
+  const [loading, setLoading] = useState(true); // New loading state
+  useDirectorAuth()
 
   const ButtonObject = [
     {
@@ -64,8 +67,19 @@ const DirectorSSM = () => {
     })
   }, [SsmActive])
 
+
+  useEffect(() => {
+    // Check if user object is null and setLoading accordingly
+    if (user === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+
+
   return (
-    <div>
+    loading? "" :<div>
       <OnlyNav user={user} logout={{ token: 'director-token', link: siteLinks.welcome.link }}
         heading={{ title: 'Back to Director Home', link: siteLinks.directorHome.link }}
         li={[siteLinks.directorHome, siteLinks.sdm, siteLinks.aaa]} userType="director"
