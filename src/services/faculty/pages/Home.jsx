@@ -204,7 +204,7 @@ const Home = () => {
                                         <DetailTile keyName="Gender" value={user && user.gender} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined ? 'Not Added' : user.address}`} />
                                         <DetailTile keyName="Caste" value={`${user && user.cast === undefined ? 'Not Added' : user.cast}`} />
-                                        <DetailTile keyName="Date of Rac" value={`${user && user.racDate === undefined ? 'Not Added' : user.racDate}`} />
+                                        <DetailTile keyName="Date of Joining" value={`${user && user.racDate === undefined ? 'Not Added' : user.racDate}`} />
 
                                     </div>
                                     {/* <div className='flex-1'>
