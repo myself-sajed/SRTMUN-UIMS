@@ -32,7 +32,7 @@ const StudentToAlumni = () => {
   const filteredData = data?.data.filter((students) => {
     const year = students.currentIn.split(" ")
     console.log(year);
-    students.programGraduated === activeProgram && parseInt(year[1]) >= maxClass
+    // students.programGraduated === activeProgram && parseInt(year[1]) >= maxClass
   })
 
   useEffect(() => {
