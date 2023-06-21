@@ -53,7 +53,7 @@ const InvitedTalkPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }

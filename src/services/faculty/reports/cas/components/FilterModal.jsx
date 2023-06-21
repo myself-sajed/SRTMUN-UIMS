@@ -7,27 +7,15 @@ import CASDataTable from '../components/CASDataTable'
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
 
-const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, saveLoader, setSaveLoader }) => {
+const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, setSaveLoader, recalculateScore, serverData }) => {
 
   const [filterData, setFilterData] = useState([state?.dataMap])
-
-  const recalculateScore = () => {
-    let totalScore = 0
-
-    for (const key in state?.scoreMap) {
-      if ((state?.scoreMap[key]?.score) && (state?.dataMap?.includes(key))) {
-        totalScore += state?.scoreMap[key]?.score
-      }
-    }
-
-    setState({ ...state, totalScore })
-  }
 
 
 
   return (
     <div className='w-full'>
-      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore(); setSaveLoader(true); }} fullWidth maxWidth='md'>
+      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore(state, setState, data); setSaveLoader(true); }} fullWidth maxWidth='md'>
         <DialogTitle>
           <div className='flex items-start justify-between text-base'>
             <p className='w-[60%]'>Filter : <b>{title}</b> </p>
@@ -41,7 +29,7 @@ const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal
         <DialogActions>
           <Button onClick={() => {
             setDataFilterModal({ ...dataFilterModal, isOpen: false });
-            recalculateScore();
+            recalculateScore(state, setState, data);
             setSaveLoader(true);
           }} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
         </DialogActions>

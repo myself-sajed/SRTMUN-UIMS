@@ -116,7 +116,7 @@ const PublicationPoints = ({ item, setState, state, serverData }) => {
         let totalPublicationScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 totalPublicationScore += newMap[key].score
             }
         }

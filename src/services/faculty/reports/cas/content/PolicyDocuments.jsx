@@ -112,7 +112,7 @@ const PatentPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -162,7 +162,7 @@ const AwardPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -214,7 +214,7 @@ const FellowPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -268,7 +268,7 @@ const PolicyPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }

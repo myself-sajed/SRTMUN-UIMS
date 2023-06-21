@@ -126,7 +126,7 @@ const DegreePoints = ({ item, setState, state, serverData }) => {
         let totalDegreeScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 totalDegreeScore += newMap[key]?.score
             }
         }
@@ -240,7 +240,7 @@ const ProjectPoints = ({ item, setState, state, serverData }) => {
         let totalProjectScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 totalProjectScore += newMap[key]?.score
             }
         }
@@ -285,7 +285,7 @@ const ConsultancyPoints = ({ item, setState, state, serverData }) => {
         let totalConScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 totalConScore += newMap[key]?.score
             }
         }

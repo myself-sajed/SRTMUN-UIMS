@@ -162,7 +162,7 @@ const PaperPoints = ({ item, setState, state, isFetching, serverData, }) => {
         let totalResearchPaperScore = 0
 
         for (const key in newMap) {
-            if ((newMap[key]?.score && key !== item?._id) && (newDataMap?.includes(key))) {
+            if ((newMap[key]?.score && key !== item?._id) && (newDataMap?.includes(key)) && state?.dataMap?.includes(key)) {
                 totalResearchPaperScore += newMap[key].score
             }
         }
