@@ -56,7 +56,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, firstYear, setFirstYear,
             {/* // Choose years */}
             <div className='mx-auto flex items-center justify-center'>
                 <Year state={casYearState} setState={setCasYearState} space='col-md-3'
-                    title="Choose Academic Year" numberOfYearsToDisplay={6} />
+                    title="Choose Academic Year" numberOfYearsToDisplay={9} />
             </div>
 
 
