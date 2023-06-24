@@ -169,7 +169,7 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
 
 
     return (
-        <div id={label}>
+        <div >
 
 
 
@@ -443,7 +443,7 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
             }
 
 
-            <div className='table-responsive'>
+            <div className='table-responsive text-sm'>
                 <table className={`table caption-top table-bordered`}>
                     <thead className='bg-dark text-white '>
                         <tr>

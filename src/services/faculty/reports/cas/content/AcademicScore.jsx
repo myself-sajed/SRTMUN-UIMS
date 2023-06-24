@@ -97,6 +97,8 @@ const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYear
         }
 
 
+
+
         let academicData = {
             researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks, conference
         }
