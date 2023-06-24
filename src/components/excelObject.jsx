@@ -225,8 +225,8 @@ const excelObject = {
         'year': 'Choose Year',
     },
     BookAndChapter: {
-        'teacherName': 'Teacher Name',
-        'titleOfBook': 'Title of Published Book',
+        'type': 'Type',
+        'titleOfBook': 'Title of Book / Chapter / Edited Book / Translation',
         'paperTitle': 'Paper Title',
         'titleOfProceeding': 'Title of proceedings of the conference',
         'conName': 'Conference Name',
@@ -234,7 +234,6 @@ const excelObject = {
         'authorEditor': 'Author / Editor / Translator',
         'publicationYear': 'Year of Publication',
         'issnNumber': 'ISBN/ISSN number of proceeding',
-        'schoolName': 'School Name',
         'aff': 'Affiliation Institute at the time of publication',
         'year': 'Choose Year',
         'publisherName': 'Publisher Name',

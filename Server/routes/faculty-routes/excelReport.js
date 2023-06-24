@@ -508,7 +508,7 @@ function excelRoute(app) {
                         { header: 'Name', key: 'name', width: 30 },
 
 
-                        { header: 'Title of Published Book', key: 'titleOfBook', width: 30 },
+                        { header: 'Title of Book / Chapter / Edited Book / Translation', key: 'titleOfBook', width: 30 },
                         { header: 'Paper Title', key: 'paperTitle', width: 30 },
                         { header: 'Title of proceedings of the conference', key: 'titleOfProceeding', width: 30 },
                         { header: 'Conference Name', key: 'conName', width: 30 },

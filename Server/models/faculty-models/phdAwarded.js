@@ -44,7 +44,7 @@ const phdAwardedSchema = new mongoose.Schema({
     },
     phdAwardYear: {
         type: 'string',
-        required: true,
+        required: false,
     },
     year: {
         type: 'string',

@@ -69,8 +69,8 @@ const adminExcelObject = {
         'userId.username': 'Username',
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
-        'teacherName': 'Teacher Name',
-        'titleOfBook': 'Title of Published Book',
+        'type': 'Type',
+        'titleOfBook': 'Title of Book / Chapter / Edited Book / Translation',
         'paperTitle': 'Paper Title',
         'titleOfProceeding': 'Title of proceedings of the conference',
         'conName': 'Conference Name',
@@ -78,7 +78,6 @@ const adminExcelObject = {
         'authorEditor': 'Author / Editor / Translator',
         'publicationYear': 'Year of Publication',
         'issnNumber': 'ISBN/ISSN number of proceeding',
-        'schoolName': 'School Name',
         'aff': 'Affiliation Institute at the time of publication',
         'year': 'Choose Year',
         'publisherName': 'Publisher Name',
@@ -467,7 +466,7 @@ const adminExcelObject = {
         "gender": "Gender",
         "email": "Email",
         "programGraduated": "Program graduated",
-        "doCompleted" : "Last prpgram form university on"
+        "doCompleted": "Last prpgram form university on"
     },
     //students
     StudentUser: {
@@ -476,7 +475,7 @@ const adminExcelObject = {
         "gender": "Gender",
         "email": "Email",
         "programGraduated": "Eanroled Program",
-        "programEnroledOn" : "Program Enroled on"
+        "programEnroledOn": "Program Enroled on"
     }
 }
 

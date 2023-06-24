@@ -1,29 +1,21 @@
 const mongoose = require('mongoose');
 
 const bookAndChaptersSchema = new mongoose.Schema({
-    teacherName: {
-        type: 'string',
-        required: true,
-    },
     titleOfBook: {
         type: 'string',
-        required: true,
+        required: false,
     },
     paperTitle: {
         type: 'string',
-        required: true,
-    },
-    authorEditor: {
-        type: 'string',
-        required: true,
+        required: false,
     },
     titleOfProceeding: {
         type: 'string',
-        required: true,
+        required: false,
     },
     conName: {
         type: 'string',
-        required: true,
+        required: false,
     },
     isNat: {
         type: 'string',
@@ -45,7 +37,7 @@ const bookAndChaptersSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    schoolName: {
+    type: {
         type: 'string',
         required: true,
     },

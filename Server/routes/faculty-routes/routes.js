@@ -89,13 +89,16 @@ function initRoutes(app) {
     // getdata
     app.post('/api/getData', (req, res) => {
 
-        const { model, userId, year } = req.body
+        const { model, userId, year, dataFilter } = req.body
 
         let filter = { userId }
         if (year) {
-            filter = { userId, year }
+            if (dataFilter) {
+                filter = dataFilter
+            } else {
+                filter = { userId, year }
+            }
         }
-
 
         if (model in nonAcademicYearModels) {
             models[model].find({ userId }).then((data) => {
@@ -545,10 +548,9 @@ function initRoutes(app) {
 
         try {
             const bookAndChapter = new BookAndChapter({
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
-                authorEditor: data.authorEditor,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,
@@ -556,7 +558,6 @@ function initRoutes(app) {
                 issnNumber: data.issnNumber,
                 aff: data.aff,
                 publisherName: data.publisherName,
-                schoolName: data.schoolName,
                 year: data.year,
                 proof: req.file.filename,
                 userId: data.userId,
@@ -574,7 +575,6 @@ function initRoutes(app) {
         }
     })
 
-    // books and chapters
     app.post('/api/add/researchGuidance', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
@@ -1055,16 +1055,14 @@ function initRoutes(app) {
                     'Choose Year': 'year',
                 },
                 BookAndChapter: {
-                    'Teacher Name': 'teacherName',
-                    'Title of Published Book': 'titleOfBook',
+                    'Type': 'type',
+                    'Title of Book / Chapter / Edited Book / Translation': 'titleOfBook',
                     'Paper Title': 'paperTitle',
                     'Title of proceedings of the conference': 'titleOfProceeding',
                     'Conference Name': 'conName',
                     'Wheather National / International': 'isNat',
-                    'Author / Editor / Translator': 'authorEditor',
                     'Year of Publication': 'publicationYear',
                     'ISBN/ISSN number of proceeding': 'issnNumber',
-                    'School Name': 'schoolName',
                     'Affiliation Institute at the time of publication': 'aff',
                     'Choose Year': 'year',
                     'Publisher Name': 'publisherName',

@@ -10,7 +10,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
     const [selectedYear, setSelectedYear] = useState([])
     let sortedYear = casYear && casYear.sort((a, b) => {
-        return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
+        return parseInt(JSON.parse(a).casYear?.slice(0, 4)) - parseInt(JSON.parse(b).casYear?.slice(0, 4));
     })
     const navigate = useNavigate()
     const [forPrintOut, setForPrintOut] = useState(false)

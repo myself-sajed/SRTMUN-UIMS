@@ -9,6 +9,7 @@ import Axios from 'axios'
 import BasicIntro from './BasicIntro'
 import Eligibility from './Eligibility'
 import './CAS.css'
+import Introduction from './Introduction'
 
 const CASReport = () => {
 
@@ -133,9 +134,13 @@ const CASReport = () => {
         <div className='mx-auto w-full font-sans'>
             {(casArray && academicData && eligData && level) ?
                 <>
+                    <Introduction level={level} userCasDuration={userCasDuration} title="Career Advancement Scheme (CAS)"
+                        subTitle={userCasDuration ? `${userCasDuration}` : ""} forPrintOut={forPrintOut} />
+
                     <Header user={casData.userId} title="Career Advancement Scheme (CAS)"
                         subTitle={userCasDuration ? `CAS Duration: ${userCasDuration}` : ""}
-                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
+                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} forCAS={true} />
+
                     <Eligibility eligData={eligData} level={level} forPrintOut={forPrintOut} userCasDuration={userCasDuration} />
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
                     <Table academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />
