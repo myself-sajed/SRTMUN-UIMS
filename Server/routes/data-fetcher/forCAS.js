@@ -2,6 +2,16 @@ const { models, nonAcademicYearModels } = require("../faculty-routes/routes")
 
 async function fetchDataForCAS(fetchYears, userId) {
 
+    // general info data
+    const Degree = await models.Degree.find({ userId: userId }).lean();
+    const PostHeld = await models.PostHeld.find({ userId: userId }).lean();
+    const Online = await models.Online.find({ userId: userId }).lean();
+
+
+
+
+    // data for score calculation
+
     const ResearchPaper = await models.ResearchPaper.find({ year: { $in: fetchYears }, userId: userId }).sort({ _id: -1 }).lean();
     const BookAndChapter = await models.BookAndChapter.find({ year: { $in: fetchYears }, userId: userId }).sort({ _id: -1 }).lean();
     const PhdAwarded = await models.PhdAwarded.find({ year: { $in: fetchYears }, userId: userId }).sort({ _id: -1 }).lean();
@@ -13,12 +23,24 @@ async function fetchDataForCAS(fetchYears, userId) {
     const Fellowship = await models.Fellowship.find({ year: { $in: fetchYears }, userId: userId }).sort({ _id: -1 }).lean();
     const InvitedTalk = await models.InvitedTalk.find({ year: { $in: fetchYears }, userId: userId }).sort({ _id: -1 }).lean();
 
-    const ServerData = { ResearchPaper, BookAndChapter, PhdAwarded, ResearchProject, ConsultancyServices, Patent, PolicyDocuments, AwardRecognition, Fellowship, InvitedTalk }
+    const scoreRelatedData = { ResearchPaper, BookAndChapter, PhdAwarded, ResearchProject, ConsultancyServices, Patent, PolicyDocuments, AwardRecognition, Fellowship, InvitedTalk }
 
 
-    return ServerData
 
+
+    return scoreRelatedData
+}
+
+async function fetchBasicDataForCAS(userId) {
+
+    // general info data
+    const Degree = await models.Degree.find({ userId: userId }).lean();
+    const PostHeld = await models.PostHeld.find({ userId: userId }).lean();
+    const Online = await models.Online.find({ userId: userId }).lean();
+
+    return [...Degree || [], ...PostHeld || [], ...Online || []]
 }
 
 
-module.exports = fetchDataForCAS
+
+module.exports = { fetchDataForCAS, fetchBasicDataForCAS }
