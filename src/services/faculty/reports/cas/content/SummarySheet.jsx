@@ -263,7 +263,7 @@ const ResearchScore = ({ data }) => {
                         <ResearchTableRow bold={true} td1={null} td2='[A] Invited Lectures / Resource Person / Paper Presentation in Seminars'
                             td3={data?.invitedTalks.totalScore} />
 
-                        <ResearchTableRow bold={true} td1={null} td2='[A] Patents Published'
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Conference Proceedings'
                             td3={data?.conference?.totalScore || 0} />
 
                     </tbody>
