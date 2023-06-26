@@ -153,48 +153,77 @@ async function casFilesGenerator(selectedYear, userId) {
             casArray.forEach((casItem) => {
                 const dataMap = casItem.academicData[casSpecifier.casName]?.dataMap || [];
 
+                // mainDataMap = {
+                //     ...mainDataMap,
+                //     [casItem.casYear]: {
+                //         ...mainDataMap[casItem.casYear],
+                //         [casSpecifier.casName === 'conference'
+                //             ? 'ConferenceBookAndChapter'
+                //             : casSpecifier.casName === 'publicationData'
+                //                 ? 'MainBookAndChapter'
+                //                 : casSpecifier.model]: [...mainDataMap.casModel || [], ...dataMap],
+                //     }
+                // };
+
                 mainDataMap = {
                     ...mainDataMap,
-                    [casSpecifier.casName === 'conference'
-                        ? 'ConferenceBookAndChapter'
-                        : casSpecifier.casName === 'publicationData'
-                            ? 'MainBookAndChapter'
-                            : casSpecifier.model]: [...mainDataMap.casModel || [], ...dataMap],
+                    [casItem.casYear]: {
+                        ...mainDataMap[casItem.casYear],
+                        [casSpecifier.model]: [
+                            ...dataMap
+                        ]
+                    }
                 };
+
             });
         });
 
 
+        let filterData = {}
         casDataSpecifier.forEach((casSpecifier) => {
-            let filteredItems = response[casSpecifier.model].filter((item) => {
-                return mainDataMap[[casSpecifier.casName === 'conference' ? "ConferenceBookAndChapter" : casSpecifier.casName === "publicationData" ? "MainBookAndChapter" : casSpecifier.model]].includes(item._id.toHexString())
+            selectedYear.forEach((year) => {
 
+                let filteredItems = response[casSpecifier.model].filter((item) => {
+                    return mainDataMap[year][casSpecifier.model].includes(item._id.toHexString());
+                })
 
+                filterData[year] = {
+                    ...filterData[year], [casSpecifier.model]: [...filteredItems]
+                }
             })
-            filteredResponse.push(filteredItems)
         })
 
+        let combineAllObjects = []
 
-        // keep only those item in the files which are present in the dataMap of respective model
+        selectedYear.forEach((year) => {
+            if (filterData[year]) {
+                Object.keys(filterData[year]).forEach((key) => {
+                    combineAllObjects.push(...filterData[year][key]);
+                });
+            }
+        });
 
-        const files = filteredResponse.flatMap((array) =>
-            array.map((obj) => `${process.env.REACT_APP_MAIN_URL}/showFile/${obj.proof}/faculty`)
-        );
+        let files = combineAllObjects.map((item) => `${process.env.REACT_APP_MAIN_URL}/showFile/${item.proof}/faculty`)
 
-        const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
-        const outputPath = `pdfs/${fileName}`;
 
-        mergePDFs(files, outputPath);
+        console.log("Files :", files.length, files)
+
+
+
+        // const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
+        // const outputPath = `pdfs/${fileName}`;
+
+        // mergePDFs(files, outputPath);
 
         console.log('PDFs merged and saved successfully!');
-        return { fileName, status: 'success' }; // Return the outputPath and success status
+        // return { fileName, status: 'success' }; // Return the outputPath and success status
     } catch (error) {
         console.log('Error:', error);
         return { status: 'failure', error }; // Return the failure status and error
     }
 }
 
-// casFilesGenerator(["2019-20",], "62b0a06942f8174e43cd9a26")
+// casFilesGenerator(["2019-20", "2020-21"], "62b0a06942f8174e43cd9a26")
 
 
 module.exports = { casFilesGenerator, mergePDFs };

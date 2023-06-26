@@ -539,22 +539,31 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
                             <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
                                 <tr>
-                                    <th scope="col">Year(s)</th>
-                                    <th scope="col">Yearly Total</th>
+                                    <th>Year(s)</th>
+                                    {casArray.map((item) => {
+                                        return (
+                                            <th scope="row">{item.casYear}</th>
+                                        )
+                                    })}
                                 </tr>
                             </thead>
                             <tbody>
 
 
-                                {casArray.map((item) => {
-                                    return (
-                                        <tr>
-                                            <th scope="row">{item.casYear}</th>
-                                            <td>{item.totalScore.toFixed(2)}</td>
-                                        </tr>
+                                <tr>
+                                    <td>Yearly Total</td>
 
-                                    )
-                                })}
+                                    {casArray.map((item) => {
+                                        return (
+                                            <>
+
+                                                <td className='font-semibold'>{item.totalScore.toFixed(2)}</td>
+
+                                            </>
+
+                                        )
+                                    })}
+                                </tr>
 
 
                             </tbody>
@@ -570,8 +579,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
 
                         <div>
-                            <br /><br /><br /><br />
-                            <br /><br /><br /><br />
+                            <br /><br /><br />
                             <div>
                                 <div className='flex items-center justify-between'>
                                     <p>Signature of Principal / Director</p>
@@ -579,13 +587,13 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                 </div>
 
                                 <div>
-                                    <p className="font-semibold mt-16 mb-2"> I. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
+                                    <p className="font-semibold mt-6 mb-2"> I. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
 
                                     <p className="my-2 mx-10">(or)</p>
 
                                     <p className="font-semibold ml-10">From Academic Level _______________ to _______________</p>
 
-                                    <br /><br /><br /><br /><br /><br />
+                                    <br /><br /><br />
                                     <p className='flex items-center justify-between'>
                                         <span> 1. The Principal / Director</span>
                                         <span>2. Govt. Nominee</span>
@@ -595,11 +603,9 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                     </p>
                                 </div>
 
-                                <br /><br /><br /><br />
-                                <br /><br /><br /><br />
 
                                 <div>
-                                    <p className="font-semibold mt-5 mb-2"> II. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _______________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
+                                    <p className="font-semibold mt-6 mb-2"> II. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _______________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
 
                                     <p className="my-2 mx-10">(or)</p>
 
@@ -607,8 +613,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
                                     <p></p>
 
-                                    <br /><br /><br /><br /><br /><br />
-                                    <br /><br /><br /><br /><br /><br />
+                                    <br /><br /><br />
                                     <p className='flex items-center justify-between flex-wrap'>
                                         <span> 1. The Chairperson of the Governing Body or his or her nominee</span>
                                         <span> 2. The Principal / Director</span>
@@ -616,12 +621,11 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                         <span>4. Head of the concerned department</span>
 
                                     </p>
-                                    <br /><br /><br /><br /><br /><br />
+                                    <br /><br /><br />
                                     <p class="w-1/3">5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
                                         Development Council or equivalent position in the University, and the other must be expert in the concerned subject
                                     </p>
                                     <br />
-                                    <br /><br />
                                     <br /><br />
                                     <div className='flex items-center justify-between w-1/2'>
                                         <p>6.Subject expert I</p>
@@ -629,7 +633,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                     </div>
                                 </div>
 
-                                <br /><br /><br /><br />
+                                <br /><br /><br />
 
                                 <p className="mb-5">7. An academician representing SC/ST/OBC/ Minority/Women/Differently-abled categories, if any of candidates representing these categories is the applicant, to be nominated by the Vice Chancellor, if any of the above members of the selection committee do not belong to that category.</p>
                             </div>
