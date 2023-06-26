@@ -26,6 +26,8 @@ const CASReport = () => {
 
 
 
+
+
     // get cas data from userID
     useEffect(() => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/getCASData`
@@ -131,7 +133,7 @@ const CASReport = () => {
     }, [casData, casArray])
 
     return (
-        <div className='mx-auto w-full font-sans'>
+        <div className='mx-auto w-full font-sans cas-report-generation'>
             {(casArray && academicData && eligData && level) ?
                 <>
                     <Introduction level={level} userCasDuration={userCasDuration} title="Career Advancement Scheme (CAS)"

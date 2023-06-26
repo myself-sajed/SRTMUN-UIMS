@@ -18,8 +18,6 @@ const Introduction = ({ forPrintOut, title, subTitle, userCasDuration, level }) 
 
 
                 <div className="text-center">
-                    <img src="/assets/logo.jpg" alt="" className="w-20 h-20 mx-auto" />
-
 
                     <div className="mb-2 mt-4">
                         <p className="font-semibold">CAS Promotion for <i>Teachers</i> in University & Colleges (Consolidated) </p>

@@ -1,10 +1,10 @@
 import Axios from "axios"
 import { toast } from 'react-hot-toast'
 
-const generateCASReport = (casData, userData, selectedYear, setReportLoading, forPrintOut) => {
+const generateCASReport = (casData, userData, selectedYear, setReportLoading, forPrintOut, withProofs = false) => {
     try {
 
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { casData, userData, selectedYear, forPrintOut })
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { casData, userData, selectedYear, forPrintOut, withProofs })
             .then(function (res) {
                 if (res.data.status === 'generated') {
                     setReportLoading(false)
@@ -54,11 +54,19 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
     }
 }
 
-const getCASData = (userId, setData, setError, sortByYear = false, casYear = null) => {
+const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setCasDuration = false) => {
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/getCASData`, { userId })
             .then((res) => {
                 if (res.data.status === 'success') {
+
+                    if (setCasDuration) {
+                        if (res.data.data?.casDuration) {
+                            setCasDuration(JSON.parse(res.data.data?.casDuration))
+                        }
+                    }
+
+
                     if (sortByYear) {
                         res.data.data.casData.forEach((cas) => {
                             if (JSON.parse(cas).casYear === casYear) {

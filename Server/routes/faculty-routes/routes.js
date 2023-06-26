@@ -56,16 +56,17 @@ const Responsibilities = require('../../models/faculty-models/responsibilities')
 const ConferenceParticipated = require('../../models/faculty-models/conferenceParticipated')
 const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 
+let models = {
+    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
+}
+
+let nonAcademicYearModels = {
+    Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
+}
+
 
 function initRoutes(app) {
 
-    let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
-    }
-
-    let nonAcademicYearModels = {
-        Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
-    }
 
     // get data from model specified in the req.body
     app.post('/getModelData', (req, res) => {
@@ -1216,4 +1217,4 @@ function initRoutes(app) {
 
 }
 
-module.exports = initRoutes
+module.exports = { initRoutes, nonAcademicYearModels, models }
