@@ -9,15 +9,38 @@ import ShowModal from '../../../../../components/ShowModal';
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
 
     const [selectedYear, setSelectedYear] = useState([])
-    let sortedYear = casYear && casYear.sort((a, b) => {
-        return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
-    })
+    let sortedYear = null;
+
+
+    if (casYear) {
+
+        const filteredYear = casYear.filter((item) => JSON.parse(item).casYear !== null);
+
+        console.log('filteredYear :', filteredYear)
+        // Sort the array in ascending order
+        sortedYear = filteredYear.sort((a, b) => {
+            const yearA = JSON.parse(a).casYear;
+            const yearB = JSON.parse(b).casYear;
+
+            if (yearA < yearB) {
+                return -1;
+            }
+            if (yearA > yearB) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    console.log("sortedYear :", sortedYear)
+
     const navigate = useNavigate()
     const [forPrintOut, setForPrintOut] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleGeneration = () => {
-        setReportLoading(true); generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+        setReportLoading(true);
+        generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
     }
 
     return (

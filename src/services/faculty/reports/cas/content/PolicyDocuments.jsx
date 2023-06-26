@@ -64,7 +64,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="AwardRecognition"
+                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="AwardRecognition" casYearState={casYearState} state={awards} setState={setAwards}
                     classes='my-3' model="AwardRecognition" addName="Awards" activityName="Awards & Recognitions" activity="Sub-Activity 3 [A]"
                 >
                 </NumberToTextField>
@@ -98,7 +98,6 @@ const PatentPoints = ({ item, setState, state, serverData }) => {
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
-        console.log(newMap)
 
         let score = 0
         if (item.isNat === 'National') {
@@ -112,7 +111,7 @@ const PatentPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -148,7 +147,6 @@ const AwardPoints = ({ item, setState, state, serverData }) => {
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
-        console.log(newMap)
 
         let score = 0
         if (item.isNat === 'National') {
@@ -162,7 +160,7 @@ const AwardPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -200,8 +198,6 @@ const FellowPoints = ({ item, setState, state, serverData }) => {
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
-        console.log(newMap)
-
         let score = 0
         if (item.isNat === 'National') {
             score += 5
@@ -214,7 +210,7 @@ const FellowPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -251,8 +247,6 @@ const PolicyPoints = ({ item, setState, state, serverData }) => {
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
-        console.log(newMap)
-
         let score = 0
         if (item.isNat === 'State') {
             score += 4
@@ -268,7 +262,7 @@ const PolicyPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }

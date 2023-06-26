@@ -7,27 +7,25 @@ import CASDataTable from '../components/CASDataTable'
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
 
-const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, saveLoader, setSaveLoader }) => {
+const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, setSaveLoader, recalculateScore, serverData }) => {
 
-  const [filterData, setFilterData] = useState([state?.dataMap])
+  const [filterData, setFilterData] = useState([])
 
-  const recalculateScore = () => {
-    let totalScore = 0
+  const onClose = () => {
+    setDataFilterModal({ ...dataFilterModal, isOpen: false });
+    recalculateScore(state, setState, data);
+    if (scoreCalculator) {
+      scoreCalculator({ item: false, state, setState, serverData: data })
+      setSaveLoader(true);
 
-    for (const key in state?.scoreMap) {
-      if ((state?.scoreMap[key]?.score) && (state?.dataMap?.includes(key))) {
-        totalScore += state?.scoreMap[key]?.score
-      }
+    } else {
+      setSaveLoader(true);
     }
-
-    setState({ ...state, totalScore })
   }
-
-
 
   return (
     <div className='w-full'>
-      <Dialog open={dataFilterModal.isOpen} onClose={() => { setDataFilterModal({ ...dataFilterModal, isOpen: false }); recalculateScore(); setSaveLoader(true); }} fullWidth maxWidth='md'>
+      <Dialog open={dataFilterModal.isOpen} onClose={onClose} fullWidth maxWidth='md'>
         <DialogTitle>
           <div className='flex items-start justify-between text-base'>
             <p className='w-[60%]'>Filter : <b>{title}</b> </p>
@@ -39,11 +37,7 @@ const FilterModal = ({ refetch, title, data, setDataFilterModal, dataFilterModal
           <FilterCheckBox data={data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {
-            setDataFilterModal({ ...dataFilterModal, isOpen: false });
-            recalculateScore();
-            setSaveLoader(true);
-          }} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
+          <Button onClick={onClose} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -160,10 +154,14 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
                 <td>
                   <div className="form-check">
                     <input className="form-check-input" type="checkbox" value={item._id} id={item._id}
-                      onChange={(e) => { singleCheckUncheck(e, item._id) }} checked={state.dataMap?.includes(item._id)} />
+                      onChange={(e) => { singleCheckUncheck(e, item._id) }} checked={state?.dataMap?.includes(item._id)} />
                   </div>
                 </td>
-                <td><label htmlFor={item._id}>{item[DataTable[model]?.mainKey?.keyName]}</label></td>
+                {
+                  DataTable[model]?.mainKey.keyName.map((key) => {
+                    return <td><label htmlFor={item._id}>{item?.[key]}</label></td>
+                  })
+                }
               </tr>
 
             })}

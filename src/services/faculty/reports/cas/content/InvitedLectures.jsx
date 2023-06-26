@@ -12,7 +12,7 @@ const InvitedLectures = ({ setInvitedTalks, invitedTalks, casYearState, saveLoad
                     <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                         facultyTableAvailable="InvitedTalk"
                         state={invitedTalks} setState={setInvitedTalks} casYearState={casYearState}
-                        isForm={true} activity="Activity 6" classes='my-3' model="InvitedTalk" addName="Invited Talk" activityName="Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings"
+                        isForm={true} activity="Activity 6 (A)" classes='my-3' model="InvitedTalk" addName="Invited Talk" activityName="Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings"
 
                     >
 
@@ -33,8 +33,6 @@ const InvitedTalkPoints = ({ item, setState, state, serverData }) => {
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
-        console.log(newMap)
-
         let score = 0
         if (item.isNat === 'State/University') {
             score += 2
@@ -53,7 +51,7 @@ const InvitedTalkPoints = ({ item, setState, state, serverData }) => {
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }

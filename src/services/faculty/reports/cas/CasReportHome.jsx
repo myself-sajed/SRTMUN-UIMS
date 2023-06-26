@@ -65,6 +65,11 @@ const CasReportHome = () => {
     const [fullCASData, setFullCASData] = useState(null)
     const [casDate, setCasDate] = useState(null)
     const [supervisor, setSupervisor] = useState('Main Supervisor')
+    const [serverCasDuration, setServerCasDuration] = useState(null)
+
+    const [normalDuration, setNormalDuration] = useState(null)
+    const [currentYear, setCurrentYear] = useState(null)
+    const [dateInfo, setDateInfo] = useState({ wholeYear: null, startYearCount: null, lastYearCount: null })
 
 
     const handleNext = () => {
@@ -108,7 +113,7 @@ const CasReportHome = () => {
         setServerCasData((prev) => {
             return null
         })
-        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState)
+        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setServerCasDuration)
     }, [casYearState])
 
     const verifyDates = () => {
@@ -194,13 +199,50 @@ const CasReportHome = () => {
         getCASData(user?._id, setFullCASData, setServerCasError, false, casYearState)
     }, [level])
 
-    useEffect(() => {
-        if (serverCasData) {
-            setFirstYear(serverCasData?.casDuration ? serverCasData?.casDuration?.firstYear : { day: null, month: null })
-            setLastYear(serverCasData?.casDuration ? serverCasData?.casDuration?.lastYear : { day: null, month: null })
+
+    function calDate1() {
+        if (casYearState) {
+            let wholeYear = casYearState.toString().slice(0, -3)
+            let startYearCount = casYearState.toString().slice(0, -5)
+            let lastYearCount = casYearState.toString().slice(5)
+            let duration = `1st July ${wholeYear} to 30th June ${startYearCount}${lastYearCount}`
+            setDateInfo({ wholeYear, startYearCount, lastYearCount })
+            setCurrentYear(wholeYear)
+            setNormalDuration(duration)
+        }
+    }
+
+    function calDate2() {
+        if (firstYear && lastYear) {
+
+            // user cas duration
+            let date = `${firstYear?.day} ${firstYear?.month} ${dateInfo?.wholeYear} to ${lastYear?.day} ${lastYear?.month} ${dateInfo?.startYearCount}${dateInfo?.lastYearCount}`
+
+
+
+            setCasDate(() => {
+                return { casDuration: date, firstYear, lastYear, academicYear: casYearState }
+            })
 
         }
-    }, [serverCasData])
+    }
+
+    useEffect(() => {
+
+        console.log("serverCasData :", serverCasData)
+        if (serverCasDuration) {
+
+
+            if (serverCasDuration?.firstYear && serverCasDuration?.lastYear) {
+                setFirstYear(serverCasDuration ? serverCasDuration?.firstYear : { day: null, month: null })
+                setLastYear(serverCasDuration ? serverCasDuration?.lastYear : { day: null, month: null })
+            } else {
+                calDate2()
+            }
+
+
+        }
+    }, [serverCasDuration])
 
 
 
@@ -284,7 +326,7 @@ const CasReportHome = () => {
                         e.preventDefault();
                         setAgreePopup(true);
                     }}>
-                        <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose CAS Year" lastYear={lastYear} setLastYear={setLastYear} firstYear={firstYear} setFirstYear={setFirstYear} userAllDuration={{ firstYear, lastYear }} serverCasData={serverCasData} casDate={casDate} setCasDate={setCasDate} />
+                        <SelectCASYear calDate1={calDate1} calDate2={calDate2} casYearState={casYearState} setNormalDuration={setNormalDuration} normalDuration={normalDuration} setCasYearState={setCasYearState} currentYear={currentYear} setCurrentYear={setCurrentYear} space='col-md-3' title="Choose CAS Year" lastYear={lastYear} setLastYear={setLastYear} firstYear={firstYear} setFirstYear={setFirstYear} setDateInfo={setDateInfo} dateInfo={dateInfo} userAllDuration={{ firstYear, lastYear }} serverCasData={serverCasData} casDate={casDate} setCasDate={setCasDate} />
 
                         <div className='mt-5'>
                             <SaveButton title={'Save and Proceed'}
@@ -293,7 +335,7 @@ const CasReportHome = () => {
 
                     </form>
                     {
-                        casYearState && <AgreePopup agreePopup={agreePopup} setAgreePopup={setAgreePopup} setTabName={setTabName} handleNext={handleNext} fetchYears={fetchYears} casYearState={casYearState} duration={{ firstYear, lastYear }} setSaveLoader={setSaveLoader} />
+                        casYearState && <AgreePopup agreePopup={agreePopup} setAgreePopup={setAgreePopup} setTabName={setTabName} handleNext={handleNext} fetchYears={fetchYears} casYearState={casYearState} casDate={casDate} duration={{ firstYear, lastYear }} setSaveLoader={setSaveLoader} />
                     }
                 </div>
             </div>

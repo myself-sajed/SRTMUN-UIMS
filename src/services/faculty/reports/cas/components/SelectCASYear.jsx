@@ -5,38 +5,16 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
 
-const SelectCASYear = ({ casYearState, setCasYearState, firstYear, setFirstYear, lastYear, setLastYear, casDate, setCasDate }) => {
-    const [normalDuration, setNormalDuration] = useState(null)
-    const [currentYear, setCurrentYear] = useState(null)
+const SelectCASYear = ({ currentYear, dateInfo, setDateInfo, setCurrentYear, normalDuration, setNormalDuration, casYearState, setCasYearState, firstYear, setFirstYear, lastYear, setLastYear, casDate, setCasDate, calDate1, calDate2 }) => {
+
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
-    const [dateInfo, setDateInfo] = useState({ wholeYear: null, startYearCount: null, lastYearCount: null })
-
     useEffect(() => {
-        if (casYearState) {
-            let wholeYear = casYearState.toString().slice(0, -3)
-            let startYearCount = casYearState.toString().slice(0, -5)
-            let lastYearCount = casYearState.toString().slice(5)
-            let duration = `1st July ${wholeYear} to 30th June ${startYearCount}${lastYearCount}`
-            setDateInfo({ wholeYear, startYearCount, lastYearCount })
-            setCurrentYear(wholeYear)
-            setNormalDuration(duration)
-        }
+        calDate1()
     }, [casYearState])
 
     useEffect(() => {
-        if (firstYear && lastYear) {
-
-            // user cas duration
-            let date = `${firstYear?.day} ${firstYear?.month} ${dateInfo?.wholeYear} to ${lastYear?.day} ${lastYear?.month} ${dateInfo?.startYearCount}${dateInfo?.lastYearCount}`
-
-
-
-            setCasDate(() => {
-                return { casDuration: date, firstYear, lastYear, academicYear: casYearState }
-            })
-
-        }
+        calDate2()
     }, [firstYear, lastYear, dateInfo])
 
 
@@ -56,7 +34,7 @@ const SelectCASYear = ({ casYearState, setCasYearState, firstYear, setFirstYear,
             {/* // Choose years */}
             <div className='mx-auto flex items-center justify-center'>
                 <Year state={casYearState} setState={setCasYearState} space='col-md-3'
-                    title="Choose Academic Year" numberOfYearsToDisplay={6} />
+                    title="Choose Academic Year" numberOfYearsToDisplay={9} />
             </div>
 
 

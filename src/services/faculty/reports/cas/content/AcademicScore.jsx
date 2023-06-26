@@ -10,6 +10,7 @@ import ResearchGuide from './ResearchGuide';
 import PolicyDocuments from './PolicyDocuments';
 import InvitedLectures from './InvitedLectures';
 import { saveCASDetails } from '../CASServices';
+import Conference from './Conference';
 
 
 const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYearState, teachingData, saveLoader, setSaveLoader }) => {
@@ -44,6 +45,7 @@ const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYear
 
 
     const [invitedTalks, setInvitedTalks] = useState({ scoreMap: {}, dataMap: [], totalScore: 0 })
+    const [conference, setConference] = useState({ scoreMap: {}, dataMap: [], totalScore: 0 })
 
 
     // setting researchPaper with serverCasData
@@ -74,6 +76,7 @@ const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYear
         setAwards(serverCasData ? serverCasData?.academicData?.awards : { scoreMap: {}, dataMap: [], totalScore: 0, })
         setFellow(serverCasData ? serverCasData?.academicData?.fellow : { scoreMap: {}, dataMap: [], totalScore: 0, })
         setInvitedTalks(serverCasData ? serverCasData?.academicData?.invitedTalks : { scoreMap: {}, dataMap: [], totalScore: 0, })
+        setConference(serverCasData ? serverCasData?.academicData?.conference : { scoreMap: {}, dataMap: [], totalScore: 0, })
 
 
 
@@ -89,16 +92,15 @@ const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYear
             teachingData,
             casDuration: casDate,
             academicData: {
-                researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks
+                researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks, conference
             }
         }
 
-        console.log('CAS Schema : ', casSchema)
 
 
 
         let academicData = {
-            researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks
+            researchPaper, publicationData, ictData, researchGuide, policyDocuments, researchProjects, consultancy, awards, patents, policyDocuments, fellow, invitedTalks, conference
         }
 
 
@@ -159,6 +161,10 @@ const AcademicScore = ({ casDate, setTabName, handleNext, serverCasData, casYear
                 {/* 6. Invited Talks */}
                 <div>
                     <InvitedLectures setInvitedTalks={setInvitedTalks} invitedTalks={invitedTalks} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
+                </div>
+
+                <div>
+                    <Conference setConference={setConference} conference={conference} casYearState={casYearState} saveLoader={saveLoader} setSaveLoader={setSaveLoader} />
                 </div>
 
 

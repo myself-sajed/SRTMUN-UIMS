@@ -50,6 +50,7 @@ const stageObj = {
 
 }
 
+
 const stage4Obj = [
     { title: 'Degree 1: Ph.D. degree has been successfully awarded to a candidates under his/her supervision during the assessment period.', name: "guideProof1", type: "file" },
     { title: 'Degree 2: Ph.D. degree has been successfully awarded to a candidates under his/her supervision during the assessment period.', name: "guideProof2", type: "file" },

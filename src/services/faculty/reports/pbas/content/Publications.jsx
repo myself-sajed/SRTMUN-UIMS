@@ -12,6 +12,106 @@ import NumberToTextField from '../components/NumberToTextField';
 
 const AddPublication = ({ publicationData, setPublicationData, casYearState, saveLoader, setSaveLoader }) => {
 
+    const scoreCalculator = (calculationProp) => {
+
+
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+
+
+        let score = 0
+
+        if (item) {
+            if (item.type === 'Book') {
+                if (item.isNat === 'National') {
+                    score += 10
+                }
+                else if (item.isNat === 'International') {
+                    score += 12
+                }
+                else {
+                    score += 0
+                }
+            } else if (item.type === 'Chapter') {
+                score += 5
+            } else if (item.type === 'Editor') {
+                if (item.isNat === 'National') {
+                    score += 8
+                }
+                else if (item.isNat === 'International') {
+                    score += 10
+                }
+                else {
+                    score += 0
+                }
+            } else if (item.type === 'Translator') {
+                if (state?.scoreMap?.[item._id]?.typeNature === 'Chapter or Research Paper') {
+                    score += 3
+                }
+                else if (state?.scoreMap?.[item._id]?.typeNature === 'Book') {
+                    score += 8
+                }
+                else {
+                    score += 0
+                }
+            }
+        }
+
+
+        let Book = 0;
+        let Editor = 0;
+        let Chapter = 0;
+        let Translator = 0;
+
+
+        // publication Score
+        let publicationKeys = Object.keys(newMap)
+
+        publicationKeys.forEach((element) => {
+            if (state?.dataMap?.includes(element)) {
+                if (newMap?.[element]?.type === 'Book') {
+                    Book += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Chapter') {
+                    Chapter += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Editor') {
+                    Editor += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Translator') {
+                    Translator += newMap?.[element]?.score
+                }
+            }
+        })
+
+
+
+
+
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+        grandTotal = grandTotal + score
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                Book,
+                Chapter,
+                Editor,
+                Translator,
+                scoreMap: item ? { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score, type: item?.type, change: new Date().getTime() } } : { ...newMap }
+
+            }
+        })
+    }
 
 
     return (
@@ -21,9 +121,9 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                 <div className='mt-2 text-sm md:text-base'>
 
 
-                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="BooksAndChapters"
+                    <NumberToTextField scoreCalculator={scoreCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="MainBooksAndChapters"
                         state={publicationData} setState={setPublicationData} casYearState={casYearState}
-                        isForm={true} classes='my-3' model="BookAndChapter" addName="Books, Chapters & Translation Work" activityName="Books, Chapters & Translation Work" activity="Activity 2"
+                        isForm={true} classes='my-3' model="MainBookAndChapter" addName="Books, Chapters & Translation Work" activityName="Books, Chapters & Translation Work" activity="Activity 2"
 
                     >
 
@@ -38,173 +138,84 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
 export default AddPublication
 
 
-const PublicationPoints = ({ item, setState, state, serverData }) => {
+const PublicationPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
 
 
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
 
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject[elem._id]]));
+        scoreCalculator({ item, setState, state, serverData })
 
+    }, [state?.scoreMap?.[item._id]?.typeNature, state?.scoreMap?.[item._id]?.type,])
 
-        let score = 0
-
-
-        if (item.authorEditor === 'Author') {
-            if (state?.scoreMap?.[item._id]?.authorType === 'Single') {
-                if (state?.scoreMap?.[item._id]?.publisherType === 'National') {
-                    score += 10
-                }
-                else if (state?.scoreMap?.[item._id]?.publisherType === 'International') {
-                    score += 12
-                }
-                else {
-                    score += 0;
-                }
-            }
-            else if (state?.scoreMap?.[item._id]?.authorType === 'Multiple') {
-                score += 5
-            }
-        } else if (item.authorEditor === 'Editor') {
-            if (state?.scoreMap?.[item._id]?.authorType === 'National') {
-                score += 8
-            }
-            else if (state?.scoreMap?.[item._id]?.authorType === 'International') {
-                score += 10
-            }
-            else {
-                score += 0
-            }
-        }
-        else if (item.authorEditor === 'Translator') {
-            if (state?.scoreMap?.[item._id]?.authorType === 'Chapter or Research Paper') {
-                score += 3
-            }
-            else if (state?.scoreMap?.[item._id]?.authorType === 'Book') {
-                score += 8
-            }
-            else {
-                score += 0
-            }
-        }
-
-
-        let authorPoints = 0;
-        let editorPoints = 0;
-        let translationPoints = 0;
-
-        // publication Score
-        let publicationKeys = Object.keys(newMap)
-
-        publicationKeys.forEach((element) => {
-            if (newMap?.[element]?.authorEditor === 'Author') {
-                authorPoints += newMap?.[element]?.score
-            } else if (newMap?.[element]?.authorEditor === 'Editor') {
-                editorPoints += newMap?.[element]?.score
-            } else if (newMap?.[element]?.authorEditor === 'Translator') {
-                translationPoints += newMap?.[element]?.score
-            }
-        })
-
-
-
-
-
-
-        // total Score
-        let totalPublicationScore = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
-                totalPublicationScore += newMap[key].score
-            }
-        }
-        totalPublicationScore = totalPublicationScore + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: totalPublicationScore,
-                authorPoints,
-                editorPoints,
-                translationPoints,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current.scoreMap?.[item._id], score: score, change: new Date().getTime() } },
-            }
-        })
-
-
-
-
-    }, [state?.scoreMap?.[item._id]?.authorType, state?.scoreMap?.[item._id]?.publisherType, state?.authorPoints, state?.translationPoints, state?.editorPoints, state?.scoreMap?.[item._id]?.authorEditor, state?.scoreMap?.[item._id]?.change])
 
 
 
     return <>
 
-        <p className='mb-2'>Type : <strong>{item.authorEditor}</strong></p>
+        <p className='mb-2'>Type : <strong>{item.type}</strong></p>
         <hr className='mb-3' />
         {
-            item.authorEditor === 'Author' ?
+            item.type === 'Book' ?
                 <div className='flex items-start justify-start gap-3 flex-wrap'>
                     <div className='col-md-4'>
-                        <select className="form-select" required
-                            value={state?.scoreMap?.[item._id]?.authorType}
-                            onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], authorEditor: item?.authorEditor, authorType: e.target.value } } }) }}  >
-                            <option selected disabled>Choose Author Type</option>
-                            <option value='Single'>Single</option>
-                            <option value='Multiple'>Multiple (5)</option>
-                        </select>
+                        <p value='National'>National: <b>10</b> Points</p>
+                        <p value='International'>International: <b>12</b> Points</p>
                     </div>
 
-                    {
-                        state?.scoreMap?.[item._id]?.authorType && state?.scoreMap?.[item._id]?.authorType === 'Single' ?
-                            <div className='col-md-4'>
-                                <select className="form-select" required
-                                    value={state?.scoreMap?.[item._id]?.publisherType}
-                                    onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], authorEditor: item?.authorEditor, publisherType: e.target.value } } }) }}>
-                                    <option selected disabled>Choose Publisher Type</option>
-                                    <option value='National'>National (10)</option>
-                                    <option value='International'>International (12)</option>
-                                </select>
-                            </div> : null
-                    }
                 </div> :
 
 
-                item.authorEditor === 'Editor' ?
+                item.type === 'Chapter' ?
                     <div className="flex items-center justify-start gap-3 flex-wrap">
                         <div className='col-md-4'>
-                            <select className="form-select" required
-                                value={state?.scoreMap?.[item._id]?.authorType}
-                                onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], authorEditor: item?.authorEditor, authorType: e.target.value } } }) }}>
-                                <option selected disabled>Choose Author Type</option>
-                                <option value='National'>National (8)</option>
-                                <option value='International'>International (10)</option>
-                            </select>
+                            <p><b>5</b> points for a Chapter</p>
                         </div>
                     </div> :
 
 
-                    item.authorEditor === 'Translator' ?
+                    item.type === 'Editor' ?
                         <div className='col-md-4'>
-                            <select className="form-select" required
-                                value={state?.scoreMap?.[item._id]?.authorType}
-                                onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], authorEditor: item?.authorEditor, authorType: e.target.value } } }) }}>
+                            <p value='National'>National: <b>8</b> Points</p>
+                            <p value='International'>International: <b>10</b> Points</p>
+                        </div> :
+                        item.type === 'Translator' ?
+                            <div className='col-md-4'>
+                                <select className="form-select" required
+                                    value={state?.scoreMap?.[item._id]?.typeNature}
+                                    onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], type: item?.type, typeNature: e.target.value } } }) }}>
 
-                                <option selected disabled>Choose Author Type</option>
-                                <option value='Chapter or Research Paper'>Chapter or Research Paper (3)</option>
-                                <option value='Book'>Book (8)</option>
+                                    <option selected disabled>Choose work done</option>
+                                    <option value='Chapter or Research Paper'>Chapter or Research Paper (3)</option>
+                                    <option value='Book'>Book (8)</option>
 
-                            </select>
-                        </div> : <p>You're not valid Author / Editor / Translator</p>
+                                </select>
+                            </div> : <p>You're not valid Author / Editor / Translator</p>
         }
 
     </>
 }
 
 export { PublicationPoints }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

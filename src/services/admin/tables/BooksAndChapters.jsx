@@ -27,7 +27,7 @@ const BooksAndChapters = () => {
                     <tr>
                         <th scope="col">Sr.</th>
                         <th scope="col"><div className="w-96">Full Name</div></th>
-                        <th scope="col"><div className="w-32">Title of Published Book</div></th>
+                        <th scope="col"><div className="w-32">Title of Book / Chapter / Edited Book / Translation</div></th>
                         <th scope="col">Paper Title</th>
                         <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
                         <th scope="col">Conference Name</th>

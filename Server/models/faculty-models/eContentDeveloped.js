@@ -11,11 +11,11 @@ const eContentDevelopedSchema = new mongoose.Schema({
     },
     platform: {
         type: 'string',
-        required: true,
+        required: false,
     },
     link: {
         type: 'string',
-        required: true,
+        required: false,
     },
     year: {
         type: 'string',

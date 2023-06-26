@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import refresh, { getData } from '../../../js/refresh'
 import CASDataTable from './CASDataTable'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField, Tooltip } from '@mui/material'
 import FileViewer from '../../../../../components/FileViewer'
-import { PaperPoints } from '../content/AddPaper'
 import submit, { submitWithFile } from '../../../js/submit'
 import { useQuery } from 'react-query'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
@@ -15,12 +15,7 @@ import toast from 'react-hot-toast'
 import Axios from 'axios'
 import { Popconfirm } from 'antd'
 import handleEditWithFile from '../../../js/handleEditWithFile'
-import { PublicationPoints } from '../content/Publications'
-import { ContentPoints } from '../content/ContentCreated'
 import handleEdit from '../../../js/handleEdit'
-import { ConsultancyPoints, DegreePoints, ProjectPoints } from '../content/ResearchGuide'
-import { AwardPoints, FellowPoints, PatentPoints, PolicyPoints } from '../content/PolicyDocuments'
-import { InvitedTalkPoints } from '../content/InvitedLectures'
 import FilterModal from './FilterModal'
 
 // models
@@ -34,12 +29,13 @@ import PatentPublished from '../../../tables/PatentPublished'
 import AwardRecognition from '../../../tables/AwardRecognition'
 import Fellowship from '../../../tables/Fellowship'
 import InvitedTalk from '../../../tables/InvitedTalk'
+import CalculateModal from './CalculateModal';
 
 
 
 let FacultyTables = {
     ResearchPapersUGC: <ResearchPapersUGC title="Activity 1: Research Paper" showTable={false} />,
-    BooksAndChapters: <BooksAndChapters title="Activity 2: Books, Chapters & Translation Work" showTable={false} />,
+    MainBooksAndChapters: <BooksAndChapters title="Activity 2: Books, Chapters & Translation Work" showTable={false} />,
     EContentDeveloped: <EContentDeveloped title="Activity 3: ICT (Information & Communication Technology)" showTable={false} />,
     PHDAwarded: <PHDAwarded title="Sub-Activity 1: Research Guidance" showTable={false} />,
     ResearchProjects: <ResearchProjects title="Sub-Activity 2: Research Projects" showTable={false} />,
@@ -48,10 +44,12 @@ let FacultyTables = {
     AwardRecognition: <AwardRecognition title="Sub-Activity 3 [A]: Awards & Recognitions" showTable={false} />,
     Fellowship: <Fellowship title="Sub-Activity 3 [B]: Fellowship" showTable={false} />,
     InvitedTalk: <InvitedTalk title="Activity 6: Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings" showTable={false} />,
+    ConferenceBooksAndChapters: <BooksAndChapters title="Activity 6 (B): Conferences / Full Paper in Conference Proceedings" showTable={false} propType='Conference' showConferenceOnly={true} />,
+
 
 }
 
-const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setState, classes = "", isForm = false, options, model, casYearState, activityName, addName, isFile = true, calculateScore = true, addOnce = false, saveLoader, setSaveLoader }) => {
+const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setState, classes = "", isForm = false, options, model, casYearState, activityName, addName, isFile = true, calculateScore = true, addOnce = false, saveLoader, setSaveLoader, scoreCalculator = false }) => {
 
     const [showInputs, setShowInputs] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(null)
@@ -66,8 +64,15 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
     const [dataFilterModal, setDataFilterModal] = useState({ isOpen: false, year: null })
 
 
-    let param = { model, userId: user?._id, year: fetchYears && fetchYears }
-    const { data, isLoading, isError, error, refetch, isFetching } = useQuery([param.model, param], () => refresh(param))
+    let param = {
+        model: model.includes("Book") ? 'BookAndChapter' : model,
+        userId: user?._id,
+        year: fetchYears && fetchYears,
+        dataFilter: model.includes("Book") ? model === 'MainBookAndChapter' ?
+            { userId: user?._id, year: fetchYears && fetchYears, type: { $in: ['Book', 'Chapter', 'Editor', 'Translator'] } } : { userId: user?._id, year: fetchYears && fetchYears, type: 'Conference' } : null
+    }
+
+    const { data, isLoading, isError, error, refetch, isFetching, } = useQuery([param.model, param], () => refresh(param))
 
 
 
@@ -164,7 +169,7 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
 
 
     return (
-        <div id={label}>
+        <div >
 
 
 
@@ -423,10 +428,13 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
             {
                 calculateScore && <div className=" flex items-center justify-end mb-3 bg-blue-100 rounded-lg p-2 border-2 border-blue-700">
                     <div className='flex flex-col items-end justify-end'>
-                        <div className="btn-group" role="group" aria-label="Fetch years">
-                            {fetchYears && fetchYears.map((year, index) => {
-                                return <button key={index} type="button" className="btn border-blue-900 border bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ year, isOpen: true }); }}>Fetch {year} Data</button>
-                            })}
+                        <div className='flex items-center justify-end gap-3'>
+                            <div className="btn-group" role="group" aria-label="Fetch years">
+                                {fetchYears && fetchYears.map((year, index) => {
+                                    return <button key={index} type="button" className="btn border-blue-900 border p-2 bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ year, isOpen: true }); }}>Fetch {year} Data</button>
+                                })}
+                            </div>
+                            <button onClick={() => { recalculateScore(state, setState, data, true, setSaveLoader, scoreCalculator) }} className='p-2 rounded-xl bg-green-700 hover:bg-green-600 text-white flex items-center justify-start gap-2'><RefreshRoundedIcon />Refresh Total Score</button>
                         </div>
                         <p className='text-muted text-xs text-right'>Note: When you add a new item to the table it will be available in the filter section above. Please click the respective button above, if the item does not show up, hit Refresh button at top-right corner.</p>
                     </div>
@@ -435,7 +443,7 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
             }
 
 
-            <div className='table-responsive'>
+            <div className='table-responsive text-sm'>
                 <table className={`table caption-top table-bordered`}>
                     <thead className='bg-dark text-white '>
                         <tr>
@@ -553,13 +561,13 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
 
             {
                 calculateScore &&
-                <CalculateModal saveLoader={saveLoader} setSaveLoader={setSaveLoader} setCalculateModal={setCalculateModal} calculateModal={calculateModal}
+                <CalculateModal scoreCalculator={scoreCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader} setCalculateModal={setCalculateModal} calculateModal={calculateModal}
                     calculateItem={calculateItem} state={state} setState={setState} serverData={data} isFetching={isFetching} model={model} />
             }
 
             {/* Filter Modal */}
             {
-                calculateScore && <FilterModal saveLoader={saveLoader} setSaveLoader={setSaveLoader} title={activityName} data={data} setDataFilterModal={setDataFilterModal} dataFilterModal={dataFilterModal} model={model} state={state} setState={setState} refetch={refetch} />
+                calculateScore && <FilterModal scoreCalculator={scoreCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader} title={activityName} data={data} setDataFilterModal={setDataFilterModal} dataFilterModal={dataFilterModal} model={model} state={state} setState={setState} refetch={refetch} recalculateScore={recalculateScore} />
             }
 
         </div>
@@ -575,7 +583,6 @@ const SaveCancelButtons = ({ state, setState, setShowInputs, setLoading, model, 
     const cancelData = (e) => {
         e.preventDefault();
         setShowInputs(false);
-        console.log('Your state : ', state)
         // clear inputs
         if (state !== null) {
             setState((prev) => {
@@ -609,53 +616,37 @@ const SaveCancelButtons = ({ state, setState, setShowInputs, setLoading, model, 
     )
 }
 
-const CalculateModal = ({ content, setCalculateModal, calculateModal, calculateItem, model, state, setState, isFetching, serverData, saveLoader, setSaveLoader }) => {
-    return <div className='w-full'>
-        <Dialog open={calculateModal} onClose={() => { setCalculateModal(false); setSaveLoader(true) }} fullWidth maxWidth='md'>
-            <DialogTitle>
 
-                <p className="text-base font-bold bg-blue-100 p-2 rounded-xl text-blue-800">Calculate Score</p>
-                <table class="table text-base mt-3 table-bordered">
-                    <thead className="bg-light text-black">
-                        <tr>
-                            <th>{CASDataTable[model].mainKey.head}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{calculateItem?.[CASDataTable[model].mainKey.keyName]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </DialogTitle>
-            <DialogContent>
 
-                {content}
-                {
-                    model === 'ResearchPaper' && serverData ? <PaperPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                        model === 'BookAndChapter' && serverData ? <PublicationPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                            model === 'EContentDeveloped' && serverData ? <ContentPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                model === 'PhdAwarded' && serverData ? <DegreePoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                    model === 'ResearchProject' && serverData ? <ProjectPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                        model === 'ConsultancyServices' && serverData ? <ConsultancyPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                            model === 'Patent' && serverData ? <PatentPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                                model === 'AwardRecognition' && serverData ? <AwardPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                                    model === 'Fellowship' && serverData ? <FellowPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                                        model === 'PolicyDocuments' && serverData ? <PolicyPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> :
-                                                            model === 'InvitedTalk' && serverData ? <InvitedTalkPoints item={calculateItem} state={state} setState={setState} serverData={serverData && serverData} /> : null
-                }
 
-                <hr className='my-4' />
-                <p >Score : <span className='text-green-900 font-bold'>{state?.scoreMap?.[calculateItem?._id]?.score ? state.scoreMap?.[calculateItem?._id]?.score : 0}</span></p>
+const recalculateScore = (state, setState, serverData, saveToServer = false, setSaveLoader = () => { }, scoreCalculator = false) => {
 
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => { setCalculateModal(false); setSaveLoader(true) }} sx={{ textTransform: "none" }}>Done</Button>
-            </DialogActions>
-        </Dialog>
-    </div>
+    console.log('Running the recalculate function...')
+
+    if (scoreCalculator) {
+        scoreCalculator({ item: false, state, setState, serverData })
+        setSaveLoader(true)
+    } else {
+        let totalScore = 0
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+        for (const key in state?.scoreMap) {
+            if ((state?.scoreMap[key]?.score) && (state?.dataMap?.includes(key)) && newMap[key]) {
+                totalScore += state?.scoreMap[key]?.score
+            }
+        }
+
+        setState({ ...state, totalScore })
+
+        if (saveToServer) {
+            setSaveLoader(true)
+            toast.success('Recalculated!')
+        }
+    }
+
 }
-
 
 
 

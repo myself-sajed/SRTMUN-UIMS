@@ -719,7 +719,7 @@ function editRoutes(app) {
 
         if (req.file) {
             BookAndChapter.findOneAndUpdate({ _id: data.itemId }, {
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
                 authorEditor: data.authorEditor,
@@ -760,10 +760,9 @@ function editRoutes(app) {
         else {
 
             BookAndChapter.findOneAndUpdate({ _id: data.itemId }, {
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
-                authorEditor: data.authorEditor,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,
@@ -771,7 +770,6 @@ function editRoutes(app) {
                 issnNumber: data.issnNumber,
                 aff: data.aff,
                 publisherName: data.publisherName,
-                schoolName: data.schoolName,
                 year: data.year,
             }).then(function (data) {
                 if (data) {

@@ -15,71 +15,43 @@ import NumberToTextField from '../components/NumberToTextField';
 
 const ContentCreated = ({ ictData, setIctData, casYearState, saveLoader, setSaveLoader }) => {
 
+    const scoreCalculator = (calculationProp) => {
+        let { item, setState, state, serverData } = calculationProp
 
-
-    return (
-
-        <BGPad classes='mt-3'>
-            <div>
-                <div className='mt-2 text-sm md:text-base'>
-
-                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
-                        facultyTableAvailable="EContentDeveloped"
-                        state={ictData} setState={setIctData} casYearState={casYearState}
-                        isForm={true} classes='my-3' model="EContentDeveloped" addName="ICT" activityName="ICT (Information & Communication Technology)" activity="Activity 3"
-
-                    >
-
-                    </NumberToTextField>
-
-                </div>
-            </div>
-        </BGPad>
-
-    )
-}
-
-export default ContentCreated
-
-
-const ContentPoints = ({ item, setState, state, serverData }) => {
-
-
-    useEffect(() => {
         const scoreMapObject = state?.scoreMap
 
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject[elem._id]]));
 
-        console.log('New map :', newMap)
-
         let score = 0
 
 
-        if (item.creationType === 'Development of Innovative Pedagogy') {
-            score += 5
-        } else if (item.creationType === 'Design of new curriculla & courses') {
-            score += 2
-        } else if (state?.scoreMap?.[item._id]?.creationType === 'MOOCS') {
-            if (state?.scoreMap?.[item._id]?.moocType === 'complete') {
-                score += state?.scoreMap?.[item._id]?.credit * 5
-            } else if (state?.scoreMap?.[item._id]?.moocType === 'module') {
-                score += state?.scoreMap?.[item._id]?.credit * 5
-            } else if (state?.scoreMap?.[item._id]?.moocType === 'content') {
-                score += state?.scoreMap?.[item._id]?.credit * 2
-            }
-            else if (state?.scoreMap?.[item._id]?.moocType === 'course') {
-                score += state?.scoreMap?.[item._id]?.credit * 8 > 20 ? 20
-                    : state?.scoreMap?.[item._id]?.credit * 8
-            }
-        } else if (state?.scoreMap?.[item._id]?.creationType === 'E-Content') {
-            if (state?.scoreMap?.[item._id]?.econType === 'complete') {
-                score += 12
-            } else if (state?.scoreMap?.[item._id]?.econType === 'module') {
-                score += state?.scoreMap?.[item._id]?.credit * 5
-            } else if (state?.scoreMap?.[item._id]?.econType === 'paper') {
-                score += state?.scoreMap?.[item._id]?.credit * 2
-            } else if (state?.scoreMap?.[item._id]?.econType === 'course') {
-                score += 10
+        if (item) {
+            if (item.creationType === 'Development of Innovative Pedagogy') {
+                score += 5
+            } else if (item.creationType === 'Design of new curriculla & courses') {
+                score += 2
+            } else if (state?.scoreMap?.[item._id]?.creationType === 'MOOCS') {
+                if (state?.scoreMap?.[item._id]?.moocType === 'complete') {
+                    score += state?.scoreMap?.[item._id]?.credit * 5
+                } else if (state?.scoreMap?.[item._id]?.moocType === 'module') {
+                    score += state?.scoreMap?.[item._id]?.credit * 5
+                } else if (state?.scoreMap?.[item._id]?.moocType === 'content') {
+                    score += state?.scoreMap?.[item._id]?.credit * 2
+                }
+                else if (state?.scoreMap?.[item._id]?.moocType === 'course') {
+                    score += state?.scoreMap?.[item._id]?.credit * 8 > 20 ? 20
+                        : state?.scoreMap?.[item._id]?.credit * 8
+                }
+            } else if (state?.scoreMap?.[item._id]?.creationType === 'E-Content') {
+                if (state?.scoreMap?.[item._id]?.econType === 'complete') {
+                    score += 12
+                } else if (state?.scoreMap?.[item._id]?.econType === 'module') {
+                    score += state?.scoreMap?.[item._id]?.credit * 5
+                } else if (state?.scoreMap?.[item._id]?.econType === 'paper') {
+                    score += state?.scoreMap?.[item._id]?.credit * 2
+                } else if (state?.scoreMap?.[item._id]?.econType === 'course') {
+                    score += 10
+                }
             }
         }
 
@@ -101,33 +73,38 @@ const ContentPoints = ({ item, setState, state, serverData }) => {
 
         let keys = Object.keys(newMap)
         keys.forEach((element) => {
-            if (newMap?.[element]?.creationType === 'Development of Innovative Pedagogy') {
-                pedScore += 5
-            } else if (newMap?.[element]?.creationType === 'Design of new curriculla & courses') {
-                courseScore += 2
-            } else if (newMap?.[element]?.creationType === 'MOOCS') {
-                if (newMap?.[element]?.moocType === 'complete') {
-                    moocComplete += newMap?.[element]?.credit * 5
-                } else if (newMap?.[element]?.moocType === 'module') {
-                    moocModule += newMap?.[element]?.credit * 5
-                } else if (newMap?.[element]?.moocType === 'content') {
-                    moocContent += newMap?.[element]?.credit * 2
-                }
-                else if (newMap?.[element]?.moocType === 'course') {
-                    moocCourse += newMap?.[element]?.credit * 8 > 20 ? 20
-                        : newMap?.[element]?.credit * 8
-                }
-            } else if (newMap?.[element]?.creationType === 'E-Content') {
-                if (newMap?.[element]?.econType === 'complete') {
-                    econComplete += 12
-                } else if (newMap?.[element]?.econType === 'module') {
-                    econModule += newMap?.[element]?.credit * 5
-                } else if (newMap?.[element]?.econType === 'paper') {
-                    econPaper += newMap?.[element]?.credit * 2
-                } else if (newMap?.[element]?.econType === 'course') {
-                    econCourse += 10
+
+            if (state?.dataMap?.includes(element)) {
+                if (newMap?.[element]?.creationType === 'Development of Innovative Pedagogy') {
+                    pedScore += 5
+                } else if (newMap?.[element]?.creationType === 'Design of new curriculla & courses') {
+                    courseScore += 2
+                } else if (newMap?.[element]?.creationType === 'MOOCS') {
+                    if (newMap?.[element]?.moocType === 'complete') {
+                        moocComplete += newMap?.[element]?.credit * 5
+                    } else if (newMap?.[element]?.moocType === 'module') {
+                        moocModule += newMap?.[element]?.credit * 5
+                    } else if (newMap?.[element]?.moocType === 'content') {
+                        moocContent += newMap?.[element]?.credit * 2
+                    }
+                    else if (newMap?.[element]?.moocType === 'course') {
+                        moocCourse += newMap?.[element]?.credit * 8 > 20 ? 20
+                            : newMap?.[element]?.credit * 8
+                    }
+                } else if (newMap?.[element]?.creationType === 'E-Content') {
+                    if (newMap?.[element]?.econType === 'complete') {
+                        econComplete += 12
+                    } else if (newMap?.[element]?.econType === 'module') {
+                        econModule += newMap?.[element]?.credit * 5
+                    } else if (newMap?.[element]?.econType === 'paper') {
+                        econPaper += newMap?.[element]?.credit * 2
+                    } else if (newMap?.[element]?.econType === 'course') {
+                        econCourse += 10
+                    }
                 }
             }
+
+
         })
 
 
@@ -137,7 +114,8 @@ const ContentPoints = ({ item, setState, state, serverData }) => {
         let totalIctScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id) {
+            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+
                 totalIctScore += newMap[key].score
             }
         }
@@ -160,13 +138,44 @@ const ContentPoints = ({ item, setState, state, serverData }) => {
                 econCourse,
                 econScore: econComplete + econModule + econPaper + econCourse,
                 moocScore: moocComplete + moocModule + moocContent + moocCourse,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current.scoreMap?.[item._id], score: score, creationType: item?.creationType } },
+                scoreMap: item ? { ...newMap, [item._id]: { ...current.scoreMap?.[item._id], score: score, creationType: item?.creationType } } : { ...newMap }
             }
         })
 
+    }
 
 
+    return (
+
+        <BGPad classes='mt-3'>
+            <div>
+                <div className='mt-2 text-sm md:text-base'>
+
+                    <NumberToTextField scoreCalculator={scoreCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                        facultyTableAvailable="EContentDeveloped"
+                        state={ictData} setState={setIctData} casYearState={casYearState}
+                        isForm={true} classes='my-3' model="EContentDeveloped" addName="ICT" activityName="ICT (Information & Communication Technology)" activity="Activity 3"
+
+                    >
+
+                    </NumberToTextField>
+
+                </div>
+            </div>
+        </BGPad>
+
+    )
+}
+
+export default ContentCreated
+
+
+const ContentPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
+
+
+    useEffect(() => {
+
+        scoreCalculator({ item, setState, state, serverData })
 
     }, [state?.scoreMap?.[item._id]?.creationType, state?.scoreMap?.[item._id]?.moocType, state?.scoreMap?.[item._id]?.econType, state?.scoreMap?.[item._id]?.credit], state?.scoreMap?.[item._id]?.module)
 
