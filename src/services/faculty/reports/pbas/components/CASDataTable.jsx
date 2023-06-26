@@ -619,6 +619,7 @@ const CASDataTable = {
         tableHeads: [
             "Paper Title",
             "Journal Name",
+            'Author(s)',
             "Publication Year",
             "ISSN Number",
             "Indexed in",
@@ -628,6 +629,7 @@ const CASDataTable = {
         tableCells: [
             "paperTitle",
             "journalName",
+            "authors",
             "publicationYear",
             "issnNumber",
             "indexedIn",

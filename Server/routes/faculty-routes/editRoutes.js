@@ -653,6 +653,7 @@ function editRoutes(app) {
             ResearchPaper.findOneAndUpdate({ _id: data.itemId }, {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,
@@ -690,6 +691,7 @@ function editRoutes(app) {
             ResearchPaper.findOneAndUpdate({ _id: data.itemId }, {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,

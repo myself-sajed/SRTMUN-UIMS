@@ -519,6 +519,7 @@ function initRoutes(app) {
             const researchPaper = new ResearchPaper({
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 issnNumber: data.issnNumber,
                 indexedIn: data.indexedIn,
@@ -1019,7 +1020,6 @@ function initRoutes(app) {
                     "Principal Invigilator Name": 'principalName',
                     "Funding Agency Name": 'fundingName',
                     "Wheather Government / Non-Government": 'isGov',
-                    "Department": 'department',
                     "Award Year": 'awardYear',
                     "Project Duration (In Year)": 'projectDuration',
                     "Provided Funds (INR)": 'providedFunds',
@@ -1050,6 +1050,7 @@ function initRoutes(app) {
                 },
                 ResearchPaper: {
                     'Paper Title': 'paperTitle',
+                    "Author(s)": 'authors',
                     'Journal Name': 'journalName',
                     'Publication Year': 'publicationYear',
                     'ISSN Number': 'issnNumber',

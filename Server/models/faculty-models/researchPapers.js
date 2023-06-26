@@ -17,6 +17,10 @@ const researchPapersSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    authors: {
+        type: 'string',
+        required: false,
+    },
     indexedIn: {
         type: 'string',
     },
