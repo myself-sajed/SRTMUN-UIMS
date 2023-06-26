@@ -222,6 +222,8 @@ const excelObject = {
         'journalName': 'Journal Name',
         'publicationYear': 'Publication Year',
         'issnNumber': 'ISSN Number',
+        'indexedIn': 'Indexed In',
+        'indexLink': 'Link',
         'year': 'Choose Year',
     },
     BookAndChapter: {
