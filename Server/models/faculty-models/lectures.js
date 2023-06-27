@@ -17,7 +17,7 @@ const lectureSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    percentageOfClasses: {
+    classesTaken: {
         type: 'string',
         required: false,
     },

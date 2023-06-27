@@ -493,7 +493,7 @@ function editRoutes(app) {
             level: level,
             teachingMode: mode,
             noOfClasses: noOfClasses,
-            percentageOfClasses: classesTaken,
+            classesTaken: classesTaken,
             year: year,
         }).then(function (data) {
             if (data) {

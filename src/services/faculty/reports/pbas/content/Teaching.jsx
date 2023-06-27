@@ -8,6 +8,7 @@ import Axios from 'axios'
 import Note from '../../../../director/reports/academic-audit/components/Note';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Popconfirm } from 'antd';
+import Lectures from '../../../tables/Lectures';
 
 const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData, setChangeTeaching, changeTeaching, teachingData, setTeachingData, saveLoader, setSaveLoader }) => {
 
@@ -134,6 +135,10 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                         1. Teaching
 
                         <p className='text-gray-500 md:text-sm text-xs'>Note : Classes taught includes sessions on tutorials, lab and other teaching related activities.</p>
+
+                        {casYearState && <div className='mt-3 text-sm'>
+                            <Lectures filterByAcademicYear={true} academicYear={casYearState} />
+                        </div>}
 
                         <div className='flex-col items-start md:flex-row flex md:items-center justify-between mt-4 w-full'>
                             <form className=' flex flex-col md:flex-row md:items-center justify-start gap-3' onSubmit={(e) => { e.preventDefault(); }}>

@@ -433,7 +433,7 @@ function initRoutes(app) {
                 level: level,
                 teachingMode: mode,
                 noOfClasses: noOfClasses,
-                percentageOfClasses: classesTaken,
+                classesTaken: classesTaken,
                 year: year,
                 userId: userId,
             })
@@ -1039,8 +1039,8 @@ function initRoutes(app) {
                     'Course/Paper': 'course',
                     'Level': 'level',
                     'Teaching Mode': 'teachingMode',
-                    'No of classes alloted per week': 'noOfClasses',
-                    '% of classes taken as per documented record': 'percentageOfClasses',
+                    'No of classes alloted': 'noOfClasses',
+                    'No of classes taken': 'classesTaken',
                     ' Year': 'year',
                 },
                 EContentDeveloped: {

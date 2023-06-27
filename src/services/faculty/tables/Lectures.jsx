@@ -31,8 +31,10 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
     const [mode, setMode] = useState('')
     const [noOfClasses, setNoOfClasses] = useState('')
     const [classesTaken, setClassesTaken] = useState('')
+
+
     // const [proof, setProof] = useState(null)
-    const [year, setYear] = useState('')
+    const [year, setYear] = useState(academicYear ? academicYear : '')
     const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
@@ -42,13 +44,6 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
 
     const user = useSelector(state => state.user.user);
 
-    // function handleAddQualification(e) {
-    //     e.preventDefault();
-    //     setLoading(true)
-    //     const data = { exam, subjects, institute, year, percentage, userId: user?._id }
-    //     submit(data, 'Qualification', refetch, setLoading, setQualificationModal, setIsFormOpen)
-
-    // }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -57,18 +52,6 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
 
         const data = { course, level, mode, noOfClasses, classesTaken, year, userId: user?._id }
         submit(data, 'lectures', refetch, setLoading, setLectureModal, setIsFormOpen)
-
-        // let formData = new FormData()
-        // formData.append('course', course)
-        // formData.append('level', level)
-        // formData.append('mode', mode)
-        // formData.append('noOfClasses', noOfClasses)
-        // formData.append('classesTaken', classesTaken)
-        // // formData.append('file', proof)
-        // formData.append('year', year)
-        // formData.append('userId', user?._id)
-
-        // submitWithFile(formData, 'lectures', refetch, setLoading, setLectureModal, setIsFormOpen)
     }
 
     // make states together
@@ -79,21 +62,6 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
         const theItem = { itemId: itemToDelete._id, course, level, mode, noOfClasses, classesTaken, year, }
         handleEdit(theItem, 'Lectures', setEditModal, refetch, setLoading, setIsFormOpen)
 
-
-        // // arrange form Data
-        // let formData = new FormData()
-        // formData.append('itemId', itemToDelete._id)
-        // // formData.append('proof', itemToDelete.proof)
-        // formData.append('course', course)
-        // formData.append('level', level)
-        // formData.append('mode', mode)
-        // formData.append('noOfClasses', noOfClasses)
-        // formData.append('classesTaken', classesTaken)
-        // formData.append('year', year)
-        // // formData.append('file', proof)
-
-
-        // handleEditWithFile(formData, 'Lectures', setEditModal, refetch, setLoading, setIsFormOpen)
     }
 
 
@@ -104,9 +72,8 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
                 setLevel(item.level)
                 setMode(item.teachingMode)
                 setNoOfClasses(item.noOfClasses)
-                setClassesTaken(item.percentageOfClasses)
+                setClassesTaken(item.classesTaken)
                 setYear(item.year)
-
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -120,7 +87,6 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
         setMode('')
         setNoOfClasses('')
         setClassesTaken('')
-        // setProof(null)
         setYear('')
 
 
@@ -158,18 +124,19 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
 
                         <Text title='Level' state={level} setState={setLevel} />
 
-                        <Text space='col-md-6' title='Teaching Mode' state={mode} setState={setMode} />
+                        <Text title='Teaching Mode' state={mode} setState={setMode} />
 
 
 
-                        <Text space='col-md-4' title='No of classes alloted per week' state={noOfClasses} setState={setNoOfClasses} />
+                        <Text space='col-md-3' title='No of classes alloted' state={noOfClasses} setState={setNoOfClasses} />
+
+                        <Text space='col-md-3' title='No of classes taken' state={classesTaken} setState={setClassesTaken} />
 
                         <Year state={year} setState={setYear} />
 
 
-                        {/* <Text space='col-md-6' title='% of classes taken as per documented record' state={classesTaken} setState={setClassesTaken} /> */}
 
-                        {/* <File space='col-md-6' title='Upload Attendance' setState={setProof} /> */}
+
 
 
                     </FormWrapper>
@@ -190,10 +157,9 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
                             <th scope="col">Course/Paper</th>
                             <th scope="col">Level</th>
                             <th scope="col">Teaching Mode</th>
-                            <th scope="col"><div className="max-w-56">No of classes alloted per week</div></th>
-                            {/* <th scope="col">% of classes taken as per documented record</th> */}
+                            <th scope="col"><div className="max-w-56">No of classes alloted</div></th>
+                            <th scope="col"><div className="max-w-56">No of classes taken</div></th>
                             <th scope="col"><div className="w-20">Year</div></th>
-                            {/* <th scope="col">Upload Attendance</th> */}
                             <th scope="col">Action</th>
 
 
@@ -208,7 +174,7 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
                                     <td>{item.level}</td>
                                     <td>{item.teachingMode}</td>
                                     <td>{item.noOfClasses}</td>
-                                    {/* <td>{item.percentageOfClasses}</td> */}
+                                    <td>{item.classesTaken}</td>
                                     <td>{item.year}</td>
                                     {/* <td><View proof={item.proof} /></td> */}
                                     <td> <Actions item={item} model="Lectures" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setLectureModal} /></td>
