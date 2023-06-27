@@ -11,6 +11,7 @@ import useAuth from '../../../../../hooks/useAuth';
 import Bred from '../../../../../components/Bred';
 import siteLinks from '../../../../../components/siteLinks';
 import GenerateReportTemplate from '../../../../../components/GenerateReportTemplate';
+import title from '../../../../../js/title';
 
 
 const GenerateCASPage = () => {
@@ -21,6 +22,7 @@ const GenerateCASPage = () => {
     const user = useSelector((state) => state.user.user)
     const [reportLoading, setReportLoading] = useState(false)
     const [error, setError] = useState(null)
+    title('Generate CAS Report')
     useAuth(false)
 
     useEffect(() => {

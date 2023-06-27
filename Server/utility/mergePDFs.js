@@ -2,8 +2,9 @@ const { PDFDocument } = require('pdf-lib');
 const axios = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
-const { fetchDataForCAS, fetchBasicDataForCAS } = require('../routes/data-fetcher/forCAS');
+const { fetchDataForCAS, fetchBasicDataForCAS, fetchEligibilityProofs } = require('../routes/data-fetcher/forCAS');
 const CASModel = require('../models/faculty-models/casModel');
+const PBASModel = require('../models/faculty-models/pbasModel');
 
 async function mergePDFs(files, outputPath) {
     async function convertJpgToPng(jpgBuffer) {
@@ -14,40 +15,45 @@ async function mergePDFs(files, outputPath) {
     const mergedPdf = await PDFDocument.create();
 
     for (const file of files) {
-        if (file.includes('.pdf')) {
-            const pdfBytes = await axios.get(file, { responseType: 'arraybuffer' });
-            const pdfDoc = await PDFDocument.load(pdfBytes.data);
-            const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
-        } else if (file.includes('.jpg') || file.includes('.jpeg') || file.includes('.png')) {
-            try {
-                const imageBytes = await axios.get(file, { responseType: 'arraybuffer' });
+        try {
+            const response = await axios.get(file, { responseType: 'arraybuffer' });
 
-                if (file.includes('.jpeg') || file.includes('.jpg')) {
-                    const pngBytes = await convertJpgToPng(imageBytes.data);
-                    const pngImage = await mergedPdf.embedPng(pngBytes);
-                    const page = mergedPdf.addPage();
-                    page.drawImage(pngImage, {
-                        x: 0,
-                        y: 0,
-                        width: page.getWidth(),
-                        height: page.getHeight(),
-                    });
-                } else if (file.includes('.png')) {
-                    const pngImage = await mergedPdf.embedPng(imageBytes.data);
-                    const page = mergedPdf.addPage();
-                    page.drawImage(pngImage, {
-                        x: 0,
-                        y: 0,
-                        width: page.getWidth(),
-                        height: page.getHeight(),
-                    });
+            if (response.status === 200) {
+                const fileData = response.data;
+
+                if (file.includes('.pdf')) {
+                    const pdfDoc = await PDFDocument.load(fileData);
+                    const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                    copiedPages.forEach((page) => mergedPdf.addPage(page));
+                } else if (file.includes('.jpg') || file.includes('.jpeg') || file.includes('.png')) {
+                    if (file.includes('.jpeg') || file.includes('.jpg')) {
+                        const pngBytes = await convertJpgToPng(fileData);
+                        const pngImage = await mergedPdf.embedPng(pngBytes);
+                        const page = mergedPdf.addPage();
+                        page.drawImage(pngImage, {
+                            x: 0,
+                            y: 0,
+                            width: page.getWidth(),
+                            height: page.getHeight(),
+                        });
+                    } else if (file.includes('.png')) {
+                        const pngImage = await mergedPdf.embedPng(fileData);
+                        const page = mergedPdf.addPage();
+                        page.drawImage(pngImage, {
+                            x: 0,
+                            y: 0,
+                            width: page.getWidth(),
+                            height: page.getHeight(),
+                        });
+                    }
+                } else {
+                    console.log(`Unsupported file type: ${file}`);
                 }
-            } catch (error) {
-                console.log(`Error processing image file: ${file}`, error);
+            } else {
+                console.log(`Failed to fetch file: ${file}`);
             }
-        } else {
-            console.log(`Unsupported file type: ${file}`);
+        } catch (error) {
+            console.log(`Error processing file: ${file}`);
         }
     }
 
@@ -57,7 +63,9 @@ async function mergePDFs(files, outputPath) {
     return outputPath; // Return the outputPath after saving the merged PDF
 }
 
-async function casFilesGenerator(selectedYear, userId) {
+
+
+async function casFilesGenerator(selectedYear, userId, reportType) {
 
     let casDataSpecifier = [
         {
@@ -105,7 +113,18 @@ async function casFilesGenerator(selectedYear, userId) {
     let fetchYears;
     let casArray;
 
-    const casData = await CASModel.findOne({ userId: userId })
+    let eligData;
+    let level;
+
+    let casData;
+
+    if (reportType === 'CAS') {
+        casData = await CASModel.findOne({ userId: userId })
+    } else if (reportType === 'PBAS') {
+        casData = await PBASModel.findOne({ userId: userId })
+    }
+
+
     if (casData) {
         if (casData) {
             let oldCasArray = [];
@@ -120,13 +139,22 @@ async function casFilesGenerator(selectedYear, userId) {
                 oldCasArray.forEach(item => {
                     if (item.casYear === year) {
                         newCasArray.push(item)
-                        years.push(...item.fetchYears)
+
+                        if (reportType === 'CAS') {
+                            years.push(...item.fetchYears)
+
+                        }
+
                     }
                 }
                 )
             })
 
-            fetchYears = [...new Set(years)]
+            if (reportType === 'CAS') {
+                fetchYears = [...new Set(years)]
+            } else {
+                fetchYears = selectedYear
+            }
 
             // sort the array based on casYear field in ascending order
             newCasArray.sort((a, b) => {
@@ -134,15 +162,43 @@ async function casFilesGenerator(selectedYear, userId) {
             })
 
             casArray = newCasArray
+
+
+            if (reportType === 'CAS') {
+                // creating eligibility details
+                if (casData?.['stage5']) {
+                    eligData = JSON.parse(casData['stage1'])
+                    level = 'stage1'
+                } else if (casData?.['stage4']) {
+                    eligData = JSON.parse(casData['stage4'])
+                    level = 'stage4'
+                } else if (casData?.['stage3']) {
+                    eligData = JSON.parse(casData['stage3'])
+                    level = 'stage3'
+                } else if (casData?.['stage2']) {
+                    eligData = JSON.parse(casData['stage2'])
+                    level = 'stage2'
+                } else if (casData?.['stage1']) {
+                    eligData = JSON.parse(casData['stage1'])
+                    level = 'stage1'
+                }
+            }
+
+
+
         }
+
+
     }
+
 
 
     try {
 
         // academic data for CAS
         let response = await fetchDataForCAS(fetchYears, userId)
-        let basicData = await fetchBasicDataForCAS(userId)
+        let basicData = await fetchBasicDataForCAS(fetchYears, userId)
+        let { eligProofs, impactProof, activityProof, directorProof } = fetchEligibilityProofs(reportType, level, eligData, casArray, response.ResearchPaper)
         let mainDataMap = {}
 
         casDataSpecifier.forEach((casSpecifier) => {
@@ -201,11 +257,9 @@ async function casFilesGenerator(selectedYear, userId) {
 
         combineAllObjects = [...basicData || [], ...combineAllObjects || []]
 
-        let files = [...new Set(combineAllObjects.map((item) => `${process.env.REACT_APP_MAIN_URL}/showFile/${item.proof}/faculty`))]
-
+        let files = [...eligProofs || [], ...new Set(combineAllObjects.map((item) => `${process.env.REACT_APP_MAIN_URL}/showFile/${item.proof}/faculty`)), ...impactProof || [], ...directorProof || [], ...activityProof || []].filter((item) => item !== undefined)
 
         console.log("Files :", files.length)
-
 
 
         const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
@@ -221,7 +275,23 @@ async function casFilesGenerator(selectedYear, userId) {
     }
 }
 
-// casFilesGenerator(["2019-20"], "62b0a06942f8174e43cd9a26")
+// casFilesGenerator(["2019-20", "2020-21"], "62b0a06942f8174e43cd9a26")
 
 
 module.exports = { casFilesGenerator, mergePDFs };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

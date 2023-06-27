@@ -1,5 +1,5 @@
 import { SignalCellularNullRounded } from '@mui/icons-material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NumberToTextField from '../components/NumberToTextField'
 import { BGPad } from './Teaching'
 
@@ -11,6 +11,10 @@ const BasicInfo = () => {
     const [postHeld, setPostHeld] = useState(null)
     const [online, setOnline] = useState(null)
     const [experience, setExperience] = useState(null)
+
+    useEffect(() => {
+        console.log('Degree :', degree)
+    }, [degree])
 
     let introTables = [
         {
@@ -40,6 +44,7 @@ const BasicInfo = () => {
             options: [
                 { field: 'Text', keyName: "degreeName", label: "Degree" },
                 { field: 'Text', keyName: "title", label: "Title" },
+                { field: 'Text', keyName: "subject", label: "Subject" },
                 { field: 'Text', keyName: "university", label: "University" },
                 { field: 'Text', keyName: "awardDate", label: "Award Year" },
                 { field: 'File', keyName: "proof", label: "Proof" },
@@ -137,7 +142,6 @@ const BasicInfo = () => {
                                     isForm={true} activity={null} classes='my-3' model={item.model} addName={item.addName} activityName={`${index + 1}. ${item.activityName}`} calculateScore={false}
                                     options={item.options} isFile={item.isFile} addOnce={item.addOnce}
                                 >
-
                                 </NumberToTextField>
 
                             </div>

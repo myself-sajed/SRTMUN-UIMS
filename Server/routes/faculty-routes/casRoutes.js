@@ -5,7 +5,7 @@ var pdf = require("html-pdf");
 var options = { format: "A4", timeout: 60000, border: { top: "0.4in", right: "0in", bottom: "0.4in", left: "0in" }, };
 const puppeteer = require('puppeteer')
 const path = require('path');
-const { pdfGenerator, mergePDFs, casFilesGenerator } = require("../../utility/mergePDFs");
+const { mergePDFs, casFilesGenerator } = require("../../utility/mergePDFs");
 
 
 async function casRoutes(app) {
@@ -29,11 +29,11 @@ async function casRoutes(app) {
     // for generating cas report
     app.post("/generateCASReport", async (req, res) => {
 
-        const { userData, casData, selectedYear, forPrintOut, withProofs } = req.body;
-
+        const { userData, selectedYear, forPrintOut, withProofs } = req.body;
         const fileName = `CASReport-${new Date().getTime()}.pdf`
-        console.log("selectedYear :", selectedYear)
+        console.log("withProofs :", withProofs)
 
+        // pupetteer setting which is common
         async function pupetteerSetting() {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
@@ -57,9 +57,9 @@ async function casRoutes(app) {
             await browser.close()
         }
 
-
+        // if selected proofs
         if (withProofs === true) {
-            let isMerged = await casFilesGenerator(selectedYear, userData._id)
+            let isMerged = await casFilesGenerator(selectedYear, userData._id, 'CAS')
 
             if (isMerged.status === "success") {
 
@@ -72,7 +72,7 @@ async function casRoutes(app) {
                             `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${isMerged.fileName}`,
                         ]
 
-                        const reportName = `CASReportWithProof-${new Date().getTime()}.pdf`;
+                        const reportName = `CASReportWithProofs-${new Date().getTime()}.pdf`;
                         const outputPath = `pdfs/${reportName}`;
 
                         await mergePDFs(files, outputPath);
@@ -102,12 +102,6 @@ async function casRoutes(app) {
                 res.send({ status: "error", message: 'Could not generate report, please try again later...' });
             }
         }
-
-
-
-
-
-
 
 
     });

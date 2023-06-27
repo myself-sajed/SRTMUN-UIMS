@@ -313,6 +313,8 @@ function initRoutes(app) {
 
         const data = JSON.parse(JSON.stringify(req.body));
 
+        console.log(data)
+
         try {
             const degree = new Degree({
                 degreeName: data.degreeName,
@@ -1054,8 +1056,8 @@ function initRoutes(app) {
                     'Journal Name': 'journalName',
                     'Publication Year': 'publicationYear',
                     'ISSN Number': 'issnNumber',
-                    'Indexed In' : 'indexedIn',
-                    'Link' : 'indexLink',
+                    'Indexed In': 'indexedIn',
+                    'Link': 'indexLink',
                     'Choose Year': 'year',
                 },
                 BookAndChapter: {

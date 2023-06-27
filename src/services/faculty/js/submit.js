@@ -12,13 +12,13 @@ const submit = async (data, url, setState, setLoading, setModal, setIsFormOpen) 
         toast.success('Data added successfully');
         setLoading(false)
         setModal(false)
-        setIsFormOpen(false)
+        setIsFormOpen && setIsFormOpen(false)
     }
     else if (res.data.status === 'error') {
         toast.error('Failed to add data');
         setLoading(false)
         setModal(false)
-        setIsFormOpen(false)
+        setIsFormOpen && setIsFormOpen(false)
     }
 }
 

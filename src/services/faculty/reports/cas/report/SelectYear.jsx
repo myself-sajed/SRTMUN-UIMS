@@ -36,11 +36,12 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
     const navigate = useNavigate()
     const [forPrintOut, setForPrintOut] = useState(false)
+    const [withProofs, setWithProofs] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleGeneration = () => {
         setReportLoading(true);
-        generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+        generateCASReport(userData, selectedYear, setReportLoading, forPrintOut, withProofs)
     }
 
     return (
@@ -59,17 +60,33 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                             </div>
 
                             <ShowModal okText={"Generate Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked onClick={(e) => { setForPrintOut(false) }} />
-                                    <label class="form-check-label" htmlFor="flexRadioDefault1">
-                                        Standard Report
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onClick={(e) => { setForPrintOut(true) }} />
-                                    <label class="form-check-label" htmlFor="flexRadioDefault2">
-                                        Printable Report (Specially designed for printing purposes)
-                                    </label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked onChange={(e) => { setForPrintOut(false) }} />
+                                        <label class="form-check-label" htmlFor="standard">
+                                            Standard Report
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="printableOrNot" id="printable" onChange={(e) => { setForPrintOut(true) }} />
+                                        <label class="form-check-label" htmlFor="printable">
+                                            Printable Report (Specially designed for printing purposes)
+                                        </label>
+                                    </div>
+
+                                    <hr />
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="radio" name="withOrWithoutProof" id="withoutProof" checked onChange={(e) => { setWithProofs(false) }} />
+                                        <label class="form-check-label" htmlFor="withoutProof">
+                                            Report without Proofs
+                                        </label>
+                                    </div>
+                                    <div class="form-check pb-5">
+                                        <input class="form-check-input" type="radio" name="withOrWithoutProof" id="withProof" onChange={(e) => { setWithProofs(true) }} />
+                                        <label class="form-check-label" htmlFor="withProof">
+                                            Report with Proofs (All related proofs attached at the end of the report)
+                                        </label>
+                                    </div>
                                 </div>
                             </ShowModal>
 
