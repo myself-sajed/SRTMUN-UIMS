@@ -15,7 +15,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const AppointmentsHeldPrior = ({ showTable }) => {
+const AppointmentsHeldPrior = ({ showTable = true }) => {
 
     const dispatch = useDispatch()
     const [appointmentModal, setAppointmentModal] = useState(false)

@@ -99,7 +99,6 @@ const PaperPoints = ({ item, setState, state, isFetching, serverData, }) => {
 
         if (window.confirm('Are you sure you want to delete this proof?')) {
             const url = `${process.env.REACT_APP_MAIN_URL}/api/deleteFile`
-            console.log('Running')
             Axios.post(url, { fileName, path: 'CAS' })
                 .then((res) => {
                     if (res.data.status === 'deleted') {
@@ -129,7 +128,6 @@ const PaperPoints = ({ item, setState, state, isFetching, serverData, }) => {
     }
 
     useEffect(() => {
-        console.log('Paper : ', state)
         const newItem = state?.scoreMap?.[item._id]
         const scoreMapObject = state?.scoreMap
         const newDataMap = state?.dataMap

@@ -1,7 +1,7 @@
 import React from 'react'
 import DialogBox from '../../../../../components/DialogBox'
 
-const AgreePopup = ({ setSaveLoader, agreePopup, setAgreePopup, setTabName, handleNext, fetchYears, duration, casYearState, userDuration }) => {
+const AgreePopup = ({ setSaveLoader, agreePopup, setAgreePopup, setTabName, handleNext, fetchYears, duration, casYearState, userDuration, casDate }) => {
 
     let wholeYear = casYearState.toString().slice(0, -3)
     let startYearCount = casYearState.toString().slice(0, -5)
@@ -17,7 +17,7 @@ const AgreePopup = ({ setSaveLoader, agreePopup, setAgreePopup, setTabName, hand
                 <p>Please note that, the data to be fetched from
                     <strong> {fetchYears?.[0]}</strong> & <strong>{fetchYears?.[1]}</strong> should strictly fall under your CAS duration i.e. <br />
 
-                    <p className="text-center mt-2"><span className=" bg-blue-100 rounded-full text-blue-800 font-bold p-1">{calculatedDuration}</span></p>
+                    <p className="text-center mt-2"><span className=" bg-blue-100 rounded-full text-blue-800 font-bold p-1">{casDate.casDuration}</span></p>
 
                 </p>
 

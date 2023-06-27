@@ -36,7 +36,6 @@ const CASDataTable = {
     AwardRecognition: {
         tableHeads: ["Name of full-time teachers receiving award",
             "Award Date",
-            "PAN",
             "Designation",
             "Name of the Award, Fellowship, received",
             "Award Agency Name",
@@ -47,7 +46,6 @@ const CASDataTable = {
         tableCells: [
             "teacherName",
             "awardYear",
-            "pan",
             "designation",
             "awardName",
             "agencyName",
@@ -63,44 +61,101 @@ const CASDataTable = {
     },
     TrimmedBookAndChapter: {
         tableHeads: [
-            "Title of Published Book",
+            "Type",
+            "Title of Book / Chapter / Edited Book / Translation",
             "Paper Title",
             "Title of proceedings",
-            "Author / Editor / Translator",
             "Conference Name",
             "National / International",
             "Publication Year",
             "SBN/ISSN number",
             "Affiliation Institute at the time of publication",
-            "Publisher Name",
             "Year",
             "Uploaded Proof",
+
         ],
         tableCells: [
+            "type",
             "titleOfBook",
             "paperTitle",
             "titleOfProceeding",
-            "authorEditor",
             "conName",
             "isNat",
             "publicationYear",
             "issnNumber",
             "aff",
-            "publisherName",
             "year",
             "proof",
         ],
         mainKey: {
-            head: ['Title of Published Book'],
-            keyName: ['titleOfBook']
+            head: ['Type', "Title of Book / Chapter / Edited Book / Translation", "Paper Title"],
+            keyName: ['type', 'titleOfBook', 'paperTitle']
+        }
+    },
+    MainBookAndChapter: {
+        tableHeads: [
+            "Type",
+            "Title of Book / Chapter / Edited Book / Translation",
+            "National / International",
+            "Publication Year",
+            "SBN/ISSN number",
+            "Affiliation Institute at the time of publication",
+            "Year",
+            "Uploaded Proof",
+
+        ],
+        tableCells: [
+            "type",
+            "titleOfBook",
+            "isNat",
+            "publicationYear",
+            "issnNumber",
+            "aff",
+            "year",
+            "proof",
+        ],
+        mainKey: {
+            head: ['Type', "Title of Book / Chapter / Edited Book / Translation",],
+            keyName: ['type', 'titleOfBook',]
+        }
+    },
+    ConferenceBookAndChapter: {
+        tableHeads: [
+            "Type",
+            "Paper Title",
+            "Title of proceedings",
+            "Conference Name",
+            "National / International",
+            "Publication Year",
+            "SBN/ISSN number",
+            "Affiliation Institute at the time of publication",
+            "Year",
+            "Uploaded Proof",
+
+        ],
+        tableCells: [
+            "type",
+            "paperTitle",
+            "titleOfProceeding",
+            "conName",
+            "isNat",
+            "publicationYear",
+            "issnNumber",
+            "aff",
+            "year",
+            "proof",
+        ],
+        mainKey: {
+            head: ['Type', "Paper Title"],
+            keyName: ['type', 'paperTitle']
         }
     },
     BookAndChapter: {
         tableHeads: [
-            "Title of Published Book",
+            "Type",
+            "Title of Book / Chapter / Edited Book / Translation",
             "Paper Title",
             "Title of proceedings",
-            "Author / Editor / Translator",
             "Conference Name",
             "National / International",
             "Publication Year",
@@ -108,12 +163,13 @@ const CASDataTable = {
             "Affiliation Institute at the time of publication",
             "Year",
             "Uploaded Proof",
+
         ],
         tableCells: [
+            "type",
             "titleOfBook",
             "paperTitle",
             "titleOfProceeding",
-            "authorEditor",
             "conName",
             "isNat",
             "publicationYear",
@@ -123,8 +179,8 @@ const CASDataTable = {
             "proof",
         ],
         mainKey: {
-            head: ['Title of Published Book'],
-            keyName: ['titleOfBook']
+            head: ['Type', "Title of Book / Chapter / Edited Book / Translation", "Paper Title"],
+            keyName: ['type', 'titleOfBook', 'paperTitle']
         }
     },
     Collaboration: {
@@ -367,19 +423,17 @@ const CASDataTable = {
             "Course/Paper",
             "Level",
             "Teaching Mode",
-            "No of classes alloted per week",
-            "% of classes taken as per documented record",
+            "No of classes alloted",
+            "No of classes taken",
             "Year",
-            "Uploaded Attendance",
         ],
         tableCells: [
             "course",
             "level",
             "teachingMode",
             "noOfClasses",
-            "percentageOfClasses",
+            "classesTaken",
             "year",
-            "proof",
         ],
         mainKey: {
             head: ['Course/Paper'],
@@ -435,7 +489,6 @@ const CASDataTable = {
     PhdAwarded: {
         tableHeads: [
             "Scholar Name",
-            "Department Name",
             "Guide Name",
             "Thesis Title",
             "Degree",
@@ -450,7 +503,6 @@ const CASDataTable = {
         ],
         tableCells: [
             "scholarName",
-            "departmentName",
             "guideName",
             "thesisTitle",
             "degreeName",
@@ -537,6 +589,7 @@ const CASDataTable = {
         tableHeads: [
             "Degree",
             "Title",
+            "Subject",
             "University",
             "Award Year",
             "Proof",
@@ -544,6 +597,7 @@ const CASDataTable = {
         tableCells: [
             "degreeName",
             "title",
+            "subject",
             "university",
             "awardDate",
             "proof",
@@ -565,20 +619,20 @@ const CASDataTable = {
         tableHeads: [
             "Paper Title",
             "Journal Name",
+            'Author(s)',
             "Publication Year",
             "ISSN Number",
             "Indexed in",
-            "Links",
             "Year",
             "Proof",
         ],
         tableCells: [
             "paperTitle",
             "journalName",
+            "authors",
             "publicationYear",
             "issnNumber",
             "indexedIn",
-            "indexLink",
             "year",
             "proof"
         ],
@@ -589,15 +643,14 @@ const CASDataTable = {
     },
     TrimmedResearchProject: {
         tableHeads: [
-            "Scheme/Project Name",
-            "Program Title",
+            "Scheme / Project Title",
             "Principal Invigilator Name",
             "Funding Agency Name",
-            "Government / Non-Government",
+            "Govt. / Non-Govt.",
             "Department",
             "Award Year",
-            "Provided Funds (INR)",
-            "Major/Minor",
+            "Funds",
+            "Major / Minor",
             "Project Status",
             "Project Duration",
             "Year",
@@ -605,7 +658,6 @@ const CASDataTable = {
         ],
         tableCells: [
             "schemeName",
-            "programTitle",
             "principalName",
             "fundingName",
             "isGov",
@@ -626,14 +678,13 @@ const CASDataTable = {
     },
     ResearchProject: {
         tableHeads: [
-            "Scheme/Project Name",
-            "Program Title",
+            "Scheme / Project Title",
             "Principal Invigilator Name",
             "Funding Agency Name",
-            "Government / Non-Government",
+            "Govt. / Non-Govt.",
             "Award Year",
-            "Provided Funds (INR)",
-            "Major/Minor",
+            "Funds",
+            "Major / Minor",
             "Project Status",
             "Project Duration",
             "Year",
@@ -641,7 +692,6 @@ const CASDataTable = {
         ],
         tableCells: [
             "schemeName",
-            "programTitle",
             "principalName",
             "fundingName",
             "isGov",

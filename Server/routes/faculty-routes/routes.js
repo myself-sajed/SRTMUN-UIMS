@@ -56,16 +56,17 @@ const Responsibilities = require('../../models/faculty-models/responsibilities')
 const ConferenceParticipated = require('../../models/faculty-models/conferenceParticipated')
 const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 
+let models = {
+    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
+}
+
+let nonAcademicYearModels = {
+    Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
+}
+
 
 function initRoutes(app) {
 
-    let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit
-    }
-
-    let nonAcademicYearModels = {
-        Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
-    }
 
     // get data from model specified in the req.body
     app.post('/getModelData', (req, res) => {
@@ -89,13 +90,16 @@ function initRoutes(app) {
     // getdata
     app.post('/api/getData', (req, res) => {
 
-        const { model, userId, year } = req.body
+        const { model, userId, year, dataFilter } = req.body
 
         let filter = { userId }
         if (year) {
-            filter = { userId, year }
+            if (dataFilter) {
+                filter = dataFilter
+            } else {
+                filter = { userId, year }
+            }
         }
-
 
         if (model in nonAcademicYearModels) {
             models[model].find({ userId }).then((data) => {
@@ -309,6 +313,8 @@ function initRoutes(app) {
 
         const data = JSON.parse(JSON.stringify(req.body));
 
+        console.log(data)
+
         try {
             const degree = new Degree({
                 degreeName: data.degreeName,
@@ -427,7 +433,7 @@ function initRoutes(app) {
                 level: level,
                 teachingMode: mode,
                 noOfClasses: noOfClasses,
-                percentageOfClasses: classesTaken,
+                classesTaken: classesTaken,
                 year: year,
                 userId: userId,
             })
@@ -515,6 +521,7 @@ function initRoutes(app) {
             const researchPaper = new ResearchPaper({
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 issnNumber: data.issnNumber,
                 indexedIn: data.indexedIn,
@@ -545,10 +552,9 @@ function initRoutes(app) {
 
         try {
             const bookAndChapter = new BookAndChapter({
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
-                authorEditor: data.authorEditor,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,
@@ -556,7 +562,6 @@ function initRoutes(app) {
                 issnNumber: data.issnNumber,
                 aff: data.aff,
                 publisherName: data.publisherName,
-                schoolName: data.schoolName,
                 year: data.year,
                 proof: req.file.filename,
                 userId: data.userId,
@@ -574,7 +579,6 @@ function initRoutes(app) {
         }
     })
 
-    // books and chapters
     app.post('/api/add/researchGuidance', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
@@ -1018,7 +1022,6 @@ function initRoutes(app) {
                     "Principal Invigilator Name": 'principalName',
                     "Funding Agency Name": 'fundingName',
                     "Wheather Government / Non-Government": 'isGov',
-                    "Department": 'department',
                     "Award Year": 'awardYear',
                     "Project Duration (In Year)": 'projectDuration',
                     "Provided Funds (INR)": 'providedFunds',
@@ -1036,8 +1039,8 @@ function initRoutes(app) {
                     'Course/Paper': 'course',
                     'Level': 'level',
                     'Teaching Mode': 'teachingMode',
-                    'No of classes alloted per week': 'noOfClasses',
-                    '% of classes taken as per documented record': 'percentageOfClasses',
+                    'No of classes alloted': 'noOfClasses',
+                    'No of classes taken': 'classesTaken',
                     ' Year': 'year',
                 },
                 EContentDeveloped: {
@@ -1049,22 +1052,23 @@ function initRoutes(app) {
                 },
                 ResearchPaper: {
                     'Paper Title': 'paperTitle',
+                    "Author(s)": 'authors',
                     'Journal Name': 'journalName',
                     'Publication Year': 'publicationYear',
                     'ISSN Number': 'issnNumber',
+                    'Indexed In': 'indexedIn',
+                    'Link': 'indexLink',
                     'Choose Year': 'year',
                 },
                 BookAndChapter: {
-                    'Teacher Name': 'teacherName',
-                    'Title of Published Book': 'titleOfBook',
+                    'Type': 'type',
+                    'Title of Book / Chapter / Edited Book / Translation': 'titleOfBook',
                     'Paper Title': 'paperTitle',
                     'Title of proceedings of the conference': 'titleOfProceeding',
                     'Conference Name': 'conName',
                     'Wheather National / International': 'isNat',
-                    'Author / Editor / Translator': 'authorEditor',
                     'Year of Publication': 'publicationYear',
                     'ISBN/ISSN number of proceeding': 'issnNumber',
-                    'School Name': 'schoolName',
                     'Affiliation Institute at the time of publication': 'aff',
                     'Choose Year': 'year',
                     'Publisher Name': 'publisherName',
@@ -1218,4 +1222,4 @@ function initRoutes(app) {
 
 }
 
-module.exports = initRoutes
+module.exports = { initRoutes, nonAcademicYearModels, models }

@@ -493,7 +493,7 @@ function editRoutes(app) {
             level: level,
             teachingMode: mode,
             noOfClasses: noOfClasses,
-            percentageOfClasses: classesTaken,
+            classesTaken: classesTaken,
             year: year,
         }).then(function (data) {
             if (data) {
@@ -653,6 +653,7 @@ function editRoutes(app) {
             ResearchPaper.findOneAndUpdate({ _id: data.itemId }, {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,
@@ -690,6 +691,7 @@ function editRoutes(app) {
             ResearchPaper.findOneAndUpdate({ _id: data.itemId }, {
                 paperTitle: data.paperTitle,
                 journalName: data.journalName,
+                authors: data.authors,
                 publicationYear: data.publicationYear,
                 indexedIn: data.indexedIn,
                 indexData: data.indexData,
@@ -719,7 +721,7 @@ function editRoutes(app) {
 
         if (req.file) {
             BookAndChapter.findOneAndUpdate({ _id: data.itemId }, {
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
                 authorEditor: data.authorEditor,
@@ -760,10 +762,9 @@ function editRoutes(app) {
         else {
 
             BookAndChapter.findOneAndUpdate({ _id: data.itemId }, {
-                teacherName: data.teacherName,
+                type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
-                authorEditor: data.authorEditor,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,
@@ -771,7 +772,6 @@ function editRoutes(app) {
                 issnNumber: data.issnNumber,
                 aff: data.aff,
                 publisherName: data.publisherName,
-                schoolName: data.schoolName,
                 year: data.year,
             }).then(function (data) {
                 if (data) {

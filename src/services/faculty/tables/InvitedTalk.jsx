@@ -124,7 +124,7 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = t
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Invited Talk" editState={setEditModal} clearStates={clearStates} state={setTalkModal} icon={<HeadsetMicRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Invited Talk / Resource Person"} />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Invited Talk" editState={setEditModal} clearStates={clearStates} state={setTalkModal} icon={<HeadsetMicRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Invited Talks / Resource Person / Paper presentation"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='InvitedTalkFaculty' title='Invited Talk' SendReq='InvitedTalk' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

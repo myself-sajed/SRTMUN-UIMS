@@ -14,7 +14,7 @@ const CASActivities = [
     },
     {
         activityName: 'Activity 2 : Publications (Other than Research Papers)',
-        activityTables: CASDataTable.TrimmedBookAndChapter,
+        activityTables: CASDataTable.MainBookAndChapter,
         model: 'BookAndChapter',
         desc: 'Books, Chapters & Translation Works',
         colName: 'Publications',
@@ -126,12 +126,32 @@ const CASActivities = [
 
     },
     {
-        activityName: 'Activity 6: Invited Talks / Lectures / Resource Person / Presentation / Conferences',
+        activityName: 'Activity 6 [A]: Invited Talks / Lectures / Resource Person / Presentation',
         activityTables: CASDataTable.InvitedTalk,
         model: 'InvitedTalk',
-        desc: 'Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full paper in Conference Proceedings (Paper presented in seminars / conferences and also published as full paper in Conference Proceedings will be counted only once)',
-        colName: 'Invited Talks / Lectures',
-        casName: 'invitedTalks'
+        desc: 'Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars',
+        colName: 'Invited Talks',
+        casName: 'invitedTalks',
+        hasSubActivity: true,
+        mainActivityName: 'Activity 6: Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full paper in Conference Proceedings',
+        mainActivityDesc: 'Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full paper in Conference Proceedings (Paper presented in seminars / conferences and also published as full paper in Conference Proceedings will be counted only once)',
+        subCasNames: ['invitedTalks', 'conference',]
+
+
+    },
+    {
+        activityName: 'Activity 6 [B]: Conferences / Full Paper in Conference Proceedings',
+        activityTables: CASDataTable.ConferenceBookAndChapter,
+        model: 'BookAndChapter',
+        desc: 'Conferences / Full Paper in Conference Proceedings',
+        colName: 'Conferences',
+        casName: 'conference',
+        hasSubActivity: true,
+        mainActivityName: 'Activity 6: Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full paper in Conference Proceedings',
+        mainActivityDesc: 'Invited Talks / Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full paper in Conference Proceedings (Paper presented in seminars / conferences and also published as full paper in Conference Proceedings will be counted only once)',
+        subCasNames: ['invitedTalks', 'conference',]
+
+
     },
 ]
 
@@ -159,7 +179,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
                             <div className="bg-[#ffffff41] rounded-lg w-[30%] text-center">
                                 <p className='p-2'>
                                     Total Activity Score : <span className="font-bold">
-                                        {(casArray.reduce((sum, element) => sum + activity.subCasNames.reduce((newSum, subCasName) => newSum + element.academicData[subCasName].totalScore, 0), 0)).toFixed(2)}</span>
+                                        {(casArray.reduce((sum, element) => sum + activity.subCasNames.reduce((newSum, subCasName) => newSum + (element.academicData[subCasName]?.totalScore || 0), 0), 0)).toFixed(2)}</span>
                                 </p>
                             </div>
                         </div>
@@ -172,7 +192,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
                         </div>
                         <div className="bg-[#ffffff41] rounded-lg w-[30%] text-center">
                             <p className='p-2'>
-                                Total {activity?.hasSubActivity ? 'Sub-Activity' : 'Activity'} Score : <span className="font-bold">{(casArray.reduce((sum, element) => sum + element.academicData[activity.casName].totalScore, 0)).toFixed(2)}</span>
+                                Total {activity?.hasSubActivity ? 'Sub-Activity' : 'Activity'} Score : <span className="font-bold">{(casArray.reduce((sum, element) => sum + (element.academicData[activity.casName]?.totalScore || 0), 0)).toFixed(2)}</span>
                             </p>
                         </div>
                     </div>
@@ -228,7 +248,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
                                                 <div className={`${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} w-full rounded-lg flex items-center justify-end`}>
                                                     <p className='p-2 text-center'>
                                                         Total Score : <span className="font-bold">
-                                                            {casItem.academicData[activity.casName].totalScore.toFixed(2)}</span>
+                                                            {casItem.academicData[activity.casName]?.totalScore.toFixed(2) || 0}</span>
                                                     </p>
                                                 </div>
 

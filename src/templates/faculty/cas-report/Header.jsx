@@ -54,18 +54,16 @@ const dashboardObj = {
     ]
 }
 
-const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null }) => {
+const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, otherOptions = false, userType, showPersonalDetails = true, type = null, academicYear = null, forCAS = false }) => {
 
 
 
 
     return (
         <div className='font-sans mx-auto mt-16'>
-
-            <div className={`text-center ${forPrintOut === 'false' ? "bg-[#009879] text-white" : 'border'} p-2 mt-3 rounded-md`}>
-                <p className='lg:text-2xl text-lg'><strong>{title}</strong></p>
-                <p className='text-sm mt-2'>{subTitle}</p>
-            </div>
+            {
+                forCAS ? null : <MainHeading forPrintOut={forPrintOut} title={title} subTitle={subTitle} />
+            }
 
             <div className='mt-8'>
 
@@ -166,6 +164,15 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
 }
 
 export default Header
+
+const MainHeading = ({ forPrintOut, title, subTitle }) => {
+    return <div className={`text-center ${forPrintOut === 'false' ? "bg-[#009879] text-white" : 'border'} p-2 mt-3 rounded-md`}>
+        <p className='lg:text-2xl text-lg'><strong>{title}</strong></p>
+        <p className='text-sm mt-2'>{subTitle}</p>
+    </div>
+}
+
+export { MainHeading }
 
 
 

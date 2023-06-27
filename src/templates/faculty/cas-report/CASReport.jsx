@@ -9,6 +9,7 @@ import Axios from 'axios'
 import BasicIntro from './BasicIntro'
 import Eligibility from './Eligibility'
 import './CAS.css'
+import Introduction from './Introduction'
 
 const CASReport = () => {
 
@@ -21,6 +22,8 @@ const CASReport = () => {
     const [eligData, setEligData] = useState(null)
     const [level, setLevel] = useState(null)
     const [userCasDuration, setUserCasDuration] = useState(null)
+
+
 
 
 
@@ -130,12 +133,16 @@ const CASReport = () => {
     }, [casData, casArray])
 
     return (
-        <div className='mx-auto w-full font-sans'>
+        <div className='mx-auto w-full font-sans cas-report-generation'>
             {(casArray && academicData && eligData && level) ?
                 <>
+                    <Introduction level={level} userCasDuration={userCasDuration} title="Career Advancement Scheme (CAS)"
+                        subTitle={userCasDuration ? `${userCasDuration}` : ""} forPrintOut={forPrintOut} />
+
                     <Header user={casData.userId} title="Career Advancement Scheme (CAS)"
                         subTitle={userCasDuration ? `CAS Duration: ${userCasDuration}` : ""}
-                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
+                        directorData={academicData} userType="faculty" forPrintOut={forPrintOut} forCAS={true} />
+
                     <Eligibility eligData={eligData} level={level} forPrintOut={forPrintOut} userCasDuration={userCasDuration} />
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
                     <Table academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />

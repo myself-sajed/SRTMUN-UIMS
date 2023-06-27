@@ -105,7 +105,9 @@ const ResearchScore = ({ data }) => {
 
     let totalPatentPolicyScore = data?.patents.totalScore + data?.policyDocuments.totalScore + data?.awards.totalScore + data?.fellow.totalScore
 
-    let totalScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + data?.invitedTalks.totalScore
+    let totalInvitedConferenceScore = data?.invitedTalks.totalScore + (data?.conference?.totalScore || 0)
+
+    let totalScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + totalInvitedConferenceScore
 
 
     // capping
@@ -136,7 +138,7 @@ const ResearchScore = ({ data }) => {
         data?.awards.totalScore + data?.fellow.totalScore
 
     // total capped score and grand total score also
-    let totalCappedScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore
+    let totalCappedScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore + (data?.conference?.totalScore || 0)
 
 
     // checking for zero activities
@@ -176,9 +178,10 @@ const ResearchScore = ({ data }) => {
                         {/* // 2 Publication */}
                         <ResearchTableRow color={true} bold={true} td1={2} td2='Publication (Other than Research Papers)' td3={data?.publicationData.totalScore.toFixed(2)} />
 
-                        <ResearchTableRow bold={true} td1={null} td2='[A] Authored Books' td3={data?.publicationData?.authorPoints === undefined ? 0 : data?.publicationData?.authorPoints} />
-                        <ResearchTableRow bold={true} td1={null} td2='[B] Chapters in Edited Book' td3={data?.publicationData?.editorPoints === undefined ? 0 : data?.publicationData?.editorPoints} />
-                        <ResearchTableRow bold={true} td1={null} td2='[C] Translation Work' td3={data?.publicationData?.translationPoints === undefined ? 0 : data?.publicationData?.translationPoints} />
+                        <ResearchTableRow bold={true} td1={null} td2='[A] Authored Books' td3={data?.publicationData?.Book === undefined ? 0 : data?.publicationData?.Book} />
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Chapters' td3={data?.publicationData?.Chapter === undefined ? 0 : data?.publicationData?.Chapter} />
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Editor' td3={data?.publicationData?.Editor === undefined ? 0 : data?.publicationData?.Editor} />
+                        <ResearchTableRow bold={true} td1={null} td2='[C] Translation Work' td3={data?.publicationData?.Translator === undefined ? 0 : data?.publicationData?.Translator} />
 
 
 
@@ -252,9 +255,16 @@ const ResearchScore = ({ data }) => {
                             td3={data?.awards.totalScore + data?.fellow.totalScore} />
 
 
+
                         {/* // 6. Invited talks */}
                         < ResearchTableRow color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
-                            td3={`${data?.invitedTalks.totalScore.toFixed(2)},  Capped Score : ${talkCapScore}`} />
+                            td3={`${totalInvitedConferenceScore.toFixed(2)},  Capped Score : ${talkCapScore}`} />
+
+                        <ResearchTableRow bold={true} td1={null} td2='[A] Invited Lectures / Resource Person / Paper Presentation in Seminars'
+                            td3={data?.invitedTalks.totalScore} />
+
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Conference Proceedings'
+                            td3={data?.conference?.totalScore || 0} />
 
                     </tbody>
                 </table>

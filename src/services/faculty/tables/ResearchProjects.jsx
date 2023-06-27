@@ -168,9 +168,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Project Details' : 'Add a new Project'}</p>
 
 
-                        <Text title='Scheme or Project Name' state={projectName} setState={setProjectName} />
-
-                        <Text title='Program Title' state={programTitle} setState={setProgramTitle} />
+                        <Text title='"Scheme / Project Title"' state={projectName} setState={setProjectName} />
 
                         <Text title='Principal Invigilator Name' state={invName} setState={setInvName} />
 
@@ -187,8 +185,6 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                             </select>
                         </div>
 
-
-                        <Text title='Department' state={department} setState={setDepartment} />
 
                         <Text type="number" title='Award Year' state={awardDate} setState={setAwardDate} />
 
@@ -239,15 +235,13 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                     <table className="table table-bordered table-hover">
                         <thead className='table-dark'>
                             <tr>
-                                <th scope="col"><div className='w-44'>Scheme/Project Name</div></th>
-                                <th scope="col"><div className='w-44'>Program Title</div></th>
+                                <th scope="col"><div className='w-44'>Scheme / Project Title</div></th>
                                 <th scope="col"><div className='w-44'>Principal Invigilator Name</div></th>
-                                <th scope="col"><div className='w-44'>Funding Agency Name</div></th>
-                                <th scope="col">Government / Non-Government</th>
-                                <th scope="col">Department</th>
+                                <th scope="col"><div className='w-44'>Funding Agency</div></th>
+                                <th scope="col">Govt. / Non-Govt.</th>
                                 <th scope="col">Award Year</th>
-                                <th scope="col"><div className='w-44'>Provided Funds (INR)</div></th>
-                                <th scope="col">Major/Minor</th>
+                                <th scope="col"><div className='w-44'>Funds (INR)</div></th>
+                                <th scope="col">Major / Minor</th>
                                 <th scope="col">Project Status</th>
                                 <th scope="col">Project Duration</th>
                                 <th scope="col"><div className="w-20">Year</div></th>
@@ -260,11 +254,9 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                                 return (
                                     <tr key={index}>
                                         <td>{item.schemeName}</td>
-                                        <td>{item.programTitle}</td>
                                         <td>{item.principalName}</td>
                                         <td>{item.fundingName}</td>
                                         <td>{item.isGov}</td>
-                                        <td>{item.department}</td>
                                         <td>{item.awardYear}</td>
                                         <td>{item.providedFunds}</td>
                                         <td>{item.fundType}</td>

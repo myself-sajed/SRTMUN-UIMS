@@ -44,6 +44,8 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
+    const [editId, setEditId] = useState(null)
+
     const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
@@ -100,6 +102,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
 
     function pencilClick(itemId) {
+        setEditId(itemId)
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
                 setScholarName(item.scholarName)
@@ -149,12 +152,42 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
 
+    useEffect(() => {
+
+        if (editModal === true) {
+
+            data?.data?.data?.forEach(function (item) {
+                if (item._id === editId) {
+
+                    console.log(item)
+
+                    if (awardSubmit === 'Awarded') {
+                        setAwardYear("")
+                    } else {
+                        setAwardYear("-")
+                    }
+                }
+            })
+
+
+        } else {
+            if (awardSubmit === 'Awarded') {
+                setAwardYear("")
+            } else {
+                setAwardYear("-")
+            }
+        }
+
+
+
+    }, [awardSubmit, editModal])
+
 
     return (
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Research Guidance" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Guidance"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
@@ -197,7 +230,11 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
                         <Year space="col-md-3" title='Year of Scholar Registration' state={scholarYear} setState={setScholarYear} />
 
-                        <Text title='Year of Award' type="number" state={awardYear} setState={setAwardYear} />
+                        {
+                            awardSubmit === 'Awarded' && <Text title='Year of Award' type="number" state={awardYear} setState={setAwardYear} />
+                        }
+
+
 
                         <Year state={year} setState={setYear} />
 

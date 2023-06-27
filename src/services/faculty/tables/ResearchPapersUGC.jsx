@@ -25,7 +25,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
 
     //states
     const [paperTitle, setPaperTitle] = useState('')
-    const [authorName, setAuthorName] = useState('')
+    const [authors, setAuthors] = useState('')
     const [teacherName, setTeacherName] = useState('')
     const [journalName, setJournalName] = useState('')
     const [indexLink, setIndexLink] = useState([])
@@ -57,6 +57,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
         let formData = new FormData()
         formData.append('paperTitle', paperTitle)
         formData.append('journalName', journalName)
+        formData.append('authors', authors)
         formData.append('publicationYear', pubYear)
         formData.append('indexedIn', indexData?.join(", "))
         formData.append('indexData', indexData)
@@ -84,6 +85,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
         formData.append('itemId', itemToDelete._id)
         formData.append('proof', itemToDelete.proof)
         formData.append('paperTitle', paperTitle)
+        formData.append('authors', authors)
         formData.append('indexedIn', indexData?.join(", "))
         formData.append('indexData', indexData)
         formData.append('indexLink', Object.entries(indexLinkData).map(([key, value]) => `${key}: ${value}`).join(", "))
@@ -108,6 +110,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
                 setJournalName(item.journalName)
                 setPubYear(item.publicationYear)
                 setIssn(item.issnNumber)
+                setAuthors(item.authors)
                 setUgc(item.recLink)
                 setIndexData(item.indexedIn ? item.indexedIn?.split(', ')?.map(item => item.trim()) : [])
                 setIndexLinkData(item.indexLink ? item.indexLink?.split(', ')?.reduce((acc, entry) => (parts => (acc[parts[0].trim()] = parts[1].trim(), acc))(entry.split(': ')), {})
@@ -124,7 +127,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
     // function to clear states to '' 
     function clearStates() {
         setPaperTitle('')
-        setAuthorName('')
+        setAuthors('')
         setTeacherName('')
         setJournalName('')
         setPubYear('')
@@ -168,6 +171,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
 
                         <Text title='Paper Title' state={paperTitle} setState={setPaperTitle} />
                         <Text title='Journal Name' state={journalName} setState={setJournalName} />
+                        <Text title='Author(s)' state={authors} setState={setAuthors} />
                         <Text title='Publication Year' type="number" state={pubYear} setState={setPubYear} />
                         <Text title='ISSN Number' state={issn} setState={setIssn} />
                         <Year state={year} setState={setYear} />
@@ -203,6 +207,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
                             <tr>
                                 <th scope="col">Paper Title</th>
                                 <th scope="col">Journal Name</th>
+                                <th scope="col">Author(s)</th>
                                 <th scope="col">Publication Year</th>
                                 <th scope="col">ISSN Number</th>
                                 <th scope="col">Indexed in</th>
@@ -218,6 +223,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
                                     <tr key={index}>
                                         <td>{item.paperTitle}</td>
                                         <td>{item.journalName}</td>
+                                        <td>{item?.authors}</td>
                                         <td>{item.publicationYear}</td>
                                         <td>{item.issnNumber}</td>
                                         <td>{item?.indexedIn}</td>

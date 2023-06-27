@@ -119,7 +119,7 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
     return (
         <div>
             {/* // HEADER */}
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Patents published / awarded" />
+            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Patents published / awarded"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PatentFaculty' title='Patents published / awarded' SendReq='Patent' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

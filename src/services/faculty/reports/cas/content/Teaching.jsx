@@ -420,6 +420,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
                         ...teachingData, uploadedFiles:
                             { ...teachingData.uploadedFiles, [fileId]: null }
                     })
+                    savingFunction()
 
                     toast.success('File deleted successfully')
                 } else {

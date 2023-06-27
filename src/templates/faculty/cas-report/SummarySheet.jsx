@@ -2,6 +2,7 @@ import React from 'react'
 import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded';
 import { Remark } from '../../../services/faculty/reports/cas/content/Teaching';
 import { ViewFile } from './Tables';
+import { useEffect } from 'react';
 
 
 const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL", forPrintOut }) => {
@@ -145,6 +146,10 @@ const Teaching = ({ casArray, showFileURL, forPrintOut }) => {
 
 const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
+    useEffect(() => {
+        console.log("casArray :", casArray)
+    }, [casArray])
+
     let allYearTotalSum = 0;
     let allYearTotalCappedSum = 0;
 
@@ -160,7 +165,13 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
         item.totalPatentPolicyScore = totalPatentPolicyScore
 
-        let totalScore = item?.academicData.researchPaper.totalScore + item?.academicData.publicationData.totalScore + item?.academicData.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + item?.academicData.invitedTalks.totalScore
+        let totalInvitedConferenceScore = item?.academicData.invitedTalks.totalScore + (item?.academicData?.conference?.totalScore || 0)
+
+        item.totalInvitedConferenceScore = totalInvitedConferenceScore
+
+        let totalScore = item?.academicData.researchPaper.totalScore + item?.academicData.publicationData.totalScore + item?.academicData.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + totalInvitedConferenceScore
+
+
 
 
         // this is main total score 
@@ -188,7 +199,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
             item.academicData?.awards.totalScore + item.academicData?.fellow.totalScore
 
         // total capped score and grand total score also
-        let totalCappedScore = item.academicData?.researchPaper.totalScore + item.academicData?.publicationData.totalScore + item.academicData?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore
+        let totalCappedScore = item.academicData?.researchPaper.totalScore + item.academicData?.publicationData.totalScore + item.academicData?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore + (item.academicData?.conference?.totalScore || 0)
 
         item.totalCappedScore = totalCappedScore
 
@@ -211,7 +222,6 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
     }
 
     let mainCappedScoreResult = allYearTotalSum - policyAndTalkTotalScore + allYearTotalCappedScore
-
 
 
 
@@ -242,6 +252,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={1} td2={'Research Papers in Peer-Reviewed or UGC listed Journals'}
                             td3={<>
                                 {casArray.map((item) => {
+
                                     return (
                                         <td> <div className={`${forPrintOut === 'false' && "bg-[#00987936]"} p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.academicData.researchPaper.totalScore.toFixed(2)}</div> </td>);
                                 })}
@@ -254,6 +265,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={2} td2='Publication (Other than Research Papers)'
                             td3={<>
                                 {casArray.map((item) => {
+
                                     return (
                                         <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item.academicData.publicationData.totalScore.toFixed(2)}</div> </td>);
                                 })}
@@ -264,23 +276,29 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
-                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.authorPoints === undefined ? 0 : item.academicData.publicationData.authorPoints}</div> </td>);
+                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.Book === undefined ? 0 : item.academicData.publicationData.Book}</div> </td>);
                                 })}</>}
                         />
 
 
-                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Chapters in Edited Book'
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Chapters'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
-                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.editorPoints === undefined ? 0 : item.academicData.publicationData.editorPoints}</div> </td>);
+                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.Chapter === undefined ? 0 : item.academicData.publicationData.Chapter}</div> </td>);
+                                })}</>} />
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Editor'
+                            td3={<>
+                                {casArray.map((item) => {
+                                    return (
+                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.Editor === undefined ? 0 : item.academicData.publicationData.Editor}</div> </td>);
                                 })}</>} />
 
                         <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[C] Translation Work'
                             td3={<>
                                 {casArray.map((item) => {
                                     return (
-                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.translationPoints === undefined ? 0 : item.academicData.publicationData.translationPoints}</div> </td>);
+                                        <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item.academicData.publicationData.Translator === undefined ? 0 : item.academicData.publicationData.Translator}</div> </td>);
                                 })}</>} />
 
 
@@ -468,8 +486,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                 return (
                                     <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>
                                         {false && <LabelImportantRoundedIcon />}
-                                        {title === "CAS" ? `${item?.academicData?.policyDocuments.totalScore} | Capped Score : 
-                                ${item?.policyCapScore}` : item?.academicData?.policyDocuments.totalScore}
+                                        {item?.academicData?.policyDocuments.totalScore}
                                     </div> </td>);
                             })}</>} />
 
@@ -485,7 +502,18 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         < ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
                             td3={<>{casArray.map((item) => {
                                 return (
-                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{title === "CAS" ? `${item?.academicData.invitedTalks.totalScore.toFixed(2)} |   Capped Score : ${item?.talkCapScore}` : item?.academicData.invitedTalks.totalScore.toFixed(2)}</div> </td>);
+                                    <td> <div className={true && `${forPrintOut === 'false' && "bg-[#00987936]"}  p-1 rounded-xl flex items-center justify-start gap-2`}>{true && <LabelImportantRoundedIcon />}{item?.totalInvitedConferenceScore.toFixed(2)}</div> </td>);
+                            })}</>} />
+
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[A] Invited Lectures / Resource Person / Paper Presentation in Seminars'
+                            td3={<>{casArray.map((item) => {
+                                return (
+                                    <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData.invitedTalks.totalScore}</div> </td>);
+                            })}</>} />
+                        <ResearchTableRow forPrintOut={forPrintOut} casArray={casArray} bold={true} td1={null} td2='[B] Conferences / Full Paper in Conference Proceedings'
+                            td3={<>{casArray.map((item) => {
+                                return (
+                                    <td> <div className={false && 'bg-[#00987936] p-1 rounded-xl flex items-center justify-start gap-2'}>{false && <LabelImportantRoundedIcon />}{item?.academicData?.conference?.totalScore || 0}</div> </td>);
                             })}</>} />
 
                         {/* // grand total */}
@@ -511,40 +539,47 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                         <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>
                             <thead className={`${forPrintOut === 'false' && "text-white bg-[#009879]"}`}>
                                 <tr>
-                                    <th scope="col">Year(s)</th>
-                                    <th scope="col">Total Score</th>
-                                    {/* <th scope="col">Total Capped Score</th> */}
+                                    <th>Year(s)</th>
+                                    {casArray.map((item) => {
+                                        return (
+                                            <th scope="row">{item.casYear}</th>
+                                        )
+                                    })}
                                 </tr>
                             </thead>
                             <tbody>
 
 
-                                {casArray.map((item) => {
-                                    return (
-                                        <tr>
-                                            <th scope="row">{item.casYear}</th>
-                                            <td>{item.totalScore.toFixed(2)}</td>
-                                            {/* <td>{item.totalCappedScore.toFixed(2)}</td> */}
-                                        </tr>
+                                <tr>
+                                    <td>Yearly Total</td>
 
-                                    )
-                                })}
+                                    {casArray.map((item) => {
+                                        return (
+                                            <>
+
+                                                <td className='font-semibold'>{item.totalScore.toFixed(2)}</td>
+
+                                            </>
+
+                                        )
+                                    })}
+                                </tr>
+
 
                             </tbody>
                         </table>
 
                         <div className="my-2 flex items-center justify-center gap-4">
-                            <div className='font-bold'>Total Score for all years is : <span className='text-xl text-blue-700'>{allYearTotalSum.toFixed(2)}</span></div>
+                            <div className='font-bold'>Total Score for Assessment Period : <span className='text-xl text-blue-700'>{allYearTotalSum.toFixed(2)}</span></div>
 
 
                             <span className='text-3xl text-muted'>|</span>
-                            <div className='font-bold'>Total Capped Score for all years is : <span className='text-xl text-blue-700'>{mainCappedScoreResult.toFixed(2)}</span></div>
+                            <div className='font-bold'>Total Score after Capping : <span className='text-xl text-blue-700'>{mainCappedScoreResult.toFixed(2)}</span></div>
                         </div>
 
 
                         <div>
-                            <br /><br /><br /><br />
-                            <br /><br /><br /><br />
+                            <br /><br /><br />
                             <div>
                                 <div className='flex items-center justify-between'>
                                     <p>Signature of Principal / Director</p>
@@ -552,9 +587,13 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                 </div>
 
                                 <div>
-                                    <p className="font-semibold mt-16 mb-2"> I. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: For Stage ________ to ________ AGP: ________ </p>
+                                    <p className="font-semibold mt-6 mb-2"> I. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
 
-                                    <br /><br /><br /><br /><br /><br />
+                                    <p className="my-2 mx-10">(or)</p>
+
+                                    <p className="font-semibold ml-10">From Academic Level _______________ to _______________</p>
+
+                                    <br /><br /><br />
                                     <p className='flex items-center justify-between'>
                                         <span> 1. The Principal / Director</span>
                                         <span>2. Govt. Nominee</span>
@@ -564,13 +603,17 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                     </p>
                                 </div>
 
-                                <br /><br /><br /><br />
-                                <br /><br /><br /><br />
 
                                 <div>
-                                    <p className="font-semibold mt-5 mb-2"> II. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _____________: For Stage ________ to ________ AGP: ________ </p>
+                                    <p className="font-semibold mt-6 mb-2"> II. Verified and recommended / not recommended by Screening Committee Members with Signature w.e.f. _______________: <br /><br /> <span className='ml-10 pt-3'>From Stage _______________ to _______________ AGP: _______________ </span></p>
 
-                                    <br /><br /><br /><br /><br /><br />
+                                    <p className="my-2 mx-10">(or)</p>
+
+                                    <p className="font-semibold ml-10">From Academic Level _______________ to _______________</p>
+
+                                    <p></p>
+
+                                    <br /><br /><br />
                                     <p className='flex items-center justify-between flex-wrap'>
                                         <span> 1. The Chairperson of the Governing Body or his or her nominee</span>
                                         <span> 2. The Principal / Director</span>
@@ -578,15 +621,21 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                                         <span>4. Head of the concerned department</span>
 
                                     </p>
-                                    <br /><br /><br /><br /><br /><br />
-                                    <p className='grid grid-cols-3 gap-10'>
-                                        <span>5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
-                                            Development Council or equivalent position in the University, and the other must be expert in the concerned subject
-                                        </span>
-                                        <span>6.Subject expert I</span>
-                                        <span>7. Subject expert II</span>
+                                    <br /><br /><br />
+                                    <p class="w-1/3">5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
+                                        Development Council or equivalent position in the University, and the other must be expert in the concerned subject
                                     </p>
+                                    <br />
+                                    <br /><br />
+                                    <div className='flex items-center justify-between w-1/2'>
+                                        <p>6.Subject expert I</p>
+                                        <p>Subject expert II</p>
+                                    </div>
                                 </div>
+
+                                <br /><br /><br />
+
+                                <p className="mb-5">7. An academician representing SC/ST/OBC/ Minority/Women/Differently-abled categories, if any of candidates representing these categories is the applicant, to be nominated by the Vice Chancellor, if any of the above members of the selection committee do not belong to that category.</p>
                             </div>
                         </div>
 

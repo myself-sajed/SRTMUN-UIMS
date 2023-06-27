@@ -6,7 +6,7 @@ import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded
 const SummarySheet = ({ casData, casYearState }) => {
     return (
         <div className='mb-5'>
-            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">PBAS Summary Sheet of Year {casYearState}</p>
+            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">CAS Summary Sheet of Year {casYearState}</p>
 
             <div>
                 {/* Table 1 */}
@@ -105,7 +105,9 @@ const ResearchScore = ({ data }) => {
 
     let totalPatentPolicyScore = data?.patents.totalScore + data?.policyDocuments.totalScore + data?.awards.totalScore + data?.fellow.totalScore
 
-    let totalScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + data?.invitedTalks.totalScore
+    let totalInvitedConferenceScore = data?.invitedTalks.totalScore + (data?.conference?.totalScore || 0)
+
+    let totalScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + totalPatentPolicyScore + totalInvitedConferenceScore
 
 
     // capping
@@ -136,7 +138,7 @@ const ResearchScore = ({ data }) => {
         data?.awards.totalScore + data?.fellow.totalScore
 
     // total capped score and grand total score also
-    let totalCappedScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore
+    let totalCappedScore = data?.researchPaper.totalScore + data?.publicationData.totalScore + data?.ictData.totalScore + totalGuidanceProjectScore + cappedPatentScore + talkCapScore + (data?.conference?.totalScore || 0)
 
 
     // checking for zero activities
@@ -176,9 +178,10 @@ const ResearchScore = ({ data }) => {
                         {/* // 2 Publication */}
                         <ResearchTableRow color={true} bold={true} td1={2} td2='Publication (Other than Research Papers)' td3={data?.publicationData.totalScore.toFixed(2)} />
 
-                        <ResearchTableRow bold={true} td1={null} td2='[A] Authored Books' td3={data?.publicationData?.authorPoints === undefined ? 0 : data?.publicationData?.authorPoints} />
-                        <ResearchTableRow bold={true} td1={null} td2='[B] Chapters in Edited Book' td3={data?.publicationData?.editorPoints === undefined ? 0 : data?.publicationData?.editorPoints} />
-                        <ResearchTableRow bold={true} td1={null} td2='[C] Translation Work' td3={data?.publicationData?.translationPoints === undefined ? 0 : data?.publicationData?.translationPoints} />
+                        <ResearchTableRow bold={true} td1={null} td2='[A] Authored Books' td3={data?.publicationData?.Book === undefined ? 0 : data?.publicationData?.Book} />
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Chapters' td3={data?.publicationData?.Chapter === undefined ? 0 : data?.publicationData?.Chapter} />
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Editor' td3={data?.publicationData?.Editor === undefined ? 0 : data?.publicationData?.Editor} />
+                        <ResearchTableRow bold={true} td1={null} td2='[C] Translation Work' td3={data?.publicationData?.Translator === undefined ? 0 : data?.publicationData?.Translator} />
 
 
 
@@ -252,20 +255,54 @@ const ResearchScore = ({ data }) => {
                             td3={data?.awards.totalScore + data?.fellow.totalScore} />
 
 
+
                         {/* // 6. Invited talks */}
                         < ResearchTableRow color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
-                            td3={`${data?.invitedTalks.totalScore.toFixed(2)},  Capped Score : ${talkCapScore}`} />
+                            td3={`${totalInvitedConferenceScore.toFixed(2)},  Capped Score : ${talkCapScore}`} />
+
+                        <ResearchTableRow bold={true} td1={null} td2='[A] Invited Lectures / Resource Person / Paper Presentation in Seminars'
+                            td3={data?.invitedTalks.totalScore} />
+
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Conferences / Full Paper in Conference Proceedings'
+                            td3={data?.conference?.totalScore || 0} />
 
                     </tbody>
                 </table>
             </div>
 
-            <p>Total Score  :
-                <span className='ml-4 text-xl font-bold text-blue-700'>{
-                    totalScore && totalScore.toFixed(2)
-                }</span>
-            </p>
+            {/* // Grand total */}
+            {/* // GRAND TOTAL */}
+            <div className='border-2 border-blue-700 rounded-lg p-3 text-center'>
+                <div className='flex items-center justify-center gap-4'>
+                    <p>Total Score  :
+                        <span className='ml-4 text-xl font-bold text-blue-700'>{
+                            totalScore && totalScore.toFixed(2)
+                        }</span>
+                    </p>
+                    <div className='text-muted'>|</div>
+                    <p>Total Capped Score  :
+                        <span className='ml-4 text-xl font-bold text-blue-700'>{
+                            totalCappedScore && totalCappedScore.toFixed(2)
+                        }</span>
+                    </p>
+                </div>
+                <hr className='my-3' />
+                <p className='text-lg'>Grand Total Score  :
+                    <span className='ml-4 text-2xl font-bold text-blue-700'>{
+                        totalCappedScore && totalCappedScore.toFixed(2)
+                    }</span>
+                </p>
+            </div>
 
+            <div className='border-2 text-lg border-blue-700 rounded-lg p-3 text-center mt-3'>
+                <p>The above Grand Total Score is from <span className='font-bold'>{count}</span> out of <span className='font-bold'>6</span> Categories.</p>
+
+
+                {count < 3 &&
+                    <p className='mt-2 bg-red-50 font-bold rounded-xl p-2 text-red-900 text-lg'>{
+                        "Therefore you are not eligible for CAS Promotion."}</p>
+                }
+            </div>
 
         </div>
     )

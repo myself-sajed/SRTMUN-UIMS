@@ -66,7 +66,7 @@ module.exports = upload;
 
 
 //routes
-require("./routes/faculty-routes/routes.js")(app);
+require("./routes/faculty-routes/routes.js").initRoutes(app);
 require("./routes/faculty-routes/excelReport.js")(app);
 require("./routes/faculty-routes/editRoutes.js")(app);
 require("./routes/faculty-routes/casRoutes.js")(app);

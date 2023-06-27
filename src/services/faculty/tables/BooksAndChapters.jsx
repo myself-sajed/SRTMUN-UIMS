@@ -18,7 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
+const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTable = true, title, propType = "Book", showConferenceOnly = false }) => {
     const [bookModal, setBookModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -38,6 +38,8 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     const [pubDate, setPubDate] = useState('')
     const [proof, setProof] = useState(null)
     const [year, setYear] = useState('')
+    const [type, setType] = useState(null)
+    const [editId, setEditId] = useState(null)
 
     const [res, setRes] = useState('')
 
@@ -53,18 +55,16 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         setLoading(true)
 
         let formData = new FormData()
-        formData.append('teacherName', teacherName)
+        formData.append('type', type)
         formData.append('titleOfBook', bookTitle)
         formData.append('paperTitle', paperTitle)
         formData.append('titleOfProceeding', conTitle)
-        formData.append('authorEditor', authorEditor)
         formData.append('conName', conName)
         formData.append('isNat', nat)
         formData.append('publicationYear', pubDate)
         formData.append('issnNumber', issn)
         formData.append('aff', aff)
         formData.append('publisherName', pubName)
-        formData.append('schoolName', schoolName)
         formData.append('year', year)
         formData.append('file', proof)
         formData.append('userId', user?._id)
@@ -81,18 +81,16 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         let formData = new FormData()
         formData.append('itemId', itemToDelete._id)
         formData.append('proof', itemToDelete.proof)
-        formData.append('teacherName', teacherName)
+        formData.append('type', type)
         formData.append('titleOfBook', bookTitle)
         formData.append('paperTitle', paperTitle)
         formData.append('titleOfProceeding', conTitle)
-        formData.append('authorEditor', authorEditor)
         formData.append('conName', conName)
         formData.append('isNat', nat)
         formData.append('publicationYear', pubDate)
         formData.append('issnNumber', issn)
         formData.append('aff', aff)
         formData.append('publisherName', pubName)
-        formData.append('schoolName', schoolName)
         formData.append('year', year)
         formData.append('file', proof)
 
@@ -106,19 +104,18 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
 
 
     function pencilClick(itemId) {
+        setEditId(itemId)
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
-                setTeacherName(item.teacherName)
+                setType(item.type)
                 setBookTitle(item.titleOfBook)
                 setPaperTitle(item.paperTitle)
                 setConTitle(item.titleOfProceeding)
                 setConName(item.conName)
                 setNat(item.isNat)
                 setIssn(item.issnNumber)
-                setAuthorEditor(item.authorEditor)
                 setAff(item.aff)
                 setPubName(item.publisherName)
-                setSchoolName(item.schoolName)
                 setPubDate(item.publicationYear)
                 setYear(item.year)
                 setProof(item.file)
@@ -131,17 +128,15 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
 
     // function to clear states to '' 
     function clearStates() {
-        setTeacherName('')
+        setType(propType)
         setBookTitle('')
         setPaperTitle('')
         setConTitle('')
         setConName('')
         setNat('')
         setIssn('')
-        setAuthorEditor('')
         setAff('')
         setPubName('')
-        setSchoolName('')
         setPubDate('')
         setYear('')
         setProof('')
@@ -159,6 +154,61 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
+
+    useEffect(() => {
+
+        if (editModal === true) {
+
+            data?.data?.data?.forEach(function (item) {
+                if (item._id === editId) {
+                    setNat(item.isNat)
+                    setIssn(item.issnNumber)
+                    setAff(item.aff)
+                    setPubName(item.publisherName)
+                    setPubDate(item.publicationYear)
+                    setYear(item.year)
+                    if (type === 'Conference') {
+                        setBookTitle('-')
+                        setPaperTitle(item.paperTitle)
+                        setConTitle(item.titleOfProceeding)
+                        setConName(item.conName)
+                    } else {
+                        setPaperTitle('-')
+                        setConTitle('-')
+                        setConName('-')
+                        setBookTitle(item.titleOfBook)
+
+                    }
+                }
+            })
+
+
+
+
+
+
+        } else {
+            if (type === 'Conference') {
+                setBookTitle('-')
+                setPaperTitle('')
+                setConTitle('')
+                setConName('')
+            } else {
+                setPaperTitle('-')
+                setConTitle('-')
+                setConName('-')
+                setBookTitle('')
+            }
+        }
+
+
+
+        console.log(editModal)
+    }, [type, editModal])
+
+    useEffect(() => {
+        console.log('Editid :', editId, 'Modal is :', editModal)
+    }, [editId, editModal])
 
     return (
         <div>
@@ -178,35 +228,54 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                     <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setBookModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Book/Chapter' : 'Add a new Book/Chapter'}</p>
 
-                        <Text title='Teacher Name' state={teacherName} setState={setTeacherName} />
-                        <Text title='Title of Published Book' state={bookTitle} setState={setBookTitle} />
-                        <Text title='Paper Title' state={paperTitle} setState={setPaperTitle} />
-                        <Text title='Title of proceedings of the conference' state={conTitle} setState={setConTitle} />
-                        <Text title='Conference Name' state={conName} setState={setConName} />
+
+                        <div className="col-md-4">
+
+                            <label htmlFor="type" className="form-label">Choose Type</label>
+                            <select className="form-select" id="type" required disabled={showConferenceOnly}
+                                value={type} onChange={(e) => { setType(e.target.value) }}>
+                                <option disabled selected value="">Choose</option>
+
+                                {
+                                    showConferenceOnly ? <option value="Conference">Conference</option>
+                                        :
+                                        <>
+                                            <option value="Book">Book</option>
+                                            <option value="Chapter">Chapter</option>
+                                            <option value="Editor">Editor</option>
+                                            <option value="Translator">Translator</option>
+                                            <option value="Conference">Conference</option>
+                                        </>
+                                }
+
+                            </select>
+                        </div>
+
+                        <Text title='Title of Book / Chapter / Edited Book / Translation' state={bookTitle} setState={setBookTitle} disabled={type === 'Conference' ? true : false} />
+                        <Text title='Paper Title' state={paperTitle} setState={setPaperTitle} disabled={type !== 'Conference' ? true : false} />
+                        <Text title='Title of proceedings of the conference' state={conTitle} setState={setConTitle} disabled={type !== 'Conference' ? true : false} />
+                        <Text title='Conference Name' disabled={type !== 'Conference' ? true : false} state={conName} setState={setConName} />
                         <div className="col-md-4">
 
                             <label htmlFor="validationCustom05" className="form-label">Wheather National / International</label>
                             <select className="form-select" id="validationCustom05" required
                                 value={nat} onChange={(e) => { setNat(e.target.value) }}>
                                 <option selected disabled value="">Choose</option>
-                                <option value="National">National</option>
-                                <option value="International">International</option>
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-
-                            <label htmlFor="authorEditor" className="form-label">Author / Editor / Translator</label>
-                            <select className="form-select" id="authorEditor" required
-                                value={authorEditor} onChange={(e) => { setAuthorEditor(e.target.value) }}>
-                                <option selected disabled value="">Choose</option>
-                                <option value="Author">Author</option>
-                                <option value="Editor">Editor</option>
-                                <option value="Translator">Translator</option>
+                                {
+                                    type === 'Conference' ? <>
+                                        <option value="State/University">State/University</option>
+                                        <option value="National">National</option>
+                                        <option value="International (Abroad)">International (Abroad)</option>
+                                        <option value="International (within country)">International (within country)</option>
+                                    </> : <>
+                                        <option value="National">National</option>
+                                        <option value="International">International</option>
+                                    </>
+                                }
                             </select>
                         </div>
                         <Text title='Year of Publication' type="number" state={pubDate} setState={setPubDate} />
                         <Text title='ISBN/ISSN number of proceeding' state={issn} setState={setIssn} />
-                        <Text title='School Name' state={schoolName} setState={setSchoolName} />
                         <Text title='Affiliation Institute at the time of publication' space='col-md-6' state={aff} setState={setAff} />
                         <Year state={year} setState={setYear} />
                         <Text title='Publisher Name' space='col-md-6' state={pubName} setState={setPubName} />
@@ -228,10 +297,9 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                     <table className="table table-bordered table-hover">
                         <thead className='table-dark'>
                             <tr>
-                                <th scope="col">Teacher Name</th>
-                                <th scope="col"><div className="w-32">Title of Published Book</div></th>
+                                <th scope="col">Type</th>
+                                <th scope="col"><div className="w-32">Title of Book / Chapter / Edited Book / Translation  </div></th>
                                 <th scope="col">Paper Title</th>
-                                <th scope="col">Author / Editor / Translator</th>
                                 <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
                                 <th scope="col">Conference Name</th>
                                 <th scope="col">National / International</th>
@@ -239,7 +307,6 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                                 <th scope="col"><div className="w-40">ISBN/ISSN number of proceeding</div></th>
                                 <th scope="col"><div className="w-48">Affiliation Institute at the time of publication</div></th>
                                 <th scope="col">Publisher Name</th>
-                                <th scope="col">School Name</th>
                                 <th scope="col"><div className="w-24">Year</div></th>
                                 <th scope="col">Uploaded Proof</th>
                                 <th scope="col">Action</th>
@@ -252,10 +319,9 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                             {data && filteredItems.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.teacherName}</td>
+                                        <td>{item?.type}</td>
                                         <td>{item.titleOfBook}</td>
                                         <td>{item.paperTitle}</td>
-                                        <td>{item.authorEditor}</td>
                                         <td>{item.titleOfProceeding}</td>
                                         <td>{item.conName}</td>
                                         <td>{item.isNat}</td>
@@ -263,7 +329,6 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                                         <td>{item.issnNumber}</td>
                                         <td>{item.aff}</td>
                                         <td>{item.publisherName}</td>
-                                        <td>{item.schoolName}</td>
                                         <td>{item.year}</td>
                                         <td><View proof={item.proof} /></td>
                                         <td><Actions item={item} model="BookAndChapter" refreshFunction={() => { refetch() }} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setBookModal} /></td>
@@ -286,7 +351,7 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                     }
                 </div>
             }
-        </div>
+        </div >
     )
 }
 
@@ -296,3 +361,12 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
 
 
 export default BooksAndChapters
+
+const RadioForType = ({ title, id }) => {
+    return <div className="form-check flex-auto">
+        <input className="form-check-input" type="radio" name="chooseType" id={id} />
+        <label className="form-check-label" htmlFor={id}>
+            {title}
+        </label>
+    </div>
+}

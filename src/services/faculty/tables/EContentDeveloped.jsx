@@ -32,6 +32,7 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
+    const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
 
@@ -55,6 +56,7 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
     }
 
     function pencilClick(itemId) {
+        setEditId(itemId)
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
                 setModuleName(item.moduleName)
@@ -87,6 +89,53 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
+
+    useEffect(() => {
+
+        if (editModal === true) {
+
+            console.log("Running", editId)
+
+            data?.data?.data?.forEach(function (item) {
+                if (item._id === editId) {
+
+                    console.log(item)
+
+                    if (creationType === 'Design of new curriculla & courses') {
+                        setPlatform("-")
+                        setLink("N/A")
+                        setModuleName(item.moduleName)
+                        setYear(item.year)
+                    } else {
+                        setModuleName(item.moduleName)
+                        setPlatform(item.platform)
+                        setYear(item.year)
+                        setLink(item.link)
+
+                    }
+                }
+            })
+
+
+
+
+
+
+        } else {
+            if (creationType === 'Design of new curriculla & courses') {
+                setPlatform("-")
+                setLink("N/A")
+            } else {
+                setPlatform("")
+                setLink("")
+            }
+        }
+
+
+
+    }, [creationType, editModal])
+
+
 
 
     return (
@@ -121,10 +170,11 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
                             </select>
                         </div>
 
-                        <Text title='Platform on which the module is developed' space='col-md-6' state={platform} setState={setPlatform} />
+                        <Text title='Platform on which the module is developed' space='col-md-6' state={platform} setState={setPlatform} disabled={creationType === "Design of new curriculla & courses" && true} />
 
                         <Year space='col-md-3' state={year} setState={setYear} />
-                        <Text title='Link to the content' state={link} space='col-md-9' setState={setLink} />
+
+                        <Text title='Link to the content' disabled={creationType === "Design of new curriculla & courses" && true} state={link} space='col-md-9' setState={setLink} />
 
                     </FormWrapper>
                 </DialogContent>
@@ -164,8 +214,10 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
                                         <td>{item.year}</td>
 
 
-                                        <td><a href={item.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
-                                            {item.link.slice(0, 30)}{item.link.length > 30 && `...`}</a></td>
+                                        <td>
+                                            {item.link === 'N/A' ? 'N/A' : <a href={item.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
+                                                {item.link.slice(0, 30)}{item.link.length > 30 && `...`}</a>}
+                                        </td>
 
                                         <td><Actions item={item} model="EContentDeveloped" refreshFunction={refetch} editState={setEditModal} addState={setECont} pencilClick={() => pencilClick(item._id)} /></td>
                                     </tr>

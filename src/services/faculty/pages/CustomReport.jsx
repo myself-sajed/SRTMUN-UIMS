@@ -129,7 +129,7 @@ const CustomReport = () => {
         },
         {
             title: 'Book and Chapter published',
-            columns: ['Teacher Name', 'Title of Published Book', 'Paper Title', 'Title of proceedings of the conference',
+            columns: ['Teacher Name', 'Title of Book / Chapter / Edited Book / Translation', 'Paper Title', 'Title of proceedings of the conference',
                 'Conference Name', 'Is National', 'Year of Publication', 'ISBN/ISSN number of proceeding',
                 'Affiliation Institute at the time of publication',
                 'Publisher Name', 'School Name', 'Year', 'Proof',],
