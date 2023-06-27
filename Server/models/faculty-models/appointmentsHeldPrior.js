@@ -25,6 +25,10 @@ const appointmentSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    proof: {
+        type: 'string',
+        required: false,
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
