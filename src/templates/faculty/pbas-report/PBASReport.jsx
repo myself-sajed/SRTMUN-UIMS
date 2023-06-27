@@ -10,6 +10,7 @@ import Table from '../cas-report/Tables'
 import ShowProofs from './ShowProofs'
 import OtherInfo from '../cas-report/OtherInfo'
 import Instructions from '../cas-report/Instructions'
+import TeachingAndActivities from '../cas-report/TeachingAndActivities'
 
 const CASReport = () => {
 
@@ -95,6 +96,7 @@ const CASReport = () => {
                         subTitle={`PBAS Report of year ${casArray?.map((cas) => cas.casYear).join(', ')}`}
                         directorData={academicData} userType="faculty" forPrintOut={forPrintOut} />
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
+                    {/* <TeachingAndActivities casArray={casArray} forPrintOut={forPrintOut} lectures={academicData.Lectures} /> */}
                     <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" forPrintOut={forPrintOut} />
                     <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
                     <OtherInfo casArray={casArray} forPrintOut={forPrintOut} />
