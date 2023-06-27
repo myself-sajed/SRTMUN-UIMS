@@ -113,9 +113,6 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
 
     }
 
-    useEffect(() => {
-        console.log('Selected Year :', selectedYear)
-    }, [selectedYear])
 
     return (
         <div className="flex flex-col sm:flex-row items-center justify-center mt-2  flex-wrap">

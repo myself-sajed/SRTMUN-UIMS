@@ -16,7 +16,6 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
         const filteredYear = casYear.filter((item) => JSON.parse(item).casYear !== null);
 
-        console.log('filteredYear :', filteredYear)
         // Sort the array in ascending order
         sortedYear = filteredYear.sort((a, b) => {
             const yearA = JSON.parse(a).casYear;
@@ -32,7 +31,6 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
         });
     }
 
-    console.log("sortedYear :", sortedYear)
 
     const navigate = useNavigate()
     const [forPrintOut, setForPrintOut] = useState(false)

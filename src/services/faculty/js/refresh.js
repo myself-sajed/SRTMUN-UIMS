@@ -9,11 +9,6 @@ const getData = async ({ model, userId, year }) => {
 }
 
 const refresh = ({ model, userId, year, dataFilter = null }) => {
-
-    if (model.includes('Book')) {
-        console.log('Book filter in refresh :', dataFilter)
-    }
-
     return axios.post(`${process.env.REACT_APP_MAIN_URL}/api/getData`, { model, userId, year, dataFilter })
 }
 
