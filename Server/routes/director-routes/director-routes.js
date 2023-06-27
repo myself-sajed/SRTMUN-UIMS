@@ -960,4 +960,31 @@ router.post('/inactive-active/student', async (req, res) => {
     }
 })
 
+// Convert student to alumni in bulk
+router.post('/student-to-alumni/bulk', async (req,res)=> {
+
+    const {arr} = req.body
+    try{
+        for (id of arr){
+            let student = await StudentUser.findOne({_id: id});
+            const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated, programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
+
+            let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
+            let YNext = (yStarted+1).toString().slice(-2);
+            let doStarted = `${yStarted}-${YNext}`;
+
+            let alumni = { salutation, photoURL, name, email, address: address? address : "-", dob : dob? dob : "-", mobile, programGraduated, doStarted: programEnroledOn? programEnroledOn: doStarted, cast: cast?cast: '-', religion: religion? religion: '-', country: country ? country : 'india', schoolName,  }
+            // const module = new AlumniUser(student)
+            // await module.save()
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+    
+})
+// Convert student to alumni single
+router.post('/student-to-alumni/single', async (req,res)=> {
+    
+})
 module.exports = router;
