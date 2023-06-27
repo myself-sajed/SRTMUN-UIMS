@@ -11,10 +11,6 @@ const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal
 
   const [filterData, setFilterData] = useState([])
 
-  useEffect(() => {
-    console.log("data :", data)
-  }, [data])
-
   const onClose = () => {
     setDataFilterModal({ ...dataFilterModal, isOpen: false });
     recalculateScore(state, setState, data);

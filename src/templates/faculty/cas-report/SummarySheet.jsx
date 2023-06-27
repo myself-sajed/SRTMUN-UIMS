@@ -644,6 +644,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
                     </div>
                     :
                     <div>
+                        <p className="academic-start"></p>
                         <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} mt-28 mb-2 p-2 `}>Table 3 : <span className="font-bold">Summary of API Scores</span></p>
 
                         <table className={`table table-bordered ${forPrintOut === 'true' && "border-dark"}`}>

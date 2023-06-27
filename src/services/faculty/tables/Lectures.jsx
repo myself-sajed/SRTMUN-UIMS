@@ -20,7 +20,7 @@ import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 
-const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
+const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = false }) => {
     const [lectureModal, setLectureModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -100,8 +100,15 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
 
 
     useEffect(() => {
-        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
-    }, [data])
+        if (data) {
+            let filteredData = sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear)
+            setFilteredItems(filteredData)
+
+            if (setPulledData) {
+                setPulledData(filteredData)
+            }
+        }
+    }, [data, academicYear && academicYear])
 
     return (
         <div>
@@ -128,9 +135,9 @@ const Lectures = ({ filterByAcademicYear = false, academicYear }) => {
 
 
 
-                        <Text space='col-md-3' title='No of classes alloted' state={noOfClasses} setState={setNoOfClasses} />
+                        <Text type='number' space='col-md-3' title='No of classes alloted' state={noOfClasses} setState={setNoOfClasses} />
 
-                        <Text space='col-md-3' title='No of classes taken' state={classesTaken} setState={setClassesTaken} />
+                        <Text type='number' space='col-md-3' title='No of classes taken' state={classesTaken} setState={setClassesTaken} />
 
                         <Year state={year} setState={setYear} />
 

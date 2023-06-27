@@ -201,14 +201,9 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
             }
         }
 
-
-
-        console.log(editModal)
     }, [type, editModal])
 
-    useEffect(() => {
-        console.log('Editid :', editId, 'Modal is :', editModal)
-    }, [editId, editModal])
+
 
     return (
         <div>

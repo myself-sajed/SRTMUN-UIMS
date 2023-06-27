@@ -22,17 +22,21 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
         { id: 'G', activity: "Conducting minor or major research project sponsored by National or International agencies." }]
 
     const [isLoading, setIsLoading] = useState(false)
+    const [pulledData, setPulledData] = useState(null)
 
 
     function calculateTeachingPercentage() {
 
+        console.log('Function is running calculating...')
+
         // validation
-        if (parseInt(teachingData.classesTaught) > parseInt(teachingData.totalClasses)) {
+        if (teachingData.classesTaught > teachingData.totalClasses) {
             toast.error('Total Classes cannot be greater than Classes Taught.')
             setTeachingData({ ...teachingData, teachingGrade: null })
+            console.log('taght greater')
             return false
         }
-        else if (parseInt(teachingData.totalClasses) <= 0) {
+        else if (teachingData.totalClasses <= 0) {
             toast.error('Total Classes cannot be 0.')
             setTeachingData({ ...teachingData, teachingGrade: null })
             return false
@@ -40,12 +44,16 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
         // Computation of teaching percentage
         const teachingGrade = Math.ceil((teachingData.classesTaught / teachingData.totalClasses) * 100);
+        console.log('teachingGrade', teachingGrade)
 
         teachingGrade >= 80 ?
             setTeachingData({ ...teachingData, teachingGrade, teachingRemark: 'Good', teachingRemarkColor: 'green' }) :
             teachingGrade >= 70 ?
                 setTeachingData({ ...teachingData, teachingGrade, teachingRemark: 'Satisfactory', teachingRemarkColor: 'yellow' }) :
                 setTeachingData({ ...teachingData, teachingGrade, teachingRemark: 'Not-Satisfactory', teachingRemarkColor: 'red' })
+
+        setSaveLoader(true)
+
     }
 
 
@@ -54,7 +62,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
     }, [casYearState])
 
     useEffect(() => {
-        setTeachingData(serverCasData?.teachingData === undefined ? { checkBoxCount: 0, checkBoxSelected: [], teachingGrade: null, totalClasses: null, classesTaught: null, teachingRemark: null, teachingRemarkColor: null } : { ...teachingData, checkBoxSelected: serverCasData?.teachingData.checkBoxSelected, checkBoxCount: serverCasData?.teachingData.checkBoxCount, teachingGrade: serverCasData?.teachingData.teachingGrade, totalClasses: serverCasData?.teachingData.totalClasses, classesTaught: serverCasData?.teachingData.classesTaught, teachingRemark: serverCasData?.teachingData.teachingRemark, teachingRemarkColor: serverCasData?.teachingData.teachingRemarkColor, uploadedFiles: serverCasData?.teachingData.uploadedFiles, uploadedAttendance: serverCasData?.teachingData.uploadedAttendance, })
+        setTeachingData(serverCasData?.teachingData === undefined ? { checkBoxCount: 0, checkBoxSelected: [], teachingGrade: null, totalClasses: null, classesTaught: null, teachingRemark: null, teachingRemarkColor: null } : { ...teachingData, checkBoxSelected: serverCasData?.teachingData.checkBoxSelected, checkBoxCount: serverCasData?.teachingData.checkBoxCount, uploadedFiles: serverCasData?.teachingData.uploadedFiles, uploadedAttendance: serverCasData?.teachingData.uploadedAttendance, })
 
     }, [serverCasData])
 
@@ -116,6 +124,47 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
         setSaveLoader(true)
     }
 
+    useEffect(() => {
+        console.log('Useeffect is running..')
+        if (pulledData && pulledData.length > 0) {
+            let sumClassesTaken = 0;
+            let sumNoOfClasses = 0;
+
+            // Using a loop
+            for (const obj of pulledData) {
+                sumClassesTaken += parseInt(obj.classesTaken);
+                sumNoOfClasses += parseInt(obj.noOfClasses);
+            }
+
+            console.log('sumNoOfClasses :', sumNoOfClasses)
+            console.log('sumClassesTaken :', sumClassesTaken)
+            if (sumNoOfClasses === undefined || sumNoOfClasses === NaN || sumNoOfClasses === "NaN" || sumNoOfClasses === null) {
+                toast.error('Could not calculate number of classes assigned')
+            } else if (sumClassesTaken === undefined || sumClassesTaken === NaN || sumClassesTaken === "NaN" || sumClassesTaken === null) {
+                toast.error('Could not calculate number of classes taught')
+            }
+
+            setTeachingData((teachingData) => {
+                return { ...teachingData, classesTaught: sumClassesTaken, totalClasses: sumNoOfClasses }
+            })
+
+
+
+        }
+    }, [pulledData, casYearState])
+
+    useEffect(() => {
+        if (tabName === 'first' && teachingData?.classesTaught && teachingData?.totalClasses) {
+            calculateTeachingPercentage()
+        } else if (tabName === 'first' && !teachingData?.classesTaught) {
+            toast.error('Not a valid no of classes taught')
+        } if (tabName === 'first' && !teachingData?.totalClasses) {
+            toast.error('Not valid no of classes alloted')
+        }
+    }, [teachingData?.classesTaught, teachingData?.totalClasses, tabName])
+
+
+
 
 
 
@@ -136,19 +185,19 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
                         <p className='text-gray-500 md:text-sm text-xs'>Note : Classes taught includes sessions on tutorials, lab and other teaching related activities.</p>
 
-                        {casYearState && <div className='mt-3 text-sm'>
-                            <Lectures filterByAcademicYear={true} academicYear={casYearState} />
+                        {casYearState && <div className='mt-3'>
+                            <Lectures filterByAcademicYear={true} academicYear={casYearState} setPulledData={setPulledData} />
                         </div>}
 
                         <div className='flex-col items-start md:flex-row flex md:items-center justify-between mt-4 w-full'>
                             <form className=' flex flex-col md:flex-row md:items-center justify-start gap-3' onSubmit={(e) => { e.preventDefault(); }}>
                                 <div className='flex items-center justify-between gap-3'>
-                                    <TextField focused id="standard-basic" type="number" label="Total Classes Taught" variant="standard" value={teachingData.classesTaught === null ? '' : teachingData.classesTaught} onChange={(e) => { setTeachingData({ ...teachingData, classesTaught: e.target.value }) }} />
+                                    <TextField aria-readonly={true} style={{ pointerEvents: 'none' }} focused id="standard-basic" type="number" label="Total Classes Taught" variant="standard" value={teachingData.classesTaught === null ? '' : teachingData.classesTaught} onChange={(e) => { setTeachingData({ ...teachingData, classesTaught: e.target.value }) }} />
                                     <div className='font-bold my-3 block md:hidden'>divided by</div>
                                 </div>
                                 <div className='font-bold hidden md:block'>/</div>
                                 <div className='flex items-center justify-between gap-3'>
-                                    <TextField focused id="standard-basic" type="number" label="Total Classes Assigned" variant="standard" value={teachingData.totalClasses === null ? '' : teachingData.totalClasses} onChange={(e) => { setTeachingData({ ...teachingData, totalClasses: e.target.value }) }} />
+                                    <TextField aria-readonly={true} style={{ pointerEvents: 'none' }} focused id="standard-basic" type="number" label="Total Classes Assigned" variant="standard" value={teachingData.totalClasses === null ? '' : teachingData.totalClasses} onChange={(e) => { setTeachingData({ ...teachingData, totalClasses: e.target.value }) }} />
                                     <div className='font-bold mt-3 block md:hidden '>X 100%</div>
                                 </div>
                                 <div className='font-bold hidden md:block'>X 100%</div>
@@ -172,7 +221,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                         </div>
 
 
-                        <div className='flex items-center justify-between flex-wrap'>
+                        {/* <div className='flex items-center justify-between flex-wrap'>
                             {
                                 teachingData?.teachingGrade && teachingData.teachingGrade ? <div className="input-group mt-3 lg:w-[50%] flex items-center justify-end sm:w-[100%]">
                                     <input type="file" className="form-control" id="uploadAttendance" aria-describedby="uploadAttendance" aria-label="Upload" name="Attendance"
@@ -205,7 +254,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
                                 </div>
                             }
-                        </div>
+                        </div> */}
 
                     </div>
                 </BGPad>

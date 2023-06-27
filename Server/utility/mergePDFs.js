@@ -265,7 +265,7 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
         const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
         const outputPath = `pdfs/${fileName}`;
 
-        mergePDFs(files, outputPath);
+        await mergePDFs(files, outputPath);
 
         console.log('PDFs merged and saved successfully!');
         return { fileName, status: 'success' }; // Return the outputPath and success status
@@ -276,6 +276,7 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
 }
 
 // casFilesGenerator(["2019-20", "2020-21"], "62b0a06942f8174e43cd9a26")
+
 
 
 module.exports = { casFilesGenerator, mergePDFs };
