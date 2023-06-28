@@ -7,7 +7,7 @@ const responsibilitiesSchema = new mongoose.Schema({
     },
     designation: {
         type: 'string',
-        required: true,
+        required: false,
     },
     institute: {
         type: 'string',
