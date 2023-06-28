@@ -166,6 +166,12 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
                     } else {
                         setAwardYear("-")
                     }
+
+                    if (degreeName !== 'Ph.D.') {
+                        setRac("")
+                    } else {
+                        setRac("-")
+                    }
                 }
             })
 
@@ -176,11 +182,17 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
             } else {
                 setAwardYear("-")
             }
+
+            if (degreeName !== 'Ph.D.') {
+                setRac("")
+            } else {
+                setRac("-")
+            }
         }
 
 
 
-    }, [awardSubmit, editModal])
+    }, [awardSubmit, editModal, degreeName])
 
 
     return (
@@ -222,7 +234,10 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
                             </select>
                         </div>
 
-                        <Text type="date" title='Date of Registration (RAC)' state={rac} setState={setRac} />
+                        {
+                            degreeName === 'Ph.D.' && <Text type="date" title='Date of Registration (RAC)' state={rac} setState={setRac} />
+                        }
+
 
                         <GenderSelect className="col-md-4" title='Gender' state={gender} setState={setGender} showLabel={true} />
 
