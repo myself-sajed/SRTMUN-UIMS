@@ -259,18 +259,14 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
 
         let files = [...eligProofs || [], ...new Set(combineAllObjects.map((item) => `${process.env.REACT_APP_MAIN_URL}/showFile/${item.proof}/faculty`)), ...impactProof || [], ...directorProof || [], ...activityProof || []].filter((item) => item !== undefined)
 
-        console.log("Files :", files.length)
-
 
         const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
         const outputPath = `pdfs/${fileName}`;
 
         await mergePDFs(files, outputPath);
 
-        console.log('PDFs merged and saved successfully!');
         return { fileName, status: 'success' }; // Return the outputPath and success status
     } catch (error) {
-        console.log('Error:', error);
         return { status: 'failure', error }; // Return the failure status and error
     }
 }

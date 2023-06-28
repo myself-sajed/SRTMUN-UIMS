@@ -23,82 +23,42 @@ function casRoutes(app) {
     })
     const upload = multer({ storage: storage, limits: { fileSize: 5 * 1024 * 1024 } })
 
+    async function pupetteerSetting(fileName, userData, selectedYear, forPrintOut) {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+
+        const link = `${process.env.Report_Main_URL}/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
+
+        await page.goto(link,
+            { waitUntil: 'networkidle0' });
+        await page.pdf({
+            path: `pdfs/${fileName}`,
+            printBackground: true,
+            scale: 0.6,
+            format: "A4",
+            margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
+            displayHeaderFooter: true,
+            headerTemplate: "<div style='font-size:7px;'></div>",
+            footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
+        });
+        await browser.close()
+    }
+
     // for generating cas report
     app.post("/generatePBASReport", async (req, res) => {
 
-        const { userData, selectedYear, forPrintOut, withProofs } = req.body;
+        const { userData, selectedYear, forPrintOut } = req.body;
         const fileName = `PBASReport-${new Date().getTime()}.pdf`
-        console.log("withProofs :", withProofs)
 
-        // pupetteer setting which is common
-        async function pupetteerSetting() {
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
+        try {
+            await pupetteerSetting(fileName, userData, selectedYear, forPrintOut,)
+            res.send({ status: "generated", fileName: fileName });
 
-            const link = `${process.env.Report_Main_URL}/report/PBASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
-
-            console.log('PBAS Report Link : ', link)
-
-            await page.goto(link,
-                { waitUntil: 'networkidle0' });
-            await page.pdf({
-                path: `pdfs/${fileName}`,
-                printBackground: true,
-                scale: 0.6,
-                format: "A4",
-                margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
-                displayHeaderFooter: true,
-                headerTemplate: "<div style='font-size:7px;'></div>",
-                footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
-            });
-            await browser.close()
+        } catch (error) {
+            console.log(error)
+            res.send({ status: "error", message: 'Could not generate report, please try again later...' });
         }
 
-        // if selected proofs
-        if (withProofs === true) {
-            let isMerged = await casFilesGenerator(selectedYear, userData._id, 'PBAS')
-
-            if (isMerged.status === "success") {
-
-                try {
-                    await pupetteerSetting()
-                    try {
-
-                        let files = [
-                            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${fileName}`,
-                            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${isMerged.fileName}`,
-                        ]
-
-                        const reportName = `PBASReportWithProofs-${new Date().getTime()}.pdf`;
-                        const outputPath = `pdfs/${reportName}`;
-
-                        await mergePDFs(files, outputPath);
-                        res.send({ status: "generated", fileName: reportName });
-
-
-                    } catch (error) {
-                        console.log('error is :', error)
-                        res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-
-                    }
-
-
-                } catch (error) {
-                    res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-                }
-            } else {
-                console.log('Message is false')
-                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-            }
-        } else {
-            try {
-                await pupetteerSetting()
-                res.send({ status: "generated", fileName: fileName });
-
-            } catch (error) {
-                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-            }
-        }
 
     });
 
@@ -139,7 +99,6 @@ function casRoutes(app) {
                 }
                 else {
                     // if cas data does not exist create new one
-                    console.log('in else')
                     const newCAS = new CASModel({
                         userId: userId,
                         casData: [JSON.stringify(casData)]

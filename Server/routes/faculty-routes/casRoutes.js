@@ -45,84 +45,43 @@ async function casRoutes(app) {
         await browser.close()
     }
 
-
-    async function mergeHandler(reportName, fileName, userData, selectedYear, forPrintOut, mergeFileName) {
-
-        console.log('CAS to be merged FileName :', fileName)
-        console.log('Report Name after generation :', reportName)
-        console.log('PDF Proofs :', reportName)
-
-        await pupetteerSetting(fileName, userData, selectedYear, forPrintOut)
-
-
-        let files = [
-            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${fileName}`,
-            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${mergeFileName}`,
-        ]
-
-        console.log('Files are :', files)
-
-        const outputPath = `pdfs/${reportName}`;
-
-        await mergePDFs(files, outputPath);
-    }
-
     // for generating cas report
     app.post("/generateCASReport", async (req, res) => {
 
-        const { userData, selectedYear, forPrintOut, withProofs } = req.body;
-        console.log("withProofs :", withProofs)
+        const { userData, selectedYear, forPrintOut } = req.body;
         const fileName = `CASReport-${new Date().getTime()}.pdf`
 
+        try {
+            await pupetteerSetting(fileName, userData, selectedYear, forPrintOut,)
+            res.send({ status: "generated", fileName: fileName });
 
-
-        // if selected proofs
-        if (withProofs === true) {
-            let isMerged = await casFilesGenerator(selectedYear, userData._id, 'CAS')
-
-            if (isMerged.status === "success") {
-                res.send({ status: "generated", fileName: isMerged.fileName });
-            } else {
-                console.log('Message is false')
-                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-            }
-        } else {
-            try {
-                await pupetteerSetting(fileName, userData, selectedYear, forPrintOut,)
-                console.log('Without proofs sending...')
-                res.send({ status: "generated", fileName: fileName });
-
-            } catch (error) {
-                console.log(error)
-                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-            }
+        } catch (error) {
+            console.log(error)
+            res.send({ status: "error", message: 'Could not generate report, please try again later...' });
         }
 
 
     });
 
-    app.post("/generateCASReport/getReportWithProofs", async (req, res) => {
-
-
-        const { userData, selectedYear, forPrintOut, mergeFileName } = req.body;
-        const fileName = `ToBeMergedCASReport-${new Date().getTime()}.pdf`
-        const reportName = `CASReportWithProofs-${new Date().getTime()}.pdf`;
-
+    app.post("/getProofs", async (req, res) => {
+        const { userData, selectedYear, reportType } = req.body;
 
         try {
-            console.log(mergeFileName, 'is generated')
             try {
-                await mergeHandler(reportName, fileName, userData, selectedYear, forPrintOut, mergeFileName)
-                res.send({ status: "generated", fileName: reportName });
+                const response = await casFilesGenerator(selectedYear, userData._id, reportType)
+                if (response.status === "success") {
+                    res.send({ status: "generated", fileName: response.fileName });
+                } else {
+                    res.send({ status: "error", message: 'Could not fetch proofs, please try again later...' });
 
+                }
 
             } catch (error) {
-                console.log('error is :', error)
-                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
+                res.send({ status: "error", message: 'Could not fetch proofs, please try again later...' });
 
             }
         } catch (error) {
-            res.send({ status: "error", message: 'Could not generate report with proof, please try again later...' });
+            res.send({ status: "error", message: 'Could not fetch proofs, please try again later...' });
         }
 
     });

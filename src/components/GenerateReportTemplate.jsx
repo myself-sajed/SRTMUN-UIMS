@@ -31,8 +31,8 @@ const GenerateReportTemplate = ({ bredLinks, backLink, title, loading, children,
             {/* // report gen loading */}
 
             {
-                loading ? <div className='my-3'>
-                    <p className='text-center mb-3 text-gray-500'>Generating Report, Please wait...</p>
+                loading.isLoading ? <div className='my-3'>
+                    <p className='text-center mb-3 text-gray-500'>{loading.title ? loading.title : "Generating Report"}, Please wait...</p>
                     <LinearProgress />
                 </div> : null
             }

@@ -18,9 +18,9 @@ const GenerateCASPage = () => {
 
     let links = [siteLinks.welcome, siteLinks.facultyHome, siteLinks.cas, siteLinks.casReport,]
     const [casDataFromServer, setCasDataFromServer] = useState(null)
-    const navigate = useNavigate()
     const user = useSelector((state) => state.user.user)
     const [reportLoading, setReportLoading] = useState(false)
+
     const [error, setError] = useState(null)
     title('Generate CAS Report')
     useAuth(false)
@@ -45,7 +45,7 @@ const GenerateCASPage = () => {
 
                 <GenerateReportTemplate bredLinks={links} backLink={siteLinks.facultyHome.link} title="Generate Your CAS Report" loading={reportLoading} >
                     <div className='h-screen'>
-                        <SelectYear userData={user && user} error={error} casData={casDataFromServer && casDataFromServer} casYear={casDataFromServer && casDataFromServer.casData} setReportLoading={setReportLoading} />
+                        <SelectYear userData={user && user} error={error} casYear={casDataFromServer && casDataFromServer.casData} setReportLoading={setReportLoading} />
 
                     </div>
                 </GenerateReportTemplate>

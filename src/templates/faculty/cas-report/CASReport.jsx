@@ -116,7 +116,6 @@ const CASReport = () => {
     // calculate CAS Duration here
     useEffect(() => {
         if (casData) {
-            console.log('casData :', casData)
             if (casData.casDuration && casArray) {
                 let casDuration = JSON.parse(casData.casDuration)
                 let startWholeYear = casArray[0].casYear.toString().slice(0, -3)

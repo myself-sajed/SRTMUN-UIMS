@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
 import { Alert, CircularProgress } from '@mui/material';
-import { generateCASReport } from '../PBASServices';
+import { generatePBASReport } from '../PBASServices';
 import { useNavigate } from 'react-router-dom';
 import ShowModal from '../../../../../components/ShowModal';
 import siteLinks from '../../../../../components/siteLinks';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
+import { getProofs } from '../../cas/CASServices';
+
 
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
     const [selectedYear, setSelectedYear] = useState([])
@@ -13,18 +16,24 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
     })
     const navigate = useNavigate()
     const [forPrintOut, setForPrintOut] = useState(false)
-    const [withProofs, setWithProofs] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleGeneration = () => {
-        setReportLoading(true);
-        generateCASReport(casData, userData, selectedYear, setReportLoading, forPrintOut, withProofs)
+        setReportLoading({ isLoading: true, title: 'Generating PBAS Report' });
+        generatePBASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+    }
+
+    const handleProofsGeneration = () => {
+        setReportLoading({ isLoading: true, title: 'Collecting your PBAS Proofs' });
+        getProofs(userData, selectedYear, setReportLoading, 'PBAS')
+
     }
 
     return (
         <div>
 
-            <div className='bg-blue-100 rounded-xl py-5 mt-4 sm:w-[80%] md:w-[50%] w-full sm:mx-auto'>
+            <div className='bg-blue-100 rounded-xl p-5 mt-4 sm:w-[90%] md:w-[80%] lg:w-[60%] w-full sm:mx-auto'>
+
                 {
                     sortedYear ?
                         <div>
@@ -39,37 +48,30 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                             <ShowModal okText={"Generate Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
                                 <div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked onChange={(e) => { setForPrintOut(false) }} />
+                                        <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
                                         <label class="form-check-label" htmlFor="standard">
                                             Standard Report
                                         </label>
                                     </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="printable" onChange={(e) => { setForPrintOut(true) }} />
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="printableOrNot" id="printable" checked={forPrintOut ? true : false} onChange={(e) => { setForPrintOut(true) }} />
                                         <label class="form-check-label" htmlFor="printable">
                                             Printable Report (Specially designed for printing purposes)
-                                        </label>
-                                    </div>
-
-                                    <hr />
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="radio" name="withOrWithoutProof" id="withoutProof" checked onChange={(e) => { setWithProofs(false) }} />
-                                        <label class="form-check-label" htmlFor="withoutProof">
-                                            Report without Proofs
-                                        </label>
-                                    </div>
-                                    <div class="form-check pb-5">
-                                        <input class="form-check-input" type="radio" name="withOrWithoutProof" id="withProof" onChange={(e) => { setWithProofs(true) }} />
-                                        <label class="form-check-label" htmlFor="withProof">
-                                            Report with Proofs (All related proofs attached at the end of the report)
                                         </label>
                                     </div>
                                 </div>
                             </ShowModal>
 
-                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setIsModalOpen(true); setForPrintOut(false) }}>
-                                <EngineeringRoundedIcon /> Generate PBAS Report
-                            </button>}
+                            {selectedYear.length > 0 &&
+                                <div className='flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap mt-5 w-full'>
+                                    <button className='flex items-center justify-center my-1 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setIsModalOpen(true); setForPrintOut(false) }}>
+                                        <EngineeringRoundedIcon /> Generate PBAS Report
+                                    </button>
+                                    <button className='flex items-center justify-center my-1 rounded-full bg-green-800 px-3 py-2 hover:bg-green-900 text-white' onClick={() => { handleProofsGeneration() }}>
+                                        <FileDownloadRoundedIcon /> Download Proofs
+                                    </button>
+                                </div>
+                            }
                         </div>
                         :
                         <div className='flex flex-col items-center justify-center mt-3'>

@@ -1,10 +1,11 @@
 import Axios from "axios"
 import { toast } from 'react-hot-toast'
 
-const generateCASReport = (casData, userData, selectedYear, setReportLoading, forPrintOut, withProofs) => {
+
+const generatePBASReport = (userData, selectedYear, setReportLoading, forPrintOut) => {
     try {
 
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generatePBASReport`, { casData, userData, selectedYear, forPrintOut, withProofs })
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generatePBASReport`, { userData, selectedYear, forPrintOut })
             .then(function (res) {
                 if (res.data.status === 'generated') {
                     setReportLoading(false)
@@ -23,10 +24,13 @@ const generateCASReport = (casData, userData, selectedYear, setReportLoading, fo
 
     } catch (error) {
         alert('Internal Server error');
+        setReportLoading(false)
+
     }
 
 
 }
+
 
 const saveCASDetails = (casData, userId, setSaveLoader) => {
     try {
@@ -110,4 +114,4 @@ const getTotalPBASData = (setData, setError) => {
 
 
 
-export { saveCASDetails, generateCASReport, getCASData, getTotalPBASData }
+export { saveCASDetails, generatePBASReport, getCASData, getTotalPBASData }

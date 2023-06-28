@@ -1,65 +1,51 @@
 import Axios from "axios"
 import { toast } from 'react-hot-toast'
 
-const generateCASReport = (userData, selectedYear, setReportLoading, forPrintOut, withProofs) => {
+const generateCASReport = (userData, selectedYear, setReportLoading, forPrintOut) => {
     try {
 
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { userData, selectedYear, forPrintOut, withProofs })
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { userData, selectedYear, forPrintOut })
             .then(function (res) {
                 if (res.data.status === 'generated') {
-                    if (!withProofs) {
-                        setReportLoading(false)
-                        toast.success('Report generated successfully');
-                        window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
-                    } else {
-
-
-                        try {
-
-                            toast.success('Proofs are fetched successfully!')
-
-                            Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport/getReportWithProofs`, { userData, selectedYear, forPrintOut, mergeFileName: res.data.fileName })
-                                .then(function (res) {
-                                    if (res.data.status === 'generated') {
-                                        setReportLoading(false)
-                                        toast.success('Report generated successfully');
-                                        window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
-
-                                    }
-                                    else if (res.data.status === 'error') {
-                                        setReportLoading(false)
-                                        toast.error(res.data.message);
-                                    }
-                                })
-                                .catch(function (err) {
-                                    setReportLoading(false)
-                                    toast.error('Something went wrong');
-                                })
-
-                        } catch (error) {
-                            alert('Internal Server error');
-                        }
-
-
-
-
-
-
-
-
-
-
-                    }
+                    setReportLoading(false)
+                    toast.success('Report generated successfully');
+                    window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
                 }
-
                 else if (res.data.status === 'error') {
-                    console.log('Error occured, :')
                     setReportLoading(false)
                     toast.error(res.data.message);
                 }
             })
             .catch(function (err) {
-                console.log('Error occured, :', err)
+                setReportLoading(false)
+                toast.error('Something went wrong');
+            })
+
+    } catch (error) {
+        alert('Internal Server error');
+        setReportLoading(false)
+
+    }
+
+
+}
+
+const getProofs = (userData, selectedYear, setReportLoading, reportType) => {
+    try {
+
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/getProofs`, { userData, selectedYear, reportType })
+            .then(function (res) {
+                if (res.data.status === 'generated') {
+                    setReportLoading(false)
+                    toast.success('Proofs fetched successfully');
+                    window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
+                }
+                else if (res.data.status === 'error') {
+                    setReportLoading(false)
+                    toast.error(res.data.message);
+                }
+            })
+            .catch(function (err) {
                 setReportLoading(false)
                 toast.error('Something went wrong');
             })
@@ -75,8 +61,8 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
     try {
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/saveCASDetails`, { casData, userId })
-            .then((res) => {
-                if (res.data) {
+            .then((firstResponse) => {
+                if (firstResponse.data) {
                     toast.success('CAS details saved successfully');
                     // window.location = '/home'
                     // navigate('/home')
@@ -100,25 +86,25 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
 const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setCasDuration = false) => {
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/getCASData`, { userId })
-            .then((res) => {
-                if (res.data.status === 'success') {
+            .then((firstResponse) => {
+                if (firstResponse.data.status === 'success') {
 
                     if (setCasDuration) {
-                        if (res.data.data?.casDuration) {
-                            setCasDuration(JSON.parse(res.data.data?.casDuration))
+                        if (firstResponse.data.data?.casDuration) {
+                            setCasDuration(JSON.parse(firstResponse.data.data?.casDuration))
                         }
                     }
 
 
                     if (sortByYear) {
-                        res.data.data.casData.forEach((cas) => {
+                        firstResponse.data.data.casData.forEach((cas) => {
                             if (JSON.parse(cas).casYear === casYear) {
                                 setData(JSON.parse(cas));
                             }
                         })
                     }
                     else {
-                        setData(res.data.data);
+                        setData(firstResponse.data.data);
                     }
                 }
                 else {
@@ -136,9 +122,9 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
 const getTotalCASData = (setData, setError) => {
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/getTotalCASData`,)
-            .then((res) => {
-                if (res.data.status === 'success') {
-                    setData(res.data.data);
+            .then((firstResponse) => {
+                if (firstResponse.data.status === 'success') {
+                    setData(firstResponse.data.data);
                 }
                 else {
                     setData(null)
@@ -153,12 +139,11 @@ const getTotalCASData = (setData, setError) => {
 }
 
 const saveEligibilityData = (stageNumber, userId, eligibilityData) => {
-    console.log('Elig data in server is :', eligibilityData)
     try {
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/saveEligibilityData`, { stageNumber, userId, eligibilityData })
-            .then((res) => {
-                if (res.data) {
+            .then((firstResponse) => {
+                if (firstResponse.data) {
                     toast.success('CAS details saved successfully');
                 }
                 else {
@@ -174,4 +159,4 @@ const saveEligibilityData = (stageNumber, userId, eligibilityData) => {
 }
 
 
-export { saveCASDetails, generateCASReport, getCASData, saveEligibilityData, getTotalCASData }
+export { saveCASDetails, generateCASReport, getCASData, saveEligibilityData, getTotalCASData, getProofs }
