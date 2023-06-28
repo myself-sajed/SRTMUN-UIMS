@@ -24,87 +24,110 @@ async function casRoutes(app) {
     })
     const upload = multer({ storage: storage })
 
+    async function pupetteerSetting(fileName, userData, selectedYear, forPrintOut) {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
 
+        const link = `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
+
+        await page.goto(link,
+            { waitUntil: 'networkidle0' });
+        await page.pdf({
+            path: `pdfs/${fileName}`,
+            printBackground: true,
+            scale: 0.6,
+            format: "A4",
+            margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
+            displayHeaderFooter: true,
+            headerTemplate: "<div style='font-size:7px;'></div>",
+            footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
+        });
+        await browser.close()
+    }
+
+
+    async function mergeHandler(reportName, fileName, userData, selectedYear, forPrintOut, mergeFileName) {
+
+        console.log('CAS to be merged FileName :', fileName)
+        console.log('Report Name after generation :', reportName)
+        console.log('PDF Proofs :', reportName)
+
+        await pupetteerSetting(fileName, userData, selectedYear, forPrintOut)
+
+
+        let files = [
+            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${fileName}`,
+            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${mergeFileName}`,
+        ]
+
+        console.log('Files are :', files)
+
+        const outputPath = `pdfs/${reportName}`;
+
+        await mergePDFs(files, outputPath);
+    }
 
     // for generating cas report
     app.post("/generateCASReport", async (req, res) => {
 
         const { userData, selectedYear, forPrintOut, withProofs } = req.body;
-        const fileName = `CASReport-${new Date().getTime()}.pdf`
         console.log("withProofs :", withProofs)
+        const fileName = `CASReport-${new Date().getTime()}.pdf`
 
-        // pupetteer setting which is common
-        async function pupetteerSetting() {
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
 
-            const link = `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
-
-            console.log('CAS Report Link : ', link)
-
-            await page.goto(link,
-                { waitUntil: 'networkidle0' });
-            await page.pdf({
-                path: `pdfs/${fileName}`,
-                printBackground: true,
-                scale: 0.6,
-                format: "A4",
-                margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
-                displayHeaderFooter: true,
-                headerTemplate: "<div style='font-size:7px;'></div>",
-                footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
-            });
-            await browser.close()
-        }
 
         // if selected proofs
         if (withProofs === true) {
             let isMerged = await casFilesGenerator(selectedYear, userData._id, 'CAS')
 
             if (isMerged.status === "success") {
-
-                try {
-                    await pupetteerSetting()
-                    try {
-
-                        let files = [
-                            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${fileName}`,
-                            `${process.env.REACT_APP_MAIN_URL}/downloadPdf/${isMerged.fileName}`,
-                        ]
-
-                        const reportName = `CASReportWithProofs-${new Date().getTime()}.pdf`;
-                        const outputPath = `pdfs/${reportName}`;
-
-                        await mergePDFs(files, outputPath);
-                        res.send({ status: "generated", fileName: reportName });
-
-
-                    } catch (error) {
-                        console.log('error is :', error)
-                        res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-
-                    }
-
-
-                } catch (error) {
-                    res.send({ status: "error", message: 'Could not generate report, please try again later...' });
-                }
+                res.send({ status: "generated", fileName: isMerged.fileName });
             } else {
                 console.log('Message is false')
                 res.send({ status: "error", message: 'Could not generate report, please try again later...' });
             }
         } else {
             try {
-                await pupetteerSetting()
+                await pupetteerSetting(fileName, userData, selectedYear, forPrintOut,)
+                console.log('Without proofs sending...')
                 res.send({ status: "generated", fileName: fileName });
 
             } catch (error) {
+                console.log(error)
                 res.send({ status: "error", message: 'Could not generate report, please try again later...' });
             }
         }
 
 
     });
+
+    app.post("/generateCASReport/getReportWithProofs", async (req, res) => {
+
+
+        const { userData, selectedYear, forPrintOut, mergeFileName } = req.body;
+        const fileName = `ToBeMergedCASReport-${new Date().getTime()}.pdf`
+        const reportName = `CASReportWithProofs-${new Date().getTime()}.pdf`;
+
+
+        try {
+            console.log(mergeFileName, 'is generated')
+            try {
+                await mergeHandler(reportName, fileName, userData, selectedYear, forPrintOut, mergeFileName)
+                res.send({ status: "generated", fileName: reportName });
+
+
+            } catch (error) {
+                console.log('error is :', error)
+                res.send({ status: "error", message: 'Could not generate report, please try again later...' });
+
+            }
+        } catch (error) {
+            res.send({ status: "error", message: 'Could not generate report with proof, please try again later...' });
+        }
+
+    });
+
+
 
 
     // for saving cas data

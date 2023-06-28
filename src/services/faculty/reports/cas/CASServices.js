@@ -7,16 +7,59 @@ const generateCASReport = (userData, selectedYear, setReportLoading, forPrintOut
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport`, { userData, selectedYear, forPrintOut, withProofs })
             .then(function (res) {
                 if (res.data.status === 'generated') {
-                    setReportLoading(false)
-                    toast.success('Report generated successfully');
-                    window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
+                    if (!withProofs) {
+                        setReportLoading(false)
+                        toast.success('Report generated successfully');
+                        window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
+                    } else {
+
+
+                        try {
+
+                            toast.success('Proofs are fetched successfully!')
+
+                            Axios.post(`${process.env.REACT_APP_MAIN_URL}/generateCASReport/getReportWithProofs`, { userData, selectedYear, forPrintOut, mergeFileName: res.data.fileName })
+                                .then(function (res) {
+                                    if (res.data.status === 'generated') {
+                                        setReportLoading(false)
+                                        toast.success('Report generated successfully');
+                                        window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
+
+                                    }
+                                    else if (res.data.status === 'error') {
+                                        setReportLoading(false)
+                                        toast.error(res.data.message);
+                                    }
+                                })
+                                .catch(function (err) {
+                                    setReportLoading(false)
+                                    toast.error('Something went wrong');
+                                })
+
+                        } catch (error) {
+                            alert('Internal Server error');
+                        }
+
+
+
+
+
+
+
+
+
+
+                    }
                 }
+
                 else if (res.data.status === 'error') {
+                    console.log('Error occured, :')
                     setReportLoading(false)
                     toast.error(res.data.message);
                 }
             })
             .catch(function (err) {
+                console.log('Error occured, :', err)
                 setReportLoading(false)
                 toast.error('Something went wrong');
             })

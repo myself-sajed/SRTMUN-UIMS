@@ -157,7 +157,7 @@ const CASActivities = [
 
 
 const Table = ({ academicData, casArray, forPrintOut }) => {
-    return <>
+    return <div style={{ pageBreakInside: 'avoid' }}>
         {/* // HEADING */}
         {/* <p className="academic-start"></p> */}
         <p className={`text-center ${forPrintOut === 'false' && "bg-[#00987936] text-[#009879]"} p-2`}>
@@ -165,8 +165,8 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
 
         {/* // form activity 1-3 */}
         <div className="mx-auto">
-            {CASActivities.map((activity) => {
-                return <div className="bg-white overflow-hidden sm:rounded-lg mt-5 border" style={{ pageBreakInside: 'avoid' }}>
+            {CASActivities.map((activity, index) => {
+                return <div className={`bg-white overflow-hidden sm:rounded-lg mt-5 border page ${index > 1 && "break-inside-avoid"} `}>
 
                     {
                         activity?.hasSubActivity &&
@@ -264,7 +264,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
             })}
 
         </div>
-    </>
+    </div>
 
 
 }
