@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded';
 import Header from '../components/Header';
-import submit from '../js/submit';
+import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
-import handleEdit from '../js/handleEdit';
 import { useQuery } from 'react-query';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
@@ -13,6 +12,9 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import View from './View';
+import File from '../../../inputs/File';
+import handleEditWithFile from '../js/handleEditWithFile';
 
 
 const AppointmentsHeldPrior = ({ showTable = true }) => {
@@ -29,6 +31,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
     const [leavingDate, setLeavingDate] = useState('')
     const [salaryWithGrade, setSalaryWithGrade] = useState('')
     const [leavingReason, setLeavingReason] = useState('')
+    const [Proof, setProof] = useState(null)
     const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
@@ -38,9 +41,18 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
     function handleSubmit(e) {
         e.preventDefault();
         setLoading(true)
+        let formData = new FormData()
+        formData.append('designation', designation)
+        formData.append('employerName', employerName)
+        formData.append('joiningDate', joiningDate)
+        formData.append('salaryWithGrade', salaryWithGrade)
+        formData.append('leavingReason', leavingReason)
+        formData.append('leavingDate', leavingDate)
+        formData.append('file', Proof)
+        formData.append('userId', user?._id)
 
-        const data = { userId: user._id, designation, employerName, joiningDate, salaryWithGrade, leavingReason, leavingDate }
-        submit(data, 'AppointmentsHeldPrior', refetch, setLoading, setAppointmentModal, setIsFormOpen)
+        // const data = { userId: user._id, designation, employerName, joiningDate, salaryWithGrade, leavingReason, leavingDate }
+        submitWithFile(formData, 'AppointmentsHeldPrior', refetch, setLoading, setAppointmentModal, setIsFormOpen)
     }
 
     // make states together
@@ -48,9 +60,20 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
         e.preventDefault();
         setLoading(true)
 
-        const theItem = { itemId: itemToDelete._id, designation, employerName, joiningDate, salaryWithGrade, leavingReason, leavingDate, }
+        let formData = new FormData()
+        formData.append('userId', itemToDelete._id)
+        formData.append('proof', itemToDelete.proof)
+        formData.append('designation', designation)
+        formData.append('employerName', employerName)
+        formData.append('joiningDate', joiningDate)
+        formData.append('salaryWithGrade', salaryWithGrade)
+        formData.append('leavingReason', leavingReason)
+        formData.append('leavingDate', leavingDate)
+        formData.append('file', Proof)
 
-        handleEdit(theItem, 'AppointmentsHeldPrior', setEditModal, refetch, setLoading, setIsFormOpen)
+        // const theItem = { itemId: itemToDelete._id, designation, employerName, joiningDate, salaryWithGrade, leavingReason, leavingDate, }
+
+        handleEditWithFile(formData, 'AppointmentsHeldPrior', setEditModal, refetch, setLoading, setIsFormOpen)
 
     }
 
@@ -139,6 +162,8 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
 
                         </div>
 
+                        <File space='col-md-6' title='Upload Proof' setState={setProof} />
+
                     </FormWrapper>
                 </DialogContent>
             </Dialog>
@@ -158,6 +183,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
                                 <th scope="col">To </th>
                                 <th scope="col">Salary with Grade</th>
                                 <th scope="col">Leaving Reason</th>
+                                <th scope="col">Proof</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -175,7 +201,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
                                         <td>{item.leavingDate}</td>
                                         <td>{item.salaryWithGrade}</td>
                                         <td>{item.leavingReason}</td>
-
+                                        <td><View proof={item.proof} /></td>
                                         <td>
                                             <Actions item={item} model="AppointmentsHeldPrior" refreshFunction={() => { refetch() }} editState={setEditModal} addState={setAppointmentModal} pencilClick={() => pencilClick(item._id)} />
 

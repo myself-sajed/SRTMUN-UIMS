@@ -369,28 +369,65 @@ function editRoutes(app) {
     })
 
     // appointmentsHeldPrior
-    app.post('/api/edit/AppointmentsHeldPrior', (req, res) => {
-        const { data } = req.body
+    app.post('/api/edit/AppointmentsHeldPrior',  upload.single('file'), (req, res) => {
+        const data = JSON.parse(JSON.stringify(req.body));
+        if (req.file) {
 
-        AppointmentsHeldPrior.findOneAndUpdate({ _id: data.itemId }, {
-            designation: data.designation,
-            employerName: data.employerName,
-            joiningDate: data.joiningDate,
-            leavingDate: data.leavingDate,
-            salaryWithGrade: data.salaryWithGrade,
-            leavingReason: data.leavingReason,
-        }).then(function (data) {
-            if (data) {
-                res.send({ status: 'deleted' })
-            }
-            else {
+            AppointmentsHeldPrior.findOneAndUpdate({ _id: data.userId }, {
+                designation: data.designation,
+                employerName: data.employerName,
+                joiningDate: data.joiningDate,
+                leavingDate: data.leavingDate,
+                salaryWithGrade: data.salaryWithGrade,
+                leavingReason: data.leavingReason,
+                proof: req.file.filename,
+            }).then(function (docs) {
+
+                deleteFile(data.proof, 'faculty', (err) => {
+                    try {
+
+
+                        if (err) {
+                            throw 'File not found'
+                        }
+
+                        res.send({ status: 'deleted', data: docs });
+                    } catch (error) {
+                        console.log('in catch')
+
+                        console.log('The error is :', error)
+                        res.send({ status: 'error' });
+                    }
+                })
+            }).catch(function (err) {
                 res.send({ status: 'error' })
             }
-        }).catch(function (err) {
-            res.send({ status: 'error' })
+
+            )
+        }
+        else{
+            AppointmentsHeldPrior.findOneAndUpdate({ _id: data.userId }, {
+                designation: data.designation,
+                employerName: data.employerName,
+                joiningDate: data.joiningDate,
+                leavingDate: data.leavingDate,
+                salaryWithGrade: data.salaryWithGrade,
+                leavingReason: data.leavingReason,
+            }).then(function (data) {
+                if (data) {
+                    res.send({ status: 'deleted' })
+                }
+                else {
+                    res.send({ status: 'error' })
+                }
+            }).catch(function (err) {
+                res.send({ status: 'error' })
+            }
+    
+            )
         }
 
-        )
+       
 
 
     })

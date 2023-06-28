@@ -334,8 +334,9 @@ function initRoutes(app) {
     })
 
     // appointmentsHeldPrior
-    app.post('/api/add/AppointmentsHeldPrior', (req, res) => {
-        const { data } = req.body
+    app.post('/api/add/AppointmentsHeldPrior',  upload.single('file'), (req, res) => {
+        // const { data } = req.body
+        const data = JSON.parse(JSON.stringify(req.body));
 
         try {
             const appointmentsHeldPrior = new AppointmentsHeldPrior({
@@ -345,7 +346,8 @@ function initRoutes(app) {
                 leavingDate: data.leavingDate,
                 salaryWithGrade: data.salaryWithGrade,
                 leavingReason: data.leavingReason,
-                userId: data.userId
+                userId: data.userId,
+                proof: req.file.filename,
             })
 
             appointmentsHeldPrior.save()
