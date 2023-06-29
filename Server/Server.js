@@ -43,6 +43,7 @@ app.use(function (req, res, next) {
 // middlewares
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const { casFilesGenerator } = require('./utility/actualFileMerge');
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(express.json({ limit: '10mb' })); // Adjust the limit as per your requirements
 
@@ -139,6 +140,7 @@ async function deleteFile(fileName, desiredPath, callback) {
 }
 
 
+
 app.get("/downloadPdf/:fileName", (req, res) => {
   const fileName = req.params.fileName
 
@@ -222,10 +224,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 })
 
-// // 2. for showing maintenance page
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "maintenance-build", "index.html"));
-// })
+
 
 
 app.listen(process.env.PORT, function () {

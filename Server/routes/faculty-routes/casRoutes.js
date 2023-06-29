@@ -6,6 +6,7 @@ var options = { format: "A4", timeout: 60000, border: { top: "0.4in", right: "0i
 const puppeteer = require('puppeteer')
 const path = require('path');
 const { mergePDFs, casFilesGenerator } = require("../../utility/mergePDFs");
+const { pathCasFilesGenerator } = require("../../utility/actualFileMerge");
 
 
 async function casRoutes(app) {
@@ -68,7 +69,7 @@ async function casRoutes(app) {
 
         try {
             try {
-                const response = await casFilesGenerator(selectedYear, userData._id, reportType)
+                const response = await pathCasFilesGenerator(selectedYear, userData._id, reportType)
                 if (response.status === "success") {
                     res.send({ status: "generated", fileName: response.fileName });
                 } else {

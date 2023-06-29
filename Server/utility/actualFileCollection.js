@@ -1,5 +1,5 @@
-const { models, nonAcademicYearModels } = require("../faculty-routes/routes")
-const path = require("path")
+const path = require("path");
+const { models } = require("../routes/faculty-routes/routes");
 
 const stageObj = {
 

@@ -3,9 +3,9 @@ const axios = require('axios');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const { fetchDataForCAS, fetchBasicDataForCAS, fetchEligibilityProofs } = require('../routes/data-fetcher/forCAS');
 const CASModel = require('../models/faculty-models/casModel');
 const PBASModel = require('../models/faculty-models/pbasModel');
+const { fetchDataForCAS, fetchBasicDataForCAS, fetchEligibilityProofs } = require('./actualFileCollection');
 
 async function mergePDFs(files, outputPath) {
     async function convertJpgToPng(jpgBuffer) {
@@ -62,7 +62,7 @@ async function mergePDFs(files, outputPath) {
 
 
 
-async function casFilesGenerator(selectedYear, userId, reportType) {
+async function pathCasFilesGenerator(selectedYear, userId, reportType) {
 
     let casDataSpecifier = [
         {
@@ -263,11 +263,10 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
 
         let files = [...eligProofs || [], ...new Set(combineAllObjects.map((item) => path.join(__dirname, `../uploads/faculty-uploads/${item.proof}`))), ...impactProof || [], ...directorProof || [], ...activityProof || []].filter((item) => item !== undefined)
 
-        // let files = [...new Set(combineAllObjects.map((item) => path.join(__dirname, `../uploads/faculty-uploads/${item.proof}`)))]
 
-        console.log('Files :', files.length)
+        console.log('path files :', files.length)
 
-        const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
+        const fileName = `PathMergedPDF-${new Date().getTime()}.pdf`;
         const outputPath = `pdfs/${fileName}`;
 
         await mergePDFs(files, outputPath);
@@ -280,11 +279,10 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
     }
 }
 
-casFilesGenerator(["2019-20", "2020-21"], "62b0a06942f8174e43cd9a26", 'CAS')
 
 
 
-module.exports = { casFilesGenerator, mergePDFs };
+module.exports = { pathCasFilesGenerator, mergePDFs };
 
 
 

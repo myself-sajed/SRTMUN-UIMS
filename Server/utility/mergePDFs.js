@@ -5,6 +5,7 @@ const fs = require('fs');
 const { fetchDataForCAS, fetchBasicDataForCAS, fetchEligibilityProofs } = require('../routes/data-fetcher/forCAS');
 const CASModel = require('../models/faculty-models/casModel');
 const PBASModel = require('../models/faculty-models/pbasModel');
+const { pathCasFilesGenerator } = require('./actualFileMerge');
 
 async function mergePDFs(files, outputPath) {
     async function convertJpgToPng(jpgBuffer) {
@@ -259,8 +260,10 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
 
         let files = [...eligProofs || [], ...new Set(combineAllObjects.map((item) => `${process.env.REACT_APP_MAIN_URL}/showFile/${item.proof}/faculty`)), ...impactProof || [], ...directorProof || [], ...activityProof || []].filter((item) => item !== undefined)
 
+        console.log('Link files :', files.length)
 
-        const fileName = `MergedPDF-${new Date().getTime()}.pdf`;
+
+        const fileName = `LinkMergedPDF-${new Date().getTime()}.pdf`;
         const outputPath = `pdfs/${fileName}`;
 
         await mergePDFs(files, outputPath);
@@ -271,7 +274,7 @@ async function casFilesGenerator(selectedYear, userId, reportType) {
     }
 }
 
-// casFilesGenerator(["2019-20", "2020-21"], "62b0a06942f8174e43cd9a26")
+
 
 
 
