@@ -85,11 +85,11 @@ const Teaching = ({ casArray, showFileURL, forPrintOut }) => {
                                 casArray.map((item) => {
                                     return <td><b className='mr-3'>{item?.teachingData?.teachingGrade}%</b>
                                         <Remark title={item?.teachingData?.teachingRemark} color={item?.teachingData?.teachingRemarkColor} />
-                                        <div className='my-4'>
+                                        {/* <div className='my-4'>
                                             {
                                                 item?.teachingData?.uploadedAttendance ? <ViewFile fileName={item?.teachingData?.uploadedAttendance?.file[0]?.filename} attendance={true} type={showFileURL} /> : <p className='text-red-600'>Director Certificate N/A</p>
                                             }
-                                        </div>
+                                        </div> */}
 
                                     </td>
                                 })
