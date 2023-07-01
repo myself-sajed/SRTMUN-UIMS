@@ -107,7 +107,12 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                 })
             } else {
                 triplet.forEach((tri) => {
-                    newMap[tri._id] = { score: 3, type: 'Translator' }
+
+                    if (tri.transType === "Book") {
+                        newMap[tri._id] = { score: 8, type: 'Translator', transType: 'Book' }
+                    } else {
+                        newMap[tri._id] = { score: 3, type: 'Translator', transType: 'Research Paper / Chapter' }
+                    }
                 })
             }
         })

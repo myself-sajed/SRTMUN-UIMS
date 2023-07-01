@@ -19,7 +19,9 @@ const OtherInfo = ({ otherInfo, setOtherInfo, setSaveLoader }) => {
     const saveData = (e) => {
         e.preventDefault()
         if (entry) {
-            let newArray = [...otherInfo]
+
+            let newArray = [...otherInfo || []]
+
             newArray.unshift(entry)
             setOtherInfo([...newArray])
             setSaveLoader(true)
@@ -39,7 +41,7 @@ const OtherInfo = ({ otherInfo, setOtherInfo, setSaveLoader }) => {
 
     const handleChange = (e) => {
         e.preventDefault()
-        let newArray = [...otherInfo]
+        let newArray = [...otherInfo || []]
         newArray[deleteIndex] = entry
         setOtherInfo([...newArray])
         setEntry(null)
