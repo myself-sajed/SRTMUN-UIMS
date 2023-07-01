@@ -18,12 +18,9 @@ const Actions = ({ item, model, refreshFunction, addState, editState, pencilClic
                 !res && toast.error('Something went wrong')
 
                 if (res.data.status === 'deleted') {
-                    console.log(res.data.status)
                     toast.success('Item deleted successfully')
                     refreshFunction()
                     setIsLoading(false)
-                    console.log('after refreshFunction')
-
                 }
                 else if (res.data.status === 'error') {
                     toast.error('Could not delete item. Try again later')

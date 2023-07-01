@@ -209,7 +209,7 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
 
                                 {casArray.map((casItem) => {
                                     return (
-                                        <tr className="table-light">
+                                        <tr className={`${forPrintOut === 'true' ? "text-black" : "table-light"} `}>
                                             <th scope="row" className='w-20 text-sm text-[#009879]'>{casItem.casYear}</th>
                                             <td>
 
@@ -292,3 +292,4 @@ export default Table
 export { ViewFile }
 
 export { CASActivities }
+

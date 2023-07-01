@@ -5,8 +5,6 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
 
     toast.success('Updating... Please wait.')
 
-    console.log('Form data is :', ...data)
-
     const url = `${process.env.REACT_APP_MAIN_URL}/api/edit/${model}`
 
     Axios.post(url, data).then((res) => {
@@ -20,12 +18,12 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
             refresh()
         }
         else {
-            toast.error('Error editing item')
             setLoading(false)
             if (!isCAS) {
                 setFormOpen(false)
             }
             setModal(false)
+            refresh()
         }
     }).catch((err) => {
         console.log('err', err)
@@ -35,6 +33,7 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
         setLoading(false)
         setModal(false)
         toast.error('Server error')
+        refresh()
 
     })
 

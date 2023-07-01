@@ -24,18 +24,17 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     const [open, setOpen] = useState(false);
 
     //states
-    const [teacherName, setTeacherName] = useState('')
     const [bookTitle, setBookTitle] = useState('')
-    const [paperTitle, setPaperTitle] = useState('')
-    const [conTitle, setConTitle] = useState('')
-    const [conName, setConName] = useState('')
+    const [paperTitle, setPaperTitle] = useState('-')
+    const [conTitle, setConTitle] = useState('-')
+    const [conName, setConName] = useState('-')
     const [nat, setNat] = useState('')
+    const [transType, setTransType] = useState('')
     const [issn, setIssn] = useState('')
     const [aff, setAff] = useState('')
     const [pubName, setPubName] = useState('')
-    const [authorEditor, setAuthorEditor] = useState('')
-    const [schoolName, setSchoolName] = useState('')
     const [pubDate, setPubDate] = useState('')
+    const [chapterTitle, setChapterTitle] = useState('')
     const [proof, setProof] = useState(null)
     const [year, setYear] = useState('')
     const [type, setType] = useState(null)
@@ -58,9 +57,11 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('type', type)
         formData.append('titleOfBook', bookTitle)
         formData.append('paperTitle', paperTitle)
+        formData.append('transType', transType)
         formData.append('titleOfProceeding', conTitle)
         formData.append('conName', conName)
         formData.append('isNat', nat)
+        formData.append('chapterTitle', chapterTitle)
         formData.append('publicationYear', pubDate)
         formData.append('issnNumber', issn)
         formData.append('aff', aff)
@@ -82,7 +83,9 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('itemId', itemToDelete._id)
         formData.append('proof', itemToDelete.proof)
         formData.append('type', type)
+        formData.append('transType', transType)
         formData.append('titleOfBook', bookTitle)
+        formData.append('chapterTitle', chapterTitle)
         formData.append('paperTitle', paperTitle)
         formData.append('titleOfProceeding', conTitle)
         formData.append('conName', conName)
@@ -111,6 +114,8 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                 setBookTitle(item.titleOfBook)
                 setPaperTitle(item.paperTitle)
                 setConTitle(item.titleOfProceeding)
+                setTransType(item.transType)
+                setChapterTitle(item.chapterTitle)
                 setConName(item.conName)
                 setNat(item.isNat)
                 setIssn(item.issnNumber)
@@ -128,18 +133,20 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
 
     // function to clear states to '' 
     function clearStates() {
-        setType(propType)
-        setBookTitle('')
-        setPaperTitle('')
-        setConTitle('')
-        setConName('')
-        setNat('')
-        setIssn('')
-        setAff('')
-        setPubName('')
-        setPubDate('')
-        setYear('')
-        setProof('')
+        // setType(propType)
+        // setBookTitle('')
+        // setChapterTitle('')
+        // setPaperTitle('-')
+        // setConTitle('-')
+        // setConName('-')
+        // setNat('')
+        // setIssn('')
+        // setAff('')
+        // setTransType('')
+        // setPubName('')
+        // setPubDate('')
+        // setYear('')
+        // setProof('')
 
 
 
@@ -169,15 +176,26 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                     setYear(item.year)
                     if (type === 'Conference') {
                         setBookTitle('-')
+                        setChapterTitle('-')
                         setPaperTitle(item.paperTitle)
                         setConTitle(item.titleOfProceeding)
                         setConName(item.conName)
-                    } else {
+                    } else if (type === 'Chapter' || type === 'Translator') {
                         setPaperTitle('-')
                         setConTitle('-')
                         setConName('-')
                         setBookTitle(item.titleOfBook)
+                        setChapterTitle(item.chapterTitle)
 
+                        if (type === 'Translator' && transType === 'Book') {
+                            setChapterTitle("-")
+                        }
+                    } else {
+                        setPaperTitle('-')
+                        setConTitle('-')
+                        setConName('-')
+                        setChapterTitle("-")
+                        setBookTitle(item.titleOfBook)
                     }
                 }
             })
@@ -190,18 +208,29 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         } else {
             if (type === 'Conference') {
                 setBookTitle('-')
+                setChapterTitle('-')
                 setPaperTitle('')
                 setConTitle('')
                 setConName('')
+            } else if (type === 'Chapter' || type === 'Translator') {
+                setPaperTitle('-')
+                setConTitle('-')
+                setConName('-')
+                setChapterTitle('')
+                if (type === 'Translator' && transType === 'Book') {
+                    setChapterTitle("-")
+                }
             } else {
                 setPaperTitle('-')
                 setConTitle('-')
                 setConName('-')
                 setBookTitle('')
+                setChapterTitle('-')
+
             }
         }
 
-    }, [type, editModal])
+    }, [type, editModal, transType])
 
 
 
@@ -246,10 +275,32 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                             </select>
                         </div>
 
-                        <Text title='Title of Book / Chapter / Edited Book / Translation' state={bookTitle} setState={setBookTitle} disabled={type === 'Conference' ? true : false} />
+                        <Text title='Title of Book / Edited Book / Translation' state={bookTitle} setState={setBookTitle} disabled={type === 'Conference' ? true : false} />
+
+                        {
+                            type === 'Translator' && <div className="col-md-4">
+
+                                <label htmlFor="validationCustom05" className="form-label">Translation work</label>
+                                <select className="form-select" id="validationCustom05" required
+                                    value={transType} onChange={(e) => { setTransType(e.target.value) }}>
+                                    <option selected disabled value="">Choose</option>
+
+                                    <option value="Research Paper / Chapter">Research Paper / Chapter</option>
+                                    <option value="Book">Book</option>
+
+                                </select>
+                            </div>
+                        }
+
+
+                        <Text title='Title of Chapter / Translation' state={chapterTitle} setState={setChapterTitle} disabled={type === 'Book' || type === 'Editor' || type === 'Conference' || transType === 'Book' ? true : false} />
+
+
                         <Text title='Paper Title' state={paperTitle} setState={setPaperTitle} disabled={type !== 'Conference' ? true : false} />
                         <Text title='Title of proceedings of the conference' state={conTitle} setState={setConTitle} disabled={type !== 'Conference' ? true : false} />
+
                         <Text title='Conference Name' disabled={type !== 'Conference' ? true : false} state={conName} setState={setConName} />
+
                         <div className="col-md-4">
 
                             <label htmlFor="validationCustom05" className="form-label">Wheather National / International</label>
@@ -269,13 +320,13 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                                 }
                             </select>
                         </div>
-                        <Text title='Year of Publication' type="number" state={pubDate} setState={setPubDate} />
+                        <Text space='col-md-4' title='Year of Publication' type="number" state={pubDate} setState={setPubDate} />
                         <Text title='ISBN/ISSN number of proceeding' state={issn} setState={setIssn} />
-                        <Text title='Affiliation Institute at the time of publication' space='col-md-6' state={aff} setState={setAff} />
+                        <Text title='Affiliation Institute at the time of publication' state={aff} setState={setAff} />
                         <Year state={year} setState={setYear} />
-                        <Text title='Publisher Name' space='col-md-6' state={pubName} setState={setPubName} />
+                        <Text space='col-md-6' title='Publisher Name' state={pubName} setState={setPubName} />
 
-                        <File space='col-md-6' title='Upload Proof' setState={setProof} />
+                        <File title='Upload Proof' setState={setProof} />
 
 
 
@@ -293,8 +344,10 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                         <thead className='table-dark'>
                             <tr>
                                 <th scope="col">Type</th>
-                                <th scope="col"><div className="w-32">Title of Book / Chapter / Edited Book / Translation  </div></th>
+                                <th scope="col"><div className="w-32">Title of Book / Edited Book / Translation  </div></th>
+                                <th scope="col">Chapter Title</th>
                                 <th scope="col">Paper Title</th>
+                                <th scope="col">Translation work</th>
                                 <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
                                 <th scope="col">Conference Name</th>
                                 <th scope="col">National / International</th>
@@ -316,7 +369,9 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                                     <tr key={index}>
                                         <td>{item?.type}</td>
                                         <td>{item.titleOfBook}</td>
+                                        <td>{item.chapterTitle}</td>
                                         <td>{item.paperTitle}</td>
+                                        <td>{item.transType}</td>
                                         <td>{item.titleOfProceeding}</td>
                                         <td>{item.conName}</td>
                                         <td>{item.isNat}</td>

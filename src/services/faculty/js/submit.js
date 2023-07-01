@@ -23,17 +23,14 @@ const submit = async (data, url, setState, setLoading, setModal, setIsFormOpen) 
 }
 
 const submitWithFile = async (data, url, setState, setLoading, setModal, setIsFormOpen) => {
-    console.log(...data, url)
 
     // req to server
     const res = await Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/add/${url}`, data);
 
     // handleling respose
     if (res.data.status === 'added') {
-        console.log("I am called with " + res.data.data)
         setState();
         toast.success('Data added successfully');
-        console.log('Stopped')
         setLoading(false)
         setModal(false)
         setIsFormOpen(false)

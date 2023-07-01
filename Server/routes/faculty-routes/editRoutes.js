@@ -369,7 +369,7 @@ function editRoutes(app) {
     })
 
     // appointmentsHeldPrior
-    app.post('/api/edit/AppointmentsHeldPrior',  upload.single('file'), (req, res) => {
+    app.post('/api/edit/AppointmentsHeldPrior', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
         if (req.file) {
 
@@ -405,7 +405,7 @@ function editRoutes(app) {
 
             )
         }
-        else{
+        else {
             AppointmentsHeldPrior.findOneAndUpdate({ _id: data.userId }, {
                 designation: data.designation,
                 employerName: data.employerName,
@@ -423,11 +423,11 @@ function editRoutes(app) {
             }).catch(function (err) {
                 res.send({ status: 'error' })
             }
-    
+
             )
         }
 
-       
+
 
 
     })
@@ -703,18 +703,13 @@ function editRoutes(app) {
 
                 deleteFile(data.proof, 'faculty', (err) => {
                     try {
-
-
                         if (err) {
                             throw 'File not found'
                         }
-
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
                         console.log('in catch')
-
-                        console.log('The error is :', error)
-                        res.send({ status: 'error' });
+                        res.send({ status: 'error', error: 'Previous file not found...' });
                     }
                 })
             }).catch(function (err) {
@@ -761,6 +756,8 @@ function editRoutes(app) {
                 type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
+                chapterTitle: data.chapterTitle,
+                transType: data.transType,
                 authorEditor: data.authorEditor,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
@@ -802,6 +799,8 @@ function editRoutes(app) {
                 type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
+                chapterTitle: data.chapterTitle,
+                transType: data.transType,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,

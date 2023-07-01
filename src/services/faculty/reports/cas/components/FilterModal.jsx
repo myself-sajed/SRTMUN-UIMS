@@ -7,17 +7,29 @@ import CASDataTable from '../components/CASDataTable'
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
 
-const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, setSaveLoader, recalculateScore, serverData }) => {
+
+const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal, dataFilterModal, model, setState, state, isConsolidated = false, fetchFrom, setSaveLoader, recalculateScore }) => {
 
   const [filterData, setFilterData] = useState([])
+  const [filteredServerData, setFilteredServerData] = useState(null)
+
+
+  useEffect(() => {
+    if (model === 'MainBookAndChapter') {
+      let newData = filterBook(data)
+      if (newData) {
+        setFilteredServerData({ data: { data: newData } })
+      }
+    }
+  }, [data])
+
 
   const onClose = () => {
     setDataFilterModal({ ...dataFilterModal, isOpen: false });
-    recalculateScore(state, setState, data);
+    recalculateScore(state, setState, filteredServerData ? filteredServerData : data);
     if (scoreCalculator) {
-      scoreCalculator({ item: false, state, setState, serverData: data })
+      scoreCalculator({ item: false, state, setState, serverData: filteredServerData ? filteredServerData : data })
       setSaveLoader(true);
-
     } else {
       setSaveLoader(true);
     }
@@ -30,11 +42,11 @@ const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal
           <div className='flex items-start justify-between text-base'>
             <p className='w-[60%]'>Filter : <b>{title}</b> </p>
             <p> Academic Year : <b>{dataFilterModal.year}</b></p>
-            <p className='flex items-center justify-start gap-2 p-1 bg-blue-100 hover:bg-blue-200 rounded-md cursor-pointer' onClick={refetch}> <RefreshRoundedIcon /> Refresh</p>
+            <p className='flex items-center justify-start gap-2 p-1 bg-blue-100 hover:bg-blue-200 rounded-md cursor-pointer' onClick={() => { refetch(); filterBook(); }}> <RefreshRoundedIcon /> Refresh</p>
           </div>
         </DialogTitle>
         <DialogContent>
-          <FilterCheckBox data={data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
+          <FilterCheckBox data={model === "MainBookAndChapter" ? filteredServerData : data} model={model} year={dataFilterModal.year} state={state} setState={setState} filterData={filterData} setFilterData={setFilterData} isConsolidated={isConsolidated} fetchFrom={fetchFrom} />
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} sx={{ textTransform: "none" }} className='bg-blue-800 text-white' >Done</Button>
@@ -46,29 +58,78 @@ const FilterModal = ({ scoreCalculator, refetch, title, data, setDataFilterModal
 
 export default FilterModal
 
+function filterBook(data, onlyTranslationData = false) {
+
+  const chaptersMap = new Map();
+  const translatorMap = new Map();
+  const result = [];
+  const onlyTranslation = []
+
+  data?.data?.data?.sort((a, b) => {
+    const createdAtA = new Date(a.createdAt);
+    const createdAtB = new Date(b.createdAt);
+    return createdAtA - createdAtB;
+  }).forEach((item) => {
+    if (item.type === 'Chapter') {
+      if (!chaptersMap.has(item.titleOfBook)) {
+        chaptersMap.set(item.titleOfBook, [item]);
+        result.push(item);
+      } else {
+        const chapters = chaptersMap.get(item.titleOfBook);
+        if (chapters.length < 2) {
+          chapters.push(item);
+          result.push(item);
+        }
+      }
+    } else if (item.type === 'Translator') {
+      if (!translatorMap.has(item.titleOfBook)) {
+        translatorMap.set(item.titleOfBook, [item]);
+        result.push(item);
+        onlyTranslation.push(item);
+      } else {
+        const translators = translatorMap.get(item.titleOfBook);
+        if (translators.length < 3) {
+          translators.push(item);
+          result.push(item);
+          onlyTranslation.push(item);
+        }
+      }
+    } else {
+      result.push(item);
+    }
+  })
+
+  if (onlyTranslationData) {
+    return onlyTranslation
+  }
+
+  return result;
+}
+
+export { filterBook }
+
 
 const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fetchFrom }) => {
 
   const [isAllChecked, setIsAllChecked] = useState(false)
   const DataTable = isConsolidated ? TableData : CASDataTable
 
-
   const checkAll = () => {
-    let arr = state?.dataMap ? state?.dataMap : []
-    let newArray = []
+    let arr = state?.dataMap ? state?.dataMap : [];
+    let newArray = [];
     let serverArr = !isConsolidated ? data?.data?.data?.filter(function (filterable) { return filterable.year === year; }) : data?.filter(function (filterable) {
       return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
-    })
+    });
 
     serverArr.forEach(item => {
-      newArray.push(item._id)
-    })
+      newArray.push(item._id);
+    });
 
-    let array = [...arr, ...newArray]
-    setState({ ...state, dataMap: [...new Set(array)] })
-    setIsAllChecked(true)
+    setState(prevState => ({ ...prevState, dataMap: [...new Set([...prevState.dataMap, ...newArray])] }));
+    setIsAllChecked(true);
+  };
 
-  }
+
 
   const uncheckAll = () => {
     let arr = [...new Set(state?.dataMap)]
@@ -88,19 +149,18 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
 
 
   const verifyCheckAll = () => {
+    let isAllChecked = false;
     if (!isConsolidated) {
-      data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
+      isAllChecked = data && data?.data?.data?.filter(function (filterable) { return filterable.year === year; })?.length === state?.dataMap?.length;
     } else {
-      data && data?.filter(function (filterable) {
+      isAllChecked = data && data?.filter(function (filterable) {
         return fetchFrom === "faculty" ? filterable.year === year : (filterable.Academic_Year === year || filterable.Acadmic_Year === year || filterable.Year_of_Award === year || filterable.Academic_year === year || filterable.Acadmic_year === year || filterable.Year_of_activity === year || year.includes(filterable.Year))
-      })?.length === state?.dataMap?.length ? setIsAllChecked(true) : setIsAllChecked(false)
+      })?.length === state?.dataMap?.length;
     }
-  }
+    setIsAllChecked(isAllChecked);
+  };
 
 
-  useEffect(() => {
-    verifyCheckAll()
-  }, [])
 
   const singleCheckUncheck = (e, itemId) => {
     if (e.target.checked) {
@@ -192,4 +252,6 @@ const FilterCheckBox = ({ data, model, year, setState, state, isConsolidated, fe
     </>
   )
 }
+
+
 

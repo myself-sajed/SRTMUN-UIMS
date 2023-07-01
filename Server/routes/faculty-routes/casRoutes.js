@@ -32,7 +32,7 @@ async function casRoutes(app) {
         const link = `${process.env.Report_Main_URL}/report/CASReport/${userData._id}/${JSON.stringify(selectedYear)}/${forPrintOut}`
 
         await page.goto(link,
-            { waitUntil: 'networkidle0' });
+            { waitUntil: 'networkidle0', timeout: 200000 });
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,

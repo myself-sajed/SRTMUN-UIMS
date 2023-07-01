@@ -20,7 +20,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
     const handleGeneration = () => {
         setReportLoading({ isLoading: true, title: 'Generating PBAS Report' });
-        generatePBASReport(casData, userData, selectedYear, setReportLoading, forPrintOut)
+        generatePBASReport(userData, selectedYear, setReportLoading, forPrintOut)
     }
 
     const handleProofsGeneration = () => {

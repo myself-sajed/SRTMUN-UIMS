@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddAuthorBooks from './AddAuthorBooks';
-import BottomButtons from './BottomButtons';
-import AddTranslationWork from './AddTranslationWork';
 import { BGPad, Remark } from './Teaching';
-import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
-import AddChapter from './AddChapter';
 import NumberToTextField from '../components/NumberToTextField';
+import { filterBook } from '../components/FilterModal';
 
 
 
@@ -20,6 +15,9 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
         const scoreMapObject = state?.scoreMap
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
+        let translatorData = filterBook(serverData, true).filter((item) => {
+            return state?.dataMap.includes(item._id)
+        })
 
 
         let score = 0
@@ -48,17 +46,30 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                     score += 0
                 }
             } else if (item.type === 'Translator') {
-                if (state?.scoreMap?.[item._id]?.typeNature === 'Chapter or Research Paper') {
-                    score += 3
-                }
-                else if (state?.scoreMap?.[item._id]?.typeNature === 'Book') {
-                    score += 8
-                }
-                else {
-                    score += 0
+                if (newMap[item._id].score) {
+                    score += newMap[item._id].score
                 }
             }
         }
+
+        let translatorMap = new Map()
+        let result = []
+
+        translatorData.forEach((elem) => {
+            if (!translatorMap.has(elem.titleOfBook)) {
+                translatorMap.set(elem.titleOfBook, [elem]);
+                result.push(elem);
+            } else {
+                const translators = translatorMap.get(elem.titleOfBook);
+                if (translators.length < 3) {
+                    translators.push(elem);
+                    result.push(elem);
+                }
+            }
+        })
+
+
+
 
 
         let Book = 0;
@@ -70,6 +81,7 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
         // publication Score
         let publicationKeys = Object.keys(newMap)
 
+
         publicationKeys.forEach((element) => {
             if (state?.dataMap?.includes(element)) {
                 if (newMap?.[element]?.type === 'Book') {
@@ -78,14 +90,27 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                     Chapter += newMap?.[element]?.score
                 } else if (newMap?.[element]?.type === 'Editor') {
                     Editor += newMap?.[element]?.score
-                } else if (newMap?.[element]?.type === 'Translator') {
-                    Translator += newMap?.[element]?.score
                 }
             }
         })
 
 
-
+        translatorMap.forEach((triplet) => {
+            if (triplet.length === 3) {
+                console.log('Key is ', triplet)
+                triplet.forEach((tri, index) => {
+                    if (index !== 2) {
+                        newMap[tri._id] = { score: 3, type: 'Translator' }
+                    } else {
+                        newMap[tri._id] = { score: 1, type: 'Translator' }
+                    }
+                })
+            } else {
+                triplet.forEach((tri) => {
+                    newMap[tri._id] = { score: 3, type: 'Translator' }
+                })
+            }
+        })
 
 
 
@@ -97,7 +122,9 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
             }
         }
 
+
         grandTotal = grandTotal + score
+
 
         setState((current) => {
             return {

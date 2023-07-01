@@ -178,7 +178,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                                     <button onClick={submitAttendance} className="btn btn-primary bg-blue-700 hover:bg-blue-600" type="button" id="uploadAttendance">Upload Director Certificate</button>
                                 </div> : null}
 
-                            {
+                            {/* {
                                 teachingData.uploadedAttendance?.file &&
                                 <div className='flex items-center justify-start gap-2 mt-3 bg-blue-100 rounded-md px-2'>
                                     <FileViewer serviceName="CAS"
@@ -202,7 +202,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                                     </Popconfirm>
 
                                 </div>
-                            }
+                            } */}
                         </div>
 
                     </div>

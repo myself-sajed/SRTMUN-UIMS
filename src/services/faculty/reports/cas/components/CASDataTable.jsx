@@ -62,7 +62,8 @@ const CASDataTable = {
     TrimmedBookAndChapter: {
         tableHeads: [
             "Type",
-            "Title of Book / Chapter / Edited Book / Translation",
+            "Title of Book / Edited Book / Translation",
+            "Chapter Title",
             "Paper Title",
             "Title of proceedings",
             "Conference Name",
@@ -77,6 +78,7 @@ const CASDataTable = {
         tableCells: [
             "type",
             "titleOfBook",
+            "chapterTitle",
             "paperTitle",
             "titleOfProceeding",
             "conName",
@@ -95,7 +97,8 @@ const CASDataTable = {
     MainBookAndChapter: {
         tableHeads: [
             "Type",
-            "Title of Book / Chapter / Edited Book / Translation",
+            "Title of Book / Edited Book / Translation",
+            "Chapter Title",
             "National / International",
             "Publication Year",
             "SBN/ISSN number",
@@ -107,6 +110,7 @@ const CASDataTable = {
         tableCells: [
             "type",
             "titleOfBook",
+            "chapterTitle",
             "isNat",
             "publicationYear",
             "issnNumber",

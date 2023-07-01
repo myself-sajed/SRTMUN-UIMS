@@ -9,6 +9,14 @@ const bookAndChaptersSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    chapterTitle: {
+        type: 'string',
+        required: false,
+    },
+    transType: {
+        type: 'string',
+        required: false,
+    },
     titleOfProceeding: {
         type: 'string',
         required: false,

@@ -334,7 +334,7 @@ function initRoutes(app) {
     })
 
     // appointmentsHeldPrior
-    app.post('/api/add/AppointmentsHeldPrior',  upload.single('file'), (req, res) => {
+    app.post('/api/add/AppointmentsHeldPrior', upload.single('file'), (req, res) => {
         // const { data } = req.body
         const data = JSON.parse(JSON.stringify(req.body));
 
@@ -557,6 +557,8 @@ function initRoutes(app) {
                 type: data.type,
                 titleOfBook: data.titleOfBook,
                 paperTitle: data.paperTitle,
+                chapterTitle: data.chapterTitle,
+                transType: data.transType,
                 titleOfProceeding: data.titleOfProceeding,
                 conName: data.conName,
                 isNat: data.isNat,
