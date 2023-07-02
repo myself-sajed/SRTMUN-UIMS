@@ -21,6 +21,10 @@ const researchProjectSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    department: {
+        type: 'string',
+        required: false,
+    },
     awardYear: {
         type: 'string',
         required: true,
