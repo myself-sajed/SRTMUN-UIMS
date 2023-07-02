@@ -3,6 +3,7 @@ import BookmarkAddedRoundedIcon from '@mui/icons-material/BookmarkAddedRounded';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SummarySheet from './SummarySheet';
+import submitReportForm from '../../../../../js/submitReportForm';
 
 const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
 
@@ -10,7 +11,11 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
     const casData = useSelector((state) => state.cas)
     const user = useSelector((state) => state.user.user)
 
-
+    const submitForm = (e) => {
+        e.preventDefault()
+        let filter = { userId: user._id }
+        submitReportForm(navigate, casYearState, filter, 'PBASModel')
+    }
 
     return (
         <div>
@@ -20,7 +25,8 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
             </div>
             <div className='text-center'>
 
-                <form className='flex flex-col gap-5 items-center justify-center w-full mt-5' onSubmit={() => { setSaveLoader(true); navigate('/faculty') }}>
+                <form className='flex flex-col gap-5 items-center justify-center w-full mt-5'
+                    onSubmit={submitForm}>
                     <div className="form-check md:w-1/3 w-full">
                         <input className="form-check-input" type="checkbox" value="" id="finalCheckBox1" required />
                         <label className="form-check-label" htmlFor="finalCheckBox1">
@@ -29,7 +35,7 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
                     </div>
 
 
-                    <button type='submit' className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out"><BookmarkAddedRoundedIcon /><span className='ml-2'>Save Information</span></button>
+                    <button type='submit' className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out"><BookmarkAddedRoundedIcon /><span className='ml-2'>Submit CAS Form</span></button>
 
 
                 </form>

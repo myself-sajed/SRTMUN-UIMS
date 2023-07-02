@@ -249,8 +249,7 @@ const ResearchScore = ({ data }) => {
                         {/* OPTIONS */}
                         <ResearchTableRow bold={true} td1={null} td2='[A] Patents Published'
                             td3={data?.patents.totalScore} />
-                        <ResearchTableRow bold={true} td1={null} td2='[B] Policy Documents' td3={`${data?.policyDocuments.totalScore}, Capped Score : 
-                        ${policyCapScore}`} />
+                        <ResearchTableRow bold={true} td1={null} td2='[B] Policy Documents' />
                         <ResearchTableRow bold={true} td1={null} td2='[C] Awards / Fellowships'
                             td3={data?.awards.totalScore + data?.fellow.totalScore} />
 
@@ -258,7 +257,7 @@ const ResearchScore = ({ data }) => {
 
                         {/* // 6. Invited talks */}
                         < ResearchTableRow color={true} bold={true} td1={6} td2='Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings'
-                            td3={`${totalInvitedConferenceScore.toFixed(2)},  Capped Score : ${talkCapScore}`} />
+                            td3={totalInvitedConferenceScore.toFixed(2)} />
 
                         <ResearchTableRow bold={true} td1={null} td2='[A] Invited Lectures / Resource Person / Paper Presentation in Seminars'
                             td3={data?.invitedTalks.totalScore} />
@@ -273,20 +272,6 @@ const ResearchScore = ({ data }) => {
             {/* // Grand total */}
             {/* // GRAND TOTAL */}
             <div className='border-2 border-blue-700 rounded-lg p-3 text-center'>
-                <div className='flex items-center justify-center gap-4'>
-                    <p>Total Score  :
-                        <span className='ml-4 text-xl font-bold text-blue-700'>{
-                            totalScore && totalScore.toFixed(2)
-                        }</span>
-                    </p>
-                    <div className='text-muted'>|</div>
-                    <p>Total Capped Score  :
-                        <span className='ml-4 text-xl font-bold text-blue-700'>{
-                            totalCappedScore && totalCappedScore.toFixed(2)
-                        }</span>
-                    </p>
-                </div>
-                <hr className='my-3' />
                 <p className='text-lg'>Grand Total Score  :
                     <span className='ml-4 text-2xl font-bold text-blue-700'>{
                         totalCappedScore && totalCappedScore.toFixed(2)

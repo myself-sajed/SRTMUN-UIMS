@@ -15,11 +15,11 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Year from '../../../../../inputs/Year'
 import Bred from '../../../../../components/Bred'
-import useAuth from '../../../../../hooks/useAuth'
 import { setAqarYear } from '../../../../../redux/slices/AQARSlice'
 import { toast } from 'react-hot-toast'
 import ExtendedProfile from '../../../../director/reports/aqar/components/ExtendedProfile'
 import Axios from 'axios'
+import submitReportForm from '../../../../../js/submitReportForm'
 
 const AQARHome = ({ userType = 'faculty', auth }) => {
 
@@ -80,6 +80,7 @@ const AQARHome = ({ userType = 'faculty', auth }) => {
             .then((res) => {
                 if (res) {
                     toast.success('Data saved successfully...')
+                    submitForm()
                 } else {
                     toast.error('Failed to save data')
                 }
@@ -87,6 +88,18 @@ const AQARHome = ({ userType = 'faculty', auth }) => {
                 toast.success('Failed to save data in catch up state :', err)
             })
 
+    }
+
+    const submitForm = () => {
+        let filter;
+
+        if (userType === 'faculty') {
+            filter = { userId: user._id }
+            submitReportForm(navigate, aqarYearState, filter, 'FacultyAQARModel')
+        } else {
+            filter = { schoolName: directorUser.department }
+            submitReportForm(navigate, aqarYearState, filter, 'DirectorAQARModel', '/director')
+        }
     }
 
     return (
@@ -142,7 +155,7 @@ const AQARHome = ({ userType = 'faculty', auth }) => {
                 tabName === '1' && <div>
                     <AQARForm userType={userType} />
                     <div className="mt-3 mb-5">
-                        <SaveButton title={userType === 'faculty' ? `Save AQAR Information (${aqarYearState})` : `Save & Proceed`} onClickFunction={() => {
+                        <SaveButton title={userType === 'faculty' ? `Submit AQAR Information (${aqarYearState})` : `Save & Proceed`} onClickFunction={() => {
                             setTabName(userType === 'faculty' ? '2' : 'profile');
                             if (userType === 'faculty') saveData();
                             handleNext();
@@ -156,7 +169,7 @@ const AQARHome = ({ userType = 'faculty', auth }) => {
                 tabName === 'profile' && <div>
                     <ExtendedProfile aqarYearState={aqarYearState} />
                     <div className="mt-3 mb-5">
-                        <SaveButton title={`Save AQAR Information (${aqarYearState})`} onClickFunction={() => { setTabName('2'); handleNext(); toast.success(`AQAR Information saved successfully`) }} />
+                        <SaveButton title={`Submit AQAR Information (${aqarYearState})`} onClickFunction={() => { setTabName('2'); handleNext(); submitForm(); toast.success(`AQAR Information saved successfully`) }} />
                     </div>
                 </div>
             }

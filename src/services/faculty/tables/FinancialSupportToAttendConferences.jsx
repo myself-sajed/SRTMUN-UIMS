@@ -169,7 +169,7 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
                                         <td>{item.pan}</td>
                                         <td>{item.year}</td>
                                         <td><View proof={item.proof} /></td>
-                                        <td> <Actions item={item} model="Financialsupport" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
+                                        <td> <Actions item={item} model="FinancialSupport" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setJrfModal} /></td>
 
                                     </tr>
                                 )

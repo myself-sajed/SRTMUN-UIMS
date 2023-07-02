@@ -4,68 +4,63 @@ import { getTotalDirectorAQARData } from '../../director/reports/aqar/js/getAQAR
 import { useState } from 'react'
 import { academicYearGenerator } from '../../../inputs/Year'
 import UserLoading from '../../../pages/UserLoading'
+import { getReportInfo } from '../../../js/submitReportForm'
 
 const DirectorRelatedService = ({ year, serviceName, school }) => {
 
     const [serviceDataFromServer, setServiceDataFromServer] = useState(null)
-    const [candidates, setCandidates] = useState({})
+    const [candidates, setCandidates] = useState(null)
 
-    const [loading, setLoading] = useState(false)
-
-    const serviceInfo = {
-        'AAA': { accessor: 'AAAData', year: 'auditYear' },
-        'Director AQAR': { accessor: 'aqarData', year: 'aqarYear' },
-    }
-
+    const [serviceLoading, setServiceLoading] = useState(false)
 
 
     useEffect(() => {
-        setServiceDataFromServer(null)
         setCandidates(null)
-        setLoading(true)
+        setServiceDataFromServer(null)
 
         if (serviceName === 'AAA') {
-            getTotalAAAData(setServiceDataFromServer, setLoading, () => { });
+            getReportInfo('AAAModel', setServiceDataFromServer, setServiceLoading, 'director')
         } else if (serviceName === 'Director AQAR') {
-            getTotalDirectorAQARData(setServiceDataFromServer, setLoading, () => { });
+            getReportInfo('DirectorAQARModel', setServiceDataFromServer, setServiceLoading, 'director')
         }
-    }, [year, serviceName])
+    }, [serviceName])
 
     useEffect(() => {
-        setCandidates(null)
-        const myArr = []
+        setCandidates([])
         if (serviceDataFromServer?.length > 0) {
             serviceDataFromServer.forEach((serviceItem) => {
-                serviceItem?.[serviceInfo[serviceName]?.accessor]?.map((newData) => {
-                    if (serviceItem.schoolName === school) {
-                        myArr.push(JSON.parse(newData)?.[serviceInfo[serviceName]?.year])
-                    }
-                })
+                if (serviceItem.schoolName === school) {
+                    setCandidates(() => serviceItem?.submitted ? serviceItem.submitted : [])
+                    return
+                }
             })
         }
-        setCandidates(() => myArr)
     }, [serviceDataFromServer, year, serviceName, school])
+
+    useEffect(() => {
+        console.log('serviceDataFromServer :', serviceDataFromServer, candidates)
+    }, [serviceDataFromServer, candidates])
 
     return (
         <div>
             {
-                !loading ? <div>
+                !serviceLoading ? <div>
                     {
                         candidates && <div>
-                            <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{school}</b> filled <b>{candidates?.length ? candidates?.length : 0}</b> years of {serviceName} data as shown below</p>
+                            <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{school}</b> filled <b>{candidates?.length ? candidates?.length : 0}</b> years of {serviceName} data</p>
 
                             <div className="mt-2">
                                 <ul class="list-group list-group-flush">
+
                                     {
-                                        academicYearGenerator(5)?.map((yearItem, index) => {
+                                        (candidates && candidates?.length > 0) ? candidates?.map((yearItem, index) => {
                                             return <li className='flex items-center justify-start gap-5 list-group-item'>
                                                 <span> {index + 1}. <b className='ml-3'>{yearItem}</b></span>
-                                                {
-                                                    candidates?.length > 0 && candidates?.includes(yearItem) ? <span class="badge bg-success">Filled</span> : <span class="badge bg-danger">Not filled</span>
-                                                }
-
+                                                <span class="badge bg-success">Submitted</span>
                                             </li>
-                                        })
+                                        }) : <div>
+                                            <p className='py-3 text-red-600 text-center'>No {serviceName} data submitted yet. </p>
+                                        </div>
                                     }
                                 </ul>
                             </div>

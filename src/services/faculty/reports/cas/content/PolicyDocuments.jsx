@@ -11,6 +11,160 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         setTotalActivityScore(policyDocuments?.totalScore + patents?.totalScore + awards?.totalScore + fellow?.totalScore)
     }, [policyDocuments?.totalScore, patents?.totalScore, awards?.totalScore, fellow?.totalScore])
 
+    const patentCalculator = (calculationProp) => {
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+        serverData?.data?.data?.forEach((item) => {
+            if (item.isNat === 'National') {
+                newMap[item._id] = { score: 7, isNat: item.isNat }
+            }
+            else if (item.isNat === 'International') {
+                newMap[item._id] = { score: 10, isNat: item.isNat }
+            }
+        })
+
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                scoreMap:
+                    { ...newMap }
+            }
+        })
+    }
+
+    const awardCalculator = (calculationProp) => {
+
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+
+        serverData?.data?.data?.forEach(item => {
+            if (item.isNat === 'National') {
+                newMap[item._id] = { score: 5, isNat: item.isNat }
+
+            }
+            else if (item.isNat === 'International') {
+                newMap[item._id] = { score: 7, isNat: item.isNat }
+
+            }
+
+        });
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                scoreMap:
+                    { ...newMap },
+            }
+        })
+    }
+
+    const fellowCalculator = (calculationProp) => {
+
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+        serverData?.data?.data?.forEach(item => {
+            if (item.isNat === 'National') {
+                newMap[item._id] = { score: 5, isNat: item.isNat }
+
+            }
+            else if (item.isNat === 'International') {
+                newMap[item._id] = { score: 7, isNat: item.isNat }
+
+            }
+        });
+
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                scoreMap:
+                    { ...newMap },
+            }
+        })
+    }
+
+    const policyCalculator = (calculationProp) => {
+
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+        let score = 0
+        serverData?.data?.data?.forEach(item => {
+            if (item.isNat === 'State') {
+                newMap[item._id] = { score: 4, isNat: item.isNat }
+            }
+            else if (item.isNat === 'National') {
+                newMap[item._id] = { score: 7, isNat: item.isNat }
+            }
+            else if (item.isNat === 'International') {
+                newMap[item._id] = { score: 10, isNat: item.isNat }
+            }
+        });
+
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                scoreMap:
+                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
+            }
+        })
+    }
+
 
     return <BGPad classes='mt-3'>
 
@@ -29,7 +183,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
             <div className='mt-2 text-sm md:text-base'>
 
                 <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
-                    facultyTableAvailable="PatentPublished"
+                    facultyTableAvailable="PatentPublished" scoreCalculator={patentCalculator}
                     state={patents} setState={setPatents} casYearState={casYearState}
                     classes='my-3' model="Patent" addName="Patent" activityName="Patents Published" activity="Sub-Activity 1"
                 >
@@ -42,7 +196,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                <NumberToTextField scoreCalculator={policyCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                     state={policyDocuments} setState={setPolicyDocuments} casYearState={casYearState}
                     classes='my-3' model="PolicyDocuments" addName="Policy Documents" activityName="Policy Documents" activity="Sub-Activity 2"
                     options={[
@@ -64,7 +218,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="AwardRecognition" casYearState={casYearState} state={awards} setState={setAwards}
+                <NumberToTextField scoreCalculator={awardCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader} facultyTableAvailable="AwardRecognition" casYearState={casYearState} state={awards} setState={setAwards}
                     classes='my-3' model="AwardRecognition" addName="Awards" activityName="Awards & Recognitions" activity="Sub-Activity 3 [A]"
                 >
                 </NumberToTextField>
@@ -76,7 +230,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
             <div className='mt-5 text-sm md:text-base'>
 
                 <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
-                    facultyTableAvailable="Fellowship"
+                    facultyTableAvailable="Fellowship" scoreCalculator={fellowCalculator}
                     state={fellow} setState={setFellow} casYearState={casYearState}
                     classes='my-3' model="Fellowship" addName="Fellowship" activityName="Fellowship" activity="Sub-Activity 3 [B]"
                 >
@@ -90,43 +244,10 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
 
 export default PolicyDocuments
 
-const PatentPoints = ({ item, setState, state, serverData }) => {
+const PatentPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
 
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
-
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-
-        let score = 0
-        if (item.isNat === 'National') {
-            score += 7
-        }
-        else if (item.isNat === 'International') {
-            score += 10
-        }
-
-
-        let grandTotal = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                grandTotal += newMap[key].score
-            }
-        }
-
-        grandTotal = grandTotal + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: grandTotal,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
-
+        scoreCalculator({ item, setState, state, serverData })
     }, [])
 
     return <div>
@@ -139,43 +260,10 @@ const PatentPoints = ({ item, setState, state, serverData }) => {
     </div>
 }
 
-const AwardPoints = ({ item, setState, state, serverData }) => {
+const AwardPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
 
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
-
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-
-        let score = 0
-        if (item.isNat === 'National') {
-            score += 5
-        }
-        else if (item.isNat === 'International') {
-            score += 7
-        }
-
-
-        let grandTotal = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                grandTotal += newMap[key].score
-            }
-        }
-
-        grandTotal = grandTotal + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: grandTotal,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
-
+        scoreCalculator({ item, setState, state, serverData })
     }, [])
 
 
@@ -190,41 +278,11 @@ const AwardPoints = ({ item, setState, state, serverData }) => {
     </div>
 }
 
-const FellowPoints = ({ item, setState, state, serverData }) => {
+const FellowPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
 
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
 
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-        let score = 0
-        if (item.isNat === 'National') {
-            score += 5
-        }
-        else if (item.isNat === 'International') {
-            score += 7
-        }
-
-
-        let grandTotal = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                grandTotal += newMap[key].score
-            }
-        }
-
-        grandTotal = grandTotal + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: grandTotal,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
+        scoreCalculator({ item, setState, state, serverData })
 
     }, [])
 
@@ -240,43 +298,10 @@ const FellowPoints = ({ item, setState, state, serverData }) => {
     </div>
 }
 
-const PolicyPoints = ({ item, setState, state, serverData }) => {
+const PolicyPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
+        scoreCalculator({ item, setState, state, serverData })
 
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-        let score = 0
-        if (item.isNat === 'State') {
-            score += 4
-        }
-        else if (item.isNat === 'National') {
-            score += 7
-        }
-        else if (item.isNat === 'International') {
-            score += 10
-        }
-
-
-        let grandTotal = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                grandTotal += newMap[key].score
-            }
-        }
-
-        grandTotal = grandTotal + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: grandTotal,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
 
     }, [])
 

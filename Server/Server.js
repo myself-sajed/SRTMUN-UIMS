@@ -98,6 +98,7 @@ app.use(require('./routes/developer-routes/developer-routes'))
 require('./utility/feedback')(app)
 require('./utility/dashboard')(app)
 require('./utility/userAuthentication')(app, jwt)
+require('./utility/cloneItem')(app)
 app.use(require('./utility/forgotPassword'));
 app.use(require('./utility/verifyOTP'));
 
@@ -117,6 +118,9 @@ require('./routes/feedback-routes/feedbackRoutes')(app)
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)
 require('./routes/faculty-routes/facultyAqarRoutes')(app)
+
+// submit cas, pbas, aqar
+require('./routes/faculty-routes/submitReportForm')(app)
 
 
 mongoose

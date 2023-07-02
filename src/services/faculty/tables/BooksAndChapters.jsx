@@ -96,13 +96,7 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('publisherName', pubName)
         formData.append('year', year)
         formData.append('file', proof)
-
-
         handleEditWithFile(formData, 'BookAndChapter', setEditModal, refetch, setLoading, setIsFormOpen)
-
-
-
-
     }
 
 
@@ -133,23 +127,20 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
 
     // function to clear states to '' 
     function clearStates() {
-        // setType(propType)
-        // setBookTitle('')
-        // setChapterTitle('')
-        // setPaperTitle('-')
-        // setConTitle('-')
-        // setConName('-')
-        // setNat('')
-        // setIssn('')
-        // setAff('')
-        // setTransType('')
-        // setPubName('')
-        // setPubDate('')
-        // setYear('')
-        // setProof('')
-
-
-
+        setType(propType)
+        setBookTitle('')
+        setChapterTitle('')
+        setPaperTitle('-')
+        setConTitle('-')
+        setConName('-')
+        setNat('')
+        setIssn('')
+        setAff('')
+        setTransType('')
+        setPubName('')
+        setPubDate('')
+        setYear('')
+        setProof('')
     }
 
 
@@ -256,7 +247,7 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                         <div className="col-md-4">
 
                             <label htmlFor="type" className="form-label">Choose Type</label>
-                            <select className="form-select" id="type" required disabled={showConferenceOnly}
+                            <select className="form-select" id="type" required
                                 value={type} onChange={(e) => { setType(e.target.value) }}>
                                 <option disabled selected value="">Choose</option>
 

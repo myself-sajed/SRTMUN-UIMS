@@ -63,9 +63,7 @@ const ApplyLevel = ({ setLevel, level, setEligData, eligData, fullCASData, setSu
     const [stageData, setStageData] = useState({})
     const user = useSelector((state) => state.user.user)
 
-    useEffect(() => {
-        console.log('Supervisor status is :', supervisor)
-    }, [supervisor])
+
 
     const handleRadioChange = (e) => {
         setSupervisor(e.target.value)
@@ -83,9 +81,7 @@ const ApplyLevel = ({ setLevel, level, setEligData, eligData, fullCASData, setSu
         }
     }, [fullCASData, level])
 
-    useEffect(() => {
-        console.log('Eligibility Data is :', eligData)
-    }, [eligData])
+
 
 
     const stages = [

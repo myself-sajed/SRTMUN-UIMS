@@ -43,6 +43,10 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
 
     const [filteredItems, setFilteredItems] = useState([])
 
+    // main fetcher
+    let param = { model: 'Degree', userId: user?._id }
+    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+
     // add new content
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -92,7 +96,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
                 setTitle(item.title)
                 setUniversity(item.university)
                 setAwardDate(item.awardDate)
-
+                setSubject(item.subject)
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -104,15 +108,14 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
         setDegreeName('')
         setTitle('')
         setUniversity('')
+        setSubject('')
         setAwardDate('')
         setDegree(null)
 
     }
 
-    let param = { model: 'Degree', userId: user?._id }
 
-    // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))

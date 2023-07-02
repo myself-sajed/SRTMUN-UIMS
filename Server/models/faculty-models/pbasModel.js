@@ -7,6 +7,11 @@ const pbasReportSchema = new mongoose.Schema({
         required: true,
         ref: "users"
     },
+    submitted: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
     casData: {
         type: [{ type: String }],
         required: true,

@@ -40,6 +40,7 @@ const submitWithFile = async (data, url, setState, setLoading, setModal, setIsFo
         setLoading(false)
         setModal(false)
         setIsFormOpen(false)
+        setState();
 
     }
 }

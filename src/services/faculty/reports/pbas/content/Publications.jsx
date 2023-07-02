@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddAuthorBooks from './AddAuthorBooks';
-import BottomButtons from './BottomButtons';
-import AddTranslationWork from './AddTranslationWork';
 import { BGPad, Remark } from './Teaching';
-import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
-import AddChapter from './AddChapter';
 import NumberToTextField from '../components/NumberToTextField';
+import { filterBook } from '../../cas/components/FilterModal';
 
 
 
@@ -20,43 +15,89 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
         const scoreMapObject = state?.scoreMap
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
+        let translatorData = filterBook(serverData, true).filter((item) => {
+            return state?.dataMap.includes(item._id)
+        })
+
+        let filterOtherThanTranslator = serverData?.data?.data?.filter(elem => elem.type !== 'Translator')
 
 
-        let score = 0
+        // calculating points other than translator
+        filterOtherThanTranslator.forEach(filterItem => {
+            if (state?.dataMap.includes(filterItem._id)) {
+                if (filterItem.type === 'Book') {
+                    if (filterItem.isNat === 'National') {
+                        newMap[filterItem._id] = { score: 10, isNat: 'National', type: 'Book' }
+                    }
+                    else if (filterItem.isNat === 'International') {
+                        newMap[filterItem._id] = { score: 12, isNat: 'International', type: 'Book' }
 
-        if (item) {
-            if (item.type === 'Book') {
-                if (item.isNat === 'National') {
-                    score += 10
+                    }
+                    else {
+                        newMap[filterItem._id] = { score: 0, type: 'Book' }
+                    }
+                } else if (filterItem.type === 'Chapter') {
+                    newMap[filterItem._id] = { score: 5, type: 'Chapter' }
+                } else if (filterItem.type === 'Editor') {
+                    if (filterItem.isNat === 'National') {
+                        newMap[filterItem._id] = { score: 8, isNat: 'National', type: "Editor" }
+
+                    }
+                    else if (filterItem.isNat === 'International') {
+                        newMap[filterItem._id] = { score: 10, isNat: 'International', type: "Editor" }
+                    }
+                    else {
+                        newMap[filterItem._id] = { score: 0, type: "Editor" }
+                    }
                 }
-                else if (item.isNat === 'International') {
-                    score += 12
+            }
+        });
+
+
+        let translatorMap = new Map()
+        let result = []
+
+
+        translatorData.forEach((elem) => {
+            if (!translatorMap.has(elem.titleOfBook)) {
+                translatorMap.set(elem.titleOfBook, [elem]);
+                result.push(elem);
+            } else {
+                const translators = translatorMap.get(elem.titleOfBook);
+                if (translators.length < 3) {
+                    translators.push(elem);
+                    result.push(elem);
                 }
-                else {
-                    score += 0
-                }
-            } else if (item.type === 'Chapter') {
-                score += 5
-            } else if (item.type === 'Editor') {
-                if (item.isNat === 'National') {
-                    score += 8
-                }
-                else if (item.isNat === 'International') {
-                    score += 10
-                }
-                else {
-                    score += 0
-                }
-            } else if (item.type === 'Translator') {
-                if (state?.scoreMap?.[item._id]?.typeNature === 'Chapter or Research Paper') {
-                    score += 3
-                }
-                else if (state?.scoreMap?.[item._id]?.typeNature === 'Book') {
-                    score += 8
-                }
-                else {
-                    score += 0
-                }
+            }
+        })
+
+
+
+        // calculating translation points
+        translatorMap.forEach((triplet) => {
+            if (triplet.length === 3) {
+                triplet.forEach((tri, index) => {
+                    if (index !== 2) {
+                        newMap[tri._id] = { score: 3, type: 'Translator' }
+                    } else {
+                        newMap[tri._id] = { score: 1, type: 'Translator' }
+                    }
+                })
+            } else {
+                triplet.forEach((tri) => {
+
+                    if (tri.transType === "Book") {
+                        newMap[tri._id] = { score: 8, type: 'Translator', transType: 'Book' }
+                    } else {
+                        newMap[tri._id] = { score: 3, type: 'Translator', transType: 'Research Paper / Chapter' }
+                    }
+                })
+            }
+        })
+
+        for (const key in newMap) {
+            if (newMap[key] === undefined) {
+                delete newMap[key];
             }
         }
 
@@ -86,9 +127,6 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
 
 
 
-
-
-
         let grandTotal = 0
 
         for (const key in newMap) {
@@ -97,7 +135,6 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
             }
         }
 
-        grandTotal = grandTotal + score
 
         setState((current) => {
             return {
@@ -107,7 +144,7 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                 Chapter,
                 Editor,
                 Translator,
-                scoreMap: item ? { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score, type: item?.type, change: new Date().getTime() } } : { ...newMap }
+                scoreMap: item ? { ...newMap } : { ...newMap }
 
             }
         })

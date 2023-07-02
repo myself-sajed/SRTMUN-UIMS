@@ -119,8 +119,8 @@ const CASDataTable = {
             "proof",
         ],
         mainKey: {
-            head: ['Type', "Title of Book / Chapter / Edited Book / Translation",],
-            keyName: ['type', 'titleOfBook',]
+            head: ['Type', "Title of Book / Chapter / Edited Book / Translation", "Chapter Title",],
+            keyName: ['type', 'titleOfBook', "chapterTitle",]
         }
     },
     ConferenceBookAndChapter: {

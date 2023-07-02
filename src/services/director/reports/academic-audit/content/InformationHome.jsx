@@ -19,6 +19,7 @@ import siteLinks from '../../../../../components/siteLinks';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import submitReportForm from '../../../../../js/submitReportForm';
 
 const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, serverAuditData, autoSaveLoader, serverAuditError, allYearAAAData }) => {
 
@@ -674,6 +675,11 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
     };
 
 
+    const submitForm = () => {
+        submitReportForm(navigate, auditYear, { schoolName: directorUser.department }, 'AAAModel', '/director')
+    }
+
+
     return (
         <>
 
@@ -685,7 +691,12 @@ const InformationHome = ({ tabName, setTabName, handleNext, setAutoSaveLoader, s
                         <div className='flex items-center justify-between gap-5'>
                             <Pagination count={5} page={parseInt(tabName)} onChange={handleChange} />
 
-                            <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { setAutoSaveLoader(true); handleSteps(); }} />
+                            <SaveButton title={tabName === '5' ? "Save & Submit AAA Form" : "Save & Proceed"} onClickFunction={() => {
+                                handleSteps(); setAutoSaveLoader(true);
+                                if (tabName === '5') {
+                                    submitForm()
+                                }
+                            }} />
                         </div>
                         <FloatButtons setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} />
 
@@ -1666,7 +1677,12 @@ Values, Tolerance and Harmony for the selected Academic Audit Year" className='m
                             </div>
 
                             <div className='flex items-center justify-start gap-5'>
-                                <SaveButton title={tabName === '5' ? "Save & Generate Report" : "Save & Proceed"} onClickFunction={() => { handleSteps(); setAutoSaveLoader(true) }} />
+                                <SaveButton title={tabName === '5' ? "Save & Submit AAA Form" : "Save & Proceed"} onClickFunction={() => {
+                                    handleSteps(); setAutoSaveLoader(true);
+                                    if (tabName === '5') {
+                                        submitForm()
+                                    }
+                                }} />
 
                                 <Pagination count={5} page={parseInt(tabName)} onChange={handleChange} />
 
