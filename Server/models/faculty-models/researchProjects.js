@@ -7,7 +7,7 @@ const researchProjectSchema = new mongoose.Schema({
     },
     programTitle: {
         type: 'string',
-        required: true,
+        required: false,
     },
     principalName: {
         type: 'string',
@@ -23,7 +23,7 @@ const researchProjectSchema = new mongoose.Schema({
     },
     department: {
         type: 'string',
-        required: true,
+        required: false,
     },
     awardYear: {
         type: 'string',

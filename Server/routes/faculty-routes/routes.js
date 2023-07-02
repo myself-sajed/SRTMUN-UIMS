@@ -942,7 +942,7 @@ function initRoutes(app) {
                 userId: data.userId,
             })
             responsibilities.save()
-            if (researchProject) {
+            if (responsibilities) {
                 res.send({ status: 'added', data: responsibilities });
             }
             else {
@@ -1022,7 +1022,6 @@ function initRoutes(app) {
                 },
                 ResearchProject: {
                     "Scheme or Project Name": 'schemeName',
-                    "Program Title": 'programTitle',
                     "Principal Invigilator Name": 'principalName',
                     "Funding Agency Name": 'fundingName',
                     "Wheather Government / Non-Government": 'isGov',
@@ -1081,6 +1080,9 @@ function initRoutes(app) {
                     'Scholar Name': 'scholarName',
                     'Department Name': 'departmentName',
                     'Guide Name': 'guideName',
+                    'Date of Registration (RAC)': 'rac',
+                    'Category': 'category',
+                    'Gender': 'gender',
                     'Degree': 'degreeName',
                     'Awarded / Submitted': 'awardSubmit',
                     'Thesis Title': 'thesisTitle',
@@ -1166,7 +1168,7 @@ function initRoutes(app) {
                     'Year': 'year',
 
                 },
-                Financialsupport: {
+                FinancialSupport: {
                     'Name of Conference': 'nameOfConference',
                     'Name of professional body Funds provided for': 'feeprovider',
                     'Amount of support': 'amountOfSupport',
@@ -1189,8 +1191,7 @@ function initRoutes(app) {
                 ConferenceParticipated: {
                     'Program Title': 'programTitle',
                     'Organizing Institute': 'organizingInstitute',
-                    'Funded By': 'fundedBy',
-                    'National / International': 'isNational',
+                    'Level': 'isNational',
                     'Year': 'year',
                 },
             }

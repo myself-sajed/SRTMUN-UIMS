@@ -37,7 +37,8 @@ const BulkExcel = ({ SendReq, refetch, module, department, sampleFile, title, op
     const onCancel = () => {
         setOpen(false)
     }
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         excelReq({ School: department }, SendReq, initialState, value, setValues, refetch, setOpen, setLoading, module)
     }
     return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel}>
