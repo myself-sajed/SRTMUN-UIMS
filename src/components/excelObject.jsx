@@ -218,10 +218,9 @@ const excelObject = {
     ResearchPaper: {
         'paperTitle': 'Paper Title',
         'journalName': 'Journal Name',
+        'authors': "Author(s)",
         'publicationYear': 'Publication Year',
         'issnNumber': 'ISSN Number',
-        'indexedIn': 'Indexed In',
-        'indexLink': 'Link',
         'year': 'Choose Year',
     },
     BookAndChapter: {

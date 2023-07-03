@@ -1059,8 +1059,6 @@ function initRoutes(app) {
                     'Journal Name': 'journalName',
                     'Publication Year': 'publicationYear',
                     'ISSN Number': 'issnNumber',
-                    'Indexed In': 'indexedIn',
-                    'Link': 'indexLink',
                     'Choose Year': 'year',
                 },
                 BookAndChapter: {
