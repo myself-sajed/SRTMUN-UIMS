@@ -8,6 +8,8 @@ import { designations } from '../../../inputs/DesignationSelect'
 import ActionButtons from '../components/ActionButtons';
 import validateForm from '../js/validateAndSubmit';
 import Header from '../components/Header'
+import FeedbackHome from '../components/FeedbackHome'
+import siteLinks from '../../../components/siteLinks'
 
 const teacherQuestions = [
     {
@@ -46,7 +48,9 @@ const teacherQuestions = [
 const TeacherFeedback = () => {
 
     const [formData, setFormData] = useState({})
-    const { schoolName, academicYear } = useParams()
+
+    const [academicYear, setAcademicYear] = useState(null)
+    const [schoolName, setSchoolName] = useState(null)
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -58,47 +62,50 @@ const TeacherFeedback = () => {
     useEffect(() => {
         setFormData(JSON.parse(localStorage.getItem(`teacherFeedback-FormData-${academicYear}-${schoolName}`)) ? JSON.parse(localStorage.getItem(`teacherFeedback-FormData-${academicYear}-${schoolName}`)) : {})
         setShouldUpdate(true)
-    }, [])
+    }, [schoolName, academicYear])
 
     const navigate = useNavigate()
 
-
+    const [activeStep, setActiveStep] = useState(0);
+    const links = [siteLinks.welcome, siteLinks.teacherFeedack]
 
     return (
         <div>
-            <div>
-                <GoBack pageTitle={`Teacher Feedback Form (${academicYear})`} />
-            </div>
 
-            <div className='w-full md:flex items-center justify-center'>
-                <div className='lg:w-3/5 sm:w-full md:w-4/5'>
-                    <div className='w-full'>
-                        <Header title='Teacher Feedback Form' />
+            <FeedbackHome userType="Teacher" academicYear={academicYear} setAcademicYear={setAcademicYear} schoolName={schoolName} setSchoolName={setSchoolName} setActiveStep={setActiveStep} activeStep={activeStep} links={links} >
+                <div className='w-full md:flex items-center justify-center mt-4'>
+                    <div className='lg:w-3/5 sm:w-full md:w-4/5'>
+                        <div className='w-full'>
+                            <Header title='Teacher Feedback Form' academicYear={academicYear} schoolName={schoolName} />
 
 
-                        <Note classes="mb-8 mt-5" title="This questionnaire is intended to collect information relating to your satisfaction towards the curriculum,teaching, learning and evaluation. The information provided by you will be kept confidential and will be used as important feedback for quality improvement of the programme of studies/institution." />
+                            <Note classes="mb-8 mt-5" title="This questionnaire is intended to collect information relating to your satisfaction towards the curriculum,teaching, learning and evaluation. The information provided by you will be kept confidential and will be used as important feedback for quality improvement of the programme of studies/institution." />
 
 
-                        <form onSubmit={(e) => { e.preventDefault(); validateForm(teacherQuestions, setLoading, 'teacherFeedback', formData, setFormData, { academicYear, schoolName }, navigate) }} className='w-full mt-5'>
+                            <form onSubmit={(e) => { e.preventDefault(); validateForm(teacherQuestions, setLoading, 'teacherFeedback', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep) }} className='w-full mt-5'>
 
-                            <div id="part-1" >
-                                {
-                                    teacherQuestions.map((question) => {
-                                        return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
-                                    })
-                                }
-                            </div>
+                                <div id="part-1" >
+                                    {
+                                        teacherQuestions.map((question) => {
+                                            return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
+                                        })
+                                    }
+                                </div>
 
-                            <br /><br /><br /><br />
+                                <br /><br /><br /><br />
 
-                            <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="teacherFeedback" />
+                                <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="teacherFeedback" />
 
 
-                        </form>
+                            </form>
+                        </div>
+
                     </div>
+                </div >
+            </FeedbackHome>
 
-                </div>
-            </div >
+
+
         </div>
     )
 }

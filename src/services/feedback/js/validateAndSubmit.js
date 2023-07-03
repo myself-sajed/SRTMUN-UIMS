@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Axios from "axios"
 
 
-const validateForm = (questions, setLoading, responseType, formData, setFormData, data, navigate) => {
+const validateForm = (questions, setLoading, responseType, formData, setFormData, data, navigate, setActiveStep) => {
 
     let isValid = true
 
@@ -35,12 +35,12 @@ const validateForm = (questions, setLoading, responseType, formData, setFormData
 
 
     if (isValid) {
-        submitResponse(setLoading, responseType, formData, setFormData, data, navigate)
+        submitResponse(setLoading, responseType, formData, setFormData, data, navigate, setActiveStep)
     }
 
 }
 
-const submitResponse = (setLoading, responseType, formData, setFormData, data, navigate) => {
+const submitResponse = (setLoading, responseType, formData, setFormData, data, navigate, setActiveStep) => {
     setLoading(true)
     const link = `${process.env.REACT_APP_MAIN_URL}/feedback/${responseType}/collectResponse`
     console.log({ response: formData, academicYear: data.academicYear, schoolName: data.schoolName })
@@ -50,12 +50,13 @@ const submitResponse = (setLoading, responseType, formData, setFormData, data, n
                 toast.success('Your response was successfully submitted.')
                 setLoading(false)
                 handleReset(false, setFormData, data, responseType)
-                navigate('/')
+                setActiveStep(2)
             } else {
                 toast.error(res.data.error)
                 setLoading(false)
             }
         }).catch((err) => {
+            console.log(err)
             toast.error('Could not submit the form. Try again later...')
             setLoading(false)
         })

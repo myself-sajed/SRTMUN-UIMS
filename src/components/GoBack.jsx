@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false }) => {
+const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false, functionOnBack = false }) => {
 
     const navigate = useNavigate()
 
@@ -21,10 +21,12 @@ const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false
         }
     }, [])
 
+    let a = functionOnBack
+
     return (
         <div className='py-1 flex items-center justify-between border-b' id="GoBack">
             <div className='flex items-center justify-start'>
-                <IconButton onClick={() => { navigate(backUrl) }}>
+                <IconButton onClick={() => { functionOnBack ? functionOnBack() : navigate(backUrl) }}>
                     <ArrowBackRoundedIcon />
                 </IconButton>
                 <span className='mx-2 font-bold text-lg'>{pageTitle}</span>

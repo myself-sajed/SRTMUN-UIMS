@@ -175,11 +175,11 @@ const RoutesHandler = () => {
 
 
                 {/* Feedback System: PART I : QUESTIONS */}
-                <Route path='/feedback/student/:academicYear/:schoolName' exact element={<StudentFeedback />} />
-                <Route path='/feedback/teacher/:academicYear/:schoolName' exact element={<TeacherFeedback />} />
-                <Route path='/feedback/alumni/:academicYear/:schoolName' exact element={<AlumniFeedback />} />
-                <Route path='/feedback/parent/:academicYear/:schoolName' exact element={<ParentFeedback />} />
-                <Route path='/feedback/employer/:academicYear/:schoolName' exact element={<EmployerFeedback />} />
+                <Route path='/feedback/student' exact element={<StudentFeedback />} />
+                <Route path='/feedback/teacher' exact element={<TeacherFeedback />} />
+                <Route path='/feedback/alumni' exact element={<AlumniFeedback />} />
+                <Route path='/feedback/parent' exact element={<ParentFeedback />} />
+                <Route path='/feedback/employer' exact element={<EmployerFeedback />} />
 
 
 

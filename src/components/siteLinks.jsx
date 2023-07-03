@@ -46,6 +46,11 @@ let siteLinks = {
     goToResponse: { title: "Select Response", link: '/director/service/goToResponse' },
     serviceStatusForDirector: { title: "Report Status for Director", link: '/director/service/status' },
     serviceStatusForAdmin: { title: "Report Status for Admin", link: '/admin/service/status' },
+    studentFeedack: { title: "Student Feedback Form", link: '/feedback/student' },
+    teacherFeedack: { title: "Teacher Feedback Form", link: '/feedback/teacher' },
+    parentFeedack: { title: "Parent Feedback Form", link: '/feedback/parent' },
+    alumniFeedack: { title: "Alumni Feedback Form", link: '/feedback/alumni' },
+    employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
 
 
 }
