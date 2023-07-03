@@ -130,7 +130,7 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }

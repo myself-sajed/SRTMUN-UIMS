@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import AddPaper from './AddPaper';
 import { BGPad, Remark } from './Teaching';
-import Publications from './Publications';
 import { useDispatch, useSelector, } from 'react-redux';
 import { setAcademicTable, setCasYear, setOtherInfoTable, setTeachingTable } from '../../../../../redux/slices/CASSlice';
 import { SaveButton } from '../PbasReportHome';
-import ContentCreated from './ContentCreated';
-import ResearchGuide from './ResearchGuide';
-import PolicyDocuments from './PolicyDocuments';
-import InvitedLectures from './InvitedLectures';
 import { saveCASDetails } from '../PBASServices';
+
+//imports
+import AddPaper from '../../cas/content/AddPaper';
+import Publications from '../../cas/content/Publications';
+import ContentCreated from '../../cas/content/ContentCreated';
+import ResearchGuide from '../../cas/content/ResearchGuide';
+import PolicyDocuments from '../../cas/content/PolicyDocuments';
+import InvitedLectures from '../../cas/content/InvitedLectures';
+import Conference from '../../cas/content/Conference';
 import OtherInfo from './OtherInfo';
-import Conference from './Conference';
 
 
 

@@ -31,7 +31,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -70,7 +70,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -109,7 +109,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -150,7 +150,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
@@ -160,7 +160,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
                 ...current,
                 totalScore: grandTotal,
                 scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
+                    { ...newMap },
             }
         })
     }

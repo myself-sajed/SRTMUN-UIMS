@@ -66,7 +66,7 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let totalDegreeScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 totalDegreeScore += newMap[key]?.score
             }
         }
@@ -156,7 +156,7 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let totalProjectScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 totalProjectScore += newMap[key]?.score
             }
         }
@@ -193,7 +193,7 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let totalConScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 totalConScore += newMap[key]?.score
             }
         }
