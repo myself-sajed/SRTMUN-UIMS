@@ -33,7 +33,6 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
         setCandidates(null)
 
         if (teachers?.data?.data?.length > 0) {
-            console.log('inside teachers')
             let candidatesArray = []
             teachers?.data?.data?.forEach((teacher) => {
                 serviceDataFromServer?.forEach((serviceItem) => {
@@ -61,7 +60,7 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
         <div>
             <div>
 
-                {teachers?.data?.data && <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{candidates?.length ? candidates.length : 0}</b> Teachers out of <b>{teachers?.data?.data?.length}</b> filled {serviceName} form for year <b>{year}</b> </p>}
+                {teachers?.data?.data && <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{candidates?.length ? candidates.length : 0}</b> Teachers out of <b>{teachers?.data?.data?.length}</b> submitted {serviceName} form for year <b>{year}</b> </p>}
 
                 <div>
                     {(teacherLoading || serviceLoading) && <UserLoading title="Loading Data" />}

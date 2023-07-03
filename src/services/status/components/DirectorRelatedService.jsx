@@ -47,7 +47,7 @@ const DirectorRelatedService = ({ year, serviceName, school }) => {
                 !serviceLoading ? <div>
                     {
                         candidates && <div>
-                            <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{school}</b> filled <b>{candidates?.length ? candidates?.length : 0}</b> years of {serviceName} data</p>
+                            <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{school}</b> submitted <b>{candidates?.length ? candidates?.length : 0}</b> years of {serviceName} data</p>
 
                             <div className="mt-2">
                                 <ul class="list-group list-group-flush">
