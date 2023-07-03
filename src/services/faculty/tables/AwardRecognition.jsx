@@ -109,7 +109,7 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
 
     // function to clear states to '' 
     function clearStates() {
-        setFullTimeName('')
+        setFullTimeName(`${user?.salutation} ${user?.name}`)
         setAwardDate('')
         setPan('')
         setDesignation('')

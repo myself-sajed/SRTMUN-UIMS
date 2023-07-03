@@ -127,7 +127,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     function clearStates() {
         setProjectName('')
         setProgramTitle('')
-        setInvName('')
+        setInvName(`${user?.salutation} ${user?.name}`)
         setFundingName('')
         setGov('')
         setDepartment('')
@@ -168,7 +168,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit Project Details' : 'Add a new Project'}</p>
 
 
-                        <Text title='"Scheme / Project Title"' state={projectName} setState={setProjectName} />
+                        <Text title='Scheme / Project Title' state={projectName} setState={setProjectName} />
 
                         <Text title='Principal Invigilator Name' state={invName} setState={setInvName} />
 

@@ -98,7 +98,7 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
 
     // function to clear states to '' 
     function clearStates() {
-        setPatenterName('')
+        setPatenterName(`${user?.salutation} ${user?.name}`)
         setPatentNumber('')
         setPatentTitle('')
         setAwardYear('')

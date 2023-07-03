@@ -375,7 +375,7 @@ const CASDataTable = {
     InvitedTalk: {
         tableHeads: [
             "Title of Lecture/Academic Session",
-            "Title of Seminar, etc.",
+            "Title of Seminar",
             "Organized by ",
             "Type",
             "Nature",

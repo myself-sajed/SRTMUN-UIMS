@@ -99,7 +99,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
 
     // function to clear states to '' 
     function clearStates() {
-        setConName('')
+        setConName(`${user?.salutation} ${user?.name}`)
         setConProName('')
         setAgency('')
         setCYear('')

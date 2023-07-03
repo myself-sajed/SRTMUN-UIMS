@@ -141,7 +141,7 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = t
 
                         <Text title='Title of Lecture/Academic Session' space='col-md-6' state={sessionTitle} setState={setSessionTitle} />
 
-                        <Text title='Title of Seminar, etc.' space='col-md-6' state={seminarTitle} setState={setSeminarTitle} />
+                        <Text title='Title of Seminar' space='col-md-6' state={seminarTitle} setState={setSeminarTitle} />
 
                         <Text title='Organized by' space='col-md-4' state={organizedBy} setState={setOrganizedBy} />
 
@@ -189,7 +189,7 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = t
                         <thead className='table-dark'>
                             <tr>
                                 <th scope="col">Title of Lecture/Academic Session</th>
-                                <th scope="col">Title of Seminar, etc.</th>
+                                <th scope="col">Title of Seminar</th>
                                 <th scope="col">Organized by </th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Nature</th>
