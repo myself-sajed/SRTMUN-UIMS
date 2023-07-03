@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const OtherInfo = ({ forPrintOut, casArray }) => {
+const OtherInfo = ({ forPrintOut, casArray, academicData }) => {
+
+
+    useEffect(() => {
+        console.log("academicData in other info :", academicData)
+    }, [academicData])
+
     return (
         <div>
             <div>
@@ -61,18 +67,35 @@ const OtherInfo = ({ forPrintOut, casArray }) => {
                 <p className='mb-3 font-semibold'>List of enclosures </p>
                 <hr />
 
-                <div class="grid grid-cols-2 gap-4 mt-3">
-                    <div className="p-1">1. Proof of Research Degree</div>
-                    <div className="p-1">2. Proofs of Orientation / Refresher course & FDP</div>
-                    <div className="p-1">3. Proofs of Research Papers</div>
-                    <div className="p-1">4. Proofs of Publications</div>
-                    <div className="p-1">5. Proofs of Ph.D. Awarded to students</div>
-                    <div className="p-1">6. Proofs of Research Projects</div>
-                    <div className="p-1">7. Proofs of Consultancies</div>
-                    <div className="p-1">8. Proofs of Awards and Recognition</div>
-                    <div className="p-1">9. Proofs of Invited of Invited Talks</div>
-                    <div className="p-1">10. Director Certificate</div>
-                    <div className="p-1">11. Proofs of involved activities</div>
+                <div>
+                    <ol class="grid grid-cols-2 gap-4 mt-3 px-5">
+                        <li className="p-1 list-decimal">Proof of Research Degree</li>
+                        {
+                            academicData?.Online && <li className="p-1 list-decimal">Proofs of Orientation / Refresher course & FDP</li>
+                        }
+                        {
+                            academicData?.ResearchPaper && <li className="p-1 list-decimal">Proofs of Research Papers</li>
+                        }
+                        {
+                            academicData?.BookAndChapter && <li className="p-1 list-decimal">Proofs of Publications</li>
+                        }
+                        {
+                            academicData?.PhdAwarded && <li className="p-1 list-decimal">Proofs of Ph.D. Awarded to students</li>
+                        }
+                        {
+                            academicData?.ResearchProject && <li className="p-1 list-decimal">Proofs of Research Projects</li>
+                        }
+                        {
+                            academicData?.ConsultancyServices && <li className="p-1 list-decimal">Proofs of Consultancies</li>
+                        }
+                        {
+                            academicData?.AwardRecognition && <li className="p-1 list-decimal">Proofs of Awards and Recognition</li>
+                        }
+                        {
+                            academicData?.InvitedTalk && <li className="p-1 list-decimal">Proofs of Invited of Invited Talks</li>
+                        }
+                        <li className="p-1 list-decimal"> Proofs of involved activities</li>
+                    </ol>
                 </div>
             </div>
         </div>

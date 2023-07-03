@@ -12,7 +12,6 @@ import Lectures from '../../../tables/Lectures';
 
 const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData, setChangeTeaching, changeTeaching, teachingData, setTeachingData, saveLoader, setSaveLoader }) => {
 
-
     const activitiesInvolved = [
         { id: 'A', activity: 'Administrative responsibilities such as Head / Chairperson / Dean / Director / Coordinator / Warden etc.' },
         { id: 'B', activity: 'Examination and evaluation duties assigned by the college / university or attending the examination paper evaluation.' },
@@ -165,9 +164,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
 
 
-
-
-
     return (
         <div className="w-full">
 
@@ -263,7 +259,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                 {/* Involvement in activities */}
                 <BGPad classes='mt-4'>
                     <div>
-
                         2. Involvement in University / College students related activities / Research activities
 
                         <Note title="Please tick the following checks as per your involvement. You may check your already existing files by clicking on View File button. In case you want to replace them with new one, please choose a new file from the input." />
@@ -287,9 +282,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                                 </div>
 
                             </div>
-
-
-
 
                             <div>
 
@@ -402,45 +394,55 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
     return (
         <button type={type} className={` duration-200 border-2 border-blue-900 text-blue-900 bg-blue-100 hover:bg-blue-200 p-2 rounded-lg ease-in-out ${classes}`} onClick={onClickFunction}>{title}</button>
     )
+
+
+
+
 }
 
 
 const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savingFunction }) => {
 
+    const [loading, setLoading] = useState(null)
 
-    const submitActivityFiles = (e, fileTagName) => {
-        e.preventDefault();
-        setIsLoading(true)
+    const submitActivityFiles = (file, fileTagName) => {
+        // e.preventDefault();
+        if (file) {
+            setIsLoading(true)
 
-        const formData = new FormData();
 
-        formData.append('activity-file', teachingData.uploadInputs?.[`file-${fileTagName}`]);
-        formData.append('fileTagName', fileTagName)
+            const formData = new FormData();
 
-        const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/PBAS-Report/saveTeachingActivityDocsSingle`
-        Axios.post(url, formData)
-            .then((res) => {
-                if (res.data.status === 'success') {
-                    setTeachingData({
-                        ...teachingData, uploadedFiles: {
-                            ...teachingData.uploadedFiles,
-                            [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
-                        }
-                    })
-                    savingFunction()
+            formData.append('activity-file', file);
+            formData.append('fileTagName', fileTagName)
+
+            const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/PBAS-Report/saveTeachingActivityDocsSingle`
+            Axios.post(url, formData)
+                .then((res) => {
+                    if (res.data.status === 'success') {
+                        setTeachingData({
+                            ...teachingData, uploadedFiles: {
+                                ...teachingData.uploadedFiles,
+                                [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
+                            }
+                        })
+                        savingFunction()
+                        setIsLoading(false)
+                        toast.success('Files uploaded successfully')
+                    }
+                    else {
+                        console.log('Failed...')
+                        setIsLoading(false)
+                        toast.error('Could not upload files, please try again...')
+                    }
+                }).catch(function (err) {
+                    console.log(err)
                     setIsLoading(false)
-                    toast.success('Files uploaded successfully')
-                }
-                else {
-                    console.log('Failed...')
-                    setIsLoading(false)
-                    toast.error('Could not upload files, please try again...')
-                }
-            }).catch(function (err) {
-                console.log(err)
-                setIsLoading(false)
-                toast.error('Failed due to Internal Server error')
-            })
+                    toast.error('Failed due to Internal Server error')
+                })
+        } else {
+            toast.error('Choose a file to upload')
+        }
 
     }
 
@@ -475,7 +477,13 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
 
                     toast.success('File deleted successfully')
                 } else {
-                    toast.error('Error deleting File')
+                    console.log('Could delete the item, because file not found')
+                    setTeachingData({
+                        ...teachingData, uploadedFiles:
+                            { ...teachingData.uploadedFiles, [fileId]: null }
+                    })
+                    savingFunction()
+
                 }
             })
 
@@ -496,7 +504,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
 
                     <div className="input-group">
                         <input className="form-control" type="file" id={`formFile${id}`} placeholder="Choose proof" name="activity-file" onChange={
-                            (e) => { setTeachingData({ ...teachingData, uploadInputs: { ...teachingData.uploadInputs, [`file-${id}`]: e.target.files[0] } }) }} accept="application/pdf" />
+                            (e) => { submitActivityFiles(e.target.files[0], id) }} accept="application/pdf" />
                         <Note title="In case you're involved in more than one activity, please upload it in a single PDF file." />
 
                     </div>
@@ -504,15 +512,11 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
                 }
 
 
-                {
-                    teachingData && teachingData.uploadInputs?.[`file-${id}`] &&
-                    <button type="submit" className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base"
-                    >Upload Proof</button>
-                }
+
 
 
                 {
-                    teachingData.uploadedFiles?.[`file-${id}`] &&
+                    (teachingData.uploadedFiles?.[`file-${id}`] && teachingData.checkBoxSelected?.includes(id)) &&
                     <div className='flex items-center justify-start gap-2 bg-blue-100 rounded-md px-2'>
                         <FileViewer serviceName="PBAS"
                             fileName={teachingData.uploadedFiles?.[`file-${id}`]?.filename} />

@@ -6,6 +6,11 @@ const AAASchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    submitted: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
     AAAData: {
         type: [{ type: String }],
         required: true,

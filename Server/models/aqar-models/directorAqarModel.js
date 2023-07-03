@@ -6,6 +6,11 @@ const directorAQAR = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    submitted: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
     aqarData: {
         type: [{ type: String }],
         required: true,

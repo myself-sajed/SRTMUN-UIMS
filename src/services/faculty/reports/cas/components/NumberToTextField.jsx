@@ -63,13 +63,17 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
     const fetchYears = useSelector((state) => state.cas.fetchYears)
     const [dataFilterModal, setDataFilterModal] = useState({ isOpen: false, year: null })
 
+    let serviceName = window.location.pathname.includes('pbas') ? 'PBAS' : 'CAS'
+
+    let fetchingYears = serviceName === 'CAS' ? fetchYears && fetchYears : casYearState
+
 
     let param = {
         model: model.includes("Book") ? 'BookAndChapter' : model,
         userId: user?._id,
-        year: fetchYears && fetchYears,
+        year: fetchingYears,
         dataFilter: model.includes("Book") ? model === 'MainBookAndChapter' ?
-            { userId: user?._id, year: fetchYears && fetchYears, type: { $in: ['Book', 'Chapter', 'Editor', 'Translator'] } } : { userId: user?._id, year: fetchYears && fetchYears, type: 'Conference' } : null
+            { userId: user?._id, year: fetchingYears, type: { $in: ['Book', 'Chapter', 'Editor', 'Translator'] } } : { userId: user?._id, year: fetchingYears, type: 'Conference' } : null
     }
 
     const { data, isLoading, isError, error, refetch, isFetching, } = useQuery([param.model, param], () => refresh(param))
@@ -429,11 +433,20 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
                 calculateScore && <div className=" flex items-center justify-end mb-3 bg-blue-100 rounded-lg p-2 border-2 border-blue-700">
                     <div className='flex flex-col items-end justify-end'>
                         <div className='flex items-center justify-end gap-3'>
-                            <div className="btn-group" role="group" aria-label="Fetch years">
-                                {fetchYears && fetchYears.map((year, index) => {
-                                    return <button key={index} type="button" className="btn border-blue-900 border p-2 bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ year, isOpen: true }); }}>Fetch {year} Data</button>
-                                })}
-                            </div>
+                            {
+                                serviceName === 'CAS' ? <div className="btn-group" role="group" aria-label="Fetch years">
+                                    {fetchingYears && fetchingYears.map((year, index) => {
+                                        return <button key={index} type="button" className="btn border-blue-900 border p-2 bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ year, isOpen: true }); }}>Fetch {year} Data</button>
+                                    })}
+                                </div> :
+                                    <div className="btn-group" role="group" aria-label="Fetch years">
+                                        <button type="button" className="btn border-blue-900 border p-2 bg-blue-700 rounded-xl text-white hover:bg-blue-600 duration-200 ease-in-out" onClick={() => { setDataFilterModal({ isOpen: true, year: fetchingYears }); }}>Fetch {fetchingYears} Data</button>
+                                    </div>
+                            }
+
+
+
+
                             <button onClick={() => { recalculateScore(state, setState, data, true, setSaveLoader, scoreCalculator) }} className='p-2 rounded-xl bg-green-700 hover:bg-green-600 text-white flex items-center justify-start gap-2'><RefreshRoundedIcon />Refresh Total Score</button>
                         </div>
                         <p className='text-muted text-xs text-right'>Note: When you add a new item to the table it will be available in the filter section above. Please click the respective button above, if the item does not show up, hit Refresh button at top-right corner.</p>

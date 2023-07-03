@@ -1,9 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-const Header = ({ title }) => {
-
-    const { academicYear, schoolName } = useParams()
+const Header = ({ title, academicYear, schoolName }) => {
 
     return (
         <div className='border-t-[7px] border-t-blue-700 rounded-md mt-3'>

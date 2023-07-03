@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import QuestionHandler from '../components/QuestionHandler'
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import fetchData from '../../dashboard/js/fetchData'
 import { useQuery } from 'react-query'
 import UserLoading from '../../../pages/UserLoading'
@@ -10,13 +10,19 @@ import GoBack from '../../../components/GoBack'
 import { submitResponse } from '../js/validateAndSubmit'
 import ActionButtons from '../components/ActionButtons'
 import Header from '../components/Header'
+import Bred from '../../../components/Bred'
+import siteLinks from '../../../components/siteLinks'
+import StepStatus from '../../../components/StepStatus'
+import IntroStep from '../components/IntroStep'
+import Acknowlegement from '../components/Acknowlegement'
+import FeedbackHome from '../components/FeedbackHome'
 
 
 const StudentFeedback = () => {
 
     const [formData, setFormData] = useState({})
-    const { schoolName, academicYear } = useParams()
-
+    const [academicYear, setAcademicYear] = useState(null)
+    const [schoolName, setSchoolName] = useState(null)
     const param = { model: 'User', filter: { department: schoolName } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
     const [teachers, setTeachers] = useState([])
@@ -35,7 +41,7 @@ const StudentFeedback = () => {
     useEffect(() => {
         setFormData(JSON.parse(localStorage.getItem(`studentFeedback-FormData-${academicYear}-${schoolName}`)) ? JSON.parse(localStorage.getItem(`studentFeedback-FormData-${academicYear}-${schoolName}`)) : {})
         setShouldUpdate(true)
-    }, [])
+    }, [schoolName, academicYear])
 
     const navigate = useNavigate()
 
@@ -210,76 +216,82 @@ const StudentFeedback = () => {
         })
 
         if (generalValidation === true && teacherValidation === true) {
-            submitResponse(setLoading, 'studentFeedback', formData, setFormData, { schoolName, academicYear }, navigate)
+            submitResponse(setLoading, 'studentFeedback', formData, setFormData, { schoolName, academicYear }, navigate, setActiveStep)
         }
     }
+
+    const [activeStep, setActiveStep] = useState(0);
+    const links = [siteLinks.welcome, siteLinks.studentFeedack]
 
 
     return (
         <div>
-            <div>
-                <GoBack pageTitle={`Student Feedback Form (${academicYear})`} />
-            </div>
-
-            <div className='w-full md:flex items-center justify-center'>
+            <FeedbackHome userType="Student" links={links} academicYear={academicYear} setAcademicYear={setAcademicYear} schoolName={schoolName} setSchoolName={setSchoolName} setActiveStep={setActiveStep} activeStep={activeStep} >
 
 
-                <div className='lg:w-3/5 sm:w-full md:w-4/5'>
-
-                    {
-                        isError ? <div className="alert alert-danger my-4" role="alert">
-                            Sorry could not load the form, please try again later...
-                        </div> : teachers?.length > 0 ?
-                            <div className='w-full'>
-                                <Header title='Student Feedback Form' />
-
-                                <form onSubmit={validateForm} className='w-full mt-5'>
-
-                                    <div id="part-1" >
-                                        <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full mt-3'>General Questions</p>
-                                        {
-                                            generalQuestions.map((question) => {
-                                                return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
-                                            })
-                                        }
-                                    </div>
-                                    <div id="part-2">
-                                        <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full'>Faculty related Questions</p>
-
-                                        {
-                                            formData['Tick only those teachers who taught you this year']?.map((teacher, index) => {
-                                                return <div key={index}>
-                                                    {
-                                                        teacherQuestions?.map((question) => {
-                                                            return <QuestionHandler question={question} formData={formData} setFormData={setFormData} dynamicQuestion={true} dynamicValue={teacher} />
-                                                        })
-                                                    }
-                                                </div>
-                                            })
-                                        }
-                                    </div>
-                                    <div id="part-3">
-                                        <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full'>Student related Questions</p>
-                                        {
-                                            studentQuestions.map((question) => {
-                                                return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
-                                            })
-                                        }
-                                    </div>
-                                    <br /><br /><br /><br />
-
-                                    <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="studentFeedback" />
+                <div className='w-full md:flex items-center justify-center mt-4'>
 
 
+                    <div className='lg:w-3/5 sm:w-full md:w-4/5'>
 
-                                </form>
-                            </div>
-                            : isLoading ? <UserLoading title="Loading your form" /> : <div className="alert alert-danger my-4" role="alert">
-                                Wrong URL detected, please ensure the URL is correct
-                            </div>
-                    }
+                        {
+                            isError ? <div className="alert alert-danger my-4" role="alert">
+                                Sorry could not load the form, please try again later...
+                            </div> : teachers?.length > 0 ?
+                                <div className='w-full'>
+                                    <Header title='Student Feedback Form' academicYear={academicYear} schoolName={schoolName} />
+
+                                    <form onSubmit={validateForm} className='w-full mt-5'>
+
+                                        <div id="part-1" >
+                                            <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full mt-3'>General Questions</p>
+                                            {
+                                                generalQuestions.map((question) => {
+                                                    return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
+                                                })
+                                            }
+                                        </div>
+                                        <div id="part-2">
+                                            <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full'>Faculty related Questions</p>
+
+                                            {
+                                                formData['Tick only those teachers who taught you this year']?.map((teacher, index) => {
+                                                    return <div key={index}>
+                                                        {
+                                                            teacherQuestions?.map((question) => {
+                                                                return <QuestionHandler question={question} formData={formData} setFormData={setFormData} dynamicQuestion={true} dynamicValue={teacher} />
+                                                            })
+                                                        }
+                                                    </div>
+                                                })
+                                            }
+                                        </div>
+                                        <div id="part-3">
+                                            <p className='bg-green-100 text-green-700 p-2 my-2 rounded-md font-bold w-full'>Student related Questions</p>
+                                            {
+                                                studentQuestions.map((question) => {
+                                                    return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
+                                                })
+                                            }
+                                        </div>
+                                        <br /><br /><br /><br />
+
+                                        <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="studentFeedback" />
+
+
+
+                                    </form>
+                                </div>
+                                : isLoading ? <UserLoading title="Loading your form" /> : <div className="alert alert-danger my-4" role="alert">
+                                    Wrong URL detected, please ensure the URL is correct
+                                </div>
+                        }
+                    </div>
                 </div>
-            </div >
+
+
+            </FeedbackHome>
+
         </div>
     )
 }

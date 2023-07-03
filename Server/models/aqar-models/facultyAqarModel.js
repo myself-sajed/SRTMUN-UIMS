@@ -7,6 +7,11 @@ const facultyAQAR = new mongoose.Schema({
         required: true,
         ref: "users"
     },
+    submitted: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
     aqarData: {
         type: [{ type: String }],
         required: true,

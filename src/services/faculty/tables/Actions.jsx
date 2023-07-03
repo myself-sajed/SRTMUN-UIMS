@@ -5,7 +5,8 @@ import Axios from 'axios'
 import toast from 'react-hot-toast';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import { Popconfirm } from 'antd';
-
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import cloneItem from '../../../js/cloneItem';
 
 const Actions = ({ item, model, refreshFunction, addState, editState, pencilClick }) => {
 
@@ -20,25 +21,38 @@ const Actions = ({ item, model, refreshFunction, addState, editState, pencilClic
                 if (res.data.status === 'deleted') {
                     toast.success('Item deleted successfully')
                     refreshFunction()
+                    refreshFunction()
                     setIsLoading(false)
                 }
                 else if (res.data.status === 'error') {
-                    toast.error('Could not delete item. Try again later')
+                    refreshFunction()
                     setIsLoading(false)
                 }
             }).catch(() => {
                 toast.error('Internal Server Error')
+                refreshFunction()
                 setIsLoading(false)
             })
     }
+
+
+
 
     return (
         <div className>
             {/* // EDIT */}
             <button >
-                <Tooltip title="Edit" placement="right">
+                <Tooltip title="Edit" placement="top" disableInteractive>
                     <IconButton onClick={() => { editState(true); addState(false); pencilClick() }}>
                         <EditRoundedIcon />
+                    </IconButton>
+                </Tooltip>
+            </button>
+
+            <button >
+                <Tooltip title="Clone / Duplicate" placement="top" disableInteractive>
+                    <IconButton onClick={() => { cloneItem(item._id, model, refreshFunction) }}>
+                        <ContentCopyRoundedIcon />
                     </IconButton>
                 </Tooltip>
             </button>
@@ -58,7 +72,7 @@ const Actions = ({ item, model, refreshFunction, addState, editState, pencilClic
                             okText="Yes, Delete"
                             cancelText="Cancel"
                             okButtonProps={{ "type": "default" }}>
-                            <Tooltip title="Delete" placement="right">
+                            <Tooltip title="Delete" placement="top" disableInteractive>
                                 <IconButton>
                                     <DeleteRoundedIcon />
                                 </IconButton>

@@ -80,6 +80,8 @@ import GenerateAQARReport from '../services/faculty/reports/aqar/pages/GenerateA
 import StatusPage from '../services/status/pages/StatusPage'
 import GenerateFeedbackLink from '../services/feedback/pages/GenerateFeedbackLink'
 import GoToResponse from '../services/feedback/pages/GoToResponse'
+import useAdminAuth from '../hooks/useAdminAuth'
+
 
 
 const RoutesHandler = () => {
@@ -173,11 +175,11 @@ const RoutesHandler = () => {
 
 
                 {/* Feedback System: PART I : QUESTIONS */}
-                <Route path='/feedback/student/:academicYear/:schoolName' exact element={<StudentFeedback />} />
-                <Route path='/feedback/teacher/:academicYear/:schoolName' exact element={<TeacherFeedback />} />
-                <Route path='/feedback/alumni/:academicYear/:schoolName' exact element={<AlumniFeedback />} />
-                <Route path='/feedback/parent/:academicYear/:schoolName' exact element={<ParentFeedback />} />
-                <Route path='/feedback/employer/:academicYear/:schoolName' exact element={<EmployerFeedback />} />
+                <Route path='/feedback/student' exact element={<StudentFeedback />} />
+                <Route path='/feedback/teacher' exact element={<TeacherFeedback />} />
+                <Route path='/feedback/alumni' exact element={<AlumniFeedback />} />
+                <Route path='/feedback/parent' exact element={<ParentFeedback />} />
+                <Route path='/feedback/employer' exact element={<EmployerFeedback />} />
 
 
 
@@ -192,10 +194,11 @@ const RoutesHandler = () => {
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
                 <Route path="/director/service/aqar-report" exact element={<AQARHome userType='director' auth={useDirectorAuth} />} />
-                <Route path="/:userType/service/generateAQARReport" exact element={<GenerateAQARReport auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
+                <Route path="/:userType/service/generateAQARReport" exact element={<GenerateAQARReport
+                    auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
 
                 {/* SERVICE STATUS */}
-                <Route path="/service/status" exact element={<StatusPage />} />
+                <Route path="/:userType/service/status" exact element={<StatusPage auth={{ admin: useAdminAuth, director: useDirectorAuth }} />} />
 
 
 

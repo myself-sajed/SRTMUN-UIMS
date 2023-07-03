@@ -7,6 +7,11 @@ const casReportSchema = new mongoose.Schema({
         required: true,
         ref: "users"
     },
+    submitted: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
     stage1: {
         type: 'string',
         required: false,

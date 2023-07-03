@@ -464,17 +464,13 @@ body {
 }
 
 
-/* Automatic Serial Number Row */
 .css-serial {
   counter-reset: serial-number;
-  /* Set the serial number counter to 0 */
 }
 
 .css-serial td:first-child:before {
   counter-increment: serial-number;
-  /* Increment the serial number counter */
   content: counter(serial-number);
-  /* Display the counter */
 }
 
 .css-serial .add-serial-here:first-child:before {
@@ -482,10 +478,23 @@ body {
   content: counter(serial-number);
 }
 
+.div-serial {
+  counter-reset: serial-number;
+}
+
+.div-serial p:first-child:before {
+  counter-increment: serial-number;
+  content: counter(serial-number);
+}
+
+.div-serial p:first-child:before {
+  counter-increment: serial-number;
+  content: counter(serial-number);
+}
+
 .news-container {
   overflow: hidden;
   white-space: nowrap;
-  /* set white-space to nowrap to prevent wrapping */
 }
 
 .news-headlines {

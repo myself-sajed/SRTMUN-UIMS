@@ -97,7 +97,7 @@ const Fellowship = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
     // function to clear states to '' 
     function clearStates() {
-        setTeacherName('')
+        setTeacherName(`${user?.salutation} ${user?.name}`)
         setAwardName('')
         setAwardYear('')
         setIsNat('')

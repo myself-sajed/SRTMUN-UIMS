@@ -99,7 +99,7 @@ const CASReport = () => {
                     <TeachingAndActivities showFileURL="pbasDirURL" casArray={casArray} forPrintOut={forPrintOut} lectures={academicData.Lectures} />
                     <Table academicData={academicData} casArray={casArray} showFileURL="pbasDirURL" forPrintOut={forPrintOut} />
                     <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
-                    <OtherInfo casArray={casArray} forPrintOut={forPrintOut} />
+                    <OtherInfo academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />
                     <Instructions forPrintOut={forPrintOut} />
                 </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
             }

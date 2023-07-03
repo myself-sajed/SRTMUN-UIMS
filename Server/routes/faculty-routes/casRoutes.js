@@ -170,24 +170,7 @@ async function casRoutes(app) {
         )
     })
 
-    // get total cas data
-    app.post("/getTotalCASData", (req, res) => {
-        CASModel.find({}).lean().populate("userId").exec().then((cas, err) => {
-            if (err) {
-                console.log(err)
-                res.send({ status: "error", message: "Internal server error" })
-            }
-            else {
-                if (cas) {
-                    res.send({ status: 'success', data: cas });
-                }
-                else {
-                    res.send({ status: 'error', message: "No data found" });
-                }
-            }
-        }
-        )
-    })
+
 
     // for saving cas eligibility data
     app.post("/saveEligibilityData", (req, res) => {

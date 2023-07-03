@@ -23,7 +23,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
         { id: 'F', activity: "At least one single or joint publication in peer-reviewed or UGC list of journals." },
         { id: 'G', activity: "Conducting minor or major research project sponsored by National or International agencies." }]
 
-    const [isLoading, setIsLoading] = useState(false)
 
 
     function calculateTeachingPercentage() {
@@ -56,9 +55,13 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
     }, [casYearState])
 
     useEffect(() => {
+
+
         setTeachingData(serverCasData?.teachingData === undefined ? { checkBoxCount: 0, checkBoxSelected: [], teachingGrade: null, totalClasses: null, classesTaught: null, teachingRemark: null, teachingRemarkColor: null } : { ...teachingData, checkBoxSelected: serverCasData?.teachingData.checkBoxSelected, checkBoxCount: serverCasData?.teachingData.checkBoxCount, teachingGrade: serverCasData?.teachingData.teachingGrade, totalClasses: serverCasData?.teachingData.totalClasses, classesTaught: serverCasData?.teachingData.classesTaught, teachingRemark: serverCasData?.teachingData.teachingRemark, teachingRemarkColor: serverCasData?.teachingData.teachingRemarkColor, uploadedFiles: serverCasData?.teachingData.uploadedFiles, uploadedAttendance: serverCasData?.teachingData.uploadedAttendance, })
 
-    }, [serverCasData])
+    }, [serverCasData, casYearState])
+
+
 
 
 
@@ -96,23 +99,21 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
         }
     }
 
-    const deleteFile = (fileName) => {
-        const url = `${process.env.REACT_APP_MAIN_URL}/api/deleteFile`
-        Axios.post(url, { fileName, path: 'CAS' })
-            .then((res) => {
-                if (res.data.status === 'deleted') {
-                    setTeachingData({
-                        ...teachingData, uploadedAttendance: null
-                    })
-                    savingFunction()
-                    toast.success('File deleted successfully')
-                } else {
-                    toast.error('Error deleting File')
-                }
-            })
-
-
-    }
+    // const deleteFile = (fileName) => {
+    //     const url = `${process.env.REACT_APP_MAIN_URL}/api/deleteFile`
+    //     Axios.post(url, { fileName, path: 'CAS' })
+    //         .then((res) => {
+    //             if (res.data.status === 'deleted') {
+    //                 setTeachingData({
+    //                     ...teachingData, uploadedAttendance: null
+    //                 })
+    //                 savingFunction()
+    //                 toast.success('File deleted successfully')
+    //             } else {
+    //                 toast.error('Error deleting File')
+    //             }
+    //         })
+    // }
 
     const savingFunction = () => {
         setSaveLoader(true)
@@ -128,7 +129,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
             <div className='my-3 text-lg'>
                 <p className='font-bold text-xl'>Teaching Activities</p>
-
 
                 {/* TEACHING */}
                 <BGPad classes='mt-2 w-full'>
@@ -205,6 +205,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                             } */}
                         </div>
 
+
                     </div>
                 </BGPad>
 
@@ -245,7 +246,7 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                                 {
                                     activitiesInvolved.map((activity, index) => {
                                         return (
-                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} setIsLoading={setIsLoading} savingFunction={savingFunction} />
+                                            <CheckBox setChangeTeaching={setChangeTeaching} changeTeaching={changeTeaching} activity={activity} key={index} title={activity.activity} id={activity.id} setTeachingData={setTeachingData} teachingData={teachingData} serverCasData={serverCasData} tabName={tabName} savingFunction={savingFunction} />
                                         )
                                     })
                                 }
@@ -354,42 +355,41 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
 }
 
 
-const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savingFunction }) => {
+const CheckBox = ({ title, id, setTeachingData, teachingData, savingFunction }) => {
 
+    const submitActivityFiles = (file, fileTagName) => {
+        // e.preventDefault();
+        if (file) {
 
-    const submitActivityFiles = (e, fileTagName) => {
-        e.preventDefault();
-        setIsLoading(true)
+            const formData = new FormData();
 
-        const formData = new FormData();
+            formData.append('activity-file', file);
+            formData.append('fileTagName', fileTagName)
 
-        formData.append('activity-file', teachingData.uploadInputs?.[`file-${fileTagName}`]);
-        formData.append('fileTagName', fileTagName)
-
-        const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/CAS-Report/saveTeachingActivityDocsSingle`
-        Axios.post(url, formData)
-            .then((res) => {
-                if (res.data.status === 'success') {
-                    setTeachingData({
-                        ...teachingData, uploadedFiles: {
-                            ...teachingData.uploadedFiles,
-                            [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
-                        }
-                    })
-                    savingFunction()
-                    setIsLoading(false)
-                    toast.success('Files uploaded successfully')
-                }
-                else {
-                    console.log('Failed...')
-                    setIsLoading(false)
-                    toast.error('Could not upload files, please try again...')
-                }
-            }).catch(function (err) {
-                console.log(err)
-                setIsLoading(false)
-                toast.error('Failed due to Internal Server error')
-            })
+            const url = `${process.env.REACT_APP_MAIN_URL}/api/faculty/CAS-Report/saveTeachingActivityDocsSingle`
+            Axios.post(url, formData)
+                .then((res) => {
+                    if (res.data.status === 'success') {
+                        setTeachingData({
+                            ...teachingData, uploadedFiles: {
+                                ...teachingData.uploadedFiles,
+                                [`file-${fileTagName}`]: res.data?.data ? res.data?.data : teachingData?.uploadedFiles?.[fileTagName],
+                            }
+                        })
+                        savingFunction()
+                        toast.success('Files uploaded successfully')
+                    }
+                    else {
+                        console.log('Failed...')
+                        toast.error('Could not upload files, please try again...')
+                    }
+                }).catch(function (err) {
+                    console.log(err)
+                    toast.error('Failed due to Internal Server error')
+                })
+        } else {
+            toast.error('Choose a file to upload')
+        }
 
     }
 
@@ -424,7 +424,13 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
 
                     toast.success('File deleted successfully')
                 } else {
-                    toast.error('Error deleting File')
+                    console.log('Could delete the item, because file not found')
+                    setTeachingData({
+                        ...teachingData, uploadedFiles:
+                            { ...teachingData.uploadedFiles, [fileId]: null }
+                    })
+                    savingFunction()
+
                 }
             })
 
@@ -445,7 +451,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
 
                     <div className="input-group">
                         <input className="form-control" type="file" id={`formFile${id}`} placeholder="Choose proof" name="activity-file" onChange={
-                            (e) => { setTeachingData({ ...teachingData, uploadInputs: { ...teachingData.uploadInputs, [`file-${id}`]: e.target.files[0] } }) }} accept="application/pdf" />
+                            (e) => { submitActivityFiles(e.target.files[0], id) }} accept="application/pdf" />
                         <Note title="In case you're involved in more than one activity, please upload it in a single PDF file." />
 
                     </div>
@@ -453,15 +459,11 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
                 }
 
 
-                {
-                    teachingData && teachingData.uploadInputs?.[`file-${id}`] &&
-                    <button type="submit" className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base"
-                    >Upload Proof</button>
-                }
+
 
 
                 {
-                    teachingData.uploadedFiles?.[`file-${id}`] &&
+                    (teachingData.uploadedFiles?.[`file-${id}`] && teachingData.checkBoxSelected?.includes(id)) &&
                     <div className='flex items-center justify-start gap-2 bg-blue-100 rounded-md px-2'>
                         <FileViewer serviceName="CAS"
                             fileName={teachingData.uploadedFiles?.[`file-${id}`]?.filename} />

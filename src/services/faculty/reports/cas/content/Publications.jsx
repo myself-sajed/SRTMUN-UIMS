@@ -19,41 +19,44 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
             return state?.dataMap.includes(item._id)
         })
 
+        let filterOtherThanTranslator = serverData?.data?.data?.filter(elem => elem.type !== 'Translator')
 
-        let score = 0
 
-        if (item) {
-            if (item.type === 'Book') {
-                if (item.isNat === 'National') {
-                    score += 10
-                }
-                else if (item.isNat === 'International') {
-                    score += 12
-                }
-                else {
-                    score += 0
-                }
-            } else if (item.type === 'Chapter') {
-                score += 5
-            } else if (item.type === 'Editor') {
-                if (item.isNat === 'National') {
-                    score += 8
-                }
-                else if (item.isNat === 'International') {
-                    score += 10
-                }
-                else {
-                    score += 0
-                }
-            } else if (item.type === 'Translator') {
-                if (newMap[item._id].score) {
-                    score += newMap[item._id].score
+        // calculating points other than translator
+        filterOtherThanTranslator.forEach(filterItem => {
+            if (state?.dataMap.includes(filterItem._id)) {
+                if (filterItem.type === 'Book') {
+                    if (filterItem.isNat === 'National') {
+                        newMap[filterItem._id] = { score: 10, isNat: 'National', type: 'Book' }
+                    }
+                    else if (filterItem.isNat === 'International') {
+                        newMap[filterItem._id] = { score: 12, isNat: 'International', type: 'Book' }
+
+                    }
+                    else {
+                        newMap[filterItem._id] = { score: 0, type: 'Book' }
+                    }
+                } else if (filterItem.type === 'Chapter') {
+                    newMap[filterItem._id] = { score: 5, type: 'Chapter' }
+                } else if (filterItem.type === 'Editor') {
+                    if (filterItem.isNat === 'National') {
+                        newMap[filterItem._id] = { score: 8, isNat: 'National', type: "Editor" }
+
+                    }
+                    else if (filterItem.isNat === 'International') {
+                        newMap[filterItem._id] = { score: 10, isNat: 'International', type: "Editor" }
+                    }
+                    else {
+                        newMap[filterItem._id] = { score: 0, type: "Editor" }
+                    }
                 }
             }
-        }
+        });
+
 
         let translatorMap = new Map()
         let result = []
+
 
         translatorData.forEach((elem) => {
             if (!translatorMap.has(elem.titleOfBook)) {
@@ -70,34 +73,9 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
 
 
 
-
-
-        let Book = 0;
-        let Editor = 0;
-        let Chapter = 0;
-        let Translator = 0;
-
-
-        // publication Score
-        let publicationKeys = Object.keys(newMap)
-
-
-        publicationKeys.forEach((element) => {
-            if (state?.dataMap?.includes(element)) {
-                if (newMap?.[element]?.type === 'Book') {
-                    Book += newMap?.[element]?.score
-                } else if (newMap?.[element]?.type === 'Chapter') {
-                    Chapter += newMap?.[element]?.score
-                } else if (newMap?.[element]?.type === 'Editor') {
-                    Editor += newMap?.[element]?.score
-                }
-            }
-        })
-
-
+        // calculating translation points
         translatorMap.forEach((triplet) => {
             if (triplet.length === 3) {
-                console.log('Key is ', triplet)
                 triplet.forEach((tri, index) => {
                     if (index !== 2) {
                         newMap[tri._id] = { score: 3, type: 'Translator' }
@@ -117,18 +95,45 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
             }
         })
 
+        for (const key in newMap) {
+            if (newMap[key] === undefined) {
+                delete newMap[key];
+            }
+        }
+
+
+        let Book = 0;
+        let Editor = 0;
+        let Chapter = 0;
+        let Translator = 0;
+
+
+        // publication Score
+        let publicationKeys = Object.keys(newMap)
+
+        publicationKeys.forEach((element) => {
+            if (state?.dataMap?.includes(element)) {
+                if (newMap?.[element]?.type === 'Book') {
+                    Book += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Chapter') {
+                    Chapter += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Editor') {
+                    Editor += newMap?.[element]?.score
+                } else if (newMap?.[element]?.type === 'Translator') {
+                    Translator += newMap?.[element]?.score
+                }
+            }
+        })
+
 
 
         let grandTotal = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 grandTotal += newMap[key].score
             }
         }
-
-
-        grandTotal = grandTotal + score
 
 
         setState((current) => {
@@ -139,7 +144,7 @@ const AddPublication = ({ publicationData, setPublicationData, casYearState, sav
                 Chapter,
                 Editor,
                 Translator,
-                scoreMap: item ? { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score, type: item?.type, change: new Date().getTime() } } : { ...newMap }
+                scoreMap: item ? { ...newMap } : { ...newMap }
 
             }
         })
@@ -212,15 +217,8 @@ const PublicationPoints = ({ item, setState, state, serverData, scoreCalculator 
                         </div> :
                         item.type === 'Translator' ?
                             <div className='col-md-4'>
-                                <select className="form-select" required
-                                    value={state?.scoreMap?.[item._id]?.typeNature}
-                                    onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], type: item?.type, typeNature: e.target.value } } }) }}>
-
-                                    <option selected disabled>Choose work done</option>
-                                    <option value='Chapter or Research Paper'>Chapter or Research Paper (3)</option>
-                                    <option value='Book'>Book (8)</option>
-
-                                </select>
+                                <p value='National'>Chapter or Research Paper: <b>3</b> Points</p>
+                                <p value='International'>Book: <b>8</b> Points</p>
                             </div> : <p>You're not valid Author / Editor / Translator</p>
         }
 

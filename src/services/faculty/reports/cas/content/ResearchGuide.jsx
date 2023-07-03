@@ -21,24 +21,27 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject[elem._id]]));
 
 
-        let score = 0
-        if (item) {
-            if (item.degreeName === 'Ph.D.') {
-                if (item.awardSubmit === 'Awarded') {
-                    score += 10
-                }
-                else if (item.awardSubmit === 'Submitted') {
-                    score += 5
-                }
-            } else if (item.degreeName === 'M.Phil' || item.degreeName === 'PG Dissertation') {
-                if (item.awardSubmit === 'Awarded') {
-                    score += 2
-                }
-                else {
-                    score += 0
+
+        serverData?.data?.data?.forEach(item => {
+            if (item) {
+                if (item.degreeName === 'Ph.D.') {
+                    if (item.awardSubmit === 'Awarded') {
+                        newMap[item._id] = { score: 10, degreeName: item?.degreeName, awardSubmit: item?.awardSubmit }
+                    }
+                    else if (item.awardSubmit === 'Submitted') {
+                        newMap[item._id] = { score: 5, degreeName: item?.degreeName, awardSubmit: item?.awardSubmit }
+                    }
+                } else if (item.degreeName === 'M.Phil' || item.degreeName === 'PG Dissertation') {
+                    if (item.awardSubmit === 'Awarded') {
+                        newMap[item._id] = { score: 2, degreeName: item?.degreeName, awardSubmit: item?.awardSubmit }
+                    }
+                    else {
+                        newMap[item._id] = { score: 0, degreeName: item?.degreeName, awardSubmit: item?.awardSubmit }
+                    }
                 }
             }
-        }
+        });
+
 
         // score individualScore
         let phdScore = 0;
@@ -49,19 +52,9 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
             if (state?.dataMap?.includes(key)) {
 
                 if (newMap?.[key]?.degreeName === 'Ph.D.') {
-                    if (newMap?.[key]?.awardSubmit === 'Awarded') {
-                        phdScore += 10
-                    }
-                    else if (newMap?.[key]?.awardSubmit === 'Submitted') {
-                        phdScore += 5
-                    }
+                    phdScore += newMap?.[key]?.score
                 } else if (newMap?.[key]?.degreeName === 'M.Phil' || newMap?.[key]?.degreeName === 'PG Dissertation') {
-                    if (newMap?.[key]?.awardSubmit === 'Awarded') {
-                        mphilScore += 2
-                    }
-                    else {
-                        mphilScore += 0
-                    }
+                    mphilScore += newMap?.[key]?.score
                 }
             }
 
@@ -73,12 +66,11 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let totalDegreeScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 totalDegreeScore += newMap[key]?.score
             }
         }
 
-        totalDegreeScore = totalDegreeScore + score
 
         setState((current) => {
             return {
@@ -86,7 +78,7 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
                 phdScore,
                 mphilScore,
                 totalScore: totalDegreeScore,
-                scoreMap: item ? { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score, degreeName: item.degreeName, awardSubmit: item.awardSubmit } } : { ...newMap }
+                scoreMap: item ? { ...newMap } : { ...newMap }
             }
         })
 
@@ -100,25 +92,30 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
         let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
 
 
-        let score = 0
 
-        if (item) {
-            if (item.status === 'Completed') {
-                if (item.fundType === 'Major') {
-                    score += 10
-                }
-                else if (item.fundType === 'Minor') {
-                    score += 5
-                }
-            } else if (item.status === 'Ongoing') {
-                if (item.fundType === 'Major') {
-                    score += 5
-                }
-                else if (item.fundType === 'Minor') {
-                    score += 2
+        serverData?.data?.data?.forEach(item => {
+            if (item) {
+                if (item.status === 'Completed') {
+                    if (item.fundType === 'Major') {
+                        newMap[item._id] = { score: 10, status: item.status, fundType: item.fundType }
+
+                    }
+                    else if (item.fundType === 'Minor') {
+                        newMap[item._id] = { score: 5, status: item.status, fundType: item.fundType }
+
+                    }
+                } else if (item.status === 'Ongoing') {
+                    if (item.fundType === 'Major') {
+                        newMap[item._id] = { score: 5, status: item.status, fundType: item.fundType }
+
+                    }
+                    else if (item.fundType === 'Minor') {
+                        newMap[item._id] = { score: 2, status: item.status, fundType: item.fundType }
+
+                    }
                 }
             }
-        }
+        });
 
 
         let completeMorePoints = 0;
@@ -134,17 +131,17 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
             if (state?.dataMap?.includes(key)) {
                 if (newMap?.[key]?.status === 'Completed') {
                     if (newMap?.[key]?.fundType === 'Major') {
-                        completeMorePoints += 10
+                        completeMorePoints += newMap?.[key]?.score
                     }
                     else if (newMap?.[key]?.fundType === 'Minor') {
-                        completeLessPoints += 5
+                        completeLessPoints += newMap?.[key]?.score
                     }
                 } else if (newMap?.[key]?.status === 'Ongoing') {
                     if (newMap?.[key]?.fundType === 'Major') {
-                        ongoingMorePoints += 5
+                        ongoingMorePoints += newMap?.[key]?.score
                     }
                     else if (newMap?.[key]?.fundType === 'Minor') {
-                        ongoingLessPoints += 2
+                        ongoingLessPoints += newMap?.[key]?.score
                     }
                 }
             }
@@ -156,18 +153,14 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
 
 
 
-
-
-
         let totalProjectScore = 0
 
         for (const key in newMap) {
-            if (newMap[key]?.score && (item ? key !== item?._id : true) && state?.dataMap?.includes(key)) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
                 totalProjectScore += newMap[key]?.score
             }
         }
 
-        totalProjectScore = totalProjectScore + score
 
         setState((current) => {
             return {
@@ -179,7 +172,38 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
                 ongoingLessPoints,
                 completeLessPoints,
                 totalScore: totalProjectScore,
-                scoreMap: item ? { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score, status: item.status, fundType: item.fundType } } : { ...newMap }
+                scoreMap: item ? { ...newMap } : { ...newMap }
+            }
+        })
+    }
+
+    const consultancyCalculator = (calculationProp) => {
+
+        let { item, setState, state, serverData } = calculationProp
+
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+
+        serverData?.data?.data?.forEach((item) => {
+            newMap[item._id] = { score: 3 }
+        })
+
+        let totalConScore = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && state?.dataMap?.includes(key)) {
+                totalConScore += newMap[key]?.score
+            }
+        }
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: totalConScore,
+                scoreMap:
+                    { ...newMap },
             }
         })
     }
@@ -231,7 +255,7 @@ const ResearchGuide = ({ casYearState, researchGuide, setResearchGuide, research
                 <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                     facultyTableAvailable="ConsultancyServices"
                     state={consultancy} setState={setConsultancy} casYearState={casYearState}
-                    classes='my-3' model="ConsultancyServices" addName="Consultancy" activityName="Consultancy Services" activity="Sub-Activity 3"
+                    classes='my-3' model="ConsultancyServices" addName="Consultancy" activityName="Consultancy Services" activity="Sub-Activity 3" scoreCalculator={consultancyCalculator}
                 >
 
                 </NumberToTextField>
@@ -280,7 +304,6 @@ const DegreePoints = ({ item, setState, state, serverData, scoreCalculator }) =>
     </div>
 }
 
-
 const ProjectPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
 
     useEffect(() => {
@@ -300,35 +323,9 @@ const ProjectPoints = ({ item, setState, state, serverData, scoreCalculator }) =
     </div>
 }
 
-const ConsultancyPoints = ({ item, setState, state, serverData }) => {
+const ConsultancyPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
     useEffect(() => {
-        const scoreMapObject = state?.scoreMap
-
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-        let score = 3
-
-        let totalConScore = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                totalConScore += newMap[key]?.score
-            }
-        }
-
-        totalConScore = totalConScore + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: totalConScore,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
-
-
-
+        scoreCalculator({ item, setState, state, serverData })
     }, [])
 
 

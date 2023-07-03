@@ -37,9 +37,8 @@ const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear, showT
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
+
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -100,7 +99,7 @@ const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear, showT
     // function to clear states to '' 
     function clearStates() {
         setProgramTitle('')
-        setSchoolName('')
+        setSchoolName(user?.department)
         setFundedBy('')
         setNat('')
         setNoOfParticipants('')

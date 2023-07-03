@@ -6,6 +6,8 @@ import GoBack from '../../../components/GoBack'
 import ActionButtons from '../components/ActionButtons';
 import validateForm from '../js/validateAndSubmit';
 import Header from '../components/Header'
+import FeedbackHome from '../components/FeedbackHome'
+import siteLinks from '../../../components/siteLinks'
 
 
 const parentQuestions = [
@@ -80,7 +82,8 @@ const parentQuestions = [
 const ParentFeedback = () => {
 
     const [formData, setFormData] = useState({})
-    const { schoolName, academicYear } = useParams()
+    const [academicYear, setAcademicYear] = useState(null)
+    const [schoolName, setSchoolName] = useState(null)
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -92,46 +95,52 @@ const ParentFeedback = () => {
     useEffect(() => {
         setFormData(JSON.parse(localStorage.getItem(`parentFeedback-FormData-${academicYear}-${schoolName}`)) ? JSON.parse(localStorage.getItem(`parentFeedback-FormData-${academicYear}-${schoolName}`)) : {})
         setShouldUpdate(true)
-    }, [])
+    }, [schoolName, academicYear])
 
     const navigate = useNavigate()
 
+
+    const [activeStep, setActiveStep] = useState(0);
+    const links = [siteLinks.welcome, siteLinks.parentFeedack]
+
     return (
         <div>
-            <div>
-                <GoBack pageTitle={`Parent Feedback Form (${academicYear})`} />
-            </div>
+            <FeedbackHome userType="Parent" academicYear={academicYear} setAcademicYear={setAcademicYear} schoolName={schoolName} setSchoolName={setSchoolName} setActiveStep={setActiveStep} activeStep={activeStep} links={links} >
 
-            <div className='w-full md:flex items-center justify-center'>
+                <div className='w-full md:flex items-center justify-center mt-4'>
 
 
-                <div className='lg:w-3/5 sm:w-full md:w-4/5'>
+                    <div className='lg:w-3/5 sm:w-full md:w-4/5'>
 
 
-                    <div className='w-full'>
-                        <Header title='Parent Feedback Form' />
+                        <div className='w-full'>
+                            <Header title='Parent Feedback Form' academicYear={academicYear} schoolName={schoolName} />
 
 
 
-                        <form onSubmit={(e) => { e.preventDefault(); validateForm(parentQuestions, setLoading, 'parentFeedback', formData, setFormData, { academicYear, schoolName }, navigate) }} className='w-full mt-5'>
+                            <form onSubmit={(e) => { e.preventDefault(); validateForm(parentQuestions, setLoading, 'parentFeedback', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep) }} className='w-full mt-5'>
 
-                            <div id="part-1" >
-                                {
-                                    parentQuestions.map((question) => {
-                                        return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
-                                    })
-                                }
-                            </div>
+                                <div id="part-1" >
+                                    {
+                                        parentQuestions.map((question) => {
+                                            return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
+                                        })
+                                    }
+                                </div>
 
-                            <br /><br /><br /><br />
+                                <br /><br /><br /><br />
 
-                            <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="parentFeedback" />
+                                <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="parentFeedback" />
 
-                        </form>
+                            </form>
+                        </div>
+
                     </div>
+                </div >
 
-                </div>
-            </div >
+            </FeedbackHome>
+
+
         </div>
     )
 }

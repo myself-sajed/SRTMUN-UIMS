@@ -3,13 +3,59 @@ import NumberToTextField from '../components/NumberToTextField'
 import { BGPad } from './Teaching'
 
 const InvitedLectures = ({ setInvitedTalks, invitedTalks, casYearState, saveLoader, setSaveLoader }) => {
+
+    const talkCalculator = (calculationProp) => {
+
+        let { item, setState, state, serverData } = calculationProp
+        const scoreMapObject = state?.scoreMap
+
+        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
+
+        serverData?.data?.data?.forEach(item => {
+            if (item.isNat === 'State/University') {
+                newMap[item._id] = { score: 2, isNat: item.isNat }
+
+            }
+            else if (item.isNat === 'National') {
+                newMap[item._id] = { score: 3, isNat: item.isNat }
+
+            }
+            else if (item.isNat === 'International (within country)') {
+                newMap[item._id] = { score: 5, isNat: item.isNat }
+
+            }
+            else if (item.isNat === 'International (Abroad)') {
+                newMap[item._id] = { score: 7, isNat: item.isNat }
+
+            }
+        });
+
+
+        let grandTotal = 0
+
+        for (const key in newMap) {
+            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
+                grandTotal += newMap[key].score
+            }
+        }
+
+        setState((current) => {
+            return {
+                ...current,
+                totalScore: grandTotal,
+                scoreMap:
+                    { ...newMap },
+            }
+        })
+    }
+
     return (
         <BGPad classes='mt-3'>
             <div>
                 <div className='mt-2 text-sm md:text-base'>
 
 
-                    <NumberToTextField saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                    <NumberToTextField scoreCalculator={talkCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                         facultyTableAvailable="InvitedTalk"
                         state={invitedTalks} setState={setInvitedTalks} casYearState={casYearState}
                         isForm={true} activity="Activity 6 (A)" classes='my-3' model="InvitedTalk" addName="Invited Talk" activityName="Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings"
@@ -26,47 +72,9 @@ const InvitedLectures = ({ setInvitedTalks, invitedTalks, casYearState, saveLoad
 
 export default InvitedLectures
 
-const InvitedTalkPoints = ({ item, setState, state, serverData }) => {
+const InvitedTalkPoints = ({ item, setState, state, serverData, scoreCalculator }) => {
     useEffect(() => {
-        const newItem = state?.scoreMap?.[item._id]
-        const scoreMapObject = state?.scoreMap
-
-        let newMap = Object.fromEntries(serverData?.data?.data?.map(elem => [elem._id, scoreMapObject?.[elem._id]]));
-
-        let score = 0
-        if (item.isNat === 'State/University') {
-            score += 2
-        }
-        else if (item.isNat === 'National') {
-            score += 3
-        }
-        else if (item.isNat === 'International (within country)') {
-            score += 5
-        }
-        else if (item.isNat === 'International (Abroad)') {
-            score += 7
-        }
-
-
-        let grandTotal = 0
-
-        for (const key in newMap) {
-            if (newMap[key]?.score && key !== item?._id && state?.dataMap?.includes(key)) {
-                grandTotal += newMap[key].score
-            }
-        }
-
-        grandTotal = grandTotal + score
-
-        setState((current) => {
-            return {
-                ...current,
-                totalScore: grandTotal,
-                scoreMap:
-                    { ...newMap, [item._id]: { ...current?.scoreMap?.[item._id], score: score } },
-            }
-        })
-
+        scoreCalculator({ item, setState, state, serverData })
     }, [])
 
 

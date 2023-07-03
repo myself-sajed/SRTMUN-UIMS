@@ -129,8 +129,8 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     // function to clear states to '' 
     function clearStates() {
         setScholarName('')
-        setDepartmentName('')
-        setGuideName('')
+        setDepartmentName(user?.department)
+        setGuideName(`${user?.salutation} ${user?.name}`)
         setThesisTitle('')
         setDegreeName('')
         setAwardSubmit('')

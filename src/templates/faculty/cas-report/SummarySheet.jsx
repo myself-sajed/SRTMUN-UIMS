@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const SummarySheet = ({ casArray, title = "CAS", showFileURL = "casDirURL", forPrintOut }) => {
     return (
         <div className='academic-start'>
-            <p className="academic-start"></p>
+            {title === 'CAS' && <p className="academic-start"></p>}
             <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">{title} Summary Sheet of Year {casArray.map((cas) => cas.casYear).join(', ')}</p>
 
             <div>
