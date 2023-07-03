@@ -217,15 +217,8 @@ const PublicationPoints = ({ item, setState, state, serverData, scoreCalculator 
                         </div> :
                         item.type === 'Translator' ?
                             <div className='col-md-4'>
-                                <select className="form-select" required
-                                    value={state?.scoreMap?.[item._id]?.typeNature}
-                                    onChange={(e) => { setState({ ...state, scoreMap: { ...state?.scoreMap, [item._id]: { ...state?.scoreMap?.[item._id], type: item?.type, typeNature: e.target.value } } }) }}>
-
-                                    <option selected disabled>Choose work done</option>
-                                    <option value='Chapter or Research Paper'>Chapter or Research Paper (3)</option>
-                                    <option value='Book'>Book (8)</option>
-
-                                </select>
+                                <p value='National'>Chapter or Research Paper: <b>3</b> Points</p>
+                                <p value='International'>Book: <b>8</b> Points</p>
                             </div> : <p>You're not valid Author / Editor / Translator</p>
         }
 
