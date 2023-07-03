@@ -209,7 +209,7 @@ function feedback(app) {
         }
 
 
-        const phdAwarded = await PhdAwarded.find({}).populate('userId').lean()
+        const phdAwarded = await PhdAwarded.find({ degreeName: { $ne: 'PG Dissertation' } }).populate('userId').lean()
         report.PhdAwardedCount = phdAwarded.length
         if (school) {
             report.PhdAwarded = phdAwarded.filter((doc) => doc.userId !== null && doc.userId.department === school)
@@ -337,9 +337,14 @@ function feedback(app) {
         const { model, school, userType } = req.body
         console.log(model, school, userType)
 
+        let filter = {}
+        if (model === 'PhdAwarded') {
+            filter = { degreeName: { $ne: 'PG Dissertation' } }
+        }
+
         try {
             if (userType === 'faculty') {
-                const docs = await models[model].find({}).populate('userId').lean()
+                const docs = await models[model].find(filter).populate('userId').lean()
                 const filteredDocs = docs.filter((doc) => doc.userId !== null && doc.userId.department === school)
                 res.send(({ message: 'success', data: filteredDocs }))
             }
