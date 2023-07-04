@@ -26,13 +26,11 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
     function calculateTeachingPercentage() {
 
-        console.log('Function is running calculating...')
 
         // validation
         if (teachingData.classesTaught > teachingData.totalClasses) {
             toast.error('Total Classes cannot be greater than Classes Taught.')
             setTeachingData({ ...teachingData, teachingGrade: null })
-            console.log('taght greater')
             return false
         }
         else if (teachingData.totalClasses <= 0) {
@@ -43,7 +41,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
 
         // Computation of teaching percentage
         const teachingGrade = Math.ceil((teachingData.classesTaught / teachingData.totalClasses) * 100);
-        console.log('teachingGrade', teachingGrade)
 
         teachingGrade >= 80 ?
             setTeachingData({ ...teachingData, teachingGrade, teachingRemark: 'Good', teachingRemarkColor: 'green' }) :
@@ -124,7 +121,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
     }
 
     useEffect(() => {
-        console.log('Useeffect is running..')
         if (pulledData && pulledData.length > 0) {
             let sumClassesTaken = 0;
             let sumNoOfClasses = 0;
@@ -135,8 +131,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                 sumNoOfClasses += parseInt(obj.noOfClasses);
             }
 
-            console.log('sumNoOfClasses :', sumNoOfClasses)
-            console.log('sumClassesTaken :', sumClassesTaken)
             if (sumNoOfClasses === undefined || sumNoOfClasses === NaN || sumNoOfClasses === "NaN" || sumNoOfClasses === null) {
                 toast.error('Could not calculate number of classes assigned')
             } else if (sumClassesTaken === undefined || sumClassesTaken === NaN || sumClassesTaken === "NaN" || sumClassesTaken === null) {

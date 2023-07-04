@@ -35,7 +35,7 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
                     </div>
 
 
-                    <button type='submit' className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out"><BookmarkAddedRoundedIcon /><span className='ml-2'>Submit CAS Form</span></button>
+                    <button type='submit' className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out"><BookmarkAddedRoundedIcon /><span className='ml-2'>Submit PBAS Form</span></button>
 
 
                 </form>

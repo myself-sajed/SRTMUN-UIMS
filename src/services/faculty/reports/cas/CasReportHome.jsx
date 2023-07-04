@@ -35,6 +35,7 @@ const CasReportHome = () => {
     title("CAS Report")
     const [serverCasData, setServerCasData] = useState(null)
     const [serverCasError, setServerCasError] = useState(null)
+    const [shouldProceed, setShouldProceed] = useState(false)
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.user)
     const fetchYears = useSelector((state) => state.cas.fetchYears)
@@ -113,7 +114,7 @@ const CasReportHome = () => {
         setServerCasData((prev) => {
             return null
         })
-        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setServerCasDuration)
+        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setServerCasDuration, setShouldProceed)
     }, [casYearState])
 
     const verifyDates = () => {
@@ -329,9 +330,24 @@ const CasReportHome = () => {
                         <SelectCASYear calDate1={calDate1} calDate2={calDate2} casYearState={casYearState} setNormalDuration={setNormalDuration} normalDuration={normalDuration} setCasYearState={setCasYearState} currentYear={currentYear} setCurrentYear={setCurrentYear} space='col-md-3' title="Choose CAS Year" lastYear={lastYear} setLastYear={setLastYear} firstYear={firstYear} setFirstYear={setFirstYear} setDateInfo={setDateInfo} dateInfo={dateInfo} userAllDuration={{ firstYear, lastYear }} serverCasData={serverCasData} casDate={casDate} setCasDate={setCasDate} />
 
                         <div className='mt-5'>
-                            <SaveButton title={'Save and Proceed'}
-                                onClickFunction={() => { verifyDates(); }} />
+
                         </div>
+
+                        {
+                            casYearState && <div className='mt-5'>
+                                {(shouldProceed) ?
+                                    <SaveButton title={'Save and Proceed'}
+                                        onClickFunction={() => { verifyDates(); }} />
+                                    :
+                                    <SaveButton type='button' icon={
+                                        <div>
+                                            <span className="spinner-border mr-3 spinner-border-sm text-xs" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </div>
+                                    } />
+                                }
+                            </div>
+                        }
 
                     </form>
                     {
@@ -364,9 +380,9 @@ export default CasReportHome
 
 
 
-const SaveButton = ({ title, onClickFunction, icon = <ArrowForwardRoundedIcon /> }) => {
+const SaveButton = ({ type = "submit", title, onClickFunction, icon = <ArrowForwardRoundedIcon />, iconClasses = "mr-2" }) => {
     return (
-        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" type="submit" onClick={onClickFunction}><span className='mr-2'>{title}</span> {icon}</button>
+        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" type={type} onClick={onClickFunction}><span className={`${iconClasses}`}>{title}</span> {icon}</button>
     )
 }
 

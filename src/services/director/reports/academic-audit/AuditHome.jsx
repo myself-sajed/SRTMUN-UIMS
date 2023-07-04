@@ -37,6 +37,7 @@ const AuditHome = () => {
     const [allYearAAAData, setAllYearAAAData] = useState(null)
     const navigate = useNavigate()
     const location = useLocation()
+    const [shouldProceed, setShouldProceed] = useState(false)
 
 
     useEffect(() => {
@@ -86,7 +87,7 @@ const AuditHome = () => {
     useEffect(() => {
         if (directorUser) {
             auditYearState &&
-                getAuditData(directorUser.department, auditYearState, setServerAuditData, setServerAuditError, true, setAllYearAAAData)
+                getAuditData(directorUser.department, auditYearState, setServerAuditData, setServerAuditError, true, setAllYearAAAData, setShouldProceed)
         }
 
     }, [auditYearState])
@@ -176,10 +177,21 @@ const AuditHome = () => {
 
                         <Year state={auditYearState} setState={setAuditYearState} space='col-md-3' title="Choose Audit Year" numberOfYearsToDisplay={4} />
 
-                        <div className='mt-5'>
-                            <SaveButton title={'Save and Proceed'}
-                                onClickFunction={() => { dispatch(setAuditYear(auditYearState)); }} />
-                        </div>
+                        {
+                            auditYearState && <div className='mt-5'>
+                                {(shouldProceed) ?
+                                    <SaveButton title={'Save and Proceed'}
+                                        onClickFunction={() => { dispatch(setAuditYear(auditYearState)); }} />
+                                    :
+                                    <SaveButton type='button' icon={
+                                        <div>
+                                            <span className="spinner-border mr-3 spinner-border-sm text-xs" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </div>
+                                    } />
+                                }
+                            </div>
+                        }
 
                     </form>
                 </div>
@@ -204,9 +216,9 @@ export default AuditHome
 
 
 
-const SaveButton = ({ title, onClickFunction, icon = <ArrowForwardRoundedIcon /> }) => {
+const SaveButton = ({ type = "submit", title, onClickFunction, icon = <ArrowForwardRoundedIcon />, iconClasses = "mr-2" }) => {
     return (
-        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" onClick={onClickFunction}><span className='mr-2'>{title}</span> {icon}</button>
+        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" type={type} onClick={onClickFunction}><span className={`${iconClasses}`}>{title}</span> {icon}</button>
     )
 }
 

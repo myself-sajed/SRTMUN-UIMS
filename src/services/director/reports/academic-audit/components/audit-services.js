@@ -70,14 +70,17 @@ const saveAAAData = async (AAAData, schoolName, setAutoSaveLoader) => {
 }
 
 // fetching data from database
-const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear, setAllYearAAAData) => {
+const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear, setAllYearAAAData, setShouldProceed) => {
+    if (setShouldProceed) {
+        setShouldProceed(false)
+    }
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/director/academic-audit/getAAAData`, { schoolName })
             .then((res) => {
                 if (res.data.status === 'success') {
 
                     if (setAllYearAAAData) {
-                        setAllYearAAAData(res.data.data.AAAData && res.data.data.AAAData.sort((a, b) => {
+                        setAllYearAAAData(() => res.data.data.AAAData && res.data.data.AAAData.sort((a, b) => {
                             return parseInt(JSON.parse(a).auditYear.slice(0, 4)) - parseInt(JSON.parse(b).auditYear.slice(0, 4));
                         }))
                     }
@@ -85,17 +88,30 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
                     if (sortByYear) {
                         res.data.data.AAAData.forEach((item) => {
                             if (JSON.parse(item).auditYear === auditYear) {
-                                setData(JSON.parse(item));
+                                setData(() => JSON.parse(item));
+                                if (setShouldProceed) {
+                                    setShouldProceed(false)
+                                }
                                 return
+                            } else {
+                                if (setShouldProceed) {
+                                    setShouldProceed(false)
+                                }
                             }
                         })
                     }
                     else {
-                        setData(res.data.data);
+                        setData(() => res.data.data);
+                        if (setShouldProceed) {
+                            setShouldProceed(false)
+                        }
                     }
                 }
                 else {
                     setData(null)
+                    if (setShouldProceed) {
+                        setShouldProceed(false)
+                    }
                     setError(new Date().getTime())
                 }
             }).catch((err) => {

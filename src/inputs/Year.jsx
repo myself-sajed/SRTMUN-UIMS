@@ -18,7 +18,7 @@ const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numb
         <div className={space}>
             <label htmlFor="validationCustom04" className="form-label" >{title}</label>
             <select className="form-select" id="validationCustom04" required onChange={(e) => { setState(e.target.value) }} value={state}>
-                <option selected disabled value="">Choose</option>
+                <option selected={state === null && true} disabled value="">Choose</option>
 
                 {arrayOfYears.map((year, index) => {
                     return <option key={index} value={year}>{year}</option>

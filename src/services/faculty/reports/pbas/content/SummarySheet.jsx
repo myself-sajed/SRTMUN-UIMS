@@ -6,7 +6,7 @@ import LabelImportantRoundedIcon from '@mui/icons-material/LabelImportantRounded
 const SummarySheet = ({ casData, casYearState }) => {
     return (
         <div className='mb-5'>
-            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">CAS Summary Sheet of Year {casYearState}</p>
+            <p className="text-center font-bold text-lg md:text-xl mb-5 mt-3 underline underline-offset-8">PBAS Summary Sheet of Year {casYearState}</p>
 
             <div>
                 {/* Table 1 */}

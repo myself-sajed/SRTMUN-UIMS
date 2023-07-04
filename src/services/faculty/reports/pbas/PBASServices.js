@@ -58,8 +58,10 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
     }
 }
 
-const getCASData = (userId, setData, setError, sortByYear = false, casYear = null) => {
-
+const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setShouldProceed) => {
+    if (setShouldProceed) {
+        setShouldProceed(false)
+    }
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/getPBASData`, { userId })
             .then((res) => {
@@ -67,16 +69,29 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                     if (sortByYear) {
                         res.data.data.casData.forEach((cas) => {
                             if (JSON.parse(cas).casYear === casYear) {
-                                setData(JSON.parse(cas));
+                                setData(() => JSON.parse(cas));
+                                if (setShouldProceed) {
+                                    setShouldProceed(true)
+                                }
+                            } else {
+                                if (setShouldProceed) {
+                                    setShouldProceed(true)
+                                }
                             }
                         })
                     }
                     else {
-                        setData(res.data.data);
+                        setData(() => res.data.data);
+                        if (setShouldProceed) {
+                            setShouldProceed(true)
+                        }
                     }
                 }
                 else {
                     setData(null)
+                    if (setShouldProceed) {
+                        setShouldProceed(true)
+                    }
                     setError({ error: true, message: 'PBAS Data Not Found. Please fill PBAS Form to generate report!' })
                 }
             }).catch((err) => {

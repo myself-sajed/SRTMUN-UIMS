@@ -83,7 +83,10 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
     }
 }
 
-const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setCasDuration = false) => {
+const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setCasDuration = false, setShouldProceed) => {
+    if (setShouldProceed) {
+        setShouldProceed(false)
+    }
     try {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/getCASData`, { userId })
             .then((firstResponse) => {
@@ -91,7 +94,7 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
 
                     if (setCasDuration) {
                         if (firstResponse.data.data?.casDuration) {
-                            setCasDuration(JSON.parse(firstResponse.data.data?.casDuration))
+                            setCasDuration(() => JSON.parse(firstResponse.data.data?.casDuration))
                         }
                     }
 
@@ -99,16 +102,29 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                     if (sortByYear) {
                         firstResponse.data.data.casData.forEach((cas) => {
                             if (JSON.parse(cas).casYear === casYear) {
-                                setData(JSON.parse(cas));
+                                setData(() => JSON.parse(cas));
+                                if (setShouldProceed) {
+                                    setShouldProceed(false)
+                                }
+                            } else {
+                                if (setShouldProceed) {
+                                    setShouldProceed(false)
+                                }
                             }
                         })
                     }
                     else {
-                        setData(firstResponse.data.data);
+                        setData(() => firstResponse.data.data);
+                        if (setShouldProceed) {
+                            setShouldProceed(false)
+                        }
                     }
                 }
                 else {
                     setData(null)
+                    if (setShouldProceed) {
+                        setShouldProceed(false)
+                    }
                     setError({ error: true, message: 'CAS Data Not Found. Please fill CAS Form to generate report!' })
                 }
             }).catch((err) => {

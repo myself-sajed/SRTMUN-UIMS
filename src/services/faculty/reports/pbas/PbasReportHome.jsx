@@ -40,6 +40,7 @@ const PbasReportHome = () => {
     const [activeStep, setActiveStep] = useState(0);
     const navigate = useNavigate()
     const [saveLoader, setSaveLoader] = useState(false)
+    const [shouldProceed, setShouldProceed] = useState(false)
     const [teachingData, setTeachingData] = useState({
         checkBoxCount: 0, checkBoxSelected: [], teachingGrade: null, totalClasses: null,
         classesTaught: null, teachingRemark: null, teachingRemarkColor: null, uploadInputs: {
@@ -76,6 +77,8 @@ const PbasReportHome = () => {
             setTabName('intro')
             handleBack()
         } else if (tabName === 'first') {
+            setShouldProceed(false)
+            setCasYearState(null)
             setTabName('year')
             handleBack()
         } else if (tabName === 'second') {
@@ -96,7 +99,7 @@ const PbasReportHome = () => {
         setServerCasData((prev) => {
             return null
         })
-        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState)
+        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setShouldProceed)
     }, [casYearState])
 
 
@@ -170,6 +173,7 @@ const PbasReportHome = () => {
             <div className={`${tabName === 'year' ? 'block' : 'hidden'}`}>
                 <div className='mt-3 flex-col items-center justify-center gap-3 w-full text-center h-screen'>
 
+
                     <form className='flex flex-col items-center justify-center mt-5' onSubmit={(e) => {
                         e.preventDefault();
                         setTabName('first');
@@ -177,9 +181,20 @@ const PbasReportHome = () => {
                     }}>
                         <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose PBAS Year" />
 
-                        <div className='mt-5'>
-                            <SaveButton title={'Save and Proceed'} />
-                        </div>
+                        {
+                            casYearState && <div className='mt-5'>
+                                {(shouldProceed) ?
+                                    <SaveButton title={'Save and Proceed'} />
+                                    :
+                                    <SaveButton type='button' icon={
+                                        <div>
+                                            <span className="spinner-border mr-3 spinner-border-sm text-xs" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </div>
+                                    } />
+                                }
+                            </div>
+                        }
 
                     </form>
 
@@ -210,9 +225,9 @@ export default PbasReportHome
 
 
 
-const SaveButton = ({ title, onClickFunction, icon = <ArrowForwardRoundedIcon /> }) => {
+const SaveButton = ({ type = "submit", title, onClickFunction, icon = <ArrowForwardRoundedIcon />, iconClasses = "mr-2" }) => {
     return (
-        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" type="submit" onClick={onClickFunction}><span className='mr-2'>{title}</span> {icon}</button>
+        <button className="flex items-center justify-start p-2 rounded-xl text-blue-900 font-bold bg-blue-200 hover:gap-2 duration-200 ease-in-out" type={type} onClick={onClickFunction}><span className={`${iconClasses}`}>{title}</span> {icon}</button>
     )
 }
 
