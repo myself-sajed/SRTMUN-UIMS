@@ -281,6 +281,13 @@ function services(app) {
                         return dateB - dateA;
                     });
 
+                    const phdAwardedWithoutPGD = await PhdAwarded.find({ ...filter, degreeName: { '$ne': 'PG Dissertation' } });
+
+                    report.PhdAwardedWithoutPGD = phdAwardedWithoutPGD.sort(function (a, b) {
+                        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+                        return dateB - dateA;
+                    });
+
                     const jrfSrf = await JrfSrf.find(filter);
                     report.JrfSrf = jrfSrf.sort(function (a, b) {
                         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)

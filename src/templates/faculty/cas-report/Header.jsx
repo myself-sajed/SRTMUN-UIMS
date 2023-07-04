@@ -35,7 +35,7 @@ const dashboardObj = {
         { id: 4, title: 'Seminars organized', model: 'ConferenceOrganized', icon: <LaptopChromebookRoundedIcon /> },
         { id: 6, title: 'ICT Created', model: 'EContentDeveloped', icon: <LanguageRoundedIcon /> },
         { id: 7, title: 'Books & Chapters', model: 'BookAndChapter', icon: <MenuBookRoundedIcon /> },
-        { id: 8, title: 'Research Guidance', model: 'PhdAwarded', icon: <CardMembershipRoundedIcon /> },
+        { id: 8, title: 'Research Guidance', model: 'PhdAwardedWithoutPGD', icon: <CardMembershipRoundedIcon /> },
         { id: 9, title: 'Patents', model: 'Patent', icon: <DocumentScannerRoundedIcon /> },
         { id: 10, title: 'Orientation / FDP', model: 'Online', icon: <RecordVoiceOverRoundedIcon /> },
         { id: 11, title: 'Administrative Responsibilities', model: 'Responsibilities', icon: <ManageAccountsIcon /> },
