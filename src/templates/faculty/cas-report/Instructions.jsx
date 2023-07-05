@@ -162,12 +162,14 @@ const Instructions = ({ forPrintOut }) => {
             <p className='font-semibold'>1 . (c) Justification of assessment of work as outstanding / below average : </p>
 
             <br /><br /><br /><br />
+            <br /><br /><br />
+
 
             <p className='font-semibold'>2. Comments of the Vice-Chancellor / Director of School on 1(b) & 1(c) : </p>
 
             <br /><br /><br /><br />
+            <br /><br /><br />
             <p className='font-semibold'>3. Remarks and suggestions: </p>
-            <br /><br /><br /><br />
             <br /><br /><br /><br />
 
 
@@ -182,15 +184,12 @@ const Instructions = ({ forPrintOut }) => {
             <p className="font-semibold">Remarks of the Vice-Chancellor (Adverse remarks as well as remarks of appreciation)</p>
             <br /><br /><br /><br />
             <br /><br /><br /><br />
-            <br /><br /><br /><br />
 
             <div className="mr-36">
                 <p className="text-right mr-7">Signature </p>
                 <p className="text-right">(Vice-Chancellor)</p>
             </div>
 
-            <br /><br /><br /><br />
-            <br /><br /><br /><br />
 
 
         </div>

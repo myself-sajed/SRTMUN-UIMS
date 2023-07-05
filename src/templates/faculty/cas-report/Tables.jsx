@@ -233,11 +233,11 @@ const Table = ({ academicData, casArray, forPrintOut }) => {
                                                                     {activity.activityTables.tableCells.map((item) => {
                                                                         return (<td>{item === 'proof' ?
                                                                             <ViewFile fileName={modelItem['proof']} /> : item === 'link' ?
-                                                                                <ViewFile fileName={modelItem['link']}
-                                                                                    type="linkURL" /> : modelItem[item]}</td>);
+                                                                                modelItem?.['link'] ? <ViewFile fileName={modelItem['link']}
+                                                                                    type="linkURL" /> : '-' : modelItem[item]}</td>);
                                                                     })}
 
-                                                                    {activity.model === 'ResearchPaper' && <td>{casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.refreedIFProof ? <ViewFile fileName={casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.refreedIFProof?.file?.[0].filename} type="casDirURL" /> : <span className='text-red-700'>Proof N/A</span>}</td>}
+                                                                    {activity.model === 'ResearchPaper' && <td>{casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.refreedIFProof ? <ViewFile fileName={casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.refreedIFProof?.file?.[0].filename} type="casDirURL" /> : '-'}</td>}
 
                                                                     <td>{casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.score ? casItem.academicData?.[activity.casName].scoreMap?.[modelItem._id]?.score : 0}</td>
                                                                 </tr>

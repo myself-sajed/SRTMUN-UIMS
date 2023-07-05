@@ -45,7 +45,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            <ShowModal okText={"Generate Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
+                            <ShowModal okText={"Download Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
                                 <div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
@@ -65,7 +65,7 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
                             {selectedYear.length > 0 &&
                                 <div className='flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap mt-5 w-full'>
                                     <button className='flex items-center justify-center my-1 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setIsModalOpen(true); setForPrintOut(false) }}>
-                                        <EngineeringRoundedIcon /> Generate PBAS Report
+                                        <EngineeringRoundedIcon /> Download PBAS Report
                                     </button>
                                     <button className='flex items-center justify-center my-1 rounded-full bg-green-800 px-3 py-2 hover:bg-green-900 text-white' onClick={() => { handleProofsGeneration() }}>
                                         <FileDownloadRoundedIcon /> Download Proofs
