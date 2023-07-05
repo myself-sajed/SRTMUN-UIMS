@@ -223,9 +223,9 @@ const Register = () => {
 
                                 </div>
 
-                                <div className="col-md-2">
+                                <div className="col-md-4">
                                     <label htmlFor="validationCustom04" className="form-label" >Gender</label>
-                                    <GenderSelect id="selectGender" state={gender} setState={setGender} />
+                                    <GenderSelect id="selectGender" title="Choose" state={gender} setState={setGender} />
 
 
                                 </div>
