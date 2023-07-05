@@ -210,42 +210,6 @@ const Teaching = ({ casYearState, setTabName, tabName, handleNext, serverCasData
                             </div>
                         </div>
 
-
-                        {/* <div className='flex items-center justify-between flex-wrap'>
-                            {
-                                teachingData?.teachingGrade && teachingData.teachingGrade ? <div className="input-group mt-3 lg:w-[50%] flex items-center justify-end sm:w-[100%]">
-                                    <input type="file" className="form-control" id="uploadAttendance" aria-describedby="uploadAttendance" aria-label="Upload" name="Attendance"
-                                        onChange={(e) => { setTeachingData({ ...teachingData, selectedAttendance: e.target.files[0] }) }} accept="application/pdf" />
-                                    <button onClick={submitAttendance} className="btn btn-primary bg-blue-700 hover:bg-blue-600" type="button" id="uploadAttendance">Upload Director Certificate</button>
-                                </div> : null}
-
-                            {
-                                teachingData.uploadedAttendance?.file &&
-                                <div className='flex items-center justify-start gap-2 mt-3 bg-blue-100 rounded-md px-2'>
-                                    <FileViewer serviceName="PBAS"
-                                        fileName={teachingData.uploadedAttendance?.file?.[0]?.filename} />
-
-
-                                    <Popconfirm
-                                        title="Do you want to delete this item?"
-                                        onConfirm={() => {
-                                            deleteFile(teachingData.uploadedAttendance?.file?.[0]?.filename)
-                                        }}
-                                        onCancel={() => { }}
-                                        okText="Yes, Delete"
-                                        cancelText="Cancel"
-                                        okButtonProps={{ "type": "default" }}>
-                                        <Tooltip title="Delete File">
-                                            <IconButton>
-                                                <DeleteRoundedIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Popconfirm>
-
-                                </div>
-                            }
-                        </div> */}
-
                     </div>
                 </BGPad>
 
@@ -397,11 +361,11 @@ const Button = ({ title, classes, onClickFunction, type = 'button' }) => {
 
 const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savingFunction }) => {
 
-    const [loading, setLoading] = useState(null)
 
     const submitActivityFiles = (file, fileTagName) => {
         // e.preventDefault();
         if (file) {
+            toast.success('Uploading file...')
             setIsLoading(true)
 
 
@@ -432,7 +396,7 @@ const CheckBox = ({ title, id, setTeachingData, teachingData, setIsLoading, savi
                 }).catch(function (err) {
                     console.log(err)
                     setIsLoading(false)
-                    toast.error('Failed due to Internal Server error')
+                    toast.error('File exceeds 1MB, please upload file lesser than 1MB.')
                 })
         } else {
             toast.error('Choose a file to upload')

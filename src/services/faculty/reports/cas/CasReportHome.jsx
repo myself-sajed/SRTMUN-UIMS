@@ -91,6 +91,8 @@ const CasReportHome = () => {
             setTabName('level')
             handleBack()
         } else if (tabName === 'year') {
+            setShouldProceed(false)
+            setCasYearState(null)
             setTabName('intro')
             handleBack()
         } else if (tabName === 'first') {

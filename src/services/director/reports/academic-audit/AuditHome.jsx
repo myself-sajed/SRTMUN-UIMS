@@ -78,6 +78,8 @@ const AuditHome = () => {
             handleBack()
         }
         else if (tabName === '1') {
+            setShouldProceed(false)
+            setAuditYearState(null)
             setTabName('year')
             handleBack()
         }

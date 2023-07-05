@@ -71,28 +71,28 @@ const OtherInfo = ({ forPrintOut, casArray, academicData }) => {
                     <ol class="grid grid-cols-2 gap-4 mt-3 px-5">
                         <li className="p-1 list-decimal">Proof of Research Degree</li>
                         {
-                            academicData?.Online && <li className="p-1 list-decimal">Proofs of Orientation / Refresher course & FDP</li>
+                            academicData?.Online?.length > 0 && <li className="p-1 list-decimal">Proofs of Orientation / Refresher course & FDP</li>
                         }
                         {
-                            academicData?.ResearchPaper && <li className="p-1 list-decimal">Proofs of Research Papers</li>
+                            academicData?.ResearchPaper?.length > 0 && <li className="p-1 list-decimal">Proofs of Research Papers</li>
                         }
                         {
-                            academicData?.BookAndChapter && <li className="p-1 list-decimal">Proofs of Publications</li>
+                            academicData?.BookAndChapter?.length > 0 && <li className="p-1 list-decimal">Proofs of Publications</li>
                         }
                         {
-                            academicData?.PhdAwarded && <li className="p-1 list-decimal">Proofs of Ph.D. Awarded to students</li>
+                            academicData?.PhdAwarded?.length > 0 && <li className="p-1 list-decimal">Proofs of Ph.D. Awarded to students</li>
                         }
                         {
-                            academicData?.ResearchProject && <li className="p-1 list-decimal">Proofs of Research Projects</li>
+                            academicData?.ResearchProject?.length > 0 && <li className="p-1 list-decimal">Proofs of Research Projects</li>
                         }
                         {
-                            academicData?.ConsultancyServices && <li className="p-1 list-decimal">Proofs of Consultancies</li>
+                            academicData?.ConsultancyServices?.length > 0 && <li className="p-1 list-decimal">Proofs of Consultancies</li>
                         }
                         {
-                            academicData?.AwardRecognition && <li className="p-1 list-decimal">Proofs of Awards and Recognition</li>
+                            academicData?.AwardRecognition?.length > 0 && <li className="p-1 list-decimal">Proofs of Awards and Recognition</li>
                         }
                         {
-                            academicData?.InvitedTalk && <li className="p-1 list-decimal">Proofs of Invited of Invited Talks</li>
+                            academicData?.InvitedTalk?.length > 0 && <li className="p-1 list-decimal">Proofs of Invited of Invited Talks</li>
                         }
                         <li className="p-1 list-decimal"> Proofs of involved activities</li>
                     </ol>
