@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import AdminNavbar from '../services/admin/components/AdminNavbar'
 import Navbar from '../components/Navbar'
 import CustomReport from '../services/faculty/pages/CustomReport'
@@ -81,10 +81,13 @@ import StatusPage from '../services/status/pages/StatusPage'
 import GenerateFeedbackLink from '../services/feedback/pages/GenerateFeedbackLink'
 import GoToResponse from '../services/feedback/pages/GoToResponse'
 import useAdminAuth from '../hooks/useAdminAuth'
+import FeedbackRedirect from '../services/feedback/pages/FeedbackRedirect'
 
 
 
 const RoutesHandler = () => {
+
+    const navigate = useNavigate()
 
     return (
         <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
@@ -180,11 +183,13 @@ const RoutesHandler = () => {
                 <Route path='/feedback/alumni' exact element={<AlumniFeedback />} />
                 <Route path='/feedback/parent' exact element={<ParentFeedback />} />
                 <Route path='/feedback/employer' exact element={<EmployerFeedback />} />
+                <Route path='/feedback/:userType/:year/:school' exact element={<FeedbackRedirect />} />
 
 
 
                 {/* Feedback System: PART II : RESPONSE */}
-                <Route path='/feedback/response/student/:academicYear/:schoolName' exact element={<StudentResponse />} />
+                <Route path='/feedback/response/student/:academicYear/:schoolName' exact
+                    element={<StudentResponse />} />
                 <Route path='/feedback/response/:responseType/:academicYear/:schoolName' exact element={<OtherReponses />} />
 
                 {/* Feedback System: PART III : Pages */}
