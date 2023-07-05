@@ -81,7 +81,7 @@ const Home = () => {
                 navigate(siteLinks.facultyProfile.link); dispatch(setActive('book_and_chapters')); dispatch(setPage('book_and_chapters'));
             }
         },
-        PhdAwarded: {
+        PhdAwardedWithoutPGD: {
             onClickFunc: () => {
                 navigate(siteLinks.facultyProfile.link); dispatch(setActive('phd_awarded')); dispatch(setPage('phd_awarded'));
             }
