@@ -10,6 +10,7 @@ import BasicIntro from './BasicIntro'
 import Eligibility from './Eligibility'
 import './CAS.css'
 import Introduction from './Introduction'
+import UserLoading from '../../../pages/UserLoading'
 
 const CASReport = () => {
 
@@ -146,7 +147,9 @@ const CASReport = () => {
                     <BasicIntro academicData={academicData} forPrintOut={forPrintOut} />
                     <Table academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />
                     <SummarySheet casArray={casArray} forPrintOut={forPrintOut} />
-                </> : <p className='my-5'>Sorry You're not eligible for CAS Promotion</p>
+                </> : <p className='my-5'>
+                    <UserLoading title="Fetching CAS Data" />
+                </p>
             }
         </div>
     )

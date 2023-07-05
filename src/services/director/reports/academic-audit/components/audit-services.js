@@ -90,12 +90,12 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
                             if (JSON.parse(item).auditYear === auditYear) {
                                 setData(() => JSON.parse(item));
                                 if (setShouldProceed) {
-                                    setShouldProceed(false)
+                                    setShouldProceed(true)
                                 }
                                 return
                             } else {
                                 if (setShouldProceed) {
-                                    setShouldProceed(false)
+                                    setShouldProceed(true)
                                 }
                             }
                         })
@@ -103,14 +103,14 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
                     else {
                         setData(() => res.data.data);
                         if (setShouldProceed) {
-                            setShouldProceed(false)
+                            setShouldProceed(true)
                         }
                     }
                 }
                 else {
                     setData(null)
                     if (setShouldProceed) {
-                        setShouldProceed(false)
+                        setShouldProceed(true)
                     }
                     setError(new Date().getTime())
                 }

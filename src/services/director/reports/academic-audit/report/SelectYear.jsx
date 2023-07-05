@@ -37,7 +37,8 @@ const SelectYear = ({ aaaYear, aaaData, userData, setReportLoading, error }) => 
 
                             </div>
 
-                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white' onClick={() => { setReportLoading(true); generateAAAReport(userData, selectedYear, setReportLoading) }}>
+                            {selectedYear.length > 0 && <button className='flex items-center justify-center mx-auto gap-2 mt-5 rounded-full bg-blue-800 px-3 py-2 hover:bg-blue-900 text-white'
+                                onClick={() => { setReportLoading(true); generateAAAReport(userData, selectedYear, setReportLoading) }}>
                                 <EngineeringRoundedIcon /> Generate AAA Report
                             </button>}
                         </div>

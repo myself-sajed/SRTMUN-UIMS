@@ -104,11 +104,11 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                             if (JSON.parse(cas).casYear === casYear) {
                                 setData(() => JSON.parse(cas));
                                 if (setShouldProceed) {
-                                    setShouldProceed(false)
+                                    setShouldProceed(true)
                                 }
                             } else {
                                 if (setShouldProceed) {
-                                    setShouldProceed(false)
+                                    setShouldProceed(true)
                                 }
                             }
                         })
@@ -116,14 +116,14 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                     else {
                         setData(() => firstResponse.data.data);
                         if (setShouldProceed) {
-                            setShouldProceed(false)
+                            setShouldProceed(true)
                         }
                     }
                 }
                 else {
                     setData(null)
                     if (setShouldProceed) {
-                        setShouldProceed(false)
+                        setShouldProceed(true)
                     }
                     setError({ error: true, message: 'CAS Data Not Found. Please fill CAS Form to generate report!' })
                 }

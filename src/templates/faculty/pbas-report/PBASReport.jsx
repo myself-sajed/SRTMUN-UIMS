@@ -11,6 +11,7 @@ import ShowProofs from './ShowProofs'
 import OtherInfo from '../cas-report/OtherInfo'
 import Instructions from '../cas-report/Instructions'
 import TeachingAndActivities from '../cas-report/TeachingAndActivities'
+import UserLoading from '../../../pages/UserLoading'
 
 const CASReport = () => {
 
@@ -101,7 +102,9 @@ const CASReport = () => {
                     <SummarySheet casArray={casArray} showFileURL="pbasDirURL" title="PBAS" forPrintOut={forPrintOut} />
                     <OtherInfo academicData={academicData} casArray={casArray} forPrintOut={forPrintOut} />
                     <Instructions forPrintOut={forPrintOut} />
-                </> : <p className='my-5'>Sorry You're not eligible for PBAS Promotion</p>
+                </> : <p className='my-5'>
+                    <UserLoading title="Fetching PBAS Data" />
+                </p>
             }
         </div>
     )

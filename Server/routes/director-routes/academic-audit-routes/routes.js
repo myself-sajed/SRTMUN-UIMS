@@ -191,6 +191,27 @@ router.post("/api/director/academic-audit/getTotalAAAData", (req, res) => {
     )
 })
 
+async function pupetteerSetting(fileName, userData, selectedYear) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    const link = `${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`
+
+    await page.goto(link,
+        { waitUntil: 'networkidle0', timeout: 200000 });
+    await page.pdf({
+        path: `pdfs/${fileName}`,
+        printBackground: true,
+        scale: 0.6,
+        format: "A4",
+        margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
+        displayHeaderFooter: true,
+        headerTemplate: "<div style='font-size:7px;'></div>",
+        footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
+    });
+    await browser.close()
+}
+
 // for generating AAA report
 router.post("/generateAAAReport", async (req, res) => {
 
@@ -198,10 +219,24 @@ router.post("/generateAAAReport", async (req, res) => {
 
     const fileName = `AAAReport-${new Date().getTime()}.pdf`
     try {
+        await pupetteerSetting(fileName, userData, selectedYear)
+        res.send({ status: "generated", fileName: fileName });
+
+    } catch (error) {
+        console.log(error)
+        res.send({ status: "error", message: 'Could not generate report, please try again later...' });
+    }
+
+
+
+    async function pupetteerSetting(fileName, userData, selectedYear) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        console.log('Link : ', `${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`)
-        await page.goto(`${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`, { waitUntil: 'networkidle0' });
+
+        const link = `${process.env.Report_Main_URL}/report/AAAReport/${userData.department}/${JSON.stringify(selectedYear)}`
+
+        await page.goto(link,
+            { waitUntil: 'networkidle0', timeout: 200000 });
         await page.pdf({
             path: `pdfs/${fileName}`,
             printBackground: true,
@@ -213,10 +248,8 @@ router.post("/generateAAAReport", async (req, res) => {
             footerTemplate: `<div style='font-size:7px; padding-left: 300px;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>`
         });
         await browser.close()
-        res.send({ status: "generated", fileName });
-    } catch (error) {
-        res.send({ status: "error", message: 'Could not generate report, please try again later...' });
     }
+
 
 });
 

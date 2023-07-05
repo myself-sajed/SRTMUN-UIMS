@@ -199,7 +199,7 @@ const CasReportHome = () => {
     }
 
     useEffect(() => {
-        getCASData(user?._id, setFullCASData, setServerCasError, false, casYearState)
+        getCASData(user?._id, setFullCASData, setServerCasError, false, casYearState, false, setShouldProceed)
     }, [level])
 
 
@@ -246,6 +246,10 @@ const CasReportHome = () => {
 
         }
     }, [serverCasDuration])
+
+    useEffect(() => {
+        console.log('shouldProceed :', shouldProceed)
+    }, [shouldProceed])
 
 
 
@@ -306,8 +310,23 @@ const CasReportHome = () => {
                 }}>
                     <ApplyLevel setLevel={setLevel} level={level} setEligData={setEligData} eligData={eligData} fullCASData={fullCASData} setSupervisor={setSupervisor} supervisor={supervisor} saveEligibilityData={saveEligibilityData} />
                     <div className='flex items-center justify-center'>
-                        <SaveButton title={'Save and Proceed'} />
+                        {
+                            level && <div className='mt-5'>
+                                {(shouldProceed) ?
+                                    <SaveButton title={'Save and Proceed'} />
+                                    :
+                                    <SaveButton type='button' icon={
+                                        <div>
+                                            <span className="spinner-border mr-3 spinner-border-sm text-xs" role="status" aria-hidden="true"></span>
+                                            Loading...
+                                        </div>
+                                    } />
+                                }
+                            </div>
+                        }
                     </div>
+
+
                 </form>
             </div>
 

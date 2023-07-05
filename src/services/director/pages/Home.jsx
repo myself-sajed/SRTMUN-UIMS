@@ -262,7 +262,7 @@ const Home = () => {
                                         </button>
 
                                         <button onClick={() => { navigate(siteLinks.serviceStatusForDirector.link) }} className='p-2 rounded-full border-2 flex-auto text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
-                                            School Status
+                                            Report Status
                                         </button>
 
                                         <button onClick={() => { dispatch(setDirectorUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('director-token'); }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
