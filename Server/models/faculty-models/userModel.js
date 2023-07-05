@@ -68,23 +68,23 @@ const userSchema = new mongoose.Schema({
     },
     orcidId: {
         type: 'string',
-        required: true,
+        required: false,
     },
     scopusId: {
         type: 'string',
-        required: true,
+        required: false,
     },
     researcherId: {
         type: 'string',
-        required: true,
+        required: false,
     },
     googleScholarId: {
         type: 'string',
-        required: true,
+        required: false,
     },
     personalWebsiteLink: {
         type: 'string',
-        required: true,
+        required: false,
     },
     password: {
         type: 'string',
