@@ -279,16 +279,6 @@ const ResearchScore = ({ data }) => {
                 </p>
             </div>
 
-            <div className='border-2 text-lg border-blue-700 rounded-lg p-3 text-center mt-3'>
-                <p>The above Grand Total Score is from <span className='font-bold'>{count}</span> out of <span className='font-bold'>6</span> Categories.</p>
-
-
-                {count < 3 &&
-                    <p className='mt-2 bg-red-50 font-bold rounded-xl p-2 text-red-900 text-lg'>{
-                        "Therefore you are not eligible for PBAS Promotion."}</p>
-                }
-            </div>
-
         </div>
     )
 }
