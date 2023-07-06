@@ -14,9 +14,9 @@ import title from '../../../js/title'
 import { Avatar } from '@mui/material'
 import ShowImage from './ShowImage'
 
-const AllFaculties = () => {
+const AllFaculties = ({school}) => {
 
-    const { school } = useParams()
+    // const { school } = useParams()
     const [isAnalytics, setIsAnalytics] = useState(true)
     const param = { model: 'User', filter: { department: school } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
@@ -43,8 +43,8 @@ const AllFaculties = () => {
 
     return (
         <div>
-            <div className="sticky-top bg-white">
-                <GoBack backUrl={-1} pageTitle={`Faculties of ${school}`} />
+            <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+                {`Faculties of ${school}`}
             </div>
 
             <div>

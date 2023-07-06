@@ -11,7 +11,7 @@ const TableComponent = ({ tableHeads, tableCells, data, children, tableColor = '
         <div>
             <div className="table-responsive">
                 <table className={`table table-bordered css-serial ${tableCSS}`}>
-                    <thead className={`${tableColor} ${color}`}>
+                    <thead className={`${tableColor} ${color}`} >
                         <tr>
                             <th scope="col">Sr. No.</th>
                             {
