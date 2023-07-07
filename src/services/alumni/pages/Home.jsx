@@ -28,6 +28,7 @@ import YearSelect from '../../../components/formComponents/YearSelect'
 import FileViewer from '../../../components/FileViewer'
 import countries from '../../director/components/FormComponents/country'
 import ProfileCroper from '../../../components/ProfileCroper'
+import UnderConstruction from '../../../pages/UnderConstruction'
 
 const Home = () => {
 
@@ -186,7 +187,7 @@ const Home = () => {
                                 </h2>
                                 <div id={`collapse1`} class="accordion-collapse collapse" aria-labelledby={`heading`} data-bs-parent="#accordionExample1">
                                     <div class="accordion-body">
-                                        <div> Element</div> 
+                                        <div> <UnderConstruction/></div> 
                                     </div>
                                 </div>
                         </div>
