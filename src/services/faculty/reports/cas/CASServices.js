@@ -98,7 +98,6 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                         }
                     }
 
-
                     if (sortByYear) {
                         firstResponse.data.data.casData.forEach((cas) => {
                             if (JSON.parse(cas).casYear === casYear) {
@@ -106,27 +105,24 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                                 if (setShouldProceed) {
                                     setShouldProceed(true)
                                 }
-                            } else {
-                                if (setShouldProceed) {
-                                    setShouldProceed(true)
-                                }
+                                return
                             }
                         })
                     }
                     else {
                         setData(() => firstResponse.data.data);
-                        if (setShouldProceed) {
-                            setShouldProceed(true)
-                        }
                     }
                 }
                 else {
                     setData(null)
-                    if (setShouldProceed) {
-                        setShouldProceed(true)
-                    }
                     setError({ error: true, message: 'CAS Data Not Found. Please fill CAS Form to generate report!' })
                 }
+
+                // letting form proceed after data fetching
+                if (setShouldProceed) {
+                    setShouldProceed(true)
+                }
+
             }).catch((err) => {
                 toast.error('Failed fetching data')
             })

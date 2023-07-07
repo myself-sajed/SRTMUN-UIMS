@@ -93,26 +93,21 @@ const getAuditData = async (schoolName, auditYear, setData, setError, sortByYear
                                     setShouldProceed(true)
                                 }
                                 return
-                            } else {
-                                if (setShouldProceed) {
-                                    setShouldProceed(true)
-                                }
                             }
                         })
                     }
                     else {
                         setData(() => res.data.data);
-                        if (setShouldProceed) {
-                            setShouldProceed(true)
-                        }
                     }
                 }
                 else {
                     setData(null)
-                    if (setShouldProceed) {
-                        setShouldProceed(true)
-                    }
                     setError(new Date().getTime())
+                }
+
+                // letting form proceed after fetching data
+                if (setShouldProceed) {
+                    setShouldProceed(true)
                 }
             }).catch((err) => {
                 toast.error('Failed fetching data')

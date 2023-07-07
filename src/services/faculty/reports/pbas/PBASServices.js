@@ -73,27 +73,24 @@ const getCASData = (userId, setData, setError, sortByYear = false, casYear = nul
                                 if (setShouldProceed) {
                                     setShouldProceed(true)
                                 }
-                            } else {
-                                if (setShouldProceed) {
-                                    setShouldProceed(true)
-                                }
+                                return
                             }
                         })
                     }
                     else {
                         setData(() => res.data.data);
-                        if (setShouldProceed) {
-                            setShouldProceed(true)
-                        }
                     }
                 }
                 else {
                     setData(null)
-                    if (setShouldProceed) {
-                        setShouldProceed(true)
-                    }
                     setError({ error: true, message: 'PBAS Data Not Found. Please fill PBAS Form to generate report!' })
                 }
+
+                // letting proceed after data fetching
+                if (setShouldProceed) {
+                    setShouldProceed(true)
+                }
+
             }).catch((err) => {
                 toast.error('Failed fetching data')
             })
