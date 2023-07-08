@@ -82,6 +82,7 @@ import GenerateFeedbackLink from '../services/feedback/pages/GenerateFeedbackLin
 import GoToResponse from '../services/feedback/pages/GoToResponse'
 import useAdminAuth from '../hooks/useAdminAuth'
 import FeedbackRedirect from '../services/feedback/pages/FeedbackRedirect'
+import FeedbackDashboard from '../services/feedback/pages/FeedbackDashboard'
 
 
 
@@ -193,8 +194,8 @@ const RoutesHandler = () => {
                 <Route path='/feedback/response/:responseType/:academicYear/:schoolName' exact element={<OtherReponses />} />
 
                 {/* Feedback System: PART III : Pages */}
-                <Route path="/director/service/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
-                <Route path="/director/service/goToResponse" exact element={<GoToResponse />} />
+                <Route path="/director/service/feedback/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
+                <Route path="/director/service/feedback/dashboard" exact element={<FeedbackDashboard />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
@@ -203,7 +204,7 @@ const RoutesHandler = () => {
                     auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
 
                 {/* SERVICE STATUS */}
-                <Route path="/:userType/service/status" exact element={<StatusPage auth={{ admin: useAdminAuth, director: useDirectorAuth }} />} />
+                <Route path="/director/service/status" exact element={<StatusPage auth={{ admin: useAdminAuth, director: useDirectorAuth }} />} />
 
 
 

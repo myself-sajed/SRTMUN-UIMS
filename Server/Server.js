@@ -113,7 +113,8 @@ require('./utility/visitorCount')(app)
 require('./routes/photogallery-routes/event')(app)
 
 // feedback routes
-require('./routes/feedback-routes/feedbackRoutes')(app)
+require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
+require('./routes/feedback-routes/fetchFeedbackData')(app)
 
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)

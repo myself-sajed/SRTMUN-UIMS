@@ -8,11 +8,12 @@ import MoreIcon from '@mui/icons-material/More';
 import { DashbordButtons } from '../components/navcom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAdminActive } from '../../../redux/slices/AdminActiveSlice'
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 
 
 
 const AdminDrower = ({ children }) => {
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, Alumnis: <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
 
   const dispatch = useDispatch();
   const AdminActive = useSelector(state => state.adminActive.adminActive)

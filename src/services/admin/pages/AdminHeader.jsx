@@ -21,16 +21,6 @@ const AdminHeader = () => {
         <div style={{ display: "flex", justifyContent: "flex-start", width: "20%", }}>Admin</div>
         <div style={{ display: "flex", justifyContent: "flex-end", width: "80%" }}>
           <div className='col-12' style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", gap: "10px", alignItems: "center" }}>
-            {/* <select className="form-select form-select-sm " style={{width: "100px"}}>
-                <option selected disabled value="">Choose</option>
-                {
-                    arr?.map((e) => {
-                        return <option value={e}>{e}</option>
-                    })
-                }
-            </select>
-          <Search placeholder="search ...." onSearch={onSearch} style={{width:400}} enterButton /> */}
-
 
             <div className="btn-group" >
               <button type="button" data-bs-toggle="dropdown" aria-expanded="false">

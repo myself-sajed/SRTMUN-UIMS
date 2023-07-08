@@ -12,25 +12,29 @@ import AdminDashboard from '../pages/AdminDashboard';
 import AdminMore from '../pages/AdminMore';
 
 import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
+import StatusPage from '../../status/pages/StatusPage';
+import useAdminAuth from '../../../hooks/useAdminAuth';
+import AdminReportStatus from '../pages/AdminReportStatus';
 // import EContentDeveloped from '../tables/EContentDeveloped';
 // import Faculties from '../table2/Faculties';
 // import Qualification from '../table2/Qualification';
 
 
 const navcom = [
-    
+
 ]
 
 
 
 const DashbordButtons = [
-    {element: <AdminDashboard/>, title:"Dashboard", name:"Dashboard", }, 
-    {element: <AdminFaculty/>, title:"Faculties", name:"Faculties", }, 
-    {element: <AdminDirector/>, title:"Directors", name:"Directors", }, 
-    {element: <AdminAlumni/>, title:"Alumni", name:"Alumnis", }, 
-    {element: <AdminStudent/>, title:"Students", name:"Students", },
-    {element: <AdminMore/>, title:"More", name:"More", },
+    { element: <AdminDashboard />, title: "Dashboard", name: "Dashboard", },
+    { element: <AdminFaculty />, title: "Faculties", name: "Faculties", },
+    { element: <AdminDirector />, title: "Directors", name: "Directors", },
+    { element: <AdminReportStatus />, title: "Report Status", name: "Report Status", },
+    { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
+    { element: <AdminStudent />, title: "Students", name: "Students", },
+    { element: <AdminMore />, title: "More", name: "More", },
 ]
 
-export default navcom 
+export default navcom
 export { DashbordButtons }

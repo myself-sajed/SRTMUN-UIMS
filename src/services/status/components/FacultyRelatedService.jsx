@@ -5,69 +5,157 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { generatePBASReport, getTotalPBASData } from '../../faculty/reports/pbas/PBASServices'
 import { getTotalFacultyAQARData } from '../../director/reports/aqar/js/getAQARData'
-import { getReportInfo } from '../../../js/submitReportForm'
+import { getReportInfo, getTotalReportInfo } from '../../../js/submitReportForm'
 import designationWiseSorting from '../../../js/designationWiseSorting'
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
-import { LinearProgress } from '@mui/material'
+import { CircularProgress, LinearProgress, Tooltip } from '@mui/material'
 import ReportLoading from '../../../components/ReportLoading'
 import CalendarViewDayRoundedIcon from '@mui/icons-material/CalendarViewDayRounded';
+import SchoolsProgram from '../../../components/SchoolsProgram'
+import { toast } from 'react-hot-toast'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import TaskRoundedIcon from '@mui/icons-material/TaskRounded';
 
-const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, school }) => {
+const FacultyRelatedService = ({ year }) => {
 
 
-    const [serviceDataFromServer, setServiceDataFromServer] = useState(null)
-    const [candidates, setCandidates] = useState([])
+    const [serviceData, setServiceData] = useState({})
     const [serviceLoading, setServiceLoading] = useState(false)
     const [reportLoading, setReportLoading] = useState(false)
+    const [dashboardCount, setDashboardCount] = useState(null)
 
+    const [expandedRow, setExpandedRow] = useState(null);
 
-    useEffect(() => {
-        setCandidates(null)
-        setServiceDataFromServer(null)
-
-        if (serviceName === 'CAS') {
-            getReportInfo('CASModel', setServiceDataFromServer, setServiceLoading)
-        } else if (serviceName === 'PBAS') {
-            getReportInfo('PBASModel', setServiceDataFromServer, setServiceLoading)
-        } else if (serviceName === 'Faculty AQAR') {
-            getReportInfo('FacultyAQARModel', setServiceDataFromServer, setServiceLoading)
+    const toggleRow = (rowIndex) => {
+        if (expandedRow === rowIndex) {
+            setExpandedRow(null);
+        } else {
+            setExpandedRow(rowIndex);
         }
-    }, [serviceName])
+    };
 
-    useEffect(() => {
-        setCandidates(null)
+    function getCount(data) {
+        let CASCount = 0;
+        let PBASCount = 0;
+        let FAQARCount = 0;
 
-        if (teachers?.data?.data?.length > 0) {
-            let candidatesArray = []
-            teachers?.data?.data?.forEach((teacher) => {
-                serviceDataFromServer?.forEach((serviceItem) => {
-                    if (serviceItem.userId?._id === teacher._id) {
-                        let hasSubmitted = serviceItem?.submitted ? serviceItem?.submitted.includes(year) : false
-
-                        if (hasSubmitted) {
-                            candidatesArray.push(teacher._id)
-                        }
-
-                    }
-                })
+        if (data) {
+            Object.keys(SchoolsProgram).forEach((school) => {
+                CASCount += data?.CASSchoolWise?.[school]
+                PBASCount += data?.PBASSchoolWise?.[school]
+                FAQARCount += data?.FAQARSchoolWise?.[school]
             })
 
-            setCandidates(() => candidatesArray)
-
-
-
+            setDashboardCount({ CASCount, PBASCount, FAQARCount })
         }
+    }
 
-    }, [serviceDataFromServer, year, serviceName, teachers])
+
+    useEffect(() => {
+        getTotalReportInfo(setServiceData, setServiceLoading, year)
+    }, [year])
+
+    useEffect(() => {
+        getCount(serviceData)
+    }, [serviceData, year])
+
+
+
+    return (
+        <div>
+            {
+                !serviceLoading ? <div>
+                    {
+                        serviceData && <div>
+                            <div className="flex items-center justify-between gap-5">
+                                <TotalTile year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
+                                <TotalTile year={year} dashboardKey="PBASCount" dashboardCount={dashboardCount} title="PBAS" />
+                                <TotalTile year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
+                            </div>
+                            <table class="table table-bordered">
+                                <thead className="bg-primary text-white sticky-top">
+                                    <tr>
+                                        <th>School Name</th>
+                                        <th>CAS</th>
+                                        <th>PBAS</th>
+                                        <th>AQAR (Faculty)</th>
+                                        <th>AQAR (Director)</th>
+                                        <th>AAA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        Object.keys(SchoolsProgram).map((school, rowIndex) => {
+                                            return <>
+                                                <tr className='cursor-pointer hover:bg-blue-100 hover:text-blue-700 font-semibold' onClick={() => toggleRow(rowIndex)}>
+                                                    <td>{school}</td>
+                                                    <td>{serviceData.CASSchoolWise?.[school]}</td>
+                                                    <td>{serviceData.PBASSchoolWise?.[school]}</td>
+                                                    <td>{serviceData.FAQARSchoolWise?.[school]}</td>
+                                                    <td>{serviceData.DAQARSchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
+                                                    <td>{serviceData.AAASchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
+                                                </tr>
+                                                {expandedRow === rowIndex && (
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <table class="table mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Faculty Name</th>
+                                                                        <th>CAS</th>
+                                                                        <th>PBAS</th>
+                                                                        <th>AQAR (Faculty)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+
+                                                                    {
+                                                                        designationWiseSorting(serviceData.UsersSchoolWise?.[school])?.map((user) => {
+                                                                            return <tr>
+                                                                                <td>{user.salutation} {user.name}</td>
+                                                                                <td><Badges serviceName="CAS" year={year} hasSubmitted={serviceData.CASUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
+                                                                                <td><Badges serviceName="PBAS" year={year} hasSubmitted={serviceData.PBASUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
+                                                                                <td><Badges serviceName="FAQAR" year={year} hasSubmitted={serviceData.FAQARUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
+                                                                            </tr>
+                                                                        })
+                                                                    }
+
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                )}
+                                            </>
+                                        })
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div> : <UserLoading title={`Fetching service status for ${year}`} />
+            }
+        </div>
+    )
+}
+
+export default FacultyRelatedService
+
+const Badges = ({ hasSubmitted, userId, reportLoading, setReportLoading, serviceName, year }) => {
 
     const generateReport = (id) => {
         if (serviceName === "PBAS") {
             let userData = { _id: id }
-            setReportLoading({ isLoading: true, title: 'Generating PBAS Report' });
+            toast.success('Generating report, please wait...')
+            setReportLoading({ isLoading: true, title: 'Generating PBAS Report', userId });
             generatePBASReport(userData, [year], setReportLoading, false)
         } else if (serviceName === "CAS") {
             let userData = { _id: id }
-            setReportLoading({ isLoading: true, title: 'Generating CAS Report' });
+            toast.success('Generating report, please wait...')
+            setReportLoading({ isLoading: true, title: 'Generating CAS Report', userId });
             generateCASReport(userData, [year], setReportLoading, false)
         }
     }
@@ -82,48 +170,32 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
         }
     }
 
+    return hasSubmitted ? <span className='flex items-center font-semibold'>
+        <span class="badge bg-success mr-2 cursor-default "><Tooltip placement='top' disableInteractive title="Report Submitted"><CheckCircleRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+        <span class="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(userId)} > <Tooltip placement='top' disableInteractive title="View / Explore Report"><CalendarViewDayRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+        <span class="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(userId)} > <Tooltip placement='top' disableInteractive title="Generate / Download Report">
+            {reportLoading && reportLoading.userId === userId ? <CircularProgress sx={{ width: '16px' }} /> : <FileDownloadRoundedIcon
+                sx={{ width: '16px' }} />}
+        </Tooltip>
+        </span>
+    </span>
+        :
+        <span className='flex items-center font-semibold'>
+            <span class="badge bg-danger mr-2"><Tooltip placement='top' disableInteractive title="Report Not-Submitted"><CancelRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
 
-    return (
-        <div>
-            <div>
-
-                {(reportLoading && reportLoading.title.includes(serviceName)) && <div className="my-2">
-                    <ReportLoading loading={reportLoading} />
-                </div>}
-
-                {teachers?.data?.data && <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{candidates?.length ? candidates.length : 0}</b> Teachers out of <b>{teachers?.data?.data?.length}</b> submitted {serviceName} form for year <b>{year}</b> </p>}
-
-                <div>
-                    {(teacherLoading || serviceLoading) && <UserLoading title="Loading Data" />}
-                    <ul class="list-group list-group-flush">
-
-                        {
-                            teachers?.data?.data && designationWiseSorting(teachers?.data?.data).map((teacher, index) => {
-                                return <li className='flex items-center justify-between list-group-item'>
-                                    <span> {index + 1}. {teacher?.salutation} {teacher?.name}</span>
-                                    {
-                                        candidates?.includes(teacher?._id) ?
-                                            <span className='flex items-center font-semibold'>
-                                                <span class="badge bg-success mr-2 p-[10px] cursor-default">Submitted</span>
-                                                <span class="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(teacher._id)} > <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
-                                                <span class="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(teacher._id)} > <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
-                                            </span>
-                                            :
-                                            <span className='flex items-center font-semibold'>
-                                                <span class="badge bg-danger mr-2 p-[10px]">Not Submitted</span>
-                                                <span class="badge mr-2 bg-[#0d6efd6b] cursor-default"> <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
-                                                <span class="badge bg-[#0d6efd6b] cursor-default"> <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
-                                            </span>
-                                    }
-                                </li>
-                            })
-                        }
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-    )
+            <span class="badge mr-2 bg-[#0d6efd6b] cursor-default">
+                <Tooltip placement='top' disableInteractive title="View / Explore Report">
+                    <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+            <span class="badge bg-[#0d6efd6b] cursor-default"> <Tooltip placement='top' disableInteractive title="Generate / Download Report"><FileDownloadRoundedIcon sx={{ width: '16px' }} /></Tooltip> </span>
+        </span>
 }
 
-export default FacultyRelatedService
+const TotalTile = ({ year, dashboardCount, dashboardKey, title }) => {
+    return <div id="alert-border-1" class="flex flex-auto items-start p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800" role="alert">
+        <TaskRoundedIcon sx={{ fontSize: '40px' }} />
+        <div class="ml-3 text-sm font-medium">
+            <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey]}</p>
+            <p>{title} for {year}</p>
+        </div>
+    </div>
+}

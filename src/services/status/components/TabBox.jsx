@@ -7,11 +7,9 @@ const TabBox = ({ value, setValue }) => {
 
     return <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
         <Tabs value={value} onChange={handleChange} centered >
-            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="CAS" />
-            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="PBAS" />
-            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="AQAR (Faculty)" />
-            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="AAA" />
-            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="AQAR (Director)" />
+            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="Faculty Status" />
+            <Tab style={{ textTransform: 'none', backgroundColor: '#f2f2ff', margin: '10px', borderRadius: '10px' }} className='bg-blue-100' label="School Status" />
+
         </Tabs>
     </Box>
 

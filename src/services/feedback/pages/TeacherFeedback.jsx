@@ -10,6 +10,7 @@ import validateForm from '../js/validateAndSubmit';
 import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
+import title from '../../../js/title'
 
 const teacherQuestions = [
     {
@@ -46,6 +47,8 @@ const teacherQuestions = [
 ]
 
 const TeacherFeedback = () => {
+
+    title('Teacher Feedback')
 
     const [formData, setFormData] = useState({})
 

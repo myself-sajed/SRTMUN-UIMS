@@ -8,6 +8,7 @@ import ActionButtons from '../components/ActionButtons';
 import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
+import title from '../../../js/title'
 
 const alumniQuestions = [
 
@@ -92,6 +93,8 @@ const alumniQuestions = [
 
 
 const AlumniFeedback = () => {
+
+    title('Alumni Feedback')
 
     const [formData, setFormData] = useState({})
     const [academicYear, setAcademicYear] = useState(null)

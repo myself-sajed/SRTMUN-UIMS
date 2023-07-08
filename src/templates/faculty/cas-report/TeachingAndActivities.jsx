@@ -55,7 +55,7 @@ const TeachingAndActivities = ({ forPrintOut, lectures, casArray, showFileURL })
 
                                 {casArray?.map((casItem) => {
                                     return (
-                                        <tr className="table-light">
+                                        <tr className={`${forPrintOut === 'true' ? "text-black" : "table-light"} `}>
                                             <th scope="row" className='w-20 text-sm text-[#009879]'>{casItem.casYear}</th>
                                             <td>
 
@@ -117,7 +117,7 @@ const TeachingAndActivities = ({ forPrintOut, lectures, casArray, showFileURL })
 
                                 {casArray?.map((casItem) => {
                                     return (
-                                        <tr className="table-light">
+                                        <tr className={`${forPrintOut === 'true' ? "text-black" : "table-light"} `}>
                                             <th scope="row" className='w-20 text-sm text-[#009879]'>{casItem.casYear}</th>
                                             <td className='text-[#009879]'>Involved in <span className='font-bold'>{casItem?.teachingData?.checkBoxCount}</span> {casItem?.teachingData?.checkBoxCount > 1 ? 'Activities' : 'Activity'} <span className="mx-2">
                                                 {

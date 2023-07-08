@@ -4,6 +4,8 @@ const AlumniFeedback = require('../../models/feedback-models/alumniFeedbackModel
 const ParentFeedback = require('../../models/feedback-models/parentFeedbackModel')
 const EmployerFeedback = require('../../models/feedback-models/employerFeedbackModel')
 
+const feedbackModels = { StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback }
+
 function studentFeedbackRoutes(app) {
 
     app.post('/feedback/studentFeedback/collectResponse', (req, res) => {
@@ -89,4 +91,4 @@ function studentFeedbackRoutes(app) {
 
 }
 
-module.exports = studentFeedbackRoutes
+module.exports = { studentFeedbackRoutes, feedbackModels }

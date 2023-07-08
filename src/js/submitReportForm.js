@@ -20,13 +20,35 @@ const submitReportForm = (navigate, year, filter, model, navigateToDirector) => 
 }
 
 // Filename : submitReportForm
-const getReportInfo = (model, setData, setLoading, userType = 'faculty') => {
+const getReportInfo = (model, setData, setLoading, userType = 'faculty', service, setServiceData) => {
     setLoading(true)
     const link = `${process.env.REACT_APP_MAIN_URL}/services/getTotalReportData`
     Axios.post(link, { model, userType })
         .then((res) => {
             if (res.data.status === 'success') {
-                // console.log(res.data.data)
+                setData(res.data.data)
+                setLoading(false)
+                setServiceData((prev) => {
+                    return { ...prev, [service]: res.data.data }
+                })
+            } else {
+                toast.error('Could not submit the form')
+                setLoading(false)
+            }
+        }).catch((err) => {
+            console.log('Submission error :', err)
+            toast.error('Error submiting form')
+            setLoading(false)
+        })
+}
+
+// Filename : submitReportForm
+const getTotalReportInfo = (setData, setLoading, year) => {
+    setLoading(true)
+    const link = `${process.env.REACT_APP_MAIN_URL}/services/getTotalReportData`
+    Axios.post(link, { year })
+        .then((res) => {
+            if (res.data.status === 'success') {
                 setData(res.data.data)
                 setLoading(false)
             } else {
@@ -42,4 +64,4 @@ const getReportInfo = (model, setData, setLoading, userType = 'faculty') => {
 
 
 export default submitReportForm
-export { getReportInfo }
+export { getReportInfo, getTotalReportInfo }

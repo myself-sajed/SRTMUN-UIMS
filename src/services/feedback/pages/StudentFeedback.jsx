@@ -16,9 +16,13 @@ import StepStatus from '../../../components/StepStatus'
 import IntroStep from '../components/IntroStep'
 import Acknowlegement from '../components/Acknowlegement'
 import FeedbackHome from '../components/FeedbackHome'
+import designationWiseSorting from '../../../js/designationWiseSorting'
+import title from '../../../js/title'
 
 
 const StudentFeedback = () => {
+
+    title('Student Feedback')
 
     const [formData, setFormData] = useState({})
     const [academicYear, setAcademicYear] = useState(null)
@@ -31,7 +35,7 @@ const StudentFeedback = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setTeachers(data?.data?.data?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
+        setTeachers(designationWiseSorting(data?.data?.data)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
     }, [data])
 
     useEffect(() => {

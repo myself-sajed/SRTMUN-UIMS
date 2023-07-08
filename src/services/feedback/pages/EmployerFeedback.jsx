@@ -8,6 +8,7 @@ import ActionButtons from '../components/ActionButtons';
 import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
+import title from '../../../js/title'
 
 const employerQuestions = [
     {
@@ -82,6 +83,8 @@ const employerQuestions = [
 
 
 const EmployerFeedback = () => {
+
+    title('Employer Feedback')
 
     const [formData, setFormData] = useState({})
     const [academicYear, setAcademicYear] = useState(null)

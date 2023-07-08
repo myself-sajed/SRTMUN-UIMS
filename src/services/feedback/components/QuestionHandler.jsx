@@ -93,7 +93,7 @@ const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = fa
 
                     <div className='table-responsive'>
                         <table className="table mx-auto align-middle">
-                            <thead>
+                            <thead className='sticky top-0 bg-white'>
                                 <tr className='p-3'>
                                     <td></td>
                                     {question.head.map((head) => (

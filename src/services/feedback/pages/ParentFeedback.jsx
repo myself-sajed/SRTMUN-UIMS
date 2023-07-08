@@ -8,6 +8,7 @@ import validateForm from '../js/validateAndSubmit';
 import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
+import title from '../../../js/title'
 
 
 const parentQuestions = [
@@ -80,6 +81,8 @@ const parentQuestions = [
 ]
 
 const ParentFeedback = () => {
+
+    title('Parent Feedback')
 
     const [formData, setFormData] = useState({})
     const [academicYear, setAcademicYear] = useState(null)

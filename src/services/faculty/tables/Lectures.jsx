@@ -115,7 +115,7 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
             {/* // 1. HEADER */}
 
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Lectures/Seminars" editState={setEditModal} clearStates={clearStates} state={setLectureModal} icon={<TvRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Lectures, Seminars, Tutorials, Practicals, Contact Hours" />
+            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Details of Course taught" editState={setEditModal} clearStates={clearStates} state={setLectureModal} icon={<TvRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Lectures, Seminars, Tutorials, Practicals, Contact Hours" />
 
             <BulkExcel data={data?.data?.data} sampleFile='LecturesFaculty' title='Lectures, Seminars' SendReq='Lectures' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

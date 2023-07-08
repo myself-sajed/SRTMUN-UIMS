@@ -1,8 +1,10 @@
+const UserModel = require('../../models/faculty-models/userModel')
 const CASModel = require('../../models/faculty-models/casModel')
 const PBASModel = require('../../models/faculty-models/pbasModel')
 const AAAModel = require('../../models/director-models/academic-audit-models/academicAuditModel')
 const FacultyAQARModel = require('../../models/aqar-models/facultyAqarModel')
 const DirectorAQARModel = require('../../models/aqar-models/directorAqarModel')
+const { SchoolsProgram } = require('../../utility/allschool')
 
 const modelsInfo = {
     CASModel: {
@@ -65,49 +67,138 @@ function submitReportForm(app) {
     });
 
 
-    // get total cas data
-    app.post("/services/getTotalReportData", (req, res) => {
+    // app.post("/services/getReportData", (req, res) => {
 
 
-        const { model, userType } = req.body
+    //     const { model, userType } = req.body
 
 
-        if (userType === 'faculty') {
-            modelsInfo[model].model.find({}).lean().populate("userId").select("submitted userId").exec().then((items, err) => {
-                if (err) {
-                    console.log(err)
-                    res.send({ status: "error", message: "Internal server error" })
+    //     if (userType === 'faculty') {
+    //         modelsInfo[model].await model.find({}).lean().populate("userId").select("submitted userId").populate().exec().then((items, err) => {
+    //             if (err) {
+    //                 console.log(err)
+    //                 res.send({ status: "error", message: "Internal server error" })
+    //             }
+    //             else {
+    //                 if (items) {
+    //                     res.send({ status: 'success', data: items });
+    //                 }
+    //                 else {
+    //                     res.send({ status: 'error', message: "No data found" });
+    //                 }
+    //             }
+    //         }
+
+
+    //         )
+    //     } else if (userType === 'director') {
+    //         modelsInfo[model].await model.find({}).lean().select("submitted schoolName").then((items, err) => {
+    //             if (err) {
+    //                 console.log(err)
+    //                 res.send({ status: "error", message: "Internal server error" })
+    //             }
+    //             else {
+    //                 if (items) {
+    //                     res.send({ status: 'success', data: items });
+    //                 }
+    //                 else {
+    //                     res.send({ status: 'error', message: "No data found" });
+    //                 }
+    //             }
+    //         }
+
+    //         )
+    //     }
+    // })
+
+    app.post("/services/getTotalReportData", async (req, res) => {
+
+        const { year } = req.body
+
+        try {
+            let CAS = await CASModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
+            let PBAS = await PBASModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
+            let FAQAR = await FacultyAQARModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
+            let AAA = await AAAModel.find({}).lean().select("submitted schoolName").populate().exec()
+            let DAQAR = await DirectorAQARModel.find({}).lean().select("submitted schoolName").populate().exec()
+            let Users = await UserModel.find({}).lean().select("salutation name department designation")
+
+
+            let CASUsers = CAS.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)
+            let PBASUsers = PBAS.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)
+            let FAQARUsers = FAQAR.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)
+            let AAAUsers = AAA.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)
+            let DAQARUsers = DAQAR.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)
+
+
+            const schools = Object.keys(SchoolsProgram)
+
+            const UsersSchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const users = []
+                    Users.forEach((user) => {
+                        if (user.department === school) {
+                            users.push(user)
+                        }
+                    })
+                    result[school] = users;
                 }
-                else {
-                    if (items) {
-                        res.send({ status: 'success', data: items });
-                    }
-                    else {
-                        res.send({ status: 'error', message: "No data found" });
-                    }
+                return result;
+            }, {});
+
+            const CASSchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const count = CASUsers.filter((user) => user.userId.department === school).length;
+                    result[school] = count;
                 }
-            }
+                return result;
+            }, {});
+
+            const PBASSchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const count = PBASUsers.filter((user) => user.userId.department === school).length;
+                    result[school] = count;
+                }
+                return result;
+            }, {});
+            const FAQARSchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const count = FAQARUsers.filter((user) => user.userId.department === school).length;
+                    result[school] = count;
+                }
+                return result;
+            }, {});
+            const AAASchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const submitted = AAAUsers.map((item) => item.schoolName === school ? item.submitted : []).flat();
+                    result[school] = submitted;
+                }
+                return result;
+            }, {});
+            const DAQARSchoolWise = schools.reduce((result, school) => {
+                if (typeof school === 'string') {
+                    const submitted = DAQARUsers.map((item) => item.schoolName === school ? item.submitted : []).flat();
+                    result[school] = submitted;
+                }
+                return result;
+            }, {});
+
+            const CASUserId = CASUsers.map((item) => item.userId._id)
+            const PBASUserId = PBASUsers.map((item) => item.userId._id)
+            const FAQARUserId = FAQARUsers.map((item) => item.userId._id)
 
 
-            )
-        } else if (userType === 'director') {
-            modelsInfo[model].model.find({}).lean().select("submitted schoolName").then((items, err) => {
-                if (err) {
-                    console.log(err)
-                    res.send({ status: "error", message: "Internal server error" })
-                }
-                else {
-                    if (items) {
-                        res.send({ status: 'success', data: items });
-                    }
-                    else {
-                        res.send({ status: 'error', message: "No data found" });
-                    }
-                }
-            }
+            let data = { UsersSchoolWise, CASSchoolWise, PBASSchoolWise, FAQARSchoolWise, AAASchoolWise, DAQARSchoolWise, CASUserId, PBASUserId, FAQARUserId }
+            res.send({ status: "success", data: data })
 
-            )
+        } catch (error) {
+            console.log(error)
+            res.send({ status: "error", message: "Could not fetch data" })
         }
+
+
+
+
     })
 
 }
