@@ -11,7 +11,7 @@ import { getProofs } from '../../cas/CASServices';
 
 const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => {
     const [selectedYear, setSelectedYear] = useState([])
-    let sortedYear = casYear && casYear.sort((a, b) => {
+    let sortedYear = casYear && casYear.filter((item) => JSON.parse(item).casYear).sort((a, b) => {
         return parseInt(JSON.parse(a).casYear.slice(0, 4)) - parseInt(JSON.parse(b).casYear.slice(0, 4));
     })
     const navigate = useNavigate()
