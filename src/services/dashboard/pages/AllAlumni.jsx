@@ -18,9 +18,9 @@ import title from '../../../js/title';
 import { useParams } from 'react-router-dom';
 import ShowImage from './ShowImage';
 
-const AllAlumni = () => {
+const AllAlumni = ({school}) => {
 
-    const { school } = useParams()
+    // const { school } = useParams()
 
     const param = { school }
     const { data, isLoading, isError, error, refetch } = useQuery([param.school, param], () => fetchAlumniData(param))
@@ -47,8 +47,8 @@ const AllAlumni = () => {
 
     return (
         <div>
-            <div className="sticky-top bg-white">
-                <GoBack backUrl="/" pageTitle={`Alumni of ${school}`} />
+             <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+                {school}
             </div>
 
             <div>
