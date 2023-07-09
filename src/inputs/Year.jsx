@@ -1,18 +1,16 @@
 import React from 'react'
 import { Years } from '../services/faculty/js/TableInfo'
 
-const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numberOfYearsToDisplay = 30, showCurrentYear = true }) => {
+const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numberOfYearsToDisplay = 30 }) => {
 
     // generate years
-    let now;
-    if (showCurrentYear) {
-        now = new Date().getUTCFullYear();
-    } else {
-        now = new Date().getUTCFullYear() - 1
-    }
+    const now = new Date().getUTCFullYear();
+    const arrayOfYears = Array(numberOfYearsToDisplay).fill('').map((_, idx) => {
+        const startYear = now - idx;
+        const endYear = startYear + 1;
+        return `${startYear}-${endYear.toString().slice(2, 4)}`;
+    });
 
-
-    const arrayOfYears = Array(now - (now - numberOfYearsToDisplay)).fill('').map((v, idx) => `${now - (idx + 1)}-${(now - idx).toString().slice(2, 4)}`);
 
     return (
         <div className={space}>

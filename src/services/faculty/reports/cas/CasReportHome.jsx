@@ -19,12 +19,12 @@ import { useNavigate } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import SelectCASYear from './components/SelectCASYear'
-import BasicInfo from './content/BasicInfo'
 import siteLinks from '../../../../components/siteLinks'
 import AgreePopup from './components/AgreePopup'
 import ApplyLevel, { stageObj } from './components/ApplyLevel'
 import { toast } from 'react-hot-toast';
 import Acknowledgement from './components/Acknowledgement';
+import BasicInfo from '../pbas/content/BasicInfo';
 
 
 const CasReportHome = () => {
