@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setAdminUser } from '../../../redux/slices/UserSlice';
 import siteLinks from '../../../components/siteLinks';
 import Bred from '../../../components/Bred';
+import serverLinks from '../../../js/serverLinks';
 
 
 const AdminHeader = () => {
@@ -24,7 +25,7 @@ const AdminHeader = () => {
 
             <div className="btn-group" >
               <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <Avatar src={`/public/assets/male.jpg`} className="cursor-pointer" />
+                <Avatar src={serverLinks.showFile('male.jpg', 'admin')} className="cursor-pointer" />
               </button>
               <ul className="dropdown-menu">
                 {/* <li><button className="dropdown-item" onClick={() => {}}>Profile</button></li> */}
