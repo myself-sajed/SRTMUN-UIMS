@@ -196,7 +196,7 @@ const PolicyDocuments = ({ casYearState, policyDocuments, setPolicyDocuments, pa
         <div>
             <div className='mt-5 text-sm md:text-base'>
 
-                <NumberToTextField scoreCalculator={policyCalculator} saveLoader={saveLoader} setSaveLoader={setSaveLoader}
+                <NumberToTextField scoreCalculator={policyCalculator} facultyTableAvailable="PolicyDocuments" saveLoader={saveLoader} setSaveLoader={setSaveLoader}
                     state={policyDocuments} setState={setPolicyDocuments} casYearState={casYearState}
                     classes='my-3' model="PolicyDocuments" addName="Policy Documents" activityName="Policy Documents" activity="Sub-Activity 2"
                     options={[

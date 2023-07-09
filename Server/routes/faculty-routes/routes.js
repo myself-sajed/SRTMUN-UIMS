@@ -59,6 +59,7 @@ const ExtensionActivities = require('../../models/director-models/extensionActiv
 const MoUs = require('../../models/director-models/moUsSchema')
 
 
+
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit, ExtensionActivities, MoUs
 }

@@ -28,6 +28,7 @@ import ConferenceParticipated from '../services/faculty/tables/ConferencePartici
 import ForeignVisits from '../services/faculty/tables/ForeignVisits'
 import MoUsFaculty from '../services/faculty/tables/MoUsFaculty'
 import ExtensionActivityFaculty from '../services/faculty/tables/ExtensionActivityFaculty'
+import PolicyDocument from '../services/faculty/tables/PolicyDocuments'
 
 const Rightbar = () => {
 
@@ -85,15 +86,17 @@ const Rightbar = () => {
                                                                                                     page === 'financialsupport' ?
                                                                                                         <FinancialSupportToAttendConferences /> :
                                                                                                         page === 'responsibilities' ?
-                                                                                                        <Responsibilities/>:
-                                                                                                            page === 'conference_participated'?
-                                                                                                            <ConferenceParticipated/>:
-                                                                                                                page === 'foreign_visit'?
-                                                                                                                <ForeignVisits/>:
-                                                                                                                    page === 'mous'? 
-                                                                                                                    <MoUsFaculty/>:
-                                                                                                                        page === 'extension_activities'?
-                                                                                                                        <ExtensionActivityFaculty/> :null
+                                                                                                            <Responsibilities /> :
+                                                                                                            page === 'policy_documents' ?
+                                                                                                                <PolicyDocument /> :
+                                                                                                                page === 'conference_participated' ?
+                                                                                                                    <ConferenceParticipated /> :
+                                                                                                                    page === 'foreign_visit' ?
+                                                                                                                        <ForeignVisits /> :
+                                                                                                                        page === 'mous' ?
+                                                                                                                            <MoUsFaculty /> :
+                                                                                                                            page === 'extension_activities' ?
+                                                                                                                                <ExtensionActivityFaculty /> : null
                 }
             </div>
         </div>

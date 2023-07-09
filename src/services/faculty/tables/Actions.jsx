@@ -14,25 +14,33 @@ const Actions = ({ item, model, refreshFunction, addState, editState, pencilClic
 
     async function handelDelete() {
         setIsLoading(true)
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/deleteItem`, { itemToDelete: item, model })
-            .then((res) => {
-                !res && toast.error('Something went wrong')
+        try {
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/deleteItem`, { itemToDelete: item, model })
+                .then((res) => {
+                    !res && toast.error('Something went wrong')
 
-                if (res.data.status === 'deleted') {
-                    toast.success('Item deleted successfully')
-                    refreshFunction()
-                    refreshFunction()
+                    if (res.data.status === 'deleted') {
+                        toast.success('Item deleted successfully')
+                        if (refreshFunction) {
+                            refreshFunction()
+                        }
+                        setIsLoading(false)
+                    }
+                    else if (res.data.status === 'error') {
+                        if (refreshFunction) {
+                            refreshFunction()
+                        }
+                        setIsLoading(false)
+                    }
+                }).catch(() => {
+                    if (refreshFunction) {
+                        refreshFunction()
+                    }
                     setIsLoading(false)
-                }
-                else if (res.data.status === 'error') {
-                    refreshFunction()
-                    setIsLoading(false)
-                }
-            }).catch(() => {
-                toast.error('Internal Server Error')
-                refreshFunction()
-                setIsLoading(false)
-            })
+                })
+        } catch (error) {
+            setIsLoading(false)
+        }
     }
 
 
