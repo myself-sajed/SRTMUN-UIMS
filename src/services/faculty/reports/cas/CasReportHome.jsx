@@ -24,6 +24,7 @@ import siteLinks from '../../../../components/siteLinks'
 import AgreePopup from './components/AgreePopup'
 import ApplyLevel, { stageObj } from './components/ApplyLevel'
 import { toast } from 'react-hot-toast';
+import Acknowledgement from './components/Acknowledgement';
 
 
 const CasReportHome = () => {
@@ -31,7 +32,7 @@ const CasReportHome = () => {
     const [tabName, setTabName] = useState('level')
     const [casYearState, setCasYearState] = useState(null)
     let links = [{ name: 'Welcome', link: '/' }, { name: 'Home', link: '/faculty' }, { name: 'CAS Report Form', link: '/service/cas-report' }]
-    const steps = ['Eligibility', 'Basic Info', 'Select Year', 'Teaching Activities', 'Academic/ Research Score', 'Summary Sheet'];
+    const steps = ['Eligibility', 'Basic Info', 'Select Year', 'Teaching Activities', 'Academic/ Research Score', 'Summary Sheet', 'Acknowledgement'];
     title("CAS Report")
     const [serverCasData, setServerCasData] = useState(null)
     const [serverCasError, setServerCasError] = useState(null)
@@ -105,7 +106,7 @@ const CasReportHome = () => {
             setTabName('second')
             handleBack()
         }
-        else if (tabName === 'saved') {
+        else if (tabName === 'ack') {
             setTabName('final')
             handleBack()
         }
@@ -391,6 +392,11 @@ const CasReportHome = () => {
                 </div>
             </div>
 
+            <div className={`${tabName === 'ack' ? 'block' : 'hidden'}`}>
+                <div>
+                    <Acknowledgement casYear={casYearState} handleNext={handleNext} setTabName={setTabName} serviceName="CAS" />
+                </div>
+            </div>
 
             <Footer />
         </div >

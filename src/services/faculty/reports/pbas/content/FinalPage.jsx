@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import SummarySheet from './SummarySheet';
 import submitReportForm from '../../../../../js/submitReportForm';
 
-const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
+const FinalPage = ({ casYear, casYearState, handleNext, setTabName }) => {
 
     const navigate = useNavigate()
     const casData = useSelector((state) => state.cas)
@@ -15,6 +15,9 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
         e.preventDefault()
         let filter = { userId: user._id }
         submitReportForm(navigate, casYearState, filter, 'PBASModel')
+        handleNext()
+        setTabName('ack')
+
     }
 
     return (

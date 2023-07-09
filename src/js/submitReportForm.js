@@ -9,7 +9,6 @@ const submitReportForm = (navigate, year, filter, model, navigateToDirector) => 
         .then((res) => {
             if (res.data.status === 'success') {
                 toast.success('Form submitted successfully')
-                navigate(navigateToDirector ? navigateToDirector : '/faculty')
             } else {
                 toast.error('Could not submit the form')
             }
