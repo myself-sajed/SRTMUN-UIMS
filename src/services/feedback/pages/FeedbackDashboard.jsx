@@ -8,13 +8,10 @@ import { useSelector } from 'react-redux';
 import useDirectorAuth from '../../../hooks/useDirectorAuth'
 import DashboardHeroSection from '../components/DashboardHeroSection';
 import StudentAnalysis from '../analysis/StudentAnalysis';
-import { academicYearGenerator, listOfYears } from '../../../inputs/Year';
 import { teacherQuestions } from './TeacherFeedback';
 import { studentQuestions, teacherQuestions as stutechQ } from './StudentFeedback';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import designationWiseSorting from '../../../js/designationWiseSorting';
-
-
 
 
 const FeedbackDashboard = () => {
@@ -22,9 +19,8 @@ const FeedbackDashboard = () => {
   useDirectorAuth()
   const directorUser = useSelector((state) => state.user.directorUser)
 
-  const [academicYear, setAcademicYear] = useState(academicYearGenerator(1)[0])
 
-  let param = { filter: { schoolName: directorUser?.department, academicYear } }
+  let param = { filter: { schoolName: directorUser?.department } }
 
   const { data, isLoading, refetch } = useQuery([param.model, param], () => getFeedbackData(param))
   const [teachers, setTeachers] = useState([])
@@ -114,10 +110,9 @@ const FeedbackDashboard = () => {
 
   function generateAnalyticsData(userData) {
 
-    const Analiticsdata = activeUser == "Teacher" ? { tNameArr: [], tDigiArr: [0, 0, 0, 0, 0], tContArr: [], tRadioArr: Object.fromEntries(teacherQuestions[3].cell.map((question) => [question, [0, 0, 0, 0, 0]])), tCommentArr: [] } : activeUser == "Student" ? { sNameArr: [], sEmailArr: [], sContArr: [], sProgramEnroled: Array((generalQuestions[1].options)?.length).fill(0) } : null
+    const Analiticsdata = activeUser == "Teacher" ? { tNameArr: [], tDigiArr: [0, 0, 0, 0, 0], tContArr: [], tRadioArr: Object.fromEntries(teacherQuestions[3].cell.map((question) => [question, [0, 0, 0, 0, 0]])), tCommentArr: [] } : activeUser == "Student" ? { sNameArr: [], sEmailArr: [], sContArr: [], sProgramEnroled: Array((generalQuestions[1].options)?.length).fill(0), courseAnalitics: {} } : null
 
     let sTeacherTick = Array((generalQuestions[0].options)?.length).fill(0)
-
     userData?.forEach((user) => {
       const parseData = JSON.parse(user.response);
 
@@ -134,6 +129,8 @@ const FeedbackDashboard = () => {
         question2: parseData[studentQuestions[2].question],
         question3: parseData[generalQuestions[0].question],
         question4: parseData[generalQuestions[1].question],
+        question5: parseData[generalQuestions[2].question],
+
       }
       function pushInArray(arr, value) {
         arr.push(value)
@@ -154,6 +151,26 @@ const FeedbackDashboard = () => {
           });
         });
       }
+
+      function combineScores(firstScores, secondScores) {
+        let resultantScores = {};
+
+        // Iterate over each criterion and combine the scores
+        for (let criterion in firstScores) {
+          let firstScore = firstScores[criterion];
+          let secondScore = secondScores[criterion];
+
+          // Check if the scores are the same
+          if (JSON.stringify(firstScore) === JSON.stringify(secondScore)) {
+            resultantScores[criterion] = firstScore.map((score, index) => score + secondScore[index]);
+          } else {
+            resultantScores[criterion] = [firstScore, secondScore];
+          }
+        }
+
+        return resultantScores;
+      }
+
       if (activeUser == "Teacher") {
         pushInArray(Analiticsdata.tNameArr, Teacher.question0);
         sQIncriment(Analiticsdata.tDigiArr, Teacher.question1, teacherQuestions[1]?.options);
@@ -173,9 +190,37 @@ const FeedbackDashboard = () => {
           }
         }
         sQIncriment(Analiticsdata.sProgramEnroled, Student.question4, generalQuestions[1].options)
+        generalQuestions[1]?.options?.forEach(course => {
+          if (Student.question4 == course) {
+            let arr = Object.fromEntries(generalQuestions[2].cell.map((question) => [question, [0, 0, 0, 0, 0]]))
+            mQIncriment(arr, Student.question5, generalQuestions[2])
+            if (Analiticsdata.courseAnalitics.hasOwnProperty(course)) {
 
+            }
+            else {
+              Analiticsdata.courseAnalitics[course] = arr
+            }
+
+          }
+        })
+        // generalQuestions[1]?.options?.forEach(course => {
+        //   if (generalQuestions[1].question == course) {
+        //     generalQuestions[2].cell.forEach(question => {
+        //       console.log(question);
+        //     })
+
+        // if (Analiticsdata.courceAnalitics.hasOwnProperty(course)) {
+        //   results[course] = results[course].map((val, index) => val + data[index]);
+        // } else {
+        //   results[course] = data;
+        // }
+        // }
+
+        // })
       }
+
     });
+
     // console.log(Analiticsdata.sProgramEnroled);
     // console.log(sTeacherTick)
     // console.log(Analiticsdata)
@@ -186,23 +231,8 @@ const FeedbackDashboard = () => {
     <div>
       <GoBack pageTitle="Feedback Response" />
 
-      <div className="my-2">
-        <div className="col-md-4 flex items-center justify-end w-full">
-          <div>
-            <select className="form-select" id="validationCustom04" required onChange={
-              (e) => { setAcademicYear(e.target.value); }} value={academicYear}>
-              <option selected disabled value="">Choose</option>
-
-              {listOfYears.map((academicYear, index) => {
-                return <option key={index} value={academicYear}>{academicYear}</option>
-              })}
-            </select>
-          </div>
-        </div>
-      </div>
-
       <div className="mt-4">
-        <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} year={academicYear} />
+        <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} />
       </div>
       {/* <div className="my-5">
                 <StudentAnalysis studentData={data?.data?.data?.Student} isLoading={isLoading} />
