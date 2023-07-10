@@ -26,9 +26,11 @@ import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import TourRoundedIcon from '@mui/icons-material/TourRounded';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 
 import { setActive } from '../redux/slices/ActiveSlice';
 import useScroll from '../hooks/useScroll';
+
 
 const HorizontalNavbar = () => {
     const active = useSelector(state => state.active.active)
@@ -126,6 +128,10 @@ const HorizontalNavbar = () => {
 
                                             <SidebarTile active={active} setActive={setActive} state='invited_talk'
                                                 icon={<HeadsetMicRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Invited Talk' />
+
+                                            <SidebarTile active={active} setActive={setActive} state='policy_documents'
+                                                icon={<ArticleRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Policy Documents' />
+
 
                                             <SidebarTile active={active} setActive={setActive} state='foreign_visit'
                                                 icon={<TourRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Foreign Visit' />

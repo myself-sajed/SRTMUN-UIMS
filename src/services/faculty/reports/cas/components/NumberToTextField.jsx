@@ -23,6 +23,7 @@ import ResearchPapersUGC from '../../../tables/ResearchPapersUGC'
 import BooksAndChapters from '../../../tables/BooksAndChapters'
 import EContentDeveloped from '../../../tables/EContentDeveloped'
 import PHDAwarded from '../../../tables/PHDAwarded'
+import PolicyDocuments from '../../../tables/PolicyDocuments'
 import ResearchProjects from '../../../tables/ResearchProjects'
 import ConsultancyServices from '../../../tables/ConsultancyServices'
 import PatentPublished from '../../../tables/PatentPublished'
@@ -41,6 +42,7 @@ let FacultyTables = {
     ResearchProjects: <ResearchProjects title="Sub-Activity 2: Research Projects" showTable={false} />,
     ConsultancyServices: <ConsultancyServices title="Sub-Activity 3: Consultancy Services" showTable={false} />,
     PatentPublished: <PatentPublished title="Sub-Activity 1: Patents Published" showTable={false} />,
+    PolicyDocuments: <PolicyDocuments title="Sub-Activity 2: Policy Documents" showTable={false} />,
     AwardRecognition: <AwardRecognition title="Sub-Activity 3 [A]: Awards & Recognitions" showTable={false} />,
     Fellowship: <Fellowship title="Sub-Activity 3 [B]: Fellowship" showTable={false} />,
     InvitedTalk: <InvitedTalk title="Activity 6: Invited Lectures / Resource Person / Paper Presentation in Seminars / Conferences / Full Paper in Conference Proceedings" showTable={false} />,
@@ -501,6 +503,7 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
                                     {
                                         calculateScore && <td className='font-bold'>{state?.scoreMap?.[item._id]?.score ? state.scoreMap?.[item._id]?.score : 0}</td>
                                     }
+
                                 </tr>
 
                             })}

@@ -9,7 +9,7 @@ import Axios from 'axios';
 import { toast } from 'react-hot-toast';
 import submitReportForm from '../../../../../js/submitReportForm';
 
-const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
+const FinalPage = ({ casYear, casYearState, setTabName, handleNext }) => {
 
     const navigate = useNavigate()
     const casData = useSelector((state) => state.cas)
@@ -18,7 +18,10 @@ const FinalPage = ({ casYear, casYearState, setSaveLoader }) => {
     const submitForm = (e) => {
         e.preventDefault()
         let filter = { userId: user._id }
-        submitReportForm(navigate, casYearState, filter, 'CASModel')
+        submitReportForm(navigate, casYearState, filter, 'PBASModel')
+        handleNext()
+        setTabName('ack')
+
     }
 
 

@@ -24,7 +24,9 @@ const Acknowledgement = ({ userType }) => {
             }
 
             <div className='mx-auto'>
-                <button className="btn btn-success px-10" onClick={() => navigate(userType === 'faculty' ? siteLinks.facultyHome.link : siteLinks.directorHome.link)}>Done</button>
+                <button className="btn btn-success px-10"
+                    onClick={() => navigate(userType === 'faculty' ? siteLinks.facultyHome.link : siteLinks.directorHome.link)}
+                >Done</button>
             </div>
         </div>
     )
