@@ -116,9 +116,9 @@ const FacultyRelatedService = ({ year, school, user }) => {
                                                                         designationWiseSorting(serviceData.UsersSchoolWise?.[school])?.map((user) => {
                                                                             return <tr>
                                                                                 <td>{user.salutation} {user.name}</td>
-                                                                                <td><Badges serviceName="CAS" year={year} hasSubmitted={serviceData.CASUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
                                                                                 <td><Badges serviceName="PBAS" year={year} hasSubmitted={serviceData.PBASUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
                                                                                 <td><Badges serviceName="FAQAR" year={year} hasSubmitted={serviceData.FAQARUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
+                                                                                <td><Badges serviceName="CAS" year={year} hasSubmitted={serviceData.CASUserId.includes(user._id) ? true : false} setReportLoading={setReportLoading} reportLoading={{ reportLoading }} userId={user._id} /> </td>
                                                                             </tr>
                                                                         })
                                                                     }
