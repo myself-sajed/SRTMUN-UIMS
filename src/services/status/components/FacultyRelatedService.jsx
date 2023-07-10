@@ -17,7 +17,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import TaskRoundedIcon from '@mui/icons-material/TaskRounded';
 
-const FacultyRelatedService = ({ year }) => {
+const FacultyRelatedService = ({ year, user }) => {
 
 
     const [serviceData, setServiceData] = useState({})
@@ -74,7 +74,7 @@ const FacultyRelatedService = ({ year }) => {
                                 <TotalTile year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
                             </div>
                             <table class="table table-bordered">
-                                <thead className="bg-primary text-white sticky-top">
+                                <thead className={`${!user?'bg-primary':'bg-[#ae7e28]'} text-white sticky-top`}>
                                     <tr>
                                         <th>School Name</th>
                                         <th>CAS</th>
@@ -190,8 +190,8 @@ const Badges = ({ hasSubmitted, userId, reportLoading, setReportLoading, service
         </span>
 }
 
-const TotalTile = ({ year, dashboardCount, dashboardKey, title }) => {
-    return <div id="alert-border-1" class="flex flex-auto items-start p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800" role="alert">
+const TotalTile = ({ year, dashboardCount, dashboardKey, title, user }) => {
+    return <div id="alert-border-1" class={`flex flex-auto items-start p-4 mb-4 border-t-4 ${!user?'border-[#deb66f] bg-[#f1f3f4] text-[#ae7e28]':'border-blue-300 bg-blue-50 text-blue-800'}  dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800`} role="alert">
         <TaskRoundedIcon sx={{ fontSize: '40px' }} />
         <div class="ml-3 text-sm font-medium">
             <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey]}</p>

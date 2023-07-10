@@ -965,6 +965,7 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
 
     const {arr} = req.body
     try{
+        let NonConverted = [];
         for (id of arr){
             let student = await StudentUser.findOne({_id: id});
             const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated, programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
@@ -972,10 +973,30 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
             let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
             let YNext = (yStarted+1).toString().slice(-2);
             let doStarted = `${yStarted}-${YNext}`;
+            let yComplited = new Date().getFullYear();
+            let yCNext = (yComplited+1).toString().slice(-2);
+            let doCompleted = `${yComplited}-${yCNext}`;
 
-            let alumni = { salutation, photoURL, name, email, address: address? address : "-", dob : dob? dob : "-", mobile, programGraduated, doStarted: programEnroledOn? programEnroledOn: doStarted, cast: cast?cast: '-', religion: religion? religion: '-', country: country ? country : 'india', schoolName,  }
-            // const module = new AlumniUser(student)
-            // await module.save()
+            let alumni = {salutation, photoURL, name, email, address: address || "-", dob : dob || "-", mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion: religion || '-', country: country || 'india', schoolName, gender , abcNo, password ,doCompleted,stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"", ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
+            const module = new AlumniUser(alumni)
+            let newAlumni = await module.save();
+            const oldId = newAlumni._id;
+            if(newAlumni) {
+                let oldStu = await StudentUser.deleteOne({_id: id});
+                if(oldStu){
+                    newAlumni._id = id
+                    const newModule = new AlumniUser(newAlumni);
+                    await new newModule.save();
+                    await AlumniUser.deleteOne({_id:oldId});
+                }
+                else{
+                    await AlumniUser.deleteOne({_id: newAlumni._id})
+                }
+                // console.log("item deleted from student user");
+            }
+            else {
+                NonConverted.push(id);
+            }
         }
     }
     catch(err){

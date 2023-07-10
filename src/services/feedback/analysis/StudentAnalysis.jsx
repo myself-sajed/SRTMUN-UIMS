@@ -35,7 +35,7 @@ function courseRating(data) {
         return counts;
     }, {});
 
-    console.log(ratingCounts)
+    // console.log(ratingCounts)
 
 
 }

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const alumniUserSchema = new mongoose.Schema({
+    _id: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        default: () => new mongoose.Types.ObjectId() 
+    },
     salutation: {
         type: 'string',
         required: true,
@@ -50,6 +54,18 @@ const alumniUserSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    cast: {
+        type: 'string',
+        required: false,
+    },
+    abcNo: {
+        type: 'string',
+        required: false,
+    },
+    religion: {
+        type: 'string',
+        required: false,
+    },
     gender: {
         type: 'string',
         required: true,
@@ -57,6 +73,10 @@ const alumniUserSchema = new mongoose.Schema({
     password: {
         type: 'string',
         required: true
+    },
+    stuExtraInfo: {
+        type: mongoose.Schema.Types.Mixed,
+        required: false
     },
     Upload_Proof: {
         type: 'string',

@@ -71,7 +71,7 @@ const StatusPage = ({ auth, user }) => {
                                 </div>
                             </div>
                             <div className={`${!user && "pr-3"} w-full mt-3`}>
-                                <FacultyRelatedService year={year} />
+                                <FacultyRelatedService year={year} user={user}/>
                             </div>
                         </div>
                     </div>
