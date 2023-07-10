@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import useDirectorAuth from '../../../hooks/useDirectorAuth'
 import DashboardHeroSection from '../components/DashboardHeroSection';
 import StudentAnalysis from '../analysis/StudentAnalysis';
-import { useState } from 'react';
 import { academicYearGenerator, listOfYears } from '../../../inputs/Year';
 import { teacherQuestions } from './TeacherFeedback';
 import { studentQuestions, teacherQuestions as stutechQ } from './StudentFeedback';

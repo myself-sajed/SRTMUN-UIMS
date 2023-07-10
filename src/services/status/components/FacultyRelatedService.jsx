@@ -17,7 +17,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import TaskRoundedIcon from '@mui/icons-material/TaskRounded';
 
-const FacultyRelatedService = ({ year, school }) => {
+const FacultyRelatedService = ({ year, school, user }) => {
 
 
     const [serviceData, setServiceData] = useState({})
@@ -69,9 +69,9 @@ const FacultyRelatedService = ({ year, school }) => {
                     {
                         serviceData && <div>
                             <div className="flex items-center justify-between gap-5">
-                                <TotalTile year={year} dashboardKey="PBASCount" dashboardCount={dashboardCount} title="PBAS" />
-                                <TotalTile year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
-                                <TotalTile year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
+                                <TotalTile user={user} year={year} dashboardKey="PBASCount" dashboardCount={dashboardCount} title="PBAS" />
+                                <TotalTile user={user} year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
+                                <TotalTile user={user} year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
                             </div>
                             <table class="table table-bordered">
                                 <thead className={`${!user ? 'bg-primary' : 'bg-[#ae7e28]'} text-white sticky-top`}>
@@ -88,7 +88,7 @@ const FacultyRelatedService = ({ year, school }) => {
                                     {
                                         (school ? [school] : Object.keys(SchoolsProgram)).map((school, rowIndex) => {
                                             return <>
-                                                <tr className='cursor-pointer bg-blue-100 hover:text-blue-700 font-semibold' onClick={() => toggleRow(rowIndex)}>
+                                                <tr className={`cursor-pointer ${user ? 'text-[#ae7e28]' : 'bg-blue-100 hover:text-blue-700'} font-semibold`} onClick={() => toggleRow(rowIndex)}>
                                                     <td>{school}</td>
                                                     <td>{serviceData.PBASSchoolWise?.[school]}</td>
                                                     <td>{serviceData.FAQARSchoolWise?.[school]}</td>
@@ -99,7 +99,7 @@ const FacultyRelatedService = ({ year, school }) => {
                                                 {/* {expandedRow === rowIndex && ( */}
                                                 <tr >
                                                     <td colspan="6" className='p-3'>
-                                                        <div className='bg-blue-50 rounded-md p-2'>
+                                                        <div className={`${user ? 'bg-[#f1f3f4]' : 'bg-blue-50'} rounded-md p-2`}>
                                                             <table className="table mb-0">
                                                                 <thead>
                                                                     <tr>
@@ -193,7 +193,7 @@ const Badges = ({ hasSubmitted, userId, reportLoading, setReportLoading, service
 }
 
 const TotalTile = ({ year, dashboardCount, dashboardKey, title, user }) => {
-    return <div id="alert-border-1" class={`flex flex-auto items-start p-4 mb-4 border-t-4 ${!user ? 'border-[#deb66f] bg-[#f1f3f4] text-[#ae7e28]' : 'border-blue-300 bg-blue-50 text-blue-800'}  dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800`} role="alert">
+    return <div id="alert-border-1" class={`flex flex-auto items-start p-4 mb-4 border-t-4 ${user ? 'border-[#deb66f] bg-[#f1f3f4] text-[#ae7e28]' : 'border-blue-300 bg-blue-50 text-blue-800'}  dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800`} role="alert">
         <TaskRoundedIcon sx={{ fontSize: '40px' }} />
         <div class="ml-3 text-sm font-medium">
             <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey] || 0}</p>

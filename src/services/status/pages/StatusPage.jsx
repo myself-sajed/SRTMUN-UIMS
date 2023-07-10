@@ -61,8 +61,8 @@ const StatusPage = ({ auth, user }) => {
                                 </select>
                             </div>
                         </div>
-                        <div className={`${!user && "pr-3"} w-full mt-3`}>
-                            <FacultyRelatedService year={year} school={user ? false : school} />
+                        <div className={`w-full mt-3`}>
+                            <FacultyRelatedService year={year} user={user ? user : false} school={user ? false : school} />
                         </div>
                     </div>
                 </div>
