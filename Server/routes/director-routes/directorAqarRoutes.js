@@ -60,7 +60,7 @@ function directorAqarRoutes(app) {
 
         const { filter } = req.body
 
-        DirectorAQAR.findOne({ filter }).then((aqar, err) => {
+        DirectorAQAR.findOne(filter).then((aqar, err) => {
             if (err) {
                 console.log(err)
                 res.send({ status: "error", message: "Internal server error" })

@@ -42,10 +42,10 @@ const getReportInfo = (model, setData, setLoading, userType = 'faculty', service
 }
 
 // Filename : submitReportForm
-const getTotalReportInfo = (setData, setLoading, year) => {
+const getTotalReportInfo = (setData, setLoading, year, school) => {
     setLoading(true)
     const link = `${process.env.REACT_APP_MAIN_URL}/services/getTotalReportData`
-    Axios.post(link, { year })
+    Axios.post(link, { year, school })
         .then((res) => {
             if (res.data.status === 'success') {
                 setData(res.data.data)

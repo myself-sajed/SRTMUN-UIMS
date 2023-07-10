@@ -15,6 +15,7 @@ import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
 import StatusPage from '../../status/pages/StatusPage';
 import useAdminAuth from '../../../hooks/useAdminAuth';
 import AdminReportStatus from '../pages/AdminReportStatus';
+import AdminFeedbackStatus from '../pages/AdminFeedbackStatus';
 // import EContentDeveloped from '../tables/EContentDeveloped';
 // import Faculties from '../table2/Faculties';
 // import Qualification from '../table2/Qualification';
@@ -31,6 +32,7 @@ const DashbordButtons = [
     { element: <AdminFaculty />, title: "Faculties", name: "Faculties", },
     { element: <AdminDirector />, title: "Directors", name: "Directors", },
     { element: <AdminReportStatus />, title: "Report Status", name: "Report Status", },
+    { element: <AdminFeedbackStatus />, title: "Feedback Status", name: "Feedback Status", },
     { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
     { element: <AdminStudent />, title: "Students", name: "Students", },
     { element: <AdminMore />, title: "More", name: "More", },

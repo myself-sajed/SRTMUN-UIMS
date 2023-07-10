@@ -67,61 +67,22 @@ function submitReportForm(app) {
     });
 
 
-    // app.post("/services/getReportData", (req, res) => {
-
-
-    //     const { model, userType } = req.body
-
-
-    //     if (userType === 'faculty') {
-    //         modelsInfo[model].await model.find({}).lean().populate("userId").select("submitted userId").populate().exec().then((items, err) => {
-    //             if (err) {
-    //                 console.log(err)
-    //                 res.send({ status: "error", message: "Internal server error" })
-    //             }
-    //             else {
-    //                 if (items) {
-    //                     res.send({ status: 'success', data: items });
-    //                 }
-    //                 else {
-    //                     res.send({ status: 'error', message: "No data found" });
-    //                 }
-    //             }
-    //         }
-
-
-    //         )
-    //     } else if (userType === 'director') {
-    //         modelsInfo[model].await model.find({}).lean().select("submitted schoolName").then((items, err) => {
-    //             if (err) {
-    //                 console.log(err)
-    //                 res.send({ status: "error", message: "Internal server error" })
-    //             }
-    //             else {
-    //                 if (items) {
-    //                     res.send({ status: 'success', data: items });
-    //                 }
-    //                 else {
-    //                     res.send({ status: 'error', message: "No data found" });
-    //                 }
-    //             }
-    //         }
-
-    //         )
-    //     }
-    // })
-
     app.post("/services/getTotalReportData", async (req, res) => {
 
-        const { year } = req.body
+        const { year, school } = req.body
+
+        let filter = {}
+        if (school) {
+            filter = { schoolName: school }
+        }
 
         try {
-            let CAS = await CASModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
-            let PBAS = await PBASModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
-            let FAQAR = await FacultyAQARModel.find({}).lean().populate("userId").select("submitted userId").populate().exec()
-            let AAA = await AAAModel.find({}).lean().select("submitted schoolName").populate().exec()
-            let DAQAR = await DirectorAQARModel.find({}).lean().select("submitted schoolName").populate().exec()
-            let Users = await UserModel.find({}).lean().select("salutation name department designation")
+            let CAS = await CASModel.find(filter).lean().populate("userId").select("submitted userId").populate().exec()
+            let PBAS = await PBASModel.find(filter).lean().populate("userId").select("submitted userId").populate().exec()
+            let FAQAR = await FacultyAQARModel.find(filter).lean().populate("userId").select("submitted userId").populate().exec()
+            let AAA = await AAAModel.find(filter).lean().select("submitted schoolName").populate().exec()
+            let DAQAR = await DirectorAQARModel.find(filter).lean().select("submitted schoolName").populate().exec()
+            let Users = await UserModel.find(filter).lean().select("salutation name department designation")
 
 
             let CASUsers = CAS.filter((item) => item.submitted && (item.submitted.length > 0 && item.submitted.includes(year)) ? true : false)

@@ -17,7 +17,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import TaskRoundedIcon from '@mui/icons-material/TaskRounded';
 
-const FacultyRelatedService = ({ year }) => {
+const FacultyRelatedService = ({ year, school }) => {
 
 
     const [serviceData, setServiceData] = useState({})
@@ -41,7 +41,7 @@ const FacultyRelatedService = ({ year }) => {
         let FAQARCount = 0;
 
         if (data) {
-            Object.keys(SchoolsProgram).forEach((school) => {
+            (school ? [school] : Object.keys(SchoolsProgram)).forEach((school) => {
                 CASCount += data?.CASSchoolWise?.[school]
                 PBASCount += data?.PBASSchoolWise?.[school]
                 FAQARCount += data?.FAQARSchoolWise?.[school]
@@ -53,7 +53,7 @@ const FacultyRelatedService = ({ year }) => {
 
 
     useEffect(() => {
-        getTotalReportInfo(setServiceData, setServiceLoading, year)
+        getTotalReportInfo(setServiceData, setServiceLoading, year, school)
     }, [year])
 
     useEffect(() => {
@@ -69,43 +69,44 @@ const FacultyRelatedService = ({ year }) => {
                     {
                         serviceData && <div>
                             <div className="flex items-center justify-between gap-5">
-                                <TotalTile year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
                                 <TotalTile year={year} dashboardKey="PBASCount" dashboardCount={dashboardCount} title="PBAS" />
                                 <TotalTile year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
+                                <TotalTile year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
                             </div>
                             <table class="table table-bordered">
                                 <thead className="bg-primary text-white sticky-top">
                                     <tr>
                                         <th>School Name</th>
-                                        <th>CAS</th>
                                         <th>PBAS</th>
                                         <th>AQAR (Faculty)</th>
                                         <th>AQAR (Director)</th>
-                                        <th>AAA</th>
+                                        <th>CAS</th>
+                                        {/* <th>AAA</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        Object.keys(SchoolsProgram).map((school, rowIndex) => {
+                                        (school ? [school] : Object.keys(SchoolsProgram)).map((school, rowIndex) => {
                                             return <>
-                                                <tr className='cursor-pointer hover:bg-blue-100 hover:text-blue-700 font-semibold' onClick={() => toggleRow(rowIndex)}>
+                                                <tr className='cursor-pointer bg-blue-100 hover:text-blue-700 font-semibold' onClick={() => toggleRow(rowIndex)}>
                                                     <td>{school}</td>
-                                                    <td>{serviceData.CASSchoolWise?.[school]}</td>
                                                     <td>{serviceData.PBASSchoolWise?.[school]}</td>
                                                     <td>{serviceData.FAQARSchoolWise?.[school]}</td>
                                                     <td>{serviceData.DAQARSchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
-                                                    <td>{serviceData.AAASchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
+                                                    <td>{serviceData.CASSchoolWise?.[school]}</td>
+                                                    {/* <td>{serviceData.AAASchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td> */}
                                                 </tr>
-                                                {expandedRow === rowIndex && (
-                                                    <tr>
-                                                        <td colspan="6">
-                                                            <table class="table mb-0">
+                                                {/* {expandedRow === rowIndex && ( */}
+                                                <tr >
+                                                    <td colspan="6" className='p-3'>
+                                                        <div className='bg-blue-50 rounded-md p-2'>
+                                                            <table className="table mb-0">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Faculty Name</th>
-                                                                        <th>CAS</th>
                                                                         <th>PBAS</th>
                                                                         <th>AQAR (Faculty)</th>
+                                                                        <th>CAS</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -124,9 +125,10 @@ const FacultyRelatedService = ({ year }) => {
 
                                                                 </tbody>
                                                             </table>
-                                                        </td>
-                                                    </tr>
-                                                )}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {/* )} */}
                                             </>
                                         })
                                     }
@@ -194,7 +196,7 @@ const TotalTile = ({ year, dashboardCount, dashboardKey, title }) => {
     return <div id="alert-border-1" class="flex flex-auto items-start p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800" role="alert">
         <TaskRoundedIcon sx={{ fontSize: '40px' }} />
         <div class="ml-3 text-sm font-medium">
-            <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey]}</p>
+            <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey] || 0}</p>
             <p>{title} for {year}</p>
         </div>
     </div>

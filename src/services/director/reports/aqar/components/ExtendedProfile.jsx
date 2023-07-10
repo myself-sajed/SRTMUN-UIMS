@@ -57,7 +57,7 @@ const ExtendedProfile = ({ aqarYearState }) => {
     }, [autoSaveLoader])
 
     useEffect(() => {
-        getAQARData(setData, true, { department: directorUser?.department }, aqarYearState, 'director')
+        getAQARData(setData, true, { schoolName: directorUser?.department }, aqarYearState, 'director')
     }, [])
 
     useEffect(() => {
