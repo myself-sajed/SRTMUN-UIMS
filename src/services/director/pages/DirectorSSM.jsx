@@ -125,7 +125,6 @@ const DirectorSSM = () => {
           <div style={{ width: '100%', display: 'flex', justifyContent: "flex-start" }}>
             <IconButton>
               <MenuIcon sx={{ color: '#60a5fa' }} onClick={() => setIsDrowerOpen(true)} />
-
             </IconButton>
             <h3 style={{ color: "#60a5fa", alignItems: "center", display: "flex", fontSize: "17px", paddingLeft: "12px", fontWeight: "400" }}>Student Managment</h3>
           </div>

@@ -1,7 +1,6 @@
 const FeedbackModels = require('./feedbackRoutes').feedbackModels
 const { SchoolsProgram } = require('../../utility/allschool')
 
-
 function fetchFeedbackData(app) {
 
 
@@ -19,7 +18,8 @@ function fetchFeedbackData(app) {
         dashboardData.ParentCount = dashboardData.Parent.length
         dashboardData.Employer = await FeedbackModels.EmployerFeedback.find(filter)
         dashboardData.EmployerCount = dashboardData.Employer.length
-
+        dashboardData.Faculties = await User.find({ department: filter.schoolName })
+        dashboardData.FacultiesCount = dashboardData.Faculties.length
 
         res.send({ message: 'success', data: dashboardData })
 
