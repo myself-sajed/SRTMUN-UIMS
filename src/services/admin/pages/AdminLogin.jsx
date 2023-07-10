@@ -15,6 +15,7 @@ import CredSkeleton from '../../../components/CredSkeleton';
 import CredButton from '../../../inputs/CredButton';
 import CredHeading from '../../../inputs/CredHeading';
 import title from '../../../js/title';
+import siteLinks from '../../../components/siteLinks';
 
 
 const AdminLogin = () => {
@@ -51,10 +52,12 @@ const AdminLogin = () => {
 
     }
 
+    const bred = [siteLinks.welcome, siteLinks.adminLogin]
+
     return (
         <>
 
-            <CredSkeleton bred={links} onSubmit={handleSubmit} head={<CredHeading spacing="mb-3 mt-6" icon={<LocalPoliceRoundedIcon className='text-orange-700' />} title="Admin Login" />}>
+            <CredSkeleton bred={bred} onSubmit={handleSubmit} head={<CredHeading spacing="mb-3 mt-6" icon={<LocalPoliceRoundedIcon className='text-orange-700' />} title="Admin Login" />}>
 
                 <CredInput state={username} setState={setUsername} placeholder="Enter Username" type="text" spacing="mb-2" />
 

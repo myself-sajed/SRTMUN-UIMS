@@ -83,6 +83,8 @@ import GoToResponse from '../services/feedback/pages/GoToResponse'
 import useAdminAuth from '../hooks/useAdminAuth'
 import FeedbackRedirect from '../services/feedback/pages/FeedbackRedirect'
 import FeedbackDashboard from '../services/feedback/pages/FeedbackDashboard'
+import DirectorReportStatus from '../services/director/pages/DirectorReportStatus'
+import AdminFeedbackStatus from '../services/admin/pages/AdminFeedbackStatus'
 
 
 
@@ -196,6 +198,7 @@ const RoutesHandler = () => {
                 {/* Feedback System: PART III : Pages */}
                 <Route path="/director/service/feedback/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
                 <Route path="/director/service/feedback/dashboard" exact element={<FeedbackDashboard />} />
+                <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
@@ -204,7 +207,9 @@ const RoutesHandler = () => {
                     auth={{ faculty: useAuth, director: useDirectorAuth }} />} />
 
                 {/* SERVICE STATUS */}
-                <Route path="/director/service/status" exact element={<StatusPage auth={{ admin: useAdminAuth, director: useDirectorAuth }} />} />
+                <Route path="/director/service/status" exact element={<DirectorReportStatus />} />
+
+
 
 
 

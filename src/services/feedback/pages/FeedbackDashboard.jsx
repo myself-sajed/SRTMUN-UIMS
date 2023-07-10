@@ -110,7 +110,7 @@ const FeedbackDashboard = () => {
 
   function generateAnalyticsData(userData) {
 
-    const Analiticsdata = activeUser == "Teacher" ? { tNameArr: [], tDigiArr: [0, 0, 0, 0, 0], tContArr: [], tRadioArr: Object.fromEntries(teacherQuestions[3].cell.map((question) => [question, [0, 0, 0, 0, 0]])), tCommentArr: [] } : activeUser == "Student" ? { sNameArr: [], sEmailArr: [], sContArr: [], sProgramEnroled: Array((generalQuestions[1].options)?.length).fill(0), courceAnalitics: {} } : null
+    const Analiticsdata = activeUser == "Teacher" ? { tNameArr: [], tDigiArr: [0, 0, 0, 0, 0], tContArr: [], tRadioArr: Object.fromEntries(teacherQuestions[3].cell.map((question) => [question, [0, 0, 0, 0, 0]])), tCommentArr: [] } : activeUser == "Student" ? { sNameArr: [], sEmailArr: [], sContArr: [], sProgramEnroled: Array((generalQuestions[1].options)?.length).fill(0), courseAnalitics: {} } : null
 
     let sTeacherTick = Array((generalQuestions[0].options)?.length).fill(0)
     userData?.forEach((user) => {
@@ -151,6 +151,26 @@ const FeedbackDashboard = () => {
           });
         });
       }
+
+      function combineScores(firstScores, secondScores) {
+        let resultantScores = {};
+
+        // Iterate over each criterion and combine the scores
+        for (let criterion in firstScores) {
+          let firstScore = firstScores[criterion];
+          let secondScore = secondScores[criterion];
+
+          // Check if the scores are the same
+          if (JSON.stringify(firstScore) === JSON.stringify(secondScore)) {
+            resultantScores[criterion] = firstScore.map((score, index) => score + secondScore[index]);
+          } else {
+            resultantScores[criterion] = [firstScore, secondScore];
+          }
+        }
+
+        return resultantScores;
+      }
+
       if (activeUser == "Teacher") {
         pushInArray(Analiticsdata.tNameArr, Teacher.question0);
         sQIncriment(Analiticsdata.tDigiArr, Teacher.question1, teacherQuestions[1]?.options);
@@ -174,8 +194,13 @@ const FeedbackDashboard = () => {
           if (Student.question4 == course) {
             let arr = Object.fromEntries(generalQuestions[2].cell.map((question) => [question, [0, 0, 0, 0, 0]]))
             mQIncriment(arr, Student.question5, generalQuestions[2])
-            let arrdata = { [course]: arr }
-            console.log(arrdata);
+            if (Analiticsdata.courseAnalitics.hasOwnProperty(course)) {
+
+            }
+            else {
+              Analiticsdata.courseAnalitics[course] = arr
+            }
+
           }
         })
         // generalQuestions[1]?.options?.forEach(course => {
