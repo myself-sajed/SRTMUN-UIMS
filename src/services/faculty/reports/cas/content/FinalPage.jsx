@@ -18,7 +18,7 @@ const FinalPage = ({ casYear, casYearState, setTabName, handleNext }) => {
     const submitForm = (e) => {
         e.preventDefault()
         let filter = { userId: user._id }
-        submitReportForm(navigate, casYearState, filter, 'PBASModel')
+        submitReportForm(navigate, casYearState, filter, 'CASModel')
         handleNext()
         setTabName('ack')
 
