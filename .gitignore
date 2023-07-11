@@ -5,5 +5,5 @@
 .env
 /excels
 /pdfs
-/public
+# /public
 package-lock.json

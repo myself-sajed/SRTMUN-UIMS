@@ -12,12 +12,101 @@ import { teacherQuestions } from './TeacherFeedback';
 import { studentQuestions, teacherQuestions as stutechQ } from './StudentFeedback';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import designationWiseSorting from '../../../js/designationWiseSorting';
+import { Bar, Pie } from 'react-chartjs-2';
+
 
 
 const FeedbackDashboard = () => {
   title('Feedback Dashboard')
   useDirectorAuth()
   const directorUser = useSelector((state) => state.user.directorUser)
+
+  const generateChartData = (responses) => {
+    const courseRatings = {
+      'Very Good': 0,
+      'Good': 0,
+      'Satisfactory': 0,
+      'Not-Satisfactory': 0
+    };
+
+    const facilityRatings = {
+      'Very Good': 0,
+      'Good': 0,
+      'Satisfactory': 0,
+      'N/A': 0
+    };
+
+    const teacherData = {};
+
+    responses.forEach(response => {
+      const teacherName = response['Tick only those teachers who taught you this year'][0];
+
+      if (!teacherData[teacherName]) {
+        teacherData[teacherName] = {
+          ratings: {
+            'Very Good': 0,
+            'Good': 0,
+            'Satisfactory': 0,
+            'Un-Satisfactory': 0
+          },
+          count: 0
+        };
+      }
+
+      const aboutTeacherSection = response[`About the teacher ${teacherName}`];
+      Object.keys(aboutTeacherSection).forEach(question => {
+        const rating = aboutTeacherSection[question];
+        teacherData[teacherName].ratings[rating]++;
+      });
+
+      teacherData[teacherName].count++;
+
+      const courseRating = response['Rate the course']['Overall rating'];
+      courseRatings[courseRating]++;
+
+      const facilityRatingsKeys = Object.keys(response['Rate the Facilities available']);
+      facilityRatingsKeys.forEach(key => {
+        const facilityRating = response['Rate the Facilities available'][key];
+        facilityRatings[facilityRating]++;
+      });
+    });
+
+    const data = {
+      labels: Object.keys(courseRatings),
+      datasets: [
+        {
+          data: Object.values(courseRatings),
+          backgroundColor: [
+            'green',
+            'blue',
+            'yellow',
+            'red'
+          ]
+        }
+      ]
+    };
+
+    const facilityData = {
+      labels: Object.keys(facilityRatings),
+      datasets: [
+        {
+          data: Object.values(facilityRatings),
+          backgroundColor: [
+            'green',
+            'blue',
+            'yellow',
+            'red'
+          ]
+        }
+      ]
+    };
+
+    return { courseData: data, facilityData, teacherData };
+  };
+
+
+
+
 
 
   let param = { filter: { schoolName: directorUser?.department } }
@@ -26,6 +115,8 @@ const FeedbackDashboard = () => {
   const [teachers, setTeachers] = useState([])
 
   const [activeUser, setActiveUser] = useState("Student");
+  const ratingLabels = ['Very Good', 'Good', 'Satisfactory', 'Un-Satisfactory'];
+  const [qR, setQR] = useState(null)
 
   useEffect(() => {
     setTeachers(designationWiseSorting(data?.data?.data?.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
@@ -102,9 +193,29 @@ const FeedbackDashboard = () => {
 
   ]
 
+  const [chartData, setChartData] = useState(null)
+
   useEffect(() => {
     // setTeacherData(data?.data?.data?.Teacher);
-    generateAnalyticsData(data?.data?.data[activeUser])
+    if (data?.data?.data) {
+      console.log('reponse data :', JSON.parse(data?.data?.data?.[activeUser][0]?.response))
+      let reponses = data?.data?.data?.[activeUser].map((item) => {
+        return JSON.parse(item.response)
+      })
+
+      console.log("reponses :", reponses)
+
+      let newChartData = generateChartData(reponses)
+      console.log('Chart data is :', chartData)
+
+      setChartData(() => newChartData)
+
+
+
+
+
+      generateAnalyticsData(data?.data?.data[activeUser])
+    }
 
   }, [data])
 
@@ -234,9 +345,40 @@ const FeedbackDashboard = () => {
       <div className="mt-4">
         <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} />
       </div>
-      {/* <div className="my-5">
-                <StudentAnalysis studentData={data?.data?.data?.Student} isLoading={isLoading} />
-            </div> */}
+
+
+      {chartData && <div className='my-5' style={{ width: '400px', height: '400px' }}>
+        <div>
+          <h2>Course Feedback Ratings</h2>
+          <Pie data={chartData.courseData} />
+
+          <h2>Facility Feedback Ratings</h2>
+          <Pie data={chartData.facilityData} />
+
+          <h2>Teacher Feedback Ratings</h2>
+          {Object.entries(chartData.teacherData).map(([teacherName, teacher]) => (
+            <div key={teacherName}>
+              <h3>{teacherName}</h3>
+              <p>Total Responses: {teacher.count}</p>
+              <Pie data={{
+                labels: Object.keys(teacher.ratings),
+                datasets: [
+                  {
+                    data: Object.values(teacher.ratings),
+                    backgroundColor: [
+                      'green',
+                      'blue',
+                      'yellow',
+                      'red'
+                    ]
+                  }
+                ]
+              }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      }
     </div>
   )
 }
