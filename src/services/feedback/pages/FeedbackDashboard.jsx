@@ -52,7 +52,7 @@ const FeedbackDashboard = () => {
 
   return (
     <div>
-      <GoBack pageTitle={`Feedback Dashboard for ${directorUser?.department}`} />
+      <GoBack pageTitle={`Feedback Dashboard for ${directorUser?.department}`} showAvatar={{ photoURL: directorUser.photoURL, userType: 'director' }} />
 
       <div className="my-2">
         <SelectStatusYear setYear={setYear} year={year} />

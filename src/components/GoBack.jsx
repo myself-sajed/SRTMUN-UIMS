@@ -1,10 +1,11 @@
 import React from 'react'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import { IconButton } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import serverLinks from '../js/serverLinks';
 
-const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false, functionOnBack = false }) => {
+const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false, functionOnBack = false, showAvatar = false }) => {
 
     const navigate = useNavigate()
 
@@ -32,7 +33,13 @@ const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false
                 <span className='mx-2 font-bold text-lg'>{pageTitle}</span>
             </div>
             <div>
-                {children}
+                <div>
+                    {children}
+                </div>
+
+                <div>
+                    {showAvatar && <Avatar src={serverLinks.showFile(showAvatar.photoURL, showAvatar.userType)} />}
+                </div>
             </div>
         </div>
     )
