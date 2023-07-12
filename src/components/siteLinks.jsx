@@ -40,6 +40,7 @@ let siteLinks = {
     proLogin: { title: "PRO Login", link: '/pro-login' },
     proEditor: { title: "PRO Editor", link: '/pro-editor' },
     proHome: { title: "PRO Home", link: '/pro' },
+    adminLogin: { title: "Login to Admin", link: '/admin-login' },
     adminDashboard: { title: "Admin Dashboard", link: '/admin' },
     forgotPassword: { title: "Forgot Password", link: '' },
     generateFeedbackLinksDirector: { title: "Generate Feedback Links", link: '/director/service/generateFeebackLinks' },

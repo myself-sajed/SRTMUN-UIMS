@@ -27,17 +27,11 @@ const StatusPage = ({ auth, user }) => {
     const [school, setSchool] = useState(!user ? directorUser?.department : null)
 
 
-    // useEffect(() => {
-    //     if (directorUser) {
-    //         setSchool(directorUser?.department)
-    //     }
-    // }, [directorUser])
-
-    // useEffect(() => {
-    //     if (directorUser) {
-    //         refetch()
-    //     }
-    // }, [school])
+    useEffect(() => {
+        if (directorUser) {
+            setSchool(directorUser?.department)
+        }
+    }, [directorUser])
 
 
 
@@ -51,40 +45,41 @@ const StatusPage = ({ auth, user }) => {
 
 
 
-            {
-                !user ? <div className="my-4">
-                    <UnderConstruction />
-                </div> : <div className='flex items-start justify-start mb-5'>
-                    <div className='w-full rounded-[4px]'>
-                        <div className='w-full'>
+            <div className={`flex items-start justify-start mb-5 ${!user && "mt-4"}`}>
+                <div className='w-full rounded-[4px]'>
+                    <div className='w-full'>
 
-                            <div className="col-md-4 flex items-center justify-end w-full">
-                                <div>
-                                    <select className="form-select" id="validationCustom04" required onChange={
-                                        (e) => { setYear(e.target.value); }} value={year}>
-                                        <option selected disabled value="">Choose</option>
-
-                                        {listOfYears.map((year, index) => {
-                                            return <option key={index} value={year}>{year}</option>
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className={`${!user && "pr-3"} w-full mt-3`}>
-                                <FacultyRelatedService year={year} user={user}/>
-                            </div>
+                        <SelectStatusYear setYear={setYear} year={year} />
+                        <div className={`w-full mt-3`}>
+                            <FacultyRelatedService year={year} user={user ? user : false} school={user ? false : school} />
                         </div>
                     </div>
                 </div>
-            }
-
-
+            </div>
 
         </div >
     )
 }
 
 export default StatusPage
+
+
+const SelectStatusYear = ({ setYear, year }) => {
+    return <div className="col-md-4 flex items-center justify-end w-full">
+        <div>
+            <select className="form-select" id="validationCustom04" required onChange={
+                (e) => { setYear(e.target.value); }} value={year}>
+                <option selected disabled value="">Choose Year</option>
+
+                {listOfYears.map((year, index) => {
+                    return <option key={index} value={year}>{year}</option>
+                })}
+            </select>
+        </div>
+    </div>
+}
+
+export { SelectStatusYear }
 
 
 

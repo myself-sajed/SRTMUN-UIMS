@@ -31,6 +31,7 @@ import AwardRecognition from '../../../tables/AwardRecognition'
 import Fellowship from '../../../tables/Fellowship'
 import InvitedTalk from '../../../tables/InvitedTalk'
 import CalculateModal from './CalculateModal';
+import Actions from '../../../tables/Actions';
 
 
 
@@ -467,10 +468,11 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
                                     return <th scope="col" key={`head-${index}`}>{element}</th>
                                 })
                             }
-                            <th scope="col">Actions</th>
+                            <th scope="col">Get Score</th>
                             {
                                 calculateScore && <th scope="col">Score</th>
                             }
+                            {/* <th>Actions</th> */}
                         </tr>
                     </thead>
 
@@ -503,6 +505,8 @@ const NumberToTextField = ({ facultyTableAvailable, label, activity, state, setS
                                     {
                                         calculateScore && <td className='font-bold'>{state?.scoreMap?.[item._id]?.score ? state.scoreMap?.[item._id]?.score : 0}</td>
                                     }
+
+                                    {/* <Actions item={item} /> */}
 
                                 </tr>
 

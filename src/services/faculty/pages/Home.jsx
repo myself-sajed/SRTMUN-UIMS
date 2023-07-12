@@ -190,7 +190,7 @@ const Home = () => {
                                 user &&
                                 <div className="card-body sm:flex">
 
-                                    <div className='flex flex-wrap'>
+                                    <div className='flex flex-wrap pl-5'>
                                         <DetailTile keyName="Full Name" value={`${user && user.salutation} ${user && user.name}`} />
                                         <DetailTile keyName="Date of Birth" value={`${user && user.dob === undefined ? 'Not Added' : user.dob}`} />
                                         <DetailTile keyName="Designation" value={`${user && user.designation}`} />
