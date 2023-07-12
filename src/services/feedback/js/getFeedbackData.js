@@ -2,9 +2,9 @@ import axios from 'axios'
 
 
 // serverFile: fetchFeedbackData.js
-const getFeedbackData = ({ filter }) => {
-    return axios.post(`${process.env.REACT_APP_MAIN_URL}/director/service/getFeedbackData/`,
-        { filter })
+const getFeedbackData = ({ filter, feedbackUser }) => {
+    return axios.post(`${process.env.REACT_APP_MAIN_URL}/director/service/getFeedbackData`,
+        { filter, feedbackUser })
 }
 
 // serverFile: fetchFeedbackData.js

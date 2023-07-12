@@ -296,7 +296,7 @@ const Home = () => {
                         <div className="md:mb-4 shadow-none">
                             {
                                 user &&
-                                <div className="card-body sm:flex">
+                                <div className="card-body sm:flex pl-5">
 
                                     <div className='flex-1'>
                                         <DetailTile keyName="Full Name" value={`${user && user.name}`} />

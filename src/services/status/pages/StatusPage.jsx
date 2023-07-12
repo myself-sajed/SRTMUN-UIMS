@@ -49,18 +49,7 @@ const StatusPage = ({ auth, user }) => {
                 <div className='w-full rounded-[4px]'>
                     <div className='w-full'>
 
-                        <div className="col-md-4 flex items-center justify-end w-full">
-                            <div>
-                                <select className="form-select" id="validationCustom04" required onChange={
-                                    (e) => { setYear(e.target.value); }} value={year}>
-                                    <option selected disabled value="">Choose</option>
-
-                                    {listOfYears.map((year, index) => {
-                                        return <option key={index} value={year}>{year}</option>
-                                    })}
-                                </select>
-                            </div>
-                        </div>
+                        <SelectStatusYear setYear={setYear} year={year} />
                         <div className={`w-full mt-3`}>
                             <FacultyRelatedService year={year} user={user ? user : false} school={user ? false : school} />
                         </div>
@@ -73,6 +62,24 @@ const StatusPage = ({ auth, user }) => {
 }
 
 export default StatusPage
+
+
+const SelectStatusYear = ({ setYear, year }) => {
+    return <div className="col-md-4 flex items-center justify-end w-full">
+        <div>
+            <select className="form-select" id="validationCustom04" required onChange={
+                (e) => { setYear(e.target.value); }} value={year}>
+                <option selected disabled value="">Choose Year</option>
+
+                {listOfYears.map((year, index) => {
+                    return <option key={index} value={year}>{year}</option>
+                })}
+            </select>
+        </div>
+    </div>
+}
+
+export { SelectStatusYear }
 
 
 

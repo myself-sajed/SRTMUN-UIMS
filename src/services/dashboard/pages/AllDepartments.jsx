@@ -132,95 +132,95 @@ const AllDepartments = () => {
     function scrollToSection(sectionId) {
         const section = document.getElementById(sectionId);
         section.scrollIntoView({ behavior: 'smooth' });
-      }
-      //scroll up to Top functions
-      function scrollToTop() {
+    }
+    //scroll up to Top functions
+    function scrollToTop() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-      }
-      // call function on on scroll
-    window.onscroll = function() {
+    }
+    // call function on on scroll
+    window.onscroll = function () {
         toggleScrollUpButton();
     };
     function toggleScrollUpButton() {
         const scrollUpButton = document.getElementById('scrollUpButton');
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          scrollUpButton.style.display = 'block';
+            scrollUpButton['style']['display'] = 'block';
         } else {
-          scrollUpButton.style.display = 'none';
+            scrollUpButton['style']['display'] = 'none';
         }
-      }
+    }
 
     return (
         <>
-        <div style={{borderBottom: "solid 1px #e5e7eb"}}>
-            <GoBack backUrl="/" pageTitle={Field} />
-            <div>
-                {
-                    serviceName === 'schoolInformation' && <div className="w-full mt-3">
-                        <p className="my-2 text-muted">Note: Scroll down for more detailed information about each School.</p>
+            <div style={{ borderBottom: "solid 1px #e5e7eb" }}>
+                <GoBack backUrl="/" pageTitle={Field} />
+                <div>
+                    {
+                        serviceName === 'schoolInformation' && <div className="w-full mt-3">
+                            <p className="my-2 text-muted">Note: Scroll down for more detailed information about each School.</p>
 
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.6308259466323!2d77.28688624745851!3d19.100828732039695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bce298abb43ab1d%3A0x4f9b6277bce2a8e1!2sSwami%20Ramanand%20Teerth%20Marathwada%20University%2C%20Nanded!5e0!3m2!1sen!2sin!4v1686661784605!5m2!1sen!2sin" width="100%" height="300" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                }
-            </div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.6308259466323!2d77.28688624745851!3d19.100828732039695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bce298abb43ab1d%3A0x4f9b6277bce2a8e1!2sSwami%20Ramanand%20Teerth%20Marathwada%20University%2C%20Nanded!5e0!3m2!1sen!2sin!4v1686661784605!5m2!1sen!2sin" width="100%" height="300" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    }
+                </div>
 
-            <div>
-                <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
-                    {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
-                        <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => {
+                <div>
+                    <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
+                        {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
+                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => {
 
-                            scrollToSection(`Section${i+1}`)
+                                scrollToSection(`Section${i + 1}`)
 
-                            // navigate(serviceName === 'info' ? `/dashboard/${nameOfTheSchool}` :
-                            //     serviceName === 'schoolInformation' ? `/dashboard/schoolInformation/${nameOfTheSchool}` :
-                            //         serviceMap[serviceName].type === 'faculty' ? `/dashboard/information/${nameOfTheSchool}/${serviceName}/${serviceMap[serviceName].title}` : `/dashboard/${nameOfTheSchool}/${serviceName}`)
-                        }}>
-                            <div>
-                                <div className='flex items-start justify-start gap-1 items-center'>
-                                    <div style={{fontSize:'10px'}}>{serviceMap[serviceName].icon}</div>
-                                    <div className='flex flex-col justify-start '>
-                                        <p className='text-sm text-[#1d4ed8] '>{nameOfTheSchool.replace('School of', '').length<24?nameOfTheSchool.replace('School of', ''):nameOfTheSchool.replace('School of', '').slice(0, 22) + "..."}{
-                                             serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ? 
-                                             <span style={{ marginLeft:"10px",background:"#1d4ed8", border:"solid #1d4ed8 1px",borderRadius:"3px", color:"#fff", }} className='px-1' >
-                                             {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length} 
-                                             {/* {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]}*/}</span> 
+                                // navigate(serviceName === 'info' ? `/dashboard/${nameOfTheSchool}` :
+                                //     serviceName === 'schoolInformation' ? `/dashboard/schoolInformation/${nameOfTheSchool}` :
+                                //         serviceMap[serviceName].type === 'faculty' ? `/dashboard/information/${nameOfTheSchool}/${serviceName}/${serviceMap[serviceName].title}` : `/dashboard/${nameOfTheSchool}/${serviceName}`)
+                            }}>
+                                <div>
+                                    <div className='flex items-start justify-start gap-1'>
+                                        <div style={{ fontSize: '10px' }}>{serviceMap[serviceName].icon}</div>
+                                        <div className='flex flex-col justify-start '>
+                                            <p className='text-sm text-[#1d4ed8] '>{nameOfTheSchool.replace('School of', '').length < 24 ? nameOfTheSchool.replace('School of', '') : nameOfTheSchool.replace('School of', '').slice(0, 22) + "..."}{
+                                                serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
+                                                    <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
+                                                        {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
+                                                        {/* {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]}*/}</span>
 
-                                             :
-                                             <span style={{ marginLeft:"10px",background:"#1d4ed8", border:"solid #1d4ed8 1px",borderRadius:"3px", color:"#fff", }} className='px-1' >
-                                                 {data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length} 
-                                                 {/* {
+                                                    :
+                                                    <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
+                                                        {data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length}
+                                                        {/* {
                                                      data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]
                                                  } */}
 
-                                             </span>
-                                        }</p>
-                                        
+                                                    </span>
+                                            }</p>
+
+                                        </div>
                                     </div>
+
                                 </div>
 
                             </div>
-
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-        {
+            {
 
-            Object.keys(SchoolsProgram).map((School, index)=><section id={`Section${index+1}`} style={{border:"solid 1px #b8b4b4", borderRadius: "10px", padding: "5px",marginBottom: "15px", marginTop: "15px"}}>
-                {
-                    Field==='Faculties'? <AllFaculties school={School}/>: 
-                    Field==='Students'?<AllStudents school={School}/>: 
-                    Field==='Alumni'?<AllAlumni school={School}/>: 
-                    <OtherDashboardData school={School} model={serviceMap[serviceName].model}  />
-                    
-                }
-            </section>)
-            
-        }
+                Object.keys(SchoolsProgram).map((School, index) => <section id={`Section${index + 1}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>
+                    {
+                        Field === 'Faculties' ? <AllFaculties school={School} /> :
+                            Field === 'Students' ? <AllStudents school={School} /> :
+                                Field === 'Alumni' ? <AllAlumni school={School} /> :
+                                    <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
 
-            <IconButton style={{display: 'none', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#9a9a9a', color: '#fff', cursor: 'pointer',}} id="scrollUpButton" onClick={()=>{scrollToTop()}}><ArrowUpwardIcon/></IconButton>
+                    }
+                </section>)
+
+            }
+
+            <IconButton style={{ display: 'none', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#9a9a9a', color: '#fff', cursor: 'pointer', }} id="scrollUpButton" onClick={() => { scrollToTop() }}><ArrowUpwardIcon /></IconButton>
 
         </>
     )
