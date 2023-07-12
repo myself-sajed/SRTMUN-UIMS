@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAdminActive } from '../../../redux/slices/AdminActiveSlice'
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import title from '../../../js/title'
 
 
 const AdminDrower = ({ children }) => {
   const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, Alumnis: <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
-
+  title('Admin Panel')
   const dispatch = useDispatch();
   const AdminActive = useSelector(state => state.adminActive.adminActive)
   return (
