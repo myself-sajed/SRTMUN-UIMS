@@ -12,188 +12,267 @@ import { teacherQuestions } from './TeacherFeedback';
 import { studentQuestions, teacherQuestions as stutechQ } from './StudentFeedback';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import designationWiseSorting from '../../../js/designationWiseSorting';
-
+import { Bar, Pie } from 'react-chartjs-2';
 
 
 
 const FeedbackDashboard = () => {
-    title('Feedback Dashboard')
-    useDirectorAuth()
-    const directorUser = useSelector((state) => state.user.directorUser)
+  title('Feedback Dashboard')
+  useDirectorAuth()
+  const directorUser = useSelector((state) => state.user.directorUser)
 
+  const generateChartData = (responses) => {
+    const courseRatings = {
+      'Very Good': 0,
+      'Good': 0,
+      'Satisfactory': 0,
+      'Not-Satisfactory': 0
+    };
 
-    let param = { filter: { schoolName: directorUser?.department } }
+    const facilityRatings = {
+      'Very Good': 0,
+      'Good': 0,
+      'Satisfactory': 0,
+      'N/A': 0
+    };
 
-    const { data, isLoading, refetch } = useQuery([param.model, param], () => getFeedbackData(param))
-    const [teachers, setTeachers] = useState([])
+    const facilityQuestions = {};
 
-    const [ activeUser, setActiveUser] = useState("Student");
+    const teacherData = {};
 
-    useEffect(() => {
-      setTeachers(designationWiseSorting(data?.data?.data?.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
-  }, [data])
-  
-    const generalQuestions = [
-      {
-          type: 'check',
-          required: true,
-          question: 'Tick only those teachers who taught you this year',
-          options: teachers,
-      },
-      {
-          type: 'radio',
-          required: true,
-          question: 'Choose the program you are currently enrolled in',
-          options: SchoolsProgram?.[directorUser?.department]?.map((program) => program[0])
-      },
-      {
-          type: 'table',
-          required: true,
-          question: 'Rate the course',
-          head: ['Very Good', 'Good', 'Satisfactory', 'Not-Satisfactory'],
-          cell: ['Depth of the course content including project work if any', 'Extent of coverage of course', 'Applicability/relevance to real life situations', 'Learning value (in terms of knowledge, concepts, manual skills, analytical abilities and broadening perspectives', 'Clarity and relevance of textual reading', 'Relevance of additional source material (Library)', 'Extent of effort required by students', 'Overall rating']
-      },
-      {
-          type: 'table',
-          required: true,
-          question: 'Rate the Facilities available',
-          head: ['Very Good', 'Good', 'Satisfactory', 'N/A'],
-          cell: ['Sufficient number of prescribed books are available in the Library.', 'The books prescribed/listed as reference materials are relevant, updated and appropriate', 'Infrastructural facilities, such as student’s room/ girls room/carrels, class rooms, reading rooms and toilets are available in the Department.', 'Laboratory facilities / Field Visits provided	']
-      },
-      {
-          type: 'check',
-          required: true,
-          question: 'Is your background benefiting from this course?',
-          options: ['More than adequate', 'Just adequate', 'Adequate', 'Inadequate']
-      },
-      {
-          type: 'check',
-          required: true,
-          question: 'The syllabus was?',
-          options: ['Challenging', 'Good', 'Adequate', 'Inadequate']
-      },
-      {
-          type: 'check',
-          required: true,
-          question: 'How helpful was the internal assesssment?',
-          options: ['Highly', 'Moderately', 'Fairly', 'Not sure']
-      },
-      {
-          type: 'radio',
-          required: true,
-          question: 'Were are you provided with a course and lecture outline at the beginning?',
-          options: ['Yes', 'No']
-      },
-      {
-          type: 'radio',
-          required: true,
-          question: 'If Yes, was it followed?',
-          options: ['Yes', 'No']
-      },
-      {
-          type: 'radio',
-          required: true,
-          question: 'If followed, was it helpful?',
-          options: ['Yes', 'No']
-      },
-      {
-          type: 'text',
-          required: true,
-          question: 'If you have other major comments to offer',
-      }
+    responses.forEach((response) => {
+      const teacherNames = response['Tick only those teachers who taught you this year'];
 
-  ]
+      teacherNames.forEach((teacherName) => {
+        if (!teacherData[teacherName]) {
+          teacherData[teacherName] = {};
+        }
 
-    useEffect(() => {
-        // setTeacherData(data?.data?.data?.Teacher);
-        generateAnalyticsData(data?.data?.data[activeUser])
-        
-    },[data])
-    
-    function generateAnalyticsData(userData) {
-        
-        const Analiticsdata = activeUser=="Teacher"?{ tNameArr:[], tDigiArr:[0, 0, 0, 0, 0], tContArr:[], tRadioArr : Object.fromEntries(teacherQuestions[3].cell.map((question) => [question, [0, 0, 0, 0, 0]])), tCommentArr:[] }:activeUser=="Student"?{ sNameArr:[], sEmailArr:[], sContArr:[], sProgramEnroled: Array((generalQuestions[1].options)?.length).fill(0) }:null
+        const aboutTeacherSection = response[`About the teacher ${teacherName}`];
 
-        let sTeacherTick =  Array((generalQuestions[0].options)?.length).fill(0)
-
-        userData?.forEach((user) => {
-          const parseData = JSON.parse(user.response);
-          
-            const Teacher  = {
-                question0 : parseData[teacherQuestions[0].question],
-                question1 : parseData[teacherQuestions[1].question],
-                question2 : parseData[teacherQuestions[2].question],
-                question3 : parseData[teacherQuestions[3].question],
-                question4 : parseData[teacherQuestions[4].question],
-            }
-            const Student = {
-              question0 : parseData[studentQuestions[0].question],
-              question1 : parseData[studentQuestions[1].question],
-              question2 : parseData[studentQuestions[2].question],
-              question3: parseData[generalQuestions[0].question],
-              question4: parseData[generalQuestions[1].question],
-            }
-           function pushInArray(arr, value) {
-              arr.push(value)
-           }
-           function sQIncriment( arr, que, opt ) {
-            opt.forEach((e, i) => {
-              if (e === que) {
-                arr[i] += 1;
-              }
-            });
-           }
-           function mQIncriment( arr, que, opt ) {
-            opt.head.forEach((e, i) => {
-              opt.cell.forEach((cellItem) => {
-                if (que[cellItem] === e) {
-                  arr[cellItem][i] += 1;
-                }
-              });
-            });
-           }
-          if(activeUser=="Teacher"){
-            pushInArray(Analiticsdata.tNameArr, Teacher.question0);
-            sQIncriment(Analiticsdata.tDigiArr, Teacher.question1, teacherQuestions[1]?.options);
-            pushInArray(Analiticsdata.tContArr,Teacher.question2);
-            mQIncriment(Analiticsdata.tRadioArr, Teacher.question3, teacherQuestions[3]);
-            pushInArray(Analiticsdata.tCommentArr, Teacher.question4);
+        Object.entries(aboutTeacherSection).forEach(([question, rating]) => {
+          if (!teacherData[teacherName][question]) {
+            teacherData[teacherName][question] = {
+              'Very Good': 0,
+              'Good': 0,
+              'Satisfactory': 0,
+              'Un-Satisfactory': 0
+            };
           }
-          else if(activeUser=="Student"){
-            // console.log(parseData[stutechQ[0].question]);
-            pushInArray(Analiticsdata.sNameArr, Student.question0);
-            pushInArray(Analiticsdata.sEmailArr, Student.question1);
-            pushInArray(Analiticsdata.sContArr, Student.question2);
-            for(const faculty of Student.question3){
-              const index = (generalQuestions[0].options)?.indexOf(faculty);
-              if(index > -1) {
-                sTeacherTick[index] += 1;
-              }
-            }
-            sQIncriment(Analiticsdata.sProgramEnroled, Student.question4, generalQuestions[1].options)
-            
-          }
+
+          teacherData[teacherName][question][rating]++;
         });
-        // console.log(Analiticsdata.sProgramEnroled);
-        // console.log(sTeacherTick)
-        // console.log(Analiticsdata)
+      });
 
-      }
+      const courseRating = response['Rate the course']['Overall rating'];
+      courseRatings[courseRating]++;
 
-    return (
-        <div>
-            <GoBack pageTitle="Feedback Response" />
+      const facilitySection = response['Rate the Facilities available'];
+      Object.entries(facilitySection).forEach(([question, rating]) => {
+        if (!facilityQuestions[question]) {
+          facilityQuestions[question] = {
+            'Very Good': 0,
+            'Good': 0,
+            'Satisfactory': 0,
+            'N/A': 0
+          };
+        }
 
-            <div className="mt-4">
-                <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} />
+        facilityQuestions[question][rating]++;
+      });
+    });
+
+    const courseData = {
+      labels: Object.keys(courseRatings),
+      datasets: [
+        {
+          data: Object.values(courseRatings),
+          backgroundColor: ['green', 'blue', 'yellow', 'red']
+        }
+      ]
+    };
+
+    const facilityData = {
+      labels: Object.keys(facilityRatings),
+      datasets: [
+        {
+          data: Object.values(facilityRatings),
+          backgroundColor: ['green', 'blue', 'yellow', 'red']
+        }
+      ]
+    };
+
+    const facilityChartData = Object.entries(facilityQuestions).map(([question, ratings]) => {
+      return {
+        question,
+        data: {
+          labels: Object.keys(ratings),
+          datasets: [
+            {
+              data: Object.values(ratings),
+              backgroundColor: ['green', 'blue', 'yellow', 'red']
+            }
+          ]
+        }
+      };
+    });
+
+    return { courseData, facilityData, facilityChartData, teacherData };
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  let param = { filter: { schoolName: directorUser?.department } }
+
+  const { data, isLoading, refetch } = useQuery([param.model, param], () => getFeedbackData(param))
+  const [teachers, setTeachers] = useState([])
+
+  const [activeUser, setActiveUser] = useState("Student");
+
+  useEffect(() => {
+    setTeachers(designationWiseSorting(data?.data?.data?.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
+  }, [data])
+
+
+
+  const [chartData, setChartData] = useState(null)
+
+  useEffect(() => {
+
+    if (data?.data?.data) {
+
+      let reponses = data?.data?.data?.[activeUser].map((item) => {
+        return JSON.parse(item.response)
+      })
+
+      console.log("reponses :", reponses)
+
+      let newChartData = generateChartData(reponses)
+      console.log('Chart data is :', chartData)
+
+      setChartData(() => newChartData)
+
+    }
+
+  }, [data])
+
+  const ratingLabels = ['Very Good', 'Good', 'Satisfactory', 'Un-Satisfactory'];
+
+
+  return (
+    <div>
+      <GoBack pageTitle="Feedback Response" />
+
+      <div className="mt-4">
+        <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} />
+      </div>
+
+
+      {chartData && (
+        <div className="my-5 w-full">
+          <div>
+            <div >
+              <div >
+                <Title title="1. Course Feedback Ratings" />
+                <div className="w-[30%] bg-gray-50 p-2 rounded-md m-2">
+                  <Pie data={chartData.courseData} />
+                </div>
+              </div>
+
+              <div>
+                <Title title="2. Facility Feedback Ratings" className="mt-5" />
+                <div className="grid grid-cols-2 gap-5 bg-gray-50 p-2 rounded-md m-2">
+                  {chartData?.facilityChartData?.map(({ question, data }, index) => (
+                    <div key={question} >
+                      <h4 className="font-semibold mb-3 text-center text-muted">
+                        {index + 1}. {question}
+                      </h4>
+                      <div className="flex items-center justify-center">
+                        <Pie data={data} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            {/* <div className="my-5">
-                <StudentAnalysis studentData={data?.data?.data?.Student} isLoading={isLoading} />
-            </div> */}
+
+            <Title title="3. Teacher Feedback Ratings" className="mt-5" />
+            {Object.entries(chartData.teacherData).map(([teacherName, teacher], index) => (
+              <div key={teacherName} className="bg-gray-50 p-2 rounded-md m-2">
+                <h3 className="my-3 font-semibold text-blue-600 text-lg">
+                  {index + 1}. {teacherName}
+                </h3>
+                <div className="pl-10 border-l-4 border-l-gray-400 grid grid-cols-2 gap-5">
+                  {Object.entries(teacher).map(([question, ratings], index) => (
+                    <div key={question} className="my-3">
+                      <h4 className="font-semibold mb-3">
+                        {index + 1}. {question}
+                      </h4>
+                      <div>
+                        <Bar
+                          data={{
+                            labels: Object.keys(ratings),
+                            datasets: [
+                              {
+                                label: question,
+                                data: Object.values(ratings),
+                                backgroundColor: ['green', 'blue', 'yellow', 'red'],
+                                categoryPercentage: 0.6,
+                                barPercentage: 0.4
+                              }
+                            ]
+                          }}
+                          options={{
+                            scales: {
+                              x: {
+                                stacked: true
+                              },
+                              y: {
+                                stacked: true,
+                                beginAtZero: true
+                              }
+                            },
+                            plugins: {
+                              legend: {
+                                display: false
+                              },
+                              datalabels: {
+                                display: true,
+                                anchor: 'end',
+                                align: 'end'
+                              }
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-    )
+      )}
+
+
+    </div>
+  )
 }
 
 export default FeedbackDashboard
+
+const Title = ({ title, className }) => {
+  return <p className={`mb-4 w-full text-lg font-bold bg-blue-100 p-2 rounded-md text-blue-800 ${className}`}>{title}</p>
+}
 
 
