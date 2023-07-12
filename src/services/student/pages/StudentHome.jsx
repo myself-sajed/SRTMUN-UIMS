@@ -27,7 +27,7 @@ import ProfileCroper from '../../../components/ProfileCroper'
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
-    const Casts = ["Genral", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
+    const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "muslim", "Christian", "Sikh", "Buddh", "Jain",]
     const model = "StudentUser"
     const module = 'student'

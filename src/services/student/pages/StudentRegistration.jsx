@@ -30,7 +30,7 @@ const StudentRegistration = () => {
     // all states
     const Salutations = ["Mr.", "Mrs.", , "Miss.", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
-    const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
+    const Casts = ["General", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
     const religions = ["Hindu","muslim","Christian","Sikh","Buddh","Jain",]
     const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "",createdBy: "Self",}
     const [values, setValues] = useState(initialState)

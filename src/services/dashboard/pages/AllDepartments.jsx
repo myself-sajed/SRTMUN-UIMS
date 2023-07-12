@@ -128,11 +128,7 @@ const AllDepartments = () => {
     const param = { model: serviceMap[serviceName].model, select: serviceMap[serviceName].select, type: serviceMap[serviceName]?.type ? serviceMap[serviceName].type : null }
     const { data } = useQuery([param.model, param], () => countData(param))
 
-    //scroll up to section functions
-    function scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        section.scrollIntoView({ behavior: 'smooth' });
-    }
+    
     //scroll up to Top functions
     function scrollToTop() {
         document.body.scrollTop = 0;
@@ -167,15 +163,8 @@ const AllDepartments = () => {
 
                 <div>
                     <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
-                        {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
-                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => {
-
-                                scrollToSection(`Section${i + 1}`)
-
-                                // navigate(serviceName === 'info' ? `/dashboard/${nameOfTheSchool}` :
-                                //     serviceName === 'schoolInformation' ? `/dashboard/schoolInformation/${nameOfTheSchool}` :
-                                //         serviceMap[serviceName].type === 'faculty' ? `/dashboard/information/${nameOfTheSchool}/${serviceName}/${serviceMap[serviceName].title}` : `/dashboard/${nameOfTheSchool}/${serviceName}`)
-                            }}>
+                        {Object.keys(SchoolsProgram).map((nameOfTheSchool,i) => (
+                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => {scrollToSection(`${i}`)}}>
                                 <div>
                                     <div className='flex items-start justify-start gap-1'>
                                         <div style={{ fontSize: '10px' }}>{serviceMap[serviceName].icon}</div>
@@ -184,15 +173,11 @@ const AllDepartments = () => {
                                                 serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
                                                     <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
                                                         {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
-                                                        {/* {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]}*/}</span>
+                                                        </span>
 
                                                     :
                                                     <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
                                                         {data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length}
-                                                        {/* {
-                                                     data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length === 1 ? serviceMap[serviceName].fieldName[0] : serviceMap[serviceName].fieldName[1]
-                                                 } */}
-
                                                     </span>
                                             }</p>
 
@@ -208,7 +193,7 @@ const AllDepartments = () => {
             </div>
             {
 
-                Object.keys(SchoolsProgram).map((School, index) => <section id={`Section${index + 1}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>
+                Object.keys(SchoolsProgram).map((School, i) => <section id={`${i}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>
                     {
                         Field === 'Faculties' ? <AllFaculties school={School} /> :
                             Field === 'Students' ? <AllStudents school={School} /> :
@@ -225,5 +210,11 @@ const AllDepartments = () => {
         </>
     )
 }
+//scroll up to section functions
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.scrollIntoView({ behavior: 'smooth' });
+}
 
 export default AllDepartments
+export{scrollToSection}

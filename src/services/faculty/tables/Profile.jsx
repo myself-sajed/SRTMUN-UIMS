@@ -30,7 +30,7 @@ const Profile = () => {
     const [userData, setUserData] = useState({});
     // useAuth()
 
-    const Casts = ["Genral", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
+    const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
 
     //state
     const [salutation, setSalutation] = useState()

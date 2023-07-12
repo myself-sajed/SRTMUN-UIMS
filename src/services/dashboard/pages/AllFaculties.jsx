@@ -14,22 +14,22 @@ import title from '../../../js/title'
 import { Avatar } from '@mui/material'
 import ShowImage from './ShowImage'
 
-const AllFaculties = ({school}) => {
+const AllFaculties = ({school:sch}) => {
 
-    // const { school } = useParams()
+    const { school } = useParams()
     const [isAnalytics, setIsAnalytics] = useState(true)
-    const param = { model: 'User', filter: { department: school } }
+    const param = { model: 'User', filter: { department: school || sch } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
 
-    const newParam = { school: school }
-    const { data: schoolData, isLoading: isLoadingSchoolData, isError: isErrorOccured, } = useQuery([newParam.school, newParam],
+    const newParam = { school: school||sch }
+    const { data: schoolData, isLoading: isLoadingSchoolData, isError: isErrorOccured, } = useQuery([newParam.school||sch, newParam],
         () => { return fetchSchoolData(newParam) })
     const navigate = useNavigate()
-    title(`About ${school}`)
+    // title(`About ${school}`)
 
 
     useEffect(() => {
-        console.log('SchoolData :', schoolData)
+        // console.log('SchoolData :', schoolData)
         let emptyCount = 0
         dashboardObj['faculty'].forEach((item) => {
             schoolData?.data?.data?.[item.model]?.length === 0 && emptyCount++;
@@ -43,9 +43,11 @@ const AllFaculties = ({school}) => {
 
     return (
         <div>
-            <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
-                {`Faculties of ${school}`}
-            </div>
+            {sch?<div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+                {`Faculties of ${sch}`}
+            </div>: <div className="sticky-top bg-white">
+                <GoBack backUrl={-1} pageTitle={`Faculties of ${school}`} />
+            </div>} 
 
             <div>
 
