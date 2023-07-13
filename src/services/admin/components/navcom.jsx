@@ -11,7 +11,7 @@ import AdminStudent from '../pages/AdminStudent';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminMore from '../pages/AdminMore';
 
-import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
+// import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
 import StatusPage from '../../status/pages/StatusPage';
 import useAdminAuth from '../../../hooks/useAdminAuth';
 import AdminReportStatus from '../pages/AdminReportStatus';

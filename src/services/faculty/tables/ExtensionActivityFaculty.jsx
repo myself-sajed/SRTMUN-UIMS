@@ -89,7 +89,7 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear, 
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Extension Activities"} />
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivitiesFaculty' title='Extension Activities' SendReq={model} refetch={refetch} module={module} department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivities' title='Extension Activities' SendReq={model} refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

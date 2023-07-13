@@ -204,7 +204,7 @@ const AdminDashboard = () => {
 
             <div style={{ minWidth: "782px", padding: "10px 20px", background: "#f1f3f4", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
               {
-                SubMenuCards?.map(ItemCards => <button onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name) }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
+                SubMenuCards?.map((ItemCards,index) => <button key={index} onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name) }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
                   <div style={{ fontSize: "17px", fontWeight: 800, padding: "3px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
                   <div className='flex justify-center'><div>{ItemCards.name}</div></div>
                 </button>

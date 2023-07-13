@@ -7,6 +7,7 @@ import adminExcelObject from '../components/adminExcelObject';
 import JSZip from 'jszip';
 import Papa from 'papaparse';
 import JrfSrfPdf from '../tables_student/JrfSrfPdf';
+import { downloadExcelZip } from './AdminFaculty';
 
 const AdminStudent = () => {
 
@@ -26,47 +27,13 @@ const AdminStudent = () => {
     },
   ]
 
-  const downloadCSV = async () => {
-    const zip = new JSZip();
-
-    // add each CSV file to the zip file
-    allStudentComponents?.forEach(({ childData, filename, SendReq, proof, module }) => {
-      let itemdata = []
-
-      childData?.forEach((data, index) => {
-        let newdata = {};
-
-        Object.keys(adminExcelObject[SendReq]).forEach((key) => {
-          newdata = Object.assign(newdata, { "Sr.No.": index + 1 })
-          newdata[adminExcelObject[SendReq][key]] = data[key] ? data[key] : "N.A.";
-
-        })
-        if (proof) {
-          data[proof] == undefined || data[proof] == "undefined" ? newdata = Object.assign(newdata, { "Link Of Proof": 'File Not Uploaded' }) : newdata = Object.assign(newdata, { "Link Of Proof": `${process.env.REACT_APP_MAIN_URL}/showFile/${data[proof]}/${module}` })
-        }
-
-        itemdata.push(newdata)
-      })
-      zip.file(filename, Papa.unparse(itemdata));
-    });
-
-    // generate the zip file and download it
-    const content = await zip.generateAsync({ type: 'blob' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(content);
-    link.setAttribute('download', 'allStudentsCSV.zip');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <AdminDrower>
       <div className='sub-main'>
       <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
-          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
+          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={()=>{downloadExcelZip(allStudentComponents, 'allStudentExcel')}} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 

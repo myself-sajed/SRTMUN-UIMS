@@ -28,6 +28,7 @@ import TrainingProgramsOrganized from '../tables_director/TrainingProgramsOrgani
 import UgcSapCasDstFistDbtICssr from '../tables_director/UgcSapCasDstFistDBTICSSR';
 import ValueAddedCource from '../tables_director/ValueAddedCource';
 import AdminSchoolSelect from '../components/AdminSchoolSelect';
+import { downloadExcelZip } from './AdminFaculty';
 
 
 const AdminDirector = () => {
@@ -41,128 +42,93 @@ const AdminDirector = () => {
     //all proofs remaining
     {
       element: <Directors id="director" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Directors' />,
-      childData: childData?.director, filename: 'Directors.csv', SendReq: "DirectorUser", module: "faculty"
+      childData: childData?.director, filename: 'Directors.xlsx', SendReq: "DirectorUser", module: "faculty"
     },
     {
       element: <AlumniContribution id="alumnicontribution" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Alumni Contribution' />,
-      childData: childData?.alumnicontribution, filename: 'Alumni Contribution.csv', SendReq: "AlumniContribution", proof: "Upload_Proof", module: "director"
+      childData: childData?.alumnicontribution, filename: 'Alumni Contribution.xlsx', SendReq: "AlumniContribution", proof: "Upload_Proof", module: "director"
     },
     {
       element: <Awards id="awards" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Awards' />,
-      childData: childData?.awards, filename: 'Awards.csv', SendReq: "Award", proof: "Upload_Proof", module: "director"
+      childData: childData?.awards, filename: 'Awards.xlsx', SendReq: "Award", proof: "Upload_Proof", module: "director"
     },
     {
       element: <ConferencesSemiWorkshopOrganized id="conferencessemiworkshoporganized" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Conferences Seminar Workshop Organized' />,
-      childData: childData?.conferencessemiworkshoporganized, filename: 'Conferences Seminar Workshop Organized.csv', SendReq: "ConferencesSemiWorkshopOrganized", module: "director", proof: "Upload_Proof",
+      childData: childData?.conferencessemiworkshoporganized, filename: 'Conferences Seminar Workshop Organized.xlsx', SendReq: "ConferencesSemiWorkshopOrganized", module: "director", proof: "Upload_Proof",
     },
     {
       element: <CounselingAndGuidance id="counselingandguidance" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Counseling And Guidance' />,
-      childData: childData?.counselingandguidance, filename: 'Counseling And Guidance.csv', SendReq: "CounselingAndGuidance", module: "director", proof: "Upload_Proof",
+      childData: childData?.counselingandguidance, filename: 'Counseling And Guidance.xlsx', SendReq: "CounselingAndGuidance", module: "director", proof: "Upload_Proof",
     },
     {
       element: <DemandRatio id="awardrecognition" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Demand Ratio' />,
-      childData: childData?.awardrecognition, filename: 'Demand Ratio.csv', SendReq: "DemandRatio", module: "director", proof: "Upload_Proof",
+      childData: childData?.awardrecognition, filename: 'Demand Ratio.xlsx', SendReq: "DemandRatio", module: "director", proof: "Upload_Proof",
     },
     {
       element: <Employability id="employability" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Employability' />,
-      childData: childData?.employability, filename: 'Employability.csv', SendReq: "Employability", module: "director", proof: "Upload_Proof",
+      childData: childData?.employability, filename: 'Employability.xlsx', SendReq: "Employability", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ExtensionActivities id="extensionactivities" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Extension Activities' />,
-      childData: childData?.extensionactivities, filename: 'Extension Activities.csv', SendReq: "ExtensionActivities", module: "director", proof: "Upload_Proof",
+      childData: childData?.extensionactivities, filename: 'Extension Activities.xlsx', SendReq: "ExtensionActivities", module: "director", proof: "Upload_Proof",
     },
     {
       element: <IctClassrooms id="ictclassrooms" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Ict Classrooms' />,
-      childData: childData?.ictclassrooms, filename: 'IctClassrooms.csv', SendReq: "IctClassrooms", module: "director", proof: "Upload_Proof",
+      childData: childData?.ictclassrooms, filename: 'IctClassrooms.xlsx', SendReq: "IctClassrooms", module: "director", proof: "Upload_Proof",
     },
     {
       element: <MoUs id="mous" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='MoUs' />,
-      childData: childData?.mous, filename: 'MoUs.csv', SendReq: "MoUs", module: "director", proof: "Upload_Proof",
+      childData: childData?.mous, filename: 'MoUs.xlsx', SendReq: "MoUs", module: "director", proof: "Upload_Proof",
     },
     {
       element: <Placements id="placements" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Placements' />,
-      childData: childData?.consultancy, filename: 'Placements.csv', SendReq: "Placement", module: "director", proof: "Upload_Proof",
+      childData: childData?.placements, filename: 'Placements.xlsx', SendReq: "Placement", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ProgressionToHE id="progressiontohe" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Progression To HE' />,
-      childData: childData?.progressiontohe, filename: 'Progression To HE.csv', SendReq: "ProgressionToHE", module: "director", proof: "Upload_Proof",
+      childData: childData?.progressiontohe, filename: 'Progression To HE.xlsx', SendReq: "ProgressionToHE", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ProjectsInternships id="projectsinternships" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Projects Internships' />,
-      childData: childData?.projectsinternships, filename: 'Projects Internships.csv', SendReq: "ProjectsInternships", module: "director", proof: "Upload_Proof",
+      childData: childData?.projectsinternships, filename: 'Projects Internships.xlsx', SendReq: "ProjectsInternships", module: "director", proof: "Upload_Proof",
     },
     {
       element: <QualifiedExams id="qualifiedexams" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Qualified Exams' />,
-      childData: childData?.qualifiedexams, filename: 'Qualified Exams.csv', SendReq: "QualifiedExams", module: "director", proof: "Upload_Proof",
+      childData: childData?.qualifiedexams, filename: 'Qualified Exams.xlsx', SendReq: "QualifiedExams", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ResearchMethodologyWorkshops id="researchmethodologyworkshops" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Methodology Workshops' />,
-      childData: childData?.researchmethodologyworkshops, filename: 'Research Methodology Workshops.csv', SendReq: "ResearchMethodologyWorkshops", module: "director", proof: "Upload_Proof",
+      childData: childData?.researchmethodologyworkshops, filename: 'Research Methodology Workshops.xlsx', SendReq: "ResearchMethodologyWorkshops", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ReservedSeats id="reservedseats" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Reserved Seats' />,
-      childData: childData?.reservedseats, filename: 'Reserved Seats.csv', SendReq: "ReservedSeats", module: "director", proof: "Upload_Proof",
+      childData: childData?.reservedseats, filename: 'Reserved Seats.xlsx', SendReq: "ReservedSeats", module: "director", proof: "Upload_Proof",
     },
     {
       element: <SkillsEnhancementInitiatives id="skillsenhancementinitiatives" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Skills Enhancement Initiatives' />,
-      childData: childData?.skillsenhancementinitiatives, filename: 'Skills Enhancement Initiatives.csv', SendReq: "SkillsEnhancementInitiatives", module: "director", proof: "Upload_Proof",
+      childData: childData?.skillsenhancementinitiatives, filename: 'Skills Enhancement Initiatives.xlsx', SendReq: "SkillsEnhancementInitiatives", module: "director", proof: "Upload_Proof",
     },
     {
       element: <StudentSatisfactionSurvey id="studentsatisfactionsurvey" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Student Satisfaction Survey' />,
-      childData: childData?.studentsatisfactionsurvey, filename: 'Student Satisfaction Survey.csv', SendReq: "StudentSatisfactionSurvey", module: "director", proof: "Upload_Proof",
+      childData: childData?.studentsatisfactionsurvey, filename: 'Student Satisfaction Survey.xlsx', SendReq: "StudentSatisfactionSurvey", module: "director", proof: "Upload_Proof",
     },
     {
       element: <SyllabusRevision id="syllabusrevision" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Syllabus Revision' />,
-      childData: childData?.syllabusrevision, filename: 'Syllabus Revision.csv', SendReq: "SyllabusRevision", module: "director", proof: "Upload_Proof",
+      childData: childData?.syllabusrevision, filename: 'Syllabus Revision.xlsx', SendReq: "SyllabusRevision", module: "director", proof: "Upload_Proof",
     },
     {
       element: <TrainingProgramsOrganized id="trainingprogramsorganized" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Administrative Training Programs Organized' />,
-      childData: childData?.trainingprogramsorganized, filename: 'Administrative Training Programs Organized.csv', SendReq: "TrainingProgramsOrganized", module: "director", proof: "Upload_Proof",
+      childData: childData?.trainingprogramsorganized, filename: 'Administrative Training Programs Organized.xlsx', SendReq: "TrainingProgramsOrganized", module: "director", proof: "Upload_Proof",
     },
     {
       element: <UgcSapCasDstFistDbtICssr id="ugcsapcasdstfistdbticssr" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='UGC-SAP, CAS, DST-FIST, DBT, ICSSR' />,
-      childData: childData?.ugcsapcasdstfistdbticssr, filename: 'UGC-SAP, CAS, DST-FIST, DBT, ICSSR.csv', SendReq: "UgcSapCasDstFistDBTICSSR", module: "director", proof: "Upload_Proof",
+      childData: childData?.ugcsapcasdstfistdbticssr, filename: 'UGC-SAP, CAS, DST-FIST, DBT, ICSSR.xlsx', SendReq: "UgcSapCasDstFistDBTICSSR", module: "director", proof: "Upload_Proof",
     },
     {
       element: <ValueAddedCource id="valueaddedcource" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Value Added Course' />,
-      childData: childData?.valueaddedcource, filename: 'Value Added Course.csv', SendReq: "ValueAddedCource", module: "director", proof: "Upload_Proof",
+      childData: childData?.valueaddedcource, filename: 'Value Added Course.xlsx', SendReq: "ValueAddedCource", module: "director", proof: "Upload_Proof",
     },
   ]
-
-  const downloadCSV = async () => {
-    const zip = new JSZip();
-
-    // add each CSV file to the zip file
-    allDirectorComponents?.forEach(({ childData, filename, SendReq, proof, module }) => {
-      let itemdata = []
-
-      childData?.forEach((data, index) => {
-        let newdata = {};
-
-
-        Object.keys(adminExcelObject[SendReq]).forEach((key) => {
-          newdata = Object.assign(newdata, { "Sr.No.": index + 1 })
-          newdata[adminExcelObject[SendReq][key]] = data[key] ? data[key] : "N.A.";
-
-        })
-        if (proof) {
-          data[proof] == undefined || data[proof] == "undefined" ? newdata = Object.assign(newdata, { "Link Of Proof": 'File Not Uploaded' }) : newdata = Object.assign(newdata, { "Link Of Proof": `${process.env.REACT_APP_MAIN_URL}/showFile/${data[proof]}/${module}` })
-        }
-        itemdata.push(newdata)
-      })
-      
-      zip.file(filename, Papa.unparse(itemdata));
-    });
-
-    // generate the zip file and download it
-    const content = await zip.generateAsync({ type: 'blob' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(content);
-    link.setAttribute('download', 'allDirectorCSV.zip');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <AdminDrower>
@@ -171,7 +137,7 @@ const AdminDirector = () => {
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
-          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={downloadCSV} >Export All Excels</button>
+          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={()=>{downloadExcelZip(allDirectorComponents,'allDirectorExcel')}} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 

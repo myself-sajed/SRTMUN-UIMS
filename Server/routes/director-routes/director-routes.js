@@ -723,7 +723,8 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     let sendData = {};
     const values = JSON.parse(JSON.stringify(req.body));
     const { School } = values
-
+    const multiData = model=="MoUs"|| model=="ExtensionActivities"? JSON.parse(School):School
+    
 
     let data = []
     try {
@@ -911,7 +912,7 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
                 }
                 
             })
-            const allData =  Object.assign(sendData, {SchoolName: School })
+            const allData =  Object.assign(sendData, multiData.userId? multiData :{SchoolName: multiData })
             const obj = new models[model](allData);
             obj.save(function(error){
                 if(error){

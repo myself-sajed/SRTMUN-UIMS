@@ -82,14 +82,13 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear, showTable = t
         data && setFilteredItems(sortByAcademicYear(data?.data, 'Year_of_signing_MoU', filterByAcademicYear, academicYear))
     }, [data])
 
-
     return (
         <div>
             {/* // HEADER */}
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUsFaculty' title='MoUs' SendReq='MoUs' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUs' title='MoUs' SendReq='MoUs' refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

@@ -1,13 +1,10 @@
 import React from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import AdminNavbar from '../services/admin/components/AdminNavbar'
 import Navbar from '../components/Navbar'
 import CustomReport from '../services/faculty/pages/CustomReport'
 import FacultyLogin from '../services/faculty/pages/FacultyLogin'
 import ChangePassword from '../services/faculty/pages/ChangePassword'
 import Main from './Main'
-import adminTable from '../services/admin/js/adminTable'
-import AdminNavTools from '../services/admin/components/AdminNavTools'
 import NavTools from '../components/NavTools'
 import ViewFile from './ViewFile'
 import PageNotFound from './PageNotFound'
@@ -130,16 +127,6 @@ const RoutesHandler = () => {
                 <Route path='/admin' exact element={<AdminMain />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
-
-                {/* // tables for admin */}
-                {
-                    adminTable.map((item, index) => {
-                        return (
-
-                            <Route key={index} path={item.path} element={<><AdminNavTools /> <div className="flex items-start justify-start gap-4 mt-3"><div className="hidden lg:block"><AdminNavbar /></div> {item.component}</div></>} />
-                        )
-                    })
-                }
 
 
                 <Route path='/director' element={<DirectorHome />} />
