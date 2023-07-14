@@ -724,7 +724,6 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     const values = JSON.parse(JSON.stringify(req.body));
     const { School } = values
     const multiData = model=="MoUs"|| model=="ExtensionActivities"? JSON.parse(School):School
-    
 
     let data = []
     try {

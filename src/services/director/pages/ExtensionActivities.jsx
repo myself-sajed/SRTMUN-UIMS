@@ -41,6 +41,8 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
+  const title='Extension Activities';
+
   useEffect(() => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
@@ -62,7 +64,7 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
     <>
       <AddButton onclick={setAdd} exceldialog={setOpen} />
       <Dialog fullWidth maxWidth='lg' open={add}>
-        <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
+        <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -84,7 +86,7 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivities' title='Extension Activities' SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivities' title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="Year_of_activity" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>
