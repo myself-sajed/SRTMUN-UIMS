@@ -82,6 +82,7 @@ import FeedbackRedirect from '../services/feedback/pages/FeedbackRedirect'
 import FeedbackDashboard from '../services/feedback/pages/FeedbackDashboard'
 import DirectorReportStatus from '../services/director/pages/DirectorReportStatus'
 import AdminFeedbackStatus from '../services/admin/pages/AdminFeedbackStatus'
+import FeedbackReport from '../templates/feedback/FeedbackReport'
 
 
 
@@ -186,6 +187,8 @@ const RoutesHandler = () => {
                 <Route path="/director/service/feedback/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
                 <Route path="/director/service/feedback/dashboard" exact element={<FeedbackDashboard />} />
                 <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
+
+                <Route path="/feedback/generateFeedbackReport/:schoolName/:feedbackUser/:academicYear" exact element={<FeedbackReport />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />

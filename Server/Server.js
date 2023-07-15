@@ -115,6 +115,7 @@ require('./routes/photogallery-routes/event')(app)
 // feedback routes
 require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
 require('./routes/feedback-routes/fetchFeedbackData')(app)
+require('./routes/feedback-routes/generateFeedbackReport')(app)
 
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)

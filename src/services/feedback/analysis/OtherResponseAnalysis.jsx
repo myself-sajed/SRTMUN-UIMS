@@ -1,12 +1,16 @@
 import React from 'react'
 import { Pie, Bar } from 'react-chartjs-2'
 import Title from '../components/Title'
+import DownloadReportButtons from '../components/DownloadReportButtons'
 
-const OtherResponseAnalysis = ({ questionsWithData }) => {
+const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, showDownloadButtons = true, feedbackUser }) => {
 
 
     return (
         <div>
+            {showDownloadButtons && <div className="my-3">
+                <DownloadReportButtons feedbackUser={feedbackUser} schoolName={schoolName} academicYear={academicYear} />
+            </div>}
             {
                 questionsWithData?.map((item, index) => {
                     return <div>

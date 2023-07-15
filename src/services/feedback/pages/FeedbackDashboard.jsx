@@ -25,10 +25,6 @@ const FeedbackDashboard = () => {
   let param = { filter: { schoolName: directorUser?.department, academicYear: year }, feedbackUser: activeUser }
   const { data, isLoading, refetch } = useQuery([param.model, param], () => getFeedbackData(param))
 
-
-
-
-
   const [chartData, setChartData] = useState(null)
 
   useEffect(() => {
@@ -52,7 +48,7 @@ const FeedbackDashboard = () => {
 
   return (
     <div>
-      <GoBack pageTitle={`Feedback Dashboard for ${directorUser?.department}`} showAvatar={{ photoURL: directorUser.photoURL, userType: 'director' }} />
+      <GoBack pageTitle={`Feedback Dashboard for ${directorUser?.department}`} showAvatar={{ photoURL: directorUser?.photoURL, userType: 'director' }} />
 
       <div className="my-2">
         <SelectStatusYear setYear={setYear} year={year} />
@@ -72,11 +68,11 @@ const FeedbackDashboard = () => {
           :
           <div>
             {(activeUser === "Student" && chartData[activeUser]) && <div className="mb-5 w-full">
-              <StudentAnalysis chartData={chartData[activeUser]} />
+              <StudentAnalysis academicYear={year} chartData={chartData[activeUser]} schoolName={directorUser?.department} />
             </div>}
 
             {(activeUser !== "Student" && chartData[activeUser]) && <div className="mb-5">
-              <OtherResponseAnalysis questionsWithData={chartData[activeUser]} />
+              <OtherResponseAnalysis feedbackUser={activeUser} academicYear={year} questionsWithData={chartData[activeUser]} schoolName={directorUser?.department} />
             </div>}
 
           </div>
