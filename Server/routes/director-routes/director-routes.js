@@ -24,6 +24,7 @@ const SyllabusRevision = require('../../models/director-models/syllabusRevisionS
 const AlumniContribution = require('../../models/director-models/alumniContributionSchema');
 const ConferencesSemiWorkshopOrganized = require('../../models/director-models/conferencesSemiWorkshopOrganizedSchema')
 const CourceInAllProgram = require('../../models/director-models/courceInAllProgramSchema')
+const NewPrograms = require('../../models/director-models/newProgramsSchema')
 const StudentUser = require('../../models/student-models/studentUserSchema')
 const AlumniUser = require('../../models/alumni-models/alumniUserSchema')
 const StudentIdCount = require('../../models/student-models/studentIdCountSchema')
@@ -59,7 +60,7 @@ const excelStorage = multer.diskStorage({
 })
 const excelUpload = multer({ storage: excelStorage })
 
-let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram }
+let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram, NewPrograms }
 
 //Set Route
 
@@ -834,7 +835,12 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
                 "Program Code": 'programCode',
                 "Course Name": 'courseName', 
                 "Course Code": 'courseCode',
-                "Academic Year": 'acadmicYear',
+                "Academic Year": 'academicYear',
+            },
+            NewPrograms: {
+                "Program Name": 'programName',
+                "Program Code": 'programCode',
+                "Academic Year": 'academicYear',
             }
 
         }

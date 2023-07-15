@@ -14,6 +14,8 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
 //components
 import SyllabusRevision from '../../pages/SyllabusRevision';
@@ -38,6 +40,8 @@ import TrainingProgramsOrganized from "../../pages/TrainingProgramsOrganized";
 import AlumniContribution from "../../pages/AlumniContribution";
 import ConferencesSemiWorkshopOrganized from '../../pages/ConferencesSemiWorkshopOrganized';
 import CourseInAllProgram from '../../pages/CourseInAllProgram';
+import NewPrograms from '../../pages/NewPrograms'
+
 
 const navcom = [
     {
@@ -251,11 +255,20 @@ const navcom = [
     },
     {
         element: <CourseInAllProgram/>,
-        icon: <SchoolIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
+        icon: < LibraryAddIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
         name: 'courseInAllPrograms',
-        value: 'Course In All Program',
+        value: 'Courses In All Program',
         instruction:[
-            "Course in all program"
+            "Courses in all program"
+        ]
+    },
+    {
+        element: <NewPrograms/>,
+        icon: <ImportContactsIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
+        name: 'newPrograms',
+        value: 'New Programs',
+        instruction:[
+            "New Programs"
         ]
     }
 ]

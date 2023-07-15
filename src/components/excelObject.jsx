@@ -163,7 +163,12 @@ const excelObject = {
         'programCode': "Program Code",
         'courseName': "Course Name", 
         'courseCode': "Course Code",
-        'acadmicYear': "Academic Year",
+        'academicYear': "Academic Year",
+    },
+    NewPrograms: {
+        'programName': "Program Name",
+        'programCode': "Program Code",
+        'academicYear': "Academic Year",
     },
 
     //Faculty 
