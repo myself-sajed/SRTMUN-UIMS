@@ -23,6 +23,7 @@ const Placement = require('../../models/director-models/placementSchema');
 const SyllabusRevision = require('../../models/director-models/syllabusRevisionSchema');
 const AlumniContribution = require('../../models/director-models/alumniContributionSchema');
 const ConferencesSemiWorkshopOrganized = require('../../models/director-models/conferencesSemiWorkshopOrganizedSchema')
+const CourceInAllProgram = require('../../models/director-models/courceInAllProgramSchema')
 const StudentUser = require('../../models/student-models/studentUserSchema')
 const AlumniUser = require('../../models/alumni-models/alumniUserSchema')
 const StudentIdCount = require('../../models/student-models/studentIdCountSchema')
@@ -58,7 +59,7 @@ const excelStorage = multer.diskStorage({
 })
 const excelUpload = multer({ storage: excelStorage })
 
-let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser }
+let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram }
 
 //Set Route
 
@@ -81,11 +82,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Year_of_Award: ayoa,
                 Category: ac,
             }
-        }
-        //ConferencesSemiWorkshopOrganized
-        else if (model == "ConferencesSemiWorkshopOrganized") {
-            const { Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program } = data
-            SendData = { Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program }
         }
         //CounselingAndGuidance
         else if (model == 'CounselingAndGuidance') {
@@ -148,13 +144,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Year_of_signing_MoU: muyosm
             }
         }
-        //Placement
-        else if (model == 'Placement') {
-            const { Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement } = data
-            SendData = {
-                Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement
-            }
-        }
         //ProgressionToHE
         else if (model == 'ProgressionToHE') {
             const { pthenose, pthepgf, pthenoia, pthenopa, ptheya } = data
@@ -176,13 +165,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Name_of_the_student: pinots
             }
 
-        }
-        //QualifiedExams
-        else if (model == 'QualifiedExams') {
-            const { Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam } = data
-            SendData = {
-                Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam
-            }
         }
         //ReservedSeats
         else if (model == 'ReservedSeats') {
@@ -303,13 +285,11 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Percentage_of_content_added_or_replaced: srpocaor
             }
         }
-        //AlumniContribution
-        else if (model == 'AlumniContribution') {
-            const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
-            SendData = {
-                Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
-            }
+        //AlumniContribution, CourSeInAllProgram, QualifiedExams, Placement, ConferencesSemiWorkshopOrganized
+        else {
+            SendData = data
         }
+        
         
         var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName: School })
       
@@ -333,21 +313,8 @@ router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (r
         const { SchoolName, userId } = data
         const up = req.file.filename;
 
-
-        //ExtensionActivities
-        if (model == 'ExtensionActivities') {
-            const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = data
-            SendData = {
-                Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
-            }
-        }
-        //MoUs
-        else if (model == 'MoUs') {
-            const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = data
-            SendData = {
-                Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU
-            }
-        }
+        //ExtensionActivities MoUs
+        SendData = data
 
         var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName, userId })
         const obj = new models[model](withUpData);
@@ -435,12 +402,6 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Category: ac,
         }
     }
-    //ConferencesSemiWorkshopOrganized
-    else if (model == "ConferencesSemiWorkshopOrganized") {
-
-        const { Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program } = data
-        SendData = { Year, From_Date, To_Date, Title_Of_the_Program, Number_of_Participants, Level_of_program }
-    }
     //CounselingAndGuidance
     else if (model == "CounselingAndGuidance") {
         const { cagnotacbth, cagnosa, cagyoa, } = data
@@ -501,14 +462,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Duration_of_MoU: mudom,
             Year_of_signing_MoU: muyosm
         }
-    }
-    //Placement
-    else if (model == 'Placement') {
-        const { Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement } = data
-        SendData = {
-            Name_of_student_placed, Program_graduated_from, Name_of_the_employer, Employer_contact_details, Pay_package_annum, Academic_Year, Type_Of_Placement
-        }
-    }
+    }    
     //ProgressionToHE
     else if (model == 'ProgressionToHE') {
         const { pthenose, pthepgf, pthenoia, pthenopa, ptheya } = data
@@ -530,14 +484,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Name_of_the_student: pinots
         }
 
-    }
-    //QualifiedExams
-    else if (model == 'QualifiedExams') {
-        const { Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam } = data
-        SendData = {
-            Acadmic_year, Registration_number_roll_number, Names_of_students_selected_qualified, Name_of_the_Exam
-        }
-    }
+    }    
     //ReservedSeats
     else if (model == 'ReservedSeats') {
         const { rsay, rsa, rssc, rsst, rsobc, rsd, rsg, rso } = data
@@ -657,12 +604,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Percentage_of_content_added_or_replaced: srpocaor
         }
     }
-    //AlumniContribution
-    else if (model == 'AlumniContribution') {
-        const { Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year } = data
-        SendData = {
-            Name_of_The_Alumni_Contributed, Program_graduated_from, Amount_of_contribution, Academic_Year
-        }
+    //AlumniContribution, ConferencesSemiWorkshopOrganized, QualifiedExams, Placement, CourceInAllProgram
+    else {
+        SendData = data
     }
 
     var alldata = null
@@ -686,20 +630,9 @@ router.post('/faculty/editRecord/:model', upload.single('Upload_Proof'), async (
     if (isfile) {
         var up = req.file.filename
     }
-     //ExtensionActivities
-     if (model == 'ExtensionActivities') {
-        const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = data
-        SendData = {
-            Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students
-        }
-    }
-    //MoUs
-    else if (model == "MoUs") {
-        const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = data
-        SendData = {
-            Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU
-        }
-    }
+     //ExtensionActivities, MoUs
+    SendData=data
+
      var alldata = null
     if (up) {
         alldata = Object.assign(SendData, { Upload_Proof: up })
@@ -724,7 +657,6 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     const values = JSON.parse(JSON.stringify(req.body));
     const { School } = values
     const multiData = model=="MoUs"|| model=="ExtensionActivities"? JSON.parse(School):School
-    
 
     let data = []
     try {
@@ -896,6 +828,13 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
                 "Program Graduated From": "Program_graduated_from",
                 "Contribution Ammount in ₹": "Amount_of_contribution",
                 "Year of Contribution": "Academic_Year",
+            },
+            CourceInAllProgram: {
+                "Program Name": 'programName',
+                "Program Code": 'programCode',
+                "Course Name": 'courseName', 
+                "Course Code": 'courseCode',
+                "Academic Year": 'acadmicYear',
             }
 
         }

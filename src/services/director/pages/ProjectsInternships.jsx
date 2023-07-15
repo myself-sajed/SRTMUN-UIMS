@@ -41,6 +41,8 @@ function ProjectsInternships({ filterByAcademicYear = false, academicYear }) {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
+    const title='Projects Internships';
+
     useEffect(() => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
@@ -61,7 +63,7 @@ function ProjectsInternships({ filterByAcademicYear = false, academicYear }) {
         <>
             <AddButton onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
-                <Diatitle clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
+                <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
@@ -84,7 +86,7 @@ function ProjectsInternships({ filterByAcademicYear = false, academicYear }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProjectsInternshipsDirector${directorUser?.department}`} title='Projects Internships' SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProjectsInternshipsDirector${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
