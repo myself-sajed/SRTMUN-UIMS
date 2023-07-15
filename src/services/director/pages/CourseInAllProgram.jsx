@@ -17,7 +17,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
-const tableHead = { index: "Sr. no.", programName: "Program Name", programCode: "Program Code", courseName: "Course Name",courseName: "Course Code", academicYear: "Academic Year", Action: "Action" }
+const tableHead = { index: "Sr. no.", programName: "Program Name", programCode: "Program Code", courseName: "Course Name", courseCode: "Course Code",  academicYear: "Academic Year", Action: "Action" }
 
 function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   const SendReq = "CourceInAllProgram"
@@ -40,7 +40,7 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
-  const title = "Course In All Programs";
+  const title = "Courses In All Programs";
    
   useEffect(() => {
     if (itemToEdit && data.data) {
