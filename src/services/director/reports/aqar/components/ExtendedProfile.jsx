@@ -69,7 +69,7 @@ const ExtendedProfile = ({ aqarYearState }) => {
             setClassrooms(data?.extendedProfile?.classrooms ? data?.extendedProfile?.classrooms : null)
             setComputers(data?.extendedProfile?.computers ? data?.extendedProfile?.computers : null)
 
-            console.log('data is :', data?.extendedProfile?.programs)
+            console.log('data is :', data?.extendedProfile?.courses)
         }
     }, [data])
 

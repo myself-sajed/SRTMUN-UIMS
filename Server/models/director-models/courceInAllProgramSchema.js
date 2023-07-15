@@ -28,6 +28,6 @@ const courceInAllProgramSchema = new mongoose.Schema({
 
 })
 
-const CourceInAllProgram = new mongoose.model('CourceInAllProgram', courceInAllProgramSchema);
+const CourceInAllProgram = new mongoose.model('coursesinallprograms', courceInAllProgramSchema);
 
 module.exports = CourceInAllProgram;
