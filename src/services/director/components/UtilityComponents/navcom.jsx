@@ -37,8 +37,7 @@ import ProgressionToHE from "../../pages/ProgressionToHE";
 import TrainingProgramsOrganized from "../../pages/TrainingProgramsOrganized";
 import AlumniContribution from "../../pages/AlumniContribution";
 import ConferencesSemiWorkshopOrganized from '../../pages/ConferencesSemiWorkshopOrganized';
-
-
+import CourseInAllProgram from '../../pages/CourseInAllProgram';
 
 const navcom = [
     {
@@ -249,6 +248,15 @@ const navcom = [
             "Alumni contributions"
         ],
 
+    },
+    {
+        element: <CourseInAllProgram/>,
+        icon: <SchoolIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
+        name: 'courseInAllPrograms',
+        value: 'Course In All Program',
+        instruction:[
+            "Course in all program"
+        ]
     }
 ]
 

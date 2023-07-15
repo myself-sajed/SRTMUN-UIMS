@@ -158,6 +158,13 @@ const excelObject = {
         "Amount_of_contribution": "Contribution Ammount in ₹",
         "Academic_Year": "Year of Contribution",
     },
+    CourceInAllProgram: {
+        'programName': "Program Name",
+        'programCode': "Program Code",
+        'courseName': "Course Name", 
+        'courseCode': "Course Code",
+        'acadmicYear': "Academic Year",
+    },
 
     //Faculty 
     AppointmentsHeldPrior: {
