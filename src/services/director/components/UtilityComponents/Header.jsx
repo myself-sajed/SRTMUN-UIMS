@@ -136,14 +136,6 @@ export default function Header() {
                 </Drawer>
             </div>
 
-
-
-            <div className='my-3'>
-                <p className="p-2 bg-blue-500 rounded-full text-white flex items-center justify-start gap-3">
-                    <p className='text-xl ml-5'>{data?.icon}</p>
-                    <span>{currentPage}</span>
-                </p>
-            </div>
         </div>
     );
 }
