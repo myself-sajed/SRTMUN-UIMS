@@ -11,31 +11,31 @@ function fetchFeedbackData(app) {
         const { filter, feedbackUser } = req.body;
 
         let dashboardData = {}
-        dashboardData.Student = await FeedbackModels.StudentFeedback.find(filter)
-        dashboardData.StudentCount = dashboardData.Student.length
-        dashboardData.Teacher = await FeedbackModels.TeacherFeedback.find(filter)
-        dashboardData.TeacherCount = dashboardData.Teacher.length
-        dashboardData.Alumni = await FeedbackModels.AlumniFeedback.find(filter)
-        dashboardData.AlumniCount = dashboardData.Alumni.length
-        dashboardData.Parent = await FeedbackModels.ParentFeedback.find(filter)
-        dashboardData.ParentCount = dashboardData.Parent.length
-        dashboardData.Employer = await FeedbackModels.EmployerFeedback.find(filter)
-        dashboardData.EmployerCount = dashboardData.Employer.length
-        dashboardData.Faculties = await User.find({ department: filter.schoolName })
-        dashboardData.FacultiesCount = dashboardData.Faculties.length
+        let Student = await FeedbackModels.StudentFeedback.find(filter).select("response")
+        dashboardData.StudentCount = Student.length
+        let Teacher = await FeedbackModels.TeacherFeedback.find(filter).select("response")
+        dashboardData.TeacherCount = Teacher.length
+        let Alumni = await FeedbackModels.AlumniFeedback.find(filter).select("response")
+        dashboardData.AlumniCount = Alumni.length
+        let Parent = await FeedbackModels.ParentFeedback.find(filter).select("response")
+        dashboardData.ParentCount = Parent.length
+        let Employer = await FeedbackModels.EmployerFeedback.find(filter).select("response")
+        dashboardData.EmployerCount = Employer.length
+        let Expert = await FeedbackModels.ExpertFeedback.find(filter).select("response")
+        dashboardData.ExpertCount = Expert.length
+
 
         let analysis = {}
 
-
         if (feedbackUser === "Student") {
 
-            let reponses = dashboardData.Student.map((item) => {
+            let reponses = Student.map((item) => {
                 return JSON.parse(item.response)
             })
 
             analysis["Student"] = generateChartDataForStudent(reponses)
         } else if (feedbackUser === "Teacher") {
-            let reponses = dashboardData.Teacher.map((item) => {
+            let reponses = Teacher.map((item) => {
                 return JSON.parse(item.response)
             })
 
@@ -62,7 +62,7 @@ function fetchFeedbackData(app) {
             analysis["Teacher"] = questions
 
         } else if (feedbackUser === "Alumni") {
-            let reponses = dashboardData.Alumni.map((item) => {
+            let reponses = Alumni.map((item) => {
                 return JSON.parse(item.response)
             })
 
@@ -128,7 +128,7 @@ function fetchFeedbackData(app) {
             analysis["Alumni"] = questions
 
         } else if (feedbackUser === "Parent") {
-            let reponses = dashboardData.Parent.map((item) => {
+            let reponses = Parent.map((item) => {
                 return JSON.parse(item.response)
             })
 
@@ -186,7 +186,7 @@ function fetchFeedbackData(app) {
             analysis["Parent"] = questions
 
         } else if (feedbackUser === "Employer") {
-            let reponses = dashboardData.Employer.map((item) => {
+            let reponses = Employer.map((item) => {
                 return JSON.parse(item.response)
             })
 
@@ -248,6 +248,76 @@ function fetchFeedbackData(app) {
 
             analysis["Employer"] = questions
 
+        } else if (feedbackUser === "Expert") {
+            let reponses = Expert.map((item) => {
+                return JSON.parse(item.response)
+            })
+
+            const questions = [{
+                type: 'radio',
+                required: true,
+                question: 'The Course objectives & outcomes  were clearly defined / identified',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',]
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'The books prescribed/listed as reference materials are relevant, updated and appropriate.',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',],
+                show: 'Chart'
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'The program of studies carries sufficient number of elective(optional) papers.',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',]
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'Size / quantum of curriculum according to course duration',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',],
+                show: 'Chart'
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'The Curriculum is need base and balanced',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',]
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'Curriculum is designed in view of  employability, Research and Innovation',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',],
+                show: 'Chart'
+            },
+            {
+                type: 'radio',
+                required: true,
+                question: 'The program provides focus on skill Development /Employability/ Entrepreneurship',
+                options: ['Excellent', 'Good', 'Average', 'Below Average',]
+            },
+            {
+                type: 'text',
+                required: true,
+                question: 'Any suggestions on course objectives and course outcomes',
+            },
+            {
+                type: 'text',
+                required: true,
+                question: 'Would you suggest any courses to be introduced',
+            },
+            {
+                type: 'text',
+                required: true,
+                question: 'Any other comments towards the  betterment of the curriculum',
+            },]
+
+            generateChartDataForTeacher(reponses, questions)
+
+            analysis["Expert"] = questions
+
         }
 
 
@@ -260,16 +330,18 @@ function fetchFeedbackData(app) {
         const { filter } = req.body;
 
         let dashboardData = {}
-        dashboardData.Student = await FeedbackModels.StudentFeedback.find(filter)
+        dashboardData.Student = await FeedbackModels.StudentFeedback.find(filter).select("schoolName").lean()
         dashboardData.StudentCount = dashboardData.Student.length
-        dashboardData.Teacher = await FeedbackModels.TeacherFeedback.find(filter)
+        dashboardData.Teacher = await FeedbackModels.TeacherFeedback.find(filter).select("schoolName").lean()
         dashboardData.TeacherCount = dashboardData.Teacher.length
-        dashboardData.Alumni = await FeedbackModels.AlumniFeedback.find(filter)
+        dashboardData.Alumni = await FeedbackModels.AlumniFeedback.find(filter).select("schoolName").lean()
         dashboardData.AlumniCount = dashboardData.Alumni.length
-        dashboardData.Parent = await FeedbackModels.ParentFeedback.find(filter)
+        dashboardData.Parent = await FeedbackModels.ParentFeedback.find(filter).select("schoolName").lean()
         dashboardData.ParentCount = dashboardData.Parent.length
-        dashboardData.Employer = await FeedbackModels.EmployerFeedback.find(filter)
+        dashboardData.Employer = await FeedbackModels.EmployerFeedback.find(filter).select("schoolName").lean()
         dashboardData.EmployerCount = dashboardData.Employer.length
+        dashboardData.Expert = await FeedbackModels.ExpertFeedback.find(filter).select("schoolName").lean()
+        dashboardData.ExpertCount = dashboardData.Expert.length
 
 
         let schoolNames = Object.keys(SchoolsProgram)
@@ -279,9 +351,9 @@ function fetchFeedbackData(app) {
         const StudentsSchoolWise = dashboardData.Student.reduce((obj, item) => {
             if (schoolNames.includes(item.schoolName)) {
                 if (obj[item.schoolName]) {
-                    obj[item.schoolName].push(item);
+                    obj[item.schoolName] += 1;
                 } else {
-                    obj[item.schoolName] = [item];
+                    obj[item.schoolName] = 1;
                 }
             }
             return obj;
@@ -290,9 +362,9 @@ function fetchFeedbackData(app) {
         const TeachersSchoolWise = dashboardData.Teacher.reduce((obj, item) => {
             if (schoolNames.includes(item.schoolName)) {
                 if (obj[item.schoolName]) {
-                    obj[item.schoolName].push(item);
+                    obj[item.schoolName] += 1;
                 } else {
-                    obj[item.schoolName] = [item];
+                    obj[item.schoolName] = 1;
                 }
             }
             return obj;
@@ -301,9 +373,9 @@ function fetchFeedbackData(app) {
         const AlumniSchoolWise = dashboardData.Alumni.reduce((obj, item) => {
             if (schoolNames.includes(item.schoolName)) {
                 if (obj[item.schoolName]) {
-                    obj[item.schoolName].push(item);
+                    obj[item.schoolName] += 1;
                 } else {
-                    obj[item.schoolName] = [item];
+                    obj[item.schoolName] = 1;
                 }
             }
             return obj;
@@ -312,9 +384,9 @@ function fetchFeedbackData(app) {
         const ParentsSchoolWise = dashboardData.Parent.reduce((obj, item) => {
             if (schoolNames.includes(item.schoolName)) {
                 if (obj[item.schoolName]) {
-                    obj[item.schoolName].push(item);
+                    obj[item.schoolName] += 1;
                 } else {
-                    obj[item.schoolName] = [item];
+                    obj[item.schoolName] = 1;
                 }
             }
             return obj;
@@ -323,16 +395,27 @@ function fetchFeedbackData(app) {
         const EmployersSchoolWise = dashboardData.Employer.reduce((obj, item) => {
             if (schoolNames.includes(item.schoolName)) {
                 if (obj[item.schoolName]) {
-                    obj[item.schoolName].push(item);
+                    obj[item.schoolName] += 1;
                 } else {
-                    obj[item.schoolName] = [item];
+                    obj[item.schoolName] = 1;
+                }
+            }
+            return obj;
+        }, {});
+
+        const ExpertsSchoolWise = dashboardData.Expert.reduce((obj, item) => {
+            if (schoolNames.includes(item.schoolName)) {
+                if (obj[item.schoolName]) {
+                    obj[item.schoolName] += 1;
+                } else {
+                    obj[item.schoolName] = 1;
                 }
             }
             return obj;
         }, {});
 
 
-        res.send({ message: 'success', data: { StudentsSchoolWise, TeachersSchoolWise, AlumniSchoolWise, ParentsSchoolWise, EmployersSchoolWise, StudentCount: dashboardData.StudentCount, TeacherCount: dashboardData.TeacherCount, AlumniCount: dashboardData.AlumniCount, ParentCount: dashboardData.ParentCount, EmployerCount: dashboardData.EmployerCount } })
+        res.send({ message: 'success', data: { StudentsSchoolWise, TeachersSchoolWise, AlumniSchoolWise, ParentsSchoolWise, EmployersSchoolWise, ExpertsSchoolWise, StudentCount: dashboardData.StudentCount, TeacherCount: dashboardData.TeacherCount, AlumniCount: dashboardData.AlumniCount, ParentCount: dashboardData.ParentCount, EmployerCount: dashboardData.EmployerCount, ExpertCount: dashboardData.ExpertCount } })
 
 
     })

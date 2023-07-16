@@ -51,6 +51,7 @@ let siteLinks = {
     teacherFeedack: { title: "Teacher Feedback Form", link: '/feedback/teacher' },
     parentFeedack: { title: "Parent Feedback Form", link: '/feedback/parent' },
     alumniFeedack: { title: "Alumni Feedback Form", link: '/feedback/alumni' },
+    expertFeedback: { title: "Subject Expert Feedback Form", link: '/feedback/expert' },
     employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
 
 

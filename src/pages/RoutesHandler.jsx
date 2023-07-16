@@ -83,6 +83,7 @@ import FeedbackDashboard from '../services/feedback/pages/FeedbackDashboard'
 import DirectorReportStatus from '../services/director/pages/DirectorReportStatus'
 import AdminFeedbackStatus from '../services/admin/pages/AdminFeedbackStatus'
 import FeedbackReport from '../templates/feedback/FeedbackReport'
+import ExpertFeedback from '../services/feedback/pages/ExpertFeedback'
 
 
 
@@ -174,6 +175,7 @@ const RoutesHandler = () => {
                 <Route path='/feedback/alumni' exact element={<AlumniFeedback />} />
                 <Route path='/feedback/parent' exact element={<ParentFeedback />} />
                 <Route path='/feedback/employer' exact element={<EmployerFeedback />} />
+                <Route path='/feedback/expert' exact element={<ExpertFeedback />} />
                 <Route path='/feedback/:userType/:year/:school' exact element={<FeedbackRedirect />} />
 
 

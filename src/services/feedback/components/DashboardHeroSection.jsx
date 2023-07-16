@@ -5,14 +5,16 @@ import WcRoundedIcon from '@mui/icons-material/WcRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import FamilyRestroomRoundedIcon from '@mui/icons-material/FamilyRestroomRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
+import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 
 const DashboardHeroSection = ({ countData, isLoading, showDetails = false, year, showActive = false, setActiveUser }) => {
-    return <div className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4'>
+    return <div className='grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4'>
         <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["StudentCount"]} title="Student" />
         <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["TeacherCount"]} title="Teacher" />
         <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["AlumniCount"]} title="Alumni" />
         <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["ParentCount"]} title="Parent" />
         <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["EmployerCount"]} title="Employer" />
+        <DashboardTile setActiveUser={setActiveUser} showActive={showActive} year={year} showDetails={showDetails} isLoading={isLoading} count={countData?.["ExpertCount"]} title="Expert" />
     </div>
 }
 
@@ -25,6 +27,7 @@ const DashboardTile = ({ title, count, isLoading, showDetails, year, showActive,
         Alumni: <GroupsRoundedIcon sx={{ height: '40px', width: '40px' }} />,
         Parent: <FamilyRestroomRoundedIcon sx={{ height: '40px', width: '40px' }} />,
         Employer: <PeopleRoundedIcon sx={{ height: '40px', width: '40px' }} />,
+        Expert: <LocalLibraryRoundedIcon sx={{ height: '40px', width: '40px' }} />,
     }
 
     return (

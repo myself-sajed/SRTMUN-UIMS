@@ -17,7 +17,7 @@ const AdminFeedbackStatus = () => {
   const [academicYear, setAcademicYear] = useState(academicYearGenerator(1)[0])
 
   let param = { filter: { academicYear } }
-  const { data, isLoading, refetch } = useQuery([param.model, param], () => getTotalFeedbackData(param))
+  const { data, isLoading, refetch } = useQuery([param.filter, param], () => getTotalFeedbackData(param))
 
   useEffect(() => {
     refetch()
@@ -45,7 +45,7 @@ const AdminFeedbackStatus = () => {
 
   useEffect(() => {
 
-    if (data?.data?.data) {
+    if (analysisData?.data?.data) {
       setChartData(() => analysisData?.data?.data?.analysis)
     }
   }, [analysisData, academicYear])
@@ -53,10 +53,14 @@ const AdminFeedbackStatus = () => {
   useEffect(() => {
     if (expandedRow) {
       setChartData(() => null)
-      console.log('Refetching')
       analysisRefetch()
     }
   }, [expandedRow?.title, expandedRow?.school, expandedRow?.rowIndex, expandedRow])
+
+  useEffect(() => {
+    console.log('TotalData :', data?.data?.data)
+    console.log('Analysis data :', analysisData?.data?.data)
+  }, [data, analysisData])
 
 
   return (
@@ -79,7 +83,7 @@ const AdminFeedbackStatus = () => {
             <div className="my-3">
               <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} showDetails={false} year={academicYear} />
             </div>
-            <p className="text-sm text-muted">Note: Please click on the count of Student, Teacher, Alumni, Parent or Employer of any school in the table to check the Feedback Analysis of that school.</p>
+            <p className="text-sm text-muted mt-5">Note: Please click on the count of Student, Teacher, Alumni, Parent, Employer or Expert of any school in the table to check the Feedback Analysis of that school.</p>
             <table className="table table-bordered my-3">
               <thead className="bg-primary text-white">
                 <tr>
@@ -89,6 +93,7 @@ const AdminFeedbackStatus = () => {
                   <th>Alumni</th>
                   <th>Parents</th>
                   <th>Employer</th>
+                  <th>Expert</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,11 +106,12 @@ const AdminFeedbackStatus = () => {
                       <Feedbacktd expandedRow={expandedRow} title="Alumni" rowIndex={rowIndex} toggleRow={toggleRow} school={school} data={data} accessor="AlumniSchoolWise" />
                       <Feedbacktd expandedRow={expandedRow} title="Parent" rowIndex={rowIndex} toggleRow={toggleRow} school={school} data={data} accessor="ParentsSchoolWise" />
                       <Feedbacktd expandedRow={expandedRow} title="Employer" rowIndex={rowIndex} toggleRow={toggleRow} school={school} data={data} accessor="EmployersSchoolWise" />
+                      <Feedbacktd expandedRow={expandedRow} title="Expert" rowIndex={rowIndex} toggleRow={toggleRow} school={school} data={data} accessor="ExpertsSchoolWise" />
                     </tr>
                       {expandedRow?.rowIndex === rowIndex && (
                         <tr id={school}>
-                          <td colspan="6" className='p-3'>
-                            <div className='h-[500px] overflow-auto'>
+                          <td colspan="7" className='p-3'>
+                            <div className='h-screen overflow-auto'>
                               <div className='pr-4'>
                                 <p className='mb-3 mt-3 text-lg font-bold rounded-md text-center flex items-center justify-center gap-3 p-2 bg-blue-800 text-white'> <AnalyticsRoundedIcon /> {expandedRow?.title} Feedback Analysis for {expandedRow?.school} </p>
                                 {analysisLoading ?
@@ -122,31 +128,37 @@ const AdminFeedbackStatus = () => {
                                         {
                                           expandedRow?.title === "Student" && chartData["Student"] &&
                                           <div className="mb-5 w-full">
-                                            <StudentAnalysis chartData={chartData["Student"]} />
+                                            <StudentAnalysis feedbackUser={"Student"} schoolName={expandedRow.school} academicYear={academicYear} chartData={chartData["Student"]} />
                                           </div>
                                         }
                                         {
                                           expandedRow?.title === "Teacher" && chartData["Teacher"] &&
                                           <div className="mb-5 w-full">
-                                            <OtherResponseAnalysis questionsWithData={chartData["Teacher"]} />
+                                            <OtherResponseAnalysis feedbackUser={"Teacher"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Teacher"]} />
                                           </div>
                                         }
                                         {
                                           expandedRow?.title === "Alumni" && chartData["Alumni"] &&
                                           <div className="mb-5 w-full">
-                                            <OtherResponseAnalysis questionsWithData={chartData["Alumni"]} />
+                                            <OtherResponseAnalysis feedbackUser={"Alumni"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Alumni"]} />
                                           </div>
                                         }
                                         {
                                           expandedRow?.title === "Parent" && chartData["Parent"] &&
                                           <div className="mb-5 w-full">
-                                            <OtherResponseAnalysis questionsWithData={chartData["Parent"]} />
+                                            <OtherResponseAnalysis feedbackUser={"Parent"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Parent"]} />
                                           </div>
                                         }
                                         {
                                           expandedRow?.title === "Employer" && chartData["Employer"] &&
                                           <div className="mb-5 w-full">
-                                            <OtherResponseAnalysis questionsWithData={chartData["Employer"]} />
+                                            <OtherResponseAnalysis feedbackUser={"Employer"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Employer"]} />
+                                          </div>
+                                        }
+                                        {
+                                          expandedRow?.title === "Expert" && chartData["Expert"] &&
+                                          <div className="mb-5 w-full">
+                                            <OtherResponseAnalysis feedbackUser={"Expert"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Expert"]} />
                                           </div>
                                         }
 
@@ -178,5 +190,5 @@ export default AdminFeedbackStatus
 
 const Feedbacktd = ({ expandedRow, title, data, accessor, school, rowIndex, toggleRow }) => {
   return <td onClick={() => toggleRow({ rowIndex, title, school })} className={`font-semibold text-blue-800 cursor-pointer p-2 rounded-sm ${(expandedRow && expandedRow.title === title && expandedRow.school === school) ? 'font-extrabold' : 'hover:font-extrabold'}`} >
-    {data?.data?.data?.[accessor]?.[school]?.length || 0} </td>
+    {data?.data?.data?.[accessor]?.[school] || 0} </td>
 }

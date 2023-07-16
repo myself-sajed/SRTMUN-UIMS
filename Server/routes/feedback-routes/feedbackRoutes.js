@@ -3,8 +3,9 @@ const TeacherFeedback = require('../../models/feedback-models/teacherFeedbackMod
 const AlumniFeedback = require('../../models/feedback-models/alumniFeedbackModel')
 const ParentFeedback = require('../../models/feedback-models/parentFeedbackModel')
 const EmployerFeedback = require('../../models/feedback-models/employerFeedbackModel')
+const ExpertFeedback = require('../../models/feedback-models/expertFeedbackModel')
 
-const feedbackModels = { StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback }
+const feedbackModels = { StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback }
 
 function studentFeedbackRoutes(app) {
 
@@ -78,6 +79,22 @@ function studentFeedbackRoutes(app) {
         const { response, academicYear, schoolName } = req.body;
         const employerFeedback = new EmployerFeedback({ academicYear, schoolName, response: JSON.stringify(response) });
         employerFeedback.save().then((savedFeedback) => {
+            if (savedFeedback) {
+                res.send({ status: 'success', message: 'Feedback submitted successfully' })
+            }
+            else {
+                res.send({ status: 'error', message: 'Could not save the form...' })
+            }
+        })
+
+    })
+
+    app.post('/feedback/expertFeedback/collectResponse', (req, res) => {
+        // collecting the response here
+
+        const { response, academicYear, schoolName } = req.body;
+        const expertFeedback = new ExpertFeedback({ academicYear, schoolName, response: JSON.stringify(response) });
+        expertFeedback.save().then((savedFeedback) => {
             if (savedFeedback) {
                 res.send({ status: 'success', message: 'Feedback submitted successfully' })
             }
