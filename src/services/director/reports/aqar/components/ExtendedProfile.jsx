@@ -10,6 +10,9 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import getAQARData from '../js/getAQARData'
 import useScroll from '../../../../../hooks/useScroll'
+import NewPrograms from '../../../pages/NewPrograms'
+import CourceInAllPrograms from '../../../pages/CourseInAllProgram'
+import TableAccordion from '../../../../faculty/reports/aqar/components/TableAccordion'
 
 
 const ExtendedProfile = ({ aqarYearState }) => {
@@ -19,15 +22,10 @@ const ExtendedProfile = ({ aqarYearState }) => {
     const directorUser = useSelector((state) => state.user.directorUser)
     const [data, setData] = useState(null)
 
-    const [autoSaveLoader, setAutoSaveLoader] = useState(false)
-    const [programDuringYear, setProgramDuringYear] = useState({ input: 0, ProgramCode: {}, ProgramName: {} })
-    const [coursesDuringYear, setCoursesDuringYear] = useState({ input: 0, ProgramCode: {}, ProgramName: {}, CourseCode: {}, CourseName: {} })
     const [classrooms, setClassrooms] = useState(null)
     const [computers, setComputers] = useState(null)
 
     const extendedProfile = {
-        programs: programDuringYear?.data ? programDuringYear.data : [],
-        courses: coursesDuringYear?.data ? coursesDuringYear.data : [],
         classrooms: classrooms ? classrooms : 0,
         computers: computers ? computers : 0
     }
@@ -49,12 +47,6 @@ const ExtendedProfile = ({ aqarYearState }) => {
 
     }
 
-    useEffect(() => {
-        if (autoSaveLoader) {
-            saveData()
-            setAutoSaveLoader(() => false)
-        }
-    }, [autoSaveLoader])
 
     useEffect(() => {
         getAQARData(setData, true, { schoolName: directorUser?.department }, aqarYearState, 'director')
@@ -62,47 +54,31 @@ const ExtendedProfile = ({ aqarYearState }) => {
 
     useEffect(() => {
         if (data) {
-            setProgramDuringYear(data?.extendedProfile?.programs ? { input: 0, ProgramCode: {}, ProgramName: {}, data: data?.extendedProfile?.programs } : { input: 0, ProgramCode: {}, ProgramName: {} })
-
-            setCoursesDuringYear(data?.extendedProfile?.courses ? { data: data?.extendedProfile?.courses, input: 0, ProgramCode: {}, ProgramName: {}, CourseCode: {}, CourseName: {} } : { input: 0, ProgramCode: {}, ProgramName: {}, CourseCode: {}, CourseName: {} })
 
             setClassrooms(data?.extendedProfile?.classrooms ? data?.extendedProfile?.classrooms : null)
             setComputers(data?.extendedProfile?.computers ? data?.extendedProfile?.computers : null)
-
-            console.log('data is :', data?.extendedProfile?.courses)
         }
     }, [data])
+
+    const AQARTables = [
+        {
+            title: 'Newly introduced program(s) during this year',
+            component: <NewPrograms filterByAcademicYear={true} academicYear={aqarYearState} />
+        },
+        {
+            title: 'Courses in all programs during the year',
+            component: <CourceInAllPrograms filterByAcademicYear={true} academicYear={aqarYearState} />
+        },
+    ]
 
     return (
         <div>
             <div className='my-5'>
-                <Wrapper title="1. Name of the Programs introduced during the year">
-                    <NumberToTextField state={programDuringYear} setState={setProgramDuringYear} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Number of Programs offered during year" isForm={true} classes='my-3'
-                        options={TableData.aqarPrograms.fieldOptions}
-                    >
-                        <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.aqarPrograms.auditHead}
-                            tableChildHead={TableData.aqarPrograms.childHead} state={programDuringYear}
-                            setState={setProgramDuringYear} cellAsInput={false}
-                            options={TableData.aqarPrograms.fieldOptions} isForm={true} editTitle="Programs offered during year"
-                        >
 
-                        </AuditTable>
-                    </NumberToTextField>
-                </Wrapper>
 
-                <Wrapper title="2. Courses in all programs during the year">
-                    <NumberToTextField state={coursesDuringYear} setState={setCoursesDuringYear} setAutoSaveLoader={setAutoSaveLoader} autoSaveLoader={autoSaveLoader} label="Courses in all programs during the year" isForm={true} classes='my-3'
-                        options={TableData.aqarCourse.fieldOptions}
-                    >
-                        <AuditTable setAutoSaveLoader={setAutoSaveLoader} tableHead={TableData.aqarCourse.auditHead}
-                            tableChildHead={TableData.aqarCourse.childHead} state={coursesDuringYear}
-                            setState={setCoursesDuringYear} cellAsInput={false}
-                            options={TableData.aqarCourse.fieldOptions} isForm={true} editTitle="Courses offered in all programs during year"
-                        >
 
-                        </AuditTable>
-                    </NumberToTextField>
-                </Wrapper>
+
+                <TableAccordion AQARTables={AQARTables} />
 
                 <Wrapper title="3. Total Classrooms, Seminar halls & Computers for academic purposes">
                     <div>

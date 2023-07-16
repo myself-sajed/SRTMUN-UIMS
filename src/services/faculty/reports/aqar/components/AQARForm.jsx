@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // other imports
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useSelector } from 'react-redux'
-import { Typography } from '@mui/material'
 import UserLoading from '../../../../../pages/UserLoading'
 import useScroll from '../../../../../hooks/useScroll'
 
@@ -43,18 +38,12 @@ import Placements from '../../../../director/pages/Placements';
 import ProgressionToHE from '../../../../director/pages/ProgressionToHE';
 import AlumniContribution from '../../../../director/pages/AlumniContribution';
 import TrainingProgramsOrganized from '../../../../director/pages/TrainingProgramsOrganized';
+import TableAccordion from './TableAccordion'
 
 const AQARForm = ({ userType = 'faculty' }) => {
 
-    const [expandedAccordion, setExpandedAccordion] = useState();
-
-    const handleChangeAccordion = (index) => {
-        setExpandedAccordion(index === expandedAccordion ? null : index);
-    };
-
-    const aqarYear = useSelector((state) => state.aqar.aqarYear)
-
     useScroll()
+    const aqarYear = useSelector((state) => state.aqar.aqarYear)
 
 
     const AQARTables = {
@@ -193,23 +182,7 @@ const AQARForm = ({ userType = 'faculty' }) => {
             {
                 !aqarYear ? <UserLoading title="Loading Form" /> :
                     <div className="my-5">
-                        {
-                            AQARTables[userType].map((table, index) => {
-                                return <div className={`border-[#8c8cd9] rounded-lg p-1 border-2 my-3 text-sm lg:text-base w-full`}>
-                                    <Accordion sx={{ boxShadow: 'none' }} TransitionProps={{ unmountOnExit: true }} expanded={expandedAccordion === index} onChange={() => handleChangeAccordion(index)}>
-                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}
-                                            aria-controls={`content-${index}`}
-                                            id={`accordion-${index}`}
-                                        >
-                                            <Typography sx={{ color: 'blue', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>{index + 1}. {table.title}</Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            {table.component}
-                                        </AccordionDetails>
-                                    </Accordion>
-                                </div>
-                            })
-                        }
+                        <TableAccordion AQARTables={AQARTables[userType]} />
                     </div>
 
             }
