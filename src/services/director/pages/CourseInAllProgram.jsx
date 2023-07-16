@@ -29,7 +29,10 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
 
-  const params = { model: SendReq, id: directorUser?.department, module }
+ const [Filter, setFiletr] = useState({yearFilter : [], SchoolName: directorUser?.department })
+ const {yearFilter, SchoolName}= Filter
+ let filter = yearFilter.length===0?{SchoolName}:{ academicYear: {$in:yearFilter}, SchoolName } ;
+ const params = { model: SendReq, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
 
@@ -58,7 +61,7 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   //--------------Frant end ui------------
   return (
     <>
-      <AddButton onclick={setAdd} exceldialog={setOpen} />
+      <AddButton title={title} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>
@@ -82,7 +85,7 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} sampleFile='CourceInAllProgramsDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} sampleFile='CourseInAllProgramsDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="academicYear" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

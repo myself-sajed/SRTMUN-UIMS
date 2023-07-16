@@ -37,7 +37,10 @@ function StudentSatisfactionSurvey() {
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
-    const params = { model: SendReq, id: directorUser?.department, module }
+    const [Filter, setFiletr] = useState({yearFilter : [], SchoolName: directorUser?.department })
+    const {yearFilter, SchoolName}= Filter
+    let filter = yearFilter.length===0?{SchoolName}:{ Year_of_joining: {$in:yearFilter}, SchoolName } ;
+    const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
 
@@ -75,7 +78,7 @@ function StudentSatisfactionSurvey() {
     //--------------Frant end ui------------
     return (
         <>
-            <AddButton onclick={setAdd} exceldialog={setOpen} />
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{background:"#e5eaf0" }}>

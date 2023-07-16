@@ -33,7 +33,7 @@ function TableComponent(props) {
     return (
         <>
             <Grid container my={2} >
-                <TableContainer component={Paper} sx={{ maxHeight: '50vh' }}>
+                <TableContainer component={Paper} sx={{ maxHeight: '80vh' }}>
                     <Table area-label='simple tabel' stickyHeader>
                         <TblCellH TblH={props.tableHead} />
                         <TableBody>

@@ -44,22 +44,3 @@ const AcadmicYearSelect = ({ className = "col-md-6", id, label, setState, value,
     )
 }
 export default AcadmicYearSelect
-
- // <div className={`col-12 p-1 ${className}`}>
-        //     <label htmlFor="choose" className="form-label" >{label}</label>
-        //     <select className="form-select" id={id} required={required}
-        //         onChange={(e) => {
-        //             setState((pri) => {
-        //                 return {
-        //                     ...pri,
-        //                     [id]: e.target.value
-        //                 }
-        //             })
-        //         }
-        //         } value={value}>
-        //         <option value="">All Years</option>
-        //         {
-        //             arr?.map(e => <option value={e}>{e}</option>)
-        //         }
-        //     </select>
-        // </div>

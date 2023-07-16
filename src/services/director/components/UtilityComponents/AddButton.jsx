@@ -5,14 +5,15 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import TableTitle from './TableTitle';
+import AcadmicYearSelect from '../../../admin/components/AcadmicYearSelect';
 
-export default function AddButton(props) {
+export default function AddButton({title, onclick, exceldialog, yearFilter, setState }) {
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
     const clickd = () => {
-        props.onclick(true)
+        onclick(true)
     }
     const excelClicked = () => {
-        props.exceldialog(true)
+        exceldialog(true)
     }
     const [data, setData] = useState(null)
 
@@ -31,14 +32,17 @@ export default function AddButton(props) {
 
         <div>
             <div>
-                <TableTitle excelClicked={excelClicked} clickd={clickd} />
+                <TableTitle title={title} excelClicked={excelClicked} clickd={clickd} />
             </div>
             <div style={{ display: "flex", width: "100%", background: `${data?.instruction.length > 0 ? '#ebebeb' : 'white'}`, borderRadius: "10px", margin: "auto" }} >
                 <div className={`${data?.instruction.length > 0 ? 'text-gray-800 p-2 rounded-md ' : 'white'}`} style={{ width: "70%" }}>
-                    {data?.instruction.map((e, index) => {
+                    {data?.instruction===[]? null : data?.instruction.map((e, index) => {
                         return <p key={index} className='md:text-sm text-xs'>{e}</p>
                     })}
                 </div>
+            </div>
+            <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
+                <AcadmicYearSelect className="col-md-3 col-lg-3 col-12" value={yearFilter} setState={setState} id="yearFilter" label="" />
             </div>
         </div>
 

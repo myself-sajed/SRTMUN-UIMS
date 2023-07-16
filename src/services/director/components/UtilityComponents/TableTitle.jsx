@@ -7,7 +7,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 
-const TableTitle = ({ clickd, excelClicked }) => {
+const TableTitle = ({ title, clickd, excelClicked }) => {
 
     const [currentPage, setCurrentPage] = useState(null)
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
@@ -16,7 +16,7 @@ const TableTitle = ({ clickd, excelClicked }) => {
     useEffect(() => {
         // get current url
         navcom.forEach((item) => {
-            if (item.name === DirectorActive) {
+            if (item.value === title) {
                 setCurrentPage(item.value)
                 setData(item)
             }
