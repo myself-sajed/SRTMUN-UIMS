@@ -18,8 +18,10 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SCTextField from "../components/FormComponents/SCTextField";
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no.", Course_Code: "Course Code", Name_of_the_Course: "Course name", Academic_Year: "Academic Year", Year_of_introduction: "Year of introduction", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "Activities / Content with direct bearing on Employability / Entrepreneurship / Skill development", Upload_Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.",Program_Name: "Program Name", Course_Code: "Course Code", Name_of_the_Course: "Course name", Academic_Year: "Academic Year", Year_of_introduction: "Year of introduction", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "Activities / Content with direct bearing on Employability / Entrepreneurship / Skill development", Upload_Proof: "Proof", Action: "Action" }
 
 function Employability({ filterByAcademicYear = false, academicYear }) {
 
@@ -39,7 +41,7 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
 
 
     //--------------values useState---------------
-    const initialState = { ecc: "", enotc: "", Upload_Proof: "", eyoi: "", eay: "", eacwdboeesd: "" }
+    const initialState = {  Program_Name: "", Course_Code: "", Name_of_the_Course: "", Upload_Proof: "", Year_of_introduction: "", Academic_Year: "", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -51,14 +53,11 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
     useEffect(() => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
+                const { Course_Code,Name_of_the_Course, Academic_Year, Year_of_introduction, Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development,Program_Name } = item
                 if (item?._id === itemToEdit) {
                     setEdit(true); setAdd(true);
                     setvalues({
-                        ecc: item.Course_Code,
-                        enotc: item.Name_of_the_Course,
-                        eay: item.Academic_Year,
-                        eyoi: item.Year_of_introduction,
-                        eacwdboeesd: item.Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development,
+                        Course_Code,Name_of_the_Course, Academic_Year, Year_of_introduction, Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development,Program_Name
                     })
                 }
             })
@@ -89,11 +88,12 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
                             PostReq({ School: directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
-                            <CTextField label="Course Code" type="text" value={values.ecc} id="ecc" required={true} onch={setvalues} />
-                            <CTextField label="Name of the Course" type="text" value={values.enotc} id="enotc" required={true} onch={setvalues} />
-                            <CDatePicker label="Year of introduction" value={values.eyoi} id="eyoi" required={true} onch={setvalues} />
-                            <SYTextField label="Academic Year" value={values.eay} id="eay" required={true} onch={setvalues} />
-                            <CTextField label="Activities/Content with direct bearing on Employability/ Entrepreneurship/ Skill development" type="text" value={values.eacwdboeesd} id="eacwdboeesd" required={true} onch={setvalues} />
+                            <SCTextField label= "Program Name" value={values.Program_Name} id="Program_Name" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
+                            <CTextField label="Course Code" type="text" value={values.Course_Code} id="Course_Code" required={true} onch={setvalues} />
+                            <CTextField label="Name of the Course" type="text" value={values.Name_of_the_Course} id="Name_of_the_Course" required={true} onch={setvalues} />
+                            <CDatePicker label="Year of introduction" value={values.Year_of_introduction} id="Year_of_introduction" required={true} onch={setvalues} />
+                            <SYTextField label="Academic Year" value={values.Academic_Year} id="Academic_Year" required={true} onch={setvalues} />
+                            <CTextField label="Activities/Content with direct bearing on Employability/ Entrepreneurship/ Skill development" type="text" value={values.Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development} id="Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development" required={true} onch={setvalues} />
                             <UTextField label="Upload Proof" id="Upload_Proof" required={!edit} onch={setvalues} />
                             <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
                         </Grid>
