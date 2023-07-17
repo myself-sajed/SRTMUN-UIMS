@@ -33,9 +33,9 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
-    const [Filter, setFiletr] = useState({yearFilter : [], SchoolName: directorUser?.department })
-    const {yearFilter, SchoolName}= Filter
-    let filter = yearFilter.length===0?{SchoolName}:{ Year_of_Award: {$in:yearFilter}, SchoolName } ;
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const { yearFilter, SchoolName } = Filter
+    let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_Award: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
@@ -48,8 +48,8 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
-    const title='UGC-SAP, CAS, DST-FIST, DBT, ICSSR';
-    
+    const title = 'UGC-SAP, CAS, DST-FIST, DBT, ICSSR';
+
     useEffect(() => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
@@ -69,10 +69,20 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
             })
         }
     }, [itemToEdit])
+
+    useEffect(() => {
+        if (filterByAcademicYear) {
+            setFiletr((prev) => {
+                return { ...prev, yearFilter: [academicYear] }
+            })
+        }
+    }, [academicYear])
     //--------------Frant end ui------------
+
+
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+            <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>

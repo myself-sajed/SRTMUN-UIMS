@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
@@ -17,7 +17,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from "../../../components/BulkExcel";
 
-const tableHead = { index: "Sr. no." ,  Room_number_or_Name_of_Classrooms: "Room number or Name of Classrooms" ,  Type_of_ICT_facility: "Type of ICT facility " ,  Upload_Proof: "Gio taged photo" ,  Action: "Action" }
+const tableHead = { index: "Sr. no.", Room_number_or_Name_of_Classrooms: "Room number or Name of Classrooms", Type_of_ICT_facility: "Type of ICT facility ", Upload_Proof: "Gio taged photo", Action: "Action" }
 
 function IctClassrooms() {
 
@@ -40,7 +40,7 @@ function IctClassrooms() {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
-    const title="ICT Classrooms";
+    const title = "ICT Classrooms";
 
     useEffect(() => {
         if (itemToEdit && data.data) {
@@ -56,20 +56,19 @@ function IctClassrooms() {
         }
     }, [itemToEdit])
 
-   
-    //--------------Frant end ui------------
+
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}/>
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
-                <DialogContent dividers sx={{background:"#e5eaf0" }}>
+                <DialogContent dividers sx={{ background: "#e5eaf0" }}>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({id:itemToEdit}, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School:directorUser.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container>
                             <CTextField label="Room number or Name of Classrooms" type="text" value={values.icrnonoc} id="icrnonoc" required={true} onch={setvalues} />

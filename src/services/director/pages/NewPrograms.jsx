@@ -17,7 +17,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 
-const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Name of the Program",   academicYear: "Academic Year", Action: "Action" }
+const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Name of the Program", academicYear: "Academic Year", Action: "Action" }
 
 function NewPrograms({ filterByAcademicYear = false, academicYear }) {
   const SendReq = "NewPrograms"
@@ -29,9 +29,9 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
 
-  const [Filter, setFiletr] = useState({yearFilter : [], SchoolName: directorUser?.department })
-  const {yearFilter, SchoolName}= Filter
-  let filter = yearFilter.length===0?{SchoolName}:{ academicYear: {$in:yearFilter}, SchoolName } ;
+  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const { yearFilter, SchoolName } = Filter
+  let filter = yearFilter.length === 0 ? { SchoolName } : { academicYear: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
@@ -44,11 +44,11 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
   const title = "New Programs";
-   
+
   useEffect(() => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
-        const {_id, programName, programCode, academicYear}=item
+        const { _id, programName, programCode, academicYear } = item
         if (_id === itemToEdit) {
           setEdit(true); setAdd(true);
           setvalues({
@@ -58,10 +58,20 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
       })
     }
   }, [itemToEdit])
+
+  useEffect(() => {
+    if (filterByAcademicYear) {
+      setFiletr((prev) => {
+        return { ...prev, yearFilter: [academicYear] }
+      })
+    }
+  }, [academicYear])
   //--------------Frant end ui------------
+
+
   return (
     <>
-      <AddButton title={title} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>
@@ -76,7 +86,7 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
               <CTextField label="Program Name" type="text" value={values.programName} id="programName" required={true} onch={setvalues} />
               <CTextField label="Program Code" type="text" value={values.programCode} id="programCode" required={true} onch={setvalues} />
               <SYTextField label="Academic Year" value={values.academicYear} id="academicYear" required={true} onch={setvalues} />
-              
+
               <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
             </Grid>
           </form>

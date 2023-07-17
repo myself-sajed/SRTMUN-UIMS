@@ -31,9 +31,9 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({yearFilter : [], SchoolName: directorUser?.department })
-    const {yearFilter, SchoolName}= Filter
-    let filter = yearFilter.length===0?{SchoolName}:{ year: {$in:yearFilter}, SchoolName } ;
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const { yearFilter, SchoolName } = Filter
+    let filter = yearFilter.length === 0 ? { SchoolName } : { year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
@@ -45,7 +45,7 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
-    const title='Research Methodology Workshops';
+    const title = 'Research Methodology Workshops';
 
     useEffect(() => {
         if (itemToEdit && data.data) {
@@ -63,10 +63,20 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
             })
         }
     }, [itemToEdit])
+
+    useEffect(() => {
+        if (filterByAcademicYear) {
+            setFiletr((prev) => {
+                return { ...prev, yearFilter: [academicYear] }
+            })
+        }
+    }, [academicYear])
     //--------------Frant end ui------------
+
+
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+            <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>
