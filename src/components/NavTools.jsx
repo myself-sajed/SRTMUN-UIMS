@@ -14,7 +14,7 @@ import { setUser } from '../redux/slices/UserSlice';
 import OffCanvas from './OffCanvas';
 import siteLinks from './siteLinks';
 import serverLinks from '../js/serverLinks';
-
+import GoBack from '../components/GoBack'
 
 
 const NavTools = () => {
@@ -58,42 +58,16 @@ const NavTools = () => {
 
         <>
 
-            <div className="py-1 gap-2 flex items-center justify-between ">
-
-                {/* // generateReport and  customized report */}
-                {user ?
-
-                    <div className="flex items-center justify-start gap-2">
-                        <OffCanvas />
 
 
-                        <button onClick={(e) => { navigate(siteLinks.facultyReport.link) }} className='bg-green-100 text-green-800 mt-2 hover:bg-green-200 border-2 border-green-200 ease-in-out duration-200 px-2 sm:px-3 p-1 rounded-full text-sm sm:text-base'>
-                            <LeaderboardRoundedIcon className='text-green-800 mr-2 text-sm sm:text-md' />
-                            Generate Faculty Report
-                        </button>
-
-
-
-
-                    </div> : <div className="flex items-center justify-start gap-2">
-
-
-
-
-                    </div>
-
-                }
-
-
-
-                {/* USER */}
+            <GoBack pageTitle="Faculty Profile" backUrl="/faculty">
                 {
                     user ?
                         <div className='flex items-center justify-end gap-2'>
 
-                            {/* // name of the user */}
-
-
+                            <div className='bg-gray-100 rounded-full'>
+                                <OffCanvas />
+                            </div>
                             <div className='flex items-center justify-end gap-2'>
                                 {/* // Dropdown item */}
                                 <div className="btn-group">
@@ -128,9 +102,8 @@ const NavTools = () => {
 
                         </div>
                 }
+            </GoBack>
 
-
-            </div>
 
         </>
     )

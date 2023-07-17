@@ -12,7 +12,7 @@ const generateFeedbackReport = (app) => {
 
         try {
             await pupetteerSetting({ linkToNavigate, fileName })
-            res.send({ status: 'success' });
+            res.send({ status: 'success', fileName });
 
         } catch (error) {
             console.log(error)
