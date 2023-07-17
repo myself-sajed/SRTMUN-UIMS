@@ -60,7 +60,7 @@ function IctClassrooms() {
     //--------------Frant end ui------------
     return (
         <>
-            <AddButton onclick={setAdd} exceldialog={setOpen}/>
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}/>
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{background:"#e5eaf0" }}>

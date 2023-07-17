@@ -238,9 +238,7 @@ const navcom = [
         icon: <SavedSearchIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
         name: 'conferencesSemiWorkshopOrganized',
         value: 'Conferences / Seminar / Workshop Organized',
-        instruction: [
-            'Conferences / Seminar / Workshop Organized, State / University level'
-        ],
+        instruction: [],
 
     },
     {
@@ -248,28 +246,22 @@ const navcom = [
         icon: <AccountBalanceWalletIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
         name: 'alumniContribution',
         value: 'Alumni Contribution',
-        instruction: [
-            "Alumni contributions"
-        ],
+        instruction: [],
 
     },
     {
         element: <CourseInAllProgram/>,
         icon: < LibraryAddIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
         name: 'courseInAllPrograms',
-        value: 'Courses In All Program',
-        instruction:[
-            "Courses in all program"
-        ]
+        value: 'Courses In All Programs',
+        instruction:[]
     },
     {
         element: <NewPrograms/>,
         icon: <ImportContactsIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
         name: 'newPrograms',
         value: 'New Programs',
-        instruction:[
-            "New Programs"
-        ]
+        instruction:[]
     }
 ]
 

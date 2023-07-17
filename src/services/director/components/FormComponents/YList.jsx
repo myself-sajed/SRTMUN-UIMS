@@ -5,7 +5,8 @@ function YList(){
         const [YList, setyList] = useState([])
 
     useEffect(() => {
-        let year = new Date().getFullYear();
+        const d = new Date()
+        let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1; 
         const ly = year - 29;
         let i = 1
         let arr = []
