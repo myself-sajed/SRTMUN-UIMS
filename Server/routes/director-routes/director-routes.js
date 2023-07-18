@@ -63,7 +63,6 @@ const excelUpload = multer({ storage: excelStorage })
 let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram, NewPrograms }
 
 //Set Route
-
 router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
     try {
         const model = req.params.model
@@ -104,17 +103,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Number_of_eligible_applications: drnoea,
                 Number_of_Students_admitted: drnosad,
                 Type_of_program: drtop
-            }
-        }
-        //Employability
-        else if (model == 'Employability') {
-            const { ecc, enotc, eyoi, eay, eacwdboeesd } = data
-            SendData = {
-                Course_Code: ecc,
-                Name_of_the_Course: enotc,
-                Academic_Year: eay,
-                Year_of_introduction: eyoi,
-                Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: eacwdboeesd
             }
         }
         //ExtensionActivities
@@ -166,33 +154,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Name_of_the_student: pinots
             }
 
-        }
-        //ReservedSeats
-        else if (model == 'ReservedSeats') {
-            const { rsay, rsa, rssc, rsst, rsobc, rsd, rsg, rso } = data
-            // const Count_Year = await ReservedSeats.find({ Academic_Year: rsay }).count()
-            // if (Count_Year < 2) {
-            SendData = {
-                Academic_Year: rsay,
-                Activity: rsa,
-                SC: rssc,
-                ST: rsst,
-                OBC: rsobc,
-                Divyngjan: rsd,
-                General: rsg,
-                Others: rso
-            }
-            //     const fatchactivity = await ReservedSeats.find({ Academic_Year: rsay })
-            //     if (fatchactivity[0] == null) {
-            //         SendData = sdata
-            //     } else if (fatchactivity[0].Activity == rsa) {
-            //         res.status(406).json({ massage: "allready added entry of this acadmic year with activity" })
-            //     } else if (fatchactivity[0].Activity != rsa) {
-            //         SendData = sdata
-            //     }
-            // } else {
-            //     res.status(406).json({ massage: "only two entrys are valid of same acadmic year" })
-            // }
         }
         //ResearchMethodologyWorkshops
         else if (model == 'ResearchMethodologyWorkshops') {
@@ -258,20 +219,6 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Number_of_students_enrolled: seiianose
             }
         }
-        //ValueAddedCource
-        else if (model == 'ValueAddedCource') {
-            const { vacnotvaco, vacccia, vacac, vacyoo, vacnotodtsy, vacdoc, vacnose, vacnosctc } = data
-            SendData = {
-                Name_of_the_value_added_courses_offered: vacnotvaco,
-                Course_Code_if_any: vacccia,
-                Academic_year: vacac,
-                Year_of_offering: vacyoo,
-                No_of_times_offered_during_the_same_year: vacnotodtsy,
-                Duration_of_the_course: vacdoc,
-                Number_of_students_enrolled: vacnose,
-                Number_of_Students_completing_the_course: vacnosctc
-            }
-        }
         //SyllabusRevision
         else if (model == 'SyllabusRevision') {
             const { srpc, srpn, sray, sryoi, srsoioce, sryoim, sryor, srpocaor } = data
@@ -286,7 +233,7 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
                 Percentage_of_content_added_or_replaced: srpocaor
             }
         }
-        //AlumniContribution, CourSeInAllProgram, QualifiedExams, Placement, ConferencesSemiWorkshopOrganized
+        //AlumniContribution, CourSeInAllProgram, QualifiedExams, Placement, ConferencesSemiWorkshopOrganized, Employability, ValueAddedCource, ReservedSeats
         else {
             SendData = data
         }
@@ -424,18 +371,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Number_of_Students_admitted: drnosad,
             Type_of_program: drtop
         }
-    }
-    //Employability
-    else if (model == 'Employability') {
-        const { ecc, enotc, eyoi, eay, eacwdboeesd } = data
-        SendData = {
-            Course_Code: ecc,
-            Name_of_the_Course: enotc,
-            Academic_Year: eay,
-            Year_of_introduction: eyoi,
-            Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: eacwdboeesd
-        }
-    }
+    }    
     //ExtensionActivities
     else if (model == 'ExtensionActivities') {
         const { eanota, eaouaca, eanots, eanosp, eayota } = data
@@ -485,33 +421,6 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Name_of_the_student: pinots
         }
 
-    }    
-    //ReservedSeats
-    else if (model == 'ReservedSeats') {
-        const { rsay, rsa, rssc, rsst, rsobc, rsd, rsg, rso } = data
-        // const Count_Year = await ReservedSeats.find({ Academic_Year: rsay }).count()
-        // if (Count_Year < 2) {
-        SendData = {
-            Academic_Year: rsay,
-            Activity: rsa,
-            SC: rssc,
-            ST: rsst,
-            OBC: rsobc,
-            Divyngjan: rsd,
-            General: rsg,
-            Others: rso
-        }
-        //     const fatchactivity = await ReservedSeats.find({ Academic_Year: rsay })
-        //     if (fatchactivity[0] == null) {
-        //         SendData = sdata
-        //     } else if (fatchactivity[0].Activity == rsa) {
-        //         res.status(406).json({ massage: "allready added entry of this acadmic year with activity" })
-        //     } else if (fatchactivity[0].Activity != rsa) {
-        //         SendData = sdata
-        //     }
-        // } else {
-        //     res.status(406).json({ massage: "only two entrys are valid of same acadmic year" })
-        // }
     }
     //ResearchMethodologyWorkshops
     else if (model == 'ResearchMethodologyWorkshops') {
@@ -577,20 +486,6 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Number_of_students_enrolled: seiianose
         }
     }
-    //ValueAddedCource
-    else if (model == 'ValueAddedCource') {
-        const { vacnotvaco, vacccia, vacac, vacyoo, vacnotodtsy, vacdoc, vacnose, vacnosctc } = data
-        SendData = {
-            Name_of_the_value_added_courses_offered: vacnotvaco,
-            Course_Code_if_any: vacccia,
-            Academic_year: vacac,
-            Year_of_offering: vacyoo,
-            No_of_times_offered_during_the_same_year: vacnotodtsy,
-            Duration_of_the_course: vacdoc,
-            Number_of_students_enrolled: vacnose,
-            Number_of_Students_completing_the_course: vacnosctc
-        }
-    }
     //SyllabusRevision
     else if (model == 'SyllabusRevision') {
         const { srpc, srpn, sray, sryoi, srsoioce, sryoim, sryor, srpocaor } = data
@@ -605,7 +500,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Percentage_of_content_added_or_replaced: srpocaor
         }
     }
-    //AlumniContribution, ConferencesSemiWorkshopOrganized, QualifiedExams, Placement, CourceInAllProgram
+    //AlumniContribution, ConferencesSemiWorkshopOrganized, QualifiedExams, Placement, CourceInAllProgram, Employability, ValueAddedCource, ReservedSeats
     else {
         SendData = data
     }

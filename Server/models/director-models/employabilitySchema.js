@@ -22,6 +22,10 @@ const employabilitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    Program_Name:{
+        type: String,
+        required: true
+    },
     Upload_Proof: {
         type: String,
         required: false

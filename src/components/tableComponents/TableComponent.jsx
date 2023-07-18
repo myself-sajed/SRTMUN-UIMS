@@ -35,7 +35,7 @@ function TableComponent(props) {
             <Grid container my={2} >
                 <TableContainer component={Paper} sx={{ maxHeight: '80vh' }}>
                     <Table area-label='simple tabel' stickyHeader>
-                        <TblCellH TblH={props.tableHead} />
+                        <TblCellH TblH={props.tableHead} SendReq={props.SendReq} />
                         <TableBody>
                             {
                                 props.TB && sortByAcademicYear(props.TB, props.year, props.filterByAcademicYear, props.academicYear).map((row, index) => (

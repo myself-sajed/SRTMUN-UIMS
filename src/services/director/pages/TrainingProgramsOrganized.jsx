@@ -23,7 +23,7 @@ import SYTextField from "../components/FormComponents/SYTextField";
 
 const tableHead = { index: "Sr. no.", Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Type_of_staff: "Type of staff", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", Action: "Action" }
 
-const StaffType = ["Teaching staff", "Non-Teaching Staff"]
+const StaffType = ["Teaching staff & Student", "Non-Teaching Staff"]
 const level = ["University", "State"]
 
 function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear }) {

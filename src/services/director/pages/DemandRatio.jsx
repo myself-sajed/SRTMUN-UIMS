@@ -21,7 +21,7 @@ import BulkExcel from '../../../components/BulkExcel';
 
 
 const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
-const tableHead = { index: "Sr. no.", Programme_Code: "Programme Code", Programme_name: "Programme name", Academic_Year: "Academic Year", Type_of_program: "Type of Program", Number_of_seats_available: "Number of seats available", Number_of_eligible_applications: "Number of eligible applications", Number_of_Students_admitted: "Number of Students admitted", Upload_Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", Programme_Code: "Program Code", Programme_name: "Program name", Academic_Year: "Academic Year", Type_of_program: "Type of Program", Number_of_seats_available: "Number of seats available", Number_of_eligible_applications: "Number of eligible applications", Number_of_Students_admitted: "Number of Students admitted", Upload_Proof: "Proof", Action: "Action" }
 function DemandRatio({ filterByAcademicYear = false, academicYear }) {
 
   const SendReq = "DemandRatio"
@@ -90,8 +90,8 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
               PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
-              <CTextField label="Programme Code" value={values.drpc} type="text" id="drpc" required={true} onch={setvalues} />
-              <CTextField label="Programme name" type="text" value={values.drpn} id="drpn" required={true} onch={setvalues} />
+              <CTextField label="Program Code" value={values.drpc} type="text" id="drpc" required={true} onch={setvalues} />
+              <CTextField label="Program name" type="text" value={values.drpn} id="drpn" required={true} onch={setvalues} />
               <SYTextField label="Academic Year" value={values.dray} id="dray" required={true} onch={setvalues} />
               <CTextField label="Number of seats available" type="number" value={values.drnosav} id="drnosav" required={true} onch={setvalues} />
               <CTextField label="Number of eligible applications" type="number" value={values.drnoea} id="drnoea" required={true} onch={setvalues} />

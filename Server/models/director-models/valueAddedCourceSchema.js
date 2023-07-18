@@ -17,6 +17,10 @@ const valueAddedCourceSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    Program_Name:{
+        type: String,
+        required: true
+    },
     No_of_times_offered_during_the_same_year: {
         type: Number,
         required: true

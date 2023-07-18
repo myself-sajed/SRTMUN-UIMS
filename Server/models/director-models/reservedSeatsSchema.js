@@ -5,31 +5,51 @@ const reservedSeatsSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    Activity: {
-        type: String,
-        required: false
-    },
-    SC: {
+    NseSC: {
         type: Number,
         required: true
     },
-    ST: {
+    NseST: {
         type: Number,
         required: true
     },
-    OBC: {
+    NseOBC: {
         type: Number,
         required: true
     },
-    Divyngjan: {
+    NseDivyngjan: {
         type: Number,
         required: true
     },
-    General: {
+    NseGeneral: {
         type: Number,
         required: true
     },
-    Others: {
+    NseOthers: {
+        type: Number,
+        required: true
+    },
+    NsaSC: {
+        type: Number,
+        required: true
+    },
+    NsaST: {
+        type: Number,
+        required: true
+    },
+    NsaOBC: {
+        type: Number,
+        required: true
+    },
+    NsaDivyngjan: {
+        type: Number,
+        required: true
+    },
+    NsaGeneral: {
+        type: Number,
+        required: true
+    },
+    NsaOthers: {
         type: Number,
         required: true
     },
