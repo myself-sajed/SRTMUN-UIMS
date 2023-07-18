@@ -46,7 +46,7 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
-    const title = 'Employability';
+    const title = 'Courses focusing employability / entrepreneurship / skill development';
 
     useEffect(() => {
         if (itemToEdit && data.data) {

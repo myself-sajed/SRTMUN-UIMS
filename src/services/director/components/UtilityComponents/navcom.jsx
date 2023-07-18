@@ -58,7 +58,7 @@ const navcom = [
         element: <Employability />,
         icon: <AccessibilityIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
         name: 'Employability',
-        value: 'Employability',
+        value: 'Courses focusing employability / entrepreneurship / skill development',
         instruction: [
             "1.1.3 Average percentage of courses having focus on employability/ entrepreneurship/ skill development during the last five years (10)",
             "1.2.1 Percentage of new courses introduced of the total number of courses across all programmes offered during the last five years (30)"
@@ -250,18 +250,18 @@ const navcom = [
 
     },
     {
-        element: <CourseInAllProgram/>,
-        icon: < LibraryAddIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
+        element: <CourseInAllProgram />,
+        icon: < LibraryAddIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
         name: 'courseInAllPrograms',
         value: 'Courses In All Programs',
-        instruction:[]
+        instruction: []
     },
     {
-        element: <NewPrograms/>,
-        icon: <ImportContactsIcon style={{ fontSize: '18px', color: "#1E3A8A" }}/>,
+        element: <NewPrograms />,
+        icon: <ImportContactsIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
         name: 'newPrograms',
         value: 'New Programs',
-        instruction:[]
+        instruction: []
     }
 ]
 
