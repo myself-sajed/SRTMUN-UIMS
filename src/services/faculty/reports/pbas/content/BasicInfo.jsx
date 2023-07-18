@@ -6,20 +6,14 @@ import Qualification from '../../../tables/Qualification'
 import ResearchDegrees from '../../../tables/ResearchDegrees'
 import AppointmentsHeldPrior from '../../../tables/AppointmentsHeldPrior'
 import OnlineFDP from '../../../tables/OnlineFDP'
+import useAuth from '../../../../../hooks/useAuth'
 
 
 const BasicInfo = () => {
 
-    const [qualifications, setQualifications] = useState(null)
-    const [degree, setDegree] = useState(null)
-    const [appointments, setAppointments] = useState(null)
-    const [postHeld, setPostHeld] = useState(null)
-    const [online, setOnline] = useState(null)
+
     const [experience, setExperience] = useState(null)
 
-    useEffect(() => {
-        console.log('Degree :', degree)
-    }, [degree])
 
     let facultyTables = [
         <Qualification />, <ResearchDegrees />, <AppointmentsHeldPrior />, <OnlineFDP />

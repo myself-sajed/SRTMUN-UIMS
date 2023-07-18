@@ -494,6 +494,8 @@ function initRoutes(app) {
                 schemeName: data.schemeName,
                 programTitle: data.programTitle,
                 principalName: data.principalName,
+                coInvestigator: data.coInvestigator,
+                isCo: data.isCo,
                 fundingName: data.fundingName,
                 isGov: data.isGov,
                 department: data.department,
@@ -942,6 +944,7 @@ function initRoutes(app) {
                 designation: data.designation,
                 institute: data.institute,
                 year: data.year,
+                duration: data.duration,
                 proof: req.file.filename,
                 userId: data.userId,
             })
@@ -1027,6 +1030,7 @@ function initRoutes(app) {
                 ResearchProject: {
                     "Scheme or Project Name": 'schemeName',
                     "Principal Invigilator Name": 'principalName',
+                    "Co-Invigilator Name": 'coInvestigator',
                     "Funding Agency Name": 'fundingName',
                     "Wheather Government / Non-Government": 'isGov',
                     "Award Year": 'awardYear',

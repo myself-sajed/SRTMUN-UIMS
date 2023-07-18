@@ -192,7 +192,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
                         </div>
 
                         <div className="col-md-4">
-                            <label htmlFor="inputGroupFile01" className="form-label">Upload Degree<p className='text-sm text-gray'>{editModal ? "(Your previously uploaded degree is available, if you want to replace it with new one, please select)" : ""}</p></label>
+                            <label htmlFor="inputGroupFile01" className="form-label">Upload Degree</label>
                             <input type="file" name="file" onChange={HandleImageChange} className="form-control" id="inputGroupFile01" accept="application/pdf,image/jpg,image/png,image/jpeg," />
                         </div>
 

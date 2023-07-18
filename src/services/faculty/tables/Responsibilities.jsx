@@ -17,6 +17,8 @@ import File from '../../../inputs/File';
 import handleEditWithFile from '../js/handleEditWithFile';
 import View from './View';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import MultipleYearSelect from '../../../inputs/MultipleYearSelect';
+import { toast } from 'react-hot-toast';
 
 const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
@@ -28,39 +30,52 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     const [committeeName, setCommitteeName] = useState(null)
     const [designation, setDesignation] = useState(null)
     const [institute, setInstitute] = useState(null)
-    const [year, setYear] = useState(null)
+    const [year, setYear] = useState([])
     const [proof, setProof] = useState(null)
-    const [responsibitiesModal, setResponsibitiesModal] = useState(false)
+    const [duration, setDuration] = useState(null)
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [filteredItems, setFilteredItems] = useState([])
+    const [responsibilitiesModal, setResponsibitiesModal] = useState(false)
 
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        setLoading(true)
-        let formData = new FormData()
-        formData.append('committeeName', committeeName)
-        formData.append('designation', designation)
-        formData.append('institute', institute)
-        formData.append('year', year)
-        formData.append('file', proof)
-        formData.append('userId', user?._id)
 
-        submitWithFile(formData, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
+
+        if (year.length === 0) {
+            toast.error('Please select year(s)')
+        } else {
+            setLoading(true)
+            let formData = new FormData()
+            formData.append('committeeName', committeeName)
+            formData.append('designation', designation)
+            formData.append('institute', institute)
+            formData.append('duration', duration)
+            formData.append('year', year)
+            formData.append('file', proof)
+            formData.append('userId', user?._id)
+            submitWithFile(formData, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
+        }
+
+
+
     }
 
-    // make states together
-    // function handleAddResponsibities(e) {
-    //     e.preventDefault();
-    //     setLoading(true)
-    //     const data = { committeeName, designation, institute, year, userId: user?._id }
-    //     submit(data, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
+    useEffect(() => {
+        if (year.length === 1) {
+            setDuration(`${year[0]} to ${year[0]}`)
+        } else if (year.length > 1) {
+            setDuration(`${year[0]} to ${year[year.length - 1]}`)
+        }
+    }, [year])
 
-    // }
+    useEffect(() => {
+        console.log('The duration is:', duration)
+    }, [duration])
 
 
     // make states together
@@ -68,35 +83,33 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
         e.preventDefault();
         setLoading(true)
 
-        // arrange form Data
-        let formData = new FormData()
-        formData.append('itemId', itemToDelete._id)
-        formData.append('proof', itemToDelete.proof)
-        formData.append('committeeName', committeeName)
-        formData.append('designation', designation)
-        formData.append('institute', institute)
-        formData.append('year', year)
-        formData.append('file', proof)
 
 
-        handleEditWithFile(formData, 'Responsibilities', setEditModal, refetch, setLoading, setIsFormOpen)
-
+        if (year.length === 0) {
+            toast.error('Please select year(s)')
+        } else {
+            // arrange form Data
+            let formData = new FormData()
+            formData.append('itemId', itemToDelete._id)
+            formData.append('proof', itemToDelete.proof)
+            formData.append('committeeName', committeeName)
+            formData.append('designation', designation)
+            formData.append('institute', institute)
+            formData.append('duration', duration)
+            formData.append('year', year)
+            formData.append('file', proof)
+            handleEditWithFile(formData, 'Responsibilities', setEditModal, refetch, setLoading, setIsFormOpen)
+        }
 
     }
 
-
-    // function handleChange(e) {
-    //     e.preventDefault();
-    //     // const theItem = { itemId: itemToDelete._id, committeeName, designation, institute, year }
-    //     setLoading(true)
-    //     handleEdit(theItem, 'Responsibilities', setEditModal, refetch, setLoading, setIsFormOpen)
-    // }
 
     function pencilClick(itemId) {
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
                 setCommitteeName(item.committeeName)
                 setInstitute(item.institute)
+                setDuration(item.duration)
                 setDesignation(item.designation)
                 setYear(item.year)
                 setItemToDelete(item)
@@ -109,6 +122,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     function clearStates() {
         setCommitteeName('')
         setInstitute('')
+        setDuration('')
         setDesignation('')
         setYear('')
     }
@@ -119,7 +133,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
-        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', false, academicYear, true))
     }, [data])
 
     return (
@@ -153,8 +167,8 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
                             <input type="text" className="form-control" id="validationCustom02" required value={institute} onChange={(e) => { setInstitute(e.target.value) }} />
 
                         </div>
-                        <Year space="col-md-4" state={year} setState={setYear} />
-                        <File space='col-md-8' title='Upload Proof' setState={setProof} />
+                        <MultipleYearSelect space="col-md-5" title='Select the year(s) you are / were responsible for' state={year} setState={setYear} />
+                        <File space='col-md-7' title='Upload Proof' setState={setProof} />
 
                     </FormWrapper>
                 </DialogContent>
@@ -174,7 +188,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
                                 <th scope="col">Designation</th>
                                 <th scope="col">Name of the Committee</th>
                                 <th scope="col">Hosting institute name</th>
-                                <th scope="col">Year</th>
+                                <th scope="col">Duration of Responsibility</th>
                                 <th scope="col">Uploaded Proof</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -189,7 +203,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
                                         <td>{Responsibities.designation}</td>
                                         <td>{Responsibities.committeeName}</td>
                                         <td>{Responsibities.institute}</td>
-                                        <td>{Responsibities.year}</td>
+                                        <td>{Responsibities.duration}</td>
                                         <td><View proof={Responsibities.proof} /></td>
                                         <td>
                                             <Actions item={Responsibities} model="Responsibilities" editState={setEditModal} addState={setResponsibitiesModal} refreshFunction={refetch} pencilClick={() => pencilClick(Responsibities._id)} />

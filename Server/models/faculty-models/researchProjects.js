@@ -13,6 +13,14 @@ const researchProjectSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    coInvestigator: {
+        type: 'string',
+        required: false,
+    },
+    isCo: {
+        type: 'boolean',
+        required: false,
+    },
     fundingName: {
         type: 'string',
         required: true,

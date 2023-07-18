@@ -102,7 +102,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
         setLeavingReason('')
     }
 
-    let param = { model: 'AppointmentsHeldPrior', userId: user._id }
+    let param = { model: 'AppointmentsHeldPrior', userId: user?._id }
 
     // main fetcher
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))

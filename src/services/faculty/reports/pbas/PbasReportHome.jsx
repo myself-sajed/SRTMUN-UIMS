@@ -25,13 +25,17 @@ import AgreePopup from './components/AgreePopup'
 import ApplyLevel, { stageObj } from './components/ApplyLevel'
 import { toast } from 'react-hot-toast';
 import Acknowledgement from '../cas/components/Acknowledgement';
+import ShowModal from '../../../../components/ShowModal';
 
 
 const PbasReportHome = () => {
     useAuth(false)
     const [tabName, setTabName] = useState('intro')
     const [casYearState, setCasYearState] = useState(null)
-    let links = [{ name: 'Welcome', link: '/' }, { name: 'Home', link: '/faculty' }, { name: 'PBAS Report Form', link: '/service/pbas-report' }]
+    // years mentioned below are not allowed to fill form
+    const prohabitatedYears = ["2022-23"]
+    const [isDoNotProceed, setIsDoNotProceed] = useState(false)
+
     const steps = ['Basic Info', 'Select Year', 'Teaching Activities', 'Academic/ Research Score', 'Summary Sheet', "Acknowledgement"];
     title("PBAS Report")
     const [serverCasData, setServerCasData] = useState(null)
@@ -58,6 +62,23 @@ const PbasReportHome = () => {
         selectedAttendance: null
 
     })
+
+    let initialTeaching = {
+        checkBoxCount: 0, checkBoxSelected: [], teachingGrade: null, totalClasses: null,
+        classesTaught: null, teachingRemark: null, teachingRemarkColor: null, uploadInputs: {
+            'file-A': null,
+            'file-B': null,
+            'file-C': null,
+            'file-D': null,
+            'file-E': null,
+            'file-F': null,
+            'file-G': null,
+        },
+
+        uploadedAttendance: null,
+        selectedAttendance: null
+
+    }
 
 
     const handleNext = () => {
@@ -97,11 +118,25 @@ const PbasReportHome = () => {
     }
 
     useEffect(() => {
-        setServerCasData((prev) => {
+        setServerCasData(() => {
             return null
         })
-        casYearState && getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setShouldProceed)
+
+        setTeachingData(() => {
+            return initialTeaching
+        })
+
+        if (casYearState) {
+            if (!prohabitatedYears.includes(casYearState)) {
+                getCASData(user?._id, setServerCasData, setServerCasError, true, casYearState, setShouldProceed)
+            } else {
+                setShouldProceed(true)
+            }
+        }
+
     }, [casYearState])
+
+
 
 
 
@@ -109,7 +144,7 @@ const PbasReportHome = () => {
         <div className="w-full">
 
             {/* PBAS Navtools */}
-            <div className='sticky-top bg-white'>
+            <div className={`${tabName === 'year' ? "" : "sticky-top bg-white"}`}>
                 <OnlyNav user={user} li={[siteLinks.facultyHome, siteLinks.pbas]}
                     logout={{ token: 'faculty-token', link: siteLinks.welcome.link }}>
                     <div className="flex items-center justify-start gap-2">
@@ -171,14 +206,39 @@ const PbasReportHome = () => {
 
             {/* CONTENT */}
 
+            {/* // prohabitatedYears Modal */}
+            <div className='z-50'>
+                <ShowModal isModalOpen={isDoNotProceed} setIsModalOpen={setIsDoNotProceed} title="Regarding PBAS Form submission" okText="Ok" onOkFunc={() => { }} >
+
+                    <div id="alert-additional-content-2" class="p-4 mb-4 mt-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                        <div class="flex items-center">
+                            <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                            </svg>
+                            <span class="sr-only">Info</span>
+                            <h3 class="text-lg font-medium">Edit Deadline Passed for PBAS ({casYearState}) Form </h3>
+                        </div>
+                        <div class="mt-2 mb-4 text-sm">
+                            The last date to edit the PBAS ({casYearState}) form has passed. You can no longer make changes to the form, however you will be able to download the last updated PBAS ({casYearState}) report. If you have any concerns or need further assistance, please reach out to the relevant authorities.
+                        </div>
+
+                    </div>
+
+                </ShowModal>
+            </div>
+
             <div className={`${tabName === 'year' ? 'block' : 'hidden'}`}>
                 <div className='mt-3 flex-col items-center justify-center gap-3 w-full text-center h-screen'>
 
 
                     <form className='flex flex-col items-center justify-center mt-5' onSubmit={(e) => {
                         e.preventDefault();
-                        setTabName('first');
-                        handleNext()
+                        if (prohabitatedYears.includes(casYearState)) {
+                            setIsDoNotProceed(true)
+                        } else {
+                            setTabName('first');
+                            handleNext()
+                        }
                     }}>
                         <SelectCASYear casYearState={casYearState} setCasYearState={setCasYearState} space='col-md-3' title="Choose PBAS Year" />
 

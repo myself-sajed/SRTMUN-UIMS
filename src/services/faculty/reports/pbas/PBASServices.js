@@ -59,6 +59,9 @@ const saveCASDetails = (casData, userId, setSaveLoader) => {
 }
 
 const getCASData = (userId, setData, setError, sortByYear = false, casYear = null, setShouldProceed) => {
+
+    console.log('Getting PBAS data')
+
     if (setShouldProceed) {
         setShouldProceed(false)
     }

@@ -262,6 +262,7 @@ function editRoutes(app) {
                 committeeName: data.committeeName,
                 designation: data.designation,
                 institute: data.institute,
+                duration: data.duration,
                 year: data.year,
                 proof: req.file.filename,
             }).then(function (docs) {
@@ -293,6 +294,7 @@ function editRoutes(app) {
                 committeeName: data.committeeName,
                 designation: data.designation,
                 institute: data.institute,
+                duration: data.duration,
                 year: data.year,
             }).then(function (data) {
                 if (data) {
@@ -616,6 +618,7 @@ function editRoutes(app) {
                 schemeName: data.schemeName,
                 programTitle: data.programTitle,
                 principalName: data.principalName,
+                coInvestigator: data.coInvestigator,
                 fundingName: data.fundingName,
                 isGov: data.isGov,
                 department: data.department,
@@ -655,6 +658,8 @@ function editRoutes(app) {
             ResearchProject.findOneAndUpdate({ _id: data.itemId }, {
                 schemeName: data.schemeName,
                 programTitle: data.programTitle,
+                coInvestigator: data.coInvestigator,
+                isCo: data.isCo,
                 principalName: data.principalName,
                 fundingName: data.fundingName,
                 isGov: data.isGov,

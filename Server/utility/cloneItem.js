@@ -19,7 +19,7 @@ function cloneItem(app) {
             }
 
             // Create a new instance of the model with the values from the original document
-            const clonedDocument = new models[model]({ ...originalDocument.toObject(), _id: undefined });
+            const clonedDocument = new models[model]({ ...originalDocument.toObject(), _id: undefined, proof: undefined });
 
             // Save the cloned document to the database
             clonedDocument.save((saveErr) => {

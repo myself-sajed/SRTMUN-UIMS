@@ -26,6 +26,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [projectName, setProjectName] = useState('')
     const [programTitle, setProgramTitle] = useState('')
     const [invName, setInvName] = useState('')
+    const [coInvName, setCoInvName] = useState('-')
     const [fundingName, setFundingName] = useState('')
     const [fundType, setFundType] = useState('')
     const [gov, setGov] = useState('')
@@ -42,8 +43,8 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-
-    const [res, setRes] = useState('')
+    const [isCo, setIsCo] = useState(false)
+    const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
 
@@ -55,6 +56,8 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('schemeName', projectName)
         formData.append('programTitle', programTitle)
         formData.append('principalName', invName)
+        formData.append('coInvestigator', coInvName)
+        formData.append('isCo', isCo)
         formData.append('fundingName', fundingName)
         formData.append('isGov', gov)
         formData.append('department', department)
@@ -82,6 +85,8 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('schemeName', projectName)
         formData.append('programTitle', programTitle)
         formData.append('principalName', invName)
+        formData.append('coInvestigator', coInvName)
+        formData.append('isCo', isCo)
         formData.append('fundingName', fundingName)
         formData.append('isGov', gov)
         formData.append('department', department)
@@ -101,11 +106,15 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
 
     function pencilClick(itemId) {
+        setEditId(itemId)
+
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
                 setProjectName(item.schemeName)
                 setProgramTitle(item.programTitle)
                 setInvName(item.principalName)
+                setCoInvName(item.coInvestigator)
+                setIsCo(item.isCo ? true : false)
                 setFundingName(item.fundingName)
                 setGov(item.isGov)
                 setDepartment(item.department)
@@ -128,6 +137,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         setProjectName('')
         setProgramTitle('')
         setInvName(`${user?.salutation} ${user?.name}`)
+        setCoInvName('-')
         setFundingName('')
         setGov('')
         setDepartment('')
@@ -137,10 +147,15 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         setStatus('')
         setDuration('')
         setYear('')
+        setIsCo(false)
 
 
 
     }
+
+    useEffect(() => {
+        console.log("is co:", isCo, coInvName)
+    }, [isCo, coInvName])
 
     let param = { model: 'ResearchProject', userId: user?._id }
 
@@ -150,6 +165,26 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
+
+    useEffect(() => {
+        if (editModal === true) {
+            data?.data?.data?.forEach(function (item) {
+                if (item._id === editId) {
+                    if (isCo) {
+                        setCoInvName(item.coInvestigator)
+                    } else {
+                        setCoInvName("-")
+                    }
+                }
+            })
+        } else {
+            if (isCo) {
+                setCoInvName("")
+            } else {
+                setCoInvName("-")
+            }
+        }
+    }, [isCo, editModal])
 
     return (
         <div>
@@ -171,6 +206,15 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                         <Text title='Scheme / Project Title' state={projectName} setState={setProjectName} />
 
                         <Text title='Principal Invigilator Name' state={invName} setState={setInvName} />
+
+                        <div className='col-md-4 border rounded-md mt-5'>
+                            <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
+                                <input class="form-check-input" checked={isCo} onChange={(e) => { setIsCo(e.target.checked) }} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Is this Project have a Co-Invigilator</label>
+                            </div>
+                        </div>
+
+                        <Text title='Co-Invigilator Name' state={coInvName} setState={setCoInvName} disabled={isCo ? false : true} />
 
                         <Text title='Funding Agency Name' state={fundingName} setState={setFundingName} />
 
@@ -217,7 +261,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
                         <Year state={year} setState={setYear} />
 
-                        <File space='col-md-9' title='Upload Proof' setState={setProof} />
+                        <File space='col-md-3' title='Upload Proof' setState={setProof} />
 
                     </FormWrapper>
                 </DialogContent>
@@ -231,21 +275,21 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
             {
                 showTable && <div className='mt-2 overflow-auto change__scrollbar mb-2  text-sm sm:text-base'>
-                    {/* <div className=' overflow-auto change__scrollbar mb-2 '> */}
                     <table className="table table-bordered table-hover">
                         <thead className='table-dark'>
                             <tr>
-                                <th scope="col"><div className='w-44'>Scheme / Project Title</div></th>
-                                <th scope="col"><div className='w-44'>Principal Invigilator Name</div></th>
-                                <th scope="col"><div className='w-44'>Funding Agency</div></th>
+                                <th scope="col">Scheme / Project Title</th>
+                                <th scope="col">Principal Invigilator</th>
+                                <th scope="col">Co-Invigilator</th>
+                                <th scope="col">Funding Agency</th>
                                 <th scope="col">Govt. / Non-Govt.</th>
                                 <th scope="col">Award Year</th>
-                                <th scope="col"><div className='w-44'>Funds (INR)</div></th>
+                                <th scope="col">Funds (INR)</th>
                                 <th scope="col">Major / Minor</th>
                                 <th scope="col">Project Status</th>
                                 <th scope="col">Project Duration</th>
-                                <th scope="col"><div className="w-20">Year</div></th>
-                                <th scope="col">Proof of Sactioned Project</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Saction Proof</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -255,6 +299,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                                     <tr key={index}>
                                         <td>{item.schemeName}</td>
                                         <td>{item.principalName}</td>
+                                        <td>{item.coInvestigator}</td>
                                         <td>{item.fundingName}</td>
                                         <td>{item.isGov}</td>
                                         <td>{item.awardYear}</td>

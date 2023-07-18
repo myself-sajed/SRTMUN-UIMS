@@ -358,17 +358,17 @@ const CASDataTable = {
     },
     Responsibilities: {
         tableHeads: [
-            "Name of the Committee",
             "Designation",
+            "Name of the Committee",
             "Hosting institute name",
-            "Year",
+            "Duration of Responsibility",
             "Uploaded Proof"
         ],
         tableCells: [
-            'committeeName',
             'designation',
+            'committeeName',
             'institute',
-            'year',
+            'duration',
             'proof',
         ]
     },
@@ -648,7 +648,8 @@ const CASDataTable = {
     TrimmedResearchProject: {
         tableHeads: [
             "Scheme / Project Title",
-            "Principal Invigilator Name",
+            "Principal Invigilator",
+            "Co-Invigilator",
             "Funding Agency Name",
             "Govt. / Non-Govt.",
             "Department",
@@ -663,6 +664,7 @@ const CASDataTable = {
         tableCells: [
             "schemeName",
             "principalName",
+            "coInvestigator",
             "fundingName",
             "isGov",
             "department",
@@ -683,7 +685,8 @@ const CASDataTable = {
     ResearchProject: {
         tableHeads: [
             "Scheme / Project Title",
-            "Principal Invigilator Name",
+            "Principal Invigilator",
+            "Co-Invigilator",
             "Funding Agency Name",
             "Govt. / Non-Govt.",
             "Award Year",
@@ -697,6 +700,7 @@ const CASDataTable = {
         tableCells: [
             "schemeName",
             "principalName",
+            "coInvestigator",
             "fundingName",
             "isGov",
             "awardYear",
