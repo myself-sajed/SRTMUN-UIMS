@@ -3,8 +3,8 @@ import GoBack from '../../../components/GoBack'
 import Bred from '../../../components/Bred'
 import siteLinks from '../../../components/siteLinks'
 import Text from '../../../inputs/Text'
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 let nssLogo = <img src="/assets/nsslogo.png" height="40px" width="40px" />
-
 
 const NSSStudentAdmission = () => {
 
@@ -59,6 +59,13 @@ const NSSStudentAdmission = () => {
                             </div>
                         </div>
 
+                    </div>
+
+                    <div className="my-2">
+                        <button type="button" class="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 rounded-lg text-center">
+                            <BookmarkRoundedIcon />
+                            <span className="ml-3">Submit NSS Data</span>
+                        </button>
                     </div>
                 </div>
             </div>
