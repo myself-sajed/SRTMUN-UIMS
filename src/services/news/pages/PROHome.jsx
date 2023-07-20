@@ -14,6 +14,8 @@ import { NewsComponent, SearchTable } from './NewsPage'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useState } from 'react'
 import Filter from '../components/Filter'
+import serverLinks from '../../../js/serverLinks'
+import GoBack from '../../../components/GoBack'
 
 
 const PROHome = () => {
@@ -28,8 +30,7 @@ const PROHome = () => {
 
     return (
         <div>
-            <OnlyNav user="donotshow" heading={{ title: 'PRO', link: siteLinks.welcome.link }}
-                logout={{ token: 'pro-token', link: siteLinks.welcome.link }} li={[]} />
+            <GoBack pageTitle="PRO" showAvatar={{ photoURL: user?.photoURL, userType: 'news' }} />
 
             {/* Navtools */}
             <div className='mt-2'>
@@ -43,7 +44,7 @@ const PROHome = () => {
                         {user &&
                             <div>
                                 <div className='sm:flex items-start justify-start gap-5 w-full'>
-                                    <img src={'/assets/male.jpg'} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
+                                    <img src={serverLinks.showFile(user?.photoURL, 'news')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
 
                                     <div className='text-black '>
                                         <p className='text-lg sm:text-2xl font-bold'>{user && user.name}</p>
