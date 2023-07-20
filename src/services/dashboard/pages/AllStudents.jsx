@@ -12,7 +12,7 @@ import ServiceDashboard from './ServiceDashboard'
 import serverLinks from '../../../js/serverLinks'
 import title from '../../../js/title'
 import ShowImage from './ShowImage'
-import SchoolsPrograms from '../../../components/SchoolsProgram'
+
 
 
 const AllStudents = ({ showImage = false, school }) => {
@@ -22,63 +22,19 @@ const AllStudents = ({ showImage = false, school }) => {
     const param = { model: 'Student', filter: { schoolName: school } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
     const [studentData, setStudentData] = useState(null)
-    const [activeProgram, setActiveProgram] = useState()
+ 
 
     useEffect(() => {
-        setActiveProgram(SchoolsPrograms[school][0][0])
-        setStudentData(data?.data?.data?.filter((item) => item.programGraduated === activeProgram))
+        setStudentData(data?.data?.data?.sort((a, b) => (a.programGraduated > b.programGraduated) ? 1 : ((b.programGraduated > a.programGraduated) ? -1 : 0)))
     }, [school, data])
-
-    useEffect(() => {
-        if (school) {
-            setStudentData(data?.data?.data?.filter((item) => item.programGraduated === activeProgram))
-        }
-    }, [activeProgram])
 
     return (
         <div>
-            {/* <div className="sticky-top bg-white">
-                <GoBack backUrl={-1} pageTitle={`About Students of ${school}`} />
-            </div> */}
             <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
                 {school}
             </div>
-
             <div>
-
-                <div>
-                    <div className="table-responsive change__scrollbar p-3">
-                        <table className='mx-auto'>
-                            <div className='flex items-center justify-center gap-3'>
-                                {SchoolsPrograms[school].map((item) => {
-                                    return <div className={`rounded-md border p-2 cursor-pointer ${activeProgram === item[0] ? 'bg-[#1d4ed8] text-white' : 'bg-[#dbeafe] text-[#1d4ed8]'} w-[100px] md:w-[250px] hover:shadow-md duration-200 ease-in-out md:text-base text-sm`}
-                                        onClick={() => { setActiveProgram(item[0]) }}> <p>{item[0].length > 28
-                                            ? item[0].slice(0, 35) + "..."
-                                            : item[0]}</p>
-
-                                        <div className='text-xs'>
-
-                                            {/* <div className='flex items-center justify-start gap-2 mt-3'>
-                                                <p>Male: <span className='font-semibold'>{data?.data?.data.filter((students) => students.programGraduated === item[0] && students.gender === 'Male')?.length}</span></p>
-
-                                                <p>Female: <span className='font-semibold'>{data?.data?.data.filter((students) => students.programGraduated === item[0] && students.gender === 'Female')?.length}</span></p>
-                                            </div> */}
-
-
-                                            <p>Total: <span className='font-semibold'>{data?.data?.data.filter((students) => students.programGraduated === item[0])?.length}</span></p>
-                                        </div>
-                                    </div>
-                                })}
-                            </div>
-                        </table>
-
-                    </div>
-                </div>
-
-
                 <div className='mt-3'>
-                    <p className='text-sm text-muted text-center mt-2 mb-2'>Students enrolled in {activeProgram}</p>
-
                     <div className='table-responsive'>
                         <table class="table table-bordered css-serial">
                             <thead className='bg-[#1d4ed8] text-white'>

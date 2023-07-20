@@ -51,12 +51,7 @@ const AllFaculties = ({school:sch}) => {
 
             <div>
 
-                <ServiceDashboard data={schoolData} iconDataObj={dashboardObj['faculty']} isLoading={isLoadingSchoolData} />
-
-
                 <div className='mt-5'>
-                    <ServiceDashboardHeading title="2. Our Faculties" />
-
                     <AllFacultyTable data={data} isLoading={isLoading} />
                 </div>
             </div>
@@ -107,7 +102,9 @@ const AllFacultyTable = ({ data, isLoading }) => {
                             <td>
                                 <div>
                                     <p>{item?.salutation} {item?.name}</p>
-                                    <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => { navigate('/dashboard/faculty/' + item?._id) }}>View Profile</button>
+                                    <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => { const url = '/dashboard/faculty/' + (item ? item._id : '');
+                                    window.open(url, '_blank'); 
+                                    }}>View Profile</button>
                                 </div>
                             </td>
                             <td>{item?.designation === 'Contractual' ? 'Assistant Professor (Contractual)' : item?.designation}</td>
