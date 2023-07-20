@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import TableTitle from './TableTitle';
 import AcadmicYearSelect from '../../../admin/components/AcadmicYearSelect';
 
-export default function AddButton({ title, onclick, exceldialog, yearFilter, setState, filterByAcademicYear }) {
+export default function AddButton({ title, onclick, exceldialog, yearFilter, setState, filterByAcademicYear, customName = false }) {
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
     const clickd = () => {
         onclick(true)
@@ -32,7 +32,7 @@ export default function AddButton({ title, onclick, exceldialog, yearFilter, set
 
         <div>
             <div>
-                <TableTitle title={title} excelClicked={excelClicked} clickd={clickd} />
+                <TableTitle title={title} excelClicked={excelClicked} clickd={clickd} customName={customName} />
             </div>
             <div style={{ display: "flex", width: "100%", background: `${data?.instruction.length > 0 ? '#ebebeb' : 'white'}`, borderRadius: "10px", margin: "auto" }} >
                 <div className={`${data?.instruction.length > 0 ? 'text-gray-800 p-2 rounded-md ' : 'white'}`} style={{ width: "70%" }}>

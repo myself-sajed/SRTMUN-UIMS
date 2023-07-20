@@ -4,6 +4,7 @@ import Bred from '../../../components/Bred'
 import siteLinks from '../../../components/siteLinks'
 import Text from '../../../inputs/Text'
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
+import StudentAdmissionTable from '../tables/StudentAdmissionTable'
 let nssLogo = <img src="/assets/nsslogo.png" height="40px" width="40px" />
 
 const NSSStudentAdmission = () => {
@@ -59,6 +60,10 @@ const NSSStudentAdmission = () => {
                             </div>
                         </div>
 
+                    </div>
+
+                    <div className="my-4">
+                        <StudentAdmissionTable />
                     </div>
 
                     <div className="my-2">

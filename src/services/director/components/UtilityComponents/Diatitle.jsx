@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react'
 import navcom from './navcom';
 import { useSelector } from 'react-redux';
 
-export default function Diatitle({title, clear, setItemToEdit, EditClear, Edit, init, setval}) {
+export default function Diatitle({ title, clear, setItemToEdit, EditClear, Edit, init, setval, customTitle = false }) {
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
     const [currentPage, setcurrentPage] = useState('')
     useEffect(() => {
         navcom.forEach((item) => {
             if (item.name === DirectorActive) {
                 setcurrentPage(item.value)
-            } 
+            }
         })
     }, [document.location.pathname])
 
@@ -23,8 +23,8 @@ export default function Diatitle({title, clear, setItemToEdit, EditClear, Edit, 
     }
 
     return (
-        <DialogTitle style={{ display: "flex", background:"#e5eaf0" }}>
-            <span style={{ width: '50%', display: 'flex', justifyContent: "flex-start" }}>{Edit ?`Edit ${title}`: title} </span>
+        <DialogTitle style={{ display: "flex", background: "#e5eaf0" }}>
+            <span style={{ width: '50%', display: 'flex', justifyContent: "flex-start" }}>{Edit ? `Edit ${customTitle ? customTitle : title}` : customTitle ? customTitle : title} </span>
             <span style={{ width: '50%', display: 'flex', justifyContent: "flex-end" }}>
                 <IconButton color="error" onClick={HandleChange}>
                     <ClearIcon />
