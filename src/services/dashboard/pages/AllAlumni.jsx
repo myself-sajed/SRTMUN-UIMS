@@ -15,7 +15,7 @@ const AllAlumni = ({school}) => {
     const [DATA, setData] = useState([])
 
     useEffect(() => {
-        data?.data?.data?.Alumni?.sort((a, b) => (a.programGraduated > b.programGraduated) ? 1 : ((b.programGraduated > a.programGraduated) ? -1 : 0))
+        setData(data?.data?.data?.Alumni?.sort((a, b) => (a.programGraduated > b.programGraduated) ? 1 : ((b.programGraduated > a.programGraduated) ? -1 : 0)))
       }, [data]);
 
     return (
