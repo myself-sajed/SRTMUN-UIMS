@@ -19,8 +19,9 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no.", Programme_Code: "Programme Code", Programme_Name: "Programme Name", Academic_Year: "Academic Year", Year_of_Introduction: "Year of Introduction", Status_of_implementation: "Status of implementation", Year_of_Implimentation: "Year of Implimentation", Year_of_Revision: "Year of Revision", Percentage_of_content_added_or_replaced: "Percentage of content added or replaced", Upload_Proof: "Upload Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", Programme_Code: "Program Code", Programme_Name: "Program Name", Academic_Year: "Academic Year", Year_of_Introduction: "Year of Introduction", Status_of_implementation: "Status of implementation", Year_of_Implimentation: "Year of Implimentation", Year_of_Revision: "Year of Revision", Percentage_of_content_added_or_replaced: "Percentage of content added or replaced", Upload_Proof: "Upload Proof", Action: "Action" }
 
 const CE = ["CBCS", "ECS"]
 
@@ -92,8 +93,8 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
               PostReq({ School: directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
-              <CTextField label="Programme Code" value={values.srpc} id="srpc" type="text" onch={setvalues} required={true} />
-              <CTextField label="Programme Name" value={values.srpn} id="srpn" type="text" onch={setvalues} required={true} />
+              <CTextField label="Program Code" value={values.srpc} id="srpc" type="text" onch={setvalues} required={true} />
+              <SCTextField label= "Program Name" value={values.srpn} id="srpn" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
               <SYTextField label="Academic Year" value={values.sray} id="sray" onch={setvalues} required={true} />
               <CDatePicker label="Year of Introduction" value={values.sryoi} id="sryoi" onch={setvalues} required={true} />
               <SCTextField label="Status of implementation" value={values.srsoioce} id="srsoioce" select={CE} required={true} onch={setvalues} />

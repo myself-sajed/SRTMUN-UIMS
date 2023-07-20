@@ -18,8 +18,9 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no.", Academic_Year: "Academic Year", NseSC: "SC", NseST: "ST", NseOBC: "OBC(VJNT)", NseDivyngjan: "Divyngjan", NseGeneral: "General", NseOthers: "Others",NsaSC: "SC", NsaST: "ST", NsaOBC: "OBC(VJNT)", NsaDivyngjan: "Divyngjan", NsaGeneral: "General", NsaOthers: "Others", Upload_Proof: "Upload Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", Academic_Year: "Academic Year", Program_Name: "Program Name", NseSC: "SC", NseST: "ST", NseOBC: "OBC(VJNT)", NseDivyngjan: "Divyngjan", NseGeneral: "General", NseOthers: "Others",NsaSC: "SC", NsaST: "ST", NsaOBC: "OBC(VJNT)", NsaDivyngjan: "Divyngjan", NsaGeneral: "General", NsaOthers: "Others", Upload_Proof: "Upload Proof", Action: "Action" }
 
 function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
 
@@ -39,7 +40,7 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
     //--------------values useState---------------
-    const initialState = { NseSC: "",NseST: "",NseOBC: "",NseDivyngjan: "",NseGeneral: "",NseOthers: "",NsaSC: "",NsaST: "",NsaOBC: "",NsaDivyngjan: "",NsaGeneral: "",NsaOthers: "", Academic_Year: "", Upload_Proof: "" }
+    const initialState = { NseSC: "",NseST: "",NseOBC: "",NseDivyngjan: "",NseGeneral: "",NseOthers: "",NsaSC: "",NsaST: "",NsaOBC: "",NsaDivyngjan: "",NsaGeneral: "",NsaOthers: "",Program_Name: "", Academic_Year: "", Upload_Proof: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -51,11 +52,11 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
     useEffect(() => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
-                const { NseSC, NseST, NseOBC, NseDivyngjan, NseGeneral, NseOthers, NsaSC, NsaST, NsaOBC, NsaDivyngjan, NsaGeneral, NsaOthers, Academic_Year } = item
+                const { NseSC, NseST, NseOBC, NseDivyngjan, NseGeneral, NseOthers, NsaSC, NsaST, NsaOBC, NsaDivyngjan, NsaGeneral, NsaOthers, Academic_Year, Program_Name } = item
                 if (item?._id === itemToEdit) {
                     setEdit(true); setAdd(true);
                     setvalues({
-                        NseSC, NseST, NseOBC, NseDivyngjan, NseGeneral, NseOthers, NsaSC, NsaST, NsaOBC, NsaDivyngjan, NsaGeneral, NsaOthers, Academic_Year
+                        NseSC, NseST, NseOBC, NseDivyngjan, NseGeneral, NseOthers, NsaSC, NsaST, NsaOBC, NsaDivyngjan, NsaGeneral, NsaOthers, Academic_Year, Program_Name
                     })
                 }
             })
@@ -87,7 +88,10 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
                     }}>
                         <Grid container >
                             <div className="flex-col">
-                            <SYTextField label="Academic Year" value={values.Academic_Year} id="Academic_Year" onch={setvalues} required={true} />
+                            <div className="flex flex-row flex-wrap">
+                                <SYTextField label="Academic Year" value={values.Academic_Year} id="Academic_Year" onch={setvalues} required={true} />
+                                <SCTextField label= "Program Name" value={values.Program_Name} id="Program_Name" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
+                            </div>
                             <div className="flex flex-row flex-wrap">
                                 <div className="w-full font-semibold ml-2 my-2">Number of seats earmarked for reserved category as per GOI or State Government rule</div>
                                 <CTextField label="SC" type="number" value={values.NseSC} id="NseSC" onch={setvalues} required={true} />

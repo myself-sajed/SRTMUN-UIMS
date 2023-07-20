@@ -23,7 +23,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import SYTextField from "../components/FormComponents/SYTextField";
 
-const tableHead = { index: "Sr. no.", Name_of_the_student: "Name of the student", Year_of_joining: "Year of joining", Category: "Category", State_of_Domicile: "State of Domicile", Nationality: "Nationality", Email_ID: "Email ID", Programme_name: "Programme name", Student_Unique_Enrolment_ID: "Student Unique Enrolment ID", Mobile_Number: "Mobile Number", Gender: "Gender", Upload_Proof: "Upload proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", Name_of_the_student: "Name of the student", Year_of_joining: "Year of joining", Category: "Category", State_of_Domicile: "State of Domicile", Nationality: "Nationality", Email_ID: "Email ID", Programme_name: "Program name", Student_Unique_Enrolment_ID: "Student Unique Enrolment ID", Mobile_Number: "Mobile Number", Gender: "Gender", Upload_Proof: "Upload proof", Action: "Action" }
 
 const Category = ["Genral", "OBC", "SC", "ST", "NT", "Others"]
 
@@ -45,7 +45,7 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
 
 
     //--------------values useState---------------
-    const initialState = { sssnots: "", sssyoj: "", sssc: "", ssssod: "", sssnioti: "", sssei: "", ssspn: "", ssssuei: "", sssmn: "", sssg: "", Upload_Proof: "" }
+    const initialState = { Name_of_the_student: "", Year_of_joining: "", Category: "", State_of_Domicile: "", Nationality: "", Email_ID: "", Programme_name: "", Student_Unique_Enrolment_ID: "", Mobile_Number: "", Gender: "", Upload_Proof: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -57,20 +57,10 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
     useEffect(() => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
+                const { Name_of_the_student, Year_of_joining, Category, State_of_Domicile, Nationality, Email_ID, Programme_name, Student_Unique_Enrolment_ID, Mobile_Number, Gender } = item
                 if (item?._id === itemToEdit) {
                     setEdit(true); setAdd(true);
-                    setvalues({
-                        sssnots: item.Name_of_the_student,
-                        sssyoj: item.Year_of_joining,
-                        sssc: item.Category,
-                        ssssod: item.State_of_Domicile,
-                        sssnioti: item.Nationality,
-                        sssei: item.Email_ID,
-                        ssspn: item.Programme_name,
-                        ssssuei: item.Student_Unique_Enrolment_ID,
-                        sssmn: item.Mobile_Number,
-                        sssg: item.Gender
-                    })
+                    setvalues({ Name_of_the_student, Year_of_joining, Category, State_of_Domicile, Nationality, Email_ID, Programme_name, Student_Unique_Enrolment_ID, Mobile_Number, Gender })
                 }
             })
         }
@@ -100,16 +90,16 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
                             PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
-                            <CTextField label="Name of the student" type="Text" value={values.sssnots} id="sssnots" onch={setvalues} />
-                            <SYTextField label="Year of joining" value={values.sssyoj} id="sssyoj" onch={setvalues} />
-                            <SCTextField select={Category} label="Category" value={values.sssc} id="sssc" onch={setvalues} />
-                            <SCTextField select={country()} label="Nationality" value={values.sssnioti} id="sssnioti" onch={setvalues} />
-                            <CTextField label="State of Domicile" type="Text" value={values.ssssod} id="ssssod" onch={setvalues} />
-                            <CTextField label="Email ID" type="Text" value={values.sssei} id="sssei" onch={setvalues} />
-                            <SCTextField value={values.ssspn} id="ssspn" type="text" label="Programme name" required={true} onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
-                            <CTextField label="Student Unique Enrolment ID" type="Text" value={values.ssssuei} id="ssssuei" onch={setvalues} />
-                            <CTextField label="Mobile Number" type="number" value={values.sssmn} id="sssmn" onch={setvalues} />
-                            <SCTextField label="Gender" value={values.sssg} id="sssg" onch={setvalues} select={["Male", "Female", "Other"]} />
+                            <CTextField label="Name of the student" type="Text" value={values.Name_of_the_student} id="Name_of_the_student" onch={setvalues} />
+                            <SYTextField label="Year of joining" value={values.Year_of_joining} id="Year_of_joining" onch={setvalues} />
+                            <SCTextField select={Category} label="Category" value={values.Category} id="Category" onch={setvalues} />
+                            <SCTextField select={country()} label="Nationality" value={values.Nationality} id="Nationality" onch={setvalues} />
+                            <CTextField label="State of Domicile" type="Text" value={values.State_of_Domicile} id="State_of_Domicile" onch={setvalues} />
+                            <CTextField label="Email ID" type="Text" value={values.Email_ID} id="Email_ID" onch={setvalues} />
+                            <SCTextField value={values.Programme_name} id="Programme_name" type="text" label="Program name" required={true} onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
+                            <CTextField label="Student Unique Enrolment ID" type="Text" value={values.Student_Unique_Enrolment_ID} id="Student_Unique_Enrolment_ID" onch={setvalues} />
+                            <CTextField label="Mobile Number" type="number" value={values.Mobile_Number} id="Mobile_Number" onch={setvalues} />
+                            <SCTextField label="Gender" value={values.Gender} id="Gender" onch={setvalues} select={["Male", "Female", "Other"]} />
                             <UTextField label="Upload proof" id="Upload_Proof" required={!edit} onch={setvalues} />
                             <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
                         </Grid>

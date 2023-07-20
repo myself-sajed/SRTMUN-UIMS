@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import navcom from './navcom';
 import { useSelector } from 'react-redux';
 
-export default function Diatitle({ title, clear, setItemToEdit, EditClear, Edit, init, setval, customTitle = false }) {
+export default function Diatitle({ title, clear, setItemToEdit, EditClear, Edit, init, setval}) {
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
     const [currentPage, setcurrentPage] = useState('')
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function Diatitle({ title, clear, setItemToEdit, EditClear, Edit,
 
     return (
         <DialogTitle style={{ display: "flex", background: "#e5eaf0" }}>
-            <span style={{ width: '50%', display: 'flex', justifyContent: "flex-start" }}>{Edit ? `Edit ${customTitle ? customTitle : title}` : customTitle ? customTitle : title} </span>
+            <span style={{ width: '50%', display: 'flex', justifyContent: "flex-start" }}>{Edit ? `Edit ${title}` : title} </span>
             <span style={{ width: '50%', display: 'flex', justifyContent: "flex-end" }}>
                 <IconButton color="error" onClick={HandleChange}>
                     <ClearIcon />

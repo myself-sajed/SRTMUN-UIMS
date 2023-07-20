@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const reservedSeatsSchema = new mongoose.Schema({
     Academic_Year: {
         type: String,
-        required: false
+        required: true
+    },
+    Program_Name: {
+        type: String,
+        required: true
     },
     NseSC: {
         type: Number,

@@ -18,6 +18,7 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
 
 const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
@@ -91,7 +92,7 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
           }}>
             <Grid container >
               <CTextField label="Program Code" value={values.drpc} type="text" id="drpc" required={true} onch={setvalues} />
-              <CTextField label="Program name" type="text" value={values.drpn} id="drpn" required={true} onch={setvalues} />
+              <SCTextField label= "Program Name" value={values.drpn} id="drpn" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
               <SYTextField label="Academic Year" value={values.dray} id="dray" required={true} onch={setvalues} />
               <CTextField label="Number of seats available" type="number" value={values.drnosav} id="drnosav" required={true} onch={setvalues} />
               <CTextField label="Number of eligible applications" type="number" value={values.drnoea} id="drnoea" required={true} onch={setvalues} />

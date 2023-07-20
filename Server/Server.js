@@ -81,6 +81,9 @@ app.use(require('./routes/director-routes/director-routes'));
 app.use(require('./routes/director-routes/academic-audit-routes/routes'));
 require('./routes/director-routes/directorAuth')(app, jwt)
 
+//nss routes
+app.use(require("./routes/nss-routes/nss-routes"))
+
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes'));
 
