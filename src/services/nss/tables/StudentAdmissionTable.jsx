@@ -17,7 +17,7 @@ import Diatitle from "../../director/components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import DateRPick from "../../director/components/FormComponents/DateRPick";
 
-const tableHead = { index: "Sr. no.", studentName: "Student Name", class: "Class", dob: "Date of Birth", caste: "Caste", category: "Category", nss1Year: "Year of NSS-1", nss2Year: "Year of NSS-2", address: "Address", email: "Email", projectName: "Project Assigned", bloodGroup: "Blood Group", Action: "Action" }
+const tableHead = { index: "Sr. no.", studentName: "Student Name", classes: "Class", dob: "Date of Birth", caste: "Caste", category: "Category", nss1Year: "Year of NSS-1", nss2Year: "Year of NSS-2", address: "Address", email: "Email", projectName: "Project Assigned", bloodGroup: "Blood Group", Action: "Action" }
 
 const CE = ["CBCS", "ECS"]
 
