@@ -84,6 +84,8 @@ import DirectorReportStatus from '../services/director/pages/DirectorReportStatu
 import AdminFeedbackStatus from '../services/admin/pages/AdminFeedbackStatus'
 import FeedbackReport from '../templates/feedback/FeedbackReport'
 import ExpertFeedback from '../services/feedback/pages/ExpertFeedback'
+import NSSLogin from '../services/nss/pages/NSSLogin'
+import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
 
 
 
@@ -201,8 +203,9 @@ const RoutesHandler = () => {
                 {/* SERVICE STATUS */}
                 <Route path="/director/service/status" exact element={<DirectorReportStatus />} />
 
-
-
+                {/* NSS Service */}
+                <Route path="/nss-login" exact element={<NSSLogin />} />
+                <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
 
 
             </Routes>

@@ -16,26 +16,44 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import DesignationSelect from '../../../inputs/DesignationSelect';
+import FromToDate from '../../../inputs/FromToDate';
+import StageSelect from '../../../inputs/StageSelect';
 
 const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
     const [open, setOpen] = useState(false);
+    const user = useSelector(state => state.user.user);
+
 
     // states
     const [postsModal, setPostsModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [designation, setDesignation] = useState('')
-    const [department, setDepartment] = useState('')
+    const [department, setDepartment] = useState(user?.department)
     const [joiningDate, setJoiningDate] = useState('')
     const [leavingDate, setLeavingDate] = useState('')
+    const [level, setLevel] = useState(null)
     const [proof, setProof] = useState(null)
     const [res, setRes] = useState('')
-    const user = useSelector(state => state.user.user);
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
+    const [active, setActive] = useState(false)
 
+    const [fromDate, setFromDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [filteredItems, setFilteredItems] = useState([])
+
+    useEffect(() => {
+        console.log(user)
+        setDepartment(user?.department)
+        setDesignation(user?.designation)
+    }, [user, editModal, isFormOpen])
+
+    useEffect(() => {
+        console.log('Dep:', department)
+    }, [department])
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -125,19 +143,30 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                     <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setPostsModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit a Post' : 'Add a Post'}</p>
 
+                        {/* <Text title='Designation' state={designation} setState={setDesignation} /> */}
 
-                        <p className='text-2xl font-bold my-3'></p>
 
+                        <DesignationSelect showLabel={true} classes="col-md-3" id="chooseDesignation" state={designation} setState={setDesignation} />
 
-                        <Text title='Designation' state={designation} setState={setDesignation} />
 
                         <Text title='Department' state={department} setState={setDepartment} />
 
-                        <Text title='from' state={joiningDate} setState={setJoiningDate} type='date' />
+                        <StageSelect space='col-md-4' state={level} setState={setLevel} forDesignation={designation} />
 
-                        <Text title='To (Type text, else type date)' state={leavingDate} setState={setLeavingDate} type='text' />
+                        <div className='col-md-5 border rounded-md mt-5'>
+                            <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
+                                <input class="form-check-input" checked={active} onChange={(e) => { setActive(e.target.checked) }} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Are you still active on this post or level?</label>
+                            </div>
+                        </div>
 
-                        <File space='col-md-8' title='Appointment Order / CAS Promotion	' setState={setProof} />
+                        <FromToDate fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} active={active} />
+
+                        {/* <Text title='from' state={joiningDate} setState={setJoiningDate} type='date' />
+
+                        <Text title='To (Type text, else type date)' state={leavingDate} setState={setLeavingDate} type='text' /> */}
+
+                        <File space='col-md-6' title='Appointment Order / CAS Promotion	' setState={setProof} />
 
                     </FormWrapper>
                 </DialogContent>

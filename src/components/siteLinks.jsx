@@ -53,6 +53,8 @@ let siteLinks = {
     alumniFeedack: { title: "Alumni Feedback Form", link: '/feedback/alumni' },
     expertFeedback: { title: "Subject Expert Feedback Form", link: '/feedback/expert' },
     employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
+    nssLogin: { title: "NSS Login", link: '/nss-login' },
+    nssStudentAdmission: { title: "NSS Student Admission", link: '/nss/student-admission' },
 
 
 }
