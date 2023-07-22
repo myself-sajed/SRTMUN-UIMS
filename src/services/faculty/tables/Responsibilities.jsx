@@ -19,6 +19,7 @@ import View from './View';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import MultipleYearSelect from '../../../inputs/MultipleYearSelect';
 import { toast } from 'react-hot-toast';
+import FromToDate from '../../../inputs/FromToDate';
 
 const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
@@ -33,21 +34,34 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     const [year, setYear] = useState([])
     const [proof, setProof] = useState(null)
     const [duration, setDuration] = useState(null)
+    const [fromDate, setFromDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
+    const [active, setActive] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [filteredItems, setFilteredItems] = useState([])
     const [responsibilitiesModal, setResponsibitiesModal] = useState(false)
+    const [editItem, setEditItem] = useState(null)
+
+    useEffect(() => {
+        if (active) {
+            setDuration(`${fromDate} to Till Date`)
+            setYear([fromDate, endDate])
+        } else {
+            setDuration(`${fromDate} to ${endDate}`)
+            setYear([fromDate, endDate])
+        }
+    }, [fromDate, endDate, active])
 
 
     function handleSubmit(e) {
         e.preventDefault();
-
-
-
         if (year.length === 0) {
             toast.error('Please select year(s)')
+        } else if (year.length === 1) {
+            setYear([fromDate, endDate])
         } else {
             setLoading(true)
             let formData = new FormData()
@@ -55,7 +69,8 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
             formData.append('designation', designation)
             formData.append('institute', institute)
             formData.append('duration', duration)
-            formData.append('year', year)
+            formData.append('active', active)
+            formData.append('durationYears', JSON.stringify(year))
             formData.append('file', proof)
             formData.append('userId', user?._id)
             submitWithFile(formData, 'Responsibilities', refetch, setLoading, setResponsibitiesModal, setIsFormOpen)
@@ -64,18 +79,6 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
 
 
     }
-
-    useEffect(() => {
-        if (year.length === 1) {
-            setDuration(`${year[0]} to ${year[0]}`)
-        } else if (year.length > 1) {
-            setDuration(`${year[0]} to ${year[year.length - 1]}`)
-        }
-    }, [year])
-
-    useEffect(() => {
-        console.log('The duration is:', duration)
-    }, [duration])
 
 
     // make states together
@@ -87,6 +90,8 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
 
         if (year.length === 0) {
             toast.error('Please select year(s)')
+        } else if (year.length === 1) {
+            setYear([fromDate, endDate])
         } else {
             // arrange form Data
             let formData = new FormData()
@@ -95,8 +100,9 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
             formData.append('committeeName', committeeName)
             formData.append('designation', designation)
             formData.append('institute', institute)
+            formData.append('active', active)
             formData.append('duration', duration)
-            formData.append('year', year)
+            formData.append('durationYears', JSON.stringify(year))
             formData.append('file', proof)
             handleEditWithFile(formData, 'Responsibilities', setEditModal, refetch, setLoading, setIsFormOpen)
         }
@@ -107,11 +113,22 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     function pencilClick(itemId) {
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
+                setEditItem(item)
                 setCommitteeName(item.committeeName)
                 setInstitute(item.institute)
                 setDuration(item.duration)
                 setDesignation(item.designation)
-                setYear(item.year)
+
+                if (item.durationYears?.[0]?.includes(',') || item.durationYears?.[0]?.length > 7) {
+                    setYear(() => [])
+                    setFromDate(() => null)
+
+                } else {
+                    setYear(() => item.durationYears)
+                    setFromDate(() => item.durationYears[0] || null)
+                }
+
+                setActive(item.active === undefined ? false : item.active)
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -125,6 +142,9 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
         setDuration('')
         setDesignation('')
         setYear('')
+        setActive(false)
+        setFromDate(null)
+        setEndDate(null)
     }
 
     let param = { model: 'Responsibilities', userId: user?._id }
@@ -133,8 +153,10 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
-        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', false, academicYear, true))
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, null, false, null, true,))
     }, [data])
+
+
 
     return (
         <div className="">
@@ -150,24 +172,30 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
                 <DialogContent >
                     <FormWrapper action={editModal ? "Editing" : "Adding"} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setResponsibitiesModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
-                        <p className='text-2xl font-bold my-3'>{editModal ? "Edit Responsibities" : "Add a new Responsibility"}</p>
+                        <p className='text-2xl font-bold my-3'>{editModal ? "Edit Responsibility" : "Add a new Responsibility"}</p>
+
+                        <div className="col-md-4">
+                            <label htmlFor="validationCustom02" className="form-label">Designation</label>
+                            <input type="text" className="form-control" id="validationCustom02" required value={designation} onChange={(e) => { setDesignation(e.target.value) }} />
+
+                        </div>
 
                         <div className="col-md-4">
                             <label htmlFor="validationCustom01" className="form-label">Name of the Committee</label>
                             <input type="text" className="form-control" id="validationCustom01" required value={committeeName} onChange={(e) => { setCommitteeName(e.target.value) }} />
 
                         </div>
-                        <div className="col-md-4">
-                            <label htmlFor="validationCustom02" className="form-label">Designation</label>
-                            <input type="text" className="form-control" id="validationCustom02" required value={designation} onChange={(e) => { setDesignation(e.target.value) }} />
 
-                        </div>
                         <div className="col-md-4">
                             <label htmlFor="validationCustom02" className="form-label">Hosting institute name</label>
                             <input type="text" className="form-control" id="validationCustom02" required value={institute} onChange={(e) => { setInstitute(e.target.value) }} />
 
                         </div>
-                        <MultipleYearSelect space="col-md-5" title='Select the year(s) you are / were responsible for' state={year} setState={setYear} />
+
+
+                        <FromToDate activeTitle="Are you still active under this responsibility?" fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} setActive={setActive} active={active} isYear={true} editModal={editModal} editItem={editItem} />
+
+
                         <File space='col-md-7' title='Upload Proof' setState={setProof} />
 
                     </FormWrapper>
@@ -196,7 +224,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
 
                         <tbody>
 
-                            {data && filteredItems.map((Responsibities, index) => {
+                            {data && filteredItems?.map((Responsibities, index) => {
                                 return (
                                     <tr key={Responsibities._id}>
                                         <th scope="row">{index + 1}</th>
@@ -223,7 +251,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
                         isLoading && <Loader />
                     }
                     {
-                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                        (data && data?.data?.data === undefined || filteredItems?.length === 0) && <EmptyBox />
                     }
                 </div>
             }

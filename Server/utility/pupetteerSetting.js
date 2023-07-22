@@ -10,7 +10,7 @@ async function pupetteerSetting({ linkToNavigate, fileName }) {
     await page.pdf({
         path: `pdfs/${fileName}`,
         printBackground: true,
-        scale: 0.5,
+        scale: 0.6,
         format: "A4",
         margin: { top: '50px', right: '10px', bottom: '50px', left: '10px' },
         displayHeaderFooter: true,

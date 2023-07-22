@@ -114,7 +114,7 @@ function editRoutes(app) {
     app.post('/api/edit/Qualification', (req, res) => {
         const { data } = req.body
 
-        console.log(data)
+
 
         Qualification.findOneAndUpdate({ _id: data.itemId }, {
             exam: data.exam,
@@ -124,7 +124,7 @@ function editRoutes(app) {
             subjects: data.subjects,
         }).then(function (data, err) {
             if (data) {
-                console.log('Deleted')
+
                 res.send({ status: 'deleted' })
             }
             else {
@@ -144,7 +144,7 @@ function editRoutes(app) {
     app.post('/api/edit/ForeignVisit', (req, res) => {
         const { data } = req.body
 
-        console.log(data)
+
 
         ForeignVisit.findOneAndUpdate({ _id: data.itemId }, {
             purposeOfVisit: data.purposeOfVisit,
@@ -154,7 +154,7 @@ function editRoutes(app) {
             year: data.year,
         }).then(function (data, err) {
             if (data) {
-                console.log('Deleted')
+
                 res.send({ status: 'deleted' })
             }
             else {
@@ -202,9 +202,10 @@ function editRoutes(app) {
         if (req.file) {
             PostHeld.findOneAndUpdate({ _id: data.itemId }, {
                 designation: data.designation,
-                department: data.department,
-                joiningDate: data.joiningDate,
-                leavingDate: data.leavingDate,
+                level: data.level,
+                duration: data.duration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
                 proof: req.file.filename,
             }).then(function (docs) {
 
@@ -218,7 +219,6 @@ function editRoutes(app) {
 
                         res.send({ status: 'deleted', data: docs });
                     } catch (error) {
-                        console.log('in catch')
 
                         console.log('The error is :', error)
                         res.send({ status: 'error' });
@@ -233,9 +233,10 @@ function editRoutes(app) {
         else {
             PostHeld.findOneAndUpdate({ _id: data.itemId }, {
                 designation: data.designation,
-                department: data.department,
-                joiningDate: data.joiningDate,
-                leavingDate: data.leavingDate,
+                level: data.level,
+                duration: data.duration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
             }).then(function (data) {
                 if (data) {
                     res.send({ status: 'deleted' })
@@ -257,13 +258,16 @@ function editRoutes(app) {
     app.post('/api/edit/Responsibilities', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
+
+
         if (req.file) {
             Responsibilities.findOneAndUpdate({ _id: data.itemId }, {
                 committeeName: data.committeeName,
                 designation: data.designation,
                 institute: data.institute,
                 duration: data.duration,
-                year: data.year,
+                active: data.active,
+                durationYears: [...JSON.parse(data.durationYears)],
                 proof: req.file.filename,
             }).then(function (docs) {
 
@@ -294,8 +298,9 @@ function editRoutes(app) {
                 committeeName: data.committeeName,
                 designation: data.designation,
                 institute: data.institute,
+                active: data.active,
                 duration: data.duration,
-                year: data.year,
+                durationYears: [...JSON.parse(data.durationYears)],
             }).then(function (data) {
                 if (data) {
                     res.send({ status: 'deleted' })
@@ -623,7 +628,9 @@ function editRoutes(app) {
                 isGov: data.isGov,
                 department: data.department,
                 awardYear: data.awardYear,
-                projectDuration: data.projectDuration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
+                duration: data.duration,
                 fundType: data.fundType,
                 status: data.status,
                 providedFunds: data.providedFunds,
@@ -665,7 +672,9 @@ function editRoutes(app) {
                 isGov: data.isGov,
                 department: data.department,
                 awardYear: data.awardYear,
-                projectDuration: data.projectDuration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
+                duration: data.duration,
                 providedFunds: data.providedFunds,
                 fundType: data.fundType,
                 status: data.status,
@@ -689,7 +698,7 @@ function editRoutes(app) {
     app.post('/api/edit/ResearchPaper', upload.single('file'), (req, res) => {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        console.log(data)
+
 
         if (req.file) {
             ResearchPaper.findOneAndUpdate({ _id: data.itemId }, {
@@ -1093,7 +1102,7 @@ function editRoutes(app) {
     app.post('/api/edit/Patent', upload.single('file'), (req, res) => {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        console.log('Data :', data)
+
 
         if (req.file) {
             Patent.findOneAndUpdate({ _id: data.itemId }, {
@@ -1132,7 +1141,6 @@ function editRoutes(app) {
         }
         else {
 
-            console.log('Not file')
             Patent.findOneAndUpdate({ _id: data.itemId }, {
                 patenterName: data.patenterName,
                 patentNumber: data.patentNumber,
@@ -1144,7 +1152,7 @@ function editRoutes(app) {
                 year: data.year,
             }).then(function (data) {
                 if (data) {
-                    console.log(data)
+
                     res.send({ status: 'deleted' })
                 }
                 else {
@@ -1291,9 +1299,8 @@ function editRoutes(app) {
     app.post('/api/edit/InvitedTalk', upload.single('file'), (req, res) => {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        console.log('Data :', data)
+
         if (req.file) {
-            console.log('in file is selected')
             InvitedTalk.findOneAndUpdate({ _id: data.itemId }, {
                 lectureTitle: data.lectureTitle,
                 seminarTitle: data.seminarTitle,

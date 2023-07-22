@@ -5,6 +5,8 @@ function handleEditWithFile(data, model, setModal, refresh, setLoading, setFormO
 
     toast.success('Updating... Please wait.')
 
+    console.log('Data :', [...data])
+
     const url = `${process.env.REACT_APP_MAIN_URL}/api/edit/${model}`
 
     Axios.post(url, data).then((res) => {

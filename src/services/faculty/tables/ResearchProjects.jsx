@@ -14,9 +14,10 @@ import { useQuery } from 'react-query';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
 import FormWrapper from '../components/FormWrapper';
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog, DialogContent, useStepContext } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import FromToDate from '../../../inputs/FromToDate';
 
 const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [projectModal, setProjectModal] = useState(false)
@@ -35,8 +36,14 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [funds, setFunds] = useState('')
     const [status, setStatus] = useState('')
     const [proof, setProof] = useState(null)
-    const [duration, setDuration] = useState('')
     const [year, setYear] = useState('')
+    const [fromDate, setFromDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
+    const [editItem, setEditItem] = useState(null)
+    const [active, setActive] = useState(false)
+    const [durationYears, setDurationYears] = useState(null)
+    const [duration, setDuration] = useState('')
+
 
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
@@ -47,6 +54,20 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
+
+    useEffect(() => {
+        if (active) {
+            setDuration(`${fromDate} to Till Date`)
+            setDurationYears([fromDate, endDate])
+        } else {
+            setDuration(`${fromDate} to ${endDate}`)
+            setDurationYears([fromDate, endDate])
+        }
+    }, [fromDate, endDate, active])
+
+    useEffect(() => {
+        console.log("duration :", duration, year)
+    })
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -65,7 +86,9 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('providedFunds', funds)
         formData.append('fundType', fundType)
         formData.append('status', status)
-        formData.append('projectDuration', duration)
+        formData.append('active', active)
+        formData.append('duration', duration)
+        formData.append('durationYears', JSON.stringify(durationYears))
         formData.append('year', year)
         formData.append('file', proof)
         formData.append('userId', user?._id)
@@ -94,7 +117,9 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         formData.append('providedFunds', funds)
         formData.append('fundType', fundType)
         formData.append('status', status)
-        formData.append('projectDuration', duration)
+        formData.append('active', active)
+        formData.append('duration', duration)
+        formData.append('durationYears', JSON.stringify(durationYears))
         formData.append('year', year)
         formData.append('file', proof)
 
@@ -110,6 +135,8 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
+                console.log(item)
+                setEditItem(item)
                 setProjectName(item.schemeName)
                 setProgramTitle(item.programTitle)
                 setInvName(item.principalName)
@@ -122,8 +149,18 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                 setAwardDate(item.awardYear)
                 setStatus(item.status)
                 setFunds(item.providedFunds)
-                setDuration(item.projectDuration)
+                setDuration(item.duration)
                 setYear(item.year)
+                if (item.durationYears?.[0]?.includes(',') || item.durationYears?.[0]?.length > 7) {
+                    setDurationYears(() => [])
+                    setFromDate(() => null)
+
+                } else {
+                    setDurationYears(() => item.durationYears)
+                    setFromDate(() => item.durationYears[0] || null)
+                }
+
+                setActive(item.active === undefined ? false : item.active)
                 setProof(item.file)
 
                 setItemToDelete(item)
@@ -147,10 +184,11 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
         setStatus('')
         setDuration('')
         setYear('')
+        setActive(false)
+        setFromDate(null)
+        setEndDate(null)
+        setDurationYears(null)
         setIsCo(false)
-
-
-
     }
 
     useEffect(() => {
@@ -245,6 +283,9 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                             </select>
                         </div>
 
+                        <Year title="Choose Academic Year" state={year} setState={setYear} />
+
+
                         <div className="col-md-4">
 
                             <label htmlFor="status" className="form-label">Status</label>
@@ -257,11 +298,11 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                             </select>
                         </div>
 
-                        <Text type="number" title='Project Duration (Year)' space='col-md-3' state={duration} setState={setDuration} />
 
-                        <Year state={year} setState={setYear} />
+                        <FromToDate activeTitle="Is the project still in progress?" fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} setActive={setActive} active={active} isYear={true} editModal={editModal} editItem={editItem} dateTitles={{ startTitle: "Project Start Year", endTitle: "Project End Year" }} />
 
-                        <File space='col-md-3' title='Upload Proof' setState={setProof} />
+
+                        <File space='col-md-8' title='Upload Proof' setState={setProof} />
 
                     </FormWrapper>
                 </DialogContent>
@@ -306,7 +347,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                                         <td>{item.providedFunds}</td>
                                         <td>{item.fundType}</td>
                                         <td>{item.status}</td>
-                                        <td>{item.projectDuration}</td>
+                                        <td>{item.duration}</td>
                                         <td>{item.year}</td>
                                         <td><View proof={item.proof} /></td>
                                         <td><Actions item={item} model="ResearchProject" refreshFunction={refetch} pencilClick={() => pencilClick(item._id)} editState={setEditModal} addState={setProjectModal} /></td>

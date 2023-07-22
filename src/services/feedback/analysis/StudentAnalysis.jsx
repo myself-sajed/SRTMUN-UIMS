@@ -3,7 +3,9 @@ import Title from '../components/Title'
 import { Bar, Pie } from 'react-chartjs-2'
 import DownloadReportButtons from '../components/DownloadReportButtons'
 
-const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, academicYear, excelClick }) => {
+
+const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, academicYear, excelClick, forReport = false  }) => {
+
     return (
         <div>
             {showDownloadButtons && <div className="my-3">
@@ -13,19 +15,20 @@ const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, ac
                 <div >
                     <div>
                         <Title title="1. Course Feedback Ratings" />
-                        <div className="grid grid-cols-4 gap-5">
+                        <div className={`${forReport ? "grid grid-cols-2 gap-5" : "grid grid-cols-4 gap-5"} `}>
                             {chartData.programChartData?.map(({ program, data }) => (
-                                <div key={program} className=" bg-gray-50 p-2 rounded-md m-2">
+                                <div style={{ pageBreakInside: 'avoid' }} key={program} className=" bg-gray-50 p-2 rounded-md m-2">
                                     <h4 className="font-semibold mb-3 text-center text-muted">{program}</h4>
                                     <Pie data={data} />
                                 </div>
                             ))}
                         </div>
 
+                        <p className="academic-start"></p>
                         <Title title="2. Were are you provided with a course and lecture outline at the beginning?" />
-                        <div className="grid grid-cols-3 gap-5">
+                        <div style={{ pageBreakInside: 'avoid' }} className={forReport ? "grid grid-cols-2 gap-1" : "grid grid-cols-3 gap-5"}>
                             {chartData?.onlineLectureChartData?.map((programData) => (
-                                <div key={programData.program} className=" bg-gray-50 p-2 rounded-md m-2">
+                                <div style={{ pageBreakInside: 'avoid' }} key={programData.program} className=" bg-gray-50 p-2 rounded-md m-2">
                                     <h4 className="font-semibold mb-3 text-center text-muted">{programData.program} (in %)</h4>
                                     <Bar data={programData.data} options={{
                                         plugins: {
@@ -43,33 +46,39 @@ const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, ac
 
                     </div>
 
+                    <p className="academic-start"></p>
+
                     <Title title="3. The Syllabus was?" />
-                    <div className="grid grid-cols-3 gap-5 bg-gray-50 p-2 rounded-md m-2">
+                    <div className={`${forReport ? "grid grid-cols-2" : "grid grid-cols-3 gap-5"}`}>
                         {chartData?.syllabusWasChartData?.map((data) => (
-                            <div key={data.program}>
+                            <div style={{ pageBreakInside: 'avoid' }} key={data.program} className="bg-gray-50 p-2 rounded-md m-2 w-full">
                                 <h3 className='mb-3 font-semibold text-muted'>For {data.program}</h3>
-                                <Bar data={data.data} options={{
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        },
-                                    }
-                                }} />
+                                <div className={forReport && 'w-[500px]'}>
+                                    <Bar data={data.data} options={{
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            },
+                                        }
+                                    }} />
+                                </div>
                             </div>
                         ))}
                     </div>
 
 
                     <div>
+                        <p className="academic-start"></p>
+
                         <Title title="4. Facility Feedback Ratings" className="mt-5" />
-                        <div className="grid grid-cols-2 gap-5 bg-gray-50 p-2 rounded-md m-2">
+                        <div className="grid grid-cols-2 gap-5 ">
                             {chartData?.facilityChartData?.map(({ question, data }, index) => (
-                                <div key={question} >
+                                <div style={{ pageBreakInside: 'avoid' }} key={question} className='bg-gray-50 p-2 rounded-md m-2' >
                                     <h4 className="font-semibold mb-3 text-center text-muted">
                                         {index + 1}. {question}
                                     </h4>
-                                    <div className="flex items-center justify-center">
-                                        <div className='w-[50%]'>
+                                    <div className={forReport ? "" : "flex items-center justify-center"}>
+                                        <div className={forReport ? "w-full" : 'w-[50%]'}>
                                             <Pie data={data} />
                                         </div>
                                     </div>
@@ -79,19 +88,21 @@ const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, ac
                     </div>
                 </div>
 
+                <p className="academic-start"></p>
+
                 <Title title="5. Teacher Feedback Ratings" className="mt-5" />
                 {chartData?.teacherChartData?.map(({ teacherName, data }, index) => (
                     <div key={teacherName} className="bg-gray-50 p-2 rounded-md m-2">
                         <h3 className="my-3 font-semibold text-blue-600 text-lg">
                             {index + 1}. {teacherName}
                         </h3>
-                        <div className="pl-10 border-l-4 border-l-gray-400 grid grid-cols-2 gap-5">
+                        <div className={`pl-10 border-l-4 border-l-gray-400 grid grid-cols-2 ${!forReport && "gap-5"}`}>
                             {data.map(({ label, data: ratings }, index) => (
-                                <div key={label} className="my-3">
+                                <div style={{ pageBreakInside: 'avoid' }} key={label} className={forReport ? "my-3 w-[500px]" : "my-3 w-full"}>
                                     <h4 className="font-semibold mb-3">
                                         {index + 1}. {label}
                                     </h4>
-                                    <div>
+                                    <div className='w-full'>
                                         <Bar
                                             data={{
                                                 labels: ['Very Good', 'Good', 'Satisfactory', 'Un-Satisfactory'],
@@ -134,10 +145,12 @@ const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, ac
                     </div>
                 ))}
 
+                <p className="academic-start"></p>
+
                 <Title title="6. Syllabus Coverage Ratings" className="mt-5" />
-                <div className="grid grid-cols-4 gap-3">
+                <div className={forReport ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                     {chartData?.syllabusCoverageChartData?.map(({ teacherName, data }, index) => (
-                        <div key={teacherName} className="bg-gray-50 rounded-md my-2 p-2">
+                        <div style={{ pageBreakInside: 'avoid' }} key={teacherName} className="bg-gray-50 rounded-md my-2 p-2">
                             <h3 className="my-3 font-semibold text-blue-600 text-lg">
                                 {index + 1}. {teacherName}
                             </h3>
@@ -147,6 +160,8 @@ const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, ac
                         </div>
                     ))}
                 </div>
+
+                <p className="academic-start"></p>
 
                 <Title title="7. Comments on Teacher by Students" className="mt-5" />
                 <div>

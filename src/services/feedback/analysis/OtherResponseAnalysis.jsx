@@ -3,8 +3,8 @@ import { Pie, Bar } from 'react-chartjs-2'
 import Title from '../components/Title'
 import DownloadReportButtons from '../components/DownloadReportButtons'
 
-const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, showDownloadButtons = true, feedbackUser, excelClick }) => {
 
+const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, showDownloadButtons = true, feedbackUser, excelClick, forReport = false  }) => {
 
     return (
         <div>
@@ -15,7 +15,7 @@ const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, sh
                 questionsWithData?.map((item, index) => {
                     return <div>
 
-                        <div>
+                        <div style={{ pageBreakInside: item.type !== 'table' && 'avoid' }}>
                             <Title title={`${index + 1}. ${item.question}`} className="mt-5" />
                             <div>
 
@@ -38,13 +38,18 @@ const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, sh
                                     <div className="bg-gray-50 my-3">
                                         <div className="px-5 py-2 border-l-gray-400 grid grid-cols-2 gap-2">
 
-                                            {item?.show ? <div> <Bar data={item.data} options={{
-                                                plugins: {
-                                                    legend: {
-                                                        display: false
-                                                    },
-                                                }
-                                            }} /> </div> : <div className='w-[50%]'> <Pie data={item.data} /> </div>}
+                                            {item?.show ?
+                                                <div className={forReport && 'w-[500px]'}> <Bar data={item.data} options={{
+                                                    plugins: {
+                                                        legend: {
+                                                            display: false
+                                                        },
+                                                    }
+                                                }} /> </div>
+                                                :
+                                                <div className={forReport ? 'w-[500px]' : 'w-[50%]'}>
+                                                    <Pie data={item.data} />
+                                                </div>}
                                         </div>
                                     </div>
 
@@ -53,12 +58,12 @@ const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, sh
                                 {
                                     item.type === 'table' && <div className="grid grid-cols-2 p-2 bg-gray-50 rounded-md m-2">
                                         {item.data.map(({ question, data }, index) => (
-                                            <div key={question} className='mt-3 mb-5'>
+                                            <div key={question} className='mt-3 mb-5' style={{ pageBreakInside: 'avoid' }}>
                                                 <h4 className="font-semibold mb-3 text-center text-muted">
                                                     {index + 1}. {question}
                                                 </h4>
                                                 <div className="flex items-center justify-center">
-                                                    <div className='w-[50%]'>
+                                                    <div className={forReport ? 'w-[500px]' : 'w-[50%]'}>
                                                         <Pie data={data} />
                                                     </div>
                                                 </div>
@@ -72,13 +77,6 @@ const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, sh
                         </div>
 
                     </div>
-                    // <div className="grid grid-cols-3 gap-3">
-                    //     <Title title={`${index + 1}. ${item.question}`} />
-                    //     <div key={item.question} className=" bg-gray-50 p-2 rounded-md m-2">
-                    //         <Pie data={item.data} />
-                    //     </div>
-                    // </div>
-
 
                 })
             }

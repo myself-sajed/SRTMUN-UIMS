@@ -45,6 +45,7 @@ let siteLinks = {
     forgotPassword: { title: "Forgot Password", link: '' },
     generateFeedbackLinksDirector: { title: "Generate Feedback Links", link: '/director/service/generateFeebackLinks' },
     feedbackDashboard: { title: "Feedback Dashboard", link: '/director/service/feedback/dashboard' },
+    feedbackAction: { title: "Feedback Action Taken Report", link: '/director/service/feedback/action' },
     serviceStatusForDirector: { title: "Report Status for Director", link: '/director/service/status' },
     serviceStatusForAdmin: { title: "Report Status for Admin", link: '/admin/service/status' },
     studentFeedack: { title: "Student Feedback Form", link: '/feedback/student' },

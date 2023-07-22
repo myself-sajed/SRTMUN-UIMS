@@ -21,6 +21,15 @@ const researchProjectSchema = new mongoose.Schema({
         type: 'boolean',
         required: false,
     },
+    durationYears: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
+    },
+    active: {
+        type: 'boolean',
+        required: false,
+    },
     fundingName: {
         type: 'string',
         required: true,
@@ -49,7 +58,7 @@ const researchProjectSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    projectDuration: {
+    duration: {
         type: 'string',
         required: true,
     },

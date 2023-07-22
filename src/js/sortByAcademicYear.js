@@ -4,19 +4,31 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
     if (arrayToSort?.length > 0) {
         if (isMultiYear) {
             return arrayToSort.sort((a, b) => {
-                const aYears = a.year.map(year => parseInt(year.split('-')[0]));
-                const bYears = b.year.map(year => parseInt(year.split('-')[0]));
-                const maxAYear = Math.max(...aYears);
-                const maxBYear = Math.max(...bYears);
+                // Check if "Till Date" exists in the year array
+                const aHasTillDate = a.durationYears.includes('Till Date');
+                const bHasTillDate = b.durationYears.includes('Till Date');
 
-                if (maxAYear > maxBYear) {
+                if (aHasTillDate && !bHasTillDate) {
                     return -1;
-                } else if (maxAYear < maxBYear) {
+                } else if (!aHasTillDate && bHasTillDate) {
                     return 1;
+                } else if (aHasTillDate && bHasTillDate) {
+                    // Both have "Till Date", sort by createdAt field in descending order
+                    return new Date(b.createdAt) - new Date(a.createdAt);
                 } else {
-                    const aCreatedAt = new Date(a.createdAt);
-                    const bCreatedAt = new Date(b.createdAt);
-                    return bCreatedAt - aCreatedAt;
+                    // Sort by the highest academic year first
+                    const parseYear = (year) => parseInt(year.split('-')[0]);
+                    const maxAYear = Math.max(...a.durationYears.map(parseYear));
+                    const maxBYear = Math.max(...b.durationYears.map(parseYear));
+
+                    if (maxAYear > maxBYear) {
+                        return -1;
+                    } else if (maxAYear < maxBYear) {
+                        return 1;
+                    } else {
+                        // Academic years are equal, sort by createdAt field in descending order
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    }
                 }
             });
         } else {

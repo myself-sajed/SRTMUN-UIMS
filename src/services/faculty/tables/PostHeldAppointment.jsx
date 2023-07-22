@@ -30,30 +30,41 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     const [postsModal, setPostsModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [designation, setDesignation] = useState('')
-    const [department, setDepartment] = useState(user?.department)
     const [joiningDate, setJoiningDate] = useState('')
     const [leavingDate, setLeavingDate] = useState('')
     const [level, setLevel] = useState(null)
     const [proof, setProof] = useState(null)
-    const [res, setRes] = useState('')
+    const [duration, setDuration] = useState(null)
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [active, setActive] = useState(false)
+    const [year, setYear] = useState(null)
+    const [editItem, setEditItem] = useState(null)
 
     const [fromDate, setFromDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredItems, setFilteredItems] = useState([])
 
     useEffect(() => {
-        console.log(user)
-        setDepartment(user?.department)
         setDesignation(user?.designation)
     }, [user, editModal, isFormOpen])
 
     useEffect(() => {
-        console.log('Dep:', department)
-    }, [department])
+        if (active) {
+            setDuration(`${fromDate} to Till Date`)
+            setYear([fromDate, endDate])
+        } else {
+            setDuration(`${fromDate} to ${endDate}`)
+            setYear([fromDate, endDate])
+        }
+    }, [fromDate, endDate, active])
+
+    useEffect(() => {
+        console.log("duration :", duration)
+        console.log("year :", year)
+    }, [duration, year])
+
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -61,9 +72,10 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
         setLoading(true)
         let formData = new FormData()
         formData.append('designation', designation)
-        formData.append('department', department)
-        formData.append('joiningDate', joiningDate)
-        formData.append('leavingDate', leavingDate)
+        formData.append('level', level)
+        formData.append('durationYears', JSON.stringify(year))
+        formData.append('duration', duration)
+        formData.append('active', active)
         formData.append('file', proof)
         formData.append('userId', user?._id)
 
@@ -80,9 +92,10 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
         formData.append('itemId', itemToDelete._id)
         formData.append('proof', itemToDelete.proof)
         formData.append('designation', designation)
-        formData.append('department', department)
-        formData.append('joiningDate', joiningDate)
-        formData.append('leavingDate', leavingDate)
+        formData.append('duration', duration)
+        formData.append('durationYears', JSON.stringify(year))
+        formData.append('active', active)
+        formData.append('level', level)
         formData.append('file', proof)
 
 
@@ -95,11 +108,21 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     function pencilClick(itemId) {
         data?.data?.data?.forEach(function (item) {
             if (item._id === itemId) {
+                console.log(item)
+                setEditItem(item)
                 setDesignation(item.designation)
-                setDepartment(item.department)
-                setJoiningDate(item.joiningDate)
-                setLeavingDate(item.leavingDate)
+                setLevel((item.level === undefined || item.level === 'undefined') ? null : item.level)
+                setDuration(item.duration)
+                setYear(item.durationYears)
+                if (!item.durationYears?.[0]) {
+                    setYear(() => [])
+                    setFromDate(() => null)
 
+                } else {
+                    setYear(() => item.durationYears)
+                    setFromDate(() => item.durationYears[0] || null)
+                }
+                setActive(item.active === undefined ? false : item.active)
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -108,11 +131,14 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
 
     // function to clear states to '' 
     function clearStates() {
-        setDesignation('')
-        setDepartment('')
-        setJoiningDate('')
-        setLeavingDate('')
+        setDesignation("")
+        setLevel(null)
+        setDuration(null)
+        setYear(null)
+        setActive(false)
         setProof(null)
+        setFromDate(null)
+        setEndDate(null)
 
 
     }
@@ -123,7 +149,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
-        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear, true))
     }, [data])
 
     return (
@@ -149,22 +175,12 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                         <DesignationSelect showLabel={true} classes="col-md-3" id="chooseDesignation" state={designation} setState={setDesignation} />
 
 
-                        <Text title='Department' state={department} setState={setDepartment} />
 
                         <StageSelect space='col-md-4' state={level} setState={setLevel} forDesignation={designation} />
 
-                        <div className='col-md-5 border rounded-md mt-5'>
-                            <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
-                                <input class="form-check-input" checked={active} onChange={(e) => { setActive(e.target.checked) }} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Are you still active on this post or level?</label>
-                            </div>
-                        </div>
 
-                        <FromToDate fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} active={active} />
+                        <FromToDate activeTitle="Are you still active on this post or level?" fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} setActive={setActive} active={active} editModal={editModal} editItem={editItem} />
 
-                        {/* <Text title='from' state={joiningDate} setState={setJoiningDate} type='date' />
-
-                        <Text title='To (Type text, else type date)' state={leavingDate} setState={setLeavingDate} type='text' /> */}
 
                         <File space='col-md-6' title='Appointment Order / CAS Promotion	' setState={setProof} />
 
@@ -179,9 +195,8 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                     <thead className='table-dark'>
                         <tr>
                             <th scope="col">Designation</th>
-                            <th scope="col">Department</th>
-                            <th scope="col">From</th>
-                            <th scope="col">To</th>
+                            <th scope="col">Academic Level</th>
+                            <th scope="col">Post Duration</th>
                             <th scope="col">Appointment Order / CAS Promotion</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -195,9 +210,8 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                             return (
                                 <tr key={index}>
                                     <td>{item.designation}</td>
-                                    <td>{item.department}</td>
-                                    <td>{item.joiningDate}</td>
-                                    <td>{item.leavingDate}</td>
+                                    <td>{item.level}</td>
+                                    <td>{item.duration}</td>
                                     <td><View proof={item.proof} /></td>
 
                                     <td>

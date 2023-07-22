@@ -317,7 +317,6 @@ function initRoutes(app) {
 
         const data = JSON.parse(JSON.stringify(req.body));
 
-        console.log(data)
 
         try {
             const degree = new Degree({
@@ -405,13 +404,13 @@ function initRoutes(app) {
     // post held
     app.post('/api/add/PostHeld', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
-
         try {
             const postHeld = new PostHeld({
                 designation: data.designation,
-                department: data.department,
-                joiningDate: data.joiningDate,
-                leavingDate: data.leavingDate,
+                level: data.level,
+                duration: data.duration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
                 proof: req.file.filename,
                 userId: data.userId
             })
@@ -500,7 +499,9 @@ function initRoutes(app) {
                 isGov: data.isGov,
                 department: data.department,
                 awardYear: data.awardYear,
-                projectDuration: data.projectDuration,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
+                duration: data.duration,
                 providedFunds: data.providedFunds,
                 fundType: data.fundType,
                 status: data.status,
@@ -709,7 +710,6 @@ function initRoutes(app) {
     // patent
     app.post('/api/add/Patent', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
-        console.log(data)
         try {
             const patent = new Patent({
                 patenterName: data.patenterName,
@@ -938,12 +938,14 @@ function initRoutes(app) {
     app.post('/api/add/Responsibilities', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
+
         try {
             const responsibilities = new Responsibilities({
                 committeeName: data.committeeName,
                 designation: data.designation,
                 institute: data.institute,
-                year: data.year,
+                durationYears: [...JSON.parse(data.durationYears)],
+                active: data.active,
                 duration: data.duration,
                 proof: req.file.filename,
                 userId: data.userId,
