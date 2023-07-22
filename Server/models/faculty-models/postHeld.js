@@ -5,15 +5,20 @@ const postHeldSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    department: {
+    duration: {
         type: 'string',
-        required: true,
+        required: false,
     },
-    joiningDate: {
-        type: 'string',
-        required: true,
+    durationYears: {
+        type: [{ type: String }],
+        require: false,
+        default: [],
     },
-    leavingDate: {
+    active: {
+        type: 'boolean',
+        required: false,
+    },
+    level: {
         type: 'string',
         required: false,
     },

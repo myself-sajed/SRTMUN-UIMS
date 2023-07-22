@@ -21,7 +21,9 @@ const AdminMain = () => {
   // title('SDM | School Data Management')
   const AdminActive = useSelector(state => state.adminActive.adminActive)
   return (<>
-    <AdminHeader />
+    <div className="mb-3">
+      <AdminHeader />
+    </div>
 
     {
       DashbordButtons?.map(item => item.name === AdminActive ? <div key={item}>{ComponentSetter[item.name]}</div> : null)

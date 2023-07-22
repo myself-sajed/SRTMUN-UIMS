@@ -13,11 +13,15 @@ const responsibilitiesSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    active: {
+        type: 'boolean',
+        required: true,
+    },
     duration: {
         type: 'string',
         required: true,
     },
-    year: {
+    durationYears: {
         type: [{ type: String }],
         require: false,
         default: [],

@@ -86,6 +86,7 @@ import FeedbackReport from '../templates/feedback/FeedbackReport'
 import ExpertFeedback from '../services/feedback/pages/ExpertFeedback'
 import NSSLogin from '../services/nss/pages/NSSLogin'
 import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
+import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
 
 
 
@@ -190,8 +191,8 @@ const RoutesHandler = () => {
                 {/* Feedback System: PART III : Pages */}
                 <Route path="/director/service/feedback/generateFeebackLinks" exact element={<GenerateFeedbackLink />} />
                 <Route path="/director/service/feedback/dashboard" exact element={<FeedbackDashboard />} />
+                <Route path="/director/service/feedback/action" exact element={<ActionOnFeedback />} />
                 <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
-
                 <Route path="/feedback/generateFeedbackReport/:schoolName/:feedbackUser/:academicYear" exact element={<FeedbackReport />} />
 
                 {/* AQAR  */}

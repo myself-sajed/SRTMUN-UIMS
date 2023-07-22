@@ -7,7 +7,7 @@ const generateFeedbackReport = (app) => {
 
 
         const linkToNavigate = `${process.env.Report_Main_URL}/feedback/generateFeedbackReport/${schoolName}/${feedbackUser}/${academicYear}`
-
+        console.log("Feedback Report Links:", linkToNavigate)
         const fileName = `${feedbackUser}-FeedbackAnalysis-${schoolName}-${academicYear}-${new Date().getTime()}.pdf`
 
         try {

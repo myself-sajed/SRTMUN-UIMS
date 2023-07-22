@@ -559,14 +559,12 @@ const CASDataTable = {
     PostHeld: {
         tableHeads: [
             "Designation",
-            "Department",
             "Joining Date",
             "Leaving Date ",
             "Appointment Order / CAS Promotion",
         ],
         tableCells: [
             "designation",
-            "department",
             "joiningDate",
             "leavingDate",
             "proof",

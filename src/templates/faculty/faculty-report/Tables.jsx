@@ -195,7 +195,7 @@ const TableTemplate = ({ item, data, showProof }) => {
                         </thead>
                         <tbody>
 
-                            {data && sortByAcademicYear(data?.[item.model], 'year', false, null, item.model === "Responsibilities" ? true : false).map((dataItem, index) => {
+                            {data && sortByAcademicYear(data?.[item.model], 'year', false, null, (item.model === "Responsibilities" || item.model === "PostHeld") ? true : false).map((dataItem, index) => {
                                 return <tr>
                                     <th scope="col">{index + 1}</th>
                                     {

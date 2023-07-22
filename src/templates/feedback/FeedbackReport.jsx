@@ -43,11 +43,11 @@ const FeedbackReport = () => {
                     :
                     <div>
                         {(feedbackUser === "Student" && chartData[feedbackUser]) && <div className="mb-5 w-full">
-                            <StudentAnalysis showDownloadButtons={false} chartData={chartData[feedbackUser]} schoolName={schoolName} />
+                            <StudentAnalysis forReport={true} showDownloadButtons={false} chartData={chartData[feedbackUser]} schoolName={schoolName} />
                         </div>}
 
                         {(feedbackUser !== "Student" && chartData[feedbackUser]) && <div className="mb-5">
-                            <OtherResponseAnalysis showDownloadButtons={false} questionsWithData={chartData[feedbackUser]} schoolName={schoolName} />
+                            <OtherResponseAnalysis forReport={true} showDownloadButtons={false} questionsWithData={chartData[feedbackUser]} schoolName={schoolName} />
                         </div>}
 
                     </div>
