@@ -12,17 +12,25 @@ function fetchFeedbackData(app) {
 
         let dashboardData = {}
         let Student = await FeedbackModels.StudentFeedback.find(filter).select("response")
+        dashboardData.Student = Student
         dashboardData.StudentCount = Student.length
         let Teacher = await FeedbackModels.TeacherFeedback.find(filter).select("response")
+        dashboardData.Teacher = Teacher
         dashboardData.TeacherCount = Teacher.length
         let Alumni = await FeedbackModels.AlumniFeedback.find(filter).select("response")
+        dashboardData.Alumni = Alumni
         dashboardData.AlumniCount = Alumni.length
         let Parent = await FeedbackModels.ParentFeedback.find(filter).select("response")
+        dashboardData.Parent = Parent
         dashboardData.ParentCount = Parent.length
         let Employer = await FeedbackModels.EmployerFeedback.find(filter).select("response")
+        dashboardData.Employer = Employer
         dashboardData.EmployerCount = Employer.length
         let Expert = await FeedbackModels.ExpertFeedback.find(filter).select("response")
+        dashboardData.Expert = Expert
         dashboardData.ExpertCount = Expert.length
+        let Faculties = await User.find({department:filter.schoolName})
+        dashboardData.Faculties = Faculties
 
 
         let analysis = {}

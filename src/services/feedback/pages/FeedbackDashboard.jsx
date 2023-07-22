@@ -13,6 +13,9 @@ import UserLoading from '../../../pages/UserLoading';
 import OtherResponseAnalysis from '../analysis/OtherResponseAnalysis';
 import { SelectStatusYear } from '../../status/pages/StatusPage';
 import { academicYearGenerator } from '../../../inputs/Year';
+import ExcelJS from 'exceljs';
+import designationWiseSorting from '../../../js/designationWiseSorting';
+import { toast } from 'react-hot-toast';
 
 
 const FeedbackDashboard = () => {
@@ -26,9 +29,12 @@ const FeedbackDashboard = () => {
   const { data, isLoading, refetch } = useQuery([param.model, param], () => getFeedbackData(param))
 
   const [chartData, setChartData] = useState(null)
+  const [response, setResponse] = useState(null)
+  const [teachers, setTeachers] = useState(null)
 
   useEffect(() => {
     setChartData(null)
+    setResponse(null)
   }, [activeUser])
 
   useEffect(() => {
@@ -39,11 +45,239 @@ const FeedbackDashboard = () => {
   useEffect(() => {
 
     if (data?.data?.data) {
+      setResponse(data?.data?.data?.dashboardData[activeUser])
       setChartData(() => data?.data?.data?.analysis)
+      setTeachers(designationWiseSorting(data?.data?.data?.dashboardData.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
+      
     }
   }, [data, activeUser])
 
+  async function genrateExcel(){
+        try{
+          const excelObject={
+            Student:{
+              'Name of the student':'Name of the student',
+              'Email address': 'Email address',
+              'Contact number': 'Contact number',
+              'Choose the program you are currently enrolled in':'Choose the program you are currently enrolled in',
+              'Rate the course': ['Depth of the course content including project work if any', 'Extent of coverage of course', 'Applicability/relevance to real life situations', 'Learning value (in terms of knowledge, concepts, manual skills, analytical abilities and broadening perspectives', 'Clarity and relevance of textual reading', 'Relevance of additional source material (Library)', 'Extent of effort required by students', 'Overall rating'],
+              'Is your background benefiting from this course?':'Is your background benefiting from this course?',
+              'The syllabus was?':'The syllabus was?',
+              'How helpful was the internal assesssment?':'How helpful was the internal assesssment?',
+              'Rate the Facilities available': ['Sufficient number of prescribed books are available in the Library.', 'The books prescribed/listed as reference materials are relevant, updated and appropriate', 'Infrastructural facilities, such as student’s room/ girls room/carrels, class rooms, reading rooms and toilets are available in the Department.', 'Laboratory facilities / Field Visits provided	'],
+              'Were are you provided with a course and lecture outline at the beginning?':'Were are you provided with a course and lecture outline at the beginning?',
+              'If Yes, was it followed?':'If Yes, was it followed?',
+              'If followed, was it helpful?':'If followed, was it helpful?',
+              'If you have other major comments to offer':'If you have other major comments to offer',
+            },
+            Teacher:{
+              'Your Name':'Your Name',
+              'Designation':'Designation',
+              'Contact Number':'Contact Number',
+              'For each item please indicate your level of satisfaction with the following statement':['Syllabus is suitable to the course', 'Syllabus is need based', 'Objectives & outcome of the syllabi are well defined and clear to teachers and students.', 'Course content is followed by corresponding reference materials.', 'Sufficient number of prescribed books are available in the Library.', 'The course/syllabus has good balance between theory and application.', 'The course/syllabus has made me interested in the subject area.', 'The course/syllabus of this subject increased my knowledge and perspective in the subject area', 'The course/programme of studies carries sufficient number of optional papers.', 'The books prescribed/listed as reference materials are relevant, updated and appropriate', 'Infrastructural facilities, such as teacher’s rooms/carrels, class rooms, reading rooms and toilets are available in the Department.', 'Staff canteen is available at the faculty level.', 'Tests and examinations are conducted well in time with proper coverage of all units in the syllabus.', 'I have the freedom to propose, modify, suggest and incorporate new topics in the syllabus', 'I have the freedom to adopt new techniques/strategies of teaching such as seminar presentations, group discussions and learners’ participations.', 'I have the freedom to adopt/adapt new techniques/strategies of testing and assessment of students.', 'The environment in the department is conducive to teaching and research.', 'The administration is teacher friendly', 'The University provides adequate and smooth support for projects and research facilities.', 'The University provides adequate funding and support to faculty members for upgrading their skills and qualifications.', 'Provisions for professional development are non-discriminatory and fair.'],
+              'If you have other major comments to offer':'If you have other major comments to offer',
+            },
+            Alumni:{
+              'Email':'Email',
+              'Name of the Alumni':'Name of the Alumni',
+              'Duration from':'Duration from',
+              'Duration to':'Duration to',
+              'Contact Number':'Contact Number',
+              'The Course objectives & outcomes  were clearly defined / identified':'The Course objectives & outcomes  were clearly defined / identified',
+              'Any suggestions on course objectives and course outcomes':'Any suggestions on course objectives and course outcomes',
+              'The books prescribed/listed as reference materials are relevant, updated and appropriate.':'The books prescribed/listed as reference materials are relevant, updated and appropriate.',
+              'The program of studies carries sufficient number of elective(optional) papers.':'The program of studies carries sufficient number of elective(optional) papers.',
+              'Size / quantum of curriculum according to course duration':'Size / quantum of curriculum according to course duration',
+              'Weightage and usefulness of curriculum towards Research and Innovation':'Weightage and usefulness of curriculum towards Research and Innovation',
+              'The program provides focus on skill Development /Employability/ Entrepreneurship':'The program provides focus on skill Development /Employability/ Entrepreneurship',
+              'Would you suggest any courses to be introduced':'Would you suggest any courses to be introduced',
+              'Any other comments towards the  betterment of the curriculum':'Any other comments towards the  betterment of the curriculum',
+            },
+            Parent:{
+              'Your full name(Parent)':'Your full name(Parent)',
+              'Residential address':'Residential address',
+              'Contact Number':'Contact Number',
+              'Name of your son/daughter':'Name of your son/daughter',
+              'Any suggestions on course objectives and course outcomes':'Any suggestions on course objectives and course outcomes',
+              'The books prescribed/listed as reference materials are relevant, updated and appropriate.':'The books prescribed/listed as reference materials are relevant, updated and appropriate.',
+              'The program of studies carries sufficient number of elective(optional) papers.':'The program of studies carries sufficient number of elective(optional) papers.',
+              'Size / quantum of curriculum according to course duration':'Size / quantum of curriculum according to course duration',
+              'Weightage and usefulness of curriculum towards Research and Innovation':'Weightage and usefulness of curriculum towards Research and Innovation',
+              'The program provides focus on skill Development /Employability/ Entrepreneurship':'The program provides focus on skill Development /Employability/ Entrepreneurship',
+              'Would you suggest any courses to be introduced':'Would you suggest any courses to be introduced',
+              'Any other comments towards the  betterment of the curriculum':'Any other comments towards the  betterment of the curriculum',
+            },
+            Employer:{
+              'Name of the Employer':'Name of the Employer',
+              'Address of the Employer':'Address of the Employer',
+              'Contact Number':'Contact Number',
+              'The Course objectives & outcomes  were clearly defined / identified':'The Course objectives & outcomes  were clearly defined / identified',
+              'Any suggestions on course objectives and course outcomes':'Any suggestions on course objectives and course outcomes',
+              'The books prescribed/listed as reference materials are relevant, updated and appropriate.':'The books prescribed/listed as reference materials are relevant, updated and appropriate.',
+              'The program of studies carries sufficient number of elective(optional) papers.':'The program of studies carries sufficient number of elective(optional) papers.',
+              'Size / quantum of curriculum according to course duration':'Size / quantum of curriculum according to course duration',
+              'Weightage and usefulness of curriculum towards Research and Innovation':'Weightage and usefulness of curriculum towards Research and Innovation',
+              'The program provides focus on skill Development /Employability/ Entrepreneurship':'The program provides focus on skill Development /Employability/ Entrepreneurship',
+              'Would you suggest any courses to be introduced':'Would you suggest any courses to be introduced',
+              'Any other comments towards the  betterment of the curriculum':'Any other comments towards the  betterment of the curriculum',
+            },
+            Expert:{
+              'Email':'Email',
+              'Name of the Teacher/Scientist/Industrialist':'Name of the Teacher/Scientist/Industrialist',
+              'Designation':'Designation',
+              'Name and address of the University/Institute/Industry':'Name and address of the University/Institute/Industry',
+              'Contact Number':'Contact Number',
+              'The Course objectives & outcomes  were clearly defined / identified':'The Course objectives & outcomes  were clearly defined / identified',
+              'Any suggestions on course objectives and course outcomes':'Any suggestions on course objectives and course outcomes',
+              'The books prescribed/listed as reference materials are relevant, updated and appropriate.':'The books prescribed/listed as reference materials are relevant, updated and appropriate.',
+              'The program of studies carries sufficient number of elective(optional) papers.':'The program of studies carries sufficient number of elective(optional) papers.',
+              'Size / quantum of curriculum according to course duration':'Size / quantum of curriculum according to course duration',
+              'The Curriculum is need base and balanced':'The Curriculum is need base and balanced',
+              'Curriculum is designed in view of  employability, Research and Innovation':'Curriculum is designed in view of  employability, Research and Innovation',
+              'The program provides focus on skill Development /Employability/ Entrepreneurship':'The program provides focus on skill Development /Employability/ Entrepreneurship',
+              'Would you suggest any courses to be introduced':'Would you suggest any courses to be introduced',
+              'Any other comments towards the  betterment of the curriculum':'Any other comments towards the  betterment of the curriculum',
+            }
+          }
+          let Headings = excelObject[activeUser] 
+        if(activeUser==="Student"){
+            let arr = ['Subject/Paper taught by ','About the teacher','How much of the syllabus was covered in class by ','If you have other major comments for ']
+            teachers.forEach((teacher)=>{
+            arr.forEach((question)=>{
+               let obj={
+                'Subject/Paper taught by ':`Subject/Paper taught by  ${teacher}`,
+                'About the teacher': ['The teacher is generally well-organized and prepared for class.', 'Knowledge base of the teacher (as perceived by you)', 'Communication skills (in terms of articulation and comprehensibility', 'Ability to integrate content with other courses', 'Provision of sufficient time for feedback', 'Interest generated by the teacher'],
+                'How much of the syllabus was covered in class by ':`How much of the syllabus was covered in class by  ${teacher}`,
+                'If you have other major comments for ':`If you have other major comments for  ${teacher}`
+                }
+                Headings[`${question} ${teacher}`]= obj[question]
+              })
+            })
+        }
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Sheet 1');
+    
+        const columnNames = Object.keys(Headings);
 
+        let firstIndex= 1 
+        let secondIndex = 1
+        let rowIndex = 1
+        columnNames.forEach((columnName)=>{
+      
+          if (Array.isArray(Headings[columnName])) {
+            const colspan = Headings[columnName].length;
+            worksheet.mergeCells(rowIndex, firstIndex, rowIndex, firstIndex + colspan - 1);
+            
+            worksheet.getCell(rowIndex, firstIndex).border = {
+              top: { style: 'thin' },
+              left: { style: 'thin' },
+              bottom: { style: 'thin' },
+              right: { style: 'thin' },
+            };
+            worksheet.getCell(rowIndex, firstIndex).value = columnName;
+            worksheet.getCell(rowIndex, firstIndex).font = { bold: true, size: 12 };
+            firstIndex += colspan;
+          } else {
+            worksheet.getCell(rowIndex, firstIndex).border = {
+              top: { style: 'thin' },
+              left: { style: 'thin' },
+              bottom: { style: 'thin' },
+              right: { style: 'thin' },
+            };
+            worksheet.getCell(rowIndex, firstIndex).value = columnName;
+            worksheet.getCell(rowIndex, firstIndex).font = { bold: true, size: 12 };
+            firstIndex++;
+          }
+          rowIndex++;
+          if(Array.isArray(Headings[columnName])) {
+            Headings[columnName].forEach((value) => {
+              worksheet.getCell(rowIndex, secondIndex).border = {
+                bottom: { style: 'thin' },
+              };
+              worksheet.getCell(rowIndex, secondIndex).value = value;
+              worksheet.getCell(rowIndex, secondIndex).font = { bold: true, size: 12 };
+              secondIndex++;
+            });
+          } else {
+            worksheet.getCell(rowIndex, secondIndex).border = {
+              left: { style: 'thin' },
+              bottom: { style: 'thin' },
+              right: { style: 'thin' },
+            };
+            worksheet.getCell(rowIndex, secondIndex).value = Headings[columnName];
+            worksheet.getCell(rowIndex, secondIndex).font = { bold: true, size: 12 };
+            secondIndex++;
+          }
+          rowIndex--;
+        })
+
+        const firstRow = worksheet.getRow(1);
+        let lastCol;
+        firstRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+            if (cell.value) {
+                lastCol = colNumber;
+            }
+        });
+        response.forEach((res,i)=>{
+          let singleRes = JSON.parse(res.response)
+          for(let col=1;col<=lastCol;col++){
+            let row1cellval = worksheet.getCell(1,col).value
+            let row2cellval = worksheet.getCell(2,col).value
+            if(row1cellval === row2cellval){
+              worksheet.getCell(i+3, col).border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              };
+              worksheet.getCell(i+3,col).value = singleRes.hasOwnProperty(row2cellval)?Array.isArray(singleRes[row2cellval])?singleRes[row2cellval].join(','):singleRes[row2cellval]:"N.A.";
+            }
+            else{
+              worksheet.getCell(i+3, col).border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' },
+              };
+              worksheet.getCell(i + 3, col).value = singleRes.hasOwnProperty(row1cellval)?singleRes[row1cellval][row2cellval]:"N.A.";
+            }
+
+          } 
+        })
+
+        for(let col=1;col<=lastCol;col++){
+          let row1cellval = worksheet.getCell(1,col).value
+          let row2cellval = worksheet.getCell(2,col).value
+          if(row1cellval === row2cellval){
+            worksheet.getCell(1,col).value = "";
+          }
+        }
+
+        // Apply formatting to all cells
+        worksheet.columns.forEach((column) => {
+          column.width = 20;
+          column.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+        });
+
+         // Save the workbook as a file
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = URL.createObjectURL(blob);
+
+        // Download the Excel file with the specified fileName
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${activeUser} Feedback Data Of ${directorUser?.department}.xlsx`; 
+        link.click();
+
+        console.log('Excel file generated and downloaded successfully.');
+        toast.success("Excel generated successfully");
+        }
+        catch(err){
+          console.error('Error generating Excel file:', err);
+          toast.error("Error while generating try again")
+        }
+  }
 
 
   return (
@@ -68,11 +302,11 @@ const FeedbackDashboard = () => {
           :
           <div>
             {(activeUser === "Student" && chartData[activeUser]) && <div className="mb-5 w-full">
-              <StudentAnalysis academicYear={year} chartData={chartData[activeUser]} schoolName={directorUser?.department} />
+              <StudentAnalysis excelClick={genrateExcel} academicYear={year} chartData={chartData[activeUser]} schoolName={directorUser?.department} />
             </div>}
 
             {(activeUser !== "Student" && chartData[activeUser]) && <div className="mb-5">
-              <OtherResponseAnalysis feedbackUser={activeUser} academicYear={year} questionsWithData={chartData[activeUser]} schoolName={directorUser?.department} />
+              <OtherResponseAnalysis excelClick={genrateExcel} feedbackUser={activeUser} academicYear={year} questionsWithData={chartData[activeUser]} schoolName={directorUser?.department} />
             </div>}
 
           </div>
@@ -83,9 +317,4 @@ const FeedbackDashboard = () => {
     </div >
   )
 }
-
 export default FeedbackDashboard
-
-
-
-

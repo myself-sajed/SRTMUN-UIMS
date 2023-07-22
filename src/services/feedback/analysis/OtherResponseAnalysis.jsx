@@ -3,13 +3,13 @@ import { Pie, Bar } from 'react-chartjs-2'
 import Title from '../components/Title'
 import DownloadReportButtons from '../components/DownloadReportButtons'
 
-const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, showDownloadButtons = true, feedbackUser }) => {
+const OtherResponseAnalysis = ({ questionsWithData, schoolName, academicYear, showDownloadButtons = true, feedbackUser, excelClick }) => {
 
 
     return (
         <div>
             {showDownloadButtons && <div className="my-3">
-                <DownloadReportButtons feedbackUser={feedbackUser} schoolName={schoolName} academicYear={academicYear} />
+                <DownloadReportButtons feedbackUser={feedbackUser} schoolName={schoolName} academicYear={academicYear} excelClick={excelClick} />
             </div>}
             {
                 questionsWithData?.map((item, index) => {

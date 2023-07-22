@@ -61,74 +61,70 @@ const StudentToAlumni = () => {
     setCheckAll(!checkAll);
   };
 
-  const BulkConvert = () => {
-    axios.post(`${process.env.REACT_APP_MAIN_URL}/student-to-alumni/bulk`, {arr: checkedData})
+  const BulkConvert = (arr) => {
+    axios.post(`${process.env.REACT_APP_MAIN_URL}/student-to-alumni/bulk`, {arr})
     .then(res=>{
-      console.log(res)
+      if(res?.data.status==="allCoverted"){
+        toast.success(res.data.message)
+      }
+      else if(res?.data.status==="error"){
+        toast.error(res.data.message)
+      }
+      refetch()
+      setCheckEnabe(false)
+      setItemToEdit(null)
+    }).catch(err=>{
+      console.log(err)
+      toast.error("Internal Server Error")
+      refetch()
+      setCheckEnabe(false)
+      setItemToEdit(null)
     })
   }
 
-  // useEffect(() =>{
-  //   if(itemToEdit && data.data){
-  //     axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {status: "InActive",itemToEdit  })
-  //     .then(res=>{
-  //       if(res.data.status === "success"){
-  //       toast.success("Student Deactivated Successfully")
-  //       refetch()
-  //       setItemToEdit(null)
-  //       }
-  //       else if(res.data.status === "error"){
-  //         toast.error("Try again")
-  //         refetch()
-  //         setItemToEdit(null)
-  //       }
-  //       else {
-  //         toast.error("Somthing went wrong try again")
-  //         refetch()
-  //         setItemToEdit(null)
-  //       }
-  //     })
-  //   }
-  // },[itemToEdit])
+  useEffect(() =>{
+    if(itemToEdit!=null){
+      BulkConvert([itemToEdit])
+    }
+  },[itemToEdit])
 
   return (
-    <UnderConstruction/>
-    // <>
-    //   <div stayle={{ display: "flex" }}>
+    <>
+      <div stayle={{ display: "flex" }}>
 
-    //   </div>
-    //   <div style={{ width: "100%", overflow: "hidden", background: "#FFF" }}>
-    //     <div className='table-responsive my-2' style={{ display: "flex", gap: "10px", borderRadius: "5px" }}>
-    //       {
-    //         SchoolsProgram[schoolName].map((item) => {
-    //           return <div className={`rounded-md border p-2 cursor-pointer ${activeProgram === item[0] ? 'bg-[#bfdbfe] text-[#1e3a8a]' : 'bg-blue-100 text-[#626469]'} w-[100px] md:w-[250px] hover:shadow-md duration-200 ease-in-out md:text-base text-sm`}
-    //             onClick={() => {
-    //               const max = item[1] == 7 ? 3 : item[1]
-    //               setActiveProgram(item[0]); setMaxClass(max);
-    //               if(item[0]!= activeProgram){
-    //                 setCheckedData([])
-    //               } 
+      </div>
+      <div style={{ width: "100%", overflow: "hidden", background: "#FFF" }}>
+        <div className='table-responsive my-2' style={{ display: "flex", gap: "10px", borderRadius: "5px" }}>
+          {
+            SchoolsProgram[schoolName].map((item) => {
+              return <div className={`rounded-md border p-2 cursor-pointer ${activeProgram === item[0] ? 'bg-[#bfdbfe] text-[#1e3a8a]' : 'bg-blue-100 text-[#626469]'} w-[100px] md:w-[250px] hover:shadow-md duration-200 ease-in-out md:text-base text-sm`}
+                onClick={() => {
+                  const max = item[1] == 7 ? 3 : item[1]
+                  setActiveProgram(item[0]); setMaxClass(max);
+                  if(item[0]!= activeProgram){
+                    setCheckedData([])
+                  } 
                   
-    //             }}> <p>{item[0].length > 28
-    //               ? item[0].slice(0, 35) + "..."
-    //               : item[0]}</p>
+                }}> <p>{item[0].length > 28
+                  ? item[0].slice(0, 35) + "..."
+                  : item[0]}</p>
 
-    //           </div>
-    //         })
-    //       }
-    //     </div>
-    //   </div>
-    //   <div className='flex justify-end gap-4 py-2 pr-2'><p className='text-base'>Select multiple</p>
-    //     <Switch style={{ background: "#1e3a8a" }} checkedChildren="on" unCheckedChildren="off" onChange={() => { setCheckEnabe(!checkEnabe) }} checked={checkEnabe} loading={switchLoading} />
-    //     {checkEnabe ? <><p className='text-base'>Select All</p>
-    //       <input className='form-check-input' style={{ margin: '5px' }} type="checkbox" checked={checkAll} onChange={() => { onCheckAll(); }} /></> : ""}
-    //   </div>
-    //   <Table TB={filteredData} module="student" proof="student" year="programEnroledOn" propic="photoURL" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} editIcon="Active" deleteDisabled={true} EditDisabled={checkEnabe} CheckBox={checkEnabe} checkedData={checkedData} setCheckedData={setCheckedData} />
+              </div>
+            })
+          }
+        </div>
+      </div>
+      <div className='flex justify-end gap-4 py-2 pr-2'><p className='text-base'>Select multiple</p>
+        <Switch style={{ background: "#1e3a8a" }} checkedChildren="on" unCheckedChildren="off" onChange={() => { setCheckEnabe(!checkEnabe) }} checked={checkEnabe} loading={switchLoading} />
+        {checkEnabe ? <><p className='text-base'>Select All</p>
+          <input className='form-check-input' style={{ margin: '5px' }} type="checkbox" checked={checkAll} onChange={() => { onCheckAll(); }} /></> : ""}
+      </div>
+      <Table TB={filteredData} module="student" proof="student" year="programEnroledOn" propic="photoURL" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} editIcon="Active" deleteDisabled={true} EditDisabled={checkEnabe} CheckBox={checkEnabe} checkedData={checkedData} setCheckedData={setCheckedData} />
 
-    //   {checkedData.length>0 ?<Popconfirm placement="topRight" title={"Do you want to Convert selected record?"} onConfirm={BulkConvert} okText="Yes, Convert" cancelText="Cancel" okButtonProps={{"type": "default"}}><IconButton  color='success' style={{position: "fixed", left: "auto", right: "34px", bottom: "50px", top: "auto", background: "green"}} >
-    //       <CheckCircleOutlineIcon sx={{fontSize: "30px", color:"#FFF"}} />
-    //   </IconButton></Popconfirm>:""}
-    // </>
+      {checkedData.length>0 ?<Popconfirm placement="topRight" title={"Do you want to Convert selected record?"} onConfirm={()=>{BulkConvert(checkedData)}} okText="Yes, Convert" cancelText="Cancel" okButtonProps={{"type": "default"}}><IconButton  color='success' style={{position: "fixed", left: "auto", right: "34px", bottom: "50px", top: "auto", background: "green"}} >
+          <CheckCircleOutlineIcon sx={{fontSize: "30px", color:"#FFF"}} />
+      </IconButton></Popconfirm>:""}
+    </>
   )
 }
 

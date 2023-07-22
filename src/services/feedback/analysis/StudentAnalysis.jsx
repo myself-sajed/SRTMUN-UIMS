@@ -3,11 +3,11 @@ import Title from '../components/Title'
 import { Bar, Pie } from 'react-chartjs-2'
 import DownloadReportButtons from '../components/DownloadReportButtons'
 
-const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, academicYear }) => {
+const StudentAnalysis = ({ chartData, showDownloadButtons = true, schoolName, academicYear, excelClick }) => {
     return (
         <div>
             {showDownloadButtons && <div className="my-3">
-                <DownloadReportButtons feedbackUser="Student" schoolName={schoolName} academicYear={academicYear} />
+                <DownloadReportButtons feedbackUser="Student" schoolName={schoolName} academicYear={academicYear} excelClick={excelClick} />
             </div>}
             <div>
                 <div >

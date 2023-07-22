@@ -302,7 +302,6 @@ router.post('/faculty/getData', async (req, res) => {
     }
 })
 
-
 //Delete Route
 router.post('/director/deleteRecord', async (req, res) => {
     const { model, id } = req.body
@@ -801,7 +800,7 @@ router.post('/inactive-active/student', async (req, res) => {
     }
 })
 
-// Convert student to alumni in bulk
+// Convert student to alumni in single/bulk
 router.post('/student-to-alumni/bulk', async (req,res)=> {
 
     const {arr} = req.body
@@ -809,44 +808,41 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
         let NonConverted = [];
         for (id of arr){
             let student = await StudentUser.findOne({_id: id});
-            const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated, programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
+            if(student){
+                const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated,     programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo,  ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
 
-            let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
-            let YNext = (yStarted+1).toString().slice(-2);
-            let doStarted = `${yStarted}-${YNext}`;
-            let yComplited = new Date().getFullYear();
-            let yCNext = (yComplited+1).toString().slice(-2);
-            let doCompleted = `${yComplited}-${yCNext}`;
+                let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
+                let YNext = (yStarted+1).toString().slice(-2);
+                let doStarted = `${yStarted}-${YNext}`;
+                let yComplited = new Date().getFullYear();
+                let yCNext = (yComplited+1).toString().slice(-2);
+                let doCompleted = `${yComplited}-${yCNext}`;
 
-            let alumni = {salutation, photoURL, name, email, address: address || "-", dob : dob || "-", mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion: religion || '-', country: country || 'india', schoolName, gender , abcNo, password ,doCompleted,stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"", ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
-            const module = new AlumniUser(alumni)
-            let newAlumni = await module.save();
-            const oldId = newAlumni._id;
-            if(newAlumni) {
-                let oldStu = await StudentUser.deleteOne({_id: id});
-                if(oldStu){
-                    newAlumni._id = id
-                    const newModule = new AlumniUser(newAlumni);
-                    await new newModule.save();
-                    await AlumniUser.deleteOne({_id:oldId});
+                let alumni = {_id:id, salutation, photoURL, name, email, address: address || "-", dob : dob || "-",     mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion:     religion || '-', country: country || 'India', schoolName, gender , abcNo, password ,doCompleted,    stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"",    ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
+                const module = new AlumniUser(alumni)
+                let newAlumni = await module.save();
+                if(newAlumni._id==id) {
+                    let oldStu = await StudentUser.deleteOne({_id: id});
+                    console.log(oldStu);
                 }
-                else{
-                    await AlumniUser.deleteOne({_id: newAlumni._id})
+                else {
+                    NonConverted.push(id);
+                    await AlumniUser.deleteOne({_id:newAlumni._id})
                 }
-                // console.log("item deleted from student user");
-            }
-            else {
+            }else{
                 NonConverted.push(id);
             }
+        }
+        if(NonConverted.length===0){
+            res.status(201).send({status:"allCoverted", message:`Student converted to alumni successfully`}) 
+        }
+        else{
+            res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
         }
     }
     catch(err){
         console.log(err)
     }
-    
 })
-// Convert student to alumni single
-router.post('/student-to-alumni/single', async (req,res)=> {
-    
-})
+
 module.exports = router;

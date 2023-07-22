@@ -5,7 +5,7 @@ import { downloadAnalysisPDF } from '../js/generateFeedbackReport';
 import ReportLoading from '../../../components/ReportLoading';
 import { useState } from 'react';
 
-const DownloadReportButtons = ({ schoolName, feedbackUser, academicYear }) => {
+const DownloadReportButtons = ({ schoolName, feedbackUser, academicYear, excelClick }) => {
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -30,7 +30,7 @@ const DownloadReportButtons = ({ schoolName, feedbackUser, academicYear }) => {
                 <button onClick={downloadPDFReport} className='flex items-center justify-start gap-2 rounded-md hover:bg-red-900 p-2 bg-red-800 text-white'>
                     <PictureAsPdfRoundedIcon /> Download Analysis PDF
                 </button>
-                <button className='flex items-center justify-start gap-2 rounded-md hover:bg-green-900 p-2 bg-green-800 text-white'>
+                <button onClick={excelClick} className='flex items-center justify-start gap-2 rounded-md hover:bg-green-900 p-2 bg-green-800 text-white'>
                     <TextSnippetRoundedIcon /> Download Analysis Excel
                 </button>
             </div>
