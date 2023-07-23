@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FileViewer({ fileName, serviceName, replace = null, children }) {
+export default function FileViewer({ fileName, serviceName, replace = null, children, showFullFileName = false }) {
 
 
     const [open, setOpen] = React.useState(false);
@@ -31,7 +31,7 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
             {
                 !children ? <Button onClick={handleClickOpen}
                     sx={{ textTransform: "none", border: 'none', color: `${serviceName === 'AAA' ? 'green' : 'blue'}`, outline: 'none', backgroundColor: '#d2ebff' }}>
-                    {replace ? fileName.replace(replace.target, replace.with) : serviceName === "AAA" ? fileName : 'View File'}
+                    {replace ? fileName.replace(replace.target, replace.with) : (serviceName === "AAA" || showFullFileName === true) ? truncateFileName(fileName) : 'View File'}
                 </Button> : <div onClick={handleClickOpen}>
                     {children}
                 </div>
@@ -102,4 +102,13 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
             </Dialog>
         </div>
     );
+}
+
+
+function truncateFileName(fileName) {
+    const maxFileNameLength = 50;
+    if (fileName.length > maxFileNameLength) {
+        return fileName.substring(0, maxFileNameLength) + '...';
+    }
+    return fileName;
 }

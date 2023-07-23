@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
 import title from '../../../js/title'
+import GreetParagraph from '../components/GreetParagraph'
 
 const employerQuestions = [
     {
@@ -121,6 +122,10 @@ const EmployerFeedback = () => {
                         <div className='w-full'>
                             <Header title='Employer Feedback Form' academicYear={academicYear} schoolName={schoolName} />
 
+                            <div className='mt-3'>
+                                <GreetParagraph userType="employer" />
+                            </div>
+
                             <form onSubmit={(e) => { e.preventDefault(); validateForm(employerQuestions, setLoading, 'employerFeedback', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep) }} className='w-full mt-5'>
 
                                 <div id="part-1" >
@@ -153,3 +158,6 @@ const EmployerFeedback = () => {
 export default EmployerFeedback
 
 export { employerQuestions }
+
+
+

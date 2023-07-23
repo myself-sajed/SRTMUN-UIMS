@@ -5,17 +5,18 @@ const path = require('path')
 // Practice path here and paste as it is in as an argument you're willing to call
 
 
-const multerConfig = (uploadPath)=>{
+const multerConfig = (uploadPath, customFileName = false) => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
             const link = path.join(__dirname, uploadPath)
-            cb(null,link)  
+            cb(null, link)
         },
         filename: (req, file, cb) => {
-            cb(null, `${new Date().getTime()}-${file.originalname}`)
+            cb(null, `${customFileName ? `${customFileName}-` : ''}${new Date().getTime()}-${file.originalname}`)
         },
     })
     return multer({ storage: storage })
 }
 
-module.exports =  {multerConfig}
+module.exports = { multerConfig }
+

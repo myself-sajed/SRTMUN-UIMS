@@ -119,6 +119,7 @@ require('./routes/photogallery-routes/event')(app)
 require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
 require('./routes/feedback-routes/fetchFeedbackData')(app)
 require('./routes/feedback-routes/generateFeedbackReport')(app)
+require('./routes/feedback-routes/actionTakenReport')(app)
 
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)
@@ -143,7 +144,8 @@ async function deleteFile(fileName, desiredPath, callback) {
   let paths = {
     faculty: path.join(__dirname, `./uploads/faculty-uploads/${fileName}`),
     CAS: path.join(__dirname, `./uploads/faculty-uploads/CAS-uploads/${fileName}`),
-    PBAS: path.join(__dirname, `./uploads/faculty-uploads/PBAS-uploads/${fileName}`)
+    PBAS: path.join(__dirname, `./uploads/faculty-uploads/PBAS-uploads/${fileName}`),
+    FeedbackATR: path.join(__dirname, `./uploads/feedback-uploads/${fileName}`)
   }
   fs.unlink(paths[desiredPath], callback)
 }
@@ -194,6 +196,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     news: `./uploads/news-uploads/${filename}`,
     event: `./uploads/event-uploads/${filename}`,
     school: `./uploads/school-uploads/${filename}`,
+    FeedbackATR: `./uploads/feedback-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
   }
 

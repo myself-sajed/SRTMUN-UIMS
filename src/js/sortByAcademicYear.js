@@ -1,5 +1,5 @@
 
-const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear = false, academicYear, isMultiYear = false) => {
+const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear = false, academicYear, isMultiYear = false, type = 'year') => {
 
     if (arrayToSort?.length > 0) {
         if (isMultiYear) {
@@ -16,19 +16,39 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
                     // Both have "Till Date", sort by createdAt field in descending order
                     return new Date(b.createdAt) - new Date(a.createdAt);
                 } else {
-                    // Sort by the highest academic year first
-                    const parseYear = (year) => parseInt(year.split('-')[0]);
-                    const maxAYear = Math.max(...a.durationYears.map(parseYear));
-                    const maxBYear = Math.max(...b.durationYears.map(parseYear));
 
-                    if (maxAYear > maxBYear) {
-                        return -1;
-                    } else if (maxAYear < maxBYear) {
-                        return 1;
+
+                    if (type === 'date') {
+                        // Sort by the latest date in the "year" array
+                        const latestADate = new Date(Math.max(...a.durationYears.map((date) => new Date(date))));
+                        const latestBDate = new Date(Math.max(...b.durationYears.map((date) => new Date(date))));
+
+                        if (latestADate > latestBDate) {
+                            return -1;
+                        } else if (latestADate < latestBDate) {
+                            return 1;
+                        } else {
+                            // If dates are equal, sort by createdAt field in descending order
+                            return new Date(b.createdAt) - new Date(a.createdAt);
+                        }
                     } else {
-                        // Academic years are equal, sort by createdAt field in descending order
-                        return new Date(b.createdAt) - new Date(a.createdAt);
+                        // Sort by the highest academic year first
+                        const parseYear = (year) => parseInt(year.split('-')[0]);
+                        const maxAYear = Math.max(...a.durationYears.map(parseYear));
+                        const maxBYear = Math.max(...b.durationYears.map(parseYear));
+
+                        if (maxAYear > maxBYear) {
+                            return -1;
+                        } else if (maxAYear < maxBYear) {
+                            return 1;
+                        } else {
+                            // Academic years are equal, sort by createdAt field in descending order
+                            return new Date(b.createdAt) - new Date(a.createdAt);
+                        }
                     }
+
+
+
                 }
             });
         } else {

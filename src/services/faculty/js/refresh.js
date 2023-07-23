@@ -12,5 +12,9 @@ const refresh = ({ model, userId, year, dataFilter = null }) => {
     return axios.post(`${process.env.REACT_APP_MAIN_URL}/api/getData`, { model, userId, year, dataFilter })
 }
 
+const getModelData = ({ model, filter }) => {
+    return axios.post(`${process.env.REACT_APP_MAIN_URL}/getModelData`, { model, filter })
+}
+
 export default refresh
-export { getData }
+export { getData, getModelData }
