@@ -62,6 +62,18 @@ const excelUpload = multer({ storage: excelStorage })
 
 let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram, NewPrograms }
 
+const YearSelecter={
+    academicYear:['CourceInAllProgram', 'NewPrograms'],
+    Year_of_Award:['Award', 'UgcSapCasDstFistDBTICSSR'],
+    Academic_year:['ValueAddedCource',"DemandRatio","ProgressionToHE","ProjectsInternships","SkillsEnhancementInitiatives","SyllabusRevision","QualifiedExams","Placement","Employability","ReservedSeats","AlumniContribution"],
+    Year_of_Activity:["CounselingAndGuidance"],
+    Year_of_activity:["ExtensionActivities"],
+    Year_of_signing_MoU:["MoUs"],
+    year:["ResearchMethodologyWorkshops"],
+    Year:["TrainingProgramsOrganized","ConferencesSemiWorkshopOrganized"],
+    Year_of_joining:["StudentSatisfactionSurvey"]
+}
+
 //Set Route
 router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
     try {
@@ -842,6 +854,28 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
     }
     catch(err){
         console.log(err)
+    }
+})
+
+//aqar director 
+router.post('/director/aqar/excel', async (req, res)=> {
+    const {SchoolName,years} = req.body.filter
+    try{
+        let report={}
+        let aqarModels = [ 'Award', 'MoUs', 'CounselingAndGuidance', 'ProgressionToHE', 'DemandRatio', 'ProjectsInternships', 'Employability', 'ReservedSeats', 'TrainingProgramsOrganized', 'UgcSapCasDstFistDBTICSSR', 'ResearchMethodologyWorkshops', 'ExtensionActivities', 'SyllabusRevision', 'Placement', 'ValueAddedCource', 'QualifiedExams', 'SkillsEnhancementInitiatives', 'AlumniContribution', 'CourceInAllProgram', 'NewPrograms' ]
+        for (const model of aqarModels) {
+            let year
+            for (const yearField in YearSelecter) {
+                if (YearSelecter[yearField].includes(model)) {
+                  year= yearField;
+                }
+            }
+            report[model] = await models[model].find({SchoolName,[year]:{$in:years}});
+        }
+        res.send({report})
+    }
+    catch(err){
+        console.log(err);
     }
 })
 

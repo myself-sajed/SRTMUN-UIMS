@@ -12,6 +12,8 @@ import StudentAnalysis from '../../feedback/analysis/StudentAnalysis'
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
 import OtherResponseAnalysis from '../../feedback/analysis/OtherResponseAnalysis'
 import ShowAnalysisModal from '../../feedback/components/ShowAnalysisModal'
+import { genrateFeedbackExcel } from '../../feedback/pages/FeedbackDashboard'
+import designationWiseSorting from '../../../js/designationWiseSorting'
 
 const AdminFeedbackStatus = () => {
 
@@ -27,6 +29,8 @@ const AdminFeedbackStatus = () => {
 
   const [expandedRow, setExpandedRow] = useState(null);
   const [chartData, setChartData] = useState(null)
+  const [response, setResponse] = useState(null)
+  const [teachers, setTeachers] = useState(null)
 
   const toggleRow = ({ rowIndex, title, school }) => {
 
@@ -57,8 +61,10 @@ const AdminFeedbackStatus = () => {
   }, [expandedRow?.title, expandedRow?.school, expandedRow?.rowIndex, expandedRow])
 
   useEffect(() => {
-    console.log('TotalData :', data?.data?.data)
-    console.log('Analysis data :', analysisData?.data?.data)
+    // console.log('TotalData :', data?.data?.data)
+    // console.log('Analysis data :', analysisData?.data?.data)
+    setResponse(analysisData?.data?.data.dashboardData)
+    setTeachers(designationWiseSorting(analysisData?.data?.data?.dashboardData.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
   }, [data, analysisData])
 
   const [open, setOpen] = useState(false);
@@ -94,37 +100,37 @@ const AdminFeedbackStatus = () => {
                       {
                         expandedRow?.title === "Student" && chartData["Student"] &&
                         <div className="mb-5 w-full">
-                          <StudentAnalysis feedbackUser={"Student"} schoolName={expandedRow.school} academicYear={academicYear} chartData={chartData["Student"]} />
+                          <StudentAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Student"],"Student", expandedRow.school)}} feedbackUser={"Student"} schoolName={expandedRow.school} academicYear={academicYear} chartData={chartData["Student"]} />
                         </div>
                       }
                       {
                         expandedRow?.title === "Teacher" && chartData["Teacher"] &&
                         <div className="mb-5 w-full">
-                          <OtherResponseAnalysis feedbackUser={"Teacher"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Teacher"]} />
+                          <OtherResponseAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Teacher"],"Teacher", expandedRow.school)}} feedbackUser={"Teacher"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Teacher"]} />
                         </div>
                       }
                       {
                         expandedRow?.title === "Alumni" && chartData["Alumni"] &&
                         <div className="mb-5 w-full">
-                          <OtherResponseAnalysis feedbackUser={"Alumni"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Alumni"]} />
+                          <OtherResponseAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Alumni"],"Alumni", expandedRow.school)}} feedbackUser={"Alumni"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Alumni"]} />
                         </div>
                       }
                       {
                         expandedRow?.title === "Parent" && chartData["Parent"] &&
                         <div className="mb-5 w-full">
-                          <OtherResponseAnalysis feedbackUser={"Parent"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Parent"]} />
+                          <OtherResponseAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Parent"],"Parent", expandedRow.school)}} feedbackUser={"Parent"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Parent"]} />
                         </div>
                       }
                       {
                         expandedRow?.title === "Employer" && chartData["Employer"] &&
                         <div className="mb-5 w-full">
-                          <OtherResponseAnalysis feedbackUser={"Employer"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Employer"]} />
+                          <OtherResponseAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Employer"],"Employer", expandedRow.school)}} feedbackUser={"Employer"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Employer"]} />
                         </div>
                       }
                       {
                         expandedRow?.title === "Expert" && chartData["Expert"] &&
                         <div className="mb-5 w-full">
-                          <OtherResponseAnalysis feedbackUser={"Expert"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Expert"]} />
+                          <OtherResponseAnalysis excelClick={()=>{genrateFeedbackExcel(teachers, response["Expert"],"Expert", expandedRow.school)}} feedbackUser={"Expert"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Expert"]} />
                         </div>
                       }
 

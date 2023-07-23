@@ -40,7 +40,7 @@ const GenerateAQARReport = ({ auth }) => {
         },
     }
 
-
+    console.log(aqarDataFromServer)
     const [reportLoading, setReportLoading] = useState(false)
 
     useEffect(() => {

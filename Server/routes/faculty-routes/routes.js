@@ -128,9 +128,6 @@ function initRoutes(app) {
                 res.send({ status: 'error' })
             })
         }
-
-
-
     })
 
     // getcount
@@ -191,8 +188,6 @@ function initRoutes(app) {
         });
 
     })
-
-
 
     // get all teachers
     app.get("/api/teachers", function (req, res) {
@@ -1233,6 +1228,19 @@ function initRoutes(app) {
         }
     })
 
+    app.post('/faculty/aqar/excel', async (req,res)=>{
+        const {filter} = req.body
+        try{
+            let report={}
+            let aqarModels = ["ResearchPaper", "ResearchProject", "AwardRecognition", "Fellowship", "JrfSrf",   "Patent", "PhdAwarded", "BookAndChapter", "EContentDeveloped", "ConsultancyServices",     "FinancialSupport", "Online",]
+            for (const model of aqarModels) {
+                report[model] = await models[model].find(filter);
+            }
+            res.send({report}) 
+        }catch(err){
+            console.log(err)
+        } 
+    })
 }
 
 module.exports = { initRoutes, nonAcademicYearModels, models }
