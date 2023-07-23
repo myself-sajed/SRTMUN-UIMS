@@ -58,10 +58,13 @@ const ForeignVisit = require('../../models/faculty-models/foreignVisit')
 const ExtensionActivities = require('../../models/director-models/extensionActivitysSchema')
 const MoUs = require('../../models/director-models/moUsSchema')
 
+// other models from which data is to be extrax
+const ActionTakenReport = require('../../models/feedback-models/actionTakenReportModel')
+
 
 
 let models = {
-    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit, ExtensionActivities, MoUs
+    User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, FinancialSupport, Responsibilities, ConferenceParticipated, ForeignVisit, ExtensionActivities, MoUs, ActionTakenReport
 }
 
 let nonAcademicYearModels = {

@@ -149,7 +149,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
-        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear, true))
+        data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear, true, 'date'))
     }, [data])
 
     return (

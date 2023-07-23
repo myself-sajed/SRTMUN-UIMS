@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
 import title from '../../../js/title'
+import GreetParagraph from '../components/GreetParagraph'
 
 
 const parentQuestions = [
@@ -119,6 +120,9 @@ const ParentFeedback = () => {
                         <div className='w-full'>
                             <Header title='Parent Feedback Form' academicYear={academicYear} schoolName={schoolName} />
 
+                            <div className='mt-3'>
+                                <GreetParagraph userType="parent" />
+                            </div>
 
 
                             <form onSubmit={(e) => { e.preventDefault(); validateForm(parentQuestions, setLoading, 'parentFeedback', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep) }} className='w-full mt-5'>

@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import FeedbackHome from '../components/FeedbackHome'
 import siteLinks from '../../../components/siteLinks'
 import title from '../../../js/title'
+import GreetParagraph from '../components/GreetParagraph'
 
 const alumniQuestions = [
 
@@ -130,6 +131,10 @@ const AlumniFeedback = () => {
 
                         <div className='w-full'>
                             <Header title='Alumni Feedback Form' academicYear={academicYear} schoolName={schoolName} />
+
+                            <div className='mt-3'>
+                                <GreetParagraph userType="alumni" />
+                            </div>
 
                             <form onSubmit={(e) => { e.preventDefault(); validateForm(alumniQuestions, setLoading, 'alumniFeedback', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep) }} className='w-full mt-5'>
 
