@@ -7,10 +7,15 @@ const getFeedbackData = ({ filter, feedbackUser }) => {
         { filter, feedbackUser })
 }
 
+const getATRData = ({ filter }) => {
+    return axios.post(`${process.env.REACT_APP_MAIN_URL}/director/service/getFeedbackATRData`,
+        { filter })
+}
+
 // serverFile: fetchFeedbackData.js
 const getTotalFeedbackData = ({ filter }) => {
     return axios.post(`${process.env.REACT_APP_MAIN_URL}/director/service/getTotalFeedbackData`,
         { filter })
 }
 
-export { getFeedbackData, getTotalFeedbackData }
+export { getFeedbackData, getTotalFeedbackData, getATRData }
