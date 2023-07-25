@@ -6,7 +6,7 @@ import { useEffect,useState } from "react";
   
     useEffect(() => {
         let year = new Date().getFullYear()
-        let ly = year - 10;
+        let ly = year - 25;
         let i= 1
         let arr = []
         for (year; year >= ly; year--) {
