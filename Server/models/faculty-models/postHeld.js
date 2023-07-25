@@ -5,6 +5,10 @@ const postHeldSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    userDepartment: {
+        type: 'string',
+        required: false,
+    },
     duration: {
         type: 'string',
         required: false,

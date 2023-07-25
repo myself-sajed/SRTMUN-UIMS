@@ -18,29 +18,11 @@ import designationWiseSorting from '../../../js/designationWiseSorting'
 const AllFaculties = ({ school: sch }) => {
 
     const { school } = useParams()
-    const [isAnalytics, setIsAnalytics] = useState(true)
+
     const param = { model: 'User', filter: { department: school || sch } }
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
-
-    const newParam = { school: school || sch }
-    const { data: schoolData, isLoading: isLoadingSchoolData, isError: isErrorOccured, } = useQuery([newParam.school || sch, newParam],
-        () => { return fetchSchoolData(newParam) })
-    const navigate = useNavigate()
-    // title(`About ${school}`)
+    const { data, isLoading, isError, error, refetch } = useQuery([`${param.model}-${school || sch}`, param], () => fetchData(param))
 
 
-    useEffect(() => {
-        // console.log('SchoolData :', schoolData)
-        let emptyCount = 0
-        dashboardObj['faculty'].forEach((item) => {
-            schoolData?.data?.data?.[item.model]?.length === 0 && emptyCount++;
-        })
-
-        if (emptyCount === dashboardObj['faculty']?.length) {
-            setIsAnalytics(false)
-        }
-
-    }, [schoolData])
 
     return (
         <div>

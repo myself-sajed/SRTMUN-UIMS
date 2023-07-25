@@ -560,12 +560,14 @@ const CASDataTable = {
         tableHeads: [
             "Designation",
             "Academic Level",
+            "School / Department",
             "Post Duration ",
             "Appointment Order / CAS Promotion",
         ],
         tableCells: [
             "designation",
             "level",
+            "userDepartment",
             "duration",
             "proof",
         ],

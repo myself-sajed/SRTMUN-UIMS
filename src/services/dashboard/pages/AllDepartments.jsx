@@ -128,7 +128,7 @@ const AllDepartments = () => {
     const param = { model: serviceMap[serviceName].model, select: serviceMap[serviceName].select, type: serviceMap[serviceName]?.type ? serviceMap[serviceName].type : null }
     const { data } = useQuery([param.model, param], () => countData(param))
 
-    
+
     //scroll up to Top functions
     function scrollToTop() {
         document.body.scrollTop = 0;
@@ -163,8 +163,8 @@ const AllDepartments = () => {
 
                 <div>
                     <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
-                        {Object.keys(SchoolsProgram).map((nameOfTheSchool,i) => (
-                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => {scrollToSection(`${i}`)}}>
+                        {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
+                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => { scrollToSection(`${i}`) }}>
                                 <div>
                                     <div className='flex items-start justify-start gap-1'>
                                         <div style={{ fontSize: '10px' }}>{serviceMap[serviceName].icon}</div>
@@ -173,7 +173,7 @@ const AllDepartments = () => {
                                                 serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
                                                     <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
                                                         {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
-                                                        </span>
+                                                    </span>
 
                                                     :
                                                     <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
@@ -205,7 +205,7 @@ const AllDepartments = () => {
 
             }
 
-            <IconButton style={{ display: 'none', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#9a9a9a', color: '#fff', cursor: 'pointer', }} id="scrollUpButton" onClick={() => { scrollToTop() }}><ArrowUpwardIcon /></IconButton>
+            <div id="scrollUpButton" className="fixed hover:shadow-2xl hover:bg-blue-500 bottom-[20px] right-[20px] bg-blue-800 text-white cursor-pointer p-2 rounded-xl" onClick={() => { scrollToTop() }}> <span className='flex flex-col items-center'><span><ArrowUpwardIcon /></span> <span className="text-xs">Top</span></span> </div>
 
         </>
     )
@@ -217,4 +217,4 @@ function scrollToSection(sectionId) {
 }
 
 export default AllDepartments
-export{scrollToSection}
+export { scrollToSection }
