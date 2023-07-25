@@ -50,18 +50,12 @@ const AdminFeedbackStatus = () => {
 
   const toggleRow = ({ rowIndex, title, school }) => {
     setExpandedRow({ rowIndex, title, school });
-    setChartData(() => null)
     analysisRefetch()
   };
 
 
-
-
-
-
-
   useEffect(() => {
-    console.log('changed')
+    setChartData(() => null)
     analysisRefetch()
 
     if (expandedRow) {
