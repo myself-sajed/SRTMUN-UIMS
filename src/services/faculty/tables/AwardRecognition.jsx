@@ -186,15 +186,15 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
                     <table className="table table-responsive table-bordered table-hover">
                         <thead className='table-dark'>
                             <tr>
-                                <th scope="col"><div className="w-96">Name of full-time teachers receiving award</div></th>
-                                <th scope="col"><div className='w-24'>Award Date</div></th>
+                                <th scope="col">Name of full-time teachers receiving award</th>
+                                <th scope="col">Award Date</th>
                                 <th scope="col">PAN</th>
                                 <th scope="col">Designation</th>
-                                <th scope="col"><div className='w-60'>Name of the Award, Fellowship, received</div></th>
+                                <th scope="col">Name of the Award, Fellowship, received</th>
                                 <th scope="col">National / International</th>
-                                <th scope="col"><div className="w-32">Award Agency Name</div></th>
-                                <th scope="col"><div className='w-96'>Incentives/Type of incentive given by the HEI in recognition of the award</div></th>
-                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Award Agency Name</th>
+                                <th scope="col">Incentives/Type of incentive given by the HEI in recognition of the award</th>
+                                <th scope="col">Year</th>
 
                                 <th scope="col">Uploaded Proof</th>
                                 <th scope="col">Action</th>

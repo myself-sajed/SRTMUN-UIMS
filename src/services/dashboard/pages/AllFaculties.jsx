@@ -82,7 +82,7 @@ const AllFacultyTable = ({ data, isLoading }) => {
             <tbody>
 
                 {
-                    designationWiseSorting(data?.data?.data).map((item) => {
+                    designationWiseSorting(data?.data?.data)?.map((item) => {
                         return <tr>
                             <td className='font-bold'></td>
                             <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'faculty'} /></td>
