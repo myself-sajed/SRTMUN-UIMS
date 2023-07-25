@@ -705,7 +705,7 @@ const CASDataTable = {
             "providedFunds",
             "fundType",
             "status",
-            "projectDuration",
+            "duration",
             "year",
             "proof",
         ],
