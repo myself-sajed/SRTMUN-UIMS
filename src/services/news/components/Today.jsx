@@ -11,7 +11,7 @@ const Today = ({ news, proUser, refetch, index }) => {
     return (
         <tr>
             <th scope="row">{index + 1}</th>
-            <td>{moment(news?.createdAt).format('DD/MM/YYYY')}</td>
+            <td>{moment(news?.date, "YYYY-MM-DD").format("DD/MM/YYYY")}</td>
             <td><FileViewer fileName={news?.photoURL} serviceName="news" >
                 <img src={serverLinks.showFile(news?.photoURL, 'news')}
                     className='object-cover cursor-pointer w-20 hover:brightness-75 ease-in-out duration-200 ' />
@@ -22,13 +22,7 @@ const Today = ({ news, proUser, refetch, index }) => {
             <td>{news.desc ?
                 news.desc.length > 80 ?
                     news.desc.slice(0, 80) : news.desc
-                : '--'} {news.desc.length > 80 && <span className='text-xs'>
-                    <Link to={`/news/${news?.slug}`} className='text-blue-500' >
-                        <Tooltip title={news.desc} color="black">
-                            ...Hover or click to read more
-                        </Tooltip>
-
-                    </Link></span>} </td>
+                : '--'} </td>
 
             {
                 proUser && <td><Actions news={news} refetch={refetch} /></td>

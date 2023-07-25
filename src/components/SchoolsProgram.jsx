@@ -3,7 +3,7 @@ const SchoolsProgram = {
         ["Ph.D. (Computer Science)", 7], ["M.Phil (Computer Science)", 2], ["MCA", 2], ["M.Sc.(Computer Science)", 2], ["M.Sc(Computer Applications)", 2], ["M.Sc(Computer Networking)", 2]
     ],
     "School of Chemical Sciences": [
-        ["M.Sc.(Chemistry Analytical)", 2], ["M.Sc.(Chemistry Industrial)", 2], ["M.Sc.(Chemistry Medicinal", 2], ["M.Sc.(Chemistry Organic)", 2], ["M.Sc.(Chemistry Physical", 2], ["M.Sc.(Polymer chemistry)", 2], ["M. Phil.(Chemistry)", 2], ["Ph.D.(Chemistry)", 7]
+        ["M.Sc.(Chemistry)", null], ["M.Sc.(Chemistry Analytical)", 2], ["M.Sc.(Chemistry Industrial)", 2], ["M.Sc.(Chemistry Medicinal", 2], ["M.Sc.(Chemistry Organic)", 2], ["M.Sc.(Chemistry Physical", 2], ["M.Sc.(Polymer chemistry)", 2], ["M. Phil.(Chemistry)", 2], ["Ph.D.(Chemistry)", 7]
     ],
     "School of Commerce and Management Sciences": [
         ["MBA", 2], ["M.Com", 2], ["M.Phil(Commerce)", 2],

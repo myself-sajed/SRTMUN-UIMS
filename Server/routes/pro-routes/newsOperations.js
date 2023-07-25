@@ -39,9 +39,10 @@ const newsOperations = (app) => {
                     return
                 } else {
                     const news = new NewsItem({
+                        date: data.date,
                         headline: data.headline,
                         slug: slug,
-                        desc: data.desc,
+                        desc: data.desc !== "null" ? data.desc : '',
                         photoURL: req.file.filename
                     })
 
@@ -106,7 +107,10 @@ const newsOperations = (app) => {
 
     // D. for showing in marquee tag
     app.get('/api/news/indexNews', async (req, res) => {
-        const latestDocuments = await NewsItem.find().lean().sort({ createdAt: -1 }).limit(30);
+        const docs = await NewsItem.find().lean().limit(30);
+
+        let latestDocuments = sortByDate(docs)
+
         if (latestDocuments.length > 0 || latestDocuments.length === 0) {
             res.send({ status: 'success', data: latestDocuments });
         } else {
@@ -132,6 +136,7 @@ const newsOperations = (app) => {
             const slug = slugify(data.headline)
 
             NewsItem.findOneAndUpdate({ _id: data.id }, {
+                date: data.date,
                 headline: data.headline,
                 slug: slug,
                 desc: data.desc,
@@ -175,15 +180,12 @@ const newsOperations = (app) => {
 
         const { start, end } = req.body
 
-        const startDate = new Date(start.split('/').reverse().join('-'));
-        const endDate = new Date(end.split('/').reverse().join('-'));
-
-        endDate.setDate(endDate.getDate() + 1);
+        console.log('Start:', start, "end:", end)
 
         NewsItem.find({
-            createdAt: {
-                $gte: startDate,
-                $lte: endDate
+            date: {
+                $gte: start,
+                $lte: end
             }
         }, function (err, results) {
             if (err) {
@@ -199,3 +201,22 @@ const newsOperations = (app) => {
 }
 
 module.exports = newsOperations
+
+
+function sortByDate(arrayToSort) {
+    return arrayToSort.sort((a, b) => {
+        // Sort by the "date" field in descending order (recent dates first)
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        if (dateA > dateB) {
+            return -1;
+        } else if (dateA < dateB) {
+            return 1;
+        } else {
+            // If "date" is the same, sort by the "createdAt" field in descending order (newer "createdAt" first)
+            const createdAtA = new Date(a.createdAt);
+            const createdAtB = new Date(b.createdAt);
+            return createdAtB - createdAtA;
+        }
+    });
+}

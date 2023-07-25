@@ -13,6 +13,7 @@ import UserLoading from '../../../pages/UserLoading'
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
 import NewsTableHead from '../components/TableHead'
+import { sortByDate } from '../js/sortByDate'
 
 const NewsPage = () => {
 
@@ -50,34 +51,33 @@ const NewsComponent = () => {
     // sorting of all news data based on today, this week and older
     useEffect(() => {
         if (data?.data?.data) {
-
-            const fetchData = async () => {
+            const fetchData = () => {
                 const today = moment().startOf("day");
                 const oneWeekAgo = moment().subtract(1, "week").startOf("day");
 
-                const myArray = data?.data?.data
-                const todayDocs = myArray.filter(obj => {
-                    const createdAt = moment(obj.createdAt);
-                    return createdAt.isSameOrAfter(today);
+                const myArray = data.data.data;
+                const todayDocs = myArray.filter((obj) => {
+                    const date = moment(obj.date, "YYYY-MM-DD");
+                    return date.isSameOrAfter(today);
                 });
                 setToday(todayDocs);
 
-                const weekDocs = myArray.filter(obj => {
-                    const createdAt = moment(obj.createdAt);
-                    return createdAt.isAfter(oneWeekAgo) && createdAt.isBefore(today);
+                const weekDocs = myArray.filter((obj) => {
+                    const date = moment(obj.date, "YYYY-MM-DD");
+                    return date.isAfter(oneWeekAgo) && date.isBefore(today);
                 });
                 setWeek(weekDocs);
 
-                const olderDocs = myArray.filter(obj => {
-                    const createdAt = moment(obj.createdAt);
-                    return createdAt.isSameOrBefore(oneWeekAgo);
+                const olderDocs = myArray.filter((obj) => {
+                    const date = moment(obj.date, "YYYY-MM-DD");
+                    return date.isSameOrBefore(oneWeekAgo);
                 });
                 setOlder(olderDocs);
             };
             fetchData();
-
         }
-    }, [data])
+    }, [data]);
+
 
     return <div>
         {
@@ -91,10 +91,7 @@ const NewsComponent = () => {
 
                             <tbody>
                                 {
-                                    today && today.length > 0 && today.sort(function (a, b) {
-                                        var rangeDateA = new Date(a.createdAt), rangeDateB = new Date(b.createdAt)
-                                        return rangeDateB - rangeDateA;
-                                    })?.map((newsItem, index) => {
+                                    today && today.length > 0 && sortByDate(today)?.map((newsItem, index) => {
                                         return <Today index={index} key={index} news={newsItem} refetch={refetch} proUser={proUser} />
                                     })
                                 }
@@ -113,10 +110,7 @@ const NewsComponent = () => {
 
                             <tbody>
                                 {
-                                    week && week.length > 0 && week.sort(function (a, b) {
-                                        var rangeDateA = new Date(a.createdAt), rangeDateB = new Date(b.createdAt)
-                                        return rangeDateB - rangeDateA;
-                                    })?.map((newsItem, index) => {
+                                    week && week.length > 0 && sortByDate(week)?.map((newsItem, index) => {
                                         return <Today index={index} key={index} news={newsItem} refetch={refetch} proUser={proUser} />
                                     })
                                 }
@@ -135,10 +129,7 @@ const NewsComponent = () => {
 
                             <tbody>
                                 {
-                                    older && older.length > 0 && older.sort(function (a, b) {
-                                        var rangeDateA = new Date(a.createdAt), rangeDateB = new Date(b.createdAt)
-                                        return rangeDateB - rangeDateA;
-                                    })?.map((newsItem, index) => {
+                                    older && older.length > 0 && sortByDate(older)?.map((newsItem, index) => {
                                         return <Today index={index} key={index} news={newsItem} refetch={refetch} proUser={proUser} />
                                     })
                                 }
@@ -214,10 +205,7 @@ const SearchTable = ({ search, rangeDate, shouldFetchSearchData }) => {
                         <NewsTableHead proUser={proUser} />
                         <tbody>
                             {
-                                searchNewsData && searchNewsData?.length > 0 && searchNewsData?.sort(function (a, b) {
-                                    var rangeDateA = new Date(a.createdAt), rangeDateB = new Date(b.createdAt)
-                                    return rangeDateB - rangeDateA;
-                                })?.map((newsItem, index) => {
+                                searchNewsData && searchNewsData?.length > 0 && sortByDate(searchNewsData)?.map((newsItem, index) => {
                                     return <Today index={index} key={index} news={newsItem} refetch={refetch} proUser={proUser} />
                                 })
                             }

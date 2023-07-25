@@ -9,8 +9,9 @@ const Filter = ({ search, setSearch, setRangeDate }) => {
 
     const handleDateWiseFiltering = (e) => {
         if (e) {
-            let start = `${e[0][`$D`]}/${e[0][`$M`] + 1}/${e[0][`$y`]}`
-            let end = `${e[1][`$D`]}/${e[1][`$M`] + 1}/${e[1][`$y`]}`
+            let start = `${e[0][`$y`]}-${(e[0]['$M'] + 1).toString().padStart(2, '0')}-${e[0]['$D'].toString().padStart(2, '0')}`;
+            let end = `${e[1][`$y`]}-${(e[1]['$M'] + 1).toString().padStart(2, '0')}-${e[1]['$D'].toString().padStart(2, '0')}`;
+
 
             setRangeDate({ start, end })
         } else {
