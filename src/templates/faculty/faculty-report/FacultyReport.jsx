@@ -17,7 +17,6 @@ const FacultyReport = () => {
     useEffect(() => {
 
         if (userId) {
-            console.log('Custom Options :', JSON.parse(otherOptions))
             const URL = `${process.env.REACT_APP_MAIN_URL}/api/getAllData`
             Axios.post(URL, { userId, fetchYears: 'all' })
                 .then((res) => {

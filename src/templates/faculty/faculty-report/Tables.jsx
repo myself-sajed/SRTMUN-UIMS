@@ -100,10 +100,6 @@ const Tables = ({ academicData, showProof = false, otherOptions = false }) => {
 
     ]
 
-    useEffect(() => {
-        console.log(academicData)
-    }, [academicData])
-
 
     return (
         <div>
@@ -118,7 +114,6 @@ const Tables = ({ academicData, showProof = false, otherOptions = false }) => {
                         <div className='flex items-center justify-start gap-3'>
                             <h3 className="sm:text-lg text-base leading-6 font-medium text-white">
                                 Lectures, Seminars, Tutorials, Practicals </h3>
-                            {console.log(academicData?.['Lectures'])}
                             <span class="badge bg-green-100 text-[#009879]">{academicData?.['Lectures']?.length}</span>
                         </div>
                     </div>
@@ -187,7 +182,6 @@ const TableTemplate = ({ item, data, showProof }) => {
                                 <th scope="col">Sr. No.</th>
                                 {
                                     CASDataTable[item.model]?.tableHeads.map((head) => {
-                                        console.log(item.model)
                                         return <>{head.includes('pload') || head.includes('roof') || head.includes('Order') ? showProof ? <th scope="col">{head}</th> : null : <th scope="col">{head}</th>}</>
                                     })
                                 }
