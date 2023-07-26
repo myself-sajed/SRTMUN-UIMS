@@ -100,8 +100,6 @@ const AdminFeedbackStatus = () => {
     <div className='w-full'>
       <AdminDrower>
 
-        <button className="bg-blue" onClick={callMe}>Call Me</button>
-
         <ShowAnalysisModal handleClose={handleClose} open={open} title={`${expandedRow?.title} Feedback Analysis for ${expandedRow?.school}`}>
           <div>
             <div className='pr-4'>
