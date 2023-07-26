@@ -3,7 +3,6 @@ import axios from 'axios'
 
 // serverFile: fetchFeedbackData.js
 const getFeedbackData = ({ filter, feedbackUser }) => {
-    console.log("Getting data", filter, feedbackUser)
     return axios.post(`${process.env.REACT_APP_MAIN_URL}/director/service/getFeedbackData`,
         { filter, feedbackUser })
 }

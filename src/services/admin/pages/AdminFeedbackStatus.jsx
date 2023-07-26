@@ -66,7 +66,6 @@ const AdminFeedbackStatus = () => {
   useEffect(() => {
     if (expandedRow?.title && expandedRow?.school) {
       setChartData(() => null)
-      console.log('You can fetch now')
       if (expandedRow) {
         handleClickOpen()
       }
@@ -253,9 +252,7 @@ const Feedbacktd = ({ expandedRow, title, data, accessor, school, setExpandedRow
 
 const TableBodyForATR = ({ data }) => {
 
-  useEffect(() => {
-    console.log('ATR Data Loading:', data)
-  }, [data])
+
 
   return <tbody>
     {
