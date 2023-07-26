@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useQuery } from 'react-query'
 import { getATRData, getFeedbackData, getTotalFeedbackData } from '../../feedback/js/getFeedbackData'
 import { useState } from 'react'
@@ -25,15 +25,25 @@ const AdminFeedbackStatus = () => {
   const [chartData, setChartData] = useState(null)
   const [response, setResponse] = useState(null)
   const [teachers, setTeachers] = useState(null)
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    callMe()
+
+  };
+
+  const handleClose = () => {
+    setExpandedRow(() => null)
+    setOpen(false);
+  };
+
   let tabs = ['Feedback Dashboard & Analysis', 'Feedback Action Taken Reports']
 
   // for dashboard data
   let param = { filter: { academicYear } }
   const { data, isLoading, refetch } = useQuery(['GetAllTheDataForDashboardFeedback', param], () => getTotalFeedbackData(param))
 
-  // for analysis data
-  let params = { filter: { schoolName: expandedRow?.school, academicYear }, feedbackUser: expandedRow?.title }
-  const { data: analysisData, isLoading: analysisLoading, refetch: analysisRefetch } = useQuery(['FeedbackDataFetchingAnalysis', param], () => getFeedbackData(params))
 
   // for ATR
   let paramsForATR = { filter: { academicYear } }
@@ -42,34 +52,35 @@ const AdminFeedbackStatus = () => {
   useEffect(() => {
     refetch()
     ATRRefetch()
-    analysisRefetch()
   }, [academicYear])
 
 
-
-
-  const toggleRow = ({ rowIndex, title, school }) => {
-    setExpandedRow({ rowIndex, title, school });
-    analysisRefetch()
-  };
+  // for analysis data
+  let params = { filter: { schoolName: expandedRow?.school, academicYear }, feedbackUser: expandedRow?.title }
+  const { data: analysisData, isLoading: analysisLoading, refetch: analysisRefetch } = useQuery(
+    ['FeedbackDataFetchingAnalysis', param],
+    () => getFeedbackData(params), {
+  }, { enabled: !!expandedRow });
 
 
   useEffect(() => {
-    setChartData(() => null)
-    analysisRefetch()
-
-    if (expandedRow) {
-      handleClickOpen()
+    if (expandedRow?.title && expandedRow?.school) {
+      setChartData(() => null)
+      console.log('You can fetch now')
+      if (expandedRow) {
+        handleClickOpen()
+      }
+      callMe()
     }
-
   }, [expandedRow])
 
   useEffect(() => {
-
     if (analysisData?.data?.data) {
       setChartData(() => analysisData?.data?.data?.analysis)
     }
-  }, [analysisData, academicYear, expandedRow])
+  }, [analysisData, academicYear])
+
+
 
 
   useEffect(() => {
@@ -77,15 +88,11 @@ const AdminFeedbackStatus = () => {
     setTeachers(designationWiseSorting(analysisData?.data?.data?.dashboardData.Faculties)?.map((teacher) => `${teacher.salutation} ${teacher.name}`))
   }, [data, analysisData])
 
-  const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  function callMe() {
+    analysisRefetch()
+  }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
 
 
@@ -93,6 +100,8 @@ const AdminFeedbackStatus = () => {
   return (
     <div className='w-full'>
       <AdminDrower>
+
+        <button className="bg-blue" onClick={callMe}>Call Me</button>
 
         <ShowAnalysisModal handleClose={handleClose} open={open} title={`${expandedRow?.title} Feedback Analysis for ${expandedRow?.school}`}>
           <div>
@@ -217,12 +226,12 @@ const TableBodyForAnalysis = ({ chartData, analysisLoading, academicYear, expand
       Object.keys(SchoolsProgram).map((school, rowIndex) => {
         return <> <tr key={rowIndex} >
           <td className="semibold" >{school}</td>
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Student" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="StudentsSchoolWise" />
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Teacher" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="TeachersSchoolWise" />
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Alumni" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="AlumniSchoolWise" />
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Parent" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="ParentsSchoolWise" />
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Employer" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="EmployersSchoolWise" />
-          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Expert" rowIndex={rowIndex} setExpandedRow={setExpandedRow} school={school} data={data} accessor="ExpertsSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Student" setExpandedRow={setExpandedRow} school={school} data={data} accessor="StudentsSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Teacher" setExpandedRow={setExpandedRow} school={school} data={data} accessor="TeachersSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Alumni" setExpandedRow={setExpandedRow} school={school} data={data} accessor="AlumniSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Parent" setExpandedRow={setExpandedRow} school={school} data={data} accessor="ParentsSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Employer" setExpandedRow={setExpandedRow} school={school} data={data} accessor="EmployersSchoolWise" />
+          <Feedbacktd chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} title="Expert" setExpandedRow={setExpandedRow} school={school} data={data} accessor="ExpertsSchoolWise" />
         </tr>
         </>
       })
@@ -230,6 +239,17 @@ const TableBodyForAnalysis = ({ chartData, analysisLoading, academicYear, expand
 
   </tbody>
 }
+
+
+const Feedbacktd = ({ expandedRow, title, data, accessor, school, setExpandedRow, }) => {
+  return <td onClick={() => setExpandedRow({ title, school })} className={`font-semibold text-blue-800 cursor-pointer p-2 rounded-sm ${(expandedRow && expandedRow.title === title && expandedRow.school === school) ? 'font-extrabold' : 'hover:font-extrabold'}`} >{data?.data?.data?.[accessor]?.[school] || 0}
+  </td>
+}
+
+
+
+
+
 
 const TableBodyForATR = ({ data }) => {
 
@@ -254,10 +274,4 @@ const TableBodyForATR = ({ data }) => {
     }
 
   </tbody>
-}
-
-
-const Feedbacktd = ({ expandedRow, title, data, accessor, school, rowIndex, setExpandedRow, }) => {
-  return <td onClick={() => setExpandedRow(() => { return { rowIndex, title, school } })} className={`font-semibold text-blue-800 cursor-pointer p-2 rounded-sm ${(expandedRow && expandedRow.title === title && expandedRow.school === school) ? 'font-extrabold' : 'hover:font-extrabold'}`} >{data?.data?.data?.[accessor]?.[school] || 0}
-  </td>
 }
