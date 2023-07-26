@@ -5,6 +5,10 @@ const newsItemSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    date: {
+        type: 'string',
+        required: true,
+    },
     slug: {
         type: 'string',
         required: true,

@@ -559,14 +559,16 @@ const CASDataTable = {
     PostHeld: {
         tableHeads: [
             "Designation",
-            "Joining Date",
-            "Leaving Date ",
+            "Academic Level",
+            "School / Department",
+            "Post Duration ",
             "Appointment Order / CAS Promotion",
         ],
         tableCells: [
             "designation",
-            "joiningDate",
-            "leavingDate",
+            "level",
+            "userDepartment",
+            "duration",
             "proof",
         ],
 
@@ -670,7 +672,7 @@ const CASDataTable = {
             "providedFunds",
             "fundType",
             "status",
-            "projectDuration",
+            "duration",
             "year",
             "proof",
         ],
@@ -705,7 +707,7 @@ const CASDataTable = {
             "providedFunds",
             "fundType",
             "status",
-            "projectDuration",
+            "duration",
             "year",
             "proof",
         ],

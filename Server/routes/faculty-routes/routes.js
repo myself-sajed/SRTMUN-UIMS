@@ -406,6 +406,7 @@ function initRoutes(app) {
             const postHeld = new PostHeld({
                 designation: data.designation,
                 level: data.level,
+                userDepartment: data.department,
                 duration: data.duration,
                 durationYears: [...JSON.parse(data.durationYears)],
                 active: data.active,
@@ -1231,18 +1232,18 @@ function initRoutes(app) {
         }
     })
 
-    app.post('/faculty/aqar/excel', async (req,res)=>{
-        const {filter} = req.body
-        try{
-            let report={}
-            let aqarModels = ["ResearchPaper", "ResearchProject", "AwardRecognition", "Fellowship", "JrfSrf",   "Patent", "PhdAwarded", "BookAndChapter", "EContentDeveloped", "ConsultancyServices",     "FinancialSupport", "Online",]
+    app.post('/faculty/aqar/excel', async (req, res) => {
+        const { filter } = req.body
+        try {
+            let report = {}
+            let aqarModels = ["ResearchPaper", "ResearchProject", "AwardRecognition", "Fellowship", "JrfSrf", "Patent", "PhdAwarded", "BookAndChapter", "EContentDeveloped", "ConsultancyServices", "FinancialSupport", "Online",]
             for (const model of aqarModels) {
                 report[model] = await models[model].find(filter);
             }
-            res.send({report}) 
-        }catch(err){
+            res.send({ report })
+        } catch (err) {
             console.log(err)
-        } 
+        }
     })
 }
 

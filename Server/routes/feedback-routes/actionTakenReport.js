@@ -44,6 +44,31 @@ function actionTakenReport(app) {
             res.send({ status: 'error', message: error });
         }
     })
+
+    app.post('/director/service/getFeedbackATRData', async (req, res) => {
+        let { filter } = req.body
+        filter.submitted = true
+
+        try {
+            let atrs = await ActionTakenReport.find(filter).lean()
+            const schoolObject = {};
+
+            atrs.forEach((atr) => {
+                const { schoolName, ...rest } = atr;
+
+                if (!schoolObject[schoolName]) {
+                    schoolObject[schoolName] = [rest];
+                } else {
+                    schoolObject[schoolName].push(rest);
+                }
+            });
+
+            res.send({ status: 'success', data: schoolObject });
+
+        } catch (error) {
+            res.send({ status: 'error', message: error });
+        }
+    })
 }
 
 module.exports = actionTakenReport;

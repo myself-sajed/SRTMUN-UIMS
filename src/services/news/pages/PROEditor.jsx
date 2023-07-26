@@ -48,7 +48,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
 
     const { Dragger } = Upload;
 
-
+    const [date, setDate] = useState(null)
     const [headline, setHeadline] = useState(null)
     const [file, setFile] = useState(null)
     const [desc, setDesc] = useState(null)
@@ -62,6 +62,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
 
                 const formData = new FormData()
 
+                formData.append('date', date)
                 formData.append('headline', headline)
                 formData.append('file', file)
                 formData.append('desc', desc)
@@ -93,6 +94,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
 
                 const formData = new FormData()
 
+                formData.append('date', date)
                 formData.append('headline', headline)
                 formData.append('file', file)
                 formData.append('desc', desc)
@@ -103,6 +105,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                 Axios.post(url, formData).then((res) => {
                     if (res.data.status === 'success') {
                         setLoading(false)
+                        setDate(null)
                         setHeadline('')
                         setFile(null)
                         setDesc('')
@@ -129,21 +132,33 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
 
     useEffect(() => {
         if (actionToPerform === 'Edit') {
+            setDate(news.date)
             setHeadline(news.headline)
             setFile(news.photoURL)
             setDesc(news.desc)
         }
     }, [news])
 
+    useEffect(() => {
+        console.log("Date :", date)
+    }, [date])
+
 
     return <div className="w-full">
         <form className="col g-3" onSubmit={publishNews} >
-            <div className="my-3">
-                <label htmlFor="titleofthenews" className="form-label">Headline of the News ( बातमीचे शीर्षक )</label>
-                <input type="text" value={headline} onChange={(e) => { setHeadline(e.target.value) }} className="form-control" id="titleofthenews" placeholder='Title / Headline' required />
+
+            <div className='md:flex items-center justify-start gap-4'>
+                <div className="my-3 lg:col-md-3">
+                    <label htmlFor="titleofthenews" className="form-label">Date of the News ( बातमीचे दिनांक )</label>
+                    <input type="date" value={date} onChange={(e) => { setDate(e.target.value) }} className="form-control" required />
+                </div>
+                <div className="my-3 flex-auto">
+                    <label htmlFor="titleofthenews" className="form-label">Headline of the News ( बातमीचे शीर्षक )</label>
+                    <input type="text" value={headline} onChange={(e) => { setHeadline(e.target.value) }} className="form-control" id="titleofthenews" placeholder='Title / Headline' required />
+                </div>
             </div>
 
-            <div className="my-3">
+            <div className="mt-2 mb-3">
                 <label htmlFor="descofthenews" className="form-label">Description of the News ( बातमीचे वर्णन ) <span className='text-muted text-xs'>(Optional)</span></label>
                 <textarea type="text" value={desc} onChange={(e) => { setDesc(e.target.value) }} placeholder="News in brief..." className="form-control" id="descofthenews" />
             </div>

@@ -335,18 +335,18 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                         <thead className='table-dark'>
                             <tr>
                                 <th scope="col">Type</th>
-                                <th scope="col"><div className="w-32">Title of Book / Edited Book / Translation  </div></th>
+                                <th scope="col">Title of Book / Edited Book / Translation </th>
                                 <th scope="col">Chapter Title</th>
                                 <th scope="col">Paper Title</th>
                                 <th scope="col">Translation work</th>
-                                <th scope="col"><div className="w-40">Title of proceedings of the conference</div></th>
+                                <th scope="col">Proceeding Title</th>
                                 <th scope="col">Conference Name</th>
                                 <th scope="col">National / International</th>
                                 <th scope="col">Year of Publication</th>
-                                <th scope="col"><div className="w-40">ISBN/ISSN number of proceeding</div></th>
-                                <th scope="col"><div className="w-48">Affiliation Institute at the time of publication</div></th>
+                                <th scope="col">ISBN/ISSN number of proceeding</th>
+                                <th scope="col">Affiliation Institute</th>
                                 <th scope="col">Publisher Name</th>
-                                <th scope="col"><div className="w-24">Year</div></th>
+                                <th scope="col">Year</th>
                                 <th scope="col">Uploaded Proof</th>
                                 <th scope="col">Action</th>
 

@@ -203,6 +203,7 @@ function editRoutes(app) {
             PostHeld.findOneAndUpdate({ _id: data.itemId }, {
                 designation: data.designation,
                 level: data.level,
+                userDepartment: data.department,
                 duration: data.duration,
                 durationYears: [...JSON.parse(data.durationYears)],
                 active: data.active,
@@ -234,6 +235,7 @@ function editRoutes(app) {
             PostHeld.findOneAndUpdate({ _id: data.itemId }, {
                 designation: data.designation,
                 level: data.level,
+                userDepartment: data.department,
                 duration: data.duration,
                 durationYears: [...JSON.parse(data.durationYears)],
                 active: data.active,

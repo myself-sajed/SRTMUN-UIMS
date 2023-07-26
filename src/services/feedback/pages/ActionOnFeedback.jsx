@@ -12,6 +12,7 @@ import UploadActionReport from '../components/UploadActionReport'
 import Footer from '../../../components/Footer'
 import title from '../../../js/title'
 import Acknowledgement from '../../../components/Acknowledgement'
+import { useNavigate } from 'react-router'
 
 const ActionOnFeedback = () => {
 
@@ -20,6 +21,7 @@ const ActionOnFeedback = () => {
     const [activeStep, setActiveStep] = useState(0)
     const [tabName, setTabName] = useState('year')
     const [actionYear, setActionYear] = useState(null)
+    const navigate = useNavigate()
     useDirectorAuth()
 
 
@@ -40,13 +42,15 @@ const ActionOnFeedback = () => {
         else if (tabName === 'action') {
             setTabName('year')
             handleBack()
+        } else if (tabName === 'year') {
+            navigate(siteLinks.directorHome.link)
         }
 
     }
 
     return (
         <div>
-            <GoBack functionOnBack={navigateTabs} bredLinks={[siteLinks.welcome, siteLinks.directorHome, siteLinks.feedbackAction]} pageTitle={`Feedback Action Taken Report by Director ${actionYear && `(${actionYear})`}`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} />
+            <GoBack functionOnBack={navigateTabs} bredLinks={[siteLinks.welcome, siteLinks.directorHome, siteLinks.feedbackAction]} pageTitle={`Feedback Action Taken Report by Director ${actionYear ? `(${actionYear})` : ''}`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} />
 
             <div className="mt-3">
                 <StepStatus activeStep={activeStep} steps={steps} />
@@ -57,7 +61,7 @@ const ActionOnFeedback = () => {
                     tabName === 'year' && <div className='h-screen'>
                         <div className='mx-auto flex items-center text-center justify-center my-5'>
                             <Year state={actionYear} setState={setActionYear} space='col-md-3'
-                                title="Choose year for which report is to be uploaded" numberOfYearsToDisplay={3} />
+                                title="Choose Academic Year" numberOfYearsToDisplay={3} />
                         </div>
                         <div className='mx-auto flex items-center justify-center'>
                             <SaveButton title={`Proceed to Upload`} onClickFunction={() => {

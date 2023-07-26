@@ -12,7 +12,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import InsertInvitationRoundedIcon from '@mui/icons-material/InsertInvitationRounded';
 
 const SingleNews = () => {
 
@@ -44,8 +44,8 @@ const SingleNews = () => {
                                     <p className="text-base font-semibold text-start lg:text-2xl md:text-xl sm:text-md">{data?.data?.data.headline}</p>
                                     <div className='flex items-start gap-2 justitfy-start mt-3'>
                                         <span className='bg-orange-100 border rounded-md text-orange-900 flex items-center justify-start gap-1 whitespace-nowrap md:text-sm text-xs px-1'>
-                                            <AccessTimeIcon sx={{ fontSize: '15px' }} /> <div><span>{moment(data?.data?.data?.createdAt).format('DD/MM/YYYY')}</span>
-                                                <span className='ml-2'>{moment(data?.data?.data?.createdAt).format('hh:mm A')} IST</span></div>
+                                            <InsertInvitationRoundedIcon sx={{ fontSize: '15px' }} /> <div><span>{moment(data?.data?.data?.date, "YYYY-MM-DD").format("DD/MM/YYYY")}</span>
+                                            </div>
                                         </span>
                                         <span onClick={copyNews} className='flex items-center justify-start gap-1 bg-green-100 border rounded-md hover:bg-green-200 text-green-900 cursor-pointer md:text-sm text-xs px-1'>
                                             {

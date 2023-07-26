@@ -271,18 +271,18 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
                     <table className="table table-bordered table-hover">
                         <thead className='table-dark'>
                             <tr>
-                                <th scope="col"><div className="w-44">Scholar Name</div></th>
-                                <th scope="col"><div className="w-36">Department Name</div></th>
-                                <th scope="col"><div className="w-36">Guide Name</div></th>
-                                <th scope="col"><div className="w-36">Thesis Title</div></th>
-                                <th scope="col"><div className="w-36">Date of Registration (RAC)</div></th>
-                                <th scope="col"><div className="w-36">Gender</div></th>
-                                <th scope="col"><div className="w-36">Category</div></th>
-                                <th scope="col"><div className="w-36">Degree</div></th>
-                                <th scope="col"><div className="w-36">Awarded / Submitted / Ongoing</div></th>
-                                <th scope="col"><div className="w-24">Year of Scholar Registration</div></th>
-                                <th scope="col"><div className="w-16">Year of Award</div></th>
-                                <th scope="col"><div className="w-20">Year</div></th>
+                                <th scope="col">Scholar Name</th>
+                                <th scope="col">Department Name</th>
+                                <th scope="col">Guide Name</th>
+                                <th scope="col">Thesis Title</th>
+                                <th scope="col">Date of Registration (RAC)</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Degree</th>
+                                <th scope="col">Awarded / Submitted / Ongoing</th>
+                                <th scope="col">Year of Scholar Registration</th>
+                                <th scope="col">Year of Award</th>
+                                <th scope="col">Year</th>
                                 <th scope="col">Uploaded Proofs</th>
                                 <th scope="col">Action</th>
 

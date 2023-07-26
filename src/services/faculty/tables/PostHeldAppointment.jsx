@@ -19,6 +19,7 @@ import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import DesignationSelect from '../../../inputs/DesignationSelect';
 import FromToDate from '../../../inputs/FromToDate';
 import StageSelect from '../../../inputs/StageSelect';
+import DeptSelect from '../../../inputs/DeptSelect';
 
 const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
@@ -30,9 +31,8 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     const [postsModal, setPostsModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [designation, setDesignation] = useState('')
-    const [joiningDate, setJoiningDate] = useState('')
-    const [leavingDate, setLeavingDate] = useState('')
     const [level, setLevel] = useState(null)
+    const [department, setDepartment] = useState(null)
     const [proof, setProof] = useState(null)
     const [duration, setDuration] = useState(null)
     const [editModal, setEditModal] = useState(false)
@@ -48,6 +48,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
 
     useEffect(() => {
         setDesignation(user?.designation)
+        setDepartment(user?.department)
     }, [user, editModal, isFormOpen])
 
     useEffect(() => {
@@ -75,6 +76,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
         formData.append('level', level)
         formData.append('durationYears', JSON.stringify(year))
         formData.append('duration', duration)
+        formData.append('department', department)
         formData.append('active', active)
         formData.append('file', proof)
         formData.append('userId', user?._id)
@@ -93,6 +95,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
         formData.append('proof', itemToDelete.proof)
         formData.append('designation', designation)
         formData.append('duration', duration)
+        formData.append('department', department)
         formData.append('durationYears', JSON.stringify(year))
         formData.append('active', active)
         formData.append('level', level)
@@ -169,14 +172,17 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                     <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setPostsModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit a Post' : 'Add a Post'}</p>
 
-                        {/* <Text title='Designation' state={designation} setState={setDesignation} /> */}
-
 
                         <DesignationSelect showLabel={true} classes="col-md-3" id="chooseDesignation" state={designation} setState={setDesignation} />
 
 
 
                         <StageSelect space='col-md-4' state={level} setState={setLevel} forDesignation={designation} />
+
+
+                        <div className="col-md-4">
+                            <DeptSelect title="School / Department" state={department} setState={setDepartment} />
+                        </div>
 
 
                         <FromToDate activeTitle="Are you still active on this post or level?" fromDate={fromDate} setFromDate={setFromDate} endDate={endDate} setEndDate={setEndDate} setActive={setActive} active={active} editModal={editModal} editItem={editItem} />
@@ -196,6 +202,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                         <tr>
                             <th scope="col">Designation</th>
                             <th scope="col">Academic Level</th>
+                            <th scope="col">School / Department</th>
                             <th scope="col">Post Duration</th>
                             <th scope="col">Appointment Order / CAS Promotion</th>
                             <th scope="col">Action</th>
@@ -211,6 +218,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
                                 <tr key={index}>
                                     <td>{item.designation}</td>
                                     <td>{item.level}</td>
+                                    <td>{item.userDepartment}</td>
                                     <td>{item.duration}</td>
                                     <td><View proof={item.proof} /></td>
 
