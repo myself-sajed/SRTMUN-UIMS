@@ -230,7 +230,7 @@ const IDTile = ({ photoURL, title, keyId, user, link = false }) => {
                 <div>
                     <p className='text-md leading-5'>{title}</p>
                     {
-                        link ? <a className="text-sm text-blue-500 leading-6" href={user?.[keyId]}>{user?.[keyId]}</a> : <p className='text-sm text-muted'>{user?.[keyId]}</p>
+                        user?.[keyId] === "undefined" ? <p className="text-muted text-sm">Not Available</p> : link ? <a className="text-sm text-blue-500 leading-6" href={user?.[keyId]}>{user?.[keyId]}</a> : <p className='text-sm text-muted'>{user?.[keyId]}</p>
                     }
                 </div>
             </div> : null
