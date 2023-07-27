@@ -60,12 +60,16 @@ const UploadActionReport = ({ schoolName, academicYear, setTabName, handleNext }
 
             {
                 isLoading ? <UserLoading title="Checking for Reports" /> : <div className="my-4 grid grid-cols-2 gap-3">
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Student" />
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Teacher" />
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Alumni" />
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Parent" />
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Employer" />
-                    <UploadReport data={data?.data?.data?.[0]} refetch={refetch} academicYear={academicYear} schoolName={schoolName} title="Expert" />
+                    {['Student', 'Teacher', 'Alumni', 'Parent', 'Employer', 'Expert'].map((title) => (
+                        <UploadReport
+                            key={title}
+                            data={data?.data?.data?.[0]}
+                            refetch={refetch}
+                            academicYear={academicYear}
+                            schoolName={schoolName}
+                            title={title}
+                        />
+                    ))}
                 </div>
             }
 
