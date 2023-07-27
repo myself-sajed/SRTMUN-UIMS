@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://srtmun-uims.org/</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/faculty-login</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/director-login</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/director</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/director/service/academic-audit</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/faculty-profile</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/service/cas-report</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://srtmun-uims.org/service/pbas-report</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+<url>
+  <loc>https://srtmun-uims.org/director</loc>
+  <lastmod>2022-12-02T08:11:00+00:00</lastmod>
+</url>
+
+</urlset>
