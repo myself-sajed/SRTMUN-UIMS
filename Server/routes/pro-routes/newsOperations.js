@@ -1,69 +1,40 @@
 const { multerConfig } = require('../../utility/multerConfig')
 const NewsItem = require('../../models/pro-models/newsItem')
 
-const langdetect = require('langdetect');
-function slugify(headline) {
-    return headline
-        .replace(/[^\w\s]/gi, '') // Remove special characters
-        .trim() // Remove leading/trailing whitespace
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .toLowerCase(); // Convert to lowercase
-}
-
 
 const upload = multerConfig(`../uploads/news-uploads/`)
+
+const arrayOfFields = [{ name: 'file-1', maxCount: 1 }, { name: 'file-2', maxCount: 1 }, { name: 'file-3', maxCount: 1 }, { name: 'file-4', maxCount: 1 }, { name: 'file-5', maxCount: 1 }]
 
 const newsOperations = (app) => {
 
     // 1. Create (publish the news)
-    app.post('/api/news/publish', upload.single('file'), (req, res) => {
+    app.post('/api/news/publish', upload.fields(arrayOfFields), (req, res) => {
+
         try {
             const data = JSON.parse(JSON.stringify(req.body));
-
-            // creating slug
-            const detectedLanguage = langdetect.detect(data.headline);
-            let slug;
-            try {
-                if (detectedLanguage[0].lang === 'en') {
-                    slug = slugify(data.headline)
-                } else {
-                    slug = data.headline
-                }
-            } catch (error) {
-
-            }
-
-            NewsItem.findOne({ slug: slug }).then((news) => {
-                if (news) {
-                    res.send({ status: 'error', message: 'The headline is already exist, try a different headline...' })
-                    return
-                } else {
-                    const news = new NewsItem({
-                        date: data.date,
-                        headline: data.headline,
-                        slug: slug,
-                        desc: data.desc !== "null" ? data.desc : '',
-                        photoURL: req.file.filename
-                    })
-
-                    news.save().then((savedNews) => {
-                        if (savedNews) {
-                            res.send({ status: 'success', message: 'News published successfully' })
-                        }
-                        else {
-                            res.send({ status: 'error', message: 'Could not publish the news, try again' })
-                        }
-                    })
-                }
+            console.log(Object.keys(req.files))
+            const news = new NewsItem({
+                date: data.date,
+                headline: data.headline,
+                desc: data.desc !== "null" ? data.desc : '',
+                photoURL: Object.keys(req.files).map(key => req.files[key][0].filename)
             })
 
-
+            news.save().then((savedNews) => {
+                if (savedNews) {
+                    res.send({ status: 'success', message: 'News published successfully' })
+                }
+                else {
+                    res.send({ status: 'error', message: 'Could not publish the news, try again' })
+                }
+            })
         } catch (error) {
             console.log(error)
-            res.send({ status: 'error', message: 'Something went wrong...' })
+            res.send({ status: 'error', message: 'Could not publish the news, try again' })
         }
-
     })
+
 
     // 2. Read news
 
@@ -81,9 +52,9 @@ const newsOperations = (app) => {
     // B. for a single news item
     app.post('/api/news/singleNews', (req, res) => {
 
-        const { slug } = req.body
+        const { newsId } = req.body
 
-        NewsItem.findOne({ slug }).lean().then((news) => {
+        NewsItem.findOne({ _id: newsId }).lean().then((news) => {
             res.send({ status: 'success', data: news })
         }).catch((error) => {
             res.send({ status: 'error', message: 'Something went wrong...' })
@@ -130,17 +101,16 @@ const newsOperations = (app) => {
     })
 
     // 4. Update (edit the news)
-    app.post('/api/news/edit', upload.single('file'), (req, res) => {
+    app.post('/api/news/edit', upload.fields(arrayOfFields), (req, res) => {
         try {
             const data = JSON.parse(JSON.stringify(req.body));
-            const slug = slugify(data.headline)
+            let previousPhotoURL = JSON.parse(data.previousPhotoURL)
 
             NewsItem.findOneAndUpdate({ _id: data.id }, {
                 date: data.date,
                 headline: data.headline,
-                slug: slug,
                 desc: data.desc,
-                photoURL: req.file ? req.file.filename : data.previousPhotoURL
+                photoURL: [...Object.keys(req.files).map(key => req.files[key][0].filename), ...previousPhotoURL || []]
             }).then((news) => {
                 if (news) {
                     res.send({ status: 'success', message: 'News Edited successfully' })
@@ -152,6 +122,7 @@ const newsOperations = (app) => {
 
 
         } catch (error) {
+            console.log(error)
             res.send({ status: 'error', message: 'Something went wrong...' })
         }
 

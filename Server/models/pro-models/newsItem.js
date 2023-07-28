@@ -9,18 +9,14 @@ const newsItemSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    slug: {
-        type: 'string',
-        required: true,
-        unique: true
-    },
     desc: {
         type: 'string',
         required: false,
     },
     photoURL: {
-        type: 'string',
-        required: true
+        type: [{ type: String }],
+        require: false,
+        default: [],
     }
 
 }, { timestamps: true });

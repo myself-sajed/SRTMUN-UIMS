@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setProUser, setUser } from '../redux/slices/UserSlice';
 
-const useProAuth = (shouldNavigate = true) => {
+const useProAuth = (shouldNavigate = true, keepMeOnTheSamePageAfterLogout = false) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -33,7 +33,9 @@ const useProAuth = (shouldNavigate = true) => {
                 })
         }
         else {
-            navigate('/pro-login')
+            if (keepMeOnTheSamePageAfterLogout === false) {
+                navigate('/pro-login')
+            }
             dispatch(setProUser(null))
             localStorage.removeItem('pro-token')
         }

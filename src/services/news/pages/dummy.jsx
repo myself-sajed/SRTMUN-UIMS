@@ -14,8 +14,6 @@ import siteLinks from '../../../components/siteLinks';
 import Bred from '../../../components/Bred';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import serverLinks from '../../../js/serverLinks';
-import FileViewer from '../../../components/FileViewer';
 
 const PROEditor = () => {
 
@@ -54,27 +52,25 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
     const [headline, setHeadline] = useState(null)
     const [file, setFile] = useState([])
     const [desc, setDesc] = useState(null)
-    const [base64, setBase64] = useState([])
     const [loading, setLoading] = useState(false)
-    const [uploadedFiles, setUploadedFiles] = useState([])
+    const [showFile, setShowFile] = useState(null)
+
 
     const publishNews = (e) => {
         e.preventDefault();
         if (actionToPerform === 'Add') {
-            if (file?.length > 0 && file?.length <= 5) {
+            if (file) {
                 setLoading(true)
 
                 const formData = new FormData()
 
                 formData.append('date', date)
                 formData.append('headline', headline)
-                file.forEach((fileItem, index) => {
-                    formData.append(`file-${index + 1}`, fileItem);
-                });
+                formData.append('file', [...file].map((item) => item.mainFile))
                 formData.append('desc', desc)
 
                 const url = `${process.env.REACT_APP_MAIN_URL}/api/news/publish`
-                Axios.post(url, formData).then((res) => {
+                Axios.post(url, { date, headline, file, desc }).then((res) => {
                     if (res.data.status === 'success') {
                         setLoading(false)
                         setHeadline('')
@@ -92,26 +88,23 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                     return
                 })
             } else {
-                toast.error(file?.length === 0 ? 'Please select at least one file to upload...' : 'Total files uploaded and selected files should be less than or equal to 5')
+                toast.error('Please select a file to upload...')
             }
         } else if (actionToPerform === 'Edit') {
-            let totalLength = file?.length + uploadedFiles?.length
-            if (totalLength > 0 && totalLength <= 5) {
+            if (file) {
                 setLoading(true)
 
                 const formData = new FormData()
 
                 formData.append('date', date)
                 formData.append('headline', headline)
-                file.forEach((fileItem, index) => {
-                    formData.append(`file-${index + 1}`, fileItem);
-                });
+                formData.append('file', file)
                 formData.append('desc', desc)
                 formData.append('id', news._id)
-                formData.append('previousPhotoURL', JSON.stringify(uploadedFiles))
+                formData.append('previousPhotoURL', news.photoURL)
 
                 const url = `${process.env.REACT_APP_MAIN_URL}/api/news/edit`
-                Axios.post(url, formData).then((res) => {
+                Axios.post(url, { formData }).then((res) => {
                     if (res.data.status === 'success') {
                         setLoading(false)
                         setDate(null)
@@ -134,7 +127,7 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                     return
                 })
             } else {
-                toast.error(totalLength === 0 ? 'Please select at least one file to upload...' : 'Previously uploaded photos and newly selected photos should be less than or equal to 5 photos')
+                toast.error('Please select a file to upload...')
             }
         }
     }
@@ -143,83 +136,33 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
         if (actionToPerform === 'Edit') {
             setDate(news.date)
             setHeadline(news.headline)
-            setUploadedFiles(typeof news.photoURL === 'string' ? [news.photoURL] : news.photoURL)
+            setFile(news.photoURL)
             setDesc(news.desc)
         }
     }, [news])
 
-    const getFiles = (e) => {
-        const selectedFiles = e.target.files;
-        const maxAllowedFiles = 5;
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
 
-        if (selectedFiles.length <= maxAllowedFiles) {
-            const fileListArray = Array.from(selectedFiles);
-            setFile(fileListArray);
-            convertFilesToBase64(fileListArray)
-                .then((base64Array) => {
-                    setBase64(base64Array);
-                })
-                .catch((error) => {
-                    console.error('Error converting files to base64:', error);
-                });
-        } else {
-            toast.error(`Maximum of ${maxAllowedFiles} files can be selected.`);
-            e.target.value = null;
-        }
-    };
-
-    const removeSelectedFiles = (index) => {
-        const arrayFile = [...file || []];
-        const newArray = arrayFile.filter((i, idx) => idx !== index)
-        setFile(() => [...newArray || []])
-        convertFilesToBase64(newArray)
-            .then((base64Array) => {
-                console.log(base64Array);
-                setBase64(base64Array);
-            })
-            .catch((error) => {
-                console.error('Error converting files to base64:', error);
-            });
-
-    }
-
-    const removeUploadedFiles = (index) => {
-        const arrayFile = [...uploadedFiles || []];
-        const newArray = arrayFile.filter((i, idx) => idx !== index)
-        setUploadedFiles(() => [...newArray || []])
-
-    }
-
-    // Function to convert all files in the fileListArray to base64
-    const convertFilesToBase64 = async (fileListArray) => {
-        const base64Array = [];
-        for (const file of fileListArray) {
-            try {
-                const base64 = await convertFileToBase64(file);
-                base64Array.push(base64);
-            } catch (error) {
-                console.error('Error converting file to base64:', error);
-            }
-        }
-        return base64Array;
-    };
-
-    // Function to convert each file to base64
-    const convertFileToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
+        if (selectedFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                resolve(reader.result);
+                setFile([...file, { mainFile: selectedFile, base64: reader.result }]);
             };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
+            reader.readAsDataURL(selectedFile);
+            // setFile(selectedFile); // Save the selected file in state
+        }
+    };
+
+    const removeFile = (fileToRemove) => {
+        const updatedFiles = file.filter((item) => item.mainFile !== fileToRemove);
+        setFile(updatedFiles);
     };
 
     useEffect(() => {
-        console.log('Selected Files :', file)
-        console.log('Uploaded Files :', uploadedFiles)
-    }, [uploadedFiles, file]);
+        console.log("Files:", [...file].map((item) => item.mainFile))
+    }, [file])
+
 
 
     return <div className="w-full">
@@ -241,15 +184,31 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                 <textarea type="text" value={desc} onChange={(e) => { setDesc(e.target.value) }} placeholder="News in brief..." className="form-control" id="descofthenews" />
             </div>
 
+            <div>
+                {
+                    file.length > 0 && <div className="p-2 bg-blue-50 rounded-lg">
+                        <p className='font-sm font-semibold pb-2'>Selected Files:</p>
+                        <div className="grid grid-cols-7 gap-3">
+                            {
+                                file.map((item, i) => {
+                                    return <div className='flex items-start justify-start gap-2 bg-blue-200 p-2 rounded-md'>
+                                        <img src={item.base64} alt="Selected File" style={{ maxWidth: '50px' }} />
+                                        <div onClick={() => { removeFile(item.mainFile) }}><IconButton><DeleteRoundedIcon /></IconButton></div>
+                                    </div>
+                                })
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
             <div className='my-3 w-full hover:border-blue-600 border-blue-300 border-2 border-dashed rounded-md cursor-pointer' onClick={() => document.getElementById('file').click()}>
                 <Dragger className='pointer-events-none border-none outline-none'>
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined />
                     </p>
-                    <p className="ant-upload-text">
-                        <p>Please click on the this area to upload your files. You can select a maximum of 5 photos at a time.</p> ( तुमच्या फाइल्स अपलोड करण्यासाठी कृपया या क्षेत्रावर क्लिक करा. तुम्ही एका वेळी कमाल 5 फोटो निवडू शकता. )</p>
+                    <p className="ant-upload-text">Click file to this area to upload ( कृपया फोटो निवडण्यासाठी येथे क्लिक करा )</p>
                     <p className="ant-upload-hint">
-
                         Please ensure that the picture you are uploading is less than 1 MB in size.
                         ( कृपया तुम्ही अपलोड करत असलेल्या फोटोचा आकार 1 MB पेक्षा कमी असल्याची खात्री करा. )
                     </p>
@@ -257,64 +216,11 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                 </Dragger>
             </div>
 
-            <input type="file" accept="image/png, image/jpg, image/jpeg" multiple className='hidden' name="file" id="file" onChange={(e) => getFiles(e)} />
+            <input type="file" accept=".jpg, .jpeg, .png" className='hidden' name="file" id="file" onChange={(e) => handleFileChange(e)} />
 
-            {
-                file?.length > 0 && <ol class="list-group ">
-
-                    <li class="list-group-item list-group-item-action" aria-current="true">
-                        Selected files {`(${file?.length})`}
-                    </li>
-
-                    {
-                        file.map((item, index) => {
-                            return <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="font-semibold">
-                                        {
-                                            <img src={base64[index]} width="100px" />
-                                        }
-                                        {item?.name || item} </div>
-                                </div>
-                                <span><IconButton onClick={() => removeSelectedFiles(index)}><DeleteRoundedIcon /></IconButton></span>
-                            </li>
-                        })
-                    }
-
-
-                </ol>
-            }
-
-            {
-                (actionToPerform !== "add" && uploadedFiles?.length > 0) && <ol class="list-group mt-3">
-
-                    <li class="list-group-item list-group-item-action" aria-current="true">
-                        Uploaded files {`(${uploadedFiles?.length})`}
-                    </li>
-
-                    {
-                        uploadedFiles.map((item, index) => {
-                            return <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="font-semibold">
-
-
-                                        <FileViewer fileName={item} serviceName="news" >
-                                            <img src={serverLinks.showFile(item, 'news')}
-                                                className='object-cover cursor-pointer w-20 hover:brightness-75 ease-in-out duration-200 ' />
-                                        </FileViewer>
-
-
-                                        {item} </div>
-                                </div>
-                                <span><IconButton onClick={() => removeUploadedFiles(index)}><DeleteRoundedIcon /></IconButton></span>
-                            </li>
-                        })
-                    }
-
-
-                </ol>
-            }
+            {/* {file && <div className='border px-3 font-semibold flex items-center justify-between bg-blue-100 text-blue-600 rounded-md text-sm'>
+                <div className='flex items-center justify-start gap-2'><span className='text-muted'>Selected File : </span> <span>{file.name || news.photoURL}</span></div> <IconButton onClick={() => setFile(null)}><DeleteRoundedIcon /></IconButton>
+            </div>} */}
 
             <div className='flex items-center justify-start gap-2'>
                 {
