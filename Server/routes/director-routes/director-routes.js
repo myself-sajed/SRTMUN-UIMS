@@ -29,6 +29,189 @@ const StudentUser = require('../../models/student-models/studentUserSchema')
 const AlumniUser = require('../../models/alumni-models/alumniUserSchema')
 const StudentIdCount = require('../../models/student-models/studentIdCountSchema')
 
+const excelObject = {
+    Award: {
+        'Title of the innovation': 'Title_of_the_innovation',
+        'Name of the Award': 'Name_of_the_Award',
+        'Name of the Awarding Agency': 'Name_of_the_Awarding_Agency',
+        'Contact details Agency': 'Contact_details_Agency',
+        'Year of Award': 'Year_of_Award',
+        'Category': 'Category',
+    },
+    ConferencesSemiWorkshopOrganized: {
+        'Year': 'Year',
+        'Title Of the Program': 'Title_Of_the_Program',
+        'Level of Program': 'Level_of_program',
+        'Number of Participants': 'Number_of_Participants',
+        'From Date': 'From_Date',
+        'To Date': 'To_Date'
+    },
+    CounselingAndGuidance: {
+        'Name of the Activity conducted by the HEI': 'Name_of_the_Activity_conducted_by_the_HEI',
+        'Number of Students Attended': 'Number_of_Students_Attended',
+        'Year of Activity': 'Year_of_Activity',
+    },
+    DemandRatio: {
+        'Programme Code': 'Programme_Code',
+        'Programme name': 'Programme_name',
+        'Academic Year': 'Academic_Year',
+        'Number of seats available': 'Number_of_seats_available',
+        'Number of eligible applications': 'Number_of_eligible_applications',
+        'Number of Students admitted': 'Number_of_Students_admitted',
+        'Type of program': 'Type_of_program',
+    },
+    Employability: {
+        'Program Name': 'Program_Name',
+        'Course Code': 'Course_Code',
+        'Name of the Course': 'Name_of_the_Course',
+        'Academic Year': 'Academic_Year',
+        'Year of introduction': 'Year_of_introduction',
+        'Activities Content with direct bearing on Employability Entrepreneurship Skill development': 'Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development',
+    },
+    ExtensionActivities: {
+        'Name of the activity': 'Name_of_the_activity',
+        'Organising unit/ agency/ collaborating agency': 'Organising_unit',
+        'Name of the scheme': 'Name_of_the_scheme',
+        'Year of activity': 'Year_of_activity',
+        'Number of students': 'Number_of_students',
+    },
+    IctClassrooms: {
+        'Room number or Name of Classrooms': 'Room_number_or_Name_of_Classrooms',
+        'Type of ICT facility': 'Type_of_ICT_facility'
+    },
+    MoUs: {
+        'Name of Organisation with whome mou signed': 'Name_of_Organisation_with_whome_mou_signed',
+        'Duration of MoU': 'Duration_of_MoU',
+        'Year of signing MoU': 'Year_of_signing_MoU',
+    },
+    Placement: {
+        "Name of student placed": "Name_of_student_placed",
+        "Program graduated from": "Program_graduated_from",
+        "Name of the employer": "Name_of_the_employer",
+        "Employer contact details": "Employer_contact_details",
+        "Pay package annum": "Pay_package_annum",
+        "Academic Year": "Academic_Year",
+        "Type Of Placement": 'Type_Of_Placement',
+    },
+    ProgressionToHE: {
+        'Name of student enrolling': 'Name_of_student_enrolling',
+        'Program graduated from': 'Program_graduated_from',
+        'Name of institution admitted': 'Name_of_institution_admitted',
+        'Name of programme admitted': 'Name_of_programme_admitted',
+        'Academic Year': 'Academic_Year',
+    },
+    ProjectsInternships: {
+        "Programme Code": "Programme_Code",
+        "Programme name": "Programme_name",
+        "Academic Year": "Academic_Year",
+        "Name of the student": "Name_of_the_student",
+    },
+    QualifiedExams: {
+        "Acadmic year": 'Acadmic_year',
+        "Registration number roll number": 'Registration_number_roll_number',
+        "Name of student qualified": 'Names_of_students_selected_qualified',
+        "Name of the Exam": 'Name_of_the_Exam',
+    },
+    ReservedSeats: {
+        "Academic Year": "Academic_Year",
+        "Program Name": "Program_Name",
+        "SC1": "NseSC",
+        "ST1": "NseST",
+        "OBC(VJNT)1": "NseOBC",
+        "Divyngjan1": "NseDivyngjan",
+        "General1": "NseGeneral",
+        "Others1": "NseOthers",
+        "SC2": "NsaSC",
+        "ST2": "NsaST",
+        "OBC(VJNT)2": "NsaOBC",
+        "Divyngjan2": "NsaDivyngjan",
+        "General2": "NsaGeneral",
+        "Others2": "NsaOthers",
+    },
+    ResearchMethodologyWorkshops: {
+        "Name of the workshop seminar": "Name_of_the_workshop_seminar",
+        "Number of Participants": "Number_of_Participants",
+        "year": "year",
+        "From Date": "From_Date",
+        "To Date": "To_Date",
+    },
+    TrainingProgramsOrganized: {
+        "Year": "Year",
+        "From Date": "From_Date",
+        "To Date": "To_Date",
+        "Title Of the Program": "Title_Of_the_Program",
+        "Type of staff": "Type_of_staff",
+        "Number of Participants": "Number_of_Participants",
+    },
+    UgcSapCasDstFistDBTICSSR: {
+        "Name of the Scheme Project Endowments Chairs": "Name_of_the_Scheme_Project_Endowments_Chairs",
+        "Name of the Principal Investigator Co-Investigator": "Name_of_the_Principal_Investigator_Co_Investigator",
+        "Name of the Funding agency": "Name_of_the_Funding_agency",
+        "Type of Agency": "Type_of_Agency",
+        "Name of Department": "Name_of_Department",
+        "Year of Award": "Year_of_Award",
+        "Funds provided in lakhs": "Funds_provided_in_lakhs",
+        "Duration of the project in Years": "Duration_of_the_project_in_Years",
+    },
+    StudentSatisfactionSurvey: {
+        "Name of the student": "Name_of_the_student",
+        "Year of joining": "Year_of_joining",
+        "Category": "Category",
+        "State of Domicile": "State_of_Domicile",
+        "Nationality": "Nationality",
+        "Email ID": "Email_ID",
+        "Programme name": "Programme_name",
+        "Student Unique Enrolment ID": "Student_Unique_Enrolment_ID",
+        "Mobile Number": "Mobile_Number",
+        "Gender": "Gender",
+    },
+    SkillsEnhancementInitiatives:{
+        "Name of the capacity development schemes":"Name_of_the_capacity_development_schemes",
+        "Academic Year":"Academic_Year",
+        "Number of students enrolled":"Number_of_students_enrolled",
+        "Date of implementation":"Date_of_implementation"
+    },
+    ValueAddedCource: {
+        "Name of the value added courses offered": "Name_of_the_value_added_courses_offered",
+        "Course Code (if any)": "Course_Code_if_any",
+        "Academic year": "Academic_year",
+        "Year of offering": "Year_of_offering",
+        "No of times offered during the same year": "No_of_times_offered_during_the_same_year",
+        "Duration of the course (in Months)": "Duration_of_the_course",
+        "Number of students enrolled": "Number_of_students_enrolled",
+        "Number of Students completing the course": "Number_of_Students_completing_the_course",
+    },
+    SyllabusRevision: {
+        "Programme Code": "Programme_Code",
+        "Programme Name": "Programme_Name",
+        "Academic Year": "Academic_Year",
+        "Year of Introduction": "Year_of_Introduction",
+        "Status of implementation": "Status_of_implementation",
+        "Year of Implimentation": "Year_of_Implimentation",
+        "Year of Revision": "Year_of_Revision",
+        "Percentage of content added or replaced": "Percentage_of_content_added_or_replaced",
+    },
+    AlumniContribution: {
+        "Name Of The Alumni": "Name_of_The_Alumni_Contributed",
+        "Program Graduated From": "Program_graduated_from",
+        "Contribution Ammount in ₹": "Amount_of_contribution",
+        "Year of Contribution": "Academic_Year",
+    },
+    CourceInAllProgram: {
+        "Program Name": 'programName',
+        "Program Code": 'programCode',
+        "Course Name": 'courseName', 
+        "Course Code": 'courseCode',
+        "Academic Year": 'academicYear',
+    },
+    NewPrograms: {
+        "Program Name": 'programName',
+        "Program Code": 'programCode',
+        "Academic Year": 'academicYear',
+    }
+
+}
+
 // multer configuration director 
 
 const multer = require('multer');
@@ -574,188 +757,7 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
                 file.Sheets[sheetNames[i]])
             arr.forEach((response) => data.push(response))
         }
-        const excelObject = {
-            Award: {
-                'Title of the innovation': 'Title_of_the_innovation',
-                'Name of the Award': 'Name_of_the_Award',
-                'Name of the Awarding Agency': 'Name_of_the_Awarding_Agency',
-                'Contact details Agency': 'Contact_details_Agency',
-                'Year of Award': 'Year_of_Award',
-                'Category': 'Category',
-            },
-            ConferencesSemiWorkshopOrganized: {
-                'Year': 'Year',
-                'Title Of the Program': 'Title_Of_the_Program',
-                'Level of Program': 'Level_of_program',
-                'Number of Participants': 'Number_of_Participants',
-                'From Date': 'From_Date',
-                'To Date': 'To_Date'
-            },
-            CounselingAndGuidance: {
-                'Name of the Activity conducted by the HEI': 'Name_of_the_Activity_conducted_by_the_HEI',
-                'Number of Students Attended': 'Number_of_Students_Attended',
-                'Year of Activity': 'Year_of_Activity',
-            },
-            DemandRatio: {
-                'Programme Code': 'Programme_Code',
-                'Programme name': 'Programme_name',
-                'Academic Year': 'Academic_Year',
-                'Number of seats available': 'Number_of_seats_available',
-                'Number of eligible applications': 'Number_of_eligible_applications',
-                'Number of Students admitted': 'Number_of_Students_admitted',
-                'Type of program': 'Type_of_program',
-            },
-            Employability: {
-                'Course Code': 'Course_Code',
-                'Name of the Course': 'Name_of_the_Course',
-                'Academic Year': 'Academic_Year',
-                'Year of introduction': 'Year_of_introduction',
-                'Activities Content with direct bearing on Employability Entrepreneurship Skill development': 'Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development',
-            },
-            ExtensionActivities: {
-                'Name of the activity': 'Name_of_the_activity',
-                'Organising unit/ agency/ collaborating agency': 'Organising_unit',
-                'Name of the scheme': 'Name_of_the_scheme',
-                'Year of activity': 'Year_of_activity',
-                'Number of students': 'Number_of_students',
-            },
-            IctClassrooms: {
-                'Room number or Name of Classrooms': 'Room_number_or_Name_of_Classrooms',
-                'Type of ICT facility': 'Type_of_ICT_facility'
-            },
-            MoUs: {
-                'Name of Organisation with whome mou signed': 'Name_of_Organisation_with_whome_mou_signed',
-                'Duration of MoU': 'Duration_of_MoU',
-                'Year of signing MoU': 'Year_of_signing_MoU',
-            },
-            Placement: {
-                "Name of student placed": "Name_of_student_placed",
-                "Program graduated from": "Program_graduated_from",
-                "Name of the employer": "Name_of_the_employer",
-                "Employer contact details": "Employer_contact_details",
-                "Pay package annum": "Pay_package_annum",
-                "Academic Year": "Academic_Year",
-                "Type Of Placement": 'Type_Of_Placement',
-            },
-            ProgressionToHE: {
-                'Name of student enrolling': 'Name_of_student_enrolling',
-                'Program graduated from': 'Program_graduated_from',
-                'Name of institution admitted': 'Name_of_institution_admitted',
-                'Name of programme admitted': 'Name_of_programme_admitted',
-                'Academic Year': 'Academic_Year',
-            },
-            ProjectsInternships: {
-                "Programme Code": "Programme_Code",
-                "Programme name": "Programme_name",
-                "Academic Year": "Academic_Year",
-                "Name of the student": "Name_of_the_student",
-            },
-            QualifiedExams: {
-                "Acadmic year": 'Acadmic_year',
-                "Registration number roll number": 'Registration_number_roll_number',
-                "Name of student qualified": 'Names_of_students_selected_qualified',
-                "Name of the Exam": 'Name_of_the_Exam',
-            },
-            ReservedSeats: {
-                "Academic Year": "Academic_Year",
-                "Program Name": "Program_Name",
-                "SC1": "NseSC",
-                "ST1": "NseST",
-                "OBC(VJNT)1": "NseOBC",
-                "Divyngjan1": "NseDivyngjan",
-                "General1": "NseGeneral",
-                "Others1": "NseOthers",
-                "SC2": "NsaSC",
-                "ST2": "NsaST",
-                "OBC(VJNT)2": "NsaOBC",
-                "Divyngjan2": "NsaDivyngjan",
-                "General2": "NsaGeneral",
-                "Others2": "NsaOthers",
-            },
-            ResearchMethodologyWorkshops: {
-                "Name of the workshop seminar": "Name_of_the_workshop_seminar",
-                "Number of Participants": "Number_of_Participants",
-                "year": "year",
-                "From Date": "From_Date",
-                "To Date": "To_Date",
-            },
-            TrainingProgramsOrganized: {
-                "Year": "Year",
-                "From Date": "From_Date",
-                "To Date": "To_Date",
-                "Title Of the Program": "Title_Of_the_Program",
-                "Type of staff": "Type_of_staff",
-                "Number of Participants": "Number_of_Participants",
-                "Level of program": "Level_of_program",
-            },
-            UgcSapCasDstFistDBTICSSR: {
-                "Name of the Scheme Project Endowments Chairs": "Name_of_the_Scheme_Project_Endowments_Chairs",
-                "Name of the Principal Investigator Co-Investigator": "Name_of_the_Principal_Investigator_Co_Investigator",
-                "Name of the Funding agency": "Name_of_the_Funding_agency",
-                "Type of Agency": "Type_of_Agency",
-                "Name of Department": "Name_of_Department",
-                "Year of Award": "Year_of_Award",
-                "Funds provided in lakhs": "Funds_provided_in_lakhs",
-                "Duration of the project in Years": "Duration_of_the_project_in_Years",
-            },
-            StudentSatisfactionSurvey: {
-                "Name of the student": "Name_of_the_student",
-                "Year of joining": "Year_of_joining",
-                "Category": "Category",
-                "State of Domicile": "State_of_Domicile",
-                "Nationality": "Nationality",
-                "Email ID": "Email_ID",
-                "Programme name": "Programme_name",
-                "Student Unique Enrolment ID": "Student_Unique_Enrolment_ID",
-                "Mobile Number": "Mobile_Number",
-                "Gender": "Gender",
-            },
-            SkillsEnhancementInitiatives:{
-                "Name of the capacity development schemes":"Name_of_the_capacity_development_schemes",
-                "Academic Year":"Academic_Year",
-                "Number of students enrolled":"Number_of_students_enrolled",
-                "Date of implementation":"Date_of_implementation"
-            },
-            ValueAddedCource: {
-                "Name of the value added courses offered": "Name_of_the_value_added_courses_offered",
-                "Course Code (if any)": "Course_Code_if_any",
-                "Academic year": "Academic_year",
-                "Year of offering": "Year_of_offering",
-                "No of times offered during the same year": "No_of_times_offered_during_the_same_year",
-                "Duration of the course (in Months)": "Duration_of_the_course",
-                "Number of students enrolled": "Number_of_students_enrolled",
-                "Number of Students completing the course": "Number_of_Students_completing_the_course",
-            },
-            SyllabusRevision: {
-                "Programme Code": "Programme_Code",
-                "Programme Name": "Programme_Name",
-                "Academic Year": "Academic_Year",
-                "Year of Introduction": "Year_of_Introduction",
-                "Status of implementation": "Status_of_implementation",
-                "Year of Implimentation": "Year_of_Implimentation",
-                "Year of Revision": "Year_of_Revision",
-                "Percentage of content added or replaced": "Percentage_of_content_added_or_replaced",
-            },
-            AlumniContribution: {
-                "Name Of The Alumni": "Name_of_The_Alumni_Contributed",
-                "Program Graduated From": "Program_graduated_from",
-                "Contribution Ammount in ₹": "Amount_of_contribution",
-                "Year of Contribution": "Academic_Year",
-            },
-            CourceInAllProgram: {
-                "Program Name": 'programName',
-                "Program Code": 'programCode',
-                "Course Name": 'courseName', 
-                "Course Code": 'courseCode',
-                "Academic Year": 'academicYear',
-            },
-            NewPrograms: {
-                "Program Name": 'programName',
-                "Program Code": 'programCode',
-                "Academic Year": 'academicYear',
-            }
-
-        }
+       
         let dateInputs = ["From Date", "To Date","Date of implementation"]
            data.forEach((item)=>{
             Object.keys(excelObject[model]).forEach(key => {
@@ -842,6 +844,18 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
                 if(newAlumni._id==id) {
                     let oldStu = await StudentUser.deleteOne({_id: id});
                     console.log(oldStu);
+
+                    const sourceFilePath = path.join(__dirname, '../../uploads/student-uploads/', photoURL);
+
+                    const destinationFilePath = path.join(__dirname, '../../uploads/director-uploads/', photoURL);
+
+                    fs.rename(sourceFilePath, destinationFilePath, (err) => {
+                      if (err) {
+                        console.error('Error moving the file:', err);
+                      } else {
+                        console.log('File moved successfully!');
+                      }
+                    });
                 }
                 else {
                     NonConverted.push(id);
@@ -885,4 +899,4 @@ router.post('/director/aqar/excel', async (req, res)=> {
     }
 })
 
-module.exports = router;
+module.exports = { router, excelObject }

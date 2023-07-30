@@ -28,7 +28,8 @@ function TableComponent(props) {
 
         setTblCells(tblCells)
     }, [props.tableHead])
-
+    let tableKeys = Object.keys(props?.tableHead)
+    console.log();
 
     return (
         <>
@@ -48,7 +49,7 @@ function TableComponent(props) {
                                             })
                                         }
 
-                                        {Object.keys(props?.tableHead).includes("Upload_Proof" || "Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
+                                        {tableKeys.includes("Upload_Proof")||tableKeys.includes("Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
                                         <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} CheckBox={props.CheckBox} checkedData={props.checkedData} setCheckedData={props.setCheckedData} />
                                     </TableRow>
                                 ))

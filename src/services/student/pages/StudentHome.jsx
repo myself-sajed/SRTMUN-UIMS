@@ -210,11 +210,28 @@ const StudentHome = () => {
                 </div>
             </div>
 
+            
             {
-                user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' ? <div class="accordion" id="accordionExample">
+                 <div class="accordion" id="accordionExample">
                     {
                         navcom.map(((item, index) => {
-                            return <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                            return (
+                                item.name === "studentJRFSRF" ? 
+                                    user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship==="Yes" ?
+                                    <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                                    <h2 class="accordion-header" id={`heading-${index}`}>
+                                        <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                            {item.value}
+                                        </button>
+                                    </h2>
+                                    <div id={`collapse-${index}`} class="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div key={item}>{item.element}</div>
+                                        </div>
+                                    </div>
+                                </div>:""
+                                : 
+                                <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
                                 <h2 class="accordion-header" id={`heading-${index}`}>
                                     <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                         {item.value}
@@ -226,9 +243,10 @@ const StudentHome = () => {
                                     </div>
                                 </div>
                             </div>
+                            )
                         }))
                     }
-                </div> : null
+                </div> 
             }
 
             <DialogBox title="Edit Profile" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">

@@ -16,7 +16,7 @@ const tableHead = { index: "Sr. no.", enrolmentYear: "Enrolment Date", fellowshi
 const StudentJRFSRF = () => {
 
   const model = 'JrfSrf'
-  const module = 'student'
+  const module = 'studentF'
 
   const user = useSelector(state => state.user.studentUser)
 
@@ -46,7 +46,7 @@ const StudentJRFSRF = () => {
   }, [itemToEdit])
 
   const onCancel = () => {
-    setValues(initialstate); setItemToEdit(null);
+    setValues(initialstate); setItemToEdit(null); setEdit(false); setOpen(false)
   }
   const onSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const StudentJRFSRF = () => {
   return (
     <>
     <AddButton onclick={setOpen} />
-      <DialogBox title="JRF, SRF, Post Doctoral Fellows, Research Associate" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title={`${edit?"Edit":"Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrolment Year" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration" setState={setValues} />
@@ -65,7 +65,7 @@ const StudentJRFSRF = () => {
           <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label="Granting Agency" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Quilified Exam" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />
-          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} />
+          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} required={!edit} />
         </div>
       </DialogBox>
       <Table TB={data?.data} module={module} getproof="proof" proof="faculty" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />

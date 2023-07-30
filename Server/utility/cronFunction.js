@@ -6,20 +6,20 @@ require('geckodriver')
 const C_Date = new Date();
 
 
-async function Network_Connect(username='comp21019', password='Havells@26') {
-  try {
-    let driver = await new Builder().forBrowser('firefox').build();
-    await driver.get("http://172.16.1.10:8090/httpclient.html");
-    await driver.findElement(By.id('username')).sendKeys(username);
-    await driver.findElement(By.id('password')).sendKeys(password);
-    await driver.findElement(By.id('loginbutton')).click();
-    return (true)
-  }
-  catch (e) {
-    console.log(e);
-    return (false)
-  }
-}
+// async function Network_Connect(username='comp21019', password='Havells@26') {
+//   try {
+//     let driver = await new Builder().forBrowser('firefox').build();
+//     await driver.get("http://172.16.1.10:8090/httpclient.html");
+//     await driver.findElement(By.id('username')).sendKeys(username);
+//     await driver.findElement(By.id('password')).sendKeys(password);
+//     await driver.findElement(By.id('loginbutton')).click();
+//     return (true)
+//   }
+//   catch (e) {
+//     console.log(e);
+//     return (false)
+//   }
+// }
 
 function Delete_Excels() {
 
@@ -51,10 +51,9 @@ function Delete_Pdfs() {
 
 //mongodump --host localhost --port 27017 --db srtmun --gzip --archive /home/sms2019/react-workspace/DB_Backups/srtmun2022-12-04.gzip --authenticationDatabase srtmun --username '***' --password *** 
 
-function DB_Backups() {
-  const C_Date = new Date();
-  let ARCHIVE_Path = path.join(__dirname, "../../../DB_Backups", `SRTMUN-${C_Date.getDate()}-${C_Date.getMonth() + 1}-${C_Date.getFullYear()}-${C_Date.getTime()}`);
-  console.log(process.env.DB_Name);
+function DB_Backups(CPath) {
+  ARCHIVE_Path = path.join(__dirname, CPath);
+  console.log(ARCHIVE_Path);
   const child = spawn('mongodump', [`--uri=mongodb://${process.env.DB_User}:${process.env.DB_Pass}@localhost:27017/${process.env.DB_Name}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`,
   `--out=${ARCHIVE_Path}`,
   ]);
@@ -63,9 +62,33 @@ function DB_Backups() {
   child.stderr.on("data", (data) => console.log('stderr:\n', Buffer.from(data).toString()));
   child.on("error", (error) => console.log('error:\n', error));
   child.on("exit", (code, signal) => {
-    if (code) console.log('process exited with code: ' + code);
-    else if (signal) console.log('process exited with signal: ' + signal);
+    if (code) console.log('process backup exited with code: ' + code);
+    else if (signal) console.log('process backup exited with signal: ' + signal);
     else console.log("Backup is successful")
   })
 }
-module.exports = { Delete_Pdfs, DB_Backups, Delete_Excels, Network_Connect }
+
+
+// List of URLs to hit
+// const urls = [
+//   'https://google.com',
+//   'https://srtmun-uims.org',
+// ];
+
+// Function to execute the curl command with a random URL
+// function HitRandomUrl() {
+//   console.log("hited to url");
+//   const randomIndex = Math.floor(Math.random() * urls.length);
+//   const randomUrl = urls[randomIndex];
+//   const curlCommand = `curl -s 'http://google.com'`;
+
+//   exec(curlCommand, (error, stdout, stderr) => {
+//     if (error) {
+//       console.error(`Error occurred while hitting ${randomUrl}: ${error.message}`);
+//     } else {
+//       console.log(`Successfully hit ${randomUrl}`);
+//     }
+//   });
+// }
+
+module.exports = { Delete_Pdfs, DB_Backups, Delete_Excels }

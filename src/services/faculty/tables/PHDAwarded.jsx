@@ -201,7 +201,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Guidance"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true}/>
 
             {/* // 2. FIELDS */}
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>

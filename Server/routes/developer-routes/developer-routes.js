@@ -3,7 +3,9 @@ const router = express.Router();
 const { Delete_Pdfs, DB_Backups, Delete_Excels, Network_Connect } = require('../../utility/cronFunction')
 
 router.post("/developer/mongodump", () => {
-    DB_Backups();
+    const C_Date = new Date();
+    let CPath = `../../../DB_Backups/SRTMUN-${C_Date.getDate()}-${C_Date.getMonth() + 1}-${C_Date.getFullYear()}-${C_Date.getTime()}`
+    DB_Backups(CPath)
 })
 
 router.post("/developer/excelsclear", () => {
