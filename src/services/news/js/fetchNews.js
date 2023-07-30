@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const fetchAllNews = ({ filter }) => {
+    console.log("filter in news:", filter)
     return axios.post(`${process.env.REACT_APP_MAIN_URL}/api/news/getAllNews`, { filter })
 }
 
-const fetchSingleItem = ({ slug }) => {
-    return axios.post(`${process.env.REACT_APP_MAIN_URL}/api/news/singleNews`, { slug })
+const fetchSingleItem = ({ newsId }) => {
+    return axios.post(`${process.env.REACT_APP_MAIN_URL}/api/news/singleNews`, { newsId })
 }
 
 const fetchIndexNews = () => {

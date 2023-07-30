@@ -14,16 +14,15 @@ import Axios from 'axios'
 import { toast } from 'react-hot-toast'
 import NewsTableHead from '../components/TableHead'
 import { sortByDate } from '../js/sortByDate'
+import useProAuth from '../../../hooks/useProAuth'
 
 const NewsPage = () => {
 
     title('News Bulletin')
+    useProAuth(false, true)
+
     const [search, setSearch] = useState(null)
     const [rangeDate, setRangeDate] = useState(null)
-
-    useEffect(() => {
-        console.log('rangeDate :', rangeDate)
-    }, [rangeDate])
 
     return (
         <div>
@@ -41,7 +40,9 @@ const NewsComponent = () => {
 
 
     let params = { filter: {} }
-    const { data, isLoading, isError, error, refetch } = useQuery([params, params.filter], () => fetchAllNews(params))
+    const { data, isLoading, isError, error, refetch } = useQuery(['AllNewsQuery', "FetchingAllNews"], () => fetchAllNews(params), {
+        staleTime: 600000, // Cache data for 10 minutes (600000 milliseconds)
+    })
 
     const [today, setToday] = useState([])
     const [week, setWeek] = useState([])
@@ -139,7 +140,9 @@ const NewsComponent = () => {
 
                     {older && older.length === 0 && <div className="mx-auto" > <EmptyBox /> </div>}
                 </div>
-            </div> : <UserLoading title="Getting News for you" />
+            </div> : <div className="h-screen">
+                <UserLoading title="Getting News for you" />
+            </div>
         }
     </div>
 }

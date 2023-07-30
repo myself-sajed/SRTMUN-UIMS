@@ -72,7 +72,7 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
                                 <CloseIcon />
                             </IconButton>
                             <Typography sx={{ ml: 2, flex: 1, fontSize: 15 }} component="div">
-                                File Viewer - {replace ? fileName.replace(replace.target, replace.with) : fileName}
+                                File Viewer - {replace ? fileName?.replace(replace.target, replace.with) : fileName}
                             </Typography>
                         </Toolbar>
 

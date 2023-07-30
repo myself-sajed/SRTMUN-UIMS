@@ -56,6 +56,7 @@ const AllFacultyTable = ({ data, isLoading }) => {
                     <th scope="col">Sr No.</th>
                     <th scope="col">Photo</th>
                     <th scope="col">Faculty Name</th>
+                    <th scope="col">Employee ID</th>
                     <th scope="col">Designation</th>
                     <th scope="col">Field of Specialization</th>
 
@@ -78,6 +79,7 @@ const AllFacultyTable = ({ data, isLoading }) => {
                                     }}>View Profile</button>
                                 </div>
                             </td>
+                            <td>{item?.username.includes('UFTG') || item.username.includes('C-') ? item.username : `TG-${item.username}`}</td>
                             <td>{item?.designation === 'Contractual' ? 'Assistant Professor (Contractual)' : item?.designation}</td>
                             <td>{item?.specialization}</td>
                         </tr>

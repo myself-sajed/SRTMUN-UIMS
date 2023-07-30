@@ -164,7 +164,7 @@ const RoutesHandler = () => {
                 <Route path='/pro-login' exact element={<PROLogin />} />
                 <Route path='/pro' exact element={<PROHome />} />
                 <Route path='/pro-editor' exact element={<PROEditor />} />
-                <Route path='/news/:slug' exact element={<SingleNews />} />
+                <Route path='/news/:newsId' exact element={<SingleNews />} />
 
                 {/* Photo Gallery */}
                 <Route path='/event/:eventId' exact element={<Gallery />} />

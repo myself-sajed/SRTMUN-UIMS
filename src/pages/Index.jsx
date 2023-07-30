@@ -224,7 +224,7 @@ const Index = () => {
                                 <div className='flex items-center justify-start gap-4'>
 
                                     {news?.data?.data?.map((el) => {
-                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el.slug}`) }}>
+                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el._id}`) }}>
                                             <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> {el.headline}
                                         </div>
                                     })}

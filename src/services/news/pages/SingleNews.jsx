@@ -13,13 +13,14 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import InsertInvitationRoundedIcon from '@mui/icons-material/InsertInvitationRounded';
+import NewsCorousel from '../components/NewsCorousel'
 
 const SingleNews = () => {
 
-    const { slug } = useParams()
+    const { newsId } = useParams()
 
-    let param = { slug }
-    const { data, isLoading, isError, error, refetch } = useQuery([param.slug, param], () => fetchSingleItem(param))
+    let param = { newsId }
+    const { data, isLoading, isError, error, refetch } = useQuery(['News', param.newsId], () => fetchSingleItem(param))
 
     title(data?.data?.data ? data?.data?.data.headline : 'News Viewer')
     const [copied, setCopied] = useState(false)
@@ -33,16 +34,16 @@ const SingleNews = () => {
 
     return (
         <div>
+            <Header showSearch={false} title={"News"} />
             {
                 !isLoading ? data?.data?.data && <div>
-                    <Header showSearch={false} title={null} />
 
                     <div className='my-3 w-full'>
                         <div>
-                            <div className='mt-3 bg-gray-100 p-2 border rounded-md'>
+                            <div className='mt-3 bg-gray-100 p-3 border rounded-md'>
                                 <div>
-                                    <p className="text-base font-semibold text-start lg:text-2xl md:text-xl sm:text-md">{data?.data?.data.headline}</p>
-                                    <div className='flex items-start gap-2 justitfy-start mt-3'>
+
+                                    <div className='flex items-start gap-2 justitfy-start mt-1'>
                                         <span className='bg-orange-100 border rounded-md text-orange-900 flex items-center justify-start gap-1 whitespace-nowrap md:text-sm text-xs px-1'>
                                             <InsertInvitationRoundedIcon sx={{ fontSize: '15px' }} /> <div><span>{moment(data?.data?.data?.date, "YYYY-MM-DD").format("DD/MM/YYYY")}</span>
                                             </div>
@@ -55,17 +56,29 @@ const SingleNews = () => {
 
                                             Copy News link</span>
                                     </div>
+
+                                    <p className="text-base font-semibold text-start lg:text-2xl md:text-xl sm:text-md mt-3">{data?.data?.data.headline}</p>
                                 </div>
 
-                                <div className='flex md:flex-row flex-col items-start justify-center gap-4 my-5 w-full'>
-                                    <div className='md:w-[40%] w-full'>
-                                        <FileViewer fileName={data?.data?.data?.photoURL} serviceName="news" >
-                                            <img src={serverLinks.showFile(data?.data?.data?.photoURL, 'news')}
-                                                className='w-full object-cover cursor-pointer hover:brightness-75 ease-in-out duration-200 ' />
-                                        </FileViewer>
-                                    </div>
-                                    <p className="md:text-base text-sm text-start md:w-[40%] w-full">{data?.data?.data.desc}</p>
+                                <div>
+                                    <p className="md:text-base text-sm text-start w-full mt-3">{data?.data?.data.desc}</p>
                                 </div>
+
+                                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    {data?.data?.data?.photoURL.map((item) => (
+                                        <div key={item} className="relative">
+                                            <FileViewer fileName={item} serviceName="news">
+                                                <img
+                                                    src={serverLinks.showFile(item, 'news')}
+                                                    className="w-full h-48 object-cover cursor-pointer hover:brightness-75 ease-in-out duration-200 border-2 border-blue-400 rounded-lg"
+                                                    alt="News Thumbnail"
+                                                />
+                                            </FileViewer>
+                                        </div>
+                                    ))}
+                                </div>
+
+
                             </div>
 
 
