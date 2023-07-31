@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import LoadingButton from '@mui/lab/LoadingButton';
 import React from 'react'
 
-const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFunction = null, onCancel, isModalOpen, setIsModalOpen, maxWidth = 'md', cancelButtonName = "Cancel", showActions = true, loading }) => {
+const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFunction = null, onCancel, isModalOpen, setIsModalOpen, maxWidth = 'md', cancelButtonName = "Cancel", showActions = true, loading, disableButton = false }) => {
   return (
     <Dialog open={isModalOpen} onClose={onCloseFunction} fullWidth maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
@@ -25,7 +25,7 @@ const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFuncti
             <LoadingButton color="primary" variant="contained" type='submit' loading={loading}
               loadingPosition="center" sx={{
                 textTransform: "none",
-              }}>{buttonName}</LoadingButton>
+              }} disabled={disableButton}>{buttonName}</LoadingButton>
           </DialogActions>
         }
       </form>

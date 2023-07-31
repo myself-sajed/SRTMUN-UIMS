@@ -20,7 +20,7 @@ const SchoolsProgram = {
         ["Bachalor in Performing Arts", 3], ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2]
     ],
     "School of Language, Literature and Culture Studies": [
-        ["M.A.(English)", 2], ["M.A.(Marathi)", 2], ["M.Phil.(English)", 2], ["M.Phil.(Marathi)", 2], ["Ph.D.(English)", 7], ["Ph.D.(Marathi)", 7], ["Certificate Course  in French Language", 2], ["Diploma Course in French Language", 2], ["Advance Diploma in French Language", 2], ["Certificate Course  in Spanish Language", 2], ["Diploma Course in Spanish Language", 2], ["Advance Diploma in Spanish Language", 2],
+        ["M.A.(English)", 2], ["M.A.(Marathi)", 2], ["M.Phil.(English)", 2], ["M.Phil.(Marathi)", 2], ["Ph.D.(English)", 7], ["Ph.D.(Marathi)", 7],["Ph.D.(Hindi)", 7],["Ph.D.(Urdu)", 7], ["Certificate Course  in French Language", 2], ["Diploma Course in French Language", 2], ["Advance Diploma in French Language", 2], ["Certificate Course  in Spanish Language", 2], ["Diploma Course in Spanish Language", 2], ["Advance Diploma in Spanish Language", 2],
     ],
     "School of Life Sciences": [
         ["Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)", 1], ["M.Sc.(Biotechnology)", 2], ["M.Sc.(Zoology)", 2], ["M.Sc.(Botany)", 2], ["M.Sc.(Microbiology)", 2], ["M.Phil.(Biotechnology)", 2], ["M.Phil.(Zoology)", 2], ["M.Phil.(Botany)", 2], ["M.Phil.(Microbiology)", 2], ["Ph.D.(Biotechnology)", 7], ["Ph.D.(Zoology)", 7], ["Ph.D.(Botany)", 7], ["Ph.D.(Microbiology)", 7], ["Ph.D.(Bioinformatics)", 7],

@@ -182,108 +182,111 @@ const StudentHome = () => {
                         <div className="w-full">
                             <OtherDetails user={user} editFunction={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }} />
                         </div>
+
                     </div>
-
-                    {
-                        user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' ? <div className="accordion" id="accordionExample">
-                            {
-                                navcom.map(((item, index) => {
-                                    return <div className="accordion-item bg-gray-50 border mt-3">
-                                        <h2 className="accordion-header" id={`heading-${index}`}>
-                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                {item.value}
-                                            </button>
-                                        </h2>
-                                        <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                            <div className="accordion-body">
-                                                <div key={item}>{item.element}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }))
-                            }
-                        </div> : null
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
-                        {
-                            <div className='flex flex-wrap bg-gray-50 rounded-xl border p-2 '>
-
-                                <div className='flex-items-center justify-center flex-col w-full mb-4'>
-                                    {
-                                        uploadProof ?
-                                            <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                                            <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
-                                    }
-                                    <div className='flex items-center justify-center gap-3'>
-                                        <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
-                                        <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
-                                            handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
-                                        }} />
-                                        {
-                                            uploadProof && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
-                                        }
-                                    </div>
-                                </div>
-
-
-
-                                <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
-                                <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
-                                <Text className='col-md-4 col-lg-4' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
-                                <Text className='col-md-8 col-lg-8' id="address" value={address} label="Permanent Address" setState={setValues} />
-
-                                <Select className='col-md-4' id="programGraduated" value={programGraduated} label="Current Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
-
-                                <Select className="col-lg-2 col-md-4" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
-
-                                <YearSelect className="col-md-2" id="programEnroledOn" value={programEnroledOn} label="Program Enrolled On" setState={setValues} />
-                                {/* <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Chage profile photo" setState={setValues} /> */}
-                                <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
-                                <Text className='col-md-6 col-lg-4' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />
-                                <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
-
-                                <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
-
-                                <Select className='col-md-2' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
-
-                                <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
-
-                                {programGraduated.includes("Ph.D") ? <>
-                                    <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
-                                    <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
-                                    <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
-                                    <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
-                                </> : null}
-                            </div>
-                        }
-                    </DialogBox>
-                    <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
-
                 </div>
             </div>
-            <Footer />
+
+            {
+                user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' ? <div class="accordion" id="accordionExample">
+                    {
+                        navcom.map(((item, index) => {
+                            return <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                                <h2 class="accordion-header" id={`heading-${index}`}>
+                                    <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                        {item.value}
+                                    </button>
+                                </h2>
+                                <div id={`collapse-${index}`} class="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div key={item}>{item.element}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }))
+                    }
+                </div> : null
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+                {
+                    <div className='flex flex-wrap bg-gray-50 rounded-xl border p-2 '>
+
+                        <div className='flex-items-center justify-center flex-col w-full mb-4'>
+                            {
+                                uploadProof ?
+                                    <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
+                                    <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                            }
+                            <div className='flex items-center justify-center gap-3'>
+                                <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
+                                <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
+                                    handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
+                                }} />
+                                {
+                                    uploadProof && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
+                                }
+                            </div>
+                        </div>
+
+
+
+                        <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
+                        <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
+                        <Text className='col-md-4 col-lg-4' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
+                        <Text className='col-md-8 col-lg-8' id="address" value={address} label="Permanent Address" setState={setValues} />
+
+                        <Select className='col-md-4' id="programGraduated" value={programGraduated} label="Current Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+
+                        <Select className="col-lg-2 col-md-4" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
+
+                        <YearSelect className="col-md-2" id="programEnroledOn" value={programEnroledOn} label="Program Enrolled On" setState={setValues} />
+                        {/* <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Chage profile photo" setState={setValues} /> */}
+                        <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
+                        <Text className='col-md-6 col-lg-4' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />
+                        <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+
+                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+
+                        <Select className='col-md-2' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
+
+                        <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
+
+                        {programGraduated.includes("Ph.D") ? <>
+                            <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
+                            <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
+                            <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
+                            <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
+                        </> : null}
+                    </div>
+                }
+            </DialogBox>
+            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
+
         </div>
+            </div >
+    <Footer />
+        </div >
     )
 }
 

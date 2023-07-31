@@ -1,6 +1,7 @@
 // all imports
 const cron = require('node-cron');
-const { Delete_Pdfs, DB_Backups, Delete_Excels, Network_Connect } = require('./utility/cronFunction');
+const { Delete_Pdfs, DB_Backups, Delete_Excels, HitRandomUrl } = require('./utility/cronFunction');
+const { generateExcelFile } = require('./utility/sampleExcelGenrater');
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -11,13 +12,13 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
+const { router: directorRouter  } = require("./routes/director-routes/director-routes")
 
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
 var pdf = require("html-pdf");
 const multer = require("multer");
-const Excel = require("exceljs");
 var options = { format: "A4" };
 
 
@@ -26,10 +27,19 @@ cron.schedule('45 0 * * *', () => {
   Delete_Excels();
   Delete_Pdfs();
 });
-cron.schedule('30 0 * * *', () => DB_Backups());
+cron.schedule('30 0 * * *', () =>{
+  const C_Date = new Date();
+  let CPath = `../../../DB_Backups/SRTMUN-${C_Date.getDate()}-${C_Date.getMonth() + 1}-${C_Date.getFullYear()}-${C_Date.getTime()}`
+   DB_Backups(CPath)
+});
+
+cron.schedule('0 1 * * *', () =>{
+  let CPath = `"../../../Temp_Backup"`
+  DB_Backups(CPath)
+});
 
 //netwok connection
-cron.schedule('0 0 * * 1,4', () => Network_Connect());
+// cron.schedule('* * * * *', () => {HitRandomUrl()});
 
 
 app.use(function (req, res, next) {
@@ -44,6 +54,7 @@ app.use(function (req, res, next) {
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { casFilesGenerator } = require('./utility/actualFileMerge');
+const { async } = require('q');
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(express.json({ limit: '10mb' })); // Adjust the limit as per your requirements
 
@@ -77,7 +88,7 @@ require("./routes/faculty-routes/services.js").services(app)
 require("./routes/faculty-routes/authRoutes.js")(app, upload, jwt);
 
 /// director routes
-app.use(require('./routes/director-routes/director-routes'));
+app.use(directorRouter);
 app.use(require('./routes/director-routes/academic-audit-routes/routes'));
 require('./routes/director-routes/directorAuth')(app, jwt)
 
@@ -168,12 +179,40 @@ app.get("/downloadExcel/:filename", (req, res) => {
   res.download(link)
 });
 
-app.get("/downloadSampleExcel/:filename", (req, res) => {
-  const filename = req.params.filename;
 
-  const link = path.resolve(`./sampleExcels/${filename}`);
-  res.download(link)
-})
+app.get('/downloadSampleExcel/:filename/:model/:school', async (req, res) => {
+  const filename = req.params.filename
+  const model = req.params.model
+  const school = req.params.school
+ 
+  const filePath = path.join(__dirname, '../sampleExcels/', `${filename}.xlsx`);
+
+  // Check if the file exists in the /clientDownload/ directory
+  if (fs.existsSync(filePath)) {
+    // If the file exists, serve it to the client
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename=${filename}.xlsx`);
+
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+  } else {
+    try {
+      // If the file doesn't exist, generate it first
+      const generatedFilePath = await generateExcelFile(filename,model,school);
+
+      // Serve the generated file to the client
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', `attachment; filename=${filename}.xlsx`);
+
+      const fileStream = fs.createReadStream(generatedFilePath);
+      fileStream.pipe(res);
+    } catch (error) {
+      console.error('Error generating or serving Excel file:', error);
+      res.status(500).send('Error generating or serving Excel file');
+    }
+  }
+});
+
 
 app.get("/getFile/:filename", function (req, res) {
   const link = path.join(__dirname, `./uploads/faculty-uploads/${req.params.filename}`);
@@ -237,9 +276,6 @@ app.use(express.static(path.join(__dirname, "build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 })
-
-
-
 
 app.listen(process.env.PORT, function () {
   console.log(`Server started successfully at ${process.env.PORT}.`);
