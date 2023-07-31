@@ -16,18 +16,12 @@ const OtherDashboardData = ({ model, school }) => {
     const param = { model, school, userType: 'faculty' }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => departmentWiseFetching(param))
 
-    useEffect(() => {
-        model === 'EContentDeveloped' && console.log(data?.data?.data)
-    }, [data])
-
-
     return (
         <div>
-             <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+            <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
                 {school}
             </div>
-            {/* <GoBack backUrl={-1} pageTitle={`${pageTitle} of ${school} 
-            ${!isLoading ? `(${data?.data?.data?.length})` : ''}  `} /> */}
+
             <div className='mt-3'>
 
                 {

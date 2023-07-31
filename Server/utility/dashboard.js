@@ -47,6 +47,7 @@ const ProgressionToHE = require('../models/director-models/progressionToHESchema
 const Placement = require('../models/director-models/placementSchema');
 const SyllabusRevision = require('../models/director-models/syllabusRevisionSchema');
 const AlumniContribution = require('../models/director-models/alumniContributionSchema')
+const QualifiedExam = require('../models/director-models/qualifiedExamSchema');
 
 // 3. Alumni Models
 const Alumni = require('../models/alumni-models/alumniUserSchema')
@@ -59,7 +60,7 @@ const StudentFeedback = require('../models/feedback-models/studentFeedbackModel'
 const TeacherFeedback = require('../models/feedback-models/teacherFeedbackModel')
 const AlumniFeedback = require('../models/feedback-models/alumniFeedbackModel')
 const ParentFeedback = require('../models/feedback-models/parentFeedbackModel')
-const EmployerFeedback = require('../models/feedback-models/employerFeedbackModel')
+const EmployerFeedback = require('../models/feedback-models/employerFeedbackModel');
 
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,
@@ -116,10 +117,16 @@ function feedback(app) {
         report.AlumniCount = alumni.length
         report.Alumni = alumni
 
-        // get alumni
+        // get students
         const student = await Student.find({}).lean()
         report.StudentCount = student.length
         report.Student = student
+
+        report.PlacementCount = await Placement.countDocuments({})
+        report.QualifiedExamCount = await QualifiedExam.countDocuments({})
+        report.ProgressionToHECount = await ProgressionToHE.countDocuments({})
+
+
 
         // get qualifications
         const qualifications = await Qualification.find({}).populate('userId').lean()

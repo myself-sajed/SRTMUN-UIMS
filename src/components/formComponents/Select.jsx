@@ -2,7 +2,7 @@ import React from 'react'
 
 function Select({ className = "col-md-6", id, label, setState, value, required = true, options, select }) {
     return (
-        <div className={`col-12 p-1 ${className}`}>
+        <div className={`col-12 p-1 ${className} text-sm md:text-base`}>
             <label htmlFor="choose" className="form-label" >{label}</label>
             <select className="form-select" id={id} required={required}
                 onChange={(e) => {
@@ -14,9 +14,9 @@ function Select({ className = "col-md-6", id, label, setState, value, required =
                     })
                 }
                 } value={value}>
-                
+
                 <option selected disabled value="">Choose</option>
-                
+
                 {
                     options?.map((e) => {
                         // const select = selected === e ? true : false;

@@ -1,30 +1,36 @@
 const mongoose = require('mongoose');
 
 const studentUserSchema = new mongoose.Schema({
+
+    isAlumni: {
+        type: 'boolean',
+        required: false,
+    },
     username: {
         type: 'string',
-        required: true,
+        required: false,
     },
     status: {
         type: 'string',
-        required: true,
+        required: false,
     },
     salutation: {
         type: 'string',
-        required: true,
+        required: false,
     },
     photoURL: {
         type: 'string',
-        required: true,
+        required: false,
     },
     name: {
         type: 'string',
-        required: true,
+        required: false,
     },
     email: {
         type: 'string',
-        required: true,
+        required: false,
     },
+
     address: {
         type: 'string',
         required: false,
@@ -35,27 +41,27 @@ const studentUserSchema = new mongoose.Schema({
     },
     mobile: {
         type: 'string',
-        required: true,
+        required: false,
     },
     programGraduated: {
         type: 'string',
-        required: true,
+        required: false,
     },
-    programEnroledOn:{
+    programEnroledOn: {
         type: 'string',
-        required: true,
+        required: false,
     },
-    cast:{
+    cast: {
         type: 'string',
-        required: true,
+        required: false,
     },
     religion: {
         type: 'string',
-        required: true,
+        required: false,
     },
     country: {
         type: 'string',
-        required: true,
+        required: false,
     },
     eligibility: {
         type: 'string',
@@ -63,50 +69,210 @@ const studentUserSchema = new mongoose.Schema({
     },
     schoolName: {
         type: 'string',
-        required: true,
+        required: false,
     },
     currentIn: {
         type: 'string',
-        required: true,
+        required: false,
     },
     gender: {
         type: 'string',
-        required: true,
+        required: false,
     },
     password: {
         type: 'string',
-        required: true
+        required: false
     },
     abcNo: {
-        type:'string',
+        type: 'string',
+        required: false,
+    },
+    doCompletion: {
+        type: 'string',
+        required: false,
+    },
+    alumniProof: {
+        type: 'string',
         required: false,
     },
     ResearchGuide: {
-        type:'string',
+        type: 'string',
         required: false,
-    }, 
+    },
     Title: {
-        type:'string',
+        type: 'string',
         required: false,
     },
     dateOfRac: {
-        type:'string',
+        type: 'string',
         required: false,
-    }, 
+    },
     ReceivesFelloship: {
-        type:'string',
+        type: 'string',
         required: false,
     },
     ResearchGuideId: {
-        type:'string',
+        type: 'string',
         required: false,
     },
-    createdBy: {
-        type:'string',
-        required: true,
+    isCreatedByDirector: {
+        type: 'boolean',
+        required: false,
+        default: false,
     },
+
 })
 
 const StudentUser = new mongoose.model('StudentUser', studentUserSchema);
 
 module.exports = StudentUser;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const mongoose = require('mongoose');
+
+// const studentUserSchema = new mongoose.Schema({
+
+//     isAlumni: {
+//         type: 'boolean',
+//         required: true,
+//     },
+//     username: {
+//         type: 'string',
+//         required: true,
+//     },
+//     status: {
+//         type: 'string',
+//         required: true,
+//     },
+//     salutation: {
+//         type: 'string',
+//         required: true,
+//     },
+//     photoURL: {
+//         type: 'string',
+//         required: true,
+//     },
+//     name: {
+//         type: 'string',
+//         required: true,
+//     },
+//     email: {
+//         type: 'string',
+//         required: true,
+//     },
+
+//     address: {
+//         type: 'string',
+//         required: false,
+//     },
+//     dob: {
+//         type: 'string',
+//         required: false,
+//     },
+//     mobile: {
+//         type: 'string',
+//         required: true,
+//     },
+//     programGraduated: {
+//         type: 'string',
+//         required: true,
+//     },
+//     programEnroledOn: {
+//         type: 'string',
+//         required: true,
+//     },
+//     cast: {
+//         type: 'string',
+//         required: true,
+//     },
+//     religion: {
+//         type: 'string',
+//         required: true,
+//     },
+//     country: {
+//         type: 'string',
+//         required: true,
+//     },
+//     eligibility: {
+//         type: 'string',
+//         required: false,
+//     },
+//     schoolName: {
+//         type: 'string',
+//         required: true,
+//     },
+//     currentIn: {
+//         type: 'string',
+//         required: true,
+//     },
+//     gender: {
+//         type: 'string',
+//         required: true,
+//     },
+//     password: {
+//         type: 'string',
+//         required: true
+//     },
+//     abcNo: {
+//         type: 'string',
+//         required: false,
+//     },
+//     ResearchGuide: {
+//         type: 'string',
+//         required: false,
+//     },
+//     Title: {
+//         type: 'string',
+//         required: false,
+//     },
+//     dateOfRac: {
+//         type: 'string',
+//         required: false,
+//     },
+//     ReceivesFelloship: {
+//         type: 'string',
+//         required: false,
+//     },
+//     ResearchGuideId: {
+//         type: 'string',
+//         required: false,
+//     },
+//     createdBy: {
+//         type: 'string',
+//         required: true,
+//     },
+
+// })
+
+// const StudentUser = new mongoose.model('StudentUser', studentUserSchema);
+
+// module.exports = StudentUser;

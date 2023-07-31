@@ -2,10 +2,10 @@ import React from "react";
 
 const YearSelect = ({ className = "col-md-6", id, label, setState, value, required = true }) => {
 
-    
+
 
     return (
-        <div className={`col-12 p-1 ${className}`}>
+        <div className={`col-12 p-1 ${className} text-sm md:text-base`}>
             <label htmlFor="choose" className="form-label" >{label}</label>
             <select className="form-select" id={id} required={required}
                 onChange={(e) => {
@@ -28,7 +28,7 @@ const YearSelect = ({ className = "col-md-6", id, label, setState, value, requir
     )
 }
 
-function acadmicYearArr(){ 
+function acadmicYearArr() {
     const d = new Date()
     let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1;
     const ly = year - 29;
@@ -46,4 +46,4 @@ function acadmicYearArr(){
 }
 
 export default YearSelect
-export {acadmicYearArr}
+export { acadmicYearArr }

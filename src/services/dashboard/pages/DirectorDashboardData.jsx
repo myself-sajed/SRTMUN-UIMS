@@ -1,31 +1,36 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
-import GoBack from '../../../components/GoBack'
-import TableComponent from '../../../components/TableComponent'
-import sortByAcademicYear from '../../../js/sortByAcademicYear'
-import CASDataTable from '../../faculty/reports/cas/components/CASDataTable'
 import fetchData, { departmentWiseFetching } from '../js/fetchData'
+import UserLoading from '../../../pages/UserLoading'
+import DirectorTableComponent from '../../../components/DirectorTableComponent'
 
-const DirectorDashboardData = () => {
+const DirectorDashboardData = ({ model, filter, school }) => {
 
+    console.log(school)
 
-    const { model, title: pageTitle, school } = useParams()
-    const param = { model, school, userType: "director" }
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => departmentWiseFetching(param))
+    const param = { model, filter }
+
+    console.log(model, filter)
+
+    const { data, isLoading, isError, error, refetch } = useQuery(["DirectorDasboardData", school], () => fetchData(param))
 
     useEffect(() => {
-        console.log('Data is :', data)
+        console.log(data?.data?.data)
     }, [data])
 
 
     return (
         <div>
-            <GoBack backUrl={-1} pageTitle={`${school}: ${pageTitle} (${data?.data?.data?.length})`} />
-            <div className='mt-5'>
+            <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+                {school}
+            </div>
 
-                {/* <TableComponent model={model && model} data={sortByAcademicYear(data?.data?.data, 'year')} takeFromModal={true} /> */}
+            <div className='mt-3'>
+
+                {
+                    isLoading ? <UserLoading title="Fetching data" /> : <DirectorTableComponent model={model && model} data={data?.data?.data} />
+                }
 
             </div>
         </div>

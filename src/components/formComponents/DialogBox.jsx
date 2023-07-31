@@ -8,22 +8,26 @@ const DialogBox = ({ title, children, buttonName, onClickFunction, onCloseFuncti
       <DialogTitle>{title}</DialogTitle>
       <hr />
       <form onSubmit={onClickFunction}>
-      <DialogContent>{children}</DialogContent>
-      <hr />
-      <br />
-      {
-        showActions && <DialogActions>
-          <Button onClick={() => { setIsModalOpen(false); onCancel() }} sx={{
-            textTransform: "none", backgroundColor: 'red', color: 'white', "&:hover": {
-              backgroundColor: '#ff4545',
-            }
-          }}>{cancelButtonName}</Button>
-          <LoadingButton  color="primary" variant="contained" type='submit' loading={loading}
-                loadingPosition="center" sx={{
-            textTransform: "none",
-          }}>{buttonName}</LoadingButton>
-        </DialogActions>
-      }
+        <DialogContent sx={{ padding: '0px' }}>
+          <div className="w-full md:p-[15px] p-[5px]">
+            {children}
+          </div>
+        </DialogContent>
+        <hr />
+        <br />
+        {
+          showActions && <DialogActions>
+            <Button onClick={() => { setIsModalOpen(false); onCancel() }} sx={{
+              textTransform: "none", backgroundColor: 'red', color: 'white', "&:hover": {
+                backgroundColor: '#ff4545',
+              }
+            }}>{cancelButtonName}</Button>
+            <LoadingButton color="primary" variant="contained" type='submit' loading={loading}
+              loadingPosition="center" sx={{
+                textTransform: "none",
+              }}>{buttonName}</LoadingButton>
+          </DialogActions>
+        }
       </form>
     </Dialog>
   )

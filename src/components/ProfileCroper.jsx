@@ -65,24 +65,28 @@ const ProfileCroper = ({ open, setOpen, setFile, file, setAvatar }) => {
     >
       <div className='flex flex-wrap md:flex-row items-start'>
         {Img && (
-          <ReactCrop
-            src={Img}
-            onImageLoaded={setImage}
-            crop={crop}
-            onChange={(e) => {
-              setCrop(e);
-              getCroppedImg();
-            }}
-            className="md:w-[400px] md:h-[400px] w-full h-full"
-          />
+          <div>
+            <ReactCrop
+              src={Img}
+              onImageLoaded={setImage}
+              crop={crop}
+              onChange={(e) => {
+                setCrop(e);
+                getCroppedImg();
+              }}
+              className="md:w-[400px] md:h-[400px] w-full h-full border-2 border-blue-500"
+            />
+            <p className="my-2 text-xs text-muted">Drag your mouse or finger on the image to crop.</p>
+          </div>
+
         )}
         {result && (
           <div className='flex flex-col m-auto'>
-            <p className='text-muted text-sm mt-3 font-semibold text-center'>Preview</p>
+            <p className='text-muted text-sm mt-3 mb-2 font-semibold text-center'>Preview</p>
             <img
               src={result}
               alt=""
-              className='rounded-full border-solid border-2 md:w-64 md:h-64 w-44 h-44'
+              className='rounded-full border-2 border-blue-500 md:w-64 md:h-64 w-44 h-44'
             />
           </div>
         )}

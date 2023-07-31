@@ -128,6 +128,8 @@ require('./routes/faculty-routes/facultyAqarRoutes')(app)
 // submit cas, pbas, aqar
 require('./routes/faculty-routes/submitReportForm')(app)
 
+// require('./routes/director-routes/alumniToStudent').alumniToStudent()
+
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

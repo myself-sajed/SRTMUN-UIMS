@@ -57,44 +57,11 @@ router.post("/api/auth/student-login", (req, res) => {
 router.post("/api/auth/student-register", StudentUpload.single("file"), async (req, res) => {
 
     try {
-        const SchoolFourCharacter = {
-            "School of Computational Sciences": "comp",
-            "School of Chemical Sciences": "chem",
-            "School of Commerce and Management Sciences": "comm",
-            "School of Educational Sciences": "educ",
-            "School of Mathematical Sciences": "math",
-            "School of Physical Sciences": "phys",
-            "School of Social Sciences": "soci",
-            "School of Earth Sciences": "eart",
-            "School of Life Sciences": "life",
-            "School of Pharmacy": "phar",
-            "School of Media Studies": "medi",
-            "School of Fine and Performing Arts": "fine",
-            "School of Language, Literature and Culture Studies": "lang",
-            "School of Management Sciences, Sub-Campus, Latur": "mana",
-            "School of Technology, Sub-Campus, Latur": "tech",
-            "School of Social Sciences, Sub-Campus, Latur": "sosc",
 
-        }
         const data = JSON.parse(JSON.stringify(req.body));
         const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, createdBy } = data;
 
-        console.log(req.file.filename)
-
-        const year = programEnroledOn.slice(0,4);
-        console.log(year);
-        let dataId = await StudentIdCount.findOne({name : year})
-        console.log(dataId);
-        let NextRoll= dataId.idObject[SchoolFourCharacter[schoolName]]+1;
-
-        // return res.StudentIdCount
-        // console.log("Object is"+ NextRoll);
-        // console.log(getLastRollNo())
-        const rollNumberStr = NextRoll.toString().padStart(3, '0');
-        const username= `${SchoolFourCharacter[schoolName]}${year}${rollNumberStr}`;
-        console.log("Student username is "+ username);
-
-        if(createdBy== "director"){
+        if (createdBy == "director") {
             //genrate random pass
             const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
             let password = "";
@@ -107,33 +74,32 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 mobile, salutation, name, schoolName, programGraduated, password, gender,
                 email: email.toLowerCase(),
                 photoURL: req.file.filename,
-                abcNo, currentIn, country, cast, religion, programEnroledOn, username, 
-                status: "Active",createdBy
+                abcNo, currentIn, country, cast, religion, programEnroledOn, username,
+                status: "Active", createdBy
             })
             await user.save();
-            await StudentIdCount.updateOne({name: year},{$set:{[`idObject.${SchoolFourCharacter[schoolName]}`]:NextRoll}});
-            res.send({ status: "success", message: "Student Added Successfuly", username});
+            res.send({ status: "success", message: "Student Added Successfuly", username });
         }
-        else if(createdBy== "Self"){
-        // otp authentication
-        const{password} = data
-        let isMatch = await bcrypt.compare(clientOTP, serverOTP)
-        console.log(isMatch);
-        if (isMatch) {
-            const user = new StudentUser({
-                mobile, salutation, name, schoolName, programGraduated, password, gender,
-                email: email.toLowerCase(),
-                photoURL: req.file.filename,
-                abcNo, currentIn, country, cast, religion, programEnroledOn, username, 
-                status: "InActive", createdBy
-            });
-            await user.save();
-            await StudentIdCount.updateOne({name: year},{$set:{[`idObject.${SchoolFourCharacter[schoolName]}`]:NextRoll}});
-            res.send({ status: "success", message: "Registration Successfull", username: username});
+        else if (createdBy == "Self") {
+            // otp authentication
+            const { password } = data
+            let isMatch = await bcrypt.compare(clientOTP, serverOTP)
+            console.log(isMatch);
+            if (isMatch) {
+                const user = new StudentUser({
+                    mobile, salutation, name, schoolName, programGraduated, password, gender,
+                    email: email.toLowerCase(),
+                    photoURL: req.file.filename,
+                    abcNo, currentIn, country, cast, religion, programEnroledOn, username,
+                    status: "InActive", createdBy
+                });
+                await user.save();
+                res.send({ status: "success", message: "Registration Successfull", username: username });
+            }
+            else {
+                res.send({ status: "error", message: "Wrong OTP entered, Please try again" });
+            }
         }
-        else {
-            res.send({ status: "error", message: "Wrong OTP entered, Please try again" });
-        }}
 
     } catch (error) {
         console.log(error);

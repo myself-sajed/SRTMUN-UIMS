@@ -12,7 +12,7 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 
 
-const tableHead = { index: "Sr. no.", enrolmentYear: "Enrolment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "year", Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", enrolmentYear: "Enrolment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
 const StudentJRFSRF = () => {
 
   const model = 'JrfSrf'
@@ -20,10 +20,10 @@ const StudentJRFSRF = () => {
 
   const user = useSelector(state => state.user.studentUser)
 
-  const params = { model, id: user?._id, module, filterConditios:{ResearchGuideId:user.ResearchGuideId}}
+  const params = { model, id: user?._id, module, filterConditios: { ResearchGuideId: user.ResearchGuideId } }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
-  const initialstate = { enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '',Upload_Proof: '' }
+  const initialstate = { enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Upload_Proof: '' }
   const [values, setValues] = useState(initialstate)
   const { enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year } = values
   const [open, setOpen] = useState(false)
@@ -51,19 +51,19 @@ const StudentJRFSRF = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-      addReq({ researchName: user?.name, studentId: user?._id, userId:user.ResearchGuideId }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+      addReq({ researchName: user?.name, studentId: user?._id, userId: user.ResearchGuideId }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
   }
 
   return (
     <>
-    <AddButton onclick={setOpen} />
+      <AddButton onclick={setOpen} />
       <DialogBox title="JRF, SRF, Post Doctoral Fellows, Research Associate" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
-          <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrolment Year" setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrollment Year" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration" setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Feloship Type" setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Fellowship Type" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label="Granting Agency" setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Quilified Exam" setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Qualified Exam" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />
           <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} />
         </div>

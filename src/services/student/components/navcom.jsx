@@ -13,8 +13,6 @@ const PhDStudent = [
         name: 'studentJRFSRF',
         value: 'JRF, SRF, Post Doctoral Fellows, Research Associate',
     }
-    
+
 ]
-// const Student= [{}];
 export default PhDStudent;
-// export {Student};

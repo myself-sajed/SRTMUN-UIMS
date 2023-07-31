@@ -14,12 +14,15 @@ import title from '../../../js/title';
 import Select from '../../../components/formComponents/Select';
 import Text from '../../../components/formComponents/Text';
 import SchoolsProgram from '../../../components/SchoolsProgram';
+import StepStatus from '../../../components/StepStatus';
 
 const StudentRegister = () => {
 
-    const [step, setStep] = useState(1)
-    const navigate = useNavigate();
+    const [step, setStep] = useState(0)
+    const steps = ["Basic Information", "Student Photo & Email", "Email verification by OTP", "Acknowledgement"]
+    const navigate = useNavfirst();
     title("Student Registration")
+
 
     // all states
     const Salutations = ["Mr.", "Mrs.", , "Miss.", "Shri", "Shrimati"]
@@ -44,7 +47,7 @@ const StudentRegister = () => {
                     setOtp({ ...otp, serverOTP: res.data.otp })
                     toast.success(res.data.message)
                     setLoading(false)
-                    setStep(3)
+                    setStep(2)
                 }
                 else {
                     setLoading(false)
@@ -66,7 +69,7 @@ const StudentRegister = () => {
             toast.error('Passwords does not match')
             return
         }
-        setStep(2);
+        setStep(1);
     }
 
     function handleSecondStep(e) {
@@ -113,6 +116,7 @@ const StudentRegister = () => {
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
             if (response.data.status === 'success') {
+                setStep(3)
                 navigate(siteLinks.studentLogin.link)
                 toast.success(response.data.message)
             }
@@ -163,9 +167,12 @@ const StudentRegister = () => {
             <div className='mt-3'>
                 <Bred links={[siteLinks.welcome, siteLinks.studentLogin, { title: 'Student Registration', link: '/student-register' }]} />
             </div>
+
+            <StepStatus steps={steps} activeStep={step} />
+
             <div className='flex items-center justify-center gap-2 mb-3 mt-6 mx-auto'>
                 <BadgeRoundedIcon className='text-orange-700 mb-1' />
-                <p className='text-orange-700 font-bold text-xl'>Student Registration</p>
+                <p className='text-orange-700 font-bold text-xl'>Students Registration</p>
             </div>
 
             <div className='mt-3 flex items-center justify-center mb-4'>
@@ -182,133 +189,152 @@ const StudentRegister = () => {
 
 
                     {
-                        step === 1 ?
+                        step === 0 &&
+                        <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
 
-                            <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
+                            <Select className="col-md-2" id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
 
-                                <Select className="col-md-2" id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
+                            <Text className="col-md-10" id="name" value={name} setState={setValues} label="Full Name" />
 
-                                <Text className="col-md-10" id="name" value={name} setState={setValues} label="Full Name" />
+                            <Select className='col-md-5' id="schoolName" value={schoolName} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
 
-                                <Select className='col-md-5' id="schoolName" value={schoolName} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
+                            <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Current Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
 
-                                <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Current Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+                            <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
 
-                                <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
+                            <Select className="col-md-2" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
 
-                                <Select className="col-md-2" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+                            <Text className="col-md-5" id="password" value={password} label="Create Password" type='password' setState={setValues} />
 
-                                <Text className="col-md-5" id="password" value={password} label="Create Password" type='password' setState={setValues} />
+                            <Text className="col-md-5" id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
 
-                                <Text className="col-md-5" id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
+                            <div className="col-12 flex items-center justify-center">
+                                <button className="flex items-center justify-start mt-3 gap-2 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"> Next <ArrowForwardRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /></button>
+                            </div>
 
-                                <div className="col-12 flex items-center justify-center">
-                                    <button className="flex items-center justify-start mt-3 gap-2 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"> Next <ArrowForwardRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /></button>
-                                </div>
-
-                            </form>
-                            : step === 2 ?
+                        </form>
+                    }
+                    {step === 1 &&
+                        <div>
+                            <div>
                                 <div>
-                                    <div>
-                                        <div>
-                                            {!avatar ?
+                                    {!avatar ?
 
-                                                gender && gender === 'Male' ?
-                                                    <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={`/assets/male.jpg`} /> :
-                                                    <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={`/assets/female.jpg`} />
-                                                :
+                                        gender && gender === 'Male' ?
+                                            <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={`/assets/male.jpg`} /> :
+                                            <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={`/assets/female.jpg`} />
+                                        :
 
-                                                <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={avatar} />
+                                        <img className="h-[90px] w-[90px] rounded-full object-cover mx-auto sm:h-[110px] sm:w-[110px] sm:mx-0" src={avatar} />
 
 
-                                            }
-                                            <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-200 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Required)*</p>
-                                            <div className='text-xs text-muted text-center my-2'>Photo size should be less than 1MB</div>
-                                        </div>
-
-
-                                        <div className="w-full flex items-center justify-center ">
-                                            <form className="row g-3 needs-validation" onSubmit={handleSecondStep} type="multipart/form-data">
-
-
-                                                <input onChange={handleAvatarChange} type="file" accept='image/png, image/jpeg, image/jpg' name="file" id='avatar' style={{ 'display': 'none' }} />
-
-                                                <div>
-
-                                                    <div className="col-md-10 mx-auto mt-3">
-
-                                                        <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
-
-                                                        <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputClass="py-3" />
-
-                                                        <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (abc) ID' inputClass="py-3" />
-
-                                                    </div>
-                                                </div>
-
-
-                                                <div className='mx-auto flex flex-col items-center justify-center'>
-                                                    <div className='w-full flex items-center justify-center gap-2'>
-                                                        <div className="flex items-center justify-center">
-                                                            <button onClick={() => { setStep(1); setLoading(false) }} className="flex items-center justify-start mt-3 gap-1 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"><ArrowBackRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /> Back  </button>
-
-                                                        </div>
-                                                        <div className="flex items-center justify-center">
-
-                                                            {
-                                                                loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
-                                                                        Sending OTP...
-                                                                    </button>
-                                                                    :
-                                                                    <button className="flex items-center justify-start mt-3 gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" type="submit" >
-                                                                        Send OTP
-                                                                    </button>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    }
+                                    <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-200 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Required)*</p>
+                                    <div className='text-xs text-muted text-center my-2'>Photo size should be less than 1MB</div>
                                 </div>
-                                :
-                                <div >
-                                    <div className="w-full flex items-center justify-center h-52">
-                                        <form className="row g-3 needs-validation" onSubmit={handleRegistration} type="multipart/form-data">
 
-                                            <div className='mx-auto flex flex-col items-center justify-center'>
-                                                <div className="col-sm-8 mx-auto mb-3">
-                                                    <label htmlFor="validationCustomUsername" className="form-label">Enter OTP</label>
-                                                    <div className="input-group has-validation">
 
-                                                        <input type="number" className="form-control py-3" id="validationCustomUsername" aria-describedby="inputGroupPrepend" placeholder="Enter OTP" required value={otp.clientOTP} onChange={(e) => setOtp({ ...otp, clientOTP: e.target.value })} />
-                                                    </div>
+                                <div className="w-full flex items-center justify-center ">
+                                    <form className="row g-3 needs-validation" onSubmit={handleSecondStep} type="multipart/form-data">
+
+
+                                        <input onChange={handleAvatarChange} type="file" accept='image/png, image/jpeg, image/jpg' name="file" id='avatar' style={{ 'display': 'none' }} />
+
+                                        <div>
+
+                                            <div className="col-md-10 mx-auto mt-3">
+
+                                                <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
+
+                                                <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputClass="py-3" />
+
+                                                <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (abc) ID' inputClass="py-3" />
+
+                                            </div>
+                                        </div>
+
+
+                                        <div className='mx-auto flex flex-col items-center justify-center'>
+                                            <div className='w-full flex items-center justify-center gap-2'>
+                                                <div className="flex items-center justify-center">
+                                                    <button onClick={() => { setStep(1); setLoading(false) }} className="flex items-center justify-start mt-3 gap-1 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"><ArrowBackRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /> Back  </button>
+
                                                 </div>
-                                                <div className='w-full flex items-center justify-center gap-2'>
-                                                    <div className="flex items-center justify-center">
-                                                        <button onClick={() => { setStep(2); setLoading(false); setOtp({ ...otp, clientOTP: null }) }} className="flex items-center justify-start mt-3 gap-1 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"><ArrowBackRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /> Back  </button>
+                                                <div className="flex items-center justify-center">
 
-                                                    </div>
-                                                    <div className="flex items-center justify-center">
-                                                        {
-                                                            loading ?
-                                                                <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                    <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
-                                                                    Verifying OTP...
-                                                                </button>
-                                                                :
-                                                                <button className="flex items-center justify-start mt-3 gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" type="submit" >
-                                                                    Verify OTP
-                                                                </button>
-                                                        }
-                                                    </div>
+                                                    {
+                                                        loading ?
+                                                            <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                Sending OTP...
+                                                            </button>
+                                                            :
+                                                            <button className="flex items-center justify-start mt-3 gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" type="submit" >
+                                                                Send OTP
+                                                            </button>
+                                                    }
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    {step === 2 &&
+                        <div >
+                            <div className="w-full flex items-center justify-center h-52">
+                                <form className="row g-3 needs-validation" onSubmit={handleRegistration} type="multipart/form-data">
+
+                                    <div className='mx-auto flex flex-col items-center justify-center'>
+                                        <div className="col-sm-8 mx-auto mb-3">
+                                            <label htmlFor="validationCustomUsername" className="form-label">Enter OTP</label>
+                                            <div className="input-group has-validation">
+
+                                                <input type="number" className="form-control py-3" id="validationCustomUsername" aria-describedby="inputGroupPrepend" placeholder="Enter OTP" required value={otp.clientOTP} onChange={(e) => setOtp({ ...otp, clientOTP: e.target.value })} />
+                                            </div>
+                                        </div>
+                                        <div className='w-full flex items-center justify-center gap-2'>
+                                            <div className="flex items-center justify-center">
+                                                <button onClick={() => { setStep(2); setLoading(false); setOtp({ ...otp, clientOTP: null }) }} className="flex items-center justify-start mt-3 gap-1 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"><ArrowBackRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /> Back  </button>
+
+                                            </div>
+                                            <div className="flex items-center justify-center">
+                                                {
+                                                    loading ?
+                                                        <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                            <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                            Verifying OTP...
+                                                        </button>
+                                                        :
+                                                        <button className="flex items-center justify-start mt-3 gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" type="submit" >
+                                                            Verify OTP
+                                                        </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+
+                    {
+                        step === 3 && <div className="w-full flex items-center justify-center h-52">
+                            <div>
+                                <div className='flex flex-col items-center justify-center'>
+                                    <CheckCircleRoundedIcon className='text-green-700'
+                                        sx={{ fontSize: 65 }} />
+
+                                    Congratulations! Your account has been successfully created at <b>SRTMUN-UIMS</b>
+                                </div>
+                                <div className='text-center mb-3 mt-5'>
+                                    <div>
+                                        Your username for Signing in is <strong>Registered Email</strong>.
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                     }
                     <p className='text-center mt-2'><Link to="" className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> | Already have an account? <Link to={siteLinks.studentLogin.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Login Now.</Link></p>
                 </div>

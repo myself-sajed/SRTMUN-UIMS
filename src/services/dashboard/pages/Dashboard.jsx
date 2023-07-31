@@ -9,12 +9,13 @@ import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import BookmarkAddedRoundedIcon from '@mui/icons-material/BookmarkAddedRounded';
 import VideoChatRoundedIcon from '@mui/icons-material/VideoChatRounded';
-import SafetyDividerRoundedIcon from '@mui/icons-material/SafetyDividerRounded';
-import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
 import LightbulbRoundedIcon from '@mui/icons-material/LightbulbRounded';
 import CardMembershipRoundedIcon from '@mui/icons-material/CardMembershipRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
+import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
+import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded';
+import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { fetchSchoolData } from '../js/fetchData';
@@ -23,7 +24,6 @@ import { Skeleton, useStepContext } from '@mui/material';
 
 const dashboardCards = [
     {
-        id: 0,
         title: 'Schools',
         countModelName: 'SchoolCount',
         color: 'cyan',
@@ -31,7 +31,6 @@ const dashboardCards = [
         icon: <MapsHomeWorkRoundedIcon sx={{ color: 'red', fontSize: '38px' }} />
     },
     {
-        id: 1,
         title: 'Faculties',
         countModelName: 'usersCount',
         color: 'cyan',
@@ -39,7 +38,6 @@ const dashboardCards = [
         icon: <GroupsRoundedIcon sx={{ color: 'green', fontSize: '42px' }} />
     },
     {
-        id: 2,
         title: 'Students',
         countModelName: 'StudentCount',
         color: 'orange',
@@ -47,7 +45,6 @@ const dashboardCards = [
         icon: <GroupRoundedIcon sx={{ color: 'orange', fontSize: '42px' }} />
     },
     {
-        id: 3,
         title: 'Registered Alumni',
         countModelName: 'AlumniCount',
         color: 'cyan',
@@ -55,7 +52,27 @@ const dashboardCards = [
         icon: <Diversity3RoundedIcon sx={{ color: 'red', fontSize: '38px' }} />
     },
     {
-        id: 5,
+        title: 'Placements',
+        countModelName: 'PlacementCount',
+        color: 'cyan',
+        url: `/dashboard/select-department/placements`,
+        icon: <WorkRoundedIcon sx={{ color: 'blue', fontSize: '38px' }} />
+    },
+    {
+        title: 'Qualified Exams',
+        countModelName: 'QualifiedExamCount',
+        color: 'cyan',
+        url: `/dashboard/select-department/qualifiedExams`,
+        icon: <AssignmentTurnedInRoundedIcon sx={{ color: 'green', fontSize: '38px' }} />
+    },
+    {
+        title: 'Progressed to H.E.',
+        countModelName: 'ProgressionToHECount',
+        color: 'cyan',
+        url: `/dashboard/select-department/progessionToHigherEducation`,
+        icon: <TimelineRoundedIcon sx={{ color: 'red', fontSize: '38px' }} />
+    },
+    {
         title: 'Books & Chapters',
         countModelName: 'BookAndChapterCount',
         url: `/dashboard/select-department/BookAndChapter`,
@@ -63,7 +80,6 @@ const dashboardCards = [
         icon: <AutoStoriesRoundedIcon sx={{ color: 'purple', fontSize: '38px' }} />
     },
     {
-        id: 6,
         title: 'Research Papers',
         countModelName: 'ResearchPaperCount',
         url: `/dashboard/select-department/ResearchPaper`,
@@ -71,7 +87,6 @@ const dashboardCards = [
         icon: <StickyNote2RoundedIcon sx={{ color: 'darkcyan', fontSize: '35px' }} />
     },
     {
-        id: 2,
         title: 'Research Projects',
         countModelName: 'ResearchProjectCount',
         url: `/dashboard/select-department/ResearchProject`,
@@ -79,7 +94,6 @@ const dashboardCards = [
         icon: <ScienceRoundedIcon sx={{ color: 'blue', fontSize: '35px' }} />
     },
     {
-        id: 3,
         title: 'E-content Developed',
         countModelName: 'EContentDevelopedCount',
         url: `/dashboard/select-department/EContentDeveloped`,
@@ -87,7 +101,6 @@ const dashboardCards = [
         icon: <LanguageRoundedIcon sx={{ color: 'green', fontSize: '35px' }} />
     },
     {
-        id: 4,
         title: 'Patents Published',
         countModelName: 'PatentCount',
         url: `/dashboard/select-department/Patent`,
@@ -95,7 +108,6 @@ const dashboardCards = [
         icon: <BookmarkAddedRoundedIcon sx={{ color: 'brown', fontSize: '35px' }} />
     },
     {
-        id: 5,
         title: 'Conference Organized',
         countModelName: 'ConferenceOrganizedCount',
         url: `/dashboard/select-department/ConferenceOrganized`,
@@ -103,7 +115,6 @@ const dashboardCards = [
         icon: <VideoChatRoundedIcon sx={{ color: 'DeepPink', fontSize: '35px' }} />
     },
     {
-        id: 6,
         title: 'Invited Talks ',
         countModelName: 'InvitedTalkCount',
         url: `/dashboard/select-department/InvitedTalk`,
@@ -111,7 +122,6 @@ const dashboardCards = [
         icon: <LightbulbRoundedIcon sx={{ color: 'fuchsia', fontSize: '35px' }} />
     },
     {
-        id: 7,
         title: 'Research Guidance ',
         countModelName: 'PhdAwardedCount',
         url: `/dashboard/select-department/PhdAwarded`,
@@ -119,7 +129,6 @@ const dashboardCards = [
         icon: <CardMembershipRoundedIcon sx={{ color: 'MediumVioletRed', fontSize: '35px' }} />
     },
     {
-        id: 8,
         title: 'Fellowships ',
         countModelName: 'FellowshipCount',
         url: `/dashboard/select-department/Fellowship`,
@@ -141,6 +150,10 @@ const Dashboard = () => {
     useEffect(() => {
         setLocalData(JSON.parse(localStorage.getItem('dashboardData')) || null)
     }, [])
+
+    useEffect(() => {
+        console.log('Dashboard Data:', data?.data?.data)
+    }, [data])
 
 
     useEffect(() => {

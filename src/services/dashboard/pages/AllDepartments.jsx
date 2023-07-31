@@ -17,6 +17,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AllFaculties from './AllFaculties';
 import AllAlumni from './AllAlumni';
 import OtherDashboardData from './OtherDashboardData';
+import DirectorDashboardData from './DirectorDashboardData';
 
 const AllDepartments = () => {
 
@@ -48,6 +49,24 @@ const AllDepartments = () => {
             select: 'schoolName',
             icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
             fieldName: ['Alumnus/Alumna', 'Alumni']
+        },
+        placements: {
+            model: 'Placement',
+            select: 'SchoolName',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
+            fieldName: ['Placements', 'Placements']
+        },
+        qualifiedExams: {
+            model: 'QualifiedExams',
+            select: 'SchoolName',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
+            fieldName: ['QualifiedExams', 'Qualified Exams']
+        },
+        progessionToHigherEducation: {
+            model: 'ProgressionToHE',
+            select: 'SchoolName',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
+            fieldName: ['ProgressionToHE', 'Students Progressed to Higher Education']
         },
         BookAndChapter: {
             model: 'BookAndChapter',
@@ -198,7 +217,8 @@ const AllDepartments = () => {
                         Field === 'Faculties' ? <AllFaculties school={School} /> :
                             Field === 'Students' ? <AllStudents school={School} /> :
                                 Field === 'Alumni' ? <AllAlumni school={School} /> :
-                                    <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
+                                    (Field === 'Placements' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
+                                        <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
 
                     }
                 </section>)
