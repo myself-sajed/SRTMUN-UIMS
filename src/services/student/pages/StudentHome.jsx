@@ -208,26 +208,6 @@ const StudentHome = () => {
                 </div> : null
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
                 {
                     <div className='flex flex-wrap bg-gray-50 rounded-xl border p-2 '>
@@ -282,11 +262,9 @@ const StudentHome = () => {
                 }
             </DialogBox>
             <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
-
+            <Footer />
         </div>
-            </div >
-    <Footer />
-        </div >
+
     )
 }
 
