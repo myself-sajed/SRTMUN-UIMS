@@ -39,13 +39,9 @@ const StudentRegistration = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain", "Other"]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", isCreatedByDirector: false }
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "" }
     const [values, setValues] = useState(initialState)
     const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn } = values
-
-    useEffect(() => {
-        console.log("values :", values)
-    }, [values])
 
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
@@ -142,10 +138,12 @@ const StudentRegistration = () => {
         formData.append('file', file)
         formData.append('serverOTP', otp.serverOTP)
         formData.append('clientOTP', otp.clientOTP)
+        formData.append('isCreatedByDirector', 'false')
 
         // route at student-auth file line 136
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
             if (response.data.status === 'success') {
+                // localStorage.removeItem('StudentRegistration')
                 toast.success(response.data.message)
                 setStep(4)
             }

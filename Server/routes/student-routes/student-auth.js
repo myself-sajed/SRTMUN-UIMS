@@ -76,9 +76,8 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
         const data = JSON.parse(JSON.stringify(req.body));
         const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector } = data;
 
-        console.log("Student Data :", data)
 
-        if (isCreatedByDirector) {
+        if (JSON.parse(isCreatedByDirector)) {
             //genrate random pass
             const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
             let password = "";
@@ -94,8 +93,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             })
             await user.save();
             res.send({ status: "success", message: "Student Added Successfuly" });
-        }
-        else if (isCreatedByDirector === false) {
+        } else {
             // otp authentication
             const { password } = data
             let isMatch = await bcrypt.compare(clientOTP, serverOTP)
