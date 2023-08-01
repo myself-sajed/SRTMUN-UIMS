@@ -185,7 +185,7 @@ const StudentRegistration = () => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
                 if (programs[0] === programGraduated) {
-                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)} Yr.`))
+                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)}`))
                 }
             })
         }

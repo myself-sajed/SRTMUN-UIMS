@@ -30,6 +30,7 @@ import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { getOrdinalSuffix } from '../../director/pages/NewStudent'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -124,7 +125,7 @@ const StudentHome = () => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
                 if (programs[0] === programGraduated) {
-                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `Year ${i + 1}`))
+                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)}`))
                 }
             })
         }
