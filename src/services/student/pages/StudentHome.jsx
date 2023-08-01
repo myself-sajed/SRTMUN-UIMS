@@ -31,6 +31,7 @@ import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { getOrdinalSuffix } from '../../director/pages/NewStudent'
+import FileViewer from '../../../components/FileViewer'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -53,10 +54,10 @@ const StudentHome = () => {
     const user = useSelector(state => state.user.studentUser)
     title(user?.isAlumni ? 'Alumni Home' : 'Student Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", }
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", uploadProof: null }
 
     const [avatar, setAvatar] = useState(null)
-    const [uploadProof, setUploadProof] = useState(null)
+    const [photoURL, setPhotoURL] = useState(null)
     const [guides, setGuides] = useState([])
     const [guidesData, setGuidesData] = useState([])
     const [programDuration, setProgramDuration] = useState(null)
@@ -72,7 +73,7 @@ const StudentHome = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit, uploadProof: uploadProof }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        editReq({ id: itemToEdit, photoURL }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
     }
 
     const onCancel = () => {
@@ -121,6 +122,8 @@ const StudentHome = () => {
         }
     }, [itemToEdit])
 
+    console.log(values);
+
     useEffect(() => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
@@ -132,7 +135,7 @@ const StudentHome = () => {
     }, [programGraduated])
 
     useEffect(() => {
-        console.log("User:", user)
+        // console.log("User:", user)
     }, [user])
 
     return (
@@ -197,7 +200,7 @@ const StudentHome = () => {
                         <div className="accordion" id="accordionExample">
                             {
                                 navcom.map((item, index) => {
-                                    console.log("item in nav:", item)
+                                    // console.log("item in nav:", item)
                                     return item.name === 'studentJRFSRF' ?
                                         (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
                                             <div className="accordion-item bg-gray-50 ">
@@ -239,17 +242,17 @@ const StudentHome = () => {
 
                         <div className='flex-items-center justify-center flex-col w-full mb-4'>
                             {
-                                uploadProof ?
+                                photoURL ?
                                     <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
                                     <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
                                 <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
-                                    handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
+                                    handleAvatarChange(e, setAvatar, setPhotoURL, setOpenCroper)
                                 }} />
                                 {
-                                    uploadProof && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
+                                    photoURL && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setPhotoURL(null); }}>Reset Picture</button>
                                 }
                             </div>
                         </div>
@@ -276,17 +279,20 @@ const StudentHome = () => {
                         <Select className='col-md-2' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
 
                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
+                        {
+                            user?.isAlumni===true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof==undefined?true:false} />
+                        }
 
-                        {programGraduated.includes("Ph.D") ? <>
+                        {programGraduated.includes("Ph.D") && user.isAlumni===false && <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
-                        </> : null}
+                        </> }
                     </div>
                 }
             </DialogBox>
-            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
+            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={photoURL} setFile={setPhotoURL} setAvatar={setAvatar} />
             <Footer />
         </div>
 
@@ -309,26 +315,31 @@ const OtherDetails = ({ user, editFunction }) => {
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
             <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
-            {user?.programGraduated.includes("Ph.D") ? <>
+            
+            {user?.programGraduated.includes("Ph.D")&&user.isAlumni===false ? <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
                 <DetailTile editFunction={editFunction} keyName="Date of RAC" value={`${user && user.dateOfRac}`} />
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />
                 <DetailTile editFunction={editFunction} keyName="Receives any Fellowship" value={`${user && user.ReceivesFelloship}`} />
             </> : null}
             <DetailTile editFunction={editFunction} keyName="Address" value={`${user && user?.address?.toUpperCase()}`} />
+
+            {
+                user?.isAlumni===true && <DetailTile keyName="Alumni Proof" value={user && user.uploadProof} user={user} />
+            }
         </div>
 
 
     </div>
 }
 
-const DetailTile = ({ keyName, value, editFunction }) => {
+const DetailTile = ({ keyName, value, editFunction, user}) => {
     return (
         <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
             <p className="text-muted">{keyName}</p>
             <p className="">{(value === undefined || value === "undefined"
                 || value === "null" || value === null || value === "")
-                ? <span onClick={editFunction} className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : value}</p>
+                ? <span onClick={editFunction} className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : keyName!="Alumni Proof"? value:<FileViewer fileName={user.uploadProof} serviceName="student"/>}</p>
         </div>
     )
 }

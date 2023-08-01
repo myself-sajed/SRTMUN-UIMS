@@ -12,6 +12,7 @@ const StudentIdCount = require('../../models/student-models/studentIdCountSchema
 
 const multer = require('multer');
 
+
 const studentstorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const link = path.join(__dirname, `../../uploads/student-uploads/`)
@@ -141,15 +142,22 @@ router.get("/student/:filename", function (req, res) {
 });
 
 //Student User Edit Record
-router.post("/student/editRecord/", StudentUpload.single("uploadProof"), async (req, res) => {
+router.post("/student/editRecord/", StudentUpload.fields([{name: "uploadProof", maxCount: 1},{name: "photoURL", maxCount: 1}]), async (req, res) => {
 
-    // const model = req.params.model
+    try {
+        // const model = req.params.model
     const data = JSON.parse(JSON.stringify(req.body));
     let SendData = null;
     const { id } = data
-    const isfile = req.file;
-    if (isfile) {
-        var up = req.file.filename
+    const isfile = req.files;
+    const isFileProfile = isfile&& isfile["photoURL"]? req.files["photoURL"][0]: ""
+    const isFileProof = isfile&& isfile["uploadProof"]? req.files["uploadProof"][0]: ""
+        console.log(isfile);
+    if (isFileProof !== ""){
+        var uploadProof = isFileProof.filename
+    }
+    if (isFileProfile !== "") {
+        var photoURL = isFileProfile.filename
     }
 
     Object.keys(data).map((item) => {
@@ -158,20 +166,22 @@ router.post("/student/editRecord/", StudentUpload.single("uploadProof"), async (
         }
 
     })
-    console.log(data)
+    // console.log(data)
     const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn } = data
 
     SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn }
 
-    var alldata = null
-    if (up) {
-        alldata = Object.assign(SendData, { photoURL: up })
+    if (photoURL) {
+        SendData.photoURL = photoURL
     }
-    else {
-        alldata = SendData
+    else if (uploadProof) {
+        SendData.uploadProof =uploadProof
     }
-    await StudentUser.findOneAndUpdate({ _id: id }, alldata)
+    await StudentUser.findOneAndUpdate({ _id: id }, SendData)
     res.status(200).send("Edited Successfully")
+    } catch (error) {
+        console.log(error);
+    }
 
 })
 
