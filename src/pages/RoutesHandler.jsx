@@ -121,9 +121,9 @@ const RoutesHandler = () => {
                 <Route path="/*" exact element={<PageNotFound />} />
                 <Route path="/test" exact element={<Test />} />
                 <Route path="/director/service/academic-audit" exact element={<AuditHome />} />
-                <Route path="/alumni-login" exact element={<AlumniLogin />} />
-                <Route path="/alumni-registration" exact element={<AlumniRegistration />} />
-                <Route path="/alumni" exact element={<AlumniHome />} />
+                <Route path="/alumni-login" exact element={<StudentLogin />} />
+                <Route path="/alumni-registration" exact element={<StudentRegister />} />
+                <Route path="/alumni" exact element={<StudentHome />} />
                 <Route path="/alumni/alumni-status" exact element={<AlumniMain />} />
                 <Route path="/student-login" exact element={< StudentLogin />} />
                 <Route path="/student-registration" exact element={<StudentRegister />} />

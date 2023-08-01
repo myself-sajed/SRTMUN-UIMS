@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setStudentUser } from '../../../redux/slices/UserSlice'
+import { setAlumniUser, setStudentUser } from '../../../redux/slices/UserSlice'
 import Footer from '../../../components/Footer'
 import Bred from '../../../components/Bred'
 import useStudentAuth from '../../../hooks/useStudentAuth'
@@ -29,6 +29,7 @@ import { toast } from 'react-hot-toast'
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -46,10 +47,10 @@ const StudentHome = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const isAlumniLink = window.location.pathname.includes('alumni')
+    useStudentAuth(true, isAlumniLink ? 'alumni' : 'student')
     const user = useSelector(state => state.user.studentUser)
-    // const studentActive = useSelector(state => state.studentActive.studentActive)
-    useStudentAuth()
-    title('Student Home')
+    title(user?.isAlumni ? 'Alumni Home' : 'Student Home')
 
     const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", }
 
@@ -67,7 +68,6 @@ const StudentHome = () => {
 
         dispatch(setStudentUser(userrefetch?.data[0]))
     }
-    // console.log(guides)
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
@@ -109,6 +109,7 @@ const StudentHome = () => {
     useEffect(() => {
         setResearchGuideId()
     }, [ResearchGuide])
+
     useEffect(() => {
         if (itemToEdit && user) {
             const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, cast, country, religion, programEnroledOn, photoURL } = user
@@ -129,26 +130,31 @@ const StudentHome = () => {
         }
     }, [programGraduated])
 
+    useEffect(() => {
+        console.log("User:", user)
+    }, [user])
+
     return (
         <div>
-            <OnlyNav user={user} logout={{ token: 'student-token', link: siteLinks.welcome.link }}
-                heading={{ title: 'Student', link: siteLinks.welcome.link }}
+            <OnlyNav user={user} logout={{ token: user?.isAlumni ? 'alumni-token' : 'student-token', link: siteLinks.welcome.link }}
+                heading={{ title: user?.isAlumni ? 'Alumni' : 'Student', link: siteLinks.welcome.link }}
                 li={[siteLinks.welcome]} userType='student'
             />
 
             <div className='mt-2'>
-                <Bred links={[siteLinks.welcome, siteLinks.studentHome]} />
+                <Bred links={[siteLinks.welcome, user?.isAlumni ? siteLinks.alumniHome : siteLinks.studentHome]} />
             </div>
 
             <div className="main-div md:flex items-start my-3 gap-3">
                 <div className="mb-3 md:mb-0 xl:min-w-[35%] lg:min-w-[45%] md:min-w-[60%] h-screen">
-                    <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-xl border h-full">
+                    <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
                         <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
 
                         <div className='mt-4'>
                             <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
 
                             <div className='text-left gap-2 mt-2'>
+                                <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
                                 <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
                                 <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
                                 <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
@@ -165,7 +171,7 @@ const StudentHome = () => {
                                     Edit Profile
                                 </button>
 
-                                <button onClick={() => { dispatch(setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
+                                <button onClick={() => { dispatch(user?.isAlumni ? setAlumniUser(null) : setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem(user?.isAlumni ? 'alumni-token' : 'student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
                                     <LogoutRoundedIcon />
                                     Log out
                                 </button>
@@ -184,29 +190,47 @@ const StudentHome = () => {
                         </div>
 
                     </div>
+
+                    <div className="mt-3">
+
+                        <div className="accordion" id="accordionExample">
+                            {
+                                navcom.map((item, index) => {
+                                    console.log("item in nav:", item)
+                                    return item.name === 'studentJRFSRF' ?
+                                        (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                            <div className="accordion-item bg-gray-50 ">
+                                                <h2 className="accordion-header" id={`heading-${index}`}>
+                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                        {item.value}
+                                                    </button>
+                                                </h2>
+                                                <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                    <div className="accordion-body">
+                                                        <div key={item}>{item.element}</div>
+                                                    </div>
+                                                </div>
+                                            </div> : null : <div className="accordion-item bg-gray-50 ">
+                                            <h2 className="accordion-header" id={`heading-${index}`}>
+                                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                    {item.value}
+                                                </button>
+                                            </h2>
+                                            <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                <div className="accordion-body">
+                                                    <div key={item}>{item.element}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                })
+                            }
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
-            {
-                user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' ? <div class="accordion" id="accordionExample">
-                    {
-                        navcom.map(((item, index) => {
-                            return <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
-                                <h2 class="accordion-header" id={`heading-${index}`}>
-                                    <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                        {item.value}
-                                    </button>
-                                </h2>
-                                <div id={`collapse-${index}`} class="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div key={item}>{item.element}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        }))
-                    }
-                </div> : null
-            }
+
 
             <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
                 {
@@ -311,17 +335,14 @@ const DetailTile = ({ keyName, value, editFunction }) => {
 const ContactTile = ({ keyName, value }) => {
 
     let icons = {
+        User: <CheckCircleRoundedIcon sx={{ width: '16px', color: 'green' }} />,
         School: <MapsHomeWorkRoundedIcon sx={{ width: '15px' }} />,
         Phone: <LocalPhoneRoundedIcon sx={{ width: '15px' }} />,
         Email: <MailRoundedIcon sx={{ width: '15px' }} />
     }
 
-    const copyText = () => {
-        window.navigator.clipboard.writeText(value)
-        toast.success(`${keyName} Copied`,)
-    }
 
-    return <div onClick={copyText} className="flex items-center text-sm justify-start  cursor-pointer gap-2 hover:bg-blue-50">
+    return <div className="flex items-center text-sm justify-start gap-2">
         {icons[keyName]} <span>{value}</span>
     </div>
 }

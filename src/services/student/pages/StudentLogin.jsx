@@ -19,12 +19,13 @@ const StudentLogin = () => {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user.user)
-    useStudentAuth()
-    title("Student Login")
+    const isAlumniLink = window.location.pathname.includes('alumni')
+
+    title(isAlumniLink ? "Alumni Login" : "Student Login")
+    useStudentAuth(true, isAlumniLink ? 'alumni' : 'student')
     const [isLoading, setIsLoading] = useState(false)
 
-    const linkLine = <p className='text-center'>Don't have an account? <Link to={siteLinks.studentRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now</Link> | <Link to={siteLinks.studentPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
+    const linkLine = <p className='text-center'>Don't have an account? <Link to={isAlumniLink ? siteLinks.alumniRegistration.link : siteLinks.studentRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now</Link> | <Link to={isAlumniLink ? siteLinks.alumniPasswordReset.link : siteLinks.studentPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
 
     // handle submit
     function handleSubmit(e) {
@@ -33,10 +34,8 @@ const StudentLogin = () => {
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-login`, { username, password }).then(function (res) {
             if (res.data.status === 'ok') {
                 dispatch(setStudentUser(res.data.user))
-                localStorage.setItem('student-token', res.data.token)
-                // dispatch(setActive('profile'));
-                // dispatch(setPage('profile'));
-                navigate(siteLinks.studentHome.link)
+                localStorage.setItem(isAlumniLink ? 'alumni-token' : 'student-token', res.data.token)
+                navigate(isAlumniLink ? siteLinks.alumniHome.link : siteLinks.studentHome.link)
                 toast.success('Logged in successfully')
                 setIsLoading(false)
             }
@@ -57,7 +56,7 @@ const StudentLogin = () => {
 
     return (
 
-        <CredSkeleton bred={[siteLinks.welcome, siteLinks.studentLogin]} onSubmit={handleSubmit} linkLine={linkLine} head={<CredHeading spacing="mb-3 mt-6" icon={<PersonRoundedIcon className='text-orange-700' />} title="Student Login" />}>
+        <CredSkeleton bred={[siteLinks.welcome, isAlumniLink ? siteLinks.alumniLogin : siteLinks.studentLogin]} onSubmit={handleSubmit} linkLine={linkLine} head={<CredHeading spacing="mb-3 mt-6" icon={<PersonRoundedIcon className='text-orange-700' />} title={isAlumniLink ? "Alumni Login" : "Student Login"} />}>
 
             <CredInput state={username} setState={setUsername} placeholder="Enter Email ID" type="text" spacing="mb-2" size={39} />
 

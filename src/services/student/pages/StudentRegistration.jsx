@@ -27,8 +27,8 @@ import EnterOTPComponent from '../components/EnterOTPComponent';
 const StudentRegistration = () => {
 
     const [step, setStep] = useState(1)
-    const navigate = useNavigate();
-    title("Student Registration")
+    const isAlumniLink = window.location.pathname.includes('alumni')
+    title(isAlumniLink ? 'Alumni Registration' : "Student Registration")
     const steps = ["Basic Info", "Photo & Contact", "Verify Email", "Registration Successful"]
 
 
@@ -54,7 +54,7 @@ const StudentRegistration = () => {
 
     const [shouldUpdate, setShouldUpdate] = useState(false)
 
-    useLocalStorage({ titleOfStorage: 'StudentRegistration', formData: values, setFormData: setValues, shouldUpdate, setShouldUpdate, initialState, dependancies: [] })
+    useLocalStorage({ titleOfStorage: isAlumniLink ? 'AlumniRegistration' : 'StudentRegistration', formData: values, setFormData: setValues, shouldUpdate, setShouldUpdate, initialState, dependancies: [] })
 
     // send otp
     function sendOTP() {
@@ -188,7 +188,7 @@ const StudentRegistration = () => {
 
             <IndexNavbar />
             <div className='mt-2'>
-                <Bred links={[siteLinks.welcome, { title: 'Student Registration', link: '/student-registration' }]} />
+                <Bred links={[siteLinks.welcome, { title: isAlumniLink ? 'Alumni Registration' : 'Student Registration', link: isAlumniLink ? '/alumni-registration' : '/student-registration' }]} />
             </div>
 
             <div className="mt-2">
@@ -197,7 +197,7 @@ const StudentRegistration = () => {
 
             <div className='flex items-center justify-center gap-2 mb-3 mt-6 mx-auto'>
                 <BadgeRoundedIcon className='text-orange-700 mb-1' />
-                <p className='text-orange-700 font-bold text-xl'>Student Registration</p>
+                <p className='text-orange-700 font-bold text-xl'> {isAlumniLink ? 'Alumni Registration' : 'Student Registration'} </p>
             </div>
 
             <div className='mt-3 flex items-center justify-center mb-4'>
