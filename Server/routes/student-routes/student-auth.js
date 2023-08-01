@@ -52,34 +52,20 @@ router.post("/api/auth/student-login", (req, res) => {
         });
 })
 
-    // // check if eligibility number is already regitered by student
-    // app.post('/service/student-eligibility', function (req, res) {
-    //     const { eligibility } = req.body;
-    //     // check if mail already taken
-    //     StudentUser.findOne({ eligibility }, (err, user) => {
-    //         if (user) {
-    //             res.send({ status: 'taken', message: 'Student Already Registered With Eligibility No.' });
-    //         }
-    //         else {
-    //             res.send({ status: 'available' })
-    //         }
-    //     });
-    // })
 
-
-    // check if email is already taken by student
-    router.post('/service/student-checkAndEmail', function (req, res) {
-        const { email } = req.body;
-        // check if mail already taken
-        StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
-            if (user) {
-                res.send({ status: 'taken', message: 'Email already taken' });
-            }
-            else {
-                res.send({ status: 'available' })
-            }
-        });
-    })
+// check if email is already taken by student
+router.post('/service/student-checkAndEmail', function (req, res) {
+    const { email } = req.body;
+    // check if mail already taken
+    StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
+        if (user) {
+            res.send({ status: 'taken', message: 'Email already taken' });
+        }
+        else {
+            res.send({ status: 'available' })
+        }
+    });
+})
 
 
 // student-user register handler 
@@ -89,6 +75,8 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
 
         const data = JSON.parse(JSON.stringify(req.body));
         const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector } = data;
+
+        console.log("Student Data :", data)
 
         if (isCreatedByDirector) {
             //genrate random pass
@@ -116,7 +104,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 const user = new StudentUser({
                     mobile, salutation, name, schoolName, programGraduated, password, gender,
                     email: email.toLowerCase(), photoURL: req.file.filename,
-                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent:true, isCreatedByDirector:false
+                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false
                 });
                 await user.save();
                 res.send({ status: "success", message: "Registration Successfull" });

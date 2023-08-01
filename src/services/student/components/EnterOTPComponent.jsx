@@ -11,11 +11,11 @@ const EnterOTPComponent = ({ otp, setOtp, onOTPEntered = false }) => {
         let joinedOTP = otpArray.join('')
         setOtp(() => joinedOTP);
 
-        if (joinedOTP.length === 6) {
-            if (onOTPEntered) {
-                onOTPEntered()
-            }
-        }
+        // if (joinedOTP.length > 6) {
+        //     if (onOTPEntered) {
+        //         onOTPEntered()
+        //     }
+        // }
 
 
 

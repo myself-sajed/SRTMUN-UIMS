@@ -28,6 +28,7 @@ import { getOrdinalSuffix } from '../../director/pages/NewStudent';
 const StudentRegistration = () => {
 
     const [step, setStep] = useState(1)
+    const navigate = useNavigate()
     const isAlumniLink = window.location.pathname.includes('alumni')
     title(isAlumniLink ? 'Alumni Registration' : "Student Registration")
     const steps = ["Basic Info", "Photo & Contact", "Verify Email", "Registration Successful"]
@@ -38,9 +39,13 @@ const StudentRegistration = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain", "Other"]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", isCreatedByDirector: false, }
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", isCreatedByDirector: false }
     const [values, setValues] = useState(initialState)
-    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn, } = values
+    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn } = values
+
+    useEffect(() => {
+        console.log("values :", values)
+    }, [values])
 
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
@@ -188,10 +193,19 @@ const StudentRegistration = () => {
     }, [programGraduated])
 
     useEffect(() => {
+
         setOtp((prev) => {
             return { ...prev, clientOTP: enteredOTP }
         })
+
     }, [enteredOTP])
+
+    useEffect(() => {
+        console.log('OTP changed to:', otp.clientOTP)
+        if (otp.clientOTP?.length === 6) {
+            handleRegistration()
+        }
+    }, [otp])
 
 
     return (
@@ -348,7 +362,7 @@ const StudentRegistration = () => {
                                                         <EnterOTPComponent otp={enteredOTP} setOtp={setEnteredOTP} onOTPEntered={handleRegistration} />
                                                     </div>
                                                     <div className='w-full flex items-center justify-center gap-2 mt-3'>
-                                                        <div onClick={() => { setStep(2); setVerifyLoading(false); setLoading(false); setOtp({ ...otp, clientOTP: null }) }} type="submit" className='bg-gray-200 rounded-full'>
+                                                        <div onClick={() => { setOtp(() => { return { ...otp, clientOTP: null } }); setStep(2); setVerifyLoading(false); setLoading(false); }} type="submit" className='bg-gray-200 rounded-full'>
                                                             <IconButton>
                                                                 <ArrowBackRoundedIcon />
                                                             </IconButton>
@@ -393,21 +407,28 @@ const StudentRegistration = () => {
                                                 <CheckCircleRoundedIcon className='text-green-700'
                                                     sx={{ fontSize: 65 }} />
 
-                                                Congratulations! Your account has been successfully Registered at  <b>SRTMUN-UIMS</b>
+                                                Congratulations! Your account has been successfully registered at  <p><b>SRTMUN-UIMS</b> as {isAlumniLink ? 'an Alumni' : 'a Student'}. </p>
                                             </div>
-                                            <div className='text-center mb-3 mt-5'>
+                                            <div className='text-center mb-3 mt-3'>
                                                 {
                                                     <div>
-                                                        Remember your password that you entered. <strong>Username</strong> is your Email. <br />Go to <Link to={siteLinks.welcome.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>Welcome</span></Link> Page.<br />Go to <Link to={siteLinks.studentLogin.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>login</span></Link> Page.
+                                                        <strong>Username</strong> is your Email and
+                                                        remember your password that you entered. <br />
+
+
+                                                        <div className="my-5 flex items-center justify-center gap-4">
+                                                            <button onClick={() => { navigate('/') }} className="flex items-center justify-start gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                                Home Page
+                                                            </button>
+                                                            <button onClick={() => { navigate(isAlumniLink ? siteLinks.alumniLogin.link : siteLinks.studentLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                                {isAlumniLink ? 'Alumni Login' : 'Student Login'}
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 }
                                             </div>
                                         </div>
                                     </div>}
-
-                                {/* {
-                                    step === 3 && <EnterOTPComponent />
-                                } */}
                             </div>
                             : isRegActive === false ? <p className='text-center my-4 text-xl text-[#c2410c]'>The student registration is suspended for period of time</p> : <><Skeleton height={50} /><Skeleton height={50} /><Skeleton height={50} /></>
 
