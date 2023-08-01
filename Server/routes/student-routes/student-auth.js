@@ -74,7 +74,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
     try {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector } = data;
+        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector, isAlumni } = data;
 
 
         if (JSON.parse(isCreatedByDirector)) {
@@ -89,7 +89,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             const user = new StudentUser({
                 mobile, salutation, name, schoolName, programGraduated, password, gender,
                 email: email.toLowerCase(), photoURL: req.file.filename,
-                abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: true
+                abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: true, isAlumni: false
             })
             await user.save();
             res.send({ status: "success", message: "Student Added Successfuly" });
@@ -102,7 +102,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 const user = new StudentUser({
                     mobile, salutation, name, schoolName, programGraduated, password, gender,
                     email: email.toLowerCase(), photoURL: req.file.filename,
-                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false
+                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false, isAlumni: JSON.parse(isAlumni)
                 });
                 await user.save();
                 res.send({ status: "success", message: "Registration Successfull" });

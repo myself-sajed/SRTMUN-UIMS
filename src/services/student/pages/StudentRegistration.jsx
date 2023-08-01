@@ -139,6 +139,7 @@ const StudentRegistration = () => {
         formData.append('serverOTP', otp.serverOTP)
         formData.append('clientOTP', otp.clientOTP)
         formData.append('isCreatedByDirector', 'false')
+        formData.append('isAlumni', isAlumniLink ? 'true' : 'false')
 
         // route at student-auth file line 136
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
