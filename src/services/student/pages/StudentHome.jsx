@@ -81,7 +81,7 @@ const StudentHome = () => {
 
     const fetchFacutys = async () => {
         let arr = []
-        const userrefetch = await getReq({ model: "User", id: '', module, filter: {department:user.schoolName, salutation: 'Dr.'}})
+        const userrefetch = await getReq({ model: "User", id: '', module, filter: { department: user.schoolName, salutation: 'Dr.' } })
         setGuidesData(userrefetch?.data)
         userrefetch?.data.map(item => { arr.push(item.name) })
         setGuides(arr);
@@ -180,8 +180,8 @@ const StudentHome = () => {
                     </div>
                 </div>
 
-                <div>
-                    <div className="flex-1 font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
+                <div className='flex-1'>
+                    <div className=" font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
                         <p aria-current="true" className="w-full p-2 font-medium text-left text-black  border-b border-gray-200 rounded-t-lg ">
                             Other Relevant Information
                         </p>
@@ -314,7 +314,7 @@ const OtherDetails = ({ user, editFunction }) => {
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />
                 <DetailTile editFunction={editFunction} keyName="Receives any Fellowship" value={`${user && user.ReceivesFelloship}`} />
             </> : null}
-            <DetailTile editFunction={editFunction} keyName="Address" value={`${user && user.address.toUpperCase()}`} />
+            <DetailTile editFunction={editFunction} keyName="Address" value={`${user && user?.address?.toUpperCase()}`} />
         </div>
 
 

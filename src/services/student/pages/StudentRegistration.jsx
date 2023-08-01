@@ -419,7 +419,7 @@ const StudentRegistration = () => {
                                                                 Home Page
                                                             </button>
                                                             <button onClick={() => { navigate(isAlumniLink ? siteLinks.alumniLogin.link : siteLinks.studentLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" >
-                                                                {isAlumniLink ? 'Alumni Login' : 'Student Login'}
+                                                                {isAlumniLink ? 'Login as Alumni' : 'Login as Student'}
                                                             </button>
                                                         </div>
                                                     </div>
