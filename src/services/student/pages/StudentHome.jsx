@@ -81,7 +81,7 @@ const StudentHome = () => {
 
     const fetchFacutys = async () => {
         let arr = []
-        const userrefetch = await getReq({ model: "User", id: 'Dr.', module, filter: "facultyUser", filterConditios: { schoolName: user.schoolName } })
+        const userrefetch = await getReq({ model: "User", id: '', module, filter: {department:user.schoolName, salutation: 'Dr.'}})
         setGuidesData(userrefetch?.data)
         userrefetch?.data.map(item => { arr.push(item.name) })
         setGuides(arr);

@@ -6,12 +6,8 @@ const studentUserSchema = new mongoose.Schema({
         type: 'boolean',
         required: false,
     },
-    username: {
-        type: 'string',
-        required: false,
-    },
-    status: {
-        type: 'string',
+    isActiveStudent: {
+        type: 'boolean',
         required: false,
     },
     salutation: {
@@ -30,7 +26,6 @@ const studentUserSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
-
     address: {
         type: 'string',
         required: false,
@@ -165,11 +160,7 @@ module.exports = StudentUser;
 //         type: 'boolean',
 //         required: true,
 //     },
-//     username: {
-//         type: 'string',
-//         required: true,
-//     },
-//     status: {
+//     isActiveStudent: {
 //         type: 'string',
 //         required: true,
 //     },
