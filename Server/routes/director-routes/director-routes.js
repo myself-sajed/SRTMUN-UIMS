@@ -825,52 +825,55 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
 
     const {arr} = req.body
     try{
-        let NonConverted = [];
-        for (id of arr){
-            let student = await StudentUser.findOne({_id: id});
-            if(student){
-                const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated,     programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo,  ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
+        // let NonConverted = [];
 
-                let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
-                let YNext = (yStarted+1).toString().slice(-2);
-                let doStarted = `${yStarted}-${YNext}`;
-                let yComplited = new Date().getFullYear();
-                let yCNext = (yComplited+1).toString().slice(-2);
-                let doCompleted = `${yComplited}-${yCNext}`;
+        const objectIdArray = arr.map(id => mongoose.Types.ObjectId(id));
+        await StudentUser.updateMany({_id:{ $in: objectIdArray }}, {$set:{isAlumni:true}})
+        // for (id of arr){
+        //     let student = await StudentUser.findOne({_id: id});
+        //     if(student){
+        //         const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated,     programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo,  ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
 
-                let alumni = {_id:id, salutation, photoURL, name, email, address: address || "-", dob : dob || "-",     mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion:     religion || '-', country: country || 'India', schoolName, gender , abcNo, password ,doCompleted,    stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"",    ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
-                const module = new AlumniUser(alumni)
-                let newAlumni = await module.save();
-                if(newAlumni._id==id) {
-                    let oldStu = await StudentUser.deleteOne({_id: id});
-                    console.log(oldStu);
+        //         let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
+        //         let YNext = (yStarted+1).toString().slice(-2);
+        //         let doStarted = `${yStarted}-${YNext}`;
+        //         let yComplited = new Date().getFullYear();
+        //         let yCNext = (yComplited+1).toString().slice(-2);
+        //         let doCompleted = `${yComplited}-${yCNext}`;
 
-                    const sourceFilePath = path.join(__dirname, '../../uploads/student-uploads/', photoURL);
+        //         let alumni = {_id:id, salutation, photoURL, name, email, address: address || "-", dob : dob || "-",     mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion:     religion || '-', country: country || 'India', schoolName, gender , abcNo, password ,doCompleted,    stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"",    ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
+        //         const module = new AlumniUser(alumni)
+        //         let newAlumni = await module.save();
+        //         if(newAlumni._id==id) {
+        //             let oldStu = await StudentUser.deleteOne({_id: id});
+        //             console.log(oldStu);
 
-                    const destinationFilePath = path.join(__dirname, '../../uploads/director-uploads/', photoURL);
+        //             const sourceFilePath = path.join(__dirname, '../../uploads/student-uploads/', photoURL);
 
-                    fs.rename(sourceFilePath, destinationFilePath, (err) => {
-                      if (err) {
-                        console.error('Error moving the file:', err);
-                      } else {
-                        console.log('File moved successfully!');
-                      }
-                    });
-                }
-                else {
-                    NonConverted.push(id);
-                    await AlumniUser.deleteOne({_id:newAlumni._id})
-                }
-            }else{
-                NonConverted.push(id);
-            }
-        }
-        if(NonConverted.length===0){
+        //             const destinationFilePath = path.join(__dirname, '../../uploads/director-uploads/', photoURL);
+
+        //             fs.rename(sourceFilePath, destinationFilePath, (err) => {
+        //               if (err) {
+        //                 console.error('Error moving the file:', err);
+        //               } else {
+        //                 console.log('File moved successfully!');
+        //               }
+        //             });
+        //         }
+        //         else {
+        //             NonConverted.push(id);
+        //             await AlumniUser.deleteOne({_id:newAlumni._id})
+        //         }
+        //     }else{
+        //         NonConverted.push(id);
+        //     }
+        // }
+        // if(NonConverted.length===0){
             res.status(201).send({status:"allCoverted", message:`Student converted to alumni successfully`}) 
-        }
-        else{
-            res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
-        }
+        // }
+        // else{
+        //     res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
+        // }
     }
     catch(err){
         console.log(err)

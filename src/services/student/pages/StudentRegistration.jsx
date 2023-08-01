@@ -23,6 +23,7 @@ import ProfileCroper from '../../../components/ProfileCroper';
 import StepStatus from '../../../components/StepStatus';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import EnterOTPComponent from '../components/EnterOTPComponent';
+import { getOrdinalSuffix } from '../../director/pages/NewStudent';
 
 const StudentRegistration = () => {
 
@@ -37,7 +38,7 @@ const StudentRegistration = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain", "Other"]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", createdBy: "Self", }
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", isCreatedByDirector: false, }
     const [values, setValues] = useState(initialState)
     const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn, } = values
 
@@ -96,7 +97,17 @@ const StudentRegistration = () => {
         // check if file is selected
         if (file) {
             setLoading(true)
-            sendOTP()
+            // check if username already exists
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
+                if (res.data.status === 'taken') {
+                    toast.error(res.data.message)
+                    setLoading(false)
+                    return
+                }
+                else {
+                    sendOTP()
+                }
+            })
         } else {
             setLoading(false)
             toast.error('Please select a photo')
@@ -127,7 +138,7 @@ const StudentRegistration = () => {
         formData.append('serverOTP', otp.serverOTP)
         formData.append('clientOTP', otp.clientOTP)
 
-
+        // route at student-auth file line 136
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
             if (response.data.status === 'success') {
                 toast.success(response.data.message)
@@ -170,7 +181,7 @@ const StudentRegistration = () => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
                 if (programs[0] === programGraduated) {
-                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `Year ${i + 1}`))
+                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)} Yr.`))
                 }
             })
         }
@@ -387,7 +398,7 @@ const StudentRegistration = () => {
                                             <div className='text-center mb-3 mt-5'>
                                                 {
                                                     <div>
-                                                        Remember your password that you entered. Once your Account is activated, You will receive a <strong>Username</strong> via Email. <br />Go to <Link to={siteLinks.welcome.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>Welcome</span></Link> Page.
+                                                        Remember your password that you entered. <strong>Username</strong> is your Email. <br />Go to <Link to={siteLinks.welcome.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>Welcome</span></Link> Page.<br />Go to <Link to={siteLinks.studentLogin.link}><span className='text-blue-700 hover:text-blue-800 cursor-pointer'>login</span></Link> Page.
                                                     </div>
                                                 }
                                             </div>

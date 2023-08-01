@@ -28,7 +28,7 @@ const NewStudent = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
     const religions = ["Hindu","muslim","Christian","Sikh","Buddh","Jain",]
-    const initialState = { salutation: "", name: "", programGraduated: "",  gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "",createdBy: "director" }
+    const initialState = { salutation: "", name: "", programGraduated: "",  gender: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "",isCreatedByDirector: true }
     const [values, setValues] = useState(initialState)
     const { salutation, name, programGraduated, gender, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn,  } = values
 
@@ -41,7 +41,7 @@ const NewStudent = () => {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [photoURL, setPhotoURL] = useState(null)
     const schoolName = user? user.department : null
-    const filter =  {schoolName,createdBy: "director"}
+    const filter =  {schoolName,isCreatedByDirector: true}
     const params = { model: model, id: "", module, filter: filter, }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -93,7 +93,7 @@ const NewStudent = () => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
                 if (programs[0] === programGraduated) {
-                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `Year ${i + 1}`))
+                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)} Yr.`))
                 }
             })
         }
@@ -173,4 +173,20 @@ const NewStudent = () => {
   )
 }
 
+function getOrdinalSuffix(number) {
+  const j = number % 10,
+    k = number % 100;
+  if (j === 1 && k !== 11) {
+    return 'st';
+  }
+  if (j === 2 && k !== 12) {
+    return 'nd';
+  }
+  if (j === 3 && k !== 13) {
+    return 'rd';
+  }
+  return 'th';
+}
+
 export default NewStudent
+export {getOrdinalSuffix}

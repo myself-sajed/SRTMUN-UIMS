@@ -52,6 +52,35 @@ router.post("/api/auth/student-login", (req, res) => {
         });
 })
 
+    // // check if eligibility number is already regitered by student
+    // app.post('/service/student-eligibility', function (req, res) {
+    //     const { eligibility } = req.body;
+    //     // check if mail already taken
+    //     StudentUser.findOne({ eligibility }, (err, user) => {
+    //         if (user) {
+    //             res.send({ status: 'taken', message: 'Student Already Registered With Eligibility No.' });
+    //         }
+    //         else {
+    //             res.send({ status: 'available' })
+    //         }
+    //     });
+    // })
+
+
+    // check if email is already taken by student
+    router.post('/service/student-checkAndEmail', function (req, res) {
+        const { email } = req.body;
+        // check if mail already taken
+        StudentUser.findOne({ email: email.toLowerCase() }, (err, user) => {
+            if (user) {
+                res.send({ status: 'taken', message: 'Email already taken' });
+            }
+            else {
+                res.send({ status: 'available' })
+            }
+        });
+    })
+
 
 // student-user register handler 
 router.post("/api/auth/student-register", StudentUpload.single("file"), async (req, res) => {
@@ -59,9 +88,9 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
     try {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, createdBy } = data;
+        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector } = data;
 
-        if (createdBy == "director") {
+        if (isCreatedByDirector) {
             //genrate random pass
             const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
             let password = "";
@@ -72,15 +101,13 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             }
             const user = new StudentUser({
                 mobile, salutation, name, schoolName, programGraduated, password, gender,
-                email: email.toLowerCase(),
-                photoURL: req.file.filename,
-                abcNo, currentIn, country, cast, religion, programEnroledOn, username,
-                status: "Active", createdBy
+                email: email.toLowerCase(), photoURL: req.file.filename,
+                abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: true
             })
             await user.save();
-            res.send({ status: "success", message: "Student Added Successfuly", username });
+            res.send({ status: "success", message: "Student Added Successfuly" });
         }
-        else if (createdBy == "Self") {
+        else if (isCreatedByDirector === false) {
             // otp authentication
             const { password } = data
             let isMatch = await bcrypt.compare(clientOTP, serverOTP)
@@ -88,13 +115,11 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             if (isMatch) {
                 const user = new StudentUser({
                     mobile, salutation, name, schoolName, programGraduated, password, gender,
-                    email: email.toLowerCase(),
-                    photoURL: req.file.filename,
-                    abcNo, currentIn, country, cast, religion, programEnroledOn, username,
-                    status: "InActive", createdBy
+                    email: email.toLowerCase(), photoURL: req.file.filename,
+                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent:true, isCreatedByDirector:false
                 });
                 await user.save();
-                res.send({ status: "success", message: "Registration Successfull", username: username });
+                res.send({ status: "success", message: "Registration Successfull" });
             }
             else {
                 res.send({ status: "error", message: "Wrong OTP entered, Please try again" });

@@ -17,7 +17,7 @@ const ActiveStudent = () => {
   const user = useSelector(state => state.user.directorUser)
   const schoolName = user ? user.department: null
   
-  const filter =  {schoolName,status:"Active"}
+  const filter =  {schoolName,isActiveStudent:true}
   const params = { model: model, id: "", module, filter: filter, }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params)) 
 
@@ -28,7 +28,7 @@ const ActiveStudent = () => {
  
   useEffect(() =>{
     if(itemToEdit && data.data){
-      axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {status: "InActive",itemToEdit  })
+      axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {isActiveStudent: false, itemToEdit  })
       .then(res=>{
         if(res.data.status === "success"){
         toast.success("Student Deactivated Successfully")
