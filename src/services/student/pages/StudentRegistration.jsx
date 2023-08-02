@@ -201,10 +201,18 @@ const StudentRegistration = () => {
 
     useEffect(() => {
         console.log('OTP changed to:', otp.clientOTP)
-        if (otp.clientOTP?.length === 6) {
+        if (otp.clientOTP?.length === 6 && step === 3) {
             handleRegistration()
         }
     }, [otp])
+
+    useEffect(() => {
+        const element = document.getElementById('top');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [step])
+
 
 
     return (
@@ -219,7 +227,7 @@ const StudentRegistration = () => {
                 <StepStatus steps={steps} activeStep={step - 1} />
             </div>
 
-            <div className='flex items-center justify-center gap-2 mb-3 mt-6 mx-auto'>
+            <div className='flex items-center justify-center gap-2 mb-3 mt-6 mx-auto' id="top">
                 <BadgeRoundedIcon className='text-orange-700 mb-1' />
                 <p className='text-orange-700 font-bold text-xl'> {isAlumniLink ? 'Alumni Registration' : 'Student Registration'} </p>
             </div>
@@ -402,24 +410,25 @@ const StudentRegistration = () => {
                                 {step === 4 &&
                                     <div className="w-full flex items-center justify-center h-67">
                                         <div>
-                                            <div className='flex flex-col items-center justify-center'>
+                                            <div className='flex flex-col text-center items-center justify-center'>
                                                 <CheckCircleRoundedIcon className='text-green-700'
                                                     sx={{ fontSize: 65 }} />
 
-                                                Congratulations! Your account has been successfully registered at  <p><b>SRTMUN-UIMS</b> as {isAlumniLink ? 'an Alumni' : 'a Student'}. </p>
+                                                <b className="text-xl mb-3">Congratulations!</b>
+                                                <p> Your account has been successfully registered at  <b>SRTMUN-UIMS</b> as {isAlumniLink ? <span>an <b>Alumni</b></span> : <span>a<b> Student</b></span>}.</p>
                                             </div>
                                             <div className='text-center mb-3 mt-3'>
                                                 {
                                                     <div>
-                                                        <strong>Username</strong> is your Email and
+                                                        <strong>Email</strong> is your Username and
                                                         remember your password that you entered. <br />
 
 
-                                                        <div className="my-5 flex items-center justify-center gap-4">
-                                                            <button onClick={() => { navigate('/') }} className="flex items-center justify-start gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                        <div className="my-5 flex items-center justify-center md:gap-4 gap-2">
+                                                            <button onClick={() => { navigate('/') }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
                                                                 Home Page
                                                             </button>
-                                                            <button onClick={() => { navigate(isAlumniLink ? siteLinks.alumniLogin.link : siteLinks.studentLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800  bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                            <button onClick={() => { navigate(isAlumniLink ? siteLinks.alumniLogin.link : siteLinks.studentLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
                                                                 {isAlumniLink ? 'Login as Alumni' : 'Login as Student'}
                                                             </button>
                                                         </div>

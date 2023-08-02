@@ -87,7 +87,7 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
                                         <>
 
                                             {/* // Your fileName div */}
-                                            <div className="w-full my-3">
+                                            <div className="w-full my-3 p-1">
                                                 {
                                                     fileName?.endsWith('.pdf')
 
