@@ -180,17 +180,21 @@ const StudentHome = () => {
                                     Log out
                                 </button>
                             </div>
+
+
+                            <div className="my-4">
+                                <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
+                                    <p className="text-muted">Alumni Proof</p>
+                                    <p className="">{(user && user.uploadProof === undefined || user && user.uploadProof === "undefined"
+                                        || user && user.uploadProof === "null" || user && user.uploadProof === null || user && user.uploadProof === "")
+                                        ? <span className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : <FileViewer fileName={user.uploadProof} serviceName="student" />}</p>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
 
-                    {/* <div className="my-4">
-                        <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
-                            <p className="text-muted">{keyName}</p>
-                            <p className="">{(user && user.uploadProof === undefined || user && user.uploadProof === "undefined"
-                                || user && user.uploadProof === "null" || user && user.uploadProof === null || user && user.uploadProof === "")
-                                ? <span className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : keyName != "Alumni Proof" ? value : <FileViewer fileName={user.uploadProof} serviceName="student" />}</p>
-                        </div>
-                    </div> */}
                 </div>
 
                 <div className='flex-1'>
