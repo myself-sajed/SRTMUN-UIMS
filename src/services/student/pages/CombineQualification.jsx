@@ -60,14 +60,14 @@ const CombineQualification = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} />
+      <AddButton onclick={setOpen} title="Your Qualifications" />
       <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Select className='col-md-6 col-lg-4' id="Type" value={Type} label="Exam Type" setState={setValues} options={ExamType} />
           {
             ["UG", "PG", "M.Phil.", "Ph.D."].includes(Type) && <div className=' p-1 text-sm md:text-base'>
               <label htmlFor='checkbox' className="form-label" >Complited from University</label>
-              <input className='form-check-input mx-5' id='checkbox' type='checkbox'/>
+              <input className='form-check-input mx-5' id='checkbox' type='checkbox' />
             </div>
           }
           <Text className='col-md-6 col-lg-4' id="Exam" value={Exam} label="Exam Name" setState={setValues} />
