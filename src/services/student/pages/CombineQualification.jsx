@@ -18,7 +18,7 @@ const tableHead = { index: "Sr. no.", Type: "Exam Type", Exam: "Exam Name", Inst
 const CombineQualification = () => {
   const model = 'StudentQualification'
   const module = 'student'
-  const ExamType = ["SSC", "HSC", "UG", "PG", "Ph.D."]
+  const ExamType = ["SSC", "HSC", "UG", "PG", "M.Phil.", "Ph.D."]
 
   const isAlumniLink = window.location.pathname.includes('alumni')
 
@@ -64,6 +64,7 @@ const CombineQualification = () => {
       <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Select className='col-md-6 col-lg-4' id="Type" value={Type} label="Exam Type" setState={setValues} options={ExamType} />
+          
           <Text className='col-md-6 col-lg-4' id="Exam" value={Exam} label="Exam Name" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="InstitutionBoard" value={InstitutionBoard} label="Institute/Board" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Persentage" value={Persentage} type='number' label="Percentage" setState={setValues} />

@@ -18,6 +18,10 @@ const studentUserSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    uploadProof: {
+        type: 'string',
+        required: false,
+    },
     name: {
         type: 'string',
         required: false,
@@ -172,6 +176,10 @@ module.exports = StudentUser;
 //         type: 'string',
 //         required: true,
 //     },
+//     uploadProof: {
+//          type: 'string',
+//          required: false,
+//      },
 //     name: {
 //         type: 'string',
 //         required: true,
