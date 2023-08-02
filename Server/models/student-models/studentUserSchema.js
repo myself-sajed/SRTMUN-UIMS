@@ -50,6 +50,10 @@ const studentUserSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    programCompletedOn: {
+        type: 'string',
+        required: false,
+    },
     cast: {
         type: 'string',
         required: false,
