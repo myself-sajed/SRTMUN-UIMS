@@ -182,7 +182,7 @@ const StudentHome = () => {
                             </div>
 
 
-                            <div className="my-4">
+                            <div className="my-4 border-t border-[#dee2e6] border-solid">
                                 <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
                                     <p className="text-muted">Alumni Proof</p>
                                     <p className="">{(user && user.uploadProof === undefined || user && user.uploadProof === "undefined"
