@@ -152,7 +152,6 @@ router.post("/student/editRecord/", StudentUpload.fields([{name: "uploadProof", 
     const isfile = req.files;
     const isFileProfile = isfile&& isfile["photoURL"]? req.files["photoURL"][0]: ""
     const isFileProof = isfile&& isfile["uploadProof"]? req.files["uploadProof"][0]: ""
-        console.log(isfile);
     if (isFileProof !== ""){
         var uploadProof = isFileProof.filename
     }
