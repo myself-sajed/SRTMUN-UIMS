@@ -130,10 +130,6 @@ const StudentHome = () => {
         }
     }, [programGraduated])
 
-    useEffect(() => {
-        console.log("User:", user)
-    }, [user])
-
     return (
         <div>
             <div className="bg-white sticky-top">

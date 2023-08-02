@@ -200,7 +200,6 @@ const StudentRegistration = () => {
     }, [enteredOTP])
 
     useEffect(() => {
-        console.log('OTP changed to:', otp.clientOTP)
         if (otp.clientOTP?.length === 6 && step === 3) {
             handleRegistration()
         }
