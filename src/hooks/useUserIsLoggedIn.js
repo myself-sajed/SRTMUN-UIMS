@@ -118,7 +118,7 @@ const useUserIsLoggedIn = () => {
         const alumni_token = localStorage.getItem('alumni-token')
         if (alumni_token) {
 
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: student_token, model: 'StudentUser', filterName: 'email' })
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: alumni_token, model: 'StudentUser', filterName: 'email' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setAlumniUser(res.data.user))

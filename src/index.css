@@ -579,3 +579,10 @@ body {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* Your custom CSS to remove the styles from the Bootstrap accordion-button */
+.accordionHeader>.accordion-button:not(.collapsed) {
+  color: initial !important;
+  background-color: initial !important;
+  box-shadow: none !important;
+}

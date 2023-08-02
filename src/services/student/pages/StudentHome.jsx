@@ -49,7 +49,7 @@ const StudentHome = () => {
     const dispatch = useDispatch()
     const isAlumniLink = window.location.pathname.includes('alumni')
     useStudentAuth(true, isAlumniLink ? 'alumni' : 'student')
-    const user = useSelector(state => state.user.studentUser)
+    const user = useSelector(state => isAlumniLink ? state.user.alumniUser : state.user.studentUser)
     title(user?.isAlumni ? 'Alumni Home' : 'Student Home')
 
     const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", }
@@ -196,11 +196,10 @@ const StudentHome = () => {
                         <div className="accordion" id="accordionExample">
                             {
                                 navcom.map((item, index) => {
-                                    console.log("item in nav:", item)
                                     return item.name === 'studentJRFSRF' ?
                                         (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                            <div className="accordion-item bg-gray-50 ">
-                                                <h2 className="accordion-header" id={`heading-${index}`}>
+                                            <div className="accordion-item  bg-gray-50 ">
+                                                <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                     <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                                         {item.value}
                                                     </button>
@@ -211,7 +210,7 @@ const StudentHome = () => {
                                                     </div>
                                                 </div>
                                             </div> : null : <div className="accordion-item bg-gray-50 ">
-                                            <h2 className="accordion-header" id={`heading-${index}`}>
+                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                                     {item.value}
                                                 </button>
