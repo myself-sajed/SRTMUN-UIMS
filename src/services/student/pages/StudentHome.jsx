@@ -31,6 +31,7 @@ import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import FileViewer from '../../../components/FileViewer'
+import { Skeleton } from '@mui/material'
 import { getOrdinalSuffix } from '../../director/pages/NewStudent'
 
 const StudentHome = () => {
@@ -67,8 +68,7 @@ const StudentHome = () => {
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
-
-        dispatch(setStudentUser(userrefetch?.data[0]))
+        dispatch(isAlumniLink ? setAlumniUser(userrefetch?.data[0]) : setStudentUser(userrefetch?.data[0]))
     }
     const onSubmit = (e) => {
         e.preventDefault();
@@ -132,75 +132,85 @@ const StudentHome = () => {
         }
     }, [programGraduated])
 
-    useEffect(() => {
-        console.log("User:", user)
-    }, [user])
-
     return (
         <div>
-            <OnlyNav user={user} logout={{ token: user?.isAlumni ? 'alumni-token' : 'student-token', link: siteLinks.welcome.link }}
-                heading={{ title: user?.isAlumni ? 'Alumni' : 'Student', link: siteLinks.welcome.link }}
-                li={[siteLinks.welcome]} userType='student'
-            />
-
-            <div className='mt-2'>
-                <Bred links={[siteLinks.welcome, user?.isAlumni ? siteLinks.alumniHome : siteLinks.studentHome]} />
+            <div className="bg-white sticky-top">
+                <OnlyNav user={user} logout={{ token: user?.isAlumni ? 'alumni-token' : 'student-token', link: siteLinks.welcome.link }}
+                    heading={{ title: isAlumniLink ? 'Alumni' : 'Student', link: siteLinks.welcome.link }}
+                    li={[siteLinks.welcome]} userType='student'
+                />
             </div>
 
-            <div className="main-div md:flex items-start my-3 gap-3">
-                <div className="mb-3 md:mb-0 xl:min-w-[35%] lg:min-w-[45%] md:min-w-[60%] h-screen">
-                    <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
-                        <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
+            <div className='mt-2'>
+                <Bred links={[siteLinks.welcome, isAlumniLink ? siteLinks.alumniHome : siteLinks.studentHome]} />
+            </div>
 
-                        <div className='mt-4'>
-                            <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
+            {user ?
+                <div className="main-div md:flex items-start my-3 gap-3">
+                    <div className="mb-3 md:mb-0 xl:w-[35%] lg:w-[45%] md:w-[60%] sm:h-screen">
+                        <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
+                            <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
 
-                            <div className='text-left gap-2 mt-2'>
-                                <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
-                                <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
-                                <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
-                                <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
-                            </div>
+                            <div className='mt-4'>
+                                <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
 
-                            <div className="mt-3">
-                                <button type="button" className="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
-                                    <ContactPageRoundedIcon />
-                                    Build Resume
-                                </button>
+                                <div className='text-left gap-2 mt-2'>
+                                    <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
+                                    <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
+                                    <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
+                                    <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
+                                </div>
 
-                                <button type="button" className="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2" onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
-                                    <EditRoundedIcon />
-                                    Edit Profile
-                                </button>
+                                <div className="mt-3">
+                                    <button type="button" className="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
+                                        <ContactPageRoundedIcon />
+                                        Build Resume
+                                    </button>
 
-                                <button onClick={() => { dispatch(user?.isAlumni ? setAlumniUser(null) : setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem(user?.isAlumni ? 'alumni-token' : 'student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
-                                    <LogoutRoundedIcon />
-                                    Log out
-                                </button>
+                                    <button type="button" className="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2" onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
+                                        <EditRoundedIcon />
+                                        Edit Profile
+                                    </button>
+
+                                    <button onClick={() => { dispatch(user?.isAlumni ? setAlumniUser(null) : setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem(user?.isAlumni ? 'alumni-token' : 'student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
+                                        <LogoutRoundedIcon />
+                                        Log out
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className='flex-1'>
-                    <div className=" font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
-                        <p aria-current="true" className="w-full p-2 font-medium text-left text-black  border-b border-gray-200 rounded-t-lg ">
-                            Other Relevant Information
-                        </p>
-                        <div className="w-full">
-                            <OtherDetails user={user} editFunction={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }} />
+                    <div className='flex-1'>
+                        <div className=" font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
+                            <p aria-current="true" className="w-full p-2 font-medium text-left text-black  border-b border-gray-200 rounded-t-lg ">
+                                Other Relevant Information
+                            </p>
+                            <div className="w-full">
+                                <OtherDetails user={user} editFunction={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }} />
+                            </div>
+
                         </div>
 
-                    </div>
+                        <div className="mt-3">
 
-                    <div className="mt-3">
-
-                        <div className="accordion" id="accordionExample">
-                            {
-                                navcom.map((item, index) => {
-                                    return item.name === 'studentJRFSRF' ?
-                                        (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                            <div className="accordion-item bg-gray-50 ">
+                            <div className="accordion" id="accordionExample">
+                                {
+                                    navcom.map((item, index) => {
+                                        return item.name === 'studentJRFSRF' ?
+                                            (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                                <div className="accordion-item bg-gray-50 ">
+                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                            {item.value}
+                                                        </button>
+                                                    </h2>
+                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <div key={item}>{item.element}</div>
+                                                        </div>
+                                                    </div>
+                                                </div> : null : <div className="accordion-item bg-gray-50 ">
                                                 <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                     <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                                         {item.value}
@@ -211,27 +221,56 @@ const StudentHome = () => {
                                                         <div key={item}>{item.element}</div>
                                                     </div>
                                                 </div>
-                                            </div> : null : <div className="accordion-item bg-gray-50 ">
-                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                    {item.value}
-                                                </button>
-                                            </h2>
-                                            <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                <div className="accordion-body">
-                                                    <div key={item}>{item.element}</div>
-                                                </div>
                                             </div>
-                                        </div>
-                                })
-                            }
+                                    })
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div> : <div className="mt-3 flex flex-col md:flex-row items-start gap-5">
+                    <div className="h-screen w-full bg-gray-50 border rounded-xl p-2">
+                        <div className="mx-auto w-[50%] mt-2">
+                            <Skeleton animation="wave" variant="circular" width={90} height={90} />
                         </div>
 
+                        <div className='mt-3'>
+                            <Skeleton
+                                animation="wave"
+                                height={60}
+                                width="80%"
+                                style={{ marginBottom: 6 }}
+                            />
+                            <Skeleton
+                                animation="wave"
+                                height={40}
+                                width="80%"
+                                style={{ marginBottom: 6 }}
+                            />
+                            <Skeleton
+                                animation="wave"
+                                height={40}
+                                width="80%"
+                                style={{ marginBottom: 6 }}
+                            />
+                            <Skeleton
+                                animation="wave"
+                                height={40}
+                                width="80%"
+                                style={{ marginBottom: 6 }}
+                            />
+                        </div>
+                    </div>
+                    <div className="h-screen w-full">
+                        <div className="h-1/2 bg-gray-50 rounded-xl border p-2">
+                            <Skeleton variant="rectangular" sx={{ width: '100%', height: '100%' }} />
+                        </div>
+                        <div className="h-1/2 mt-3 bg-gray-50 rounded-xl border p-2">
+                            <Skeleton variant="rectangular" sx={{ width: '100%', height: '100%' }} />
+                        </div>
                     </div>
                 </div>
-            </div>
-
-
+            }
 
             <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
                 {
@@ -278,9 +317,9 @@ const StudentHome = () => {
                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
                         {
-                            user?.isAlumni===true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof==undefined?true:false} />
+                            user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
-                        {programGraduated.includes("Ph.D")&& user.isAlumni===false &&  <>
+                        {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
@@ -302,7 +341,9 @@ const OtherDetails = ({ user, editFunction }) => {
     return <div className="p-2 lg:flex items-start justify-start gap-5 w-full">
         <div className="w-full md:w-full lg:w-[60%] xl:w-[40%]">
             <DetailTile editFunction={editFunction} keyName="Program Enrolled" value={`${user && user.programGraduated}`} />
-            <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} />
+            {
+                !user?.isAlumni ? <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} /> : null
+            }
             <DetailTile editFunction={editFunction} keyName="Caste" value={`${user && user.cast}`} />
             <DetailTile editFunction={editFunction} keyName="Religion" value={`${user && user.religion}`} />
             <DetailTile editFunction={editFunction} keyName="Date Of Birth" value={`${user && user.dob}`} />
@@ -310,9 +351,9 @@ const OtherDetails = ({ user, editFunction }) => {
         </div>
         <div className="w-full md:w-full lg:w-[60%] xl:w-[60%]">
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
-            <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
+            {!user?.isAlumni ? <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} /> : null}
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
-            {user?.programGraduated.includes("Ph.D") && user.isAlumni===false && <>
+            {user?.programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
                 <DetailTile editFunction={editFunction} keyName="Date of RAC" value={`${user && user.dateOfRac}`} />
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />
