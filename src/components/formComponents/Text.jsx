@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Text({ className = "col-md-6", type = "text", setState, value, label, id, required = true, placeholder = "", inputClass = "" }) {
+function Text({ className = "col-md-6", type = "text", setState, value, label, id, required = true, placeholder = "", inputClass = "", desable = false }) {
     return (
         <div className={`col-12 p-1 ${className} text-sm md:text-base`}>
             <label htmlFor="fname" className="form-label">{label}</label>
@@ -13,7 +13,7 @@ function Text({ className = "col-md-6", type = "text", setState, value, label, i
                         }
                     })
                 }}
-                value={value} />
+                value={value} disabled={desable} />
         </div>
     )
 }
