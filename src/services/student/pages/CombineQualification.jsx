@@ -20,7 +20,9 @@ const CombineQualification = () => {
   const module = 'student'
   const ExamType = ["SSC", "HSC", "UG", "PG", "M.Phil.", "Ph.D."]
 
-  const user = useSelector(state => state.user.studentUser)
+  const isAlumniLink = window.location.pathname.includes('alumni')
+
+  const user = useSelector(state => isAlumniLink ? state.user.alumniUser : state.user.studentUser)
   const filter = { userId: user?._id }
   const params = { model, id: "", module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))

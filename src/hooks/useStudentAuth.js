@@ -6,6 +6,7 @@ import { setAlumniUser, setStudentUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 
 const useStudentAuth = (shouldNavigate = true, userType) => {
+    console.log('In auth:', userType);
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -18,6 +19,7 @@ const useStudentAuth = (shouldNavigate = true, userType) => {
             Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: student_token, model: 'StudentUser', filterName: 'email' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
+                        console.log('authenticated:', res.data.user)
                         dispatch(userType === 'student' ? setStudentUser(res.data.user) : setAlumniUser(res.data.user))
                         if (shouldNavigate) navigate(userType === 'student' ? siteLinks.studentHome.link : siteLinks.alumniHome.link)
                     }

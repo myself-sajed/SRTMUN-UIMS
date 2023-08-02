@@ -51,7 +51,7 @@ const StudentHome = () => {
     const dispatch = useDispatch()
     const isAlumniLink = window.location.pathname.includes('alumni')
     useStudentAuth(true, isAlumniLink ? 'alumni' : 'student')
-    const user = useSelector(state => state.user.studentUser)
+    const user = useSelector(state => isAlumniLink ? state.user.alumniUser : state.user.studentUser)
     title(user?.isAlumni ? 'Alumni Home' : 'Student Home')
 
     const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", uploadProof: null }
@@ -182,6 +182,15 @@ const StudentHome = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* <div className="my-4">
+                        <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
+                            <p className="text-muted">{keyName}</p>
+                            <p className="">{(user && user.uploadProof === undefined || user && user.uploadProof === "undefined"
+                                || user && user.uploadProof === "null" || user && user.uploadProof === null || user && user.uploadProof === "")
+                                ? <span className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : keyName != "Alumni Proof" ? value : <FileViewer fileName={user.uploadProof} serviceName="student" />}</p>
+                        </div>
+                    </div> */}
                 </div>
 
                 <div className='flex-1'>
@@ -200,11 +209,11 @@ const StudentHome = () => {
                         <div className="accordion" id="accordionExample">
                             {
                                 navcom.map((item, index) => {
-                                    // console.log("item in nav:", item)
+                                    console.log("item in nav:", item)
                                     return item.name === 'studentJRFSRF' ?
                                         (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                            <div className="accordion-item bg-gray-50 ">
-                                                <h2 className="accordion-header" id={`heading-${index}`}>
+                                            <div className="accordion-item  bg-gray-50 ">
+                                                <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                     <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                                         {item.value}
                                                     </button>
@@ -215,7 +224,7 @@ const StudentHome = () => {
                                                     </div>
                                                 </div>
                                             </div> : null : <div className="accordion-item bg-gray-50 ">
-                                            <h2 className="accordion-header" id={`heading-${index}`}>
+                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                                     {item.value}
                                                 </button>
@@ -280,15 +289,15 @@ const StudentHome = () => {
 
                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
                         {
-                            user?.isAlumni===true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof==undefined?true:false} />
+                            user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
 
-                        {programGraduated.includes("Ph.D") && user.isAlumni===false && <>
+                        {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
-                        </> }
+                        </>}
                     </div>
                 }
             </DialogBox>
@@ -315,8 +324,8 @@ const OtherDetails = ({ user, editFunction }) => {
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
             <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
-            
-            {user?.programGraduated.includes("Ph.D")&&user.isAlumni===false ? <>
+
+            {user?.programGraduated.includes("Ph.D") && user.isAlumni === false ? <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
                 <DetailTile editFunction={editFunction} keyName="Date of RAC" value={`${user && user.dateOfRac}`} />
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />
@@ -324,22 +333,20 @@ const OtherDetails = ({ user, editFunction }) => {
             </> : null}
             <DetailTile editFunction={editFunction} keyName="Address" value={`${user && user?.address?.toUpperCase()}`} />
 
-            {
-                user?.isAlumni===true && <DetailTile keyName="Alumni Proof" value={user && user.uploadProof} user={user} />
-            }
+
         </div>
 
 
     </div>
 }
 
-const DetailTile = ({ keyName, value, editFunction, user}) => {
+const DetailTile = ({ keyName, value, editFunction, user }) => {
     return (
         <div className="grid grid-cols-2 py-2 text-black text-sm md:gap-1 gap-3">
             <p className="text-muted">{keyName}</p>
             <p className="">{(value === undefined || value === "undefined"
                 || value === "null" || value === null || value === "")
-                ? <span onClick={editFunction} className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : keyName!="Alumni Proof"? value:<FileViewer fileName={user.uploadProof} serviceName="student"/>}</p>
+                ? <span onClick={editFunction} className='bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs'>Add Now</span> : value}</p>
         </div>
     )
 }

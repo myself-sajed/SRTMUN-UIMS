@@ -15,7 +15,7 @@ const LoggedInUsers = () => {
         user: { homeLink: siteLinks.facultyHome.link, serviceName: 'faculty' },
         directorUser: { homeLink: siteLinks.directorHome.link, serviceName: 'director' },
         studentUser: { homeLink: siteLinks.studentHome.link, serviceName: 'student' },
-        alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'faculty' },
+        alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'student' },
         proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news' },
         adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin' },
     }
