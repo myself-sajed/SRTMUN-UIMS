@@ -68,18 +68,14 @@ const CombineQualification = () => {
           <Select className='col-md-6 col-lg-4' id="Type" value={Type} label="Exam Type" setState={setValues} options={ExamType} />
           {
             ["UG", "PG", "M.Phil.", "Ph.D."].includes(Type) && <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
-            <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
-                <input class="form-check-input" checked={isStudied} onChange={()=>{setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied }})}} type="checkbox" role="switch" id="checkbox" />
-                <label class="form-check-label" htmlFor="checkbox">Complited from University</label>
+              <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
+                  <input class="form-check-input" checked={isStudied} onChange={()=>{setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied }})}} type="checkbox" role="switch" id="checkbox" />
+                  <label class="form-check-label" htmlFor="checkbox">Complited from University campus</label>
+              </div>
             </div>
-        </div>
-            // <div className='col-12 col-md-6 col-lg-4 p-4 text-sm md:text-base flex items-center'>
-            //   <label htmlFor='checkbox' className="form-label" ></label>
-            //   <Switch className='mx-3' style={{background:"#fff", border:"solid 1px #1976d2", color:"#1976d2" }} checkedChildren="yes" unCheckedChildren="no" onChange={} checked={isStudied} />
-            // </div>
           }
           {
-            Type && <Select className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
+             isStudied && <Select className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} options={Type==="UG"?["School of Pharmacy"]:Object.keys(SchoolsProgram)} />
           }
           <Text className='col-md-6 col-lg-4' id="Exam" value={Exam} label="Exam Name" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="InstitutionBoard" value={InstitutionBoard} label="Institute/Board" setState={setValues} />
