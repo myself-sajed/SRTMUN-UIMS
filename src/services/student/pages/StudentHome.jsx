@@ -276,12 +276,15 @@ const StudentHome = () => {
 
                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
-                        {programGraduated.includes("Ph.D") ? <>
+                        {
+                            user?.isAlumni===true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof==undefined?true:false} />
+                        }
+                        {programGraduated.includes("Ph.D")&& user.isAlumni===false &&  <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
-                        </> : null}
+                        </>}
                     </div>
                 }
             </DialogBox>
@@ -308,12 +311,12 @@ const OtherDetails = ({ user, editFunction }) => {
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
             <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
-            {user?.programGraduated.includes("Ph.D") ? <>
+            {user?.programGraduated.includes("Ph.D") && user.isAlumni===false && <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
                 <DetailTile editFunction={editFunction} keyName="Date of RAC" value={`${user && user.dateOfRac}`} />
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />
                 <DetailTile editFunction={editFunction} keyName="Receives any Fellowship" value={`${user && user.ReceivesFelloship}`} />
-            </> : null}
+            </>}
             <DetailTile editFunction={editFunction} keyName="Address" value={`${user && user?.address?.toUpperCase()}`} />
             {
                 user?.isAlumni === true && <DetailTile editFunction={editFunction} keyName="Alumni Proof" value={user && user.uploadProof} user={user} />

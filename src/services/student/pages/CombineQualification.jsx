@@ -11,6 +11,7 @@ import getReq from '../../../components/requestComponents/getReq'
 import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
+import { Switch } from 'antd'
 
 
 const tableHead = { index: "Sr. no.", Type: "Exam Type", Exam: "Exam Name", InstitutionBoard: "Institute/Board", Persentage: "Percentage", StartYear: "Started On", Year: "Completed on", Upload_Proof: "Uploaded Proof", Action: "Action" }
@@ -41,7 +42,7 @@ const CombineQualification = () => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
         if (item?._id === itemToEdit) {
-          const { Exam, InstitutionBoard, Persentage, StartYear, Year, Type, } = item
+          const { Exam, InstitutionBoard, Persentage, StartYear, Year, Type } = item
           setEdit(true); setOpen(true);
           setValues({ Exam, InstitutionBoard, Persentage, StartYear, Year, Type })
         }
@@ -65,9 +66,9 @@ const CombineQualification = () => {
         <div className='flex flex-wrap'>
           <Select className='col-md-6 col-lg-4' id="Type" value={Type} label="Exam Type" setState={setValues} options={ExamType} />
           {
-            ["UG", "PG", "M.Phil.", "Ph.D."].includes(Type) && <div className=' p-1 text-sm md:text-base'>
+            ["UG", "PG", "M.Phil.", "Ph.D."].includes(Type) && <div className='col-12 col-md-6 col-lg-4 p-4 text-sm md:text-base flex items-center'>
               <label htmlFor='checkbox' className="form-label" >Complited from University</label>
-              <input className='form-check-input mx-5' id='checkbox' type='checkbox' />
+              <Switch className='mx-3' style={{background:"#fff", border:"solid 1px #1976d2", color:"#1976d2" }} checkedChildren="yes" unCheckedChildren="no" onChange={(e)=>{setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied }})}} checked={values['isStudied']} />
             </div>
           }
           <Text className='col-md-6 col-lg-4' id="Exam" value={Exam} label="Exam Name" setState={setValues} />
