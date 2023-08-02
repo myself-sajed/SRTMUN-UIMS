@@ -44,9 +44,9 @@ const FromToDate = ({ editItem, editModal, activeTitle, fromDate, setFromDate, s
         <>
 
             <div className='col-md-5 border rounded-md mt-5'>
-                <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
-                    <input class="form-check-input" checked={active} onChange={(e) => { setActive(e.target.checked) }} type="checkbox" role="switch" id={activeTitle} />
-                    <label class="form-check-label" htmlFor={activeTitle}>{activeTitle}</label>
+                <div className="form-check form-switch py-[0.20rem] mt-[0.28rem]">
+                    <input className="form-check-input" checked={active} onChange={(e) => { setActive(e.target.checked) }} type="checkbox" role="switch" id={activeTitle} />
+                    <label className="form-check-label" htmlFor={activeTitle}>{activeTitle}</label>
                 </div>
             </div>
 

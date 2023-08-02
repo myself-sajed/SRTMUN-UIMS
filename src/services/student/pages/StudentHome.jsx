@@ -66,8 +66,7 @@ const StudentHome = () => {
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
-
-        dispatch(setStudentUser(userrefetch?.data[0]))
+        dispatch(isAlumniLink ? setAlumniUser(userrefetch?.data[0]) : setStudentUser(userrefetch?.data[0]))
     }
     const onSubmit = (e) => {
         e.preventDefault();
@@ -131,23 +130,21 @@ const StudentHome = () => {
         }
     }, [programGraduated])
 
-    useEffect(() => {
-        console.log("User:", user)
-    }, [user])
-
     return (
         <div>
-            <OnlyNav user={user} logout={{ token: user?.isAlumni ? 'alumni-token' : 'student-token', link: siteLinks.welcome.link }}
-                heading={{ title: user?.isAlumni ? 'Alumni' : 'Student', link: siteLinks.welcome.link }}
-                li={[siteLinks.welcome]} userType='student'
-            />
+            <div className="bg-white sticky-top">
+                <OnlyNav user={user} logout={{ token: user?.isAlumni ? 'alumni-token' : 'student-token', link: siteLinks.welcome.link }}
+                    heading={{ title: user?.isAlumni ? 'Alumni' : 'Student', link: siteLinks.welcome.link }}
+                    li={[siteLinks.welcome]} userType='student'
+                />
+            </div>
 
             <div className='mt-2'>
                 <Bred links={[siteLinks.welcome, user?.isAlumni ? siteLinks.alumniHome : siteLinks.studentHome]} />
             </div>
 
             <div className="main-div md:flex items-start my-3 gap-3">
-                <div className="mb-3 md:mb-0 xl:min-w-[35%] lg:min-w-[45%] md:min-w-[60%] h-screen">
+                <div className="mb-3 md:mb-0 xl:min-w-[35%] lg:min-w-[45%] md:min-w-[60%] sm:h-screen">
                     <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
                         <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
 
@@ -277,9 +274,9 @@ const StudentHome = () => {
                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
                         {
-                            user?.isAlumni===true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof==undefined?true:false} />
+                            user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
-                        {programGraduated.includes("Ph.D")&& user.isAlumni===false &&  <>
+                        {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
@@ -311,7 +308,7 @@ const OtherDetails = ({ user, editFunction }) => {
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
             <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
-            {user?.programGraduated.includes("Ph.D") && user.isAlumni===false && <>
+            {user?.programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
                 <DetailTile editFunction={editFunction} keyName="Date of RAC" value={`${user && user.dateOfRac}`} />
                 <DetailTile editFunction={editFunction} keyName="Title" value={`${user && user.Title}`} />

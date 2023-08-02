@@ -25,7 +25,7 @@ const StudentLogin = () => {
     useStudentAuth(true, isAlumniLink ? 'alumni' : 'student')
     const [isLoading, setIsLoading] = useState(false)
 
-    const linkLine = <p className='text-center'>Don't have an account? <Link to={isAlumniLink ? siteLinks.alumniRegistration.link : siteLinks.studentRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now</Link> | <Link to={isAlumniLink ? siteLinks.alumniPasswordReset.link : siteLinks.studentPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
+    const linkLine = <p className='text-center'>Don't have an account? <Link to={isAlumniLink ? siteLinks.alumniRegistration.link : siteLinks.studentRegistration.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Register Now.</Link> <br /> <Link to={isAlumniLink ? siteLinks.alumniPasswordReset.link : siteLinks.studentPasswordReset.link} className='cursor-pointer hover:text-blue-900 text-blue-600'>Forgot Password</Link> </p>
 
     // handle submit
     function handleSubmit(e) {

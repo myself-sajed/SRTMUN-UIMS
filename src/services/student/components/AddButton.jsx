@@ -12,7 +12,7 @@ export default function AddButton(props) {
     return (
 
 
-        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between sm:gap-2'>
+        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2'>
             <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
                 <div className='flex items-center justify-start gap-2'>
                     <p>{props.title}</p>
