@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const studentQualificationSchema = new mongoose.Schema({
     Program: {
         type: 'string',
-        required: true,
+        required: false,
     },
-    InstitutionBoard: {   //isStudied, school
+    InstitutionBoard: {
         type: 'string',
         required: true,
     },
@@ -27,7 +27,7 @@ const studentQualificationSchema = new mongoose.Schema({
     },
     school: {
         type: 'string',
-        required: true,
+        required: false,
     },
     isStudied: {
         type: 'boolean',
