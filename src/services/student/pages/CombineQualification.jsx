@@ -15,12 +15,12 @@ import { Switch } from 'antd'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 
 
-const tableHead = { index: "Sr. no.", Type: "Exam Type", Exam: "Exam Name", InstitutionBoard: "Institute/Board", Persentage: "Percentage", StartYear: "Started On", Year: "Completed on", Upload_Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", ProgramType: "Program Type", school: "School/College Name", Program: "Program Name", InstitutionBoard: "Institute/Board", Persentage: "Percentage", StartYear: "Started On", Year: "Completed on", Upload_Proof: "Uploaded Proof", Action: "Action" }
 
 const CombineQualification = () => {
   const model = 'StudentQualification'
   const module = 'student'
-  const ExamType = ["SSC", "HSC", "UG", "PG", "M.Phil.", "Ph.D."]
+  const ProgramTypes = ["SSC", "HSC", "UG", "PG", "M.Phil.", "Ph.D."]
 
   const isAlumniLink = window.location.pathname.includes('alumni')
 
@@ -29,9 +29,9 @@ const CombineQualification = () => {
   const params = { model, id: "", module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
-  const initialstate = { Exam: '', InstitutionBoard: '', Persentage: '', StartYear: '', Year: '', Type: '', Upload_Proof: '', isStudied: false, school: '' }
+  const initialstate = { Program: '', InstitutionBoard: '', Persentage: '', StartYear: '', Year: '', ProgramType: '', Upload_Proof: '', isStudied: false, school: '' }
   const [values, setValues] = useState(initialstate)
-  const { Exam, InstitutionBoard, Persentage, StartYear, Year, Type, isStudied, school } = values
+  const { Program, InstitutionBoard, Persentage, StartYear, Year, ProgramType, isStudied, school } = values
   const [open, setOpen] = useState(false)
 
   //---------------edit state-------------------
@@ -43,9 +43,9 @@ const CombineQualification = () => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
         if (item?._id === itemToEdit) {
-          const { Exam, InstitutionBoard, Persentage, StartYear, Year, Type } = item
+          const { Program, InstitutionBoard, Persentage, StartYear, Year, ProgramType, isStudied, school } = item
           setEdit(true); setOpen(true);
-          setValues({ Exam, InstitutionBoard, Persentage, StartYear, Year, Type })
+          setValues({ Program, InstitutionBoard, Persentage, StartYear, Year, ProgramType, isStudied, school })
         }
       })
     }
@@ -65,20 +65,40 @@ const CombineQualification = () => {
       <AddButton onclick={setOpen} title="Your Qualifications" />
       <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
-          <Select className='col-md-6 col-lg-4' id="Type" value={Type} label="Exam Type" setState={setValues} options={ExamType} />
+          <div className={`col-12 p-1 col-md-6 col-lg-4 text-sm md:text-base`}>
+            <label htmlFor="choose" className="form-label" >Program Type</label>
+            <select className="form-select" id="choose" required
+                onChange={(e) => {
+                    setValues((pri) => {
+                        return {
+                            ...pri,
+                            ProgramType : e.target.value, isStudied: false, school: "", Program: ""
+                        }})}
+                } value={ProgramType}>
+                <option selected disabled value="">Choose</option>
+                {
+                    ProgramTypes?.map((e) => {
+                        return <option value={e} >{e}</option>
+                    })
+                }
+            </select>
+        </div>
           {
-            ["UG", "PG", "M.Phil.", "Ph.D."].includes(Type) && <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
+            <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
               <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
-                  <input class="form-check-input" checked={isStudied} onChange={()=>{setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied }})}} type="checkbox" role="switch" id="checkbox" />
-                  <label class="form-check-label" htmlFor="checkbox">Complited from University campus</label>
+                  <input class="form-check-input" checked={isStudied} onChange={()=>{setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied, school: "", Program: "",  InstitutionBoard:pri['isStudied']===false?"Swami Ramanand Teerth Marathwada University, Nanded":""}})}} type="checkbox" role="switch" id="checkbox" disabled={!["UG", "PG", "M.Phil.", "Ph.D."].includes(ProgramType)} />
+                  <label class="form-check-label" htmlFor="checkbox">Completed from University Campus</label>
               </div>
             </div>
           }
           {
-             isStudied && <Select className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} options={Type==="UG"?["School of Pharmacy"]:Object.keys(SchoolsProgram)} />
+             isStudied ? <Select className='col-md-6 col-lg-4' id="school" value={school} label="School/College Name" setState={setValues} options={ProgramType==="UG"?["School of Fine and Performing Arts","School of Pharmacy", "School of Technology, Sub-Campus, Latur"]:Object.keys(SchoolsProgram)} /> : <Text className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} />
           }
-          <Text className='col-md-6 col-lg-4' id="Exam" value={Exam} label="Exam Name" setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="InstitutionBoard" value={InstitutionBoard} label="Institute/Board" setState={setValues} />
+          {
+            isStudied ? <Select className='col-md-6 col-lg-4' id="Program" value={Program} label="Program Name" setState={setValues} options={ProgramType==="UG"||school==="School of Fine and Performing Arts"?["Bachalor in Performing Arts"]:ProgramType==="UG"||school==="School of Pharmacy"?["B.Pharm"]: ProgramType==="UG"||school==="School of Technology, Sub-Campus, Latur"?["B.Voc.(Software Development)"]:SchoolsProgram[school]?SchoolsProgram[school].map(item => { return item[0]}):[]} /> : <Text className='col-md-6 col-lg-4' id="Program" value={Program} label="Program Name" setState={setValues} />
+          }
+          
+          <Text className='col-md-6 col-lg-4' id="InstitutionBoard" value={InstitutionBoard} label="Institute/Board" setState={setValues} desable={isStudied} />
           <Text className='col-md-6 col-lg-4' id="Persentage" value={Persentage} type='number' label="Percentage" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="StartYear" value={StartYear} label="Started On" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="Year" value={Year} label="Completed On" setState={setValues} />

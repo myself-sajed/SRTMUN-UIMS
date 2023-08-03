@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const studentQualificationSchema = new mongoose.Schema({
-    Exam: {
+    Program: {
         type: 'string',
         required: true,
     },
-    InstitutionBoard: {
+    InstitutionBoard: {   //isStudied, school
         type: 'string',
         required: true,
     },
@@ -21,8 +21,16 @@ const studentQualificationSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    Type: {
+    ProgramType: {
         type: 'string',
+        required: true,
+    },
+    school: {
+        type: 'string',
+        required: true,
+    },
+    isStudied: {
+        type: 'boolean',
         required: true,
     },
     Upload_Proof: {

@@ -75,7 +75,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
     try {
 
         const data = JSON.parse(JSON.stringify(req.body));
-        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector, isAlumni } = data;
+        const { salutation, name, programGraduated, schoolName, gender, email, mobile, clientOTP, serverOTP, abcNo, currentIn, country, cast, religion, programEnroledOn, isCreatedByDirector, isAlumni, programCompletedOn } = data;
 
 
         if (JSON.parse(isCreatedByDirector)) {
@@ -103,7 +103,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 const user = new StudentUser({
                     mobile, salutation, name, schoolName, programGraduated, password, gender,
                     email: email.toLowerCase(), photoURL: req.file.filename,
-                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false, isAlumni: JSON.parse(isAlumni)
+                    abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false, isAlumni: JSON.parse(isAlumni), programCompletedOn
                 });
                 await user.save();
                 res.send({ status: "success", message: "Registration Successfull" });
@@ -166,9 +166,9 @@ router.post("/student/editRecord/", StudentUpload.fields([{name: "uploadProof", 
 
     })
     // console.log(data)
-    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn } = data
+    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn } = data
 
-    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn }
+    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn }
 
     if (photoURL) {
         SendData.photoURL = photoURL

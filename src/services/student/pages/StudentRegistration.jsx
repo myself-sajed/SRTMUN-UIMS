@@ -39,9 +39,9 @@ const StudentRegistration = () => {
     const genders = ["Male", "Female", "Other"]
     const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain", "Other"]
-    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "" }
+    const initialState = { salutation: "", name: "", programGraduated: "", schoolName: "", gender: "", password: "", cPassword: "", email: "", mobile: "", abcNo: "", currentIn: '', country: "India", cast: "", religion: "", programEnroledOn: "", programCompletedOn: "" }
     const [values, setValues] = useState(initialState)
-    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn } = values
+    const { salutation, name, programGraduated, schoolName, gender, password, cPassword, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn, programCompletedOn } = values
 
     const [avatar, setAvatar] = useState(null)
     const [file, setFile] = useState(null)
@@ -268,8 +268,13 @@ const StudentRegistration = () => {
                                         {
                                             !isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
                                         }
+                                        <Select className='col-md-5' id="programGraduated" value={programGraduated} label={isAlumniLink ? "Last Completed Program" : "Enrolled Program"} setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+
+                                        {!isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />}
 
                                         <YearSelect className="col-md-3" id="programEnroledOn" value={programEnroledOn} label="Year of Enrollment" setState={setValues} />
+
+                                        {isAlumniLink && <YearSelect className="col-md-3" id="programCompletedOn" value={programCompletedOn} label="Year of Completion" setState={setValues} />}
 
                                         <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
 
@@ -277,11 +282,11 @@ const StudentRegistration = () => {
 
                                         <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
-                                        <Select className='col-md-2' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
+                                        <Select className='col-md-3' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
 
-                                        <Text className="col-md-5" id="password" value={password} label="Create Password" type='password' setState={setValues} />
+                                        <Text className="col-md-3" id="password" value={password} label="Create Password" type='password' setState={setValues} />
 
-                                        <Text className="col-md-5" id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
+                                        <Text className="col-md-3" id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
 
                                         <div className="col-12 flex items-center justify-center">
                                             <button className="flex items-center justify-start mt-3 gap-2 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"> Next <ArrowForwardRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /></button>
@@ -327,6 +332,7 @@ const StudentRegistration = () => {
                                                             {
                                                                 !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />
                                                             }
+                                                            {!isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />}
 
                                                         </div>
                                                     </div>
