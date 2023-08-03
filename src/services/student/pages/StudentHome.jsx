@@ -295,36 +295,39 @@ const StudentHome = () => {
 
 
 
-                        <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
-                        <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />
-                        <Text className='col-md-4 col-lg-4' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
+                        <Select className='col-md-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
+                        <Text className='col-md-5' id="name" value={name} label="Full Name" setState={setValues} />
+                        <Text className='col-md-2' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
+                        <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
                         <Text className='col-md-8 col-lg-8' id="address" value={address} label="Permanent Address" setState={setValues} />
 
-                        <Select className='col-md-4' id="programGraduated" value={programGraduated} label={isAlumniLink ? "Last Completed Program" : "Enrolled Program"} setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+                        <Select className='col-md-4' id="programGraduated" value={programGraduated} label={isAlumniLink ? "Program Graduated" : "Enrolled Program"} setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
 
-                        {!isAlumniLink && <Select className="col-lg-2 col-md-4" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />}
+                        {!isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />}
 
-                        <YearSelect className="col-md-2" id="programEnroledOn" value={programEnroledOn} label="Program Enrolled On" setState={setValues} />
+                        <YearSelect className="col-md-2" id="programEnroledOn" value={programEnroledOn} label="Program Enrolled in" setState={setValues} />
 
-                        {isAlumniLink && <YearSelect className="col-md-3" id="programCompletedOn" value={programCompletedOn} label="Year of Completion" setState={setValues} />}
+                        {isAlumniLink && <YearSelect className="col-md-2" id="programCompletedOn" value={programCompletedOn} label="Program Completed in" setState={setValues} />}
 
-                        <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
-                        {!isAlumniLink && <Text className='col-md-6 col-lg-4' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />}
-                        <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
+                        <Text className='col-md-2' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
 
-                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+                        {!isAlumniLink && <Text className='col-md-2' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />}
 
-                        <Select className='col-md-2' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
 
-                        <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
+
+                        <Select className='col-md-2' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+
+                        <Select className='col-md-2' id='cast' value={cast} label="Category" setState={setValues} options={Casts} />
+
+                        <Select className='col-md-2' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
                         {
                             user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                             <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
-                            <Text className='col-md-6 col-lg-4' type='text' id="Title" value={Title} label="Title" setState={setValues} />
-                            <Text className='col-md-6 col-lg-4' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
+                            <Text className='col-md-7' type='text' id="Title" value={Title} label="Title" setState={setValues} />
+                            <Text className='col-md-2' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
                         </>}
                     </div>
@@ -343,15 +346,24 @@ const OtherDetails = ({ user, editFunction }) => {
     return <div className="p-2 lg:flex items-start justify-start gap-5 w-full">
         <div className="w-full md:w-full lg:w-[60%] xl:w-[40%]">
             <DetailTile editFunction={editFunction} keyName="Program Enrolled" value={`${user && user.programGraduated}`} />
-            <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} />
-            <DetailTile editFunction={editFunction} keyName="Caste" value={`${user && user.cast}`} />
+
+            {
+                !user?.isAlumni && <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} />
+            }
+
+            <DetailTile editFunction={editFunction} keyName="Category" value={`${user && user.cast}`} />
             <DetailTile editFunction={editFunction} keyName="Religion" value={`${user && user.religion}`} />
             <DetailTile editFunction={editFunction} keyName="Date Of Birth" value={`${user && user.dob}`} />
             <DetailTile editFunction={editFunction} keyName="Gender" value={`${user && user.gender}`} />
         </div>
         <div className="w-full md:w-full lg:w-[60%] xl:w-[60%]">
-            <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
-            <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
+            <DetailTile editFunction={editFunction} keyName="Program Enrolled in" value={`${user && user.programEnroledOn}`} />
+            {
+                !user?.isAlumni && <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
+            }
+            {
+                user?.isAlumni && <DetailTile editFunction={editFunction} keyName="Program Completed in" value={`${user && user.programCompletedOn}`} />
+            }
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
             {user?.programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />

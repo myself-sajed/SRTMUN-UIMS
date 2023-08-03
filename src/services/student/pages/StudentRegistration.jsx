@@ -268,9 +268,6 @@ const StudentRegistration = () => {
                                         {
                                             !isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
                                         }
-                                        <Select className='col-md-5' id="programGraduated" value={programGraduated} label={isAlumniLink ? "Last Completed Program" : "Enrolled Program"} setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
-
-                                        {!isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />}
 
                                         <YearSelect className="col-md-3" id="programEnroledOn" value={programEnroledOn} label="Year of Enrollment" setState={setValues} />
 
@@ -280,13 +277,13 @@ const StudentRegistration = () => {
 
                                         <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
 
-                                        <Select className='col-md-3' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
+                                        <Select className={isAlumniLink ? 'col-md-2' : 'col-md-3'} id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
-                                        <Select className='col-md-3' id='cast' value={cast} label="Caste" setState={setValues} options={Casts} />
+                                        <Select className='col-md-2' id='cast' value={cast} label="Category" setState={setValues} options={Casts} />
 
-                                        <Text className="col-md-3" id="password" value={password} label="Create Password" type='password' setState={setValues} />
+                                        <Text className={isAlumniLink ? 'col-md-4' : 'col-md-5'} id="password" value={password} label="Create Password" type='password' setState={setValues} />
 
-                                        <Text className="col-md-3" id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
+                                        <Text className={isAlumniLink ? 'col-md-4' : 'col-md-5'} id="cPassword" value={cPassword} label="Confirm Password" type='password' setState={setValues} />
 
                                         <div className="col-12 flex items-center justify-center">
                                             <button className="flex items-center justify-start mt-3 gap-2 hover:bg-blue-800 bg-blue-600 text-white p-2 rounded-lg" type="submit"> Next <ArrowForwardRoundedIcon sx={{ fontSize: '20px' }} className='mt-1' /></button>
@@ -322,7 +319,7 @@ const StudentRegistration = () => {
 
                                                     <div>
 
-                                                        <div className="col-md-10 mx-auto mt-3">
+                                                        <div className="col-md-10 mx-auto my-3">
 
 
                                                             <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
@@ -332,7 +329,7 @@ const StudentRegistration = () => {
                                                             {
                                                                 !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />
                                                             }
-                                                            {!isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />}
+
 
                                                         </div>
                                                     </div>
