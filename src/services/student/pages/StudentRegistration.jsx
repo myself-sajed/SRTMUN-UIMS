@@ -144,7 +144,7 @@ const StudentRegistration = () => {
         // route at student-auth file line 136
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
             if (response.data.status === 'success') {
-                // localStorage.removeItem('StudentRegistration')
+                localStorage.removeItem(isAlumniLink ? 'AlumniRegistration' : 'StudentRegistration')
                 toast.success(response.data.message)
                 setStep(4)
             }
@@ -263,9 +263,11 @@ const StudentRegistration = () => {
 
                                         <Select className='col-md-5' id="schoolName" value={schoolName} label="School Name" setState={setValues} options={Object.keys(SchoolsProgram)} />
 
-                                        <Select className='col-md-5' id="programGraduated" value={programGraduated} label="Enrolled Program" setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
+                                        <Select className={isAlumniLink ? "col-md-7" : 'col-md-5'} id="programGraduated" value={programGraduated} label={isAlumniLink ? "Program Graduated" : "Enrolled Program"} setState={setValues} options={schoolName ? SchoolsProgram[schoolName].map(item => { return item[0] }) : []} />
 
-                                        <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
+                                        {
+                                            !isAlumniLink && <Select className="col-md-2" id="currentIn" value={currentIn} label="Admitted In" setState={setValues} options={programDuration ? programDuration : []} />
+                                        }
 
                                         <YearSelect className="col-md-3" id="programEnroledOn" value={programEnroledOn} label="Year of Enrollment" setState={setValues} />
 
@@ -322,7 +324,9 @@ const StudentRegistration = () => {
 
                                                             <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputClass="py-3" />
 
-                                                            <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />
+                                                            {
+                                                                !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />
+                                                            }
 
                                                         </div>
                                                     </div>

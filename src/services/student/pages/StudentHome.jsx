@@ -32,6 +32,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import FileViewer from '../../../components/FileViewer'
 import { Skeleton } from '@mui/material'
+import { getOrdinalSuffix } from '../../director/pages/NewStudent'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -125,7 +126,7 @@ const StudentHome = () => {
         if (programGraduated) {
             SchoolsProgram[schoolName].forEach((programs) => {
                 if (programs[0] === programGraduated) {
-                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `Year ${i + 1}`))
+                    setProgramDuration(Array.from({ length: programs[1] }, (v, i) => `${i + 1}${getOrdinalSuffix(i + 1)}`))
                 }
             })
         }
@@ -146,7 +147,7 @@ const StudentHome = () => {
 
             {user ?
                 <div className="main-div md:flex items-start my-3 gap-3">
-                    <div className="mb-3 md:mb-0 xl:min-w-[35%] lg:min-w-[45%] md:min-w-[60%] sm:h-screen">
+                    <div className="mb-3 md:mb-0 xl:w-[35%] lg:w-[45%] md:w-[60%] sm:h-screen">
                         <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
                             <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
 
@@ -229,7 +230,9 @@ const StudentHome = () => {
                     </div>
                 </div> : <div className="mt-3 flex flex-col md:flex-row items-start gap-5">
                     <div className="h-screen w-full bg-gray-50 border rounded-xl p-2">
-                        <Skeleton animation="wave" variant="circular" width={80} height={80} />
+                        <div className="mx-auto w-[50%] mt-2">
+                            <Skeleton animation="wave" variant="circular" width={90} height={90} />
+                        </div>
 
                         <div className='mt-3'>
                             <Skeleton
@@ -338,7 +341,13 @@ const OtherDetails = ({ user, editFunction }) => {
     return <div className="p-2 lg:flex items-start justify-start gap-5 w-full">
         <div className="w-full md:w-full lg:w-[60%] xl:w-[40%]">
             <DetailTile editFunction={editFunction} keyName="Program Enrolled" value={`${user && user.programGraduated}`} />
-            <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} />
+            {
+                !user?.isAlumni ? <DetailTile editFunction={editFunction} keyName="ABC ID" value={`${user && user.abcNo}`} /> : null
+            }
+            {
+                !user?.isAlumni ? <DetailTile editFunction={editFunction} keyName="Studying in" value={`${user && user.currentIn}`} /> : null
+            }
+
             <DetailTile editFunction={editFunction} keyName="Caste" value={`${user && user.cast}`} />
             <DetailTile editFunction={editFunction} keyName="Religion" value={`${user && user.religion}`} />
             <DetailTile editFunction={editFunction} keyName="Date Of Birth" value={`${user && user.dob}`} />
@@ -346,7 +355,7 @@ const OtherDetails = ({ user, editFunction }) => {
         </div>
         <div className="w-full md:w-full lg:w-[60%] xl:w-[60%]">
             <DetailTile editFunction={editFunction} keyName="Program Enrolled On" value={`${user && user.programEnroledOn}`} />
-            <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} />
+            {!user?.isAlumni ? <DetailTile editFunction={editFunction} keyName="Admitted In" value={`${user && user.currentIn}`} /> : null}
             <DetailTile editFunction={editFunction} keyName="Nationality" value={`${user && user.country}`} />
             {user?.programGraduated.includes("Ph.D") && user.isAlumni === false && <>
                 <DetailTile editFunction={editFunction} keyName="Research Guide" value={`${user && user.ResearchGuide}`} />
