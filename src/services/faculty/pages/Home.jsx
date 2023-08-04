@@ -22,6 +22,7 @@ import ModeEditOutlineRoundedIcon from '@mui/icons-material/ModeEditOutlineRound
 import ShowModal from '../../../components/ShowModal'
 import { setActive } from '../../../redux/slices/ActiveSlice'
 import { setPage } from '../../../redux/slices/NavbarSlice'
+import capitalizeText from '../../../js/capitalizeText'
 
 
 const Home = () => {
@@ -143,7 +144,7 @@ const Home = () => {
                                 <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
 
                                 <div className='text-black '>
-                                    <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
+                                    <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)} </p>
                                     <p className='text-base sm:text-xl'>{user && user.designation === 'Contractual' ? 'Assistant Professor(Contractual)' : user.designation},</p>
                                     <p className='text-xs sm:text-sm'>{user && user.department},</p>
                                     <p className='text-xs sm:text-sm'><p className='text-xs sm:text-sm'>{user.department.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p></p>

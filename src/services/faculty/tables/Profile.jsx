@@ -20,6 +20,7 @@ import siteLinks from '../../../components/siteLinks';
 import serverLinks from '../../../js/serverLinks';
 import handleAvatarChange from '../../../js/handleAvatar';
 import ProfileCroper from '../../../components/ProfileCroper';
+import capitalizeText from '../../../js/capitalizeText';
 
 
 const Profile = () => {
@@ -180,7 +181,7 @@ const Profile = () => {
                                     <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[70px] w-[70px] sm:h-[150px] sm:w-[150px] rounded-full object-cover' />
 
                                     <div>
-                                        <p className="block sm:hidden text-lg font-bold text-gray-700 ">{user && user.salutation} {user && user.name}</p>
+                                        <p className="block sm:hidden text-lg font-bold text-gray-700 ">{user && user.salutation} {capitalizeText(user?.name)}</p>
 
                                         <p className='block sm:hidden text-md text-gray-600'>{user && user.designation},</p>
                                         <p className='block sm:hidden text-muted text-[12px] text-gray-600'>{user && user.department}</p>
