@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import GoBack from '../../../components/GoBack'
 import fetchData, { fetchSchoolData } from '../js/fetchData'
 import UserLoading from '../../../pages/UserLoading'
-import { dashboardObj } from '../../../templates/faculty/cas-report/Header'
+import capitalizeText from '../../../js/capitalizeText'
 import { useState } from 'react'
 import EmptyBox from '../../../components/EmptyBox'
 import ServiceDashboard, { ServiceDashboardHeading } from './ServiceDashboard'
@@ -72,7 +72,7 @@ const AllFacultyTable = ({ data, isLoading }) => {
 
                             <td>
                                 <div>
-                                    <p>{item?.salutation} {item?.name}</p>
+                                    <p>{item?.salutation} {capitalizeText(item?.name)}</p>
                                     <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => {
                                         const url = '/dashboard/faculty/' + (item ? item._id : '');
                                         window.open(url, '_blank');

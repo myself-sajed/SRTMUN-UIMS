@@ -11,6 +11,7 @@ const StudentIdCount = require('../../models/student-models/studentIdCountSchema
 // multer configuration
 
 const multer = require('multer');
+const capitalizeText = require('../../utility/capitalizeText');
 
 
 const studentstorage = multer.diskStorage({
@@ -97,7 +98,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
                 password += charset[randomIndex];
             }
             const user = new StudentUser({
-                mobile, salutation, name, schoolName, programGraduated, password, gender,
+                mobile, salutation, name: capitalizeText(name), schoolName, programGraduated, password, gender,
                 email: email.toLowerCase(), photoURL: req.file.filename,
                 abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: true, isAlumni: false
             })
@@ -110,7 +111,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             console.log(isMatch);
             if (isMatch) {
                 const user = new StudentUser({
-                    mobile, salutation, name, schoolName, programGraduated, password, gender,
+                    mobile, salutation, name: capitalizeText(name), schoolName, programGraduated, password, gender,
                     email: email.toLowerCase(), photoURL: req.file.filename,
                     abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false, isAlumni: JSON.parse(isAlumni), programCompletedOn
                 });

@@ -33,6 +33,7 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import FileViewer from '../../../components/FileViewer'
 import { Skeleton } from '@mui/material'
 import { getOrdinalSuffix } from '../../director/pages/NewStudent'
+import capitalizeText from '../../../js/capitalizeText'
 
 const StudentHome = () => {
     const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"]
@@ -152,7 +153,7 @@ const StudentHome = () => {
                             <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
 
                             <div className='mt-4'>
-                                <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
+                                <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)}</p>
 
                                 <div className='text-left gap-2 mt-2'>
                                     <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />

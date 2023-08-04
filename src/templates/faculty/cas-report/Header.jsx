@@ -25,6 +25,7 @@ import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import { useNavigate } from 'react-router-dom';
+import capitalizeText from '../../../js/capitalizeText';
 
 
 const dashboardObj = {
@@ -89,7 +90,7 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
                         }
 
                         <div className="my-3">
-                            <p className='lg:text-2xl text-xl text-center text-[#009879] font-semibold'>{`${user.salutation} ${user.name}`}</p>
+                            <p className='lg:text-2xl text-xl text-center text-[#009879] font-semibold'>{`${user.salutation}`} {capitalizeText(user?.name)} </p>
 
                             <div className="mt-1 text-center lg:text-sm text-xs">
                                 <p className='text-base'>{user && user.designation === 'Contractual' ? 'Assistant Professor(Contractual)' : user.designation},</p>
