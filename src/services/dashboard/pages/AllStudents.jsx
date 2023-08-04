@@ -12,6 +12,7 @@ import ServiceDashboard from './ServiceDashboard'
 import serverLinks from '../../../js/serverLinks'
 import title from '../../../js/title'
 import ShowImage from './ShowImage'
+import capitalizeText from '../../../js/capitalizeText'
 
 
 
@@ -61,7 +62,7 @@ const AllStudents = ({ showImage = false, school }) => {
                                             {
                                                 showImage && <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'student'} /></td>
                                             }
-                                            <td>{item?.name}</td>
+                                            <td>{capitalizeText(item?.name)}</td>
                                             <td>{item?.gender}</td>
                                             <td>{item?.programGraduated}</td>
                                             <td>{item.currentIn ? item.currentIn : 'Not Added'}</td>

@@ -5,6 +5,7 @@ import fetchData, { fetchAlumniData } from '../js/fetchData'
 import UserLoading from '../../../pages/UserLoading';
 import TableComponent from '../../../components/TableComponent';
 import serverLinks from '../../../js/serverLinks';
+import capitalizeText from '../../../js/capitalizeText';
 
 const AllAlumni = ({school}) => {
 
@@ -33,7 +34,7 @@ const AllAlumni = ({school}) => {
                                 <td className='font-bold'></td>
                                 <td className='w-[40%]'>
                                     <div>
-                                        <p>{item?.salutation} {item?.name}</p>
+                                        <p>{item?.salutation} {capitalizeText(item?.name)}</p>
                                     </div>
                                 </td>
                                 <td>{item?.gender}</td>

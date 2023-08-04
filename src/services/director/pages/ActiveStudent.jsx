@@ -8,7 +8,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast'
 import useDirectorAuth from '../../../hooks/useDirectorAuth';
 
-const tableHead = { index: "Sr. no.",propic: "Profile Pic", username: "Username", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programEnroledOn: "Program Enroled On", Action: "Action" }
+const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programEnroledOn: "Program Enroled On", Action: "Action" }
 
 const ActiveStudent = () => {
   const module = "director";

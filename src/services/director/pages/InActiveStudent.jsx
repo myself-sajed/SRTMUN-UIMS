@@ -7,7 +7,7 @@ import Table from '../../../components/tableComponents/TableComponent'
 import axios from 'axios';
 import { toast } from 'react-hot-toast'
 
-const tableHead = { index: "Sr. no.",propic: "Profile Pic", username: "Username", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programEnroledOn: "Program Enroled On", Action: "Action" }
+const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programEnroledOn: "Program Enroled On", Action: "Action" }
 
 const InActiveStudent = () => {
   const module = "director";

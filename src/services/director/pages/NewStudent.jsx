@@ -16,7 +16,7 @@ import serverLinks from '../../../js/serverLinks'
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-const tableHead = { index: "Sr. no.",propic: "Profile Pic", username: "Username", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programGraduated: "Enrolled Program" ,  programEnroledOn: "Program Enroled On",  Action: "Action" }
+const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programGraduated: "Enrolled Program" ,  programEnroledOn: "Program Enroled On",  Action: "Action" }
 
 const NewStudent = () => {
 

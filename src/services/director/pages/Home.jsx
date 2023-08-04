@@ -27,6 +27,7 @@ import { setAuditYear } from '../../../redux/slices/AuditSlice'
 import { ShowLocalDashboard } from '../../faculty/pages/Home'
 import { setDirectorActive, setSsmActive } from '../../../redux/slices/DirectorActiveSlice'
 import ProfileCroper from '../../../components/ProfileCroper'
+import capitalizeText from '../../../js/capitalizeText'
 
 const Home = () => {
     const navigate = useNavigate()
@@ -251,7 +252,7 @@ const Home = () => {
                                 <img src={serverLinks.showFile(user?.photoURL, 'director')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
 
                                 <div className='text-black '>
-                                    <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
+                                    <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)}</p>
                                     <p className='text-base sm:text-xl'>{user && user.designation},</p>
                                     <p className='text-xs sm:text-sm'>{user && user.department},</p>
                                     <p className='text-xs sm:text-sm'>{user.schoolName?.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p>
