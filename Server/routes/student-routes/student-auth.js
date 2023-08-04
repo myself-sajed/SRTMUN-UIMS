@@ -29,16 +29,16 @@ const models = { StudentUser }
 
 // student login auth route 
 router.post("/api/auth/student-login", (req, res) => {
-    const {username, password, isAlumniLink}=req.body
+    const { username, password, isAlumniLink } = req.body
     StudentUser.findOne({ email: username.toLowerCase() })
         .then((user) => {
             if (user) {
                 if (isAlumniLink === user.isAlumni) {
-                    if(password === user.password){
+                    if (password === user.password) {
                         const token = jwt.sign({ email: user.email, id: user._id, }, "SRTMUN");
                         res.send({ status: "ok", user, token });
                     }
-                    else{
+                    else {
                         res.send({
                             status: "notok",
                             message: "Please Enter correct username or password",
@@ -47,7 +47,7 @@ router.post("/api/auth/student-login", (req, res) => {
                 } else {
                     res.send({
                         status: "notok",
-                        message: `You are ${isAlumniLink?"not Alumni; try logging in with the Student Login.":"no longer Student; please use the Alumni Login instead."}`,
+                        message: `You are ${isAlumniLink ? "not an alumni, try logging in via the Student Login page." : "no longer a student, please use the Alumni Login instead."}`,
                     });
                 }
             } else {
@@ -151,42 +151,42 @@ router.get("/student/:filename", function (req, res) {
 });
 
 //Student User Edit Record
-router.post("/student/editRecord/", StudentUpload.fields([{name: "uploadProof", maxCount: 1},{name: "photoURL", maxCount: 1}]), async (req, res) => {
+router.post("/student/editRecord/", StudentUpload.fields([{ name: "uploadProof", maxCount: 1 }, { name: "photoURL", maxCount: 1 }]), async (req, res) => {
 
     try {
         // const model = req.params.model
-    const data = JSON.parse(JSON.stringify(req.body));
-    let SendData = null;
-    const { id } = data
-    const isfile = req.files;
-    const isFileProfile = isfile&& isfile["photoURL"]? req.files["photoURL"][0]: ""
-    const isFileProof = isfile&& isfile["uploadProof"]? req.files["uploadProof"][0]: ""
-    if (isFileProof !== ""){
-        var uploadProof = isFileProof.filename
-    }
-    if (isFileProfile !== "") {
-        var photoURL = isFileProfile.filename
-    }
-
-    Object.keys(data).map((item) => {
-        if (data[item] == 'undefined') {
-            data[item] = ""
+        const data = JSON.parse(JSON.stringify(req.body));
+        let SendData = null;
+        const { id } = data
+        const isfile = req.files;
+        const isFileProfile = isfile && isfile["photoURL"] ? req.files["photoURL"][0] : ""
+        const isFileProof = isfile && isfile["uploadProof"] ? req.files["uploadProof"][0] : ""
+        if (isFileProof !== "") {
+            var uploadProof = isFileProof.filename
+        }
+        if (isFileProfile !== "") {
+            var photoURL = isFileProfile.filename
         }
 
-    })
-    // console.log(data)
-    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn } = data
+        Object.keys(data).map((item) => {
+            if (data[item] == 'undefined') {
+                data[item] = ""
+            }
 
-    SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn }
+        })
+        // console.log(data)
+        const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn } = data
 
-    if (photoURL) {
-        SendData.photoURL = photoURL
-    }
-    else if (uploadProof) {
-        SendData.uploadProof =uploadProof
-    }
-    await StudentUser.findOneAndUpdate({ _id: id }, SendData)
-    res.status(200).send("Edited Successfully")
+        SendData = { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, country, cast, religion, programEnroledOn, programCompletedOn }
+
+        if (photoURL) {
+            SendData.photoURL = photoURL
+        }
+        else if (uploadProof) {
+            SendData.uploadProof = uploadProof
+        }
+        await StudentUser.findOneAndUpdate({ _id: id }, SendData)
+        res.status(200).send("Edited Successfully")
     } catch (error) {
         console.log(error);
     }
