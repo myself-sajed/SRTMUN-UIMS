@@ -41,7 +41,7 @@ const NewStudent = () => {
     const [itemToEdit, setItemToEdit] = useState(null)
     const [photoURL, setPhotoURL] = useState(null)
     const schoolName = user? user.department : null
-    const filter =  {schoolName,isCreatedByDirector: true}
+    const filter =  {schoolName,isCreatedByDirector: true, isAlumni: false}
     const params = { model: model, id: "", module, filter: filter, }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
