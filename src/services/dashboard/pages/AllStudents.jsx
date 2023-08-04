@@ -20,7 +20,7 @@ const AllStudents = ({ showImage = false, school }) => {
 
     // const { school } = useParams()
     // title(`About Students of ${school}`)
-    const param = { model: 'Student', filter: { schoolName: school, isAlumni:false } }
+    const param = { model: 'Student', filter: { schoolName: school, isAlumni:false, isActiveStudent:true } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
     const [studentData, setStudentData] = useState(null)
  
