@@ -56,7 +56,7 @@ const AlumniBusiness = () => {
   return (
     <>
 
-      <AddButton onclick={setOpen} />
+      <AddButton onclick={setOpen} title="Your Business" />
       <DialogBox title="Business" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_the_employer" value={Name_of_the_employer} label="Name of the Business/Company" setState={setValues} />
@@ -64,7 +64,7 @@ const AlumniBusiness = () => {
           <Text className='col-md-6 col-lg-4' type="number" id="Pay_package_annum" value={Pay_package_annum} label="Income Aprox. ( ₹ / annum)" setState={setValues} />
           {/* <Text className='col-md-6 col-lg-4' type="number" id="Pay_package_annum" value={Pay_package_annum} label="Pay package ( ₹ / annum)" setState={setValues} /> */}
           <YearSelect className='col-md-6 col-lg-4' id="Academic_Year" value={Academic_Year} label="Business started on" setState={setValues} />
-          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} />
+          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} required={!edit} />
         </div>
       </DialogBox>
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />

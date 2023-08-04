@@ -31,7 +31,7 @@ const StudentLogin = () => {
     function handleSubmit(e) {
         e.preventDefault()
         setIsLoading(true)
-        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-login`, { username, password }).then(function (res) {
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-login`, { username, password, isAlumniLink }).then(function (res) {
             if (res.data.status === 'ok') {
                 dispatch(setStudentUser(res.data.user))
                 localStorage.setItem(isAlumniLink ? 'alumni-token' : 'student-token', res.data.token)
@@ -40,7 +40,7 @@ const StudentLogin = () => {
                 setIsLoading(false)
             }
             else if (res.data.status === 'notok') {
-                toast.error('Username or password is incorrect')
+                toast.error(res.data.message)
                 setIsLoading(false)
             }
             else {

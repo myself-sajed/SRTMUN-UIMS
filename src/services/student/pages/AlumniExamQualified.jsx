@@ -57,13 +57,13 @@ const AlumniExamQualified = () => {
     }
     return (
         <>
-            <AddButton onclick={setOpen} />
+            <AddButton onclick={setOpen} title="Your Exam Qualified" />
             <DialogBox title="Exam Qualified" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="Registration_number_roll_number" value={Registration_number_roll_number} label="Registration no / roll no." setState={setValues} />
                     <Select className='col-md-6 col-lg-4' id="Name_of_the_Exam" value={Name_of_the_Exam} label="Select Exam" setState={setValues} options={Exams} />
                     <YearSelect className='col-md-6 col-lg-4' id="Acadmic_year" value={Acadmic_year} label="Academic Year" setState={setValues} />
-                    <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} />
+                    <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
             <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />

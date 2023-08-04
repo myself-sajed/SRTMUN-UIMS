@@ -17,7 +17,7 @@ const ActiveStudent = () => {
   const user = useSelector(state => state.user.directorUser)
   const schoolName = user ? user.department: null
   
-  const filter =  {schoolName,isActiveStudent:true}
+  const filter =  { schoolName, isAlumni:false ,isActiveStudent:true }
   const params = { model: model, id: "", module, filter: filter, }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params)) 
 

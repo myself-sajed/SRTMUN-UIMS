@@ -54,14 +54,14 @@ const AlumniJobs = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} />
+      <AddButton onclick={setOpen} title="Your Jobs" />
       <DialogBox title="Job" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_the_employer" value={Name_of_the_employer} label="Name of the employer" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Employer_contact_details" value={Employer_contact_details} label="Employer contact details" setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="Pay_package_annum" value={Pay_package_annum} label="Pay package ( ₹ / annum)" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="Academic_Year" value={Academic_Year} label="Acadmic Year of placement" setState={setValues} />
-          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} />
+          <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof" label="Upload Proof" setState={setValues} required={!edit} />
         </div>
       </DialogBox>
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />

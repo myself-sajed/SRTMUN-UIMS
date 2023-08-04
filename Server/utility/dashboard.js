@@ -301,12 +301,12 @@ function feedback(app) {
 
         const { school } = req.body
         const report = {}
-        const filterForAlumniModel = { schoolName: school }
+        const filterForAlumniModel = { schoolName: school, isAlumni:true }
         const filterForOtherModels = { SchoolName: school }
 
 
         // get alumni
-        const alumni = await Alumni.find(filterForAlumniModel).sort({ $natural: -1 }).lean()
+        const alumni = await Student.find(filterForAlumniModel).sort({ $natural: -1 }).lean()
 
         report.AlumniCount = alumni.length
         report.Alumni = alumni

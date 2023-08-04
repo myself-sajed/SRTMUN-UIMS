@@ -29,16 +29,25 @@ const models = { StudentUser }
 
 // student login auth route 
 router.post("/api/auth/student-login", (req, res) => {
-    StudentUser.findOne({ email: req.body.username.toLowerCase() })
+    const {username, password, isAlumniLink}=req.body
+    StudentUser.findOne({ email: username.toLowerCase() })
         .then((user) => {
             if (user) {
-                if (req.body.password === user.password) {
-                    const token = jwt.sign({ email: user.email, id: user._id, }, "SRTMUN");
-                    res.send({ status: "ok", user, token });
+                if (isAlumniLink === user.isAlumni) {
+                    if(password === user.password){
+                        const token = jwt.sign({ email: user.email, id: user._id, }, "SRTMUN");
+                        res.send({ status: "ok", user, token });
+                    }
+                    else{
+                        res.send({
+                            status: "notok",
+                            message: "Please Enter correct username or password",
+                        });
+                    }
                 } else {
                     res.send({
                         status: "notok",
-                        message: "Please Enter correct username or password",
+                        message: `You are ${isAlumniLink?"not Alumni; try logging in with the Student Login.":"no longer Student; please use the Alumni Login instead."}`,
                     });
                 }
             } else {
