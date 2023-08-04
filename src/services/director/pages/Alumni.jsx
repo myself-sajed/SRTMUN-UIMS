@@ -10,12 +10,12 @@ import { toast } from 'react-hot-toast'
 const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No.",  doCompleted: "Compited On", Action: "Action" }
 const Alumni = () => {
   const module = "director";
-  const model = "AlumniUser"
+  const model = "StudentUser"
 
   const user = useSelector(state => state.user.directorUser)
   const schoolName = user? user.department : null
   
-  const filter =  {schoolName}
+  const filter =  {schoolName, isAlumni:true}
   const params = { model: model, id: "", module, filter: filter, }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
