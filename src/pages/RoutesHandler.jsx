@@ -87,6 +87,7 @@ import ExpertFeedback from '../services/feedback/pages/ExpertFeedback'
 import NSSLogin from '../services/nss/pages/NSSLogin'
 import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
 import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
+import StudentResume from '../templates/student/StudentResume'
 
 
 
@@ -128,6 +129,7 @@ const RoutesHandler = () => {
                 <Route path="/student-login" exact element={< StudentLogin />} />
                 <Route path="/student-registration" exact element={<StudentRegister />} />
                 <Route path='/student' exact element={<StudentHome />} />
+                <Route path='/student/resume' exact element={<StudentResume />} />
                 <Route path="/student/student-status" exact element={<StudentMain />} />
                 <Route path='/admin' exact element={<AdminMain />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />

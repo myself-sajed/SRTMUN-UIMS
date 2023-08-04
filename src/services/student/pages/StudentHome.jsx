@@ -164,7 +164,7 @@ const StudentHome = () => {
                                 <div className="mt-3">
                                     <button type="button" className="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
                                         <ContactPageRoundedIcon />
-                                        Build Resume
+                                        Download Resume
                                     </button>
 
                                     <button type="button" className="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2" onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
@@ -210,18 +210,18 @@ const StudentHome = () => {
                                                             <div key={item}>{item.element}</div>
                                                         </div>
                                                     </div>
-                                                </div> : null : <div className="accordion-item bg-gray-50 ">
-                                                <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                        {item.value}
-                                                    </button>
-                                                </h2>
-                                                <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body">
-                                                        <div key={item}>{item.element}</div>
+                                                </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
+                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                            {item.value}
+                                                        </button>
+                                                    </h2>
+                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <div key={item}>{item.element}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                     })
                                 }
                             </div>
@@ -406,3 +406,5 @@ const ContactTile = ({ keyName, value }) => {
         {icons[keyName]} <span>{value}</span>
     </div>
 }
+
+export { ContactTile }
