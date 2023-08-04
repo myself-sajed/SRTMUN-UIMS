@@ -210,18 +210,18 @@ const StudentHome = () => {
                                                             <div key={item}>{item.element}</div>
                                                         </div>
                                                     </div>
-                                                </div> : null : <div className="accordion-item bg-gray-50 ">
-                                                <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                        {item.value}
-                                                    </button>
-                                                </h2>
-                                                <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                    <div className="accordion-body">
-                                                        <div key={item}>{item.element}</div>
+                                                </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
+                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                            {item.value}
+                                                        </button>
+                                                    </h2>
+                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <div key={item}>{item.element}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                     })
                                 }
                             </div>
