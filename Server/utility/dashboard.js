@@ -113,12 +113,12 @@ function feedback(app) {
 
 
         // get alumni
-        const alumni = await Alumni.find({}).lean()
+        const alumni = await Student.find({ isAlumni: true }).lean()
         report.AlumniCount = alumni.length
         report.Alumni = alumni
 
         // get students
-        const student = await Student.find({}).lean()
+        const student = await Student.find({ isAlumni: false }).lean()
         report.StudentCount = student.length
         report.Student = student
 
@@ -301,7 +301,7 @@ function feedback(app) {
 
         const { school } = req.body
         const report = {}
-        const filterForAlumniModel = { schoolName: school, isAlumni:true }
+        const filterForAlumniModel = { schoolName: school, isAlumni: true }
         const filterForOtherModels = { SchoolName: school }
 
 

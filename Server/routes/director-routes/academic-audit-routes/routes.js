@@ -311,20 +311,26 @@ router.post('/api/getAllData/director', async (req, res) => {
     })
 
     // get Alumni
-    const alumni = await Alumni.find({ schoolName: department }).lean();
+    const alumni = await Student.find({ schoolName: department, isAlumni: true }).lean()
     report.Alumni = alumni.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
-    // get Alumni
-    const DemandRatioRes = await DemandRatio.find({ schoolName: department }).lean();
-    report.DemandRatio = DemandRatioRes.sort(function (a, b) {
+    // get student
+    const student = await Student.find({ schoolName: department, isAlumni: false }).lean()
+    report.Student = student.sort(function (a, b) {
         var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
         return dateB - dateA;
     });
 
 
+    // get demand
+    const DemandRatioRes = await DemandRatio.find({ schoolName: department }).lean();
+    report.DemandRatio = DemandRatioRes.sort(function (a, b) {
+        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
+        return dateB - dateA;
+    });
 
 
 
@@ -356,12 +362,7 @@ router.post('/api/getAllData/director', async (req, res) => {
         return dateB - dateA;
     });;
 
-    // get student
-    const student = await Student.find({ schoolName: department }).lean()
-    report.Student = student.sort(function (a, b) {
-        var dateA = new Date(a.createdAt), dateB = new Date(b.createdAt)
-        return dateB - dateA;
-    });;
+
 
     // get progressionToHE
     const progressionToHE = await ProgressionToHE.find({ SchoolName: department }).lean()
