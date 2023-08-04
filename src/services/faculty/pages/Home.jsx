@@ -261,8 +261,6 @@ const DetailTile = ({ keyName, value }) => {
 
 const ShowLocalDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColor = "green", onClickFunc = null, urlLinks }) => {
 
-    const navigate = useNavigate()
-
     return <div className='flex items-center justify-between gap-3 flex-wrap'>
         {
             directorData && dashboardObj.map((item, index) => {
