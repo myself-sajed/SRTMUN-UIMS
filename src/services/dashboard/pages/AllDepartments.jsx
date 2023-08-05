@@ -145,7 +145,7 @@ const AllDepartments = () => {
     const Field = serviceMap[serviceName].fieldName[1]
 
     const param = { model: serviceMap[serviceName].model, select: serviceMap[serviceName].select, type: serviceMap[serviceName]?.type ? serviceMap[serviceName].type : null }
-    const { data } = useQuery([param.model, param], () => countData(param))
+    const { data } = useQuery(["DashboardAnalysis", param.model], () => countData(param), { staleTime: 600000 })
 
 
     //scroll up to Top functions

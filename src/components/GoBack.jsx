@@ -23,8 +23,6 @@ const GoBack = ({ backUrl = -1, pageTitle, children = null, shouldScroll = false
         }
     }, [])
 
-    let a = functionOnBack
-
     return (
         <div>
             <div className='py-1 flex items-center justify-between border-b' id="GoBack">

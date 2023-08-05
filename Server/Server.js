@@ -12,7 +12,8 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const { router: directorRouter  } = require("./routes/director-routes/director-routes")
+const { router: directorRouter } = require("./routes/director-routes/director-routes")
+
 
 app.use(cors());
 const path = require("path");
@@ -27,13 +28,13 @@ cron.schedule('45 0 * * *', () => {
   Delete_Excels();
   Delete_Pdfs();
 });
-cron.schedule('30 0 * * *', () =>{
+cron.schedule('30 0 * * *', () => {
   const C_Date = new Date();
   let CPath = `../../../DB_Backups/SRTMUN-${C_Date.getDate()}-${C_Date.getMonth() + 1}-${C_Date.getFullYear()}-${C_Date.getTime()}`
-   DB_Backups(CPath)
+  DB_Backups(CPath)
 });
 
-cron.schedule('0 1 * * *', () =>{
+cron.schedule('0 1 * * *', () => {
   let CPath = `"../../../Temp_Backup"`
   DB_Backups(CPath)
 });
@@ -150,6 +151,29 @@ mongoose
   .catch((err) => console.log("Database connection failed"));
 
 
+// Capitalizing the names of users for better display
+const User = mongoose.model("users")
+
+const capitalizeNames = async () => {
+  try {
+    const users = await User.find();
+    const updates = users.map((user) => {
+      const updatedName = user.name.trim().toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+      return User.updateOne({ _id: user._id }, { $set: { name: updatedName } });
+    });
+
+    await Promise.all(updates);
+    console.log('All names have been capitalized successfully.');
+  } catch (error) {
+    console.error('Error occurred while capitalizing names:', error);
+  }
+};
+
+// Call the function to capitalize names
+// capitalizeNames();
+
+
+
 // FILE MANAGEMENT SECTION
 
 // 1. File Deletion function
@@ -162,6 +186,8 @@ async function deleteFile(fileName, desiredPath, callback) {
   }
   fs.unlink(paths[desiredPath], callback)
 }
+
+
 
 
 
@@ -184,7 +210,7 @@ app.get('/downloadSampleExcel/:filename/:model/:school', async (req, res) => {
   const filename = req.params.filename
   const model = req.params.model
   const school = req.params.school
- 
+
   const filePath = path.join(__dirname, '../sampleExcels/', `${filename}.xlsx`);
 
   // Check if the file exists in the /clientDownload/ directory
@@ -198,7 +224,7 @@ app.get('/downloadSampleExcel/:filename/:model/:school', async (req, res) => {
   } else {
     try {
       // If the file doesn't exist, generate it first
-      const generatedFilePath = await generateExcelFile(filename,model,school);
+      const generatedFilePath = await generateExcelFile(filename, model, school);
 
       // Serve the generated file to the client
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -242,6 +268,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
+  res.setHeader('Cache-Control', 'public, max-age=3600'); // Cache the image for 1 hour (3600 seconds)
   res.sendFile(link);
 });
 

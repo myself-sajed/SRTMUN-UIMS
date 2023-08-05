@@ -39,7 +39,7 @@ export default function Header() {
     return (
         <div>
             <OnlyNav user={user} logout={{ token: 'director-token', link: siteLinks.welcome.link }}
-                heading={{ title: 'Back to Director Home', link: siteLinks.directorHome.link }}
+                heading={{ title: 'School Data Management', link: siteLinks.directorHome.link }}
                 li={[siteLinks.directorHome, siteLinks.ssm, siteLinks.aaa]} userType="director"
 
             />

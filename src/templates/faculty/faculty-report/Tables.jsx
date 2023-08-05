@@ -167,12 +167,13 @@ const TableTemplate = ({ item, data, showProof }) => {
     return (
         data?.[item.model]?.length === 0 ?
             null :
-            <div className="my-10" id={item.model}>
+            <div className="my-10" id={item.model === "PhdAwarded" ? "PhdAwardedWithoutPGD" : item.model}>
                 <div className="p-2 bg-[#009879] text-white flex items-center justify-between rounded-t-md ">
                     <div className='flex items-center justify-start gap-3'>
                         <h3 className="sm:text-lg text-base leading-6 font-medium text-white">
                             {item.title} </h3>
-                        <span class="badge bg-green-100 text-[#009879]">{data?.[item.model]?.length}</span>
+                        <span class="badge bg-green-100 text-[#009879]">{item.model === "PhdAwarded" ?
+                            (data?.[item.model].filter((insideItem) => insideItem.degreeName !== "PG Dissertation")).length : data?.[item.model]?.length}</span>
                     </div>
                 </div>
                 <div className='table-responsive'>
@@ -189,7 +190,7 @@ const TableTemplate = ({ item, data, showProof }) => {
                         </thead>
                         <tbody>
 
-                            {data && sortByAcademicYear(data?.[item.model], 'year', false, null, (item.model === "Responsibilities" || item.model === "PostHeld") ? true : false).map((dataItem, index) => {
+                            {data && sortByAcademicYear(item.model === "PhdAwarded" ? data?.[item.model].filter((insideItem) => insideItem.degreeName !== "PG Dissertation") : data?.[item.model], 'year', false, null, (item.model === "Responsibilities" || item.model === "PostHeld") ? true : false).map((dataItem, index) => {
                                 return <tr>
                                     <th scope="col">{index + 1}</th>
                                     {

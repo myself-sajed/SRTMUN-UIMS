@@ -14,20 +14,21 @@ import title from '../../../js/title'
 import { Avatar } from '@mui/material'
 import ShowImage from './ShowImage'
 import designationWiseSorting from '../../../js/designationWiseSorting'
+import { convertToURLFormat } from '../js/prettifyTextForLink'
 
 const AllFaculties = ({ school: sch }) => {
 
     const { school } = useParams()
 
     const param = { model: 'User', filter: { department: school || sch } }
-    const { data, isLoading, isError, error, refetch } = useQuery([`${param.model}-${school || sch}`, param], () => fetchData(param))
+    const { data, isLoading, isError, error, refetch } = useQuery([`${param.model}-${school || sch}`, school || sch], () => fetchData(param), { staleTime: 600000 })
 
 
 
     return (
         <div>
-            {sch ? <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
-                {`Faculties of ${sch}`}
+            {sch ? <div className="sticky-top bg-white text-lg font-bold py-2 border-b flex justify-center">
+                {`Faculties of ${sch}  ${data && `(${data?.data?.data?.length})`}`}
             </div> : <div className="sticky-top bg-white">
                 <GoBack backUrl={-1} pageTitle={`Faculties of ${school}`} />
             </div>}
@@ -47,7 +48,6 @@ export default AllFaculties
 
 const AllFacultyTable = ({ data, isLoading }) => {
 
-    const navigate = useNavigate()
 
     return <div className='table-responsive w-full'>
         <table class="table table-bordered css-serial">
@@ -70,11 +70,11 @@ const AllFacultyTable = ({ data, isLoading }) => {
                             <td className='font-bold'></td>
                             <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'faculty'} /></td>
 
-                            <td>
+                            <td className='w-[25%]'>
                                 <div>
                                     <p>{item?.salutation} {capitalizeText(item?.name)}</p>
                                     <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => {
-                                        const url = '/dashboard/faculty/' + (item ? item._id : '');
+                                        const url = '/dashboard/faculty/' + (item ? convertToURLFormat(item.name) : '');
                                         window.open(url, '_blank');
                                     }}>View Profile</button>
                                 </div>

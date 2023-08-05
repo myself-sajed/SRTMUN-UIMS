@@ -89,7 +89,13 @@ function feedback(app) {
             docs = await models[model].find({}).populate('userId').lean()
         }
         else {
-            docs = await models[model].find({}).select(select).lean()
+            if (model === 'Student') {
+                docs = await models[model].find({ isAlumni: false, isActiveStudent: true }).select(select).lean()
+            } else if (model === 'Alumni') {
+                docs = await models[model].find({ isAlumni: true }).select(select).lean()
+            } else {
+                docs = await models[model].find({}).select(select).lean()
+            }
         }
 
         if (docs) {

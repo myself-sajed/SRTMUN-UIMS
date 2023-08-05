@@ -150,7 +150,7 @@ const RoutesHandler = () => {
                 {/* main dashboard routes */}
                 <Route path="/dashboard/select-department/:serviceName" exact element={<AllDepartments />} />
                 <Route path="/dashboard/:school" exact element={<AllFaculties />} />
-                <Route path="/dashboard/faculty/:userId" exact element={<Faculty />} />
+                <Route path="/dashboard/faculty/:facultyName" exact element={<Faculty />} />
                 <Route path="/dashboard/:school/students" exact element={<AllStudents />} />
                 <Route path="/dashboard/:school/alumni" exact element={<AllAlumni />} />
                 <Route path="/dashboard/schoolInformation/:schoolName" exact element={<SchoolInformation />} />

@@ -178,19 +178,28 @@ function services(app) {
     // generateReport for user
     app.post('/api/getAllData', async (req, res) => {
 
-        const { userId, fetchYears } = req.body
+        const { userId, fetchYears, getDataFilter } = req.body
         const report = {};
 
-        User.findOne({ _id: userId })
+        let userFilter;
+        if (userId) {
+            userFilter = { _id: userId }
+        } else if (getDataFilter) {
+            userFilter = getDataFilter
+        }
+
+        User.findOne(userFilter)
             .then(async function (user, err) {
+
+                console.log(user)
 
 
                 // filter
                 let filter;
                 if (fetchYears === 'all') {
-                    filter = { userId }
+                    filter = { userId: user?._id }
                 } else {
-                    filter = { userId, year: { $in: fetchYears } }
+                    filter = { userId: user?._id, year: { $in: fetchYears } }
                 }
 
                 if (user) {
@@ -400,7 +409,7 @@ function services(app) {
         });
     })
 
-    
+
 
     // update profile
     app.post('/api/edit-profile/:modelName/:filter', upload.single('file'), async (req, res) => {

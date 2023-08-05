@@ -26,6 +26,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import { useNavigate } from 'react-router-dom';
 import capitalizeText from '../../../js/capitalizeText';
+import { truncateString } from '../../../services/dashboard/js/prettifyTextForLink';
 
 
 const dashboardObj = {
@@ -61,12 +62,12 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
 
 
     return (
-        <div className='font-sans mx-auto mt-16'>
+        <div className='font-sans mx-auto mt-4'>
             {
                 forCAS ? null : <MainHeading forPrintOut={forPrintOut} title={title} subTitle={subTitle} />
             }
 
-            <div className='mt-8'>
+            <div className='mt-3'>
 
 
                 {
@@ -227,11 +228,11 @@ const IDTile = ({ photoURL, title, keyId, user, link = false }) => {
 
     return <>
         {
-            user[keyId] ? <div className='flex items-start justify-start gap-2'> <img src={`/assets/${photoURL}`} className="bg-blend-screen bg-white w-10" />
+            user[keyId] ? <div className='flex items-start justify-start gap-2'> <img src={`/assets/${photoURL}`} className=" bg-white w-10" style={{ mixBlendMode: 'darken' }} />
                 <div>
                     <p className='text-md leading-5'>{title}</p>
                     {
-                        user?.[keyId] === "undefined" ? <p className="text-muted text-sm">Not Available</p> : link ? <a className="text-sm text-blue-500 leading-6" href={user?.[keyId]}>{user?.[keyId]}</a> : <p className='text-sm text-muted'>{user?.[keyId]}</p>
+                        user?.[keyId] === "undefined" ? <p className="text-muted text-sm">Not Available</p> : link ? <a className="text-sm text-blue-500 leading-6" href={user?.[keyId]}>{truncateString(user?.[keyId], 30)}</a> : <p className='text-sm text-muted'>{user?.[keyId]}</p>
                     }
                 </div>
             </div> : null
