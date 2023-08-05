@@ -27,7 +27,7 @@ const InActiveStudent = () => {
   
   useEffect(() =>{
     if(itemToEdit && data.data){
-      axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {status: "Active",itemToEdit  })
+      axios.post(`${process.env.REACT_APP_MAIN_URL}/inactive-active/student`, {isActiveStudent:true ,itemToEdit  })
       .then(res=>{
         if(res.data.status === "success"){
         toast.success("Student Activated Successfully")

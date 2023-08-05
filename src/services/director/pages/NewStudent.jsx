@@ -104,7 +104,6 @@ const NewStudent = () => {
         data?.data.forEach((item) => {
           if (item?._id === itemToEdit) {
             setEdit(true); setOpen(true);
-            console.log(item.photoURL)
             setPhotoURL(item.photoURL)
             const { salutation, name, programGraduated, gender, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn,  } = item
             setValues({
@@ -117,7 +116,7 @@ const NewStudent = () => {
   return (
     <>
       <div className='py-2'>
-        <AddButton onclick={setOpen} />
+        <AddButton onclick={setOpen} title="Add New Studnet" />
       </div>
       {/* <div><button className='btn btn-success' onClick={()=>{setOpen(true)}}>add</button></div> */}
       <DialogBox title="Add new Student" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={loading}>
