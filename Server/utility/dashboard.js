@@ -348,7 +348,6 @@ function feedback(app) {
     app.post('/api/get/modelData/departmentWise', async (req, res) => {
 
         const { model, school, userType } = req.body
-        console.log(model, school, userType)
 
         let filter = {}
         if (model === 'PhdAwarded') {
