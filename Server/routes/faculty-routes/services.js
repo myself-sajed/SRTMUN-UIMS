@@ -191,8 +191,6 @@ function services(app) {
         User.findOne(userFilter)
             .then(async function (user, err) {
 
-                console.log(user)
-
 
                 // filter
                 let filter;
@@ -417,10 +415,6 @@ function services(app) {
 
         const data = JSON.parse(JSON.stringify(req.body));
         const { modelName, filter } = req.params
-
-        console.log(modelName + " : " + filter)
-        console.log("------------------------------------------------")
-        console.log(data)
 
         if (req.file) {
             data['photoURL'] = req.file.filename
