@@ -15,6 +15,7 @@ import Table from '../../../components/tableComponents/TableComponent'
 import serverLinks from '../../../js/serverLinks'
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
+import ProfileCroper from '../../../components/ProfileCroper'
 
 const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programGraduated: "Enrolled Program" ,  programEnroledOn: "Program Enroled On",  Action: "Action" }
 
@@ -33,7 +34,8 @@ const NewStudent = () => {
     const { salutation, name, programGraduated, gender, mobile, email, abcNo, currentIn, country, cast, religion, programEnroledOn,  } = values
 
     const [avatar, setAvatar] = useState(null)
-    const [Upload_Proof, setUpload_Proof] = useState(null)
+    const [uploadProof, setUploadProof] = useState(null)
+    const [openCroper, setOpenCroper] = useState(false)
     const [loading, setLoading] = useState(false)
     const [programDuration, setProgramDuration] = useState(null)
     const [open, setOpen] = useState(false)
@@ -45,13 +47,15 @@ const NewStudent = () => {
     const params = { model: model, id: "", module, filter: filter, }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
-    const onSubmit = (event) => {
-      event.preventDefault();
+
+    const onSubmit = (e) => {
+      e.preventDefault();
+
       let formData = new FormData();
         Object.keys(values).map((key) => {
             formData.append(key, values[key]);
         });
-        formData.append('file', Upload_Proof)
+        formData.append('file', uploadProof)
         formData.append('schoolName', user?.department)
 
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/student-register`, formData).then(function (response) {
@@ -59,7 +63,7 @@ const NewStudent = () => {
               toast.success(response.data.message)
               setValues(initialState)
               setAvatar(null)
-              setUpload_Proof(null)
+              setUploadProof(null)
               refetch()
               setOpen(false)
               setLoading(false)
@@ -68,7 +72,7 @@ const NewStudent = () => {
               toast.error(response.data.message)
               setValues(initialState)
               setAvatar(null)
-              setUpload_Proof(null)
+              setUploadProof(null)
               setOpen(false)
               setLoading(false)
           }
@@ -76,16 +80,45 @@ const NewStudent = () => {
           toast.error('Internal Server Error')
           setValues(initialState)
           setAvatar(null)
-          setUpload_Proof(null)
+          setUploadProof(null)
           setOpen(false)
           setLoading(false)
 
       })
     }
+
+    function handleEmailTaken(e) {
+      console.log("funccall");
+      e.preventDefault();
+      // check if file is selected
+      if (uploadProof) {
+          setLoading(true)
+          // check if username already exists
+          Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
+              if (res.data.status === 'taken') {
+                  toast.error(res.data.message)
+                  setLoading(false)
+                  return
+              }
+              else {
+                onSubmit(e)
+              }
+          })
+      } else {
+          setLoading(false)
+          toast.error('Please select a photo')
+          return
+      }
+  }
+
+  const onEdit = (e) => {
+    e.preventDefault();
+    editReq({ id: itemToEdit, uploadProof }, "", initialState, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, 'student')
+  }
     const onCancel = (event) => {
       setValues(initialState)
       setAvatar(null)
-      setUpload_Proof(null)
+      setUploadProof(null)
 
     }
 
@@ -119,23 +152,23 @@ const NewStudent = () => {
         <AddButton onclick={setOpen} title="Add New Studnet" />
       </div>
       {/* <div><button className='btn btn-success' onClick={()=>{setOpen(true)}}>add</button></div> */}
-      <DialogBox title="Add new Student" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={loading}>
+      <DialogBox title="Add new Student" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={!edit ? handleEmailTaken : onEdit} onCancel={onCancel} maxWidth="lg" loading={loading}>
 
         <div className='flex flex-wrap'>
 
             <div className='flex-items-center justify-center flex-col w-full mb-4'>
               {
-                Upload_Proof==null&&edit?
+                uploadProof==null&&edit?
                 <img src={serverLinks.showFile(photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />:
                 <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
               }
               <div className='flex items-center justify-center gap-3'>
                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
                 <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
-                    handleAvatarChange(e, setAvatar, setUpload_Proof)
-                }} required={!edit} />
+                    handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
+                }}  />
                 {
-                  Upload_Proof && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUpload_Proof(null); }}>Reset Picture</button>
+                  uploadProof && <button className='w-[20%] bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
                 }
               </div>
             </div>
@@ -166,7 +199,7 @@ const NewStudent = () => {
 
         </div>
       </DialogBox>
-
+      <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
       <Table TB={data?.data} module="student" proof="student" year="programEnroledOn" propic="photoURL" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>
   )

@@ -74,7 +74,7 @@ const StudentHome = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit, uploadProof: uploadProof }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        editReq({ id: itemToEdit, uploadProof }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
     }
 
     const onCancel = () => {

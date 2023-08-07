@@ -790,26 +790,25 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
 
 //Activate Diactivate Student
 router.post('/inactive-active/student', async (req, res) => {
-    const {status,itemToEdit} = req.body
+    const {isActiveStudent,itemToEdit} = req.body
     try{
-        await StudentUser.updateOne({_id: itemToEdit},{$set:{status}});
+        await StudentUser.updateOne({_id: itemToEdit},{$set:{isActiveStudent}});
         const userdetails = await StudentUser.findOne({_id: itemToEdit});
 
-        const {username, email, schoolName, status:state } = userdetails
-        const activestate = state=="Active"? "Activated":"Disabled";
+        const { email, schoolName, isActiveStudent:isActive } = userdetails
+        const activestate = isActive===true ? "Activated":"Disabled";
         subjectForEmail = `Your account is ${activestate} by director of ${schoolName} at SRTMUN-UIMS.`
 
         // message to send on res
-        const statematter = state=="Active"? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
+        const statematter = isActive===true ? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
         let message = { status: 'success', message: 'Email sent successfully, Please check your Email Account'}
 
         let htmlMatter = `<div>
                             <h2>Your student account ${activestate} by Director of ${schoolName}</h2>
                             <p style="font-size: 14px; line-height: 140%;">
-                            <strong>${username}</strong> is your username that is <strong>${activestate}</strong> ${statematter}.
+                            <strong>${email}</strong> is your username that is <strong>${activestate}</strong> ${statematter}.
                             </p>
                         </div>`
-                        console.log(htmlMatter);
 
         // send mail
         sendMail(req, res, email, subjectForEmail, 'html', emailTemplate(htmlMatter), message);
@@ -825,55 +824,33 @@ router.post('/student-to-alumni/bulk', async (req,res)=> {
 
     const {arr} = req.body
     try{
-        // let NonConverted = [];
+        let NonConverted = [];
 
-        const objectIdArray = arr.map(id => mongoose.Types.ObjectId(id));
-        await StudentUser.updateMany({_id:{ $in: objectIdArray }}, {$set:{isAlumni:true}})
-        // for (id of arr){
-        //     let student = await StudentUser.findOne({_id: id});
-        //     if(student){
-        //         const { _id, salutation, photoURL, name, email, address, dob, mobile, programGraduated,     programEnroledOn, cast, religion, country, schoolName, currentIn, gender, password, abcNo,  ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, createdBy } = student
+        
+        for (id of arr){
+            let student = await StudentUser.findOne({_id: id});
+            if(student){
+                const { programEnroledOn, currentIn } = student
 
-        //         let yStarted = new Date().getFullYear()-parseInt(currentIn.split(" ")[1]);
-        //         let YNext = (yStarted+1).toString().slice(-2);
-        //         let doStarted = `${yStarted}-${YNext}`;
-        //         let yComplited = new Date().getFullYear();
-        //         let yCNext = (yComplited+1).toString().slice(-2);
-        //         let doCompleted = `${yComplited}-${yCNext}`;
+                let yStarted = new Date().getFullYear()-parseInt(currentIn[0]);
+                let YNext = (yStarted+1).toString().slice(-2);
+                let doStarted = programEnroledOn===undefined?`${yStarted}-${YNext}`:programEnroledOn;
+                let yComplited = new Date().getFullYear();
+                let yCNext = (yComplited+1).toString().slice(-2);
+                let doCompleted = `${yComplited}-${yCNext}`;
 
-        //         let alumni = {_id:id, salutation, photoURL, name, email, address: address || "-", dob : dob || "-",     mobile, programGraduated, doStarted: programEnroledOn || doStarted, cast: cast || '', religion:     religion || '-', country: country || 'India', schoolName, gender , abcNo, password ,doCompleted,    stuExtraInfo:{ResearchGuide:ResearchGuide||"", Title:Title||"", dateOfRac:dateOfRac||"",    ReceivesFelloship:ReceivesFelloship||"", ResearchGuideId:ResearchGuideId||"", createdBy:createdBy||""} }
-        //         const module = new AlumniUser(alumni)
-        //         let newAlumni = await module.save();
-        //         if(newAlumni._id==id) {
-        //             let oldStu = await StudentUser.deleteOne({_id: id});
-        //             console.log(oldStu);
-
-        //             const sourceFilePath = path.join(__dirname, '../../uploads/student-uploads/', photoURL);
-
-        //             const destinationFilePath = path.join(__dirname, '../../uploads/director-uploads/', photoURL);
-
-        //             fs.rename(sourceFilePath, destinationFilePath, (err) => {
-        //               if (err) {
-        //                 console.error('Error moving the file:', err);
-        //               } else {
-        //                 console.log('File moved successfully!');
-        //               }
-        //             });
-        //         }
-        //         else {
-        //             NonConverted.push(id);
-        //             await AlumniUser.deleteOne({_id:newAlumni._id})
-        //         }
-        //     }else{
-        //         NonConverted.push(id);
-        //     }
-        // }
-        // if(NonConverted.length===0){
+                await StudentUser.updateOne({_id:id}, {$set:{isAlumni:true, programEnroledOn: doStarted, doCompletion: doCompleted }})
+                
+            }else{
+                NonConverted.push(id);
+            }
+        }
+        if(NonConverted.length===0){
             res.status(201).send({status:"allCoverted", message:`Student converted to alumni successfully`}) 
-        // }
-        // else{
-        //     res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
-        // }
+        }
+        else{
+            res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
+        }
     }
     catch(err){
         console.log(err)

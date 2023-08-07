@@ -11,7 +11,7 @@ import { IconButton } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import UnderConstruction from '../../../pages/UnderConstruction'
 
-const tableHead = { index: "Sr. no.", propic: "Profile Pic", username: "Username", name: "Name Of Student", email: "Email Id", mobile: "Mobile No.", currentIn: "Current Year", Action: "Action" }
+const tableHead = { index: "Sr. no.", propic: "Profile Pic", name: "Name Of Student", email: "Email Id", mobile: "Mobile No.", currentIn: "Current Year", Action: "Action" }
 
 const StudentToAlumni = () => {
   const module = "director";
@@ -20,7 +20,7 @@ const StudentToAlumni = () => {
   const user = useSelector(state => state.user.directorUser)
   const schoolName = user ? user.department : null
   const [maxClass, setMaxClass] = useState(SchoolsProgram[schoolName][0][1] == 7 ? 3 : SchoolsProgram[schoolName][0][1])
-  const filter = { schoolName, status: "Active" }
+  const filter = { schoolName, isActiveStudent: true, isAlumni: false }
   const params = { model: model, id: "", module, filter: filter, }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -33,8 +33,8 @@ const StudentToAlumni = () => {
   const [itemToEdit, setItemToEdit] = useState(null)
 
   const filteredData = data?.data.filter((students) => {
-    const year = students.currentIn?.split(" ");
-    return students.programGraduated === activeProgram && maxClass <= parseInt(year?.[1])
+    const year = students.currentIn?.[0]
+    return students.programGraduated === activeProgram && maxClass <= parseInt(year)
   })
 
   useEffect(() => {

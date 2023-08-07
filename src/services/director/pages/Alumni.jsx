@@ -7,7 +7,7 @@ import Table from '../../../components/tableComponents/TableComponent'
 import axios from 'axios';
 import { toast } from 'react-hot-toast'
 
-const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No.",  doCompleted: "Compited On", Action: "Action" }
+const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No.",  doCompletion: "completed on", Action: "Action" }
 const Alumni = () => {
   const module = "director";
   const model = "StudentUser"
@@ -16,12 +16,12 @@ const Alumni = () => {
   const schoolName = user? user.department : null
   
   const filter =  {schoolName, isAlumni:true}
-  const params = { model: model, id: "", module, filter: filter, }
+  const params = { model: model, id: "", module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
   const [activeProgram, setActiveProgram] = useState(SchoolsProgram[schoolName][0][0])
 
-  const filteredData = data?.data.filter((students) => students.programGraduated[0] === activeProgram)
+  const filteredData = data?.data.filter((students) => students.programGraduated === activeProgram)
   
   return (
     <>
@@ -36,14 +36,14 @@ const Alumni = () => {
 
                 <div className='text-xs'>
 
-                    <p>Total: <span className='font-semibold'>{data?.data.filter((students) => students.programGraduated[0] === item[0])?.length}</span></p>
+                    <p>Total: <span className='font-semibold'>{data?.data.filter((students) => students.programGraduated === item[0])?.length}</span></p>
                 </div>
             </div>
         })
         }
       </div>
     </div>
-    <Table TB={filteredData} module="Alumni" proof="faculty" year="programEnroledOn" propic="photoURL" fatchdata={refetch} isLoading={isLoading} tableHead={tableHead} SendReq={model} EditDisabled={true} />
+    <Table TB={filteredData} module="Alumni" proof="student" year="programEnroledOn" propic="photoURL" fatchdata={refetch} isLoading={isLoading} tableHead={tableHead} SendReq={model} EditDisabled={true} />
     </>
   )
 }
