@@ -147,12 +147,12 @@ const StudentHome = () => {
             </div>
 
             {user ?
-                <div className="main-div md:flex items-start my-3 gap-3">
-                    <div className="mb-3 md:mb-0 xl:w-[35%] lg:w-[45%] md:w-[60%] sm:h-screen">
-                        <div className="p-3 items-start justify-start gap-4 bg-gray-50 rounded-lg border h-full">
-                            <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] mx-auto rounded-full object-cover border- border-[#4566ac]' />
+                <div className="main-div xl:flex flex-row items-start my-3 gap-3">
+                    <div className="mb-3 md:mb-0 xl:h-screen">
+                        <div className="p-3 sm:flex flex-row xl:block items-start justify-start gap-4 bg-gray-50 rounded-lg border xl:h-full">
+                            <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] xl:mx-auto rounded-full object-cover sm:mt-4 border- border-[#4566ac] sm:mx-10' />
 
-                            <div className='mt-4'>
+                            <div className='xl:mt-4'>
                                 <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)}</p>
 
                                 <div className='text-left gap-2 mt-2'>
