@@ -4,6 +4,7 @@ const xlsx = require('xlsx');
 const router = express.Router();
 
 const NssAdmission = require("../../models/nss-models/nssAdmissionSchema")
+const NssBasicInfo = require("../../models/nss-models/nssBasicInfoSchema")
 
 // multer configuration director 
 
@@ -21,7 +22,47 @@ const dirstorage = multer.diskStorage({
 })
 const upload = multer({ storage: dirstorage })
 
-const models = { NssAdmission }
+// multer configuration excel 
+const excelStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const link = path.join(__dirname, `../../../excels/`)
+        cb(null, link)
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${new Date().getTime()}-${file.originalname}`)
+    },
+})
+const excelUpload = multer({ storage: excelStorage })
+
+const models = { NssAdmission, NssBasicInfo }
+
+const excelObject = {
+    //Nss
+    NssBasicInfo: {
+        "Student Name":'studentName', 
+        "Father/Mother Name":'parentName', 
+        "Date of Birth":'dob', 
+        "Gender":'gender',  
+        "Mobile No":'mobileNo', 
+        "Address":'address', 
+        "Email":'email', 
+        "Created by Programme. Officer Email":'createdByEmail', 
+        "Other Area Of Interest":'otherAreaOfInterest',
+    },
+    NssAdmission:{
+        "Student Name":'studentName',
+        "Class":'classes',
+        "Date of Birth":'dob',
+        "Caste":'caste',
+        "Category":'category',
+        "Year of NSS-1":'nss1Year',
+        "Year of NSS-2":'nss2Year',
+        "Address":'address',
+        "Email":'email',
+        "Project Assigned":'projectName',
+        "Blood Group":'bloodGroup',
+    },
+}
 
 router.post("/nss/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
     try {
@@ -103,4 +144,49 @@ router.post('/nss/deleteRecord', async (req, res) => {
     }
 })
 
-module.exports = router;
+router.post('/nss/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
+    const excelFile = req.file.filename
+    const model = req.params.model
+    let sendData = {};
+    const values = JSON.parse(JSON.stringify(req.body));
+
+    let data = []
+    try {
+        const file = xlsx.readFile(path.join(__dirname, `../../../excels/${excelFile}`))
+        const sheetNames = file.SheetNames
+        for (let i = 0; i < sheetNames.length; i++) {
+            const arr = xlsx.utils.sheet_to_json(
+                file.Sheets[sheetNames[i]])
+            arr.forEach((response) => data.push(response))
+        }
+       
+        let dateInputs = ["From Date", "To Date","Date of implementation", "Date of Birth"]
+           data.forEach((item)=>{
+            Object.keys(excelObject[model]).forEach(key => {
+                if(dateInputs.includes(key)){
+                    let d = new Date((item[key] - (25567 + 2))*86400*1000)
+                    fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
+                    sendData[excelObject[model][key]] = fullDate
+                }
+                else{
+                    sendData[excelObject[model][key]] = item[key]
+                }
+                
+            })
+            const obj = new models[model](sendData);
+            obj.save(function(error){
+                if(error){
+                    res.status(500).send()
+                    console.log(error)  
+                }
+            })
+        })
+         res.status(201).send(`Entry suceeed`)  
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).send()
+    }
+})
+
+module.exports = {router, excelObject};

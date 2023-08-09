@@ -19,8 +19,6 @@ import DateRPick from "../../director/components/FormComponents/DateRPick";
 
 const tableHead = { index: "Sr. no.", studentName: "Student Name", classes: "Class", dob: "Date of Birth", caste: "Caste", category: "Category", nss1Year: "Year of NSS-1", nss2Year: "Year of NSS-2", address: "Address", email: "Email", projectName: "Project Assigned", bloodGroup: "Blood Group", Action: "Action" }
 
-const CE = ["CBCS", "ECS"]
-
 function StudentAdmissionTable({ filterByAcademicYear = false, academicYear }) {
     const SendReq = 'NssAdmission';
     const module = 'nss';
@@ -61,7 +59,7 @@ function StudentAdmissionTable({ filterByAcademicYear = false, academicYear }) {
 
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}  customName="Enrolled Students into NSS" />
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}  customName="Enrolled Students into NSS" filterByAcademicYear={true} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>
