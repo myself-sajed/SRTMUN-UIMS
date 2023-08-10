@@ -761,14 +761,15 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
         let dateInputs = ["From Date", "To Date","Date of implementation"]
            data.forEach((item)=>{
             Object.keys(excelObject[model]).forEach(key => {
-                if(dateInputs.includes(key)){
-                    let d = new Date((item[key] - (25567 + 2))*86400*1000)
-                    fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
-                    sendData[excelObject[model][key]] = fullDate
-                }
-                else{
-                    sendData[excelObject[model][key]] = item[key]
-                }
+                
+                    if(dateInputs.includes(key)){
+                        let d = new Date((item[key] - (25567 + 2))*86400*1000)
+                        fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
+                        sendData[excelObject[model][key]] = fullDate
+                    }
+                    else{
+                        sendData[excelObject[model][key]] = item[key]
+                    }    
                 
             })
             const allData =  Object.assign(sendData, multiData.userId? multiData :{SchoolName: multiData })

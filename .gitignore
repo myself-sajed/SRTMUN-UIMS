@@ -4,6 +4,7 @@
 /Server/maintenance-build
 .env
 /excels
+/sampleExcels
 /pdfs
 /public
 package-lock.json
