@@ -702,7 +702,11 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
                                     <td>Research and Academic Contribution</td>
                                     <td></td>
-                                    <td><b>{allYearTotalSum.toFixed(2)}</b></td>
+                                    <td><div>
+                                        <p>Total Score: <b> {allYearTotalSum?.toFixed(2) || 0}</b></p>
+                                        <p>Total Score after capping: <b> {mainCappedScoreResult?.toFixed(2) || 0}</b></p>
+                                    </div>
+                                    </td>
                                     <td></td>
                                 </tr>
 
