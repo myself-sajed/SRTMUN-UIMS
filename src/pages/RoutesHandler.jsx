@@ -93,8 +93,6 @@ import StudentResume from '../templates/student/StudentResume'
 
 const RoutesHandler = () => {
 
-    const navigate = useNavigate()
-
     return (
         <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
 
