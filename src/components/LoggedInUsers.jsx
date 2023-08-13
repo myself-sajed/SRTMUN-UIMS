@@ -12,31 +12,36 @@ const LoggedInUsers = () => {
     const navigate = useNavigate()
 
     const redirectLinks = {
-        user: { homeLink: siteLinks.facultyHome.link, serviceName: 'faculty' },
-        directorUser: { homeLink: siteLinks.directorHome.link, serviceName: 'director' },
-        studentUser: { homeLink: siteLinks.studentHome.link, serviceName: 'student' },
-        alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'student' },
-        proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news' },
-        adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin' },
+        user: { homeLink: siteLinks.facultyHome.link, serviceName: 'faculty', title: "Faculty" },
+        directorUser: { homeLink: siteLinks.directorHome.link, serviceName: 'director', title: "Director" },
+        studentUser: { homeLink: siteLinks.studentHome.link, serviceName: 'student', title: "Student" },
+        alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'student', title: "Alumni" },
+        proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news', title: "PRO" },
+        adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin', title: "Admin" },
     }
 
     return (
         <div>
-            {
-                users && <div className="text-center bg-gray-100 rounded-md border py-1 px-3 inline-block w-[auto] mx-auto">
-                    <div className='flex items-center justify-center gap-2'>
+            <div>
+                {
+                    users && <div className="text-center bg-gray-100 rounded-md border py-1 px-3 inline-block w-[auto] mx-auto">
+                        <div className='flex items-center justify-center gap-4'>
 
-                        {
-                            Object.keys(users).map((serviceName, index) => {
-                                return users[serviceName] && <div key={index} className='cursor-pointer'
-                                    onClick={() => navigate(redirectLinks[serviceName].homeLink)}>
-                                    <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px', }} />
-                                </div>
-                            })
-                        }
+                            {
+                                Object.keys(users).map((serviceName, index) => {
+                                    return users[serviceName] && <div key={index} className='cursor-pointer'
+                                        onClick={() => navigate(redirectLinks[serviceName].homeLink)}>
+                                        <div className='text-center'>
+                                            <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px', }} />
+                                            <p className="text-xs text-muted mt-1 font-semibold">{redirectLinks[serviceName].title}</p>
+                                        </div>
+                                    </div>
+                                })
+                            }
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     )
 }
