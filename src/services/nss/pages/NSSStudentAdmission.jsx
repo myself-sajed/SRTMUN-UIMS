@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import GoBack from '../../../components/GoBack'
-import Bred from '../../../components/Bred'
 import siteLinks from '../../../components/siteLinks'
 import Text from '../../../inputs/Text'
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import StudentAdmissionTable from '../tables/StudentAdmissionTable'
+import StudentBasicInfoTable from '../tables/StudentBasicInfoTable'
+
 let nssLogo = <img src="/assets/nsslogo.png" height="40px" width="40px" />
 
 const NSSStudentAdmission = () => {
@@ -61,9 +62,26 @@ const NSSStudentAdmission = () => {
                         </div>
 
                     </div>
-
-                    <div className="my-4">
-                        <StudentAdmissionTable />
+                    
+                    <div className="my-3">
+                        <div className="accordion" id="accordionExample">
+                            {
+                                navcom.map((item, index) => { 
+                                    return <div className="accordion-item bg-gray-50 ">
+                                        <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                {item.value}
+                                            </button>
+                                        </h2>
+                                        <div id={`collapse-${index}`} className={`accordion-collapse collapse${index === 0 ? ' show' : ''}`} aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                            <div className="accordion-body">        
+                                                <div key={item}>{item.element}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                })
+                            }
+                        </div>
                     </div>
 
                     <div className="my-2">
@@ -74,11 +92,13 @@ const NSSStudentAdmission = () => {
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     )
 }
+
+const navcom = [
+    {element: <StudentBasicInfoTable />, value: 'Student Basic Info' },
+    {element: <StudentAdmissionTable />, value: 'NSS Student' },
+]
 
 export default NSSStudentAdmission

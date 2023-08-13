@@ -373,6 +373,33 @@ const excelObject = {
         'toDate': 'To',
         'year': 'Year',
     },
+    //Nss
+    NssBasicInfo: {
+        'studentName': "Student Name", 
+        'parentName': "Father/Mother Name", 
+        'dob': "Date of Birth", 
+        'gender': "Gender", 
+        'state': "State", 
+        'distric': "Distric", 
+        'mobileNo': "Mobile No", 
+        'address': "Address", 
+        'email': "Email", 
+        'createdByEmail': "Created by Programme. Officer Email", 
+        'otherAreaOfInterest': "Other Area Of Interest",
+    },
+    NssAdmission:{
+        'studentName': "Student Name", 
+        'classes': "Class", 
+        'dob': "Date of Birth", 
+        'caste': "Caste", 
+        'category': "Category", 
+        'nss1Year': "Year of NSS-1", 
+        'nss2Year': "Year of NSS-2", 
+        'address': "Address", 
+        'email': "Email", 
+        'projectName': "Project Assigned", 
+        'bloodGroup': "Blood Group",
+    },
 }
 
 export default excelObject;

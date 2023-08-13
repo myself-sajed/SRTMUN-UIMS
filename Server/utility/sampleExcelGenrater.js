@@ -1,11 +1,12 @@
 const xlsxPopulate = require('xlsx-populate');
 const {excelObject: facultyExcelObj} = require("../routes/faculty-routes/routes")
 const {excelObject: directorExcelObj} = require("../routes/director-routes/director-routes")
+const {excelObject: nssExcelObj} = require("../routes/nss-routes/nss-routes")
 
 const path = require("path");
 
 
-const ExcelObj = {...directorExcelObj, ...facultyExcelObj}
+const ExcelObj = {...directorExcelObj, ...facultyExcelObj, ...nssExcelObj}
 
 const SchoolsProgram = {
     "School of Computational Sciences": '"Ph.D. (Computer Science),M.Phil (Computer Science),MCA,M.Sc.(Computer Science),M.Sc(Computer Applications),M.Sc(Computer Networking)"',
@@ -244,7 +245,14 @@ async function generateExcelFile(filename,model,school) {
     policyDocument: {
         "Wheather National / International": "isNat3",
         "Choose Year": "academicYear",
-    }
+    },
+    //Nss
+    NssBasicInfo: {  
+        "Gender":'gender', 
+        "Mobile No":'number',
+    },
+    NssAdmission:{
+    },
     
     };
     const headings = Object.keys(columnMapping);
@@ -430,7 +438,7 @@ async function generateExcelFile(filename,model,school) {
             errorTitle: 'Invalid value',
             error: 'Please select a value from the list',
         },
-        
+                
       };
 
     for(let rowIndex=0; rowIndex<=100; rowIndex++) {

@@ -13,6 +13,7 @@ const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
 const { router: directorRouter } = require("./routes/director-routes/director-routes")
+const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
 
 
 app.use(cors());
@@ -94,7 +95,7 @@ app.use(require('./routes/director-routes/academic-audit-routes/routes'));
 require('./routes/director-routes/directorAuth')(app, jwt)
 
 //nss routes
-app.use(require("./routes/nss-routes/nss-routes"))
+app.use(NssRouter)
 
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes'));

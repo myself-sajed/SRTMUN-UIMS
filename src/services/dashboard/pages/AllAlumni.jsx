@@ -39,7 +39,7 @@ const AllAlumni = ({school}) => {
                                 </td>
                                 <td>{item?.gender}</td>
                                 <td>{item?.programGraduated}</td>
-                                <td>{`${item && item.doCompleted === undefined || item.doCompleted === '' ? "Not Added" : item.doCompleted}`}</td>
+                                <td>{`${item && item.doCompletion === undefined || item.doCompletion === '' ? "Not Added" : item.doCompletion}`}</td>
 
                             </tr>
                         })
