@@ -529,19 +529,14 @@ body {
 
 .dashboard-gradient {
   /* background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(90deg, #e66465, #f97316); */
-  /* background-image: linear-gradient(90deg, #FF9933 0%, #FFFFFF 33.33%, #138808 66.66%, #138808 100%); */
-  /* background-image: linear-gradient(90deg, #FF9933 20%, #FFFFFF 50%, #138808 50%); */
-  /* background-image: radial-gradient(ellipse at top left, #FF9933 20%, transparent 50%), radial-gradient(ellipse at bottom right, #00802b 20%, transparent 50%); */
-/* background-blend-mode: screen; */
-/* background-image: linear-gradient(to bottom right, #FF9933 0%, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%, #138808 100%); */
-/* background-image: linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808);
-background-size: 100% 100vh;
-background-repeat: no-repeat;
-background-position: center top; */
-background-image: linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808), linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808);
-background-size: 100% 100vh, 100% auto;
-background-repeat: no-repeat, no-repeat;
-background-position: center top, center bottom;
+
+background-image: 
+  linear-gradient(to bottom, transparent 0%, transparent calc(100vh - 20px), #ffffff00 calc(100vh - 20px), #ffffffad 100%),
+  linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808), 
+  linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808);
+background-size: 100% 100vh, 100% 100vh, 100% auto;
+background-repeat: no-repeat, no-repeat, no-repeat;
+background-position: center top, center top, center bottom;
 }
 
 .ant-upload-list {
@@ -560,7 +555,6 @@ background-position: center top, center bottom;
   background: rgb(131, 58, 180);
   background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 0.5012861834186799) 0%, rgba(252, 176, 69, 0.49848506297050066) 100%);
 }
-
 
 /* Masonry layout */
 
