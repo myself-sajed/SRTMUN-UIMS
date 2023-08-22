@@ -323,7 +323,7 @@ const MainService = ({ data }) => {
     return (
 
 
-        <div className="indexCard flex items-start gap-2 relative pt-4">
+        <div className="indexCard">
             <div className='indexCardIcon'>
                 {data.icon}
 
@@ -333,22 +333,22 @@ const MainService = ({ data }) => {
                     <p className='indexCardPUp'>{data.title}</p>
                     <p className='indexCardPDown'>{data.phrase}</p>
                 </div>
-            </div>
-            <div className='indexBtnOuter'>
-                <button onClick={() => {
-                    navigate(data.user ? data.profileUrl : data.
-                        loginUrl)
-                }} className={`indexBtn ${data.user ? 'indexBtnHalf' : 'indexBtnFull'} duration-200 ease-in-out`}>
-                    {data.user ? 'Visit Profile' : 'Login Now'}
-                </button>
-                {data.user && <button onClick={() => {
-                    dispatch(data.dispatchFunction(null))
-                    localStorage.removeItem(data.tokenId)
-                    navigate('/')
-                }} className='indexBtn indexBtnHalf duration-200 ease-in-out'
-                    style={{ backgroundColor: "#f88e7b" }}> Logout
-                </button>
-                }
+                <div className='indexBtnOuter'>
+                    <button onClick={() => {
+                        navigate(data.user ? data.profileUrl : data.
+                            loginUrl)
+                    }} className={`indexBtn ${data.user ? 'indexBtnHalf' : 'indexBtnFull'} duration-200 ease-in-out`}>
+                        {data.user ? 'Visit Profile' : 'Login Now'}
+                    </button>
+                    {data.user && <button onClick={() => {
+                        dispatch(data.dispatchFunction(null))
+                        localStorage.removeItem(data.tokenId)
+                        navigate('/')
+                    }} className='indexBtn indexBtnHalf duration-200 ease-in-out'
+                        style={{ backgroundColor: "#f88e7b" }}> Logout
+                    </button>
+                    }
+                </div>
             </div>
         </div>
 

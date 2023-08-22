@@ -45,7 +45,7 @@ const dashboardCards = [
         icon: <GroupRoundedIcon sx={{ color: 'orange', fontSize: '42px' }} />
     },
     {
-        title: 'Registered Alumni',
+        title: 'Alumni Connect',
         countModelName: 'AlumniCount',
         color: 'cyan',
         url: `/dashboard/select-department/alumni`,

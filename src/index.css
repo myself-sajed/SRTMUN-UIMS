@@ -388,7 +388,7 @@ body {
 
 .indexCard {
   width: 49%;
-  height: 290px;
+  height: 340px;
   background-color: #fee2e2;
   border: solid #f89786 1px;
   border-radius: 10px;
@@ -528,15 +528,15 @@ body {
 }
 
 .dashboard-gradient {
-  /* background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(90deg, #e66465, #f97316); */
-
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(90deg, #e66465, #f97316);
+  /* 
   background-image:
     linear-gradient(to bottom, transparent 0%, transparent calc(100vh - 20px), #ffffff00 calc(100vh - 20px), #ffffffad 100%),
     linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808),
     linear-gradient(to bottom right, #FF9933, #FFFFFF, #138808);
   background-size: 100% 100vh, 100% 100vh, 100% auto;
   background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: center top, center top, center bottom;
+  background-position: center top, center top, center bottom; */
 }
 
 .ant-upload-list {
