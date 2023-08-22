@@ -50,7 +50,7 @@ const Index = () => {
         {
             icon: <PersonRoundedIcon sx={iconProps} />,
             title: 'Faculty Profile',
-            phrase: 'Login to the individual Faculty Profile by entering your valid Employee ID and Password.',
+            phrase: 'Login to the your Faculty Profile by entering your alloted Employee ID and Password.',
             user: users.user ? users.user : null,
             profileUrl: siteLinks.facultyHome.link,
             tokenId: 'faculty-token',
@@ -60,7 +60,7 @@ const Index = () => {
         {
             icon: <DescriptionRoundedIcon sx={iconProps} />,
             title: 'CAS / PBAS',
-            phrase: 'Fill Career Advancement Scheme report of any year and and generate Single or consolidate CAS Report in a click.',
+            phrase: 'Submit CAS & PBAS Reports effortlessly, login through your Faculty Profile Credentials',
             user: users.user ? users.user : null,
             profileUrl: siteLinks.cas.link,
             dispatchFunction: setUser,
@@ -70,7 +70,7 @@ const Index = () => {
         {
             icon: <LocalLibraryRoundedIcon sx={iconProps} />,
             title: 'Director',
-            phrase: 'Login to the individual Director Profile by entering your valid allotted Director ID and Password.',
+            phrase: "Information of the School's Students, Alumni, Achievements and much more in one place.",
             user: users.directorUser ? users.directorUser : null,
             profileUrl: siteLinks.directorHome.link,
             dispatchFunction: setDirectorUser,
@@ -215,7 +215,7 @@ const Index = () => {
 
                 {/* News */}
                 <div className='flex items-center justify-start mt-2'>
-                    <span onClick={() => { navigate('/news') }} className='md:text-sm cursor-pointer text-xs whitespace-nowrap bg-orange-500 hover:bg-orange-800 text-white px-1 md:px-2'>
+                    <span onClick={() => { navigate('/news') }} className='md:text-base cursor-pointer text-sm whitespace-nowrap bg-orange-500 hover:bg-orange-800 text-white px-1 md:px-2'>
                         <div className='flex items-center justify-start gap-1'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />News Bulletin</div></span>
                     <marquee className='bg-orange-100 text-orange-700' behavior="scroll" direction="left"
                     >
@@ -224,7 +224,7 @@ const Index = () => {
                                 <div className='flex items-center justify-start gap-4'>
 
                                     {news?.data?.data?.map((el) => {
-                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-xs md:text-sm' onClick={() => { navigate(`/news/${el._id}`) }}>
+                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el._id}`) }}>
                                             <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> {el.headline}
                                         </div>
                                     })}
@@ -232,7 +232,7 @@ const Index = () => {
                                 </div> : <p className="md:text-base text-sm">No Recent News</p>
                         }
                     </marquee>
-                    <span onClick={() => { navigate('/news') }} className='sm:block hidden text-xs md:text-sm whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
+                    <span onClick={() => { navigate('/news') }} className='sm:block hidden text-sm md:text-base whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
                         <div className='flex items-center justify-start gap-1 cursor-pointer'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />Explore all News</div></span>
 
 

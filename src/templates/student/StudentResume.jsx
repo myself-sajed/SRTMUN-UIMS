@@ -114,10 +114,10 @@ const StudentResume = () => {
             {/* HORIZONTAL INFO BAR */}
             <div>
                 <div className='flex items-center justify-center gap-5 bg-blue-50 p-2 my-3'>
-                    <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
-                    <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
-                    <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
-                    <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
+                    <ContactTile keyName="User" value={`${(user && user?.isAlumni) ? 'Verified Alumni' : 'Verified Student'}`} />
+                    <ContactTile keyName="School" value={`${(user && user.schoolName) || 'Not Added'}`} />
+                    <ContactTile keyName="Email" value={`${(user && user.email) || 'Not Added'}`} />
+                    <ContactTile keyName="Phone" value={`${(user && user.mobile) || 'Not Added'}`} />
                 </div>
             </div>
 
