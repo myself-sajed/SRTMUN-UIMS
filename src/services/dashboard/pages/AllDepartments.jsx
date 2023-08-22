@@ -184,7 +184,7 @@ const AllDepartments = () => {
                 {
                     window.location.pathname === '/dashboard/select-department/alumni' &&
                     <div className="my-2">
-                        <AlumniAnalytics progression={data?.data?.data?.ProgressionToHE} placement={data?.data?.data.placement} />
+                        <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE }} />
                     </div>
 
                 }

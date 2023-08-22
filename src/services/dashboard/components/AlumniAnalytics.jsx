@@ -9,10 +9,14 @@ import siteLinks from '../../../components/siteLinks'
 import { useEffect } from 'react';
 
 
-const AlumniAnalytics = (stats) => {
+const AlumniAnalytics = ({ stats }) => {
     const navigate = useNavigate()
     const numAlumniPlaced = 250;
     const numAlumniHigherEducation = 150;
+
+    useEffect(() => {
+        console.log("Stats:", stats)
+    }, [stats])
 
 
     const dashboardInfo = [
@@ -54,7 +58,9 @@ const AlumniAnalytics = (stats) => {
                                 onClick={() => { card.url && navigate(card.url) }}>
                                 <div className='w-full'>
                                     <div className='flex items-start justify-start gap-2 flex-col'>
-                                        <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-3xl font-bold'>{160}</span></div>
+                                        <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-3xl font-bold'>
+                                            {stats?.[card.countModelName]}
+                                        </span></div>
                                         <p className='text-center '>{card.title}</p>
                                     </div>
                                 </div>
