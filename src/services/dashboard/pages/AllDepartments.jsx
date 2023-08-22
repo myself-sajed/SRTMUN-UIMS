@@ -200,7 +200,7 @@ const AllDepartments = () => {
                                             <p className='text-sm text-[#1d4ed8] '>{nameOfTheSchool.replace('School of', '').length < 24 ? nameOfTheSchool.replace('School of', '') : nameOfTheSchool.replace('School of', '').slice(0, 22) + "..."}{
                                                 serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
                                                     <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
-                                                        {(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
+                                                        {serviceName=="alumni"? (data?.data?.data.alumni.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length:(data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
                                                     </span>
 
                                                     :

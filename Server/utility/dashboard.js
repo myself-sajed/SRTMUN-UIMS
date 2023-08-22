@@ -61,6 +61,7 @@ const TeacherFeedback = require('../models/feedback-models/teacherFeedbackModel'
 const AlumniFeedback = require('../models/feedback-models/alumniFeedbackModel')
 const ParentFeedback = require('../models/feedback-models/parentFeedbackModel')
 const EmployerFeedback = require('../models/feedback-models/employerFeedbackModel');
+const StudentUser = require('../models/student-models/studentUserSchema');
 
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,
@@ -84,7 +85,7 @@ function feedback(app) {
     app.post('/api/get/dashboardCount', async function (req, res) {
         const { model, select, type } = req.body
 
-        let docs;
+        let docs = {};
         if (type === 'faculty') {
             docs = await models[model].find({}).populate('userId').lean()
         }
@@ -92,7 +93,9 @@ function feedback(app) {
             if (model === 'Student') {
                 docs = await models[model].find({ isAlumni: false, isActiveStudent: true }).select(select).lean()
             } else if (model === 'Alumni') {
-                docs = await models[model].find({ isAlumni: true }).select(select).lean()
+                docs.alumni = await Student.find({ isAlumni: true }).select(select).lean()
+                docs.placement = await Placement.find({}).lean()
+                docs.ProgressionToHE = await ProgressionToHE.find({}).lean()
             } else {
                 docs = await models[model].find({}).select(select).lean()
             }
