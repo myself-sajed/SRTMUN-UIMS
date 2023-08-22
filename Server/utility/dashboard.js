@@ -96,6 +96,7 @@ function feedback(app) {
                 docs.alumni = await Student.find({ isAlumni: true }).select(select).lean()
                 docs.placement = await Placement.find({}).lean().length
                 docs.ProgressionToHE = await ProgressionToHE.find({}).lean().length
+                docs.QualifiedExam = await QualifiedExam.find({}).lean().length
             } else {
                 docs = await models[model].find({}).select(select).lean()
             }
