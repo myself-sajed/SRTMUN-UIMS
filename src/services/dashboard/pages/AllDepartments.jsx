@@ -18,6 +18,7 @@ import AllFaculties from './AllFaculties';
 import AllAlumni from './AllAlumni';
 import OtherDashboardData from './OtherDashboardData';
 import DirectorDashboardData from './DirectorDashboardData';
+import AlumniAnalytics from '../components/AlumniAnalytics';
 
 const AllDepartments = () => {
 
@@ -180,6 +181,14 @@ const AllDepartments = () => {
                     }
                 </div>
 
+                {
+                    window.location.pathname === '/dashboard/select-department/alumni' &&
+                    <div className="my-2">
+                        <AlumniAnalytics />
+                    </div>
+
+                }
+
                 <div>
                     <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
                         {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
@@ -210,6 +219,9 @@ const AllDepartments = () => {
                     </div>
                 </div>
             </div>
+
+
+
             {
 
                 Object.keys(SchoolsProgram).map((School, i) => <section id={`${i}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>

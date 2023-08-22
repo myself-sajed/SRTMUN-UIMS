@@ -7,7 +7,7 @@ import TableComponent from '../../../components/TableComponent';
 import serverLinks from '../../../js/serverLinks';
 import capitalizeText from '../../../js/capitalizeText';
 
-const AllAlumni = ({school}) => {
+const AllAlumni = ({ school }) => {
 
     // const { school } = useParams()
 
@@ -17,11 +17,11 @@ const AllAlumni = ({school}) => {
 
     useEffect(() => {
         setData(data?.data?.data?.Alumni?.sort((a, b) => (a.programGraduated > b.programGraduated) ? 1 : ((b.programGraduated > a.programGraduated) ? -1 : 0)))
-      }, [data]);
+    }, [data]);
 
     return (
         <div>
-             <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
+            <div className="sticky-top bg-white text-[19px] font-bold pt-2 flex justify-center">
                 {school}
             </div>
 
@@ -39,7 +39,7 @@ const AllAlumni = ({school}) => {
                                 </td>
                                 <td>{item?.gender}</td>
                                 <td>{item?.programGraduated}</td>
-                                <td>{`${item && item.doCompletion === undefined || item.doCompletion === '' ? "Not Added" : item.doCompletion}`}</td>
+                                <td>{`${item && item.doCompletion === undefined || item.doCompletion === null || item.doCompletion === '' ? "-" : item.doCompletion}`}</td>
 
                             </tr>
                         })

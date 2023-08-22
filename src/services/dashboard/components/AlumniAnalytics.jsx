@@ -1,0 +1,72 @@
+import React from 'react';
+import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
+import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
+import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded';
+import { useNavigate } from 'react-router-dom';
+import siteLinks from '../../../components/siteLinks'
+
+
+const AlumniAnalytics = () => {
+    const navigate = useNavigate()
+    const numAlumniPlaced = 250;
+    const numAlumniHigherEducation = 150;
+
+    const dashboardInfo = [
+        {
+            title: 'Placements',
+            countModelName: 'PlacementCount',
+            color: 'cyan',
+            url: `/dashboard/select-department/placements`,
+            icon: <WorkRoundedIcon sx={{ color: 'white', fontSize: '38px' }} />
+        },
+        {
+            title: 'Qualified Exams',
+            countModelName: 'QualifiedExamCount',
+            color: 'cyan',
+            url: `/dashboard/select-department/qualifiedExams`,
+            icon: <AssignmentTurnedInRoundedIcon sx={{ color: 'white', fontSize: '38px' }} />
+        },
+    ]
+
+    return (
+        <div id="alert-additional-content-1" className="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 " role="alert">
+            <div className="flex items-center">
+                <Diversity3RoundedIcon fontSize="medium" />
+                <span className="sr-only ml-3"></span>
+                <h3 className="text-xl font-bold ml-3">Alumni Dashboard</h3>
+            </div>
+            <div>
+                <div className="my-4 text-sm flex items-start gap-3 ">
+                    {
+                        dashboardInfo.map((card, index) => {
+                            return <div className={`py-3 px-3 md:pl-3 md:pr-11 rounded-md cursor-pointer border border-[#d8d5d5] duration-200 ease-in-out bg-blue-800 text-white`} key={`dashboardCard-${index}`}
+                                onClick={() => { card.url && navigate(card.url) }}>
+                                <div className='w-full'>
+                                    <div className='flex items-start justify-start gap-2 flex-col'>
+                                        <div className='flex items-center justify-start gap-2'>{card.icon} <span className='text-xl md:text-3xl font-bold'>{160}</span></div>
+                                        <p className='text-center '>{card.title}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        })
+                    }
+                </div>
+                <hr />
+                <div class="flex flex-col mt-3 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                    <div onClick={() => { navigate(siteLinks.alumniLogin.link) }} class="inline-flex justify-center items-center p-3 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 cursor-pointer dark:focus:ring-blue-900">
+                        Login as Alumni
+                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </div>
+                    <div onClick={() => { navigate(siteLinks.alumniRegistration.link) }} class="inline-flex justify-center items-center p-3 text-base font-medium text-center text-blue-800 rounded-lg border-2 border-blue-700 hover:bg-blue-700 hover:text-white cursor-pointer">
+                        Alumni Registration
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default AlumniAnalytics;
+

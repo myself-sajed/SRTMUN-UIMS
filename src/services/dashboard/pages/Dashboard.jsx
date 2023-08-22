@@ -16,6 +16,7 @@ import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded';
 import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded';
+import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { fetchSchoolData } from '../js/fetchData';
@@ -134,6 +135,13 @@ const dashboardCards = [
         url: `/dashboard/select-department/Fellowship`,
         color: 'maroon',
         icon: <AttachMoneyRoundedIcon sx={{ color: 'green', fontSize: '35px' }} />
+    },
+    {
+        title: 'Teachers Training Programs ',
+        countModelName: 'OnlineFDPCount',
+        url: `/dashboard/select-department/Fellowship`,
+        color: 'red',
+        icon: <LocalLibraryRoundedIcon sx={{ color: 'red', fontSize: '35px' }} />
     },
 
 ]
