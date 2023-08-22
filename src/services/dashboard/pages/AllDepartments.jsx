@@ -178,7 +178,7 @@ const AllDepartments = () => {
     return (
         <>
             <div style={{ borderBottom: "solid 1px #e5e7eb" }}>
-                <GoBack backUrl="/" pageTitle={Field} />
+                <GoBack backUrl={-1} pageTitle={Field} />
                 <div>
                     {
                         serviceName === 'schoolInformation' && <div className="w-full mt-3">
