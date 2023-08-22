@@ -4,12 +4,17 @@ import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded';
 import { useNavigate } from 'react-router-dom';
 import siteLinks from '../../../components/siteLinks'
+import { useEffect } from 'react';
 
 
-const AlumniAnalytics = () => {
+const AlumniAnalytics = ({ progression, placement }) => {
     const navigate = useNavigate()
     const numAlumniPlaced = 250;
     const numAlumniHigherEducation = 150;
+
+    useEffect(() => {
+        console.log(progression, placement)
+    }, [progression, placement])
 
     const dashboardInfo = [
         {
