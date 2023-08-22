@@ -141,6 +141,14 @@ const AllDepartments = () => {
             fieldName: ['Fellowship', 'Fellowships'],
             title: 'Fellowships'
         },
+        Online: {
+            model: 'Online',
+            select: 'department',
+            type: 'faculty',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
+            fieldName: ['Online FDPs', 'Online/Face-to-Face Faculty Development Programmes (FDP)'],
+            title: 'Online / Face-to-Face Faculty Development Programmes(FDP)'
+        },
     }
 
     const Field = serviceMap[serviceName].fieldName[1]

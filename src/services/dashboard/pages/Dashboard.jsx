@@ -116,6 +116,13 @@ const dashboardCards = [
         icon: <VideoChatRoundedIcon sx={{ color: 'DeepPink', fontSize: '35px' }} />
     },
     {
+        title: 'Teachers Training Programs ',
+        countModelName: 'OnlineCount',
+        url: `/dashboard/select-department/Online`,
+        color: 'red',
+        icon: <LocalLibraryRoundedIcon sx={{ color: 'red', fontSize: '35px' }} />
+    },
+    {
         title: 'Invited Talks ',
         countModelName: 'InvitedTalkCount',
         url: `/dashboard/select-department/InvitedTalk`,
@@ -136,13 +143,7 @@ const dashboardCards = [
         color: 'maroon',
         icon: <AttachMoneyRoundedIcon sx={{ color: 'green', fontSize: '35px' }} />
     },
-    {
-        title: 'Teachers Training Programs ',
-        countModelName: 'OnlineFDPCount',
-        url: `/dashboard/select-department/Fellowship`,
-        color: 'red',
-        icon: <LocalLibraryRoundedIcon sx={{ color: 'red', fontSize: '35px' }} />
-    },
+
 
 ]
 
