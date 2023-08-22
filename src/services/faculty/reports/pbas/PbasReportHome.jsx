@@ -33,7 +33,7 @@ const PbasReportHome = () => {
     const [tabName, setTabName] = useState('intro')
     const [casYearState, setCasYearState] = useState(null)
     // years mentioned below are not allowed to fill form
-    const prohabitatedYears = ["2022-23"]
+    const prohabitatedYears = []
     const [isDoNotProceed, setIsDoNotProceed] = useState(false)
 
     const steps = ['Basic Info', 'Select Year', 'Teaching Activities', 'Academic/ Research Score', 'Summary Sheet', "Acknowledgement"];
