@@ -3,6 +3,7 @@ import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded';
 import TimelineRoundedIcon from '@mui/icons-material/TimelineRounded';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 
 import { useNavigate } from 'react-router-dom';
 import siteLinks from '../../../components/siteLinks'
@@ -40,6 +41,13 @@ const AlumniAnalytics = ({ stats }) => {
             color: 'cyan',
             url: `/dashboard/select-department/progessionToHigherEducation`,
             icon: <TimelineRoundedIcon sx={{ color: 'white', fontSize: '38px' }} />
+        },
+        {
+            title: 'Alumni Contributions',
+            countModelName: 'ContributionCount',
+            color: 'cyan',
+            url: `/dashboard/select-department/AlumniContribution`,
+            icon: <AccountBalanceWalletRoundedIcon sx={{ color: 'white', fontSize: '38px' }} />
         },
     ]
 

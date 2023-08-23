@@ -69,6 +69,12 @@ const AllDepartments = () => {
             icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
             fieldName: ['ProgressionToHE', 'Students Progressed to Higher Education']
         },
+        AlumniContribution: {
+            model: 'AlumniContribution',
+            select: 'SchoolName',
+            icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
+            fieldName: ['Alumni Contributions', 'Alumni Contributions']
+        },
         BookAndChapter: {
             model: 'BookAndChapter',
             select: 'department',
@@ -168,10 +174,13 @@ const AllDepartments = () => {
     };
     function toggleScrollUpButton() {
         const scrollUpButton = document.getElementById('scrollUpButton');
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            scrollUpButton['style']['display'] = 'block';
-        } else {
-            scrollUpButton['style']['display'] = 'none';
+
+        if (scrollUpButton) {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollUpButton.style.display = 'block';
+            } else {
+                scrollUpButton.style.display = 'none';
+            }
         }
     }
 
@@ -192,7 +201,7 @@ const AllDepartments = () => {
                 {
                     window.location.pathname === '/dashboard/select-department/alumni' &&
                     <div className="my-2">
-                        <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE }} />
+                        <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE, ContributionCount: data?.data?.data.AlumniContribution }} />
                     </div>
 
                 }
@@ -237,7 +246,7 @@ const AllDepartments = () => {
                         Field === 'Faculties' ? <AllFaculties school={School} /> :
                             Field === 'Students' ? <AllStudents school={School} /> :
                                 Field === 'Alumni' ? <AllAlumni school={School} /> :
-                                    (Field === 'Placements' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
+                                    (Field === 'Placements' || Field === 'Alumni Contributions' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
                                         <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
 
                     }

@@ -33,6 +33,7 @@ import { useQuery } from 'react-query';
 import LoggedInUsers from '../components/LoggedInUsers';
 import VisitorCount from '../services/dashboard/components/VisitorCount';
 import navcom from '../services/director/components/UtilityComponents/navcom';
+import PriorityServices from '../services/dashboard/components/PriorityServices';
 
 const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }
@@ -223,8 +224,8 @@ const Index = () => {
                             news?.data?.data.length > 0 ?
                                 <div className='flex items-center justify-start gap-4'>
 
-                                    {news?.data?.data?.map((el) => {
-                                        return <div className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el._id}`) }}>
+                                    {news?.data?.data?.map((el, index) => {
+                                        return <div key={index} className='flex items-center justify-start gap-1 hover:text-blue-800 cursor-pointer text-sm md:text-base' onClick={() => { navigate(`/news/${el._id}`) }}>
                                             <LabelImportantRoundedIcon sx={{ fontSize: '18px' }} /> {el.headline}
                                         </div>
                                     })}
@@ -257,14 +258,16 @@ const Index = () => {
                 </div>
 
 
-                <div className='mt-4 z-30 '>
+                <div className='z-30 '>
 
 
-                    <div className={`${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
+                    <div className={` ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
                         <div className='md:p-5 sm:p-4 p-3 rounded-lg'>
                             <Dashboard />
                         </div>
                     </div>
+
+
 
 
                     <div className={`flex-wrap flex items-center mt-9 gap-auto ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>

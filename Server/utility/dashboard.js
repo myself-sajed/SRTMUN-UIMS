@@ -94,9 +94,10 @@ function feedback(app) {
                 docs = await models[model].find({ isAlumni: false, isActiveStudent: true }).select(select).lean()
             } else if (model === 'Alumni') {
                 docs.alumni = await Student.find({ isAlumni: true }).select(select).lean()
-                docs.placement = (await Placement.find({}).lean()).length
-                docs.ProgressionToHE = (await ProgressionToHE.find({}).lean()).length
-                docs.QualifiedExam = (await QualifiedExam.find({}).lean()).length
+                docs.placement = await Placement.countDocuments({})
+                docs.ProgressionToHE = await ProgressionToHE.countDocuments({})
+                docs.QualifiedExam = await QualifiedExam.countDocuments({})
+                docs.AlumniContribution = await AlumniContribution.countDocuments({})
             } else {
                 docs = await models[model].find({}).select(select).lean()
             }
