@@ -24,6 +24,7 @@ const fetchSchoolData = ({ school }) => {
 }
 
 const countData = ({ model, select, type }) => {
+    console.log('Function is called')
     const url = `${process.env.REACT_APP_MAIN_URL}/api/get/dashboardCount`
     return axios.post(url, { model, select, type })
 }

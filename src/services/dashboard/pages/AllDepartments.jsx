@@ -19,11 +19,11 @@ import AllAlumni from './AllAlumni';
 import OtherDashboardData from './OtherDashboardData';
 import DirectorDashboardData from './DirectorDashboardData';
 import AlumniAnalytics from '../components/AlumniAnalytics';
+import UserLoading from '../../../pages/UserLoading';
 
 const AllDepartments = () => {
 
     title("University Schools / Departments")
-    const navigate = useNavigate()
     const { serviceName } = useParams()
 
     const serviceMap = {
@@ -49,7 +49,7 @@ const AllDepartments = () => {
             model: 'Alumni',
             select: 'schoolName',
             icon: <MapsHomeWorkRoundedIcon sx={{ color: '#1d4ed8' }} />,
-            fieldName: ['Alumnus/Alumna', 'Alumni']
+            fieldName: ['Alumnus/Alumna', 'Alumni Connect']
         },
         placements: {
             model: 'Placement',
@@ -160,7 +160,12 @@ const AllDepartments = () => {
     const Field = serviceMap[serviceName].fieldName[1]
 
     const param = { model: serviceMap[serviceName].model, select: serviceMap[serviceName].select, type: serviceMap[serviceName]?.type ? serviceMap[serviceName].type : null }
-    const { data } = useQuery(["DashboardAnalysis", param.model], () => countData(param), { staleTime: 600000 })
+    const { data, isLoading } = useQuery(
+        ["DashboardAnalysis", param.model, param.select, param.type],
+        () => countData(param), {
+        staleTime: 30000, // Set a time in milliseconds (30 seconds in this example)
+    }
+    );
 
 
     //scroll up to Top functions
@@ -190,22 +195,14 @@ const AllDepartments = () => {
                 <GoBack backUrl={-1} pageTitle={Field} />
                 <div>
                     {
-                        serviceName === 'schoolInformation' && <div className="w-full mt-3">
-                            <p className="my-2 text-muted">Note: Scroll down for more detailed information about each School.</p>
-
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.6308259466323!2d77.28688624745851!3d19.100828732039695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bce298abb43ab1d%3A0x4f9b6277bce2a8e1!2sSwami%20Ramanand%20Teerth%20Marathwada%20University%2C%20Nanded!5e0!3m2!1sen!2sin!4v1686661784605!5m2!1sen!2sin" width="100%" height="300" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        window.location.pathname === '/dashboard/select-department/alumni' &&
+                        <div className="my-2">
+                            <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE, ContributionCount: data?.data?.data.AlumniContribution }} />
                         </div>
+
                     }
+
                 </div>
-
-                {
-                    window.location.pathname === '/dashboard/select-department/alumni' &&
-                    <div className="my-2">
-                        <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE, ContributionCount: data?.data?.data.AlumniContribution }} />
-                    </div>
-
-                }
-
                 <div>
                     <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
                         {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
@@ -245,7 +242,7 @@ const AllDepartments = () => {
                     {
                         Field === 'Faculties' ? <AllFaculties school={School} /> :
                             Field === 'Students' ? <AllStudents school={School} /> :
-                                Field === 'Alumni' ? <AllAlumni school={School} /> :
+                                Field === 'Alumni Connect' ? <AllAlumni school={School} /> :
                                     (Field === 'Placements' || Field === 'Alumni Contributions' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
                                         <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
 

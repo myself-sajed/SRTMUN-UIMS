@@ -12,8 +12,6 @@ import { useEffect } from 'react';
 
 const AlumniAnalytics = ({ stats }) => {
     const navigate = useNavigate()
-    const numAlumniPlaced = 250;
-    const numAlumniHigherEducation = 150;
 
     useEffect(() => {
         console.log("Stats:", stats)
@@ -53,11 +51,22 @@ const AlumniAnalytics = ({ stats }) => {
 
     return (
         <div id="alert-additional-content-1" className="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 " role="alert">
-            <div className="flex items-center">
-                <Diversity3RoundedIcon fontSize="medium" />
-                <span className="sr-only ml-3"></span>
-                <h3 className="text-xl font-bold ml-3">Alumni Dashboard</h3>
+            <div class="flex flex-col mb-3 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <div onClick={() => { navigate(siteLinks.alumniLogin.link) }} class="inline-flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 cursor-pointer dark:focus:ring-blue-900">
+                    Login as Alumni
+                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                </div>
+                <div onClick={() => { navigate(siteLinks.alumniRegistration.link) }} class="inline-flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-blue-800 rounded-lg border-2 border-blue-700 hover:bg-blue-700 hover:text-white cursor-pointer">
+                    Alumni Registration
+                </div>
             </div>
+
+            <hr />
+
+
+            <h3 className="text-lg font-bold ml-1 mt-3">Alumni Dashboard</h3>
             <div>
                 <div className="my-4 text-sm flex items-start gap-3 ">
                     {
@@ -76,18 +85,7 @@ const AlumniAnalytics = ({ stats }) => {
                         })
                     }
                 </div>
-                <hr />
-                <div class="flex flex-col mt-3 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                    <div onClick={() => { navigate(siteLinks.alumniLogin.link) }} class="inline-flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 cursor-pointer dark:focus:ring-blue-900">
-                        Login as Alumni
-                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </div>
-                    <div onClick={() => { navigate(siteLinks.alumniRegistration.link) }} class="inline-flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-blue-800 rounded-lg border-2 border-blue-700 hover:bg-blue-700 hover:text-white cursor-pointer">
-                        Alumni Registration
-                    </div>
-                </div>
+
             </div>
         </div>
     );

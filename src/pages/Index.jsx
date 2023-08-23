@@ -39,9 +39,6 @@ const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }
     useScroll()
     const users = useSelector(state => state.user)
-    const [feedbackModal, setFeedbackModal] = useState(false)
-    const [feedback, setFeedback] = useState({ content: '' })
-    const [feedbackEmail, setFeedbackEmail] = useState(null)
     useUserIsLoggedIn()
     title("Welcome")
     const navigate = useNavigate()
@@ -187,26 +184,6 @@ const Index = () => {
 
     ]
 
-    const sendFeedback = () => {
-        if (feedbackEmail === null || feedbackEmail === '' || feedbackEmail === undefined) {
-            toast.error('Please provide your email address')
-            return
-        }
-        else if (feedback.content === '' || feedback.content === null || feedback.content === undefined) {
-            toast.error('Please provide a valid feedback')
-            return
-        }
-
-        let url = `${process.env.REACT_APP_MAIN_URL}/api/userFeedback`
-        Axios.post(url, { email: feedbackEmail, feedback: feedback.content }).then((res) => {
-            res.data.status === 'success' ? toast.success('Feedback sent successfully') : toast.error(res.data.error)
-        }).catch((err) => {
-            toast.error('Internal Server Error')
-        })
-
-        setFeedbackModal(false)
-    }
-
     const { data: news, isLoading, isError, error, refetch } = useQuery([], () => fetchIndexNews())
 
 
@@ -287,27 +264,6 @@ const Index = () => {
 
 
 
-            </div>
-
-            <div>
-
-                <DialogBox title='Share your valuable feedback / suggestion' buttonName='Send Feedback / Suggestion' isModalOpen={feedbackModal} setIsModalOpen={setFeedbackModal} onClickFunction={sendFeedback}>
-                    <form className="row g-3">
-                        <div className="col-md-6">
-                            <label for="feedbackEmail" className="form-label">Email</label>
-                            <input type="email" className="form-control" value={feedbackEmail} onChange={(e) => { setFeedbackEmail(e.target.value) }} id="feedbackEmail" placeholder='youremail@example.com' />
-                        </div>
-                        <RichText setState={setFeedback} state={feedback} note="Write a short note about the Feedback, Suggestion or a Bug" />
-                    </form>
-                </DialogBox>
-
-                <FloatButton
-                    icon={<ForumRoundedIcon sx={{ color: 'blue' }} />}
-                    description="FEED BACK"
-                    shape="square"
-                    style={{ right: 24 }}
-                    onClick={() => { setFeedbackModal(true); setFeedbackEmail(null); setFeedback({ content: '' }) }} className='bg-blue-200'
-                />
             </div>
 
 
