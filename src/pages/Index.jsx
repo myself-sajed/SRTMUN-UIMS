@@ -235,10 +235,10 @@ const Index = () => {
                 </div>
 
 
-                <div className='z-30 '>
+                <div className='z-30 animate-fade-up animate-once'>
 
 
-                    <div className={` ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
+                    <div className={` `}>
                         <div className='md:p-5 sm:p-4 p-3 rounded-lg'>
                             <Dashboard />
                         </div>

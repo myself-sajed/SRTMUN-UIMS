@@ -231,7 +231,7 @@ const StudentRegistration = () => {
                 <p className='text-orange-700 font-bold text-xl'> {isAlumniLink ? 'Alumni Registration' : 'Student Registration'} </p>
             </div>
 
-            <div className='mt-3 flex items-center justify-center mb-4'>
+            <div className='mt-3 flex items-center justify-center mb-4 animate-fade-up animate-once'>
                 <div className='w-[750px] p-3 rounded-xl bg-gray-100'>
 
                     <div className='my-3 mx-2'>
