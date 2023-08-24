@@ -3,6 +3,7 @@ import FileViewer from '../../../components/FileViewer';
 import sortByAcademicYear from '../../../js/sortByAcademicYear'
 import EmptyBox from '../../../components/EmptyBox'
 import Loader from '../../../components/Loader'
+import siteLinks from '../../../components/siteLinks';
 
 
 const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) => {
@@ -32,7 +33,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
 
       <div className='table-responsive' style={{ height: "100%" }}>
         <table className="table table-bordered" >
-          <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
+          <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b':'#ae7e28'}`, color: '#FFF' }}>
             <tr>
               {
                 Object.values(tableHead)?.map(item => {

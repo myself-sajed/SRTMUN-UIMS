@@ -6,6 +6,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
 import designationWiseSorting from '../../../js/designationWiseSorting';
+import siteLinks from '../../../components/siteLinks';
 
 
 const Faculties = ({ id, setState, yearFilter, schoolName, Heading }) => {
@@ -28,10 +29,10 @@ const Faculties = ({ id, setState, yearFilter, schoolName, Heading }) => {
   }, [data && data])
 
   return (
-    <AdminAcordinTable Heading={Heading} data={data?.data} SendReq={SendReq} >
-      <div className='table-responsive' style={{ height: "100%" }}>
+    <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >
+      <div className='table-responsive' style={{height: "100%" }}>
         <table className="table">
-          <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
+          <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b':'#ae7e28'}`, color: '#FFF' }}>
             <tr>
               <th>Sr. No.</th>
               <th>profile Pic</th>

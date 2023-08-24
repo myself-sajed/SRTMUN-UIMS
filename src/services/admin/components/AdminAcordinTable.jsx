@@ -4,13 +4,14 @@ import AdminTable from './AdminTable'
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/system';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton } from '@mui/material';
+import siteLinks from '../../../components/siteLinks';
 
 const Btn = styled(Button)({
   textTransform: 'none',
 });
 
 const AdminAcordinTable = ({ children, Heading, data, SendReq, proof, tableHead, year, module, isLoading }) => {
-  let directorLocation=window.location.pathname==="/director/frcc"?true:false
+  let directorLocation=window.location.pathname===siteLinks.fdc.link?true:false
   let textClass = directorLocation ? "text-white" : "text-[#997024]";
   let hoverTextClass = directorLocation ? "hover:text-red-500" : "hover:text-[#997024]";
   const [open, setOpen] = useState(false);

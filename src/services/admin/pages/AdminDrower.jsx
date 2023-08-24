@@ -11,6 +11,7 @@ import { setAdminActive } from '../../../redux/slices/AdminActiveSlice'
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import title from '../../../js/title'
+import siteLinks from '../../../components/siteLinks';
 
 
 const AdminDrower = ({ children }) => {
@@ -22,7 +23,7 @@ const AdminDrower = ({ children }) => {
 
     <>
       <div className='col-12' style={{ height: "auto", display: 'flex', flexDirection: 'column' }}>
-        {window.location.pathname !== "/director/fdc" && <div className='sidebar-admin-drower'>
+        {window.location.pathname !== siteLinks.fdc.link && <div className='sidebar-admin-drower'>
           {
             DashbordButtons?.map(button => <button onClick={() => { dispatch(setAdminActive(button.name)) }} className={`DashbordButtons ${AdminActive === button.name ? 'active' : null}`}><span style={{ paddingRight: "10px" }}>{iconsSetter[button.name]}</span>{button.title}</button>)
           }
