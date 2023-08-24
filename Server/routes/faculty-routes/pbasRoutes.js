@@ -1,7 +1,5 @@
 const CASModel = require("../../models/faculty-models/pbasModel")
 require('dotenv').config();
-var pdf = require("html-pdf");
-// var options = { format: "A4" };
 var options = { format: "A4", timeout: 60000, border: { top: "0.4in", right: "0in", bottom: "0.4in", left: "0in" }, };
 const puppeteer = require('puppeteer')
 const path = require('path');
