@@ -50,7 +50,7 @@ const AllFacultyTable = ({ data, isLoading }) => {
 
 
     return <div className='table-responsive w-full'>
-        <table class="table table-bordered css-serial">
+        <table className="table table-bordered css-serial">
             <thead className='bg-blue-600 text-white'>
                 <tr>
                     <th scope="col">Sr No.</th>

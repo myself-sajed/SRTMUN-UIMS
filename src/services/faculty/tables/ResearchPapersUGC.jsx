@@ -185,7 +185,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
                             </div>
                         </div>
 
-                        <div class="row g-2">
+                        <div className="row g-2">
 
                             <IndexLink placeholder="Enter Scopus Link" indexLinkData={indexLinkData} setIndexLinkData={setIndexLinkData} id="Scopus" indexData={indexData} />
                             <IndexLink placeholder="Enter Web of Science Link" indexLinkData={indexLinkData} setIndexLinkData={setIndexLinkData} id="Web of Science" indexData={indexData} />
@@ -254,12 +254,12 @@ export default ResearchPapersUGC
 
 
 const FormCheck = ({ id, setIndexData, indexData }) => {
-    return <div class="form-check">
-        <input class="form-check-input" type="checkbox"
+    return <div className="form-check">
+        <input className="form-check-input" type="checkbox"
             onChange={(e) => {
                 e.target.checked ? setIndexData([...indexData, id]) : setIndexData(indexData.filter(item => item !== id))
             }} checked={indexData?.includes(id)} id={id} />
-        <label class="form-check-label" htmlFor={id}>
+        <label className="form-check-label" htmlFor={id}>
             {id}
         </label>
     </div>
@@ -269,7 +269,7 @@ const IndexLink = ({ placeholder, id, indexLinkData, setIndexLinkData, indexData
     useEffect(() => {
         console.log('indexLinkData:', indexLinkData)
     }, [indexLinkData])
-    return <div class="col">
+    return <div className="col">
         <input type="text" value={indexLinkData[id]} className='form-control col-md-4' onChange={(e) => {
             setIndexLinkData({ ...indexLinkData, [id]: e.target.value })
         }} placeholder={placeholder} disabled={!indexData.includes(id)} />

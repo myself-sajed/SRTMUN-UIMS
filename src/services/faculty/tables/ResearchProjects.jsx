@@ -246,9 +246,9 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
                         <Text title='Principal Invigilator Name' state={invName} setState={setInvName} />
 
                         <div className='col-md-4 border rounded-md mt-5'>
-                            <div class="form-check form-switch py-[0.20rem] mt-[0.28rem]">
-                                <input class="form-check-input" checked={isCo} onChange={(e) => { setIsCo(e.target.checked) }} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Is this Project have a Co-Invigilator?</label>
+                            <div className="form-check form-switch py-[0.20rem] mt-[0.28rem]">
+                                <input className="form-check-input" checked={isCo} onChange={(e) => { setIsCo(e.target.checked) }} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                                <label className="form-check-label" for="flexSwitchCheckDefault">Is this Project have a Co-Invigilator?</label>
                             </div>
                         </div>
 

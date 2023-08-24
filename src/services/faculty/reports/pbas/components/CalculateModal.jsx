@@ -18,7 +18,7 @@ const CalculateModal = ({ content, setCalculateModal, calculateModal, calculateI
             <DialogTitle>
 
                 <p className="text-base font-bold bg-blue-100 p-2 rounded-xl text-blue-800">Calculate Score</p>
-                <table class="table text-base mt-3 table-bordered">
+                <table className="table text-base mt-3 table-bordered">
                     <thead className="bg-light text-black">
                         <tr>
                             {

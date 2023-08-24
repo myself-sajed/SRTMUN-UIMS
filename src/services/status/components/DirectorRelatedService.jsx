@@ -70,16 +70,16 @@ const DirectorRelatedService = ({ year, serviceName, school }) => {
                             <p className='my-2 bg-[#f5f5f5] border text-black p-2 rounded-md'><b>{school}</b> submitted <b>{candidates?.length ? candidates?.length : 0}</b> years of {serviceName} data</p>
 
                             <div className="mt-2">
-                                <ul class="list-group list-group-flush">
+                                <ul className="list-group list-group-flush">
 
                                     {
                                         (candidates && candidates?.length > 0) ? candidates?.map((yearItem, index) => {
                                             return <li className='flex items-center justify-start gap-5 list-group-item'>
                                                 <span> {index + 1}. <b className='ml-3'>{yearItem}</b></span>
                                                 <span className='flex items-center font-semibold'>
-                                                    <span class="badge bg-success mr-2 p-[10px] cursor-default">Submitted</span>
-                                                    <span class="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(yearItem)} > <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
-                                                    <span class="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(yearItem)} > <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
+                                                    <span className="badge bg-success mr-2 p-[10px] cursor-default">Submitted</span>
+                                                    <span className="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(yearItem)} > <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
+                                                    <span className="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(yearItem)} > <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
                                                 </span>
                                             </li>
                                         }) : <div>

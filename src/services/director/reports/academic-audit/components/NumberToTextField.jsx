@@ -166,9 +166,9 @@ const NumberToTextField = ({ label, state, setState, id, inputName = "Title", cl
                                                             /> : null}
 
                                                         {element.field === 'File' ?
-                                                            <div class="mb-3">
-                                                                <label htmlFor="formFile" class="form-label">{element.label}</label>
-                                                                <input class="form-control" type="file" id="formFile" name="AAAFile" onChange={(e) => { setState({ ...state, [element.keyName]: { ...state[element.keyName], [`${element.keyName}-0`]: e.target.files[0] } }) }} />
+                                                            <div className="mb-3">
+                                                                <label htmlFor="formFile" className="form-label">{element.label}</label>
+                                                                <input className="form-control" type="file" id="formFile" name="AAAFile" onChange={(e) => { setState({ ...state, [element.keyName]: { ...state[element.keyName], [`${element.keyName}-0`]: e.target.files[0] } }) }} />
                                                             </div> : null}
 
 

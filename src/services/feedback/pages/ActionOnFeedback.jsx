@@ -89,14 +89,14 @@ const ActionOnFeedback = () => {
                     tabName === 'ack' && <div>
                         <Acknowledgement title={`Successfull submission of Action Taken Reports for Feedback of year ${actionYear}.`} navigateTo={siteLinks.directorHome.link} >
                             <div className='my-5 text-left'>
-                                <ul class="list-group">
-                                    <li class="list-group-item disabled" aria-disabled="true">You have submitted Action Taken Reports for</li>
-                                    <li class="list-group-item">01. Student</li>
-                                    <li class="list-group-item">02. Teacher</li>
-                                    <li class="list-group-item">03. Alumni</li>
-                                    <li class="list-group-item">04. Parent</li>
-                                    <li class="list-group-item">05. Employer</li>
-                                    <li class="list-group-item">06. Expert</li>
+                                <ul className="list-group">
+                                    <li className="list-group-item disabled" aria-disabled="true">You have submitted Action Taken Reports for</li>
+                                    <li className="list-group-item">01. Student</li>
+                                    <li className="list-group-item">02. Teacher</li>
+                                    <li className="list-group-item">03. Alumni</li>
+                                    <li className="list-group-item">04. Parent</li>
+                                    <li className="list-group-item">05. Employer</li>
+                                    <li className="list-group-item">06. Expert</li>
                                 </ul>
                             </div>
                         </Acknowledgement>

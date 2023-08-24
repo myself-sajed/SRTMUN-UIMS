@@ -322,12 +322,12 @@ const StudentRegistration = () => {
                                                         <div className="col-md-10 mx-auto my-3">
 
 
-                                                            <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputClass="py-3" />
+                                                            <Text className='col-md-12' type='email' id="email" value={email} setState={setValues} label="Email ID" placeholder="example@gmail.com" inputclassName="py-3" />
 
-                                                            <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputClass="py-3" />
+                                                            <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputclassName="py-3" />
 
                                                             {
-                                                                !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputClass="py-3" />
+                                                                !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputclassName="py-3" />
                                                             }
 
 
@@ -347,8 +347,8 @@ const StudentRegistration = () => {
 
                                                                 {
                                                                     loading ?
-                                                                        <button class="btn btn-primary py-2 px-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                            <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                        <button className="btn btn-primary py-2 px-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                            <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                             Sending OTP...
                                                                         </button>
                                                                         :
@@ -383,8 +383,8 @@ const StudentRegistration = () => {
                                                         <div className="flex items-center justify-center">
                                                             {
                                                                 verifyLoading ?
-                                                                    <button class="btn btn-primary py-2 px-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Verifying...
                                                                     </button>
                                                                     :
@@ -395,8 +395,8 @@ const StudentRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Resending...
                                                                     </button>
 

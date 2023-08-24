@@ -31,8 +31,8 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
     <>
 
       <div className='table-responsive' style={{ height: "100%" }}>
-        <table class="table table-bordered" >
-          <thead class="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
+        <table className="table table-bordered" >
+          <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
             <tr>
               {
                 Object.values(tableHead)?.map(item => {

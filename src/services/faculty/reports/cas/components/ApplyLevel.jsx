@@ -184,15 +184,15 @@ const ApplyLevel = ({ setLevel, level, setEligData, eligData, fullCASData, setSu
                                 level === 'stage4' && <div className="bg-blue-100 p-3 border rounded-md my-3">
                                     <p className='my-2'>Are you a :</p>
                                     <div className="flex items-center justify-start gap-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="superVisor" id="flexRadioDefault1" onChange={handleRadioChange} value="Main Supervisor" checked={supervisor === 'Main Supervisor'} />
-                                            <label class="form-check-label" for="flexRadioDefault1">
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="superVisor" id="flexRadioDefault1" onChange={handleRadioChange} value="Main Supervisor" checked={supervisor === 'Main Supervisor'} />
+                                            <label className="form-check-label" for="flexRadioDefault1">
                                                 Main Supervisor
                                             </label>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="superVisor" id="flexRadioDefault2" onChange={handleRadioChange} value="Co-supervisor" checked={supervisor === 'Co-supervisor'} />
-                                            <label class="form-check-label" for="flexRadioDefault2">
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="superVisor" id="flexRadioDefault2" onChange={handleRadioChange} value="Co-supervisor" checked={supervisor === 'Co-supervisor'} />
+                                            <label className="form-check-label" for="flexRadioDefault2">
                                                 Co-supervisor
                                             </label>
                                         </div>
@@ -246,10 +246,10 @@ const ApplyTextInput = ({ title, setEligData, eligData, name }) => {
 
 const ApplyCheckBoxInput = ({ title, setEligData, eligData, name }) => {
     return <div className='my-3 bg-blue-100 p-3 border rounded-md'>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id={title} onChange={
+        <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id={title} onChange={
                 (e) => { e.target.checked ? setEligData({ ...eligData, [name]: true }) : setEligData({ ...eligData, [name]: false }) }} checked={eligData[name]} />
-            <label class="form-check-label" htmlFor={title} >
+            <label className="form-check-label" htmlFor={title} >
                 {title}
             </label>
         </div>

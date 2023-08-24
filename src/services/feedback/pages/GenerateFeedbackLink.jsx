@@ -84,7 +84,7 @@ const GenerateFeedbackLink = () => {
 
                                 <div className="flex items-center justify-center">
                                     <div className='my-3 col-md-4'>
-                                        <select onChange={(e) => setAcademicYear(e.target.value)} class="form-select" aria-label="Default select example">
+                                        <select onChange={(e) => setAcademicYear(e.target.value)} className="form-select" aria-label="Default select example">
                                             <option selected>Choose Year</option>
                                             {
                                                 academicYearGenerator(2).map((year) => {
@@ -127,9 +127,9 @@ const GenerateFeedbackLink = () => {
 export default GenerateFeedbackLink
 
 const NameRadio = ({ title, userType, setUserType }) => {
-    return <div class="form-check text-left">
-        <input class="form-check-input" type="radio" name="Feedback" id={title} onChange={() => { setUserType(title.toLowerCase()) }} checked={title.toLowerCase() === userType} />
-        <label class="form-check-label" for={title}>
+    return <div className="form-check text-left">
+        <input className="form-check-input" type="radio" name="Feedback" id={title} onChange={() => { setUserType(title.toLowerCase()) }} checked={title.toLowerCase() === userType} />
+        <label className="form-check-label" for={title}>
             {title}
         </label>
     </div>

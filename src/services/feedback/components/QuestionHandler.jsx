@@ -39,7 +39,7 @@ const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = fa
 
                                         className="form-check-input" type="radio" name={dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question} id={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`} value={option} onChange={(e) => { setFormData({ ...formData, [dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question]: e.target.value }) }} />
 
-                                    <label class="form-check-label" htmlFor={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`} >
+                                    <label className="form-check-label" htmlFor={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`} >
                                         {option}
                                     </label>
                                 </div>
@@ -75,7 +75,7 @@ const QuestionHandler = ({ question, formData, setFormData, dynamicQuestion = fa
 
                                         }} />
 
-                                    <label class="form-check-label" htmlFor={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`}>
+                                    <label className="form-check-label" htmlFor={`${dynamicQuestion ? `${question.question} ${dynamicValue}` : question.question}-${option}`}>
                                         {option}
                                     </label>
                                 </div>

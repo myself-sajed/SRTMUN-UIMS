@@ -68,15 +68,15 @@ const SelectYear = ({ casYear, setLoadingTitle, userData, setReportLoading, erro
 
                             <ShowModal okText={"Download Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
                                 <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
-                                        <label class="form-check-label" htmlFor="standard">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
+                                        <label className="form-check-label" htmlFor="standard">
                                             Standard Report
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="printable" checked={forPrintOut ? true : false} onChange={(e) => { setForPrintOut(true) }} />
-                                        <label class="form-check-label" htmlFor="printable">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="printableOrNot" id="printable" checked={forPrintOut ? true : false} onChange={(e) => { setForPrintOut(true) }} />
+                                        <label className="form-check-label" htmlFor="printable">
                                             Printable Report (Specially designed for printing purposes)
                                         </label>
                                     </div>

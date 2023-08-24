@@ -282,7 +282,7 @@ const DirectorRegistration = () => {
                                             <div className='text-xs text-muted text-center my-2'>Photo size should be less than 10MB</div>
                                         </div>
 
-                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile ={setFile} setAvatar={setAvatar} />
+                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile={setFile} setAvatar={setAvatar} />
 
                                         <div className="w-full flex items-center justify-center ">
                                             <form className="row g-3 needs-validation" onSubmit={handleSecondStep} type="multipart/form-data">
@@ -318,8 +318,8 @@ const DirectorRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Sending OTP...
                                                                     </button>
 
@@ -368,8 +368,8 @@ const DirectorRegistration = () => {
 
                                                         {
                                                             verifyLoading ?
-                                                                <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                    <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                    <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                     Verifying OTP...
                                                                 </button>
 
@@ -383,8 +383,8 @@ const DirectorRegistration = () => {
 
                                                         {
                                                             loading ?
-                                                                <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
-                                                                    <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
+                                                                    <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                     Resending OTP...
                                                                 </button>
 

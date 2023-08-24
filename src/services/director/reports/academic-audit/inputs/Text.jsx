@@ -9,9 +9,9 @@ const Text = ({ label, classes = "", value, onChangeFunction, type = "text", isF
                     <div>
                         {
                             type === 'Date' ?
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor={label} className="form-label">{label}</label>
-                                    <input type="date" class="form-control" id={label} />
+                                    <input type="date" className="form-control" id={label} />
                                 </div>
                                 : <TextField
                                     fullWidth
@@ -26,9 +26,9 @@ const Text = ({ label, classes = "", value, onChangeFunction, type = "text", isF
                     <div>
                         {
                             type === "Date" ?
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor={label} className="form-label">{label}</label>
-                                    <input type="date" class="form-control" value={(state[keyName] && state[keyName][`${keyName}-${id}`]) || null} focused
+                                    <input type="date" className="form-control" value={(state[keyName] && state[keyName][`${keyName}-${id}`]) || null} focused
                                         id={`${keyName}-${id}`}
                                         onChange={(e) => { setState({ ...state, [keyName]: { ...state[keyName], [e.target.id]: e.target.value } }) }} />
                                 </div>
