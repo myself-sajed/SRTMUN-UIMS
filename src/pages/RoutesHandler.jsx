@@ -88,6 +88,7 @@ import NSSLogin from '../services/nss/pages/NSSLogin'
 import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
 import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
 import StudentResume from '../templates/student/StudentResume'
+import DirectorFRCC from '../services/director/pages/DirectorFRCC'
 
 
 
@@ -136,6 +137,7 @@ const RoutesHandler = () => {
 
                 <Route path='/director' element={<DirectorHome />} />
                 <Route path='/director/sdm' element={<DirectorMain />} />
+                <Route path='/director/frcc' element={<DirectorFRCC />} />
                 <Route path='/director/ssm' element={<DirectorSSM />} />
                 <Route path='/director-registration' element={<DirectorRegistration />} />
 

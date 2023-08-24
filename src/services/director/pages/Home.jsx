@@ -330,7 +330,19 @@ const Home = () => {
                                     </div>
                                     <div className='flex items-center justify-center gap-2'>
                                         <Link to={siteLinks.ssm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Go to SSM</Link>
-                                        {/* <Link to="#" className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Generate Report</Link> */}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-3 flex-auto w-full lg:w-fit">
+                            <div className="wrap-price">
+                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                    <div>
+                                        <h5>Faculty Records Control Center</h5>
+                                        <p className="prices">FRCC</p>
+                                    </div>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.fdm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Facultys Data</Link>
                                     </div>
                                 </div>
                             </div>

@@ -22,11 +22,11 @@ const AdminDrower = ({ children }) => {
 
     <>
       <div className='col-12' style={{ height: "auto", display: 'flex', flexDirection: 'column' }}>
-        <div className='sidebar-admin-drower'>
+       {  window.location.pathname !== "/director/frcc"&&<div className='sidebar-admin-drower'>
           {
             DashbordButtons?.map(button => <button onClick={() => { dispatch(setAdminActive(button.name)) }} className={`DashbordButtons ${AdminActive === button.name ? 'active' : null}`}><span style={{ paddingRight: "10px" }}>{iconsSetter[button.name]}</span>{button.title}</button>)
           }
-        </div>
+        </div>}
 
         {
           children
