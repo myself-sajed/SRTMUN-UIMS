@@ -137,7 +137,7 @@ const RoutesHandler = () => {
 
                 <Route path='/director' element={<DirectorHome />} />
                 <Route path='/director/sdm' element={<DirectorMain />} />
-                <Route path='/director/frcc' element={<DirectorFRCC />} />
+                <Route path='/director/fdc' element={<DirectorFRCC />} />
                 <Route path='/director/ssm' element={<DirectorSSM />} />
                 <Route path='/director-registration' element={<DirectorRegistration />} />
 

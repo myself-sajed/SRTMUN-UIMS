@@ -338,11 +338,11 @@ const Home = () => {
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
-                                        <h5>Faculty Records Control Center</h5>
-                                        <p className="prices">FRCC</p>
+                                        <h5>Faculty Data Center</h5>
+                                        <p className="prices">FDC</p>
                                     </div>
                                     <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.fdm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Faculty Data</Link>
+                                        <Link to={siteLinks.fdm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Get Faculty Data</Link>
                                     </div>
                                 </div>
                             </div>
