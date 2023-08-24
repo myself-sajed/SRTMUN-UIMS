@@ -24,7 +24,7 @@ const DirectorFRCC = () => {
 
       <AdminFaculty school={user?.department} />
 
-      <div className="mt-10">
+      <div className="">
         <br /><br />
         <Footer />
       </div>
