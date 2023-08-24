@@ -89,6 +89,7 @@ import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
 import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
 import StudentResume from '../templates/student/StudentResume'
 import DirectorFRCC from '../services/director/pages/DirectorFRCC'
+import WorkshopHome from '../services/workshop/pages/WorkshopHome'
 
 
 
@@ -209,6 +210,10 @@ const RoutesHandler = () => {
                 {/* NSS Service */}
                 <Route path="/nss-login" exact element={<NSSLogin />} />
                 <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
+
+                {/* Workshop Service */}
+                <Route path="/workshop" exact element={<WorkshopHome />} />
+
 
 
             </Routes>
