@@ -131,7 +131,7 @@ const Home = () => {
 
 
 
-            <div className='mt-3 border rounded-xl gray'>
+            <div className='mt-3 border rounded-xl gray animate-fade-up animate-once'>
                 {/* PROFILE */}
                 <div className='rounded-xl '>
 
