@@ -36,10 +36,10 @@ const ShowAAAFetchButton = ({ allYearAAAData, setState, state, tableToFetch }) =
                 <div className='bg-blue-100 rounded-md p-3'>
                     {
                         allYearAAAData.map((item, index) => {
-                            return <div class="form-check text-lg" key={index}>
-                                <input class="form-check-input" type="radio" name="chooseAAAYear"
+                            return <div className="form-check text-lg" key={index}>
+                                <input className="form-check-input" type="radio" name="chooseAAAYear"
                                     id={`auditYear${index}`} value={JSON.parse(item).auditYear} onChange={(e) => { setSelectYear(() => e.target.value); }} />
-                                <label class="form-check-label" for={`auditYear${index}`}>
+                                <label className="form-check-label" for={`auditYear${index}`}>
                                     {JSON.parse(item).auditYear} {auditYear === JSON.parse(item).auditYear && <span className='text-green-700'><CheckCircleIcon fontSize="small" sx={{ marginBottom: '5px' }} /></span>}
                                 </label>
                             </div>

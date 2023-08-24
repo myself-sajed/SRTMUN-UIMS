@@ -43,14 +43,14 @@ const UploadActionReport = ({ schoolName, academicYear, setTabName, handleNext }
     return (
         <div>
 
-            <div class="flex p-3 mt-4 text-blue-800 rounded-lg bg-blue-50 " role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex p-3 mt-4 text-blue-800 rounded-lg bg-blue-50 " role="alert">
+                <svg className="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
-                <span class="sr-only">Info</span>
+                <span className="sr-only">Info</span>
                 <div>
-                    <span class="font-medium">Ensure that these requirements are met:</span>
-                    <ul class="mt-1.5 ml-4 list-disc list-inside text-sm">
+                    <span className="font-medium">Ensure that these requirements are met:</span>
+                    <ul className="mt-1.5 ml-4 list-disc list-inside text-sm">
                         <li>Please upload Action Taken Report with Director signature and stamp.</li>
                         <li>Make sure that the file (Action Taken Report) you're uploading is less than 1MB in size.</li>
                         <li>Kindly ensure that all the reports are uploaded prior to submission. Your School Action Taken Reports will only be deemed as submitted if all the individual reports (which are Student, Teacher, Alumni, Employer, Parent & Expert) are successfully uploaded. However, if you choose to delete a previously uploaded report and leave it blank, it will be regarded as not submitted. Your adherence to these guidelines is greatly appreciated.</li>
@@ -119,7 +119,7 @@ const UploadReport = ({ title, schoolName, academicYear, data, refetch, }) => {
 
     return <div className=" text-gray-800 rounded-lg bg-gray-100 p-3" role="alert">
         <div>
-            <label for="formFile" class="form-label">Upload Action Taken Report for {title} Feedback</label>
+            <label for="formFile" className="form-label">Upload Action Taken Report for {title} Feedback</label>
             <input className="form-control" name="ATRFile" type="file" id={title}
                 onChange={(e) => {
                     uploadFile(e.target.files[0], title, true, setLoading)

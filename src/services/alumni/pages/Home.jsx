@@ -55,9 +55,9 @@ const Home = () => {
     useAlumniAuth()
     title('Alumni Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", schoolName: "", gender: "", dob: "", doStarted: "", doCompleted: "", country: "", Upload_Proof2: ""}
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", schoolName: "", gender: "", dob: "", doStarted: "", doCompleted: "", country: "", Upload_Proof2: "" }
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country} = values
+    const { salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country } = values
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: "AlumniUser" })
@@ -80,14 +80,14 @@ const Home = () => {
 
     useEffect(() => {
         if (itemToEdit && user) {
-            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country} = user
+            const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country } = user
             if (user._id === itemToEdit) {
                 setEdit(true); setOpen(true);
                 setValues({ salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country })
                 setProgramGraduated(programGraduated)
             }
         }
-    }, [itemToEdit, user]) 
+    }, [itemToEdit, user])
 
     return (
         <div>
@@ -111,7 +111,7 @@ const Home = () => {
                                 <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
                                 <div className='text-black '>
                                     <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
-                                    <p className='text-base sm:text-lg'>{user && user.programGraduated.map((item)=>{return (`${item},`)})}</p>
+                                    <p className='text-base sm:text-lg'>{user && user.programGraduated.map((item) => { return (`${item},`) })}</p>
                                     <p className='text-xs sm:text-sm'>{user && user.schoolName},</p>
                                     <p className='text-xs sm:text-sm'>{user.schoolName.includes("Latur") ? "Sub-Campus, Latur - 413531" : "SRTMUN, Vishnupuri, Nanded - 431 606"}</p>
 
@@ -135,7 +135,7 @@ const Home = () => {
                         <div className='flex items-center justify-between mx-4 my-2'>
                             <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             <button className='flex items-center justify-end gap-2 text-blue-700 hover:bg-blue-200 p-2 rounded-xl' onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
-                            <EditRoundedIcon fontSize="small" />Edit Profile
+                                <EditRoundedIcon fontSize="small" />Edit Profile
                             </button>
                         </div>
                         <hr className='text-black' />
@@ -149,13 +149,13 @@ const Home = () => {
                                         <DetailTile keyName="Mobile" value={`${user && user.mobile}`} />
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
                                         <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
-                                        <DetailTile keyName="Last Program Graduated " value={`${user && user.programGraduated.map((item)=>{return (`${item}`)})}`} />
-                                        <DetailTile keyName="year of Last Program Completed" value={`${user && user.doCompleted=== undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
+                                        <DetailTile keyName="Last Program Graduated " value={`${user && user.programGraduated.map((item) => { return (`${item}`) })}`} />
+                                        <DetailTile keyName="year of Last Program Completed" value={`${user && user.doCompleted === undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
                                         <DetailTile keyName="Address" value={`${user && user.address === undefined || user.address === '' ? "Not Added" : user.address}`} />
                                         {/* <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} /> */}
                                         <DetailTile keyName="Date Of Birth" value={`${user && user.dob == undefined || user.dob == '' ? "Not Added" : user.dob}`} />
                                         <DetailTile keyName="Nationality" value={`${user && user.country == undefined || user.country == '' ? "Not Added" : user.country}`} />
-                                        <DetailTile keyName="Alumni Proof" value={user && user.Upload_Proof=== undefined || user.Upload_Proof === '' ? "Not Added" :<FileViewer fileName={user.Upload_Proof} serviceName="faculty"/>} />
+                                        <DetailTile keyName="Alumni Proof" value={user && user.Upload_Proof === undefined || user.Upload_Proof === '' ? "Not Added" : <FileViewer fileName={user.Upload_Proof} serviceName="faculty" />} />
                                     </div>
                                 </div>
                             }
@@ -178,36 +178,36 @@ const Home = () => {
             <div style={{ background: "#a8bae7", width: "100%", height: "50px", marginTop: "10px", borderRadius: "10px 10px 0 0", color: "#FFF", display: "flex", alignItems: "center", fontWeight: "600" }}><span style={{ margin: "0 30px" }}>Previous Details</span></div>
             <div style={{ border: "solid #a8bae7 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "0 0 10px 10px" }}>
 
-                <div class="accordion" id="accordionExample1">
-                    <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
-                        <h2 class="accordion-header" id={`heading`}>
-                                    <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse1`} aria-expanded="false" aria-controls={`collapse1`}>
-                                    Past Qualification
-                                    </button>
-                                </h2>
-                                <div id={`collapse1`} class="accordion-collapse collapse" aria-labelledby={`heading`} data-bs-parent="#accordionExample1">
-                                    <div class="accordion-body">
-                                        <div> <UnderConstruction/></div> 
-                                    </div>
-                                </div>
+                <div className="accordion" id="accordionExample1">
+                    <div className="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                        <h2 className="accordion-header" id={`heading`}>
+                            <button className="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse1`} aria-expanded="false" aria-controls={`collapse1`}>
+                                Past Qualification
+                            </button>
+                        </h2>
+                        <div id={`collapse1`} className="accordion-collapse collapse" aria-labelledby={`heading`} data-bs-parent="#accordionExample1">
+                            <div className="accordion-body">
+                                <div> <UnderConstruction /></div>
+                            </div>
                         </div>
+                    </div>
                 </div>
             </div>
 
             <div style={{ background: "#a8bae7", width: "100%", height: "50px", marginTop: "10px", borderRadius: "10px 10px 0 0", color: "#FFF", display: "flex", alignItems: "center", fontWeight: "600" }}><span style={{ margin: "0 30px" }}>Current Status</span></div>
             <div style={{ border: "solid #a8bae7 2px", width: "100%", padding: "3px", marginBottom: "10px", borderRadius: "0 0 10px 10px" }}>
 
-                <div class="accordion" id="accordionExample">
+                <div className="accordion" id="accordionExample">
                     {
                         navcom.map(((item, index) => {
-                            return <div class="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
-                                <h2 class="accordion-header" id={`heading-${index}`}>
-                                    <button class="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                            return <div className="accordion-item" style={{ border: "solid #d6d6fb 2px", borderRadius: "10px", background: "#efeffa", margin: "3px 0" }}>
+                                <h2 className="accordion-header" id={`heading-${index}`}>
+                                    <button className="accordion-button" style={{ borderRadius: "10px", background: "#dedef6", color: "#344e87", fontSize: 17, fontWeight: 600 }} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
                                         {item.value}
                                     </button>
                                 </h2>
-                                <div id={`collapse-${index}`} class="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
+                                <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                    <div className="accordion-body">
                                         <div key={item}>{item.element}</div>
                                     </div>
                                 </div>
@@ -234,8 +234,8 @@ const Home = () => {
                                 }
                             </div>
                         </div>
-                        
-                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile ={setFile} setAvatar={setAvatar} />
+
+                        <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={file} setFile={setFile} setAvatar={setAvatar} />
 
                         <Select className='col-md-4 col-lg-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
                         <Text className='col-md-8 col-lg-10' id="name" value={name} label="Full Name" setState={setValues} />

@@ -260,17 +260,17 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
             <input type="file" accept="image/png, image/jpg, image/jpeg" multiple className='hidden' name="file" id="file" onChange={(e) => getFiles(e)} />
 
             {
-                file?.length > 0 && <ol class="list-group ">
+                file?.length > 0 && <ol className="list-group ">
 
-                    <li class="list-group-item list-group-item-action" aria-current="true">
+                    <li className="list-group-item list-group-item-action" aria-current="true">
                         Selected files {`(${file?.length})`}
                     </li>
 
                     {
                         file.map((item, index) => {
-                            return <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="font-semibold">
+                            return <li className="list-group-item d-flex justify-content-between align-items-start">
+                                <div className="me-auto">
+                                    <div className="font-semibold">
                                         {
                                             <img src={base64[index]} width="100px" />
                                         }
@@ -286,17 +286,17 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
             }
 
             {
-                (actionToPerform !== "add" && uploadedFiles?.length > 0) && <ol class="list-group mt-3">
+                (actionToPerform !== "add" && uploadedFiles?.length > 0) && <ol className="list-group mt-3">
 
-                    <li class="list-group-item list-group-item-action" aria-current="true">
+                    <li className="list-group-item list-group-item-action" aria-current="true">
                         Uploaded files {`(${uploadedFiles?.length})`}
                     </li>
 
                     {
                         uploadedFiles.map((item, index) => {
-                            return <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="font-semibold">
+                            return <li className="list-group-item d-flex justify-content-between align-items-start">
+                                <div className="me-auto">
+                                    <div className="font-semibold">
 
 
                                         <FileViewer fileName={item} serviceName="news" >
@@ -321,8 +321,8 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                     !loading ? <div className="my-3">
                         <button className="btn btn-primary bg-primary" type="submit">Publish News</button>
                     </div> :
-                        <button class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <button className="btn btn-primary" type="button" disabled>
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Publishing...
                         </button>
                 }

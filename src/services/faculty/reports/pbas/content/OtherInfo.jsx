@@ -82,8 +82,8 @@ const OtherInfo = ({ otherInfo, setOtherInfo, setSaveLoader }) => {
                                 <div className=''>
                                     <p className='text-xl font-bold my-3'>Add details </p>
 
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Add details</label>
+                                    <div className="mb-3">
+                                        <label for="exampleFormControlTextarea1" className="form-label">Add details</label>
                                         <textarea placeholder="Your details goes here..." className="form-control" value={entry} onChange={(e) => setEntry(e.target.value)} id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
 
@@ -116,9 +116,9 @@ const OtherInfo = ({ otherInfo, setOtherInfo, setSaveLoader }) => {
                                 <div className=''>
                                     <p className='text-xl font-bold my-3'>Edit details </p>
 
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Edit details</label>
-                                        <textarea placeholder="Your details goes here..." class="form-control" value={entry} onChange={(e) => setEntry(e.target.value)} id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div className="mb-3">
+                                        <label for="exampleFormControlTextarea1" className="form-label">Edit details</label>
+                                        <textarea placeholder="Your details goes here..." className="form-control" value={entry} onChange={(e) => setEntry(e.target.value)} id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
 
                                 </div>

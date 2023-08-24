@@ -319,8 +319,8 @@ const ContractualFacultyRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Sending OTP...
                                                                     </button>
 
@@ -369,8 +369,8 @@ const ContractualFacultyRegistration = () => {
 
                                                             {
                                                                 verifyLoading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Verifying OTP...
                                                                     </button>
 
@@ -386,8 +386,8 @@ const ContractualFacultyRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Resending OTP...
                                                                     </button>
 

@@ -72,7 +72,7 @@ const CombineQualification = () => {
                 setValues((pri) => {
                   return {
                     ...pri,
-                    ProgramType: e.target.value, isStudied: false, school: "", Program: "", InstitutionBoard: ["UG", "PG", "M.Phil.", "Ph.D."].includes(e.target.value)?"Swami Ramanand Teerth Marathwada University, Nanded": ""
+                    ProgramType: e.target.value, isStudied: false, school: "", Program: "", InstitutionBoard: ["UG", "PG", "M.Phil.", "Ph.D."].includes(e.target.value) ? "Swami Ramanand Teerth Marathwada University, Nanded" : ""
                   }
                 })
               }
@@ -87,9 +87,9 @@ const CombineQualification = () => {
           </div>
           {
             <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
-              <div class="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
-                <input class="form-check-input" checked={isStudied} onChange={() => { setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied, school: "", Program: "", InstitutionBoard: "Swami Ramanand Teerth Marathwada University, Nanded"} }) }} type="checkbox" role="switch" id="checkbox" disabled={!["UG", "PG", "M.Phil.", "Ph.D."].includes(ProgramType)} />
-                <label class="form-check-label" htmlFor="checkbox">Completed from University Campus?</label>
+              <div className="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
+                <input className="form-check-input" checked={isStudied} onChange={() => { setValues((pri) => { return { ...pri, 'isStudied': !pri.isStudied, school: "", Program: "", InstitutionBoard: "Swami Ramanand Teerth Marathwada University, Nanded" } }) }} type="checkbox" role="switch" id="checkbox" disabled={!["UG", "PG", "M.Phil.", "Ph.D."].includes(ProgramType)} />
+                <label className="form-check-label" htmlFor="checkbox">Completed from University Campus?</label>
               </div>
             </div>
           }

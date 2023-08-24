@@ -62,11 +62,11 @@ const NSSStudentAdmission = () => {
                         </div>
 
                     </div>
-                    
+
                     <div className="my-3">
                         <div className="accordion" id="accordionExample">
                             {
-                                navcom.map((item, index) => { 
+                                navcom.map((item, index) => {
                                     return <div className="accordion-item bg-gray-50 ">
                                         <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
@@ -74,7 +74,7 @@ const NSSStudentAdmission = () => {
                                             </button>
                                         </h2>
                                         <div id={`collapse-${index}`} className={`accordion-collapse collapse${index === 0 ? ' show' : ''}`} aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                            <div className="accordion-body">        
+                                            <div className="accordion-body">
                                                 <div key={item}>{item.element}</div>
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@ const NSSStudentAdmission = () => {
                     </div>
 
                     <div className="my-2">
-                        <button type="button" class="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 rounded-lg text-center">
+                        <button type="button" className="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 rounded-lg text-center">
                             <BookmarkRoundedIcon />
                             <span className="ml-3">Submit NSS Data</span>
                         </button>
@@ -97,8 +97,8 @@ const NSSStudentAdmission = () => {
 }
 
 const navcom = [
-    {element: <StudentBasicInfoTable />, value: 'Student Basic Info' },
-    {element: <StudentAdmissionTable />, value: 'NSS Student' },
+    { element: <StudentBasicInfoTable />, value: 'Student Basic Info' },
+    { element: <StudentAdmissionTable />, value: 'NSS Student' },
 ]
 
 export default NSSStudentAdmission

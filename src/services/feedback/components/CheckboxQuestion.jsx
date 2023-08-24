@@ -18,8 +18,8 @@ export default CheckboxQuestion
 
 const CheckboxButton = ({ id, title }) => {
     return <div>
-        <input class="form-check-input" type="checkbox" name="radioQuestion" id={id} />
-        <label class="form-check-label" htmlFor={id}>
+        <input className="form-check-input" type="checkbox" name="radioQuestion" id={id} />
+        <label className="form-check-label" htmlFor={id}>
             {title}
         </label>
     </div>

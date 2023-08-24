@@ -130,7 +130,7 @@ const TeachingAndActivities = ({ forPrintOut, lectures, casArray, showFileURL })
                                             </span>
                                                 {casItem?.teachingData?.checkBoxSelected?.length < 1 ?
                                                     <b>0</b> :
-                                                    <ul class="list-group list-group-flush mt-4">
+                                                    <ul className="list-group list-group-flush mt-4">
                                                         {casItem?.teachingData?.checkBoxSelected?.map((checkBoxId) => {
                                                             return <li className="list-group-item flex items-center bg-transparent justify-start gap-2 px-3">
                                                                 <p className="text-black"> <b>{`[${checkBoxId}]`}</b> : {activities[checkBoxId]} </p>

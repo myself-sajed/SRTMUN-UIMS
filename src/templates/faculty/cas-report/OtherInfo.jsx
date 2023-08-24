@@ -68,7 +68,7 @@ const OtherInfo = ({ forPrintOut, casArray, academicData }) => {
                 <hr />
 
                 <div>
-                    <ol class="grid grid-cols-2 gap-4 mt-3 px-5">
+                    <ol className="grid grid-cols-2 gap-4 mt-3 px-5">
                         <li className="p-1 list-decimal">Proof of Research Degree</li>
                         {
                             academicData?.Online?.length > 0 && <li className="p-1 list-decimal">Proofs of Orientation / Refresher course & FDP</li>

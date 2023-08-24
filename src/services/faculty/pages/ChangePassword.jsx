@@ -103,8 +103,8 @@ const ChangePassword = () => {
 
                                 :
 
-                                <button class="btn btn-primary bg-blue-600 text-white rounded-lg hover:bg-blue-700 ease-in-out duration-200 p-3 mt-2" type="button" disabled>
-                                    <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                                <button className="btn btn-primary bg-blue-600 text-white rounded-lg hover:bg-blue-700 ease-in-out duration-200 p-3 mt-2" type="button" disabled>
+                                    <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                                     Please wait...
                                 </button>
 

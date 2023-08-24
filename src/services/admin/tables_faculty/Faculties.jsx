@@ -9,11 +9,11 @@ import designationWiseSorting from '../../../js/designationWiseSorting';
 import siteLinks from '../../../components/siteLinks';
 
 
-const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
+const Faculties = ({ id, setState, yearFilter, schoolName, Heading }) => {
   const SendReq = "User"
   const module = "Admin"
 
-  let filter = schoolName === 'All Schools'? null : {department: schoolName}
+  let filter = schoolName === 'All Schools' ? null : { department: schoolName }
 
   const params = { model: SendReq, id: "", module, filter: filter }
 
@@ -22,17 +22,17 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: designationWiseSorting(data?.data)
+        ...pri,
+        [id]: designationWiseSorting(data?.data)
       }
-  })
+    })
   }, [data && data])
 
   return (
     <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >
       <div className='table-responsive' style={{height: "100%" }}>
-        <table class="table">
-          <thead class="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b':'#ae7e28'}`, color: '#FFF' }}>
+        <table className="table">
+          <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b':'#ae7e28'}`, color: '#FFF' }}>
             <tr>
               <th>Sr. No.</th>
               <th>profile Pic</th>

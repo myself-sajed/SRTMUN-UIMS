@@ -20,10 +20,10 @@ const AllStudents = ({ showImage = false, school }) => {
 
     // const { school } = useParams()
     // title(`About Students of ${school}`)
-    const param = { model: 'Student', filter: { schoolName: school, isAlumni:false, isActiveStudent:true } }
+    const param = { model: 'Student', filter: { schoolName: school, isAlumni: false, isActiveStudent: true } }
     const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => fetchData(param))
     const [studentData, setStudentData] = useState(null)
- 
+
 
     useEffect(() => {
         setStudentData(data?.data?.data?.sort((a, b) => (a.programGraduated > b.programGraduated) ? 1 : ((b.programGraduated > a.programGraduated) ? -1 : 0)))
@@ -37,7 +37,7 @@ const AllStudents = ({ showImage = false, school }) => {
             <div>
                 <div className='mt-3'>
                     <div className='table-responsive'>
-                        <table class="table table-bordered css-serial">
+                        <table className="table table-bordered css-serial">
                             <thead className='bg-[#1d4ed8] text-white'>
                                 <tr>
                                     <th scope="col">Sr No.</th>

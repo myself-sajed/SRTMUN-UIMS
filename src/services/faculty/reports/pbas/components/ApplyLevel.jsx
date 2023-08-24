@@ -181,10 +181,10 @@ const ApplyTextInput = ({ title, setEligData, eligData, name }) => {
 
 const ApplyCheckBoxInput = ({ title, setEligData, eligData, name }) => {
     return <div className='my-3 bg-blue-100 p-3 border rounded-md'>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id={title} onChange={
+        <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id={title} onChange={
                 (e) => { e.target.checked ? setEligData({ ...eligData, [name]: true }) : setEligData({ ...eligData, [name]: false }) }} checked={eligData[name]} />
-            <label class="form-check-label" htmlFor={title} >
+            <label className="form-check-label" htmlFor={title} >
                 {title}
             </label>
         </div>

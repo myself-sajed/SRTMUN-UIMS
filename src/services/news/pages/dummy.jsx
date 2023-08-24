@@ -227,8 +227,8 @@ const EditorForm = ({ actionToPerform = "Add", news = null, setIsModalOpen, refe
                     !loading ? <div className="my-3">
                         <button className="btn btn-primary bg-primary" type="submit">Publish News</button>
                     </div> :
-                        <button class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <button className="btn btn-primary" type="button" disabled>
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Publishing...
                         </button>
                 }
