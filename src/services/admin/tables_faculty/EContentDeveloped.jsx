@@ -5,7 +5,6 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
   index: 'Sr.No.',
-  'userId.username': 'Username',
   'userId.name': 'Faculty Name',
   'userId.department': 'Faculty School',
   moduleName: 'Name of the Module / Course developed',

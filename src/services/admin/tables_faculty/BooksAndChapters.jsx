@@ -6,7 +6,7 @@ import AdminExcelExoprt from '../components/AdminExcelExoprt';
 import AdminTable from '../components/AdminTable';
 
 const tableHead = {
-  index: 'Sr.No.', 'userId.username': 'Username', 'userId.name': 'Faculty Name', 'userId.department': 'Faculty School', teacherName: 'Teacher Name', titleOfBook: 'Title of Book / Chapter / Edited Book / Translation', paperTitle: 'Paper Title', titleOfProceeding: 'Title of proceedings of the conference', conName: 'Conference Name', isNat: 'Wheather National / International', authorEditor: 'Author / Editor / Translator', publicationYear: 'Year of Publication', issnNumber: 'ISBN/ISSN number of proceeding', schoolName: 'School Name', aff: 'Affiliation Institute at the time of publication', year: 'Academic Year', publisherName: 'Publisher Name', proof: "Uploaded Proof"
+  index: 'Sr.No.',   'userId.name': 'Faculty Name', 'userId.department': 'Faculty School', teacherName: 'Teacher Name', titleOfBook: 'Title of Book / Chapter / Edited Book / Translation', paperTitle: 'Paper Title', titleOfProceeding: 'Title of proceedings of the conference', conName: 'Conference Name', isNat: 'Wheather National / International', authorEditor: 'Author / Editor / Translator', publicationYear: 'Year of Publication', issnNumber: 'ISBN/ISSN number of proceeding', schoolName: 'School Name', aff: 'Affiliation Institute at the time of publication', year: 'Academic Year', publisherName: 'Publisher Name', proof: "Uploaded Proof"
 }
 
 const BooksAndChapters = ({ id, setState, yearFilter, schoolName, Heading }) => {

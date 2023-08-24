@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import getReq from '../../../components/requestComponents/getReq';
 import AdminAcordinTable from '../components/AdminAcordinTable';
 
-const tableHead ={index:'Sr.No.','userId.username': 'Username','userId.name': 'Faculty Name','userId.department': 'Faculty School',collabTitle: 'Title of the collaborative activity',agencyName: 'Name of the collaborating agency with contact details',participantName: 'Participant Name',collabYear: 'Year of Collaboration',
+const tableHead ={index:'Sr.No.', 'userId.name': 'Faculty Name','userId.department': 'Faculty School',collabTitle: 'Title of the collaborative activity',agencyName: 'Name of the collaborating agency with contact details',participantName: 'Participant Name',collabYear: 'Year of Collaboration',
 duration: 'Duration',
 activityNature: 'Nature of the activity',
 year: 'Year', proof: 'Uploaded Proof'}

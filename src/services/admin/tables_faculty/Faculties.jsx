@@ -5,6 +5,7 @@ import getReq from '../../../components/requestComponents/getReq';
 import AdminAcordinTable from '../components/AdminAcordinTable';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
+import designationWiseSorting from '../../../js/designationWiseSorting';
 
 
 const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
@@ -21,7 +22,7 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
     setState((pri) => {
       return {
           ...pri,
-          [id]: data?.data
+          [id]: designationWiseSorting(data?.data)
       }
   })
   }, [data && data])
@@ -35,7 +36,6 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
               <th>Sr. No.</th>
               <th>profile Pic</th>
               <th>Name</th>
-              <th>Username</th>
               <th>School</th>
               <th>Gender</th>
               <th>Email</th>
@@ -49,7 +49,6 @@ const Faculties = ({id, setState, yearFilter, schoolName, Heading}) => {
                 <td>{index + 1}</td>
                 <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/faculty`} /></td>
                 <td>{`${item.salutation} ${item.name}`}</td>
-                <td>{item.username}</td>
                 <td>{item.department}</td>
                 <td>{item.gender}</td>
                 <td>{item.email}</td>

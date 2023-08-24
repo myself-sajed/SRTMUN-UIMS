@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 import AdminExcelExoprt from '../components/AdminExcelExoprt';
 import AdminTable from '../components/AdminTable';
 
-const tableHead = { index: 'Sr.No.',"userId.username": "Username","userId.name": "Name Of Faculty", "userId.department": "School Of Faculty" , teacherName: 'Name of full-time teachers receiving award', awardYear: 'Award Date', pan: 'PAN', designation: 'Designation', awardName: 'Name of the Award, Fellowship, received', isNat: 'National / International',agencyName:"Award Agency Name",incentive:"Incentives/Type of incentive given by the HEI in recognition of the award",year: "Year", proof: 'Uploaded Proof' }
+const tableHead = { index: 'Sr.No.',"userId.name": "Name Of Faculty", "userId.department": "School Of Faculty" , teacherName: 'Name of full-time teachers receiving award', awardYear: 'Award Date', pan: 'PAN', designation: 'Designation', awardName: 'Name of the Award, Fellowship, received', isNat: 'National / International',agencyName:"Award Agency Name",incentive:"Incentives/Type of incentive given by the HEI in recognition of the award",year: "Year", proof: 'Uploaded Proof' }
 
 const AwardRecognition = ({id, setState, yearFilter, schoolName, Heading}) => {
  const SendReq = 'AwardRecognition'

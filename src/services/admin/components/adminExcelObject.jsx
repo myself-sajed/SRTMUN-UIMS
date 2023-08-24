@@ -11,7 +11,7 @@ const adminExcelObject = {
         'address': 'Address',
     },
     Qualification: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'subjects': 'Subjects',
@@ -21,7 +21,7 @@ const adminExcelObject = {
         'percentage': 'Percentage',
     },
     Degree: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'degreeName': 'Degree',
@@ -31,7 +31,7 @@ const adminExcelObject = {
         'subject': 'Subject',
     },
     EContentDeveloped: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'moduleName': 'Name of the Module / Course developed',
@@ -41,7 +41,7 @@ const adminExcelObject = {
         'link': 'Link to the content',
     },
     AppointmentsHeldPrior: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'designation': 'Designation',
@@ -52,7 +52,7 @@ const adminExcelObject = {
         'leavingReason': 'Leaving Reason',
     },
     AwardRecognition: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'teacherName': 'Name of full-time teachers receiving award',
@@ -66,7 +66,7 @@ const adminExcelObject = {
         'year': 'Choose Year',
     },
     BookAndChapter: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'type': 'Type',
@@ -83,7 +83,7 @@ const adminExcelObject = {
         'publisherName': 'Publisher Name',
     },
     Collaboration: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'collabTitle': 'Title of the collaborative activity',
@@ -95,7 +95,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     ConferenceOrganized: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'programTitle': 'Program Title',
@@ -106,7 +106,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     ConferenceParticipated: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'programTitle': 'Program Title',
@@ -116,7 +116,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     ConsultancyServices: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'cName': 'Consultant Name',
@@ -127,7 +127,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     Fellowship: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'teacherName': 'Name of the teacher awarded national/international fellowship/financial support',
@@ -138,7 +138,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     ResearchProject: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'schemeName': "Scheme or Project Name",
@@ -155,7 +155,7 @@ const adminExcelObject = {
         'year': "Choose Year",
     },
     PostHeld: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'designation': "Designation",
@@ -164,7 +164,7 @@ const adminExcelObject = {
         'leavingDate': "Leaving Date",
     },
     Lectures: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'course': 'Course/Paper',
@@ -175,7 +175,7 @@ const adminExcelObject = {
         'year': ' Year',
     },
     ResearchPaper: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'paperTitle': 'Paper Title',
@@ -185,7 +185,7 @@ const adminExcelObject = {
         'year': 'Choose Year',
     },
     PhdAwarded: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'scholarName': 'Scholar Name',
@@ -199,7 +199,7 @@ const adminExcelObject = {
         'year': 'Choose Year',
     },
     JrfSrf: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'researchName': 'Research Fellow Name',
@@ -211,7 +211,7 @@ const adminExcelObject = {
         'year': 'Choose Year',
     },
     Patent: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'patenterName': 'Patenter Name',
@@ -222,7 +222,7 @@ const adminExcelObject = {
         'year': 'Choose Year',
     },
     InvitedTalk: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'lectureTitle': 'Title of Lecture/Academic Session',
@@ -233,7 +233,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     Online: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'programTitle': 'Program Title',
@@ -243,7 +243,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     Financialsupport: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'nameOfConference': 'Name of Conference',
@@ -253,7 +253,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     Responsibilities: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'committeeName': 'Name of the Committee',
@@ -262,7 +262,7 @@ const adminExcelObject = {
         'year': 'Year',
     },
     ForeignVisit: {
-        'userId.username': 'Username',
+         
         'userId.name': 'Faculty Name',
         'userId.department': 'Faculty School',
         'purposeOfVisit': 'Purpose Of Visit',
