@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminDrower from './AdminDrower'
 import JSZip from "jszip";
-// import Papa from 'papaparse';
 import ExcelJS from 'exceljs';
 
 import EContentDeveloped from '../tables_faculty/EContentDeveloped';
@@ -148,8 +147,8 @@ const AdminFaculty = () => {
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
-         
-          <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={()=>{downloadExcelZip(allFacultyComponents,'allFacultiesExcel')}} >Export All Excels</button>
+
+          <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={() => { downloadExcelZip(allFacultyComponents, 'allFacultiesExcel') }} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 
@@ -167,91 +166,91 @@ const AdminFaculty = () => {
   )
 }
 
-const downloadExcelZip = async (allComponentData,zipName) => {
-  try{
-          const zip = new JSZip();
+const downloadExcelZip = async (allComponentData, zipName) => {
+  try {
+    const zip = new JSZip();
 
-      // Generate Excel worksheets and add them to the zip file
-      allComponentData.forEach(({ childData, filename, SendReq, proof, module }) => {
-        const columnMapping = adminExcelObject[SendReq];
-      
-          if (!columnMapping) {
-            throw new Error(`Column mapping '${SendReq}' not found.`);
-          }
-        
-          const workbook = new ExcelJS.Workbook();
-          const worksheet = workbook.addWorksheet('Sheet 1');
-        
-          const columnNames = Object.values(columnMapping);
-          columnNames.unshift('Sr.No.');
-        
-          // Set column headers and formatting
-          const headerRow = worksheet.addRow(columnNames);
-          headerRow.font = { bold: true, size: 12 };
-        
-          // Apply formatting to all cells
-          worksheet.columns.forEach((column) => {
-            column.width = 20;
-            column.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
-          });
-        
-          // Add data rows with auto-incrementing numbers
-          childData.forEach((rowData, index) => {
-            const values = Object.keys(columnMapping).map((columnName) => columnName === 'userId.name'?rowData.userId.name:columnName === 'userId.username'?rowData.userId.username:columnName === 'userId.department'?rowData.userId.department:rowData[columnName]||'N.A.' );
-            values.unshift(index + 1);
-            worksheet.addRow(values);
-          });
-        
-          if (proof) {
-            const lastColumnIndex = Object.keys(columnMapping).length + 2;
-            const proofColumnName = "Link Of Proof";
-          
-            worksheet.getColumn(lastColumnIndex).header = proofColumnName;
-          
-            for (let i = 2; i <= childData.length + 1; i++) {
-              const proofValue = childData[i - 2][proof] == undefined || childData[i - 2][proof] == "undefined" ? 'Not Uploaded' : 'View Proof';
-              const cell = worksheet.getCell(`${String.fromCharCode(65 + lastColumnIndex-1)}${i}`);
-              if (proofValue === 'View Proof') {
-                const proofURL = `${process.env.REACT_APP_MAIN_URL}/showFile/${childData[i - 2][proof]}/${module}`;
-                cell.value = { text: proofValue, hyperlink: proofURL };
-                cell.font = { color: { argb: 'FF0000FF' }, underline: true };
-              } else {
-                cell.value = proofValue;
-              }
-            }
-          
-            // Set width and alignment for the last column
-            worksheet.getColumn(lastColumnIndex).width = 20;
-            worksheet.getColumn(lastColumnIndex).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
-          }
-          worksheet.getRow(1).font = { bold: true, size: 12 };
-          worksheet.getRow(1).height = 30;
-        
-          for (let i = 2; i <= childData.length; i++) {
-            worksheet.getRow(i).commit();
-          }
-        
-          // Save the workbook as a file
-          const buffer = workbook.xlsx.writeBuffer();
-        zip.file(filename, buffer);
+    // Generate Excel worksheets and add them to the zip file
+    allComponentData.forEach(({ childData, filename, SendReq, proof, module }) => {
+      const columnMapping = adminExcelObject[SendReq];
+
+      if (!columnMapping) {
+        throw new Error(`Column mapping '${SendReq}' not found.`);
+      }
+
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Sheet 1');
+
+      const columnNames = Object.values(columnMapping);
+      columnNames.unshift('Sr.No.');
+
+      // Set column headers and formatting
+      const headerRow = worksheet.addRow(columnNames);
+      headerRow.font = { bold: true, size: 12 };
+
+      // Apply formatting to all cells
+      worksheet.columns.forEach((column) => {
+        column.width = 20;
+        column.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
       });
-    
-      // Generate the zip file and download it
-      const content = await zip.generateAsync({ type: 'blob' });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(content);
-      link.setAttribute('download', `${zipName}.zip`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      console.log('Excel zip generated and downloaded successfully.');
-      toast.success("Excel zip generated successfully")
+
+      // Add data rows with auto-incrementing numbers
+      childData.forEach((rowData, index) => {
+        const values = Object.keys(columnMapping).map((columnName) => columnName === 'userId.name' ? rowData.userId.name : columnName === 'userId.username' ? rowData.userId.username : columnName === 'userId.department' ? rowData.userId.department : rowData[columnName] || 'N.A.');
+        values.unshift(index + 1);
+        worksheet.addRow(values);
+      });
+
+      if (proof) {
+        const lastColumnIndex = Object.keys(columnMapping).length + 2;
+        const proofColumnName = "Link Of Proof";
+
+        worksheet.getColumn(lastColumnIndex).header = proofColumnName;
+
+        for (let i = 2; i <= childData.length + 1; i++) {
+          const proofValue = childData[i - 2][proof] == undefined || childData[i - 2][proof] == "undefined" ? 'Not Uploaded' : 'View Proof';
+          const cell = worksheet.getCell(`${String.fromCharCode(65 + lastColumnIndex - 1)}${i}`);
+          if (proofValue === 'View Proof') {
+            const proofURL = `${process.env.REACT_APP_MAIN_URL}/showFile/${childData[i - 2][proof]}/${module}`;
+            cell.value = { text: proofValue, hyperlink: proofURL };
+            cell.font = { color: { argb: 'FF0000FF' }, underline: true };
+          } else {
+            cell.value = proofValue;
+          }
+        }
+
+        // Set width and alignment for the last column
+        worksheet.getColumn(lastColumnIndex).width = 20;
+        worksheet.getColumn(lastColumnIndex).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+      }
+      worksheet.getRow(1).font = { bold: true, size: 12 };
+      worksheet.getRow(1).height = 30;
+
+      for (let i = 2; i <= childData.length; i++) {
+        worksheet.getRow(i).commit();
+      }
+
+      // Save the workbook as a file
+      const buffer = workbook.xlsx.writeBuffer();
+      zip.file(filename, buffer);
+    });
+
+    // Generate the zip file and download it
+    const content = await zip.generateAsync({ type: 'blob' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(content);
+    link.setAttribute('download', `${zipName}.zip`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    console.log('Excel zip generated and downloaded successfully.');
+    toast.success("Excel zip generated successfully")
   }
-  catch(err){
-      console.error('Error while generating Excel zip:', err);
-      toast.error("Error while generating try again")
+  catch (err) {
+    console.error('Error while generating Excel zip:', err);
+    toast.error("Error while generating try again")
   }
 };
 
 export default AdminFaculty
-export {downloadExcelZip}
+export { downloadExcelZip }

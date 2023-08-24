@@ -9,7 +9,6 @@ import ProgressionToHE from '../tables_alumni/ProgressionToHE'
 import QualifiedExams from '../tables_alumni/QualifiedExams'
 import AdminDrower from './AdminDrower'
 import JSZip from "jszip";
-import Papa from 'papaparse';
 import adminExcelObject from '../components/adminExcelObject'
 import { downloadExcelZip } from './AdminFaculty'
 
@@ -52,7 +51,7 @@ const AdminAlumni = () => {
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
           <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
-          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={()=>{downloadExcelZip(allAlumniComponents, 'allAlumniExcel')}} >Export All Excels</button>
+          <button className='col-md-3 col-lg-3 col-12 btn btn-success btn-sm' style={{ margin: "37px 0px auto 0px" }} onClick={() => { downloadExcelZip(allAlumniComponents, 'allAlumniExcel') }} >Export All Excels</button>
         </div>
         <div style={{ padding: "10px" }}>
 

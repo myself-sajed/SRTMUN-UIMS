@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { CASActivities } from '../cas-report/Tables'
-import { Document, Page } from 'react-pdf';
 import serverLinks from '../../../js/serverLinks'
 
 
