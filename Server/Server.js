@@ -19,7 +19,6 @@ const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
 app.use(cors());
 const path = require("path");
 var fs = require("fs");
-var pdf = require("html-pdf");
 const multer = require("multer");
 var options = { format: "A4" };
 
