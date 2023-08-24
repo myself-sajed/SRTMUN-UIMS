@@ -32,12 +32,15 @@ import ForaginVisit from '../tables_faculty/ForaginVisit';
 import adminExcelObject from '../components/adminExcelObject';
 import AdminSchoolSelect from '../components/AdminSchoolSelect';
 import { toast } from 'react-hot-toast';
+import siteLinks from '../../../components/siteLinks';
 
 
 const AdminFaculty = ({school}) => {
 
+  let directorLocation = window.location.pathname === siteLinks.fdc.link? true: false;
+
   const [childData, setChildData] = useState({ faculty: "", qualification: "", researchdegrees: "", econtentdeveloped: "", appointmentspriorjoining: "", awardrecognition: "", booksandchapters: "", collaborations: "", conferenceorganised: "", conferencepartipeted: "", consultancy: "", fellowship: "", researchprojects: "", postheldafterjoining: "", lectures: "", researchpapers: "", phdawarded: "", jrfsrfpdf: "", patents: "", invitedtalks: "", orientationrefreshercourse: "", financialsupport: "", responsibilities: "", foraginvisit: "", })
-  const [values, setValues] = useState({ yearFilter: [], schoolName: window.location.pathname === "/director/frcc"? school&&school :"All Schools"  })
+  const [values, setValues] = useState({ yearFilter: [], schoolName: directorLocation? school&&school :"All Schools"  })
   const { yearFilter, schoolName } = values
   // console.log (yearFilter)
 
@@ -146,7 +149,7 @@ const AdminFaculty = ({school}) => {
       <div className='sub-main' >
         <div className='flex px-3 flex-wrap gap-2'>
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Acadmic Year" />
-          {window.location.pathname !== "/director/frcc" && <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />}
+          {!directorLocation && <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />}
          
           <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={()=>{downloadExcelZip(allFacultyComponents,'allFacultiesExcel')}} >Export All Excels</button>
         </div>

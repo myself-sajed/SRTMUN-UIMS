@@ -18,7 +18,7 @@ const DirectorFRCC = () => {
 
             {/* bred & title */}
             <div className='my-4'>
-                <Bred links={[siteLinks.welcome, siteLinks.directorHome, siteLinks.fdm]} />
+                <Bred links={[siteLinks.welcome, siteLinks.directorHome, siteLinks.fdc]} />
             </div>
       <AdminFaculty school={user?.department} />
     </>

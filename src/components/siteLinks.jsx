@@ -24,7 +24,7 @@ let siteLinks = {
     directorLogin: { title: 'Director Login', link: '/director-login' },
     directorRegistration: { title: 'Director Registration', link: '/director-registration' },
     sdm: { title: 'School Data Management', link: '/director/sdm' },
-    fdm: { title: 'Faculty Data Center', link: '/director/fdc' },
+    fdc: { title: 'Faculty Data Center', link: '/director/fdc' },
     ssm: { title: 'School Student Management', link: '/director/ssm' },
     aaa: { title: 'Academic Audit  ', link: '/director/service/academic-audit' },
     alumniLogin: { title: 'Alumni Login', link: '/alumni-login' },
