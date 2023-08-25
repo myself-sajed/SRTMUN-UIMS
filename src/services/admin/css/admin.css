@@ -67,6 +67,23 @@
   border-radius: 10px;
 }
 
+.directorBtn{
+  color: #fff !important;
+  background: #28359b;
+}
+.directorBtn:hover{
+  color: #28359b !important;
+  background: transparent;
+}
+
+.adminBtn{
+  color: #997024 !important
+}
+.normalBtn{
+  text-transform: none !important;
+  width: 100%;
+}
+
 /*Admin Drower*/
 .sidebar-admin-drower {
   display:flex;
@@ -142,7 +159,7 @@
   border: var(--top-color-new) solid 1px;
   color: var(--top-color-new);
   border-radius: 10px;
-  min-width: 165px;
+  min-width: 145px;
 }
 
 .adminDashbordCard:hover, .active-dashbord-card {
@@ -188,8 +205,3 @@
   border-radius: 10px;
   border:gray 1px solid;
 }
-
-/* Set the color of the scrollbar thumb on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background-color: #8e85a8;
-}*/ 
