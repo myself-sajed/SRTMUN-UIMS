@@ -90,6 +90,7 @@ import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
 import StudentResume from '../templates/student/StudentResume'
 import DirectorFRCC from '../services/director/pages/DirectorFRCC'
 import WorkshopHome from '../services/workshop/pages/WorkshopHome'
+import WorkshopRegistration from '../services/workshop/pages/WorkshopRegistration'
 
 
 
@@ -213,6 +214,7 @@ const RoutesHandler = () => {
 
                 {/* Workshop Service */}
                 <Route path="/workshop" exact element={<WorkshopHome />} />
+                <Route path="/workshop/registration-form" exact element={<WorkshopRegistration />} />
 
 
 

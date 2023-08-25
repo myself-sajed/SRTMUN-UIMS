@@ -57,6 +57,8 @@ let siteLinks = {
     employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
     nssLogin: { title: "NSS Login", link: '/nss-login' },
     nssStudentAdmission: { title: "NSS Student Admission", link: '/nss/student-admission' },
+    workshop: { title: "Workshop / Event", link: '/workshop' },
+    workshopRegistration: { title: "Workshop / Event Registration Form", link: '/workshop/registration-form' },
 
 
 }
