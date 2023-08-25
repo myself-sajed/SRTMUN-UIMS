@@ -24,6 +24,7 @@ import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import getDepartmentWiseDocumentCount from '../../../components/requestComponents/getDocumentDepartmentwise';
+import { scrollToSection } from '../../dashboard/pages/AllDepartments';
 
 ChartJs.register(
   ArcElement, Title, Legend, Tooltip, BarElement, CategoryScale, LinearScale,
@@ -55,22 +56,22 @@ const AdminDashboard = () => {
   const [activeChart, setActiveChart] = useState("bar");
 
   const categories = [
-    { Icon: <PersonRoundedIcon style={{ fontSize: '27px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
-    // { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '27px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
-    { Icon: <BoyRoundedIcon style={{ fontSize: '27px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
-    { Icon: <SchoolRoundedIcon style={{ fontSize: '27px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
+    { Icon: <PersonRoundedIcon style={{ fontSize: '25px', }} />, name: "Faculties", Count: facltyCount, active: "faculty", model: "User", property: "department" },
+    // { Icon: <LocalLibraryRoundedIcon style={{ fontSize: '25px', }} />, name: "Directors", Count: directorCount, active: "director", model: "DirectorUser", property: "department" },
+    { Icon: <BoyRoundedIcon style={{ fontSize: '25px', }} />, name: "Alumni", Count: alumniCount, active: "alumni", model: "AlumniUser", property: "schoolName" },
+    { Icon: <SchoolRoundedIcon style={{ fontSize: '25px', }} />, name: "Students", Count: studentCount, active: "student", model: "StudentUser", property: "schoolName" }
   ]
 
   const SubMenuCards = [
-    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "25px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active: "bookchapters", model: "BooksAndChapters", property: "userId.department" },
-    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "25px" }} />, name: "Research Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
-    { Icon: <ScienceRoundedIcon style={{ fontSize: "25px" }} />, name: "Research Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
-    { Icon: <LanguageRoundedIcon style={{ fontSize: "25px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active: "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
-    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "25px" }} />, name: "Patents Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
-    { Icon: <VideoChatRoundedIcon style={{ fontSize: "25px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active: "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
-    { Icon: <LightbulbRoundedIcon style={{ fontSize: "25px" }} />, name: "Invited Talks", Count: invitedTalkCount, active: "invitedtalks", model: "InvitedTalk", property: "userId.department" },
-    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "25px" }} />, name: "Research Guidance", Count: researchGuidanceCount, active: "reserchguidence", model: "PhdAwarded", property: "userId.department" },
-    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "25px" }} />, name: "Fellowships", Count: fellowshipCount, active: "fellowships", model: "Fellowship", property: "userId.department" },
+    { Icon: <AutoStoriesRoundedIcon style={{ fontSize: "20px" }} />, name: "Book & Chapters", Count: booksAndChaptersCount, active: "bookchapters", model: "BooksAndChapters", property: "userId.department" },
+    { Icon: <StickyNote2RoundedIcon style={{ fontSize: "20px" }} />, name: "Research Papers", Count: researchPapersCount, active: "reserchpapers", model: "ResearchPaper", property: "userId.department" },
+    { Icon: <ScienceRoundedIcon style={{ fontSize: "20px" }} />, name: "Research Projects", Count: researchProjectsCount, active: "reserchprojects", model: "ResearchProject", property: "userId.department" },
+    { Icon: <LanguageRoundedIcon style={{ fontSize: "20px" }} />, name: "Econtent Developed", Count: eContentDevelopedCount, active: "econtentdeveloped", model: "EContentDeveloped", property: "userId.department" },
+    { Icon: <BookmarkAddedRoundedIcon style={{ fontSize: "20px" }} />, name: "Patents Published", Count: petantCount, active: "petantspublished", model: "Patent", property: "userId.department" },
+    { Icon: <VideoChatRoundedIcon style={{ fontSize: "20px" }} />, name: "Conference Organized", Count: conferenceOrganizedCount, active: "conferenceorganized", model: "ConferenceOrganized", property: "userId.department" },
+    { Icon: <LightbulbRoundedIcon style={{ fontSize: "20px" }} />, name: "Invited Talks", Count: invitedTalkCount, active: "invitedtalks", model: "InvitedTalk", property: "userId.department" },
+    { Icon: <CardMembershipRoundedIcon style={{ fontSize: "20px" }} />, name: "Research Guidance", Count: researchGuidanceCount, active: "reserchguidence", model: "PhdAwarded", property: "userId.department" },
+    { Icon: <AttachMoneyRoundedIcon style={{ fontSize: "20px" }} />, name: "Fellowships", Count: fellowshipCount, active: "fellowships", model: "Fellowship", property: "userId.department" },
   ]
 
   const data = {
@@ -182,17 +183,17 @@ const AdminDashboard = () => {
   return (
     <AdminDrower>
       <div style={{ width: "100%", overflow: "hidden", border: "solid #d8dadb 1px", background: "#FFF" }} >
-        <div className='table-responsive p-3' style={{ display: "flex", gap: "15px", margin: "13px 20px", background: "#f1f3f4", borderRadius: "25px" }}>
+        <div className='table-responsive p-3' style={{ display: "flex", gap: "15px", margin: "10px 17px", background: "#f1f3f4", borderRadius: "25px" }}>
           {
-            categories?.map((item, index) => <button onClick={() => { setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name) }} key={index} className={`adminDashbordCard ${activeButton === item.active ? 'active-dashbord-card' : ''}`}  >
+            categories?.map((item, index) => <button onClick={() => { setActiveButton(item.active); setActiveModel(item.model); setActiveProperty(item.property); setActiveName(item.name); scrollToSection("chart") }} key={index} className={`adminDashbordCard ${activeButton === item.active ? 'active-dashbord-card' : ''}`}  >
 
               <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "10px" }}>
-                <div style={{ paddingLeft: "30PX", }}>{item.Icon}</div>
-                <div style={{ paddingRight: "40PX", fontSize: "21px", fontWeight: 500, }}>{item.Count}</div>
+                <div style={{ paddingLeft: "25PX", }}>{item.Icon}</div>
+                <div style={{ paddingRight: "33PX", fontSize: "17px", fontWeight: 500, }}>{item.Count}</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div></div>
-                <div style={{ paddingRight: "40PX", fontSize: "14px", fontWeight: 500, }}>
+                <div style={{ paddingRight: "33PX", fontSize: "13px", fontWeight: 500, }}>
                   {item.name}
                 </div>
               </div>
@@ -200,13 +201,13 @@ const AdminDashboard = () => {
           }
         </div>
         <div>
-          <div className='table-responsive' style={{ width: "100%", padding: "5px 20px 15px 20px", display: "flex" }}>
+          <div className='table-responsive' style={{ width: "100%", padding: "3px 20px 10px 20px", display: "flex" }}>
 
-            <div style={{ minWidth: "782px", padding: "10px 20px", background: "#f1f3f4", borderRadius: "20px", display: "flex", gap: "13px", flexWrap: "wrap" }}>
+            <div style={{ minWidth: "760px", padding: "5px 10px", background: "#f1f3f4", borderRadius: "10px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
               {
-                SubMenuCards?.map((ItemCards,index) => <button key={index} onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name) }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
-                  <div style={{ fontSize: "17px", fontWeight: 800, padding: "3px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
-                  <div className='flex justify-center'><div>{ItemCards.name}</div></div>
+                SubMenuCards?.map((ItemCards,index) => <button key={index} onClick={() => { setActiveButton(ItemCards.active); setActiveModel(ItemCards.model); setActiveProperty(ItemCards.property); setActiveName(ItemCards.name); scrollToSection("chart") }} className={`sub-menu-card ${activeButton === ItemCards.active ? 'sub-menu-card-active' : ''}`}>
+                  <div style={{ fontSize: "15px", fontWeight: 800, padding: "3px 20px", display: "flex", justifyContent: "space-between" }}>{ItemCards.Icon}<div>{ItemCards.Count}</div></div>
+                  <div className='flex justify-center text-[11px]'><div>{ItemCards.name}</div></div>
                 </button>
                 )
               }
@@ -216,13 +217,13 @@ const AdminDashboard = () => {
         </div>
 
         <div className='chart-button-section'>
-          <Btn className={`${activeChart=="bar"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("bar")}} startIcon={<BarChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >
+          <Btn className={`${activeChart=="bar"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("bar"); scrollToSection("chart")}} startIcon={<BarChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >
             Bar Chart
           </Btn>
-          <Btn className={`${activeChart=="pie"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("pie")}} startIcon={<PieChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >Pie Chart</Btn>
+          <Btn className={`${activeChart=="pie"? "activeChartBtn":""}`} onClick={()=>{setActiveChart("pie"); scrollToSection("chart")}} startIcon={<PieChartIcon/> } sx={{background: "#f1f3f4", borderRadius: "10px", color: "#ae7e28"}} >Pie Chart</Btn>
         </div>
 
-        <section className='section-pie'>
+        <section id="chart" className='section-pie'>
           <div >
             {activeChart=="pie"?<Doughnut data={data} options={options} plugins={plugins} style={{ maxHeight: "550px" }} />:<Bar data={data} options={options}/>}
           </div>

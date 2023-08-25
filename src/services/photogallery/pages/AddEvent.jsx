@@ -141,7 +141,7 @@ const AddEvent = () => {
                                     </button> :
 
                                     <button disabled className="btn bg-blue-600 hover:bg-blue-700 text-white p-3" type="submit">
-                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span> Uploading Event...
+                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span> Uploading Event...
                                     </button>
                             }
                         </div>

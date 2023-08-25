@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import AdminAcordinTable from '../components/AdminAcordinTable';
 
-const tableHead = { index: 'Sr.No.',"userId.username": "Username","userId.name": "Name Of Faculty", "userId.department": "School Of Faculty" , degreeName: 'Research Degree', title: 'Title', subject: 'Subject', university: 'University', awardDate: 'Award Year', Proof: 'Uploaded Proof'}
+const tableHead = { index: 'Sr.No.',"userId.name": "Name Of Faculty", "userId.department": "School Of Faculty" , degreeName: 'Research Degree', title: 'Title', subject: 'Subject', university: 'University', awardDate: 'Award Year', Proof: 'Uploaded Proof'}
 const ResearchDegrees = ({id, setState, yearFilter, schoolName}) => {
 
     const SendReq = "Degree"

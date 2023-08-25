@@ -90,7 +90,7 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
 
                 <div>
                     {(teacherLoading || serviceLoading) && <UserLoading title="Loading Data" />}
-                    <ul class="list-group list-group-flush">
+                    <ul className="list-group list-group-flush">
 
                         {
                             teachers?.data?.data && designationWiseSorting(teachers?.data?.data).map((teacher, index) => {
@@ -99,15 +99,15 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
                                     {
                                         candidates?.includes(teacher?._id) ?
                                             <span className='flex items-center font-semibold'>
-                                                <span class="badge bg-success mr-2 p-[10px] cursor-default">Submitted</span>
-                                                <span class="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(teacher._id)} > <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
-                                                <span class="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(teacher._id)} > <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
+                                                <span className="badge bg-success mr-2 p-[10px] cursor-default">Submitted</span>
+                                                <span className="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(teacher._id)} > <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
+                                                <span className="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(teacher._id)} > <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
                                             </span>
                                             :
                                             <span className='flex items-center font-semibold'>
-                                                <span class="badge bg-danger mr-2 p-[10px]">Not Submitted</span>
-                                                <span class="badge mr-2 bg-[#0d6efd6b] cursor-default"> <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
-                                                <span class="badge bg-[#0d6efd6b] cursor-default"> <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
+                                                <span className="badge bg-danger mr-2 p-[10px]">Not Submitted</span>
+                                                <span className="badge mr-2 bg-[#0d6efd6b] cursor-default"> <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /> View Report</span>
+                                                <span className="badge bg-[#0d6efd6b] cursor-default"> <FileDownloadRoundedIcon sx={{ width: '16px' }} /> Download Report</span>
                                             </span>
                                     }
                                 </li>
@@ -119,7 +119,7 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
             </div> */}
 
             <div>
-                <table class="table table-striped table-bordered">
+                <table className="table table-striped table-bordered">
                     <thead className="bg-primary text-white">
                         <tr>
                             <th>School Name</th>
@@ -141,7 +141,7 @@ const FacultyRelatedService = ({ teachers, teacherLoading, serviceName, year, sc
                         </tr>
                         <tr>
                             <td colspan="6">
-                                <table class="table mb-0">
+                                <table className="table mb-0">
                                     <thead>
                                         <tr>
                                             <th>Faculty Name</th>

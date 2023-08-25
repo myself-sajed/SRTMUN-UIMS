@@ -12,35 +12,35 @@ const AcadmicYearSelect = ({ className = "col-md-6", id, label, setState, value,
         let last = year - 1 + "-" + privyear;
         last = last.toString();
 
-        options.push({value:last})
+        options.push({ value: last })
         i++
     }
     // console.log(options)
     const selectProps = {
-      mode: "multiple",
-      id,
-      style: {
-        width: "100%",
-      },
-      value,
-      options,
-      onChange: (newValue) => {
-        setState((pri) => {
-                            return {
-                                ...pri,
-                                [id]: newValue
-                            }
-                        });
-      },
-      placeholder: "Select Years...",
-      maxTagCount: "responsive"
+        mode: "multiple",
+        id,
+        style: {
+            width: "100%",
+        },
+        value,
+        options,
+        onChange: (newValue) => {
+            setState((pri) => {
+                return {
+                    ...pri,
+                    [id]: newValue
+                }
+            });
+        },
+        placeholder: "Select Years...",
+        maxTagCount: "responsive"
     };
 
     return (
         <div className={`col-12 p-1 ${className}`}>
             <label htmlFor="choose" className="form-label" >{label}</label>
-            <Select {...selectProps} />
-        </div> 
+            <Select bordered={false} {...selectProps} className='border-[1px] rounded-lg border-gray-400' />
+        </div>
     )
 }
 export default AcadmicYearSelect

@@ -193,63 +193,67 @@ const AllDepartments = () => {
         <>
             <div style={{ borderBottom: "solid 1px #e5e7eb" }}>
                 <GoBack backUrl={-1} pageTitle={Field} />
-                <div>
-                    {
-                        window.location.pathname === '/dashboard/select-department/alumni' &&
-                        <div className="my-2">
-                            <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE, ContributionCount: data?.data?.data.AlumniContribution }} />
-                        </div>
+                <div className="animate-fade-up animate-once">
+                    <div>
+                        {
+                            window.location.pathname === '/dashboard/select-department/alumni' &&
+                            <div className="my-2">
+                                <AlumniAnalytics stats={{ PlacementCount: data?.data?.data.placement, QualifiedExamCount: data?.data?.data.QualifiedExam, ProgressionToHECount: data?.data?.data.ProgressionToHE, ContributionCount: data?.data?.data.AlumniContribution }} />
+                            </div>
 
-                    }
+                        }
 
-                </div>
-                <div>
-                    <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
-                        {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
-                            <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => { scrollToSection(`${i}`) }}>
-                                <div>
-                                    <div className='flex items-start justify-start gap-1'>
-                                        <div style={{ fontSize: '10px' }}>{serviceMap[serviceName].icon}</div>
-                                        <div className='flex flex-col justify-start '>
-                                            <p className='text-sm text-[#1d4ed8] '>{nameOfTheSchool.replace('School of', '').length < 24 ? nameOfTheSchool.replace('School of', '') : nameOfTheSchool.replace('School of', '').slice(0, 22) + "..."}{
-                                                serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
-                                                    <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
-                                                        {serviceName == "alumni" ? (data?.data?.data.alumni.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length : (data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
-                                                    </span>
+                    </div>
+                    <div>
+                        <div className='lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid gap-2 my-4'>
+                            {Object.keys(SchoolsProgram).map((nameOfTheSchool, i) => (
+                                <div className="border rounded-md p-2 duration-200 ease-in-out cursor-pointer bg-[#dbeafe] hover:bg-[#84adf2]" onClick={() => { scrollToSection(`${i}`) }}>
+                                    <div>
+                                        <div className='flex items-start justify-start gap-1'>
+                                            <div style={{ fontSize: '10px' }}>{serviceMap[serviceName].icon}</div>
+                                            <div className='flex flex-col justify-start '>
+                                                <p className='text-sm text-[#1d4ed8] '>{nameOfTheSchool.replace('School of', '').length < 24 ? nameOfTheSchool.replace('School of', '') : nameOfTheSchool.replace('School of', '').slice(0, 22) + "..."}{
+                                                    serviceMap[serviceName].model !== null && (serviceMap[serviceName]?.type !== 'faculty' && data?.data?.data) ?
+                                                        <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
+                                                            {serviceName == "alumni" ? (data?.data?.data.alumni.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length : (data?.data?.data.filter((el) => el[serviceMap[serviceName].select] === nameOfTheSchool)).length}
+                                                        </span>
 
-                                                    :
-                                                    <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
-                                                        {data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length}
-                                                    </span>
-                                            }</p>
+                                                        :
+                                                        <span style={{ marginLeft: "10px", background: "#1d4ed8", border: "solid #1d4ed8 1px", borderRadius: "3px", color: "#fff", }} className='px-1' >
+                                                            {data?.data?.data.filter((el) => el.userId?.department === nameOfTheSchool).length}
+                                                        </span>
+                                                }</p>
 
+                                            </div>
                                         </div>
+
                                     </div>
 
                                 </div>
-
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
+
+                {
+
+                    Object.keys(SchoolsProgram).map((School, i) => <section id={`${i}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>
+                        {
+                            Field === 'Faculties' ? <AllFaculties school={School} /> :
+                                Field === 'Students' ? <AllStudents school={School} /> :
+                                    Field === 'Alumni Connect' ? <AllAlumni school={School} /> :
+                                        (Field === 'Placements' || Field === 'Alumni Contributions' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
+                                            <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
+
+                        }
+                    </section>)
+
+                }
             </div>
 
 
 
-            {
 
-                Object.keys(SchoolsProgram).map((School, i) => <section id={`${i}`} style={{ border: "solid 1px #b8b4b4", borderRadius: "10px", padding: "5px", marginBottom: "15px", marginTop: "15px" }}>
-                    {
-                        Field === 'Faculties' ? <AllFaculties school={School} /> :
-                            Field === 'Students' ? <AllStudents school={School} /> :
-                                Field === 'Alumni Connect' ? <AllAlumni school={School} /> :
-                                    (Field === 'Placements' || Field === 'Alumni Contributions' || Field === 'Qualified Exams' || Field === 'Students Progressed to Higher Education') ? <DirectorDashboardData school={School} model={serviceMap[serviceName].model} filter={{ [`${serviceMap[serviceName].select}`]: School }} /> :
-                                        <OtherDashboardData school={School} model={serviceMap[serviceName].model} />
-
-                    }
-                </section>)
-
-            }
 
             <div id="scrollUpButton" className="fixed hover:shadow-2xl hover:bg-blue-500 bottom-[20px] right-[20px] bg-blue-800 text-white cursor-pointer p-2 rounded-xl" onClick={() => { scrollToTop() }}> <span className='flex flex-col items-center'><span><ArrowUpwardIcon /></span> <span className="text-xs">Top</span></span> </div>
 

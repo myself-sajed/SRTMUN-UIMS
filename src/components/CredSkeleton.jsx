@@ -11,7 +11,7 @@ const CredSkeleton = ({ bred, head, children, linkLine, onSubmit }) => {
             <div className='mt-3'>
                 <Bred links={bred} />
             </div>
-            <div className='md:w-1/2 sm:w-3/4 mx-auto p-1 h-screen'>
+            <div className='md:w-1/2 sm:w-3/4 mx-auto p-1 h-screen animate-fade-up animate-once'>
 
                 {head}
 

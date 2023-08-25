@@ -47,15 +47,15 @@ const SelectYear = ({ casYear, casData, userData, setReportLoading, error }) => 
 
                             <ShowModal okText={"Download Report"} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title="Choose report type" onOkFunc={handleGeneration}>
                                 <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
-                                        <label class="form-check-label" htmlFor="standard">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="printableOrNot" id="standard" checked={forPrintOut ? false : true} onChange={(e) => { setForPrintOut(false) }} />
+                                        <label className="form-check-label" htmlFor="standard">
                                             Standard Report
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="printableOrNot" id="printable" checked={forPrintOut ? true : false} onChange={(e) => { setForPrintOut(true) }} />
-                                        <label class="form-check-label" htmlFor="printable">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="printableOrNot" id="printable" checked={forPrintOut ? true : false} onChange={(e) => { setForPrintOut(true) }} />
+                                        <label className="form-check-label" htmlFor="printable">
                                             Printable Report (Specially designed for printing purposes)
                                         </label>
                                     </div>
@@ -124,7 +124,7 @@ const SelectYearRadio = ({ sortedYear, selectedYear, setSelectedYear }) => {
 
                     <div className="form-check sm:px-8 py-2" key={JSON.parse(item).casYear}>
 
-                        <div class="form-check">
+                        <div className="form-check">
                             <input className="form-check-input text-lg border-2 border-blue-500" type="radio" name="flexRadioDefault" id={JSON.parse(item).casYear} checked={selectedYear?.includes(JSON.parse(item).casYear)} onChange={() => { setSelectedYear([JSON.parse(item).casYear]) }} />
                             <label className="form-check-label text-lg text-blue-900 font-bold" htmlFor={JSON.parse(item).casYear}>
                                 {JSON.parse(item).casYear}

@@ -6,7 +6,7 @@ import AdminExcelExoprt from '../components/AdminExcelExoprt';
 
 const tableHead = {
    index: 'Sr.No.',
-   'userId.username': 'Username',
+    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    programTitle: 'Program Title',

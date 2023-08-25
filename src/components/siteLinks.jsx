@@ -23,8 +23,9 @@ let siteLinks = {
     directorHome: { title: 'Director Home', link: '/director' },
     directorLogin: { title: 'Director Login', link: '/director-login' },
     directorRegistration: { title: 'Director Registration', link: '/director-registration' },
-    sdm: { title: 'SDM', link: '/director/sdm' },
-    ssm: { title: 'SSM', link: '/director/ssm' },
+    sdm: { title: 'School Data Management', link: '/director/sdm' },
+    fdc: { title: 'Faculty Data Center', link: '/director/fdc' },
+    ssm: { title: 'School Student Management', link: '/director/ssm' },
     aaa: { title: 'Academic Audit  ', link: '/director/service/academic-audit' },
     alumniLogin: { title: 'Alumni Login', link: '/alumni-login' },
     alumniHome: { title: 'Alumni Home', link: '/alumni' },
@@ -56,6 +57,8 @@ let siteLinks = {
     employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
     nssLogin: { title: "NSS Login", link: '/nss-login' },
     nssStudentAdmission: { title: "NSS Student Admission", link: '/nss/student-admission' },
+    workshop: { title: "Workshop / Event", link: '/workshop' },
+    workshopRegistration: { title: "Workshop / Event Registration Form", link: '/workshop/registration-form' },
 
 
 }

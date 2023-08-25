@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
-   'userId.username': 'Username',
+    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    teacherName: 'Name of the teacher awarded national/international fellowship/financial support',

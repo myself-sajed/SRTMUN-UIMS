@@ -622,7 +622,7 @@ const ResearchScore = ({ casArray, title, forPrintOut }) => {
 
                                     </p>
                                     <br /><br /><br />
-                                    <p class="w-1/3">5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
+                                    <p className="w-1/3">5. Two University representatives nominated by the Vice Chancellor, one of whom will be the Dean of College
                                         Development Council or equivalent position in the University, and the other must be expert in the concerned subject
                                     </p>
                                     <br />

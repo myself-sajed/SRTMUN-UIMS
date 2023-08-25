@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 import AdminExcelExoprt from '../components/AdminExcelExoprt'
 import AdminTable from '../components/AdminTable'
 
-const tableHead = { index: 'Sr.No.', "userId.username": "Username", "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", exam: 'Exams', institute: 'Institute/Boards', year: 'Year', percentage: 'Percentage', subjects: 'Subjects', }
+const tableHead = { index: 'Sr.No.', "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", exam: 'Exams', institute: 'Institute/Boards', year: 'Year', percentage: 'Percentage', subjects: 'Subjects', }
 
 const Qualification = ({id, setState, yearFilter, schoolName}) => {
 

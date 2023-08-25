@@ -87,7 +87,7 @@ const Teachers = ({ loginElement }) => {
             </div> */}
 
             {/* 
-            <div class="flex items-start justify-end gap-5 mt-4">
+            <div className="flex items-start justify-end gap-5 mt-4">
                 <TeachersTables />
                 <div className=''>{loginElement}</div>
             </div> */}

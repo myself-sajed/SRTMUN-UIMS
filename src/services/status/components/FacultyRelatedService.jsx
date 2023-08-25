@@ -73,7 +73,7 @@ const FacultyRelatedService = ({ year, school, user }) => {
                                 <TotalTile user={user} year={year} dashboardKey="FAQARCount" dashboardCount={dashboardCount} title="AQAR (Faculty)" />
                                 <TotalTile user={user} year={year} dashboardKey="CASCount" dashboardCount={dashboardCount} title="CAS" />
                             </div>
-                            <table class="table table-bordered">
+                            <table className="table table-bordered">
                                 <thead className={`${!user ? 'bg-primary' : 'bg-[#ae7e28]'} text-white sticky-top`}>
                                     <tr>
                                         <th>School Name</th>
@@ -92,9 +92,9 @@ const FacultyRelatedService = ({ year, school, user }) => {
                                                     <td>{school}</td>
                                                     <td>{serviceData.PBASSchoolWise?.[school]}</td>
                                                     <td>{serviceData.FAQARSchoolWise?.[school]}</td>
-                                                    <td>{serviceData.DAQARSchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
+                                                    <td>{serviceData.DAQARSchoolWise?.[school].includes(year) ? <span className="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span className="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td>
                                                     <td>{serviceData.CASSchoolWise?.[school]}</td>
-                                                    {/* <td>{serviceData.AAASchoolWise?.[school].includes(year) ? <span class="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span class="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td> */}
+                                                    {/* <td>{serviceData.AAASchoolWise?.[school].includes(year) ? <span className="badge bg-success mr-2 p-[10px] cursor-default px-[23px]">Submitted</span> : <span className="badge bg-danger mr-2 p-[10px] cursor-default">Not-Submitted</span>}</td> */}
                                                 </tr>
                                                 {/* {expandedRow === rowIndex && ( */}
                                                 <tr >
@@ -173,9 +173,9 @@ const Badges = ({ hasSubmitted, userId, reportLoading, setReportLoading, service
     }
 
     return hasSubmitted ? <span className='flex items-center font-semibold'>
-        <span class="badge bg-success mr-2 cursor-default "><Tooltip placement='top' disableInteractive title="Report Submitted"><CheckCircleRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
-        <span class="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(userId)} > <Tooltip placement='top' disableInteractive title="View / Explore Report"><CalendarViewDayRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
-        <span class="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(userId)} > <Tooltip placement='top' disableInteractive title="Generate / Download Report">
+        <span className="badge bg-success mr-2 cursor-default "><Tooltip placement='top' disableInteractive title="Report Submitted"><CheckCircleRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+        <span className="badge mr-2 bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => browseReport(userId)} > <Tooltip placement='top' disableInteractive title="View / Explore Report"><CalendarViewDayRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+        <span className="badge bg-blue-600 hover:bg-blue-800 cursor-pointer" onClick={() => generateReport(userId)} > <Tooltip placement='top' disableInteractive title="Generate / Download Report">
             {reportLoading && reportLoading.userId === userId ? <CircularProgress sx={{ width: '16px' }} /> : <FileDownloadRoundedIcon
                 sx={{ width: '16px' }} />}
         </Tooltip>
@@ -183,19 +183,19 @@ const Badges = ({ hasSubmitted, userId, reportLoading, setReportLoading, service
     </span>
         :
         <span className='flex items-center font-semibold'>
-            <span class="badge bg-danger mr-2"><Tooltip placement='top' disableInteractive title="Report Not-Submitted"><CancelRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
+            <span className="badge bg-danger mr-2"><Tooltip placement='top' disableInteractive title="Report Not-Submitted"><CancelRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
 
-            <span class="badge mr-2 bg-[#0d6efd6b] cursor-default">
+            <span className="badge mr-2 bg-[#0d6efd6b] cursor-default">
                 <Tooltip placement='top' disableInteractive title="View / Explore Report">
                     <CalendarViewDayRoundedIcon sx={{ width: '16px' }} /></Tooltip></span>
-            <span class="badge bg-[#0d6efd6b] cursor-default"> <Tooltip placement='top' disableInteractive title="Generate / Download Report"><FileDownloadRoundedIcon sx={{ width: '16px' }} /></Tooltip> </span>
+            <span className="badge bg-[#0d6efd6b] cursor-default"> <Tooltip placement='top' disableInteractive title="Generate / Download Report"><FileDownloadRoundedIcon sx={{ width: '16px' }} /></Tooltip> </span>
         </span>
 }
 
 const TotalTile = ({ year, dashboardCount, dashboardKey, title, user }) => {
-    return <div id="alert-border-1" class={`flex flex-auto items-start p-4 mb-4 border-t-4 ${user ? 'border-[#deb66f] bg-[#f1f3f4] text-[#ae7e28]' : 'border-blue-300 bg-blue-50 text-blue-800'}  dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800`} role="alert">
+    return <div id="alert-border-1" className={`flex flex-auto items-start p-4 mb-4 border-t-4 ${user ? 'border-[#deb66f] bg-[#f1f3f4] text-[#ae7e28]' : 'border-blue-300 bg-blue-50 text-blue-800'}  dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800`} role="alert">
         <TaskRoundedIcon sx={{ fontSize: '40px' }} />
-        <div class="ml-3 text-sm font-medium">
+        <div className="ml-3 text-sm font-medium">
             <p className="font-extrabold text-2xl">{dashboardCount && dashboardCount?.[dashboardKey] || 0}</p>
             <p>{title} for {year}</p>
         </div>

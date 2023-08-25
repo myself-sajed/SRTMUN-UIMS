@@ -19,7 +19,7 @@ import CredInput from '../../../inputs/CredInput';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import checkPasswordStrength from '../../../js/passwordChecker';
 import ProfileCroper from '../../../components/ProfileCroper';
-import {SubImageResizer} from '../../../components/ProfileCroper';
+import { SubImageResizer } from '../../../components/ProfileCroper';
 
 const FacultyRegistration = () => {
 
@@ -191,7 +191,7 @@ const FacultyRegistration = () => {
                 <p className='text-orange-700 font-bold text-xl'>Faculty Registration</p>
             </div>
 
-            <div className='mt-3 flex items-center justify-center mb-4'>
+            <div className='mt-3 flex items-center justify-center mb-4 animate-fade-up animate-once'>
                 <div className='w-[750px] p-3 rounded-xl bg-gray-100'>
 
                     <div className='my-4 mx-2'>
@@ -289,7 +289,7 @@ const FacultyRegistration = () => {
                                             <div className='text-xs text-muted text-center my-2'>Photo size should be less than 10MB</div>
                                         </div>
 
-                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile ={setFile} setAvatar={setAvatar} />
+                                        <ProfileCroper open={open} setOpen={setOpen} file={file} setFile={setFile} setAvatar={setAvatar} />
 
 
                                         <div className="w-full flex items-center justify-center ">
@@ -329,8 +329,8 @@ const FacultyRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Sending OTP...
                                                                     </button>
                                                                     :
@@ -377,8 +377,8 @@ const FacultyRegistration = () => {
 
                                                             {
                                                                 verifyLoading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Verifying OTP...
                                                                     </button>
 
@@ -394,8 +394,8 @@ const FacultyRegistration = () => {
 
                                                             {
                                                                 loading ?
-                                                                    <button class="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
-                                                                        <span class="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
+                                                                    <button className="btn btn-primary py-2 px-3 mt-3 rounded-lg mx-4 flex items-center justify-center" type="button" disabled>
+                                                                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                                                                         Resending OTP...
                                                                     </button>
 

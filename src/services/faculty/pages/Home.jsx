@@ -131,7 +131,7 @@ const Home = () => {
 
 
 
-            <div className='mt-3 border rounded-xl gray'>
+            <div className='mt-3 border rounded-xl gray animate-fade-up animate-once'>
                 {/* PROFILE */}
                 <div className='rounded-xl '>
 
@@ -261,7 +261,7 @@ const DetailTile = ({ keyName, value }) => {
 
 const ShowLocalDashboard = ({ directorData, dashboardObj, color = "[#009879]", bgColor = "green", onClickFunc = null, urlLinks }) => {
 
-    return <div className='flex items-center justify-between gap-3 flex-wrap'>
+    return <div className='flex items-center justify-between gap-3 flex-wrap animate-fade-left animate-once'>
         {
             directorData && dashboardObj.map((item, index) => {
                 return (

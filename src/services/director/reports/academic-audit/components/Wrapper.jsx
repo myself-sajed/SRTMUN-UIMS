@@ -77,8 +77,8 @@ const Wrapper = ({ classes, children, title, type = 'noFeedback', state, setStat
                                     &&
                                     <div className='mt-5'>
                                         {
-                                            feedbackLoading ? <button class="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base" type="button" disabled>
-                                                <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
+                                            feedbackLoading ? <button className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base" type="button" disabled>
+                                                <span className="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
                                                 Submitting Feedback...
                                             </button> : <button type="submit" className="p-2 rounded-md text-white bg-blue-600 hover:bg-blue-500 text-base"
                                             >Submit Feedback</button>

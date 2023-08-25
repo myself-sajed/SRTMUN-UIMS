@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import getReq from '../../../components/requestComponents/getReq';
 import AdminAcordinTable from '../components/AdminAcordinTable';
 
-const tableHead = { index: 'Sr.No.', "userId.username": "Username", "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", designation: 'Designation', employerName: 'Employer Name', joiningDate: 'From', leavingDate: 'To', salaryWithGrade: 'Salary with Grade', leavingReason: 'Leaving Reason' }
+const tableHead = { index: 'Sr.No.', "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", designation: 'Designation', employerName: 'Employer Name', joiningDate: 'From', leavingDate: 'To', salaryWithGrade: 'Salary with Grade', leavingReason: 'Leaving Reason' }
 
 const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Heading }) => {
   const SendReq = "AppointmentsHeldPrior"

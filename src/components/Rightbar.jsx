@@ -38,10 +38,8 @@ const Rightbar = () => {
 
     return (
         <div className="mt-2 w-full relative">
-            {/* <div className='absolute bottom-0 right-0'>
-                <ScrollToTopButton />
-            </div> */}
-            <div className="h-[75vh]">
+
+            <div className="h-[75vh] animate-fade-up animate-once">
                 {
                     page === 'profile' ?
                         <Profile /> :

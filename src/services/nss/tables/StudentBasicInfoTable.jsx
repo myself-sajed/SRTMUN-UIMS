@@ -28,7 +28,7 @@ const StudentBasicInfoTable = () => {
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
-    studentName: "", parentName: "", gender: "", state: "", distric: "", mobileNo: "", address: "", email: "", createdByEmail: "", otherAreaOfInterest: "",  dob: ""
+    studentName: "", parentName: "", gender: "", state: "", distric: "", mobileNo: "", address: "", email: "", createdByEmail: "", otherAreaOfInterest: "", dob: ""
   }
   const [values, setValues] = useState(initialstate)
   const { studentName, parentName, gender, state, distric, mobileNo, address, email, createdByEmail, otherAreaOfInterest, dob } = values
@@ -44,7 +44,7 @@ const StudentBasicInfoTable = () => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
         if (item?._id === itemToEdit) {
-            const { studentName, parentName, gender, state, distric, mobileNo, address, email, createdByEmail, otherAreaOfInterest, dob } = item
+          const { studentName, parentName, gender, state, distric, mobileNo, address, email, createdByEmail, otherAreaOfInterest, dob } = item
           setEdit(true); setOpen(true);
           setValues({ studentName, parentName, gender, state, distric, mobileNo, address, email, createdByEmail, otherAreaOfInterest, dob })
         }
@@ -71,23 +71,23 @@ const StudentBasicInfoTable = () => {
           <Text className='col-md-6 col-lg-4' id="dob" value={dob} type="date" label="Date of Birth" setState={setValues} />
           <Select className='col-md-6 col-lg-4' id="gender" value={gender} label="Gender" options={Lists.gender} setState={setValues} />
           <Select className='col-md-6 col-lg-4' id="state" value={state} label="State" options={Object.keys(Lists.statesInIndia)} setState={setValues} />
-          <Select className='col-md-6 col-lg-4' id="distric" value={distric} label="District" options={state?Lists.statesInIndia[state]:[]} setState={setValues} />
+          <Select className='col-md-6 col-lg-4' id="distric" value={distric} label="District" options={state ? Lists.statesInIndia[state] : []} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="mobileNo" value={mobileNo} type="number" label="Mobile No." setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="email" value={email} label="Email" setState={setValues} type='email' />
           <Text className='col-md-6 col-lg-4' id="createdByEmail" value={createdByEmail} label="Created by Programme. Officer Email" setState={setValues} type='email' />
           <Text className='col-md-6 col-lg-4' id="otherAreaOfInterest" value={otherAreaOfInterest} label="Other Area Of Interest" setState={setValues} />
           <div className="p-2 col-md-6 col-lg-4 col-12">
-            <label for="address" class="form-label">Adress</label>
-            <textarea className="form-control" id="address" value={address} rows="1" 
-            onChange={(e)=>{
-                setValues((pri)=>{return{...pri, address:e.target.value }})
-            }} required ></textarea>
-          </div> 
+            <label for="address" className="form-label">Adress</label>
+            <textarea className="form-control" id="address" value={address} rows="1"
+              onChange={(e) => {
+                setValues((pri) => { return { ...pri, address: e.target.value } })
+              }} required ></textarea>
+          </div>
         </div>
       </DialogBox>
 
       <BulkExcel data={data?.data} sampleFile="NSSStudentBasicInfo" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
-      
+
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>
   )
