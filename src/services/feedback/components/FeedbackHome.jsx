@@ -6,7 +6,7 @@ import IntroStep from './IntroStep';
 import StepStatus from '../../../components/StepStatus';
 import { useNavigate } from 'react-router-dom';
 
-const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear, schoolName, setSchoolName, activeStep, setActiveStep }) => {
+const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear, schoolName, setSchoolName, activeStep, setActiveStep, customfunctionOnBack = false, customSteps = false }) => {
 
     const steps = ['Choose School & Year', `${userType} Feedback Form`, 'Acknowlegement'];
 
@@ -27,14 +27,14 @@ const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear
         <div>
             <div>
                 <div>
-                    <GoBack functionOnBack={functionOnBack} pageTitle={`${userType} Feedback Form ${academicYear ? `(${academicYear})` : ''} `} shouldScroll={true} />
+                    <GoBack functionOnBack={customfunctionOnBack || functionOnBack} pageTitle={`${userType} Feedback Form ${academicYear ? `(${academicYear})` : ''} `} shouldScroll={true} />
                 </div>
 
                 <div className='mt-2 mb-3'>
                     <Bred links={links} />
                 </div>
                 <div className='mt-3'>
-                    <StepStatus activeStep={activeStep} steps={steps} />
+                    <StepStatus activeStep={activeStep} steps={customSteps || steps} />
                 </div>
 
 
