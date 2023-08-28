@@ -35,7 +35,7 @@ cron.schedule('30 0 * * *', () => {
 });
 
 cron.schedule('0 1 * * *', () => {
-  let CPath = `"../../../Temp_Backup"`
+  let CPath = `../../../Temp_Backup`
   DB_Backups(CPath)
 });
 

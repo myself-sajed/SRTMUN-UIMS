@@ -56,7 +56,7 @@ const AdminMore = () => {
             })
           }
         </div>
-        <div className='text-lg font-semibold p-2 mt-3'>Internet Connection to Server</div>
+        {/* <div className='text-lg font-semibold p-2 mt-3'>Internet Connection to Server</div>
           <div className='w-full bg-[#f1f3f4] rounded-md p-3'>
             <div className='w-full text-sm pl-2 text-[green]'>Note:- It is recommended to connect using default credentials, as this has a 100% success rate.</div>
             <br />
@@ -87,7 +87,7 @@ const AdminMore = () => {
                 Connect
               </button>
             </div>
-          </div>
+          </div>  */}
           <div className='text-lg font-semibold p-2 mt-3'>Developers Options</div>
           <div className='flex-col gap-2 w-full bg-[#f1f3f4] rounded-md p-3'>
           <div className='w-full text-sm pl-1 pb-3 text-[#b51a1a]'>Note:- It is not recommended to use the following options manually.</div>
