@@ -45,7 +45,7 @@ const PriorityServices = () => {
             countModelName: 'AlumniCount',
             color: 'cyan',
             buttonTitle: "Check Management",
-            url: siteLinks.programs.link,
+            url: "",
             icon: <TodayRoundedIcon sx={{ color: 'blue', fontSize: '30px' }} />
         },
     ]
