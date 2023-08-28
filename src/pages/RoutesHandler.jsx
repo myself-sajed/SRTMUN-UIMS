@@ -81,7 +81,6 @@ import useAdminAuth from '../hooks/useAdminAuth'
 import FeedbackRedirect from '../services/feedback/pages/FeedbackRedirect'
 import FeedbackDashboard from '../services/feedback/pages/FeedbackDashboard'
 import DirectorReportStatus from '../services/director/pages/DirectorReportStatus'
-import AdminFeedbackStatus from '../services/admin/pages/AdminFeedbackStatus'
 import FeedbackReport from '../templates/feedback/FeedbackReport'
 import ExpertFeedback from '../services/feedback/pages/ExpertFeedback'
 import NSSLogin from '../services/nss/pages/NSSLogin'
@@ -89,8 +88,11 @@ import NSSStudentAdmission from '../services/nss/pages/NSSStudentAdmission'
 import ActionOnFeedback from '../services/feedback/pages/ActionOnFeedback'
 import StudentResume from '../templates/student/StudentResume'
 import DirectorFRCC from '../services/director/pages/DirectorFRCC'
-import WorkshopHome from '../services/workshop/pages/WorkshopHome'
-import WorkshopRegistration from '../services/workshop/pages/WorkshopRegistration'
+import ProgramHome from '../services/programs/pages/ProgramHome'
+import ProgramRegistration from '../services/programs/pages/ProgramRegistration'
+import AddProgram from '../services/programs/pages/AddProgram'
+import SingleProgram from '../services/programs/pages/SingleProgram'
+import RegistrationAck from '../services/programs/pages/RegistrationAck'
 
 
 
@@ -213,8 +215,11 @@ const RoutesHandler = () => {
                 <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
 
                 {/* Workshop Service */}
-                <Route path="/workshop" exact element={<WorkshopHome />} />
-                <Route path="/workshop/registration-form" exact element={<WorkshopRegistration />} />
+                <Route path="/programs" exact element={<ProgramHome />} />
+                <Route path="/program/:programId" exact element={<SingleProgram />} />
+                <Route path="/program/:programId/registration-form" exact element={<ProgramRegistration />} />
+                <Route path="/program/:programId/registration-form/acknowledgement" exact element={<RegistrationAck />} />
+                <Route path="/addProgram" exact element={<AddProgram />} />
 
 
 

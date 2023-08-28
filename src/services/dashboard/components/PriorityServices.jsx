@@ -45,7 +45,7 @@ const PriorityServices = () => {
             countModelName: 'AlumniCount',
             color: 'cyan',
             buttonTitle: "Check Management",
-            url: `#`,
+            url: siteLinks.programs.link,
             icon: <TodayRoundedIcon sx={{ color: 'blue', fontSize: '30px' }} />
         },
     ]
@@ -54,7 +54,7 @@ const PriorityServices = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4 justify-between'>
             {
                 services.map((service, index) => {
-                    return <div onClick={() => navigate(service.url)} key={index} className="relative bg-[#fff6] w-full cursor-pointer rounded-lg border py-2 px-[6px] border-[#d8d5d5] dark:bg-gray-800  hover:bg-[#ffffff91] flex-auto md:max-w-md h-full md:h-auto">
+                    return <div onClick={() => navigate(service.url)} key={index} className="relative bg-[#fff6] w-full cursor-pointer rounded-lg border py-2 px-[6px] border-[#d8d5d5]  hover:bg-[#ffffff91] flex-auto md:max-w-md h-full md:h-auto">
                         <div className="text-center ">
                             <div className='mb-3'>
                                 <div className="flex items-center justify-center mx-auto">

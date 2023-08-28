@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom"
 import Axios from "axios"
 
 
-const validateForm = (questions, setLoading, responseType, formData, setFormData, data, navigate, setActiveStep) => {
+const validateForm = (questions, setLoading, responseType, formData, setFormData, data, navigate, setActiveStep, customSubmitFunction = false) => {
 
     let isValid = true
 
+    let myQuestions = [...questions]
 
-    questions.reverse().forEach((question) => {
+    myQuestions.reverse().forEach((question) => {
         if (question.required) {
             if (formData[question.question]) {
                 if (question.type === 'check') {
@@ -31,11 +32,14 @@ const validateForm = (questions, setLoading, responseType, formData, setFormData
         }
     })
 
-    console.log(data)
-
 
     if (isValid) {
-        submitResponse(setLoading, responseType, formData, setFormData, data, navigate, setActiveStep)
+        console.log('Form is ready to submit')
+        if (customSubmitFunction) {
+            customSubmitFunction()
+        } else {
+            submitResponse(setLoading, responseType, formData, setFormData, data, navigate, setActiveStep)
+        }
     }
 
 }

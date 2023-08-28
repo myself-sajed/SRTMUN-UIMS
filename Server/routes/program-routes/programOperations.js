@@ -1,0 +1,35 @@
+const moment = require('moment');
+const Program = require('../../models/program-models/program');
+const { multerConfig } = require('../../utility/multerConfig');
+const upload = multerConfig(`../uploads/program-uploads/`)
+
+function programOperations(app) {
+
+    app.post('/program/add', upload.single('pPhotoURL'), async (req, res) => {
+        const formData = JSON.parse(JSON.stringify(req.body));
+        console.log('File:', req.file)
+        try {
+            const program = new Program({ ...formData, pPhotoURL: req.file.filename, finalRegistrationDate: moment(formData.finalRegistrationDate).format("DD MMM YYYY") })
+            await program.save()
+
+            res.send({ status: 'success' })
+        } catch (error) {
+            console.log('Error:', error)
+            res.send({ status: 'error' })
+        }
+
+    })
+
+    app.post('/programs/fetch', async (req, res) => {
+        const { filter, select, singleItem } = req.body
+        let data;
+        if (singleItem) {
+            data = await Program.findOne(filter).lean()
+        } else {
+            data = await Program.find(filter).lean().sort({ createdAt: -1 }).select(select)
+        }
+        res.send({ data })
+    })
+}
+
+module.exports = programOperations

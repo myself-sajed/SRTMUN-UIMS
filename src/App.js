@@ -22,6 +22,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <RoutesHandler />
       </QueryClientProvider>
+
     </div >
   )
 }
