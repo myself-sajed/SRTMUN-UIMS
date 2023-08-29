@@ -2,11 +2,15 @@ const mongoose = require('mongoose');
 
 const programSchema = new mongoose.Schema({
 
+    prefix: {
+        type: 'string',
+        required: true,
+    },
     title: {
         type: 'string',
         required: true,
     },
-    duration: {
+    programDate: {
         type: 'string',
         required: true
     },
@@ -19,6 +23,10 @@ const programSchema = new mongoose.Schema({
         required: true
     },
     finalRegistrationDate: {
+        type: 'string',
+        required: true
+    },
+    venue: {
         type: 'string',
         required: true
     },
@@ -39,6 +47,10 @@ const programSchema = new mongoose.Schema({
         required: true
     },
     pAddress: {
+        type: 'string',
+        required: true
+    },
+    pSummary: {
         type: 'string',
         required: true
     },

@@ -531,8 +531,8 @@ body {
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(90deg, #e66465, #f97316);
 }
 
-.dashboard-gradient-blue {
-  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 1) 84%), linear-gradient(0deg, #207af38c, #1d4ed800);
+.dashboard-gradient-program {
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, -0.5) 50%, rgba(255, 255, 255, 0) 84%), linear-gradient(226deg, #ff9f173b, #ff690066);
 }
 
 .ant-upload-list {

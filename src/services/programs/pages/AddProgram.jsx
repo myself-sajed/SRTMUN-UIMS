@@ -12,7 +12,7 @@ import useLocalStorage from '../../../hooks/useLocalStorage';
 const AddProgram = () => {
 
     const navigate = useNavigate()
-    const initialState = { title: null, duration: null, arrangedBy: null, finalRegistrationDate: null, summary: null, pPhotoURL: null, pName: null, pDesignation: null, pAddress: null, cName0: null, cName1: null, cPosition0: null, cPosition1: null, cEmail0: null, cEmail1: null, cPhone0: null, cPhone1: null }
+    const initialState = { prefix: null, title: null, programDate: null, arrangedBy: null, finalRegistrationDate: null, venue: null, summary: null, pPhotoURL: null, pName: null, pDesignation: null, pAddress: null, pSummary: null, cName0: null, cName1: null, cPosition0: null, cPosition1: null, cEmail0: null, cEmail1: null, cPhone0: null, cPhone1: null }
     const [programInfo, setProgramInfo] = useState(initialState)
     const [picker, setPicker] = useState(null)
     const [shouldNavigate, setShouldNavigate] = useState(true)
@@ -20,15 +20,6 @@ const AddProgram = () => {
     const [shouldUpdate, setShouldUpdate] = useState(false)
     title("Add University Program")
 
-    useEffect(() => {
-        if (picker) {
-            let data = `${picker[0]['$D']}-${picker[0]['$M'] + 1}-${picker[0]['$y']} to ${picker[1]['$D']}-${picker[1]['$M'] + 1}-${picker[1]['$y']}`
-
-            setProgramInfo((prev) => {
-                return { ...prev, duration: data }
-            })
-        }
-    }, [picker])
 
     useLocalStorage({ titleOfStorage: "AddProgramData", formData: programInfo, setFormData: setProgramInfo, initialState, shouldUpdate, setShouldUpdate, dependancies: [] })
 
@@ -44,7 +35,6 @@ const AddProgram = () => {
 
     }
 
-    const { RangePicker } = DatePicker;
 
     console.log('Program Info:', programInfo);
 
@@ -62,6 +52,15 @@ const AddProgram = () => {
 
                         <div className='row g-3 mt-2'>
                             <div className="col-md-6">
+                                <label htmlFor="prefix" className="form-label">Program Prefix</label>
+                                <input type="text" required placeholder='Ex: One Day Workshop or 2 Days Seminar' maxLength={200}
+                                    value={programInfo?.prefix || ''}
+                                    onChange={(e) => setProgramInfo((prev) => {
+                                        return { ...prev, prefix: e.target.value }
+                                    })}
+                                    className="form-control" id="prefix" aria-describedby="emailHelp" />
+                            </div>
+                            <div className="col-md-6">
                                 <label htmlFor="title" className="form-label">Title of the Program</label>
                                 <input type="text" required placeholder='Title goes here...' maxLength={200}
                                     value={programInfo?.title || ''}
@@ -72,7 +71,7 @@ const AddProgram = () => {
                                 <div id="titleHelp" className="form-text">The program title should not exceed 200 characters.</div>
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="title" className="form-label">Arranged by</label>
+                                <label htmlFor="title" className="form-label">Organized by</label>
                                 <input type="text" required placeholder='Program is arranged by...'
                                     value={programInfo?.arrangedBy || ''}
                                     onChange={(e) => setProgramInfo((prev) => {
@@ -81,14 +80,26 @@ const AddProgram = () => {
                                     className="form-control" />
 
                             </div>
+                            <div className="col-md-6">
+                                <label htmlFor="title" className="form-label">Program Venue</label>
+                                <input type="text" required placeholder='Program Venue'
+                                    value={programInfo?.venue || ''}
+                                    onChange={(e) => setProgramInfo((prev) => {
+                                        return { ...prev, venue: e.target.value }
+                                    })}
+                                    className="form-control" />
 
-                            <div className='col-md-3'>
-                                <div className="mb-3">
-                                    <label htmlFor="title" className="form-label">Duration of the Program </label>
-                                    <div>
-                                        <RangePicker onChange={(e) => setPicker(e)} className='border border-black p-2' />
-                                    </div>
-                                </div>
+                            </div>
+
+                            <div className="col-md-3">
+                                <label htmlFor="programDate" className="form-label">Program Date</label>
+                                <input type="date" required
+                                    value={programInfo?.programDate || ''}
+                                    onChange={(e) => setProgramInfo((prev) => {
+                                        return { ...prev, programDate: e.target.value }
+                                    })}
+                                    className="form-control" />
+
                             </div>
                             <div className="col-md-3">
                                 <label htmlFor="title" className="form-label">Final Date for Registration</label>
@@ -102,8 +113,8 @@ const AddProgram = () => {
                             </div>
 
                             <div className="col-md-6">
-                                <label htmlFor="summary" className="form-label">Brief program summary or theme </label>
-                                <textarea required placeholder='Write in brief about the program...' maxLength={1200} value={programInfo?.summary || ''}
+                                <label htmlFor="summary" className="form-label">Program Theme </label>
+                                <textarea required placeholder='Write in brief about the program...' maxLength={2000} value={programInfo?.summary || ''}
                                     onChange={(e) => setProgramInfo((prev) => {
                                         return { ...prev, summary: e.target.value }
                                     })} className="form-control" id="summary" aria-describedby="emailHelp" />
@@ -154,6 +165,13 @@ const AddProgram = () => {
                                     }}
                                         value={programInfo?.pAddress || ''}
                                         required className="form-control" placeholder='Address' id="pAddress" />
+                                </div>
+                                <div className="col-md-6">
+                                    <label htmlFor="pSummary" className="form-label">Career Summary </label>
+                                    <textarea required placeholder='Write in brief about the career or qualifications and achievements of Resource Person...' maxLength={2000} value={programInfo?.pSummary || ''}
+                                        onChange={(e) => setProgramInfo((prev) => {
+                                            return { ...prev, pSummary: e.target.value }
+                                        })} className="form-control" id="pSummary" aria-describedby="emailHelp" />
                                 </div>
                             </div>
                         </div>

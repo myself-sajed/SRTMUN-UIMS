@@ -44,98 +44,93 @@ const SingleProgram = () => {
                 {isLoading ? (
                     <UserLoading title="Fetching Program Details" />
                 ) : (
-                    <section>
-                        <div className="pt-3 mt-3 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative dashboard-gradient-blue">
-                            <div className="md:inline-flex justify-between gap-3 items-center py-2 md:py-1 px-2 text-sm text-blue-700 bg-blue-100 rounded-full mb-7">
-                                <p className="text-sm font-medium hidden sm:block">Final Date for Registration to the program is <b> {program?.finalRegistrationDate}</b>. </p>
-                                <button
-                                    onClick={() => navigate(`/program/${programId}/registration-form`)}
-                                    className="inline-flex justify-center items-center py-2 px-5 text-base text-center text-white rounded-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-                                >
-                                    Register Now
-                                    <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                    </svg>
-                                </button>
+                    <section className='dashboard-gradient rounded-xl'>
+                        <div className="pt-3 mt-3 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
+                            <div>
+                                <p className="mt-5 mb-2 text-lg font-bold text-[#d41528]">{program?.prefix}</p>
+                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none text-orange-900 md:text-3xl lg:text-4xl ">{program?.title}</h1>
+                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none text-orange-900 md:text-2xl lg:text-3xl">on {program?.programDate}</h1>
+
+                                <div className="mb-3 mt-2 text-red-800">
+                                    Organized by <b>{program?.arrangedBy}</b>
+                                </div>
                             </div>
 
-                            <h1 className="mb-5 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none text-gray-900 md:text-3xl lg:text-4xl ">{program?.title}</h1>
+                            <div className='grid grid-cols-3 gap-4 mt-5'>
+                                <div className="col-span-2">
+                                    <Cards id="About" title="Theme of the Program" text={program?.summary} />
+                                    <Info color="red">
+                                        <div>
+                                            <p className="text-lg">Resource Person</p>
+                                            <div className="grid md:grid-cols-3 gap-3 my-3">
+                                                <div className="col-span-2 text-left">
+                                                    <p className="text-lg">{program?.pName}</p>
+                                                    <p>{program?.pDesignation}</p>
+                                                    <p>{program?.pAddress.split(',').map((part, index) => (
+                                                        <React.Fragment key={index}>
+                                                            {index > 0 && <br />}
+                                                            {part}
+                                                        </React.Fragment>
+                                                    ))}</p>
+                                                </div>
+                                                <img className="md:w-20 md:h-20 w-14 h-14 rounded object-cover"
+                                                    src={serverLinks.showFile(program?.pPhotoURL, "program")}
+                                                    alt="Large avatar"></img>
 
-
-                            <div className="grid sm:grid-cols-2 gap-2 mt-5">
-                                <Info color="red">
-                                    <div>
-                                        <p className="text-lg">Resource Person</p>
-                                        <div className="grid md:grid-cols-3 gap-3 mt-3">
-                                            <img className="md:w-36 md:h-36 w-14 h-14 rounded object-cover"
-                                                src={serverLinks.showFile(program?.pPhotoURL, "program")}
-                                                alt="Large avatar"></img>
-                                            <div className="col-span-2 text-left">
-                                                <p className="text-lg">{program?.pName}</p>
-                                                <p>{program?.pDesignation}</p>
-                                                <p>{program?.pAddress}</p>
+                                            </div>
+                                            <hr />
+                                            <div className="mt-2">
+                                                <p className="text-sm text-justify hyphens-auto">
+                                                    {program?.pSummary}
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                </Info>
-                                <div className="md:grid grid-cols-2 gap-2">
-                                    <Info color="blue">
-                                        <p>Organized by: </p><b>{program?.arrangedBy}</b>
-                                    </Info>
-                                    <Info color="red" >
-                                        <p>Date of Program:</p><b>{program?.duration}</b>
-                                    </Info>
-                                    <Info color="green" >
-                                        <div>
-                                            <p>Last date of Registration:</p> <b>{program?.arrangedBy}</b>
-                                            <p className="text-blue-600"><Link to="/register" >Register Now</Link></p>
-                                        </div>
-                                    </Info>
-                                    <Info color="yellow" >
-                                        <p>Program Duration:</p><b>{program?.duration}</b>
                                     </Info>
                                 </div>
-                            </div>
 
-                            <div className="mt-5">
-                                <br />
-                                <div className="grid md:grid-cols-2 gap-3 grid-cols-1">
-                                    <Cards id="About" title="About the Program" text={program?.summary} />
-                                    {/* <Cards id="Details" title="Program Details" /> */}
-                                    <Cards id="Reg" title="Registration Details" programId={programId} />
-                                </div>
-                            </div>
-
-                            <div>
                                 <div>
                                     <div>
-                                        <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border-2 border-blue-800 rounded-lg bg-blue-50 " role="alert">
-                                            <div class="flex items-center">
-                                                <ContactMailRoundedIcon />
-                                                <span class="sr-only">Info</span>
-                                                <h3 class="text-lg font-medium ml-3">Contact Details</h3>
-                                            </div>
-                                            <div class="mt-2 mb-4 text-sm text-left">
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <Info color="blue" >
                                                 <div>
-                                                    <div class="sm:items-center p-3 flex flex-col sm:flex-row gap-5">
+                                                    <p>Last date of Registration:</p> <b>{program?.finalRegistrationDate}</b>
+                                                    <p className="text-blue-600 mt-2 bg-blue-50 p-2 rounded-lg"><Link to="/register" >Register Now</Link></p>
+                                                </div>
+                                            </Info>
+                                            <Info color="blue" >
+                                                <p>Program Venue:</p><b>{program?.venue}</b>
+                                            </Info>
+                                        </div>
+                                        <Cards id="Reg" title="Registration Details" programId={programId} />
+                                        <div>
+                                            <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border-2 border-blue-800 rounded-lg bg-blue-50 " role="alert">
+                                                <div class="flex items-center justify-center">
+                                                    <ContactMailRoundedIcon />
+                                                    <span class="sr-only">Info</span>
+                                                    <h3 class="text-lg font-medium ml-3">Contact Details</h3>
+                                                </div>
+                                                <div class="mt-2 mb-4 text-sm text-left">
+                                                    <div>
+                                                        <div class="sm:items-center p-3 flex-col sm:flex-row gap-4 justify-center">
 
-                                                        {
-                                                            program?.cName0 && <div class="text-gray-800">
-                                                                <div class="text-base font-normal">{program?.cName0}</div>
-                                                                <div class="text-sm font-normal">{program?.cPosition0}</div>
-                                                                <div class="text-sm font-normal">Email: {program?.cEmail0}</div>
-                                                                <div class="text-sm font-normal">Phone: {program?.cPhone0}</div>
-                                                            </div>
-                                                        }
-                                                        {
-                                                            program?.cName1 && <div class="text-gray-800">
-                                                                <div class="text-base font-normal">{program?.cName1}</div>
-                                                                <div class="text-sm font-normal">{program?.cPosition1}</div>
-                                                                <div class="text-sm font-normal">Email: {program?.cEmail1}</div>
-                                                                <div class="text-sm font-normal">Phone: {program?.cPhone1}</div>
-                                                            </div>
-                                                        }
+                                                            {
+                                                                program?.cName0 && <div class="text-black">
+                                                                    <div class="text-lg font-normal">{program?.cName0}</div>
+                                                                    <div class="text-base font-normal">{program?.cPosition0}</div>
+                                                                    <div class="text-base font-normal">Email: {program?.cEmail0}</div>
+                                                                    <div class="text-base font-normal">Phone: {program?.cPhone0}</div>
+                                                                </div>
+                                                            }
+                                                            {
+                                                                program?.cName1 && <div class="text-black mt-3">
+                                                                    <div class="text-lg font-normal">{program?.cName1}</div>
+                                                                    <div class="text-base font-normal">{program?.cPosition1}</div>
+                                                                    <div class="text-base font-normal">Email: {program?.cEmail1}</div>
+                                                                    <div class="text-base font-normal">Phone: {program?.cPhone1}</div>
+                                                                </div>
+                                                            }
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +154,7 @@ const SingleProgram = () => {
 export default SingleProgram;
 
 const Info = ({ color, children }) => {
-    return <div id="alert-border-1" className={`rounded-md text-center p-4 mb-4 text-${color}-800 border-x border-t-4 border-b border-${color}-300 bg-${color}-50`} role="alert">
+    return <div id="alert-border-1" className={`rounded-md text-center p-4 mb-4 text-${color}-800 border-l-2 border-r-2 border-b-2 border-t-4 bg-[#ddebfd80] border-${color}-800`} role="alert">
 
         <div className="text-sm font-medium">
             {children}
@@ -167,7 +162,7 @@ const Info = ({ color, children }) => {
     </div>
 }
 
-const Cards = ({ id, title, programId }) => {
+const Cards = ({ id, title, programId, text }) => {
 
     const icons = {
         About: <InfoRoundedIcon />,
@@ -204,16 +199,16 @@ const Cards = ({ id, title, programId }) => {
 
                             <p className='my-3'>OR</p>
 
-                            <button onClick={() => navigate(`/program/${programId}/registration-form`)} type="button" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center">
+                            <Link to={`/program/${programId}/registration-form`} type="button" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center">
                                 Click to Register
                                 <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                 </svg>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                     :
-                    "The main objective of the workshop is to sensitize the teaching faculty of colleges and universities about the advantages of e-learning and to encourage them towards planning, designing, developing, delivering and implementing MOOCs and other Open Educational Resources (OER)so that they can keep pace with digital revolution of the twenty first century in which technology is blended with traditional teaching-learning pedagogies for better learning outcomes"
+                    <p className="text-base">{text}</p>
             }
         </div>
     </div>
