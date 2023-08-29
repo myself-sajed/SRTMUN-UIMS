@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import GoBack from '../../../components/GoBack'
+import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks'
 import { DatePicker, Space } from 'antd';
 import { addProgram } from '../js/addProgram';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../../hooks/useLocalStorage';
+
 
 
 const AddProgram = () => {
@@ -16,7 +18,7 @@ const AddProgram = () => {
     const [shouldNavigate, setShouldNavigate] = useState(true)
     const bredLinks = [siteLinks.welcome, siteLinks.directorHome, siteLinks.programs, siteLinks.addProgram]
     const [shouldUpdate, setShouldUpdate] = useState(false)
-
+    title("Add University Program")
 
     useEffect(() => {
         if (picker) {
@@ -162,21 +164,22 @@ const AddProgram = () => {
                             <p className="font-semibold">3. Contact Details</p>
 
                             {
-                                [0, 0].map((main, index) => {
-                                    return <div className="row g-3 mt-1">
+                                ["Contact Person 1", "Contact Person 2"].map((main, index) => {
+                                    return <div className="row g-3 mt-1 mb-4">
+                                        <p className='text-semibold'> 3.{index + 1}: {main}</p>
                                         {
-                                            [{ title: "Contact Person Name", id: "cName" },
-                                            { title: "Contact Person Position", id: "cPosition" },
-                                            { title: "Contact Person Email", id: "cEmail" },
-                                            { title: "Contact Person Phone", id: "cPhone" }].map((item) => {
+                                            [{ title: "Name", id: "cName" },
+                                            { title: "Position", id: "cPosition" },
+                                            { title: "Email", id: "cEmail" },
+                                            { title: "Phone", id: "cPhone" }].map((item) => {
                                                 return <div className='col-md-4'>
-                                                    <label htmlFor={`${item.title}-${index + 1}`} className="form-label">{`${item.title}-${index + 1}`}</label>
+                                                    <label htmlFor={`${item.title}-${index + 1}`} className="form-label">{`${item.title}`}</label>
                                                     <input required type="input"
                                                         value={programInfo?.[`${item.id}${index}`] || ''} onChange={(e) => {
                                                             setProgramInfo((prev) => {
                                                                 return { ...prev, [`${item.id}${index}`]: e.target.value }
                                                             })
-                                                        }} className="form-control" placeholder={`${item.title}-${index + 1}`} id={`${item.title}-${index + 1}`} />
+                                                        }} className="form-control" placeholder={`${item.title}`} id={`${item.title}-${index + 1}`} />
                                                 </div>
                                             })}
 
