@@ -124,9 +124,11 @@ const ProgramRegistration = () => {
 
                                 <div className='animate-fade-up animate-once'>
                                     <div className='bg-blue-50 text-center rounded-xl p-2 border-2 border-blue-700'>
-                                        <p className='font-semibold text-lg'>{program?.title}</p>
-                                        <p className="text-sm">
-                                            Organized by {program?.arrangedBy} from {program?.duration}
+                                        <p className='font-semibold text-sm mb-2'>{program?.prefix}</p>
+                                        <p className='font-semibold text-xl leading-5'>{program?.title}</p>
+                                        <p className='font-semibold text-lg leading-5'>{program?.programDate}</p>
+                                        <p className="text-sm mt-2">
+                                            Organized by {program?.arrangedBy}
                                         </p>
                                     </div>
                                     <Header title='Program Registration Form' schoolName={program?.arrangedBy} />

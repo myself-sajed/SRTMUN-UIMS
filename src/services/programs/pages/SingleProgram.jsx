@@ -44,25 +44,25 @@ const SingleProgram = () => {
                 {isLoading ? (
                     <UserLoading title="Fetching Program Details" />
                 ) : (
-                    <section className='dashboard-gradient rounded-xl'>
-                        <div className="pt-3 mt-3 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
-                            <div>
-                                <p className="mt-5 mb-2 text-lg font-bold text-[#d41528]">{program?.prefix}</p>
-                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none text-orange-900 md:text-3xl lg:text-4xl ">{program?.title}</h1>
-                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none text-orange-900 md:text-2xl lg:text-3xl">on {program?.programDate}</h1>
+                    <section className='rounded-xl dashboard-gradient-program'>
+                        <div className="py-3 text-white mt-3 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
+                            <div className='text-blue-900'>
+                                <p className="mt-5 mb-2 text-lg font-bold ">{program?.prefix}</p>
+                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none md:text-3xl lg:text-4xl">{program?.title}</h1>
+                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none md:text-3xl lg:text-4xl ">{program?.programDate}</h1>
 
-                                <div className="mb-3 mt-2 text-red-800">
+
+                                <div className="mb-3 mt-2 ">
                                     Organized by <b>{program?.arrangedBy}</b>
                                 </div>
                             </div>
 
-                            <div className='grid grid-cols-3 gap-4 mt-5'>
-                                <div className="col-span-2">
+                            <div className='md:grid grid-cols-5 gap-4 mt-5'>
+                                <div className="col-span-3">
                                     <Cards id="About" title="Theme of the Program" text={program?.summary} />
-                                    <Info color="red">
+                                    <Cards id="About" title="Resource Person" >
                                         <div>
-                                            <p className="text-lg">Resource Person</p>
-                                            <div className="grid md:grid-cols-3 gap-3 my-3">
+                                            <div className="grid sm:grid-cols-3 gap-3 my-3">
                                                 <div className="col-span-2 text-left">
                                                     <p className="text-lg">{program?.pName}</p>
                                                     <p>{program?.pDesignation}</p>
@@ -73,28 +73,28 @@ const SingleProgram = () => {
                                                         </React.Fragment>
                                                     ))}</p>
                                                 </div>
-                                                <img className="md:w-20 md:h-20 w-14 h-14 rounded object-cover"
+                                                <img className="md:w-24 md:h-24 w-14 h-14 rounded object-cover"
                                                     src={serverLinks.showFile(program?.pPhotoURL, "program")}
                                                     alt="Large avatar"></img>
 
                                             </div>
                                             <hr />
                                             <div className="mt-2">
-                                                <p className="text-sm text-justify hyphens-auto">
+                                                <p className="lg:text-base md:text-sm sm:text-xs text-justify hyphens-auto">
                                                     {program?.pSummary}
                                                 </p>
                                             </div>
                                         </div>
-                                    </Info>
+                                    </Cards>
                                 </div>
 
-                                <div>
+                                <div className="col-span-2">
                                     <div>
-                                        <div className="grid grid-cols-2 gap-3">
+                                        <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-2 gap-2">
                                             <Info color="blue" >
                                                 <div>
                                                     <p>Last date of Registration:</p> <b>{program?.finalRegistrationDate}</b>
-                                                    <p className="text-blue-600 mt-2 bg-blue-50 p-2 rounded-lg"><Link to="/register" >Register Now</Link></p>
+                                                    <p className="text-blue-600 mt-2 bg-blue-50 p-2 rounded-lg"><Link to={`/program/${programId}/registration-form`} >Register Now</Link></p>
                                                 </div>
                                             </Info>
                                             <Info color="blue" >
@@ -102,39 +102,33 @@ const SingleProgram = () => {
                                             </Info>
                                         </div>
                                         <Cards id="Reg" title="Registration Details" programId={programId} />
-                                        <div>
-                                            <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border-2 border-blue-800 rounded-lg bg-blue-50 " role="alert">
-                                                <div class="flex items-center justify-center">
-                                                    <ContactMailRoundedIcon />
-                                                    <span class="sr-only">Info</span>
-                                                    <h3 class="text-lg font-medium ml-3">Contact Details</h3>
-                                                </div>
-                                                <div class="mt-2 mb-4 text-sm text-left">
-                                                    <div>
-                                                        <div class="sm:items-center p-3 flex-col sm:flex-row gap-4 justify-center">
+                                        <Cards id="About" title="Contact Details">
+                                            <div class="mt-2 mb-4 text-sm text-left">
+                                                <div>
+                                                    <div class="grid lg:grid-cols-2 gap-2">
 
-                                                            {
-                                                                program?.cName0 && <div class="text-black">
-                                                                    <div class="text-lg font-normal">{program?.cName0}</div>
-                                                                    <div class="text-base font-normal">{program?.cPosition0}</div>
-                                                                    <div class="text-base font-normal">Email: {program?.cEmail0}</div>
-                                                                    <div class="text-base font-normal">Phone: {program?.cPhone0}</div>
-                                                                </div>
-                                                            }
-                                                            {
-                                                                program?.cName1 && <div class="text-black mt-3">
-                                                                    <div class="text-lg font-normal">{program?.cName1}</div>
-                                                                    <div class="text-base font-normal">{program?.cPosition1}</div>
-                                                                    <div class="text-base font-normal">Email: {program?.cEmail1}</div>
-                                                                    <div class="text-base font-normal">Phone: {program?.cPhone1}</div>
-                                                                </div>
-                                                            }
+                                                        {
+                                                            program?.cName0 && <div class="text-black">
+                                                                <div class="text-base font-normal">{program?.cName0}</div>
+                                                                <div class="text-sm font-normal">{program?.cPosition0}</div>
+                                                                <div class="text-sm font-normal">Email: {program?.cEmail0}</div>
+                                                                <div class="text-sm font-normal">Phone: {program?.cPhone0}</div>
+                                                            </div>
+                                                        }
+                                                        {
+                                                            program?.cName1 && <div class="text-black">
+                                                                <div class="text-base font-normal">{program?.cName1}</div>
+                                                                <div class="text-sm font-normal">{program?.cPosition1}</div>
+                                                                <div class="text-sm font-normal">Email: {program?.cEmail1}</div>
+                                                                <div class="text-sm font-normal">Phone: {program?.cPhone1}</div>
+                                                            </div>
+                                                        }
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Cards>
+
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +148,7 @@ const SingleProgram = () => {
 export default SingleProgram;
 
 const Info = ({ color, children }) => {
-    return <div id="alert-border-1" className={`rounded-md text-center p-4 mb-4 text-${color}-800 border-l-2 border-r-2 border-b-2 border-t-4 bg-[#ddebfd80] border-${color}-800`} role="alert">
+    return <div id="alert-border-1" className={`rounded-md text-center p-4 mb-4 text-${color}-800 border-l-2 border-r-2 border-b-2 border-t-4 bg-blue-50 border-${color}-800`} role="alert">
 
         <div className="text-sm font-medium">
             {children}
@@ -162,23 +156,11 @@ const Info = ({ color, children }) => {
     </div>
 }
 
-const Cards = ({ id, title, programId, text }) => {
-
-    const icons = {
-        About: <InfoRoundedIcon />,
-        Details: <SubjectRoundedIcon />,
-        Reg: <HowToRegRoundedIcon />,
-    }
-
-    const navigate = useNavigate();
+const Cards = ({ id, title, programId, text, children }) => {
 
 
-    return <div id="alert-additional-content-1" className="p-4 mb-4 text-blue-800 border-l-2 border-r-2 border-b-2 border-t-4 border-blue-900 rounded-lg bg-[#ddebfd80] dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-        <div className="flex items-center">
-            {icons[id]}
-            <span className="sr-only">Info</span>
-            <h3 className="text-lg font-bold ml-3">{title}</h3>
-        </div>
+    return <div id="alert-additional-content-1" className="p-4 mb-4 text-blue-800 border-l-2 border-r-2 border-b-2 border-t-4 border-blue-900 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+        <h3 className="text-lg font-bold text-left bg-blue-100 rounded-md p-1">{title}</h3>
         <div className="mt-2 mb-4 text-sm text-left">
             {
                 id === "Reg" ?
@@ -208,7 +190,11 @@ const Cards = ({ id, title, programId, text }) => {
                         </div>
                     </div>
                     :
-                    <p className="text-base">{text}</p>
+                    <div>
+
+                        <p className="lg:text-base md:text-sm sm:text-xs text-justify hyphens-auto">{text}</p>
+                        {children}
+                    </div>
             }
         </div>
     </div>

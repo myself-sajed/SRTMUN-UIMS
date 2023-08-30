@@ -532,11 +532,15 @@ body {
 }
 
 .dashboard-gradient-program {
-  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, -0.5) 50%, rgba(255, 255, 255, 0) 84%), linear-gradient(226deg, #ff9f173b, #ff690066);
+  background-image: url(C:\Users\shaik\Downloads\bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
 
 .ant-upload-list {
   display: none;
+
 }
 
 .ant-upload-drag {
