@@ -12,6 +12,7 @@ import QRCode from 'react-qr-code';
 import Footer from '../../../components/Footer';
 import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
 import serverLinks from '../../../js/serverLinks';
+import title from '../../../js/title';
 
 const SingleProgram = () => {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ const SingleProgram = () => {
 
     let bredLinks = [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program', url: "" }];
 
+    title(program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program')
 
     return (
         <div>
@@ -173,7 +175,7 @@ const Cards = ({ id, title, programId, text, children }) => {
 
                                     {/* Absolute centering for the icon */}
                                     <div className="absolute inset-0 flex justify-center items-center">
-                                        <img src="/assets/logo.jpg" className='rounded-full' alt="qrlogo" height="40" width="40" />
+                                        <img src="/assets/logo.jpg" className='rounded-full' alt="qrlogo" height="30" width="30" />
                                     </div>
                                 </div>
                             </div>
