@@ -180,7 +180,6 @@ const Cards = ({ id, title, programId, text, children }) => {
                                 </div>
                             </div>
 
-
                             <p className='my-3'>OR</p>
 
                             <Link to={`/program/${programId}/registration-form`} type="button" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center">
