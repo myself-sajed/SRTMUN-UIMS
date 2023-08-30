@@ -44,7 +44,7 @@ const SingleProgram = () => {
                 {isLoading ? (
                     <UserLoading title="Fetching Program Details" />
                 ) : (
-                    <section className='rounded-xl dashboard-gradient-program'>
+                    <section className='rounded-xl bg-cover bg-no-repeat' style={{ backgroundImage: "url('/assets/programHeroBG.png')" }} >
                         <div className="py-3 text-white mt-3 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
                             <div className='text-blue-900'>
                                 <p className="mt-5 mb-2 text-lg font-bold ">{program?.prefix}</p>
