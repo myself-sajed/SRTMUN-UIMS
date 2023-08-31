@@ -12,7 +12,7 @@ import useLocalStorage from '../../../hooks/useLocalStorage';
 const AddProgram = () => {
 
     const navigate = useNavigate()
-    const initialState = { prefix: null, title: null, programDate: null, arrangedBy: null, finalRegistrationDate: null, venue: null, summary: null, pPhotoURL: null, pName: null, pDesignation: null, pAddress: null, pSummary: null, cName0: null, cName1: null, cPosition0: null, cPosition1: null, cEmail0: null, cEmail1: null, cPhone0: null, cPhone1: null }
+    const initialState = { prefix: null, title: null, programDate: null, arrangedBy: null, finalRegistrationDate: null, venue: null, summary: null, pPhotoURL: null, pName: null, pDesignation: null, pAddress: null, pSummary: null, cName0: null, cName1: null, cPosition0: null, cPosition1: null, cEmail0: null, cEmail1: null, cPhone0: null, cPhone1: null, registrationDetails: "1. There is no registration fee to attend this workshop 2. No TA/DA will be provided 3. Lunch and refreshments will be provided 4.  It is mandatory to attending all the sessions to get participation certificate", whoCanParticipate: "Teacher from any college or University can participate, but preference will be given to teachers of SRTM University and its affiliated colleges as there are limited seats." }
     const [programInfo, setProgramInfo] = useState(initialState)
     const [picker, setPicker] = useState(null)
     const [shouldNavigate, setShouldNavigate] = useState(true)
@@ -114,10 +114,24 @@ const AddProgram = () => {
 
                             <div className="col-md-6">
                                 <label htmlFor="summary" className="form-label">Program Theme </label>
-                                <textarea required placeholder='Write in brief about the program...' maxLength={2000} value={programInfo?.summary || ''}
+                                <textarea rows={10} required placeholder='Write in brief about the program...' maxLength={2000} value={programInfo?.summary || ''}
                                     onChange={(e) => setProgramInfo((prev) => {
                                         return { ...prev, summary: e.target.value }
                                     })} className="form-control" id="summary" aria-describedby="emailHelp" />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="whoCanParticipate" className="form-label">Who can Participate? </label>
+                                <textarea rows={10} required placeholder='Write in brief about who can participate...' maxLength={2000} value={programInfo?.whoCanParticipate || ''}
+                                    onChange={(e) => setProgramInfo((prev) => {
+                                        return { ...prev, whoCanParticipate: e.target.value }
+                                    })} className="form-control" id="whoCanParticipate" aria-describedby="emailHelp" />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="registrationDetails" className="form-label"> Registration Details  </label>
+                                <textarea rows={10} required placeholder='Write in brief about Registration Details ...' maxLength={2000} value={programInfo?.registrationDetails || ''}
+                                    onChange={(e) => setProgramInfo((prev) => {
+                                        return { ...prev, registrationDetails: e.target.value }
+                                    })} className="form-control" id="registrationDetails" aria-describedby="emailHelp" />
                             </div>
 
 
@@ -168,7 +182,7 @@ const AddProgram = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <label htmlFor="pSummary" className="form-label">Career Summary </label>
-                                    <textarea required placeholder='Write in brief about the career or qualifications and achievements of Resource Person...' maxLength={2000} value={programInfo?.pSummary || ''}
+                                    <textarea rows={10} required placeholder='Write in brief about the career or qualifications and achievements of Resource Person...' maxLength={2000} value={programInfo?.pSummary || ''}
                                         onChange={(e) => setProgramInfo((prev) => {
                                             return { ...prev, pSummary: e.target.value }
                                         })} className="form-control" id="pSummary" aria-describedby="emailHelp" />

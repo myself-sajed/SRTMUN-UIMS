@@ -22,6 +22,14 @@ const programSchema = new mongoose.Schema({
         type: 'string',
         required: true
     },
+    whoCanParticipate: {
+        type: 'string',
+        required: false
+    },
+    registrationDetails: {
+        type: 'string',
+        required: false
+    },
     finalRegistrationDate: {
         type: 'string',
         required: true
