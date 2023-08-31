@@ -42,7 +42,7 @@ const SingleProgram = () => {
 
     return (
         <div>
-            {/* <GoBack backUrl={-1} pageTitle="Program Details" bredLinks={bredLinks} /> */}
+            <GoBack backUrl={-1} pageTitle="Program Details" bredLinks={bredLinks} />
             <div className="animate-fade-up animate-once">
                 {isLoading ? (
                     <UserLoading title="Fetching Program Details" />
