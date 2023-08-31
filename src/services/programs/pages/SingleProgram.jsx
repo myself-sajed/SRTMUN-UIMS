@@ -119,9 +119,9 @@ const SingleProgram = () => {
                                                 </a>
                                             </Info>
                                         </div>
-                                        <Info color="blue" >
-                                            <p className="text-base mb-2 font-bold">Who can Participate? </p> <p>{program?.whoCanParticipate}</p>
-                                        </Info>
+                                        <Cards color="About" title="Who can participate?" >
+                                            <p>{program?.whoCanParticipate}</p>
+                                        </Cards>
                                         <Cards id="Reg" title="Registration Details" program={program} programId={programId} />
                                         <Cards id="About" title="Contact Details">
                                             <div class="mt-2 mb-4 text-sm text-left">
@@ -192,7 +192,7 @@ const Cards = ({ id, title, programId, text, children, program }) => {
                                         <li>1. There is no registration fee to attend this workshop</li>
                                         <li>2. No TA/DA will be provided</li>
                                         <li>3. Lunch and refreshments will be provided</li>
-                                        <li>4. It is mandatory to attending all the sessions to get participation certificate</li>
+                                        <li>4. It is mandatory to attend all the sessions to get participation certificate</li>
                                     </ol>
                                 </div>
                                 <div className="flex justify-center items-center bg-gray-100 p-4 rounded-lg shadow-md max-w-md mx-auto">
