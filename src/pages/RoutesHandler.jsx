@@ -99,9 +99,9 @@ import RegistrationAck from '../services/programs/pages/RegistrationAck'
 const RoutesHandler = () => {
 
     return (
-        <div >
+        <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
 
-            {/* <Navbar /> */}
+            <Navbar />
 
             <Routes>
                 <Route path="/" exact element={<Index />} />
