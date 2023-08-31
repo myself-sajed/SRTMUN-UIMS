@@ -159,9 +159,6 @@ const SingleProgram = () => {
                     </section>
                 )}
             </div>
-            {/* <div className="mt-5">
-                <Footer />
-            </div> */}
         </div>
     );
 };
@@ -189,7 +186,7 @@ const Cards = ({ id, title, programId, text, children, program }) => {
                         <div>
                             <p className='mt-2 mb-3'>Scan to go to Registration Page</p>
                             <div className='grid grid-cols-2 gap-2'>
-                                <div className='text-justify'>
+                                <div className='text-left'>
                                     {/* {program?.registrationDetails} */}
                                     <ol>
                                         <li>1. There is no registration fee to attend this workshop</li>
