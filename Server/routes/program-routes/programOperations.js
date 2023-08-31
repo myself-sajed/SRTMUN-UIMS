@@ -9,7 +9,7 @@ function programOperations(app) {
         const formData = JSON.parse(JSON.stringify(req.body));
         console.log('File:', req.file)
         try {
-            const program = new Program({ ...formData, pPhotoURL: req.file.filename, finalRegistrationDate: moment(formData.finalRegistrationDate).format("DD MMM YYYY"), programDate: moment(formData.programDate).format("DD MMM YYYY") })
+            const program = new Program({ ...formData, pPhotoURL: req.file.filename, finalRegistrationDate: moment(formData.finalRegistrationDate).format("DD MMMM YYYY"), programDate: moment(formData.programDate).format("DD MMMM YYYY") })
             await program.save()
 
             res.send({ status: 'success' })
