@@ -91,6 +91,7 @@ import DirectorFRCC from '../services/director/pages/DirectorFRCC'
 import ProgramHome from '../services/programs/pages/ProgramHome'
 import ProgramRegistration from '../services/programs/pages/ProgramRegistration'
 import AddProgram from '../services/programs/pages/AddProgram'
+import ProgramFlyer from '../services/programs/pages/ProgramFlyer'
 import SingleProgram from '../services/programs/pages/SingleProgram'
 import RegistrationAck from '../services/programs/pages/RegistrationAck'
 
@@ -216,6 +217,7 @@ const RoutesHandler = () => {
 
                 {/* Workshop Service */}
                 <Route path="/programs" exact element={<ProgramHome />} />
+                <Route path="/program/:programId/program-flyer" exact element={<ProgramFlyer />} />
                 <Route path="/program/:programId" exact element={<SingleProgram />} />
                 <Route path="/program/:programId/registration-form" exact element={<ProgramRegistration />} />
                 <Route path="/program/:programId/registration-form/acknowledgement" exact element={<RegistrationAck />} />
