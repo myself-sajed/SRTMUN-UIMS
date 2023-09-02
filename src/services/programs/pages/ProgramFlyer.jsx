@@ -172,7 +172,7 @@ const ProgramFlyer = () => {
                                             <Cards id="blue" title="Convenor" >
                                                 <div className="text-center">
                                                     <b className='text-base'>Dr. D. D. Pawar</b>
-                                                    <p>Director of School of Computational Sciences & IQAC, SRTMUN</p>
+                                                    <p>Director of School of Mathematical Sciences & IQAC, SRTMUN</p>
                                                 </div>
                                             </Cards>
                                             <Cards id="blue" title="Organizing Secretary" >
