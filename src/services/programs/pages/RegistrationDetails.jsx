@@ -25,7 +25,7 @@ const RegistrationDetails = () => {
     const [program, setProgram] = useState(null);
 
     let allres = []
-     program?.registrationResponse.map((e,i)=>{allres.push(JSON.parse(e.response))})
+    program?.registrationResponse.map((e, i) => { allres.push(JSON.parse(e.response)) })
 
     const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: true };
     const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params));
@@ -44,66 +44,67 @@ const RegistrationDetails = () => {
 
     title("Program Registration Details")
 
-    const downloadDataToExcel = async(data, fileName) => {
-        
-            try {
-              const columnMapping = {
-                "Address of the institution": "Address of the institution",
-                "Contact Number": "Contact Number",
-                "Designation": "Designation",
+    const downloadDataToExcel = async (data, fileName) => {
+
+        try {
+            const columnMapping = {
+                "Name of the Teacher": "Name of the Teacher",
                 "Email Address": "Email Address",
-                "Name of the College/University": "Name of the College/University",
+                "Designation": "Designation",
+                "Contact Number": "Contact Number",
                 "Name of the Department/School": "Name of the Department/School",
-                "Name of the Teacher": "Name of the Teacher"};
-          
-              const workbook = new ExcelJS.Workbook();
-              const worksheet = workbook.addWorksheet('Sheet 1');
-          
-              const columnNames = Object.values(columnMapping);
-              columnNames.unshift('Sr.No.');
-          
-              // Set column headers and formatting
-              const headerRow = worksheet.addRow(columnNames);
-              headerRow.font = { bold: true, size: 12 };
-          
-              // Apply formatting to all cells
-              worksheet.columns.forEach((column) => {
+                "Name of the College/University": "Name of the College/University",
+                "Address of the institution": "Address of the institution",
+            };
+
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sheet 1');
+
+            const columnNames = Object.values(columnMapping);
+            columnNames.unshift('Sr.No.');
+
+            // Set column headers and formatting
+            const headerRow = worksheet.addRow(columnNames);
+            headerRow.font = { bold: true, size: 12 };
+
+            // Apply formatting to all cells
+            worksheet.columns.forEach((column) => {
                 column.width = 20;
                 column.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
-              });
-          
-              // Add data rows with auto-incrementing numbers
-              data?.forEach((rowData, index) => {
+            });
+
+            // Add data rows with auto-incrementing numbers
+            data?.forEach((rowData, index) => {
                 const values = Object.keys(columnMapping).map((columnName) => rowData[columnName]);
                 values.unshift(index + 1);
                 worksheet.addRow(values);
-              });
-          
-              worksheet.getRow(1).font = { bold: true, size: 12 };
-              worksheet.getRow(1).height = 30;
-          
-              for (let i = 2; i <= data.length; i++) {
+            });
+
+            worksheet.getRow(1).font = { bold: true, size: 12 };
+            worksheet.getRow(1).height = 30;
+
+            for (let i = 2; i <= data.length; i++) {
                 worksheet.getRow(i).commit();
-              }
-          
-              // Save the workbook as a file
-              const buffer = await workbook.xlsx.writeBuffer();
-              const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-              const url = URL.createObjectURL(blob);
-          
-              // Download the Excel file with the specified fileName
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = fileName;
-              link.click();
-          
-              console.log('Excel file generated and downloaded successfully.');
-              toast.success("Excel generated successfully")
-            } catch (error) {
-              console.error('Error generating Excel file:', error);
-              toast.error("Error while generating try again")
             }
-        
+
+            // Save the workbook as a file
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(blob);
+
+            // Download the Excel file with the specified fileName
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            link.click();
+
+            console.log('Excel file generated and downloaded successfully.');
+            toast.success("Excel generated successfully")
+        } catch (error) {
+            console.error('Error generating Excel file:', error);
+            toast.error("Error while generating try again")
+        }
+
     }
 
 
@@ -119,13 +120,13 @@ const RegistrationDetails = () => {
                             <ProgramTitle program={program} />
 
                             <div className="mt-4 h-screen">
-                                <div className="animate-fade-up animate-once bg-gray-50 rounded-md p-2">
+                                <div className="animate-fade-up animate-once bg-gray-100 border rounded-md p-2">
                                     <div className='flex items-start justify-between'>
                                         <p className="flex items-center gap-2 text-xl"><GroupsRoundedIcon sx={{ fontSize: '35px' }} />
                                             <span className="ml-3 tracking-tight">Registrations {`(${program?.registrationResponse?.length})`} </span>
                                         </p>
 
-                                        <button onClick={()=>{downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`)}} className='flex items-center justify-start gap-2 rounded-md hover:bg-green-800 p-2 bg-green-700 text-white'>
+                                        <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 rounded-md hover:bg-green-800 p-2 bg-green-700 text-white'>
                                             <TextSnippetRoundedIcon /> Export Responses in Excel
                                         </button>
 
