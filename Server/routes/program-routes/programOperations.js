@@ -7,7 +7,6 @@ function programOperations(app) {
 
     app.post('/program/add', upload.single('pPhotoURL'), async (req, res) => {
         const formData = JSON.parse(JSON.stringify(req.body));
-        console.log('File:', req.file)
         try {
             const program = new Program({ ...formData, pPhotoURL: req.file.filename, finalRegistrationDate: moment(formData.finalRegistrationDate).format("DD MMMM YYYY"), programDate: moment(formData.programDate).format("DD MMMM YYYY") })
             await program.save()
@@ -21,10 +20,17 @@ function programOperations(app) {
     })
 
     app.post('/programs/fetch', async (req, res) => {
-        const { filter, select, singleItem } = req.body
+        const { filter, select, singleItem, shouldPopulate } = req.body
         let data;
         if (singleItem) {
-            data = await Program.findOne(filter).lean()
+            if (shouldPopulate) {
+                data = await Program.findOne(filter).populate({
+                    path: 'registrationResponse',
+                    options: { sort: { createdAt: -1 } }
+                }).lean().exec()
+            } else {
+                data = await Program.findOne(filter).lean()
+            }
         } else {
             data = await Program.find(filter).lean().sort({ createdAt: -1 }).select(select)
         }

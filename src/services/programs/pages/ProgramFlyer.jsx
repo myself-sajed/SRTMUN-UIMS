@@ -27,7 +27,6 @@ const ProgramFlyer = () => {
     });
 
     useEffect(() => {
-        console.log('Data:', data?.data?.data);
 
         if (data?.data?.data === null) {
             navigate(siteLinks.programs.link);

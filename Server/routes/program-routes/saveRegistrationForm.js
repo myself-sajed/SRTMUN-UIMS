@@ -32,6 +32,16 @@ async function registrationForm(app) {
             return res.send({ status: 'error', message: `Server Error: ${error} ` });
         }
     });
+
+    app.post('/programs/getRegistrations', async (req, res) => {
+        try {
+            const { filter } = req.body;
+            let data = await RegistrationResponse.find({ filter }).lean().sort({ createdAt: -1 })
+            res.send({ status: 'success', data })
+        } catch (error) {
+            res.send({ status: 'error', error })
+        }
+    })
 }
 
 module.exports = registrationForm;

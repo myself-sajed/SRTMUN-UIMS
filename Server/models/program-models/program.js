@@ -101,6 +101,7 @@ const programSchema = new mongoose.Schema({
     registrationResponse: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,
+            ref: "programRegistrations"
         }],
         required: false
     }

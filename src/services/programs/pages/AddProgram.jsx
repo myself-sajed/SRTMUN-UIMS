@@ -36,8 +36,6 @@ const AddProgram = () => {
     }
 
 
-    console.log('Program Info:', programInfo);
-
 
     return (
         <div>

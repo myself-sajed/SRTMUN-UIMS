@@ -12,6 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import Footer from '../../../components/Footer';
 import UserLoading from '../../../pages/UserLoading';
+import title from '../../../js/title';
+import ProgramTitle from '../components/ProgramTitle';
 
 const SingleProgram = () => {
     const navigate = useNavigate();
@@ -26,8 +28,6 @@ const SingleProgram = () => {
     });
 
     useEffect(() => {
-        console.log('Data:', data?.data?.data);
-
         if (data?.data?.data === null) {
             navigate(siteLinks.programs.link);
         } else {
@@ -37,6 +37,9 @@ const SingleProgram = () => {
 
 
     let bredLinks = [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program', url: "" }];
+
+    title(program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program')
+
 
 
     return (
@@ -50,8 +53,7 @@ const SingleProgram = () => {
                         :
                         <div className='animate-fade-up animate-once h-screen'>
                             <div className="mt-4">
-                                <p className="text-muted"> {program?.prefix} </p>
-                                <p className="font-bold text-lg sm:text-xl md:text-3xl"> {program?.title} </p>
+                                <ProgramTitle program={program} />
                             </div>
 
                             <ul class="grid w-full gap-2 sm:gap-4 md:grid-cols-3 sm:grid-cols-2 mt-4">
@@ -82,12 +84,14 @@ const DetailTile = ({ id, title, program }) => {
 
     let icons = {
         flyer: { icon: <ArticleRoundedIcon />, url: `/program/${program?._id}/program-flyer` },
-        participants: { icon: <GroupsRoundedIcon />, url: `/program/${program?._id}/registration-form` },
+        participants: { icon: <GroupsRoundedIcon />, url: `/program/${program?._id}/registration-details` },
         email: { icon: <ContactMailRoundedIcon />, url: `/program/${program?._id}/email-participants` },
         feedback: { icon: <MessageRoundedIcon />, url: `/program/${program?._id}/program-feedback` },
         report: { icon: <PictureAsPdfRoundedIcon />, url: `/program/${program?._id}/upload-program-report` },
         photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/program-photos` }
     }
+
+
 
 
     return <li onClick={() => navigate(icons[id].url)} >
