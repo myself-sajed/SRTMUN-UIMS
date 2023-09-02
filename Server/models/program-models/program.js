@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const programSchema = new mongoose.Schema({
 
+    flyer: {
+        type: 'string',
+        required: false,
+    },
     prefix: {
         type: 'string',
         required: true,

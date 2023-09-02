@@ -58,11 +58,11 @@ const ProgramFlyer = () => {
                             <div className='text-blue-900'>
                                 <p className="mt-3 mb-2 text-lg font-bold ">{program?.prefix}</p>
                                 <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none md:text-3xl lg:text-4xl">{program?.title}</h1>
-                                <h1 className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none md:text-3xl lg:text-4xl ">{program?.programDate}</h1>
+                                <i className="mb-2 text-xl font-semibold sm:font-extrabold sm:tracking-tight leading-none md:text-2xl underline lg:text-3xl">{program?.programDate}</i>
 
 
                                 <div className="my-3 ">
-                                    <p className="text-sm">Organized by </p> <b>{program?.arrangedBy}</b>
+                                    <p className="text-sm">Organized by </p> <b className="text-lg">{program?.arrangedBy}</b>
                                 </div>
                             </div>
 
@@ -83,9 +83,9 @@ const ProgramFlyer = () => {
                                         <div>
                                             <div className="grid sm:grid-cols-3 gap-3 my-3">
                                                 <div className="col-span-2 text-left">
-                                                    <p className="text-lg">{program?.pName}</p>
-                                                    <p>{program?.pDesignation}</p>
-                                                    <p>{program?.pAddress.split(',').map((part, index) => (
+                                                    <p className="text-lg font-bold">{program?.pName}</p>
+                                                    <p className="font-medium">{program?.pDesignation}</p>
+                                                    <p className="font-medium">{program?.pAddress.split(',').map((part, index) => (
                                                         <React.Fragment key={index}>
                                                             {index > 0 && <br />}
                                                             {part}
@@ -158,12 +158,12 @@ const ProgramFlyer = () => {
                                                     <div>
                                                         <b className="text-base">Dr. M. K. Patil </b>
                                                         <p>Dean,</p>
-                                                        <p> Faculty of Science and Technology, SRTMUN </p>
+                                                        <p> Faculty of Science and Technology, <br /> SRTMUN </p>
                                                     </div>
                                                     <div>
                                                         <b className="text-base">Dr. D. M. Khandare </b>
                                                         <p>Dean,</p>
-                                                        <p> Faculty of Commerce and Management, SRTMUN</p>
+                                                        <p> Faculty of Commerce and Management, <br /> SRTMUN</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,7 +172,9 @@ const ProgramFlyer = () => {
                                             <Cards id="blue" title="Convenor" >
                                                 <div className="text-center">
                                                     <b className='text-base'>Dr. D. D. Pawar</b>
-                                                    <p>Director of School of Mathematical Sciences & IQAC, SRTMUN</p>
+                                                    <p>Director, IQAC</p>
+                                                    <p>&</p>
+                                                    <p>School of Mathematical Sciences</p>
                                                 </div>
                                             </Cards>
                                             <Cards id="blue" title="Organizing Secretary" >
