@@ -180,6 +180,7 @@ const adminExcelObject = {
         'userId.department': 'Faculty School',
         'paperTitle': 'Paper Title',
         'journalName': 'Journal Name',
+        'authors': "Author(s)",
         'publicationYear': 'Publication Year',
         'issnNumber': 'ISSN Number',
         'year': 'Choose Year',

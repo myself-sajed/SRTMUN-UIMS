@@ -5,14 +5,13 @@ import Footer from '../components/Footer'
 import siteLinks from '../components/siteLinks'
 import title from '../js/title'
 import { Result } from 'antd'
+import GoBack from '../components/GoBack'
 const PageNotFound = () => {
     let links =
         title("Page Not Found")
     return (
         <div>
-            <div className='mt-3'>
-                <Bred links={[siteLinks.welcome, { title: 'Page Not Found', link: '/*' }]} />
-            </div>
+            <GoBack pageTitle="Page Not Found" bredLinks={[siteLinks.welcome, { title: 'Page Not Found', link: '/*' }]} />
 
             <div className='h-screen'>
                 <Result status="404" title="404" subTitle="Sorry, the page you visited does not exist." />

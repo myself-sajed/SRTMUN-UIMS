@@ -142,6 +142,10 @@ require('./routes/faculty-routes/submitReportForm')(app)
 
 // require('./routes/director-routes/alumniToStudent').alumniToStudent()
 
+// Program (event / workshop) routes
+require('./routes/program-routes/saveRegistrationForm')(app)
+require('./routes/program-routes/programOperations')(app)
+
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -265,6 +269,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     school: `./uploads/school-uploads/${filename}`,
     FeedbackATR: `./uploads/feedback-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
+    program: `./uploads/program-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
