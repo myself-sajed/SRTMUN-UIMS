@@ -138,7 +138,7 @@ const RegistrationDetails = () => {
 
                                                 {
                                                     program?.registrationResponse?.length > 0 ?
-                                                        <table className="table table-bordered">
+                                                        <table className="table table-bordered text-sm">
                                                             <thead className="bg-primary text-light">
                                                                 <tr>
                                                                     <th>Sr.No.</th>
