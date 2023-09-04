@@ -43,12 +43,12 @@ const SingleProgram = () => {
         <div>
             <GoBack pageTitle="Program Details" bredLinks={bredLinks} />
 
-            <div>
+            <div className=' h-screen'>
                 {
                     isLoading ?
                         <UserLoading title="Fetching the program details" />
                         :
-                        <div className='animate-fade-up animate-once h-screen'>
+                        <div className='animate-fade-up animate-once'>
                             <div className="mt-4">
                                 <ProgramTitle program={program} />
                             </div>
