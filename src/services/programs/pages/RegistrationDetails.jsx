@@ -111,30 +111,32 @@ const RegistrationDetails = () => {
     return (
         <div>
             <GoBack pageTitle="Program Registration Details" bredLinks={bredLinks} />
-            <div className="h-screen animate-fade-up animate-once">
+            <div className="animate-fade-up animate-once">
                 {
                     isLoading ?
-                        <UserLoading title="Getting Program title" />
+                        <div className="h-screen">
+                            <UserLoading title="Getting Program title" />
+                        </div>
                         :
                         <div className="mt-4 animate-fade-up animate-once">
                             <ProgramTitle program={program} />
 
-                            <div className="mt-4 h-screen">
+                            <div className="mt-4">
                                 <div className="animate-fade-up animate-once bg-gray-100 border rounded-md p-2">
-                                    <div className='flex items-start justify-between'>
+                                    <div className='sm:flex items-start justify-between'>
                                         <p className="flex items-center gap-2 text-xl"><GroupsRoundedIcon sx={{ fontSize: '35px' }} />
                                             <span className="ml-3 tracking-tight">Registrations {`(${program?.registrationResponse?.length})`} </span>
                                         </p>
 
-                                        <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 rounded-md hover:bg-green-800 p-2 bg-green-700 text-white'>
+                                        <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 mt-2 sm:mt-0 text-sm sm:text-base rounded-md hover:bg-green-800 p-1 sm:p-2 bg-green-700 text-white'>
                                             <TextSnippetRoundedIcon /> Export Responses in Excel
                                         </button>
 
                                     </div>
 
                                     <div className="mt-3">
-                                        <div className='h-3/5 '>
-                                            <div className="mt-2 table-responsive">
+                                        <div className=''>
+                                            <div className="mt-2 table-responsive h-screen">
 
                                                 {
                                                     program?.registrationResponse?.length > 0 ?
@@ -152,20 +154,22 @@ const RegistrationDetails = () => {
                                                             </thead>
                                                             <tbody>
                                                                 {
-                                                                    program?.registrationResponse?.map((item, index) => {
-                                                                        let cells = Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response))
+                                                                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,].map(() => {
+                                                                        return program?.registrationResponse?.map((item, index) => {
+                                                                            let cells = Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response))
 
-                                                                        let itemData = JSON.parse(program?.registrationResponse?.[index]?.response)
+                                                                            let itemData = JSON.parse(program?.registrationResponse?.[index]?.response)
 
 
-                                                                        return <tr>
-                                                                            <th>{index + 1}</th>
-                                                                            {
-                                                                                cells?.map((cell) => {
-                                                                                    return <td>{itemData[cell]} </td>
-                                                                                })
-                                                                            }
-                                                                        </tr>
+                                                                            return <tr>
+                                                                                <th>{index + 1}</th>
+                                                                                {
+                                                                                    cells?.map((cell) => {
+                                                                                        return <td>{itemData[cell]} </td>
+                                                                                    })
+                                                                                }
+                                                                            </tr>
+                                                                        })
                                                                     })
                                                                 }
 
