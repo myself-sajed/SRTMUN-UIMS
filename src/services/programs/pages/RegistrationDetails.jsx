@@ -141,7 +141,7 @@ const RegistrationDetails = () => {
                                                 {
                                                     program?.registrationResponse?.length > 0 ?
                                                         <table className="table table-bordered text-sm">
-                                                            <thead className="bg-primary text-light">
+                                                            <thead className="bg-primary text-light sticky-top">
                                                                 <tr>
                                                                     <th>Sr.No.</th>
                                                                     {
@@ -154,22 +154,20 @@ const RegistrationDetails = () => {
                                                             </thead>
                                                             <tbody>
                                                                 {
-                                                                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,].map(() => {
-                                                                        return program?.registrationResponse?.map((item, index) => {
-                                                                            let cells = Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response))
+                                                                    program?.registrationResponse?.map((item, index) => {
+                                                                        let cells = Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response))
 
-                                                                            let itemData = JSON.parse(program?.registrationResponse?.[index]?.response)
+                                                                        let itemData = JSON.parse(program?.registrationResponse?.[index]?.response)
 
 
-                                                                            return <tr>
-                                                                                <th>{index + 1}</th>
-                                                                                {
-                                                                                    cells?.map((cell) => {
-                                                                                        return <td>{itemData[cell]} </td>
-                                                                                    })
-                                                                                }
-                                                                            </tr>
-                                                                        })
+                                                                        return <tr>
+                                                                            <th>{index + 1}</th>
+                                                                            {
+                                                                                cells?.map((cell) => {
+                                                                                    return <td>{itemData[cell]} </td>
+                                                                                })
+                                                                            }
+                                                                        </tr>
                                                                     })
                                                                 }
 
