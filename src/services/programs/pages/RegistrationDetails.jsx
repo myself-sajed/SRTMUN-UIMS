@@ -28,7 +28,7 @@ const RegistrationDetails = () => {
     program?.registrationResponse.map((e, i) => { allres.push(JSON.parse(e.response)) })
 
     const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: true };
-    const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params));
+    const { data, isLoading } = useQuery(['PopulatedSingleProgram', programId], () => fetchPrograms(params));
 
 
     useEffect(() => {

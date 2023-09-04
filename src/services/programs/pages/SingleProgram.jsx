@@ -22,10 +22,7 @@ const SingleProgram = () => {
     const [program, setProgram] = useState(null);
 
     const params = { filter: { _id: programId }, singleItem: true };
-    const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params), {
-        staleTime: 60000,
-        cacheTime: 60000,
-    });
+    const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params));
 
     useEffect(() => {
         if (data?.data?.data === null) {
