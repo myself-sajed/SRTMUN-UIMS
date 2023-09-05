@@ -22,10 +22,7 @@ const SingleProgram = () => {
     const [program, setProgram] = useState(null);
 
     const params = { filter: { _id: programId }, singleItem: true };
-    const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params), {
-        staleTime: 60000,
-        cacheTime: 60000,
-    });
+    const { data, isLoading } = useQuery(['SingleProgram', programId], () => fetchPrograms(params));
 
     useEffect(() => {
         if (data?.data?.data === null) {
@@ -46,12 +43,12 @@ const SingleProgram = () => {
         <div>
             <GoBack pageTitle="Program Details" bredLinks={bredLinks} />
 
-            <div>
+            <div className=' h-screen'>
                 {
                     isLoading ?
                         <UserLoading title="Fetching the program details" />
                         :
-                        <div className='animate-fade-up animate-once h-screen'>
+                        <div className='animate-fade-up animate-once'>
                             <div className="mt-4">
                                 <ProgramTitle program={program} />
                             </div>
@@ -88,7 +85,7 @@ const DetailTile = ({ id, title, program }) => {
         email: { icon: <ContactMailRoundedIcon />, url: `/program/${program?._id}/email-participants` },
         feedback: { icon: <MessageRoundedIcon />, url: `/program/${program?._id}/program-feedback` },
         report: { icon: <PictureAsPdfRoundedIcon />, url: `/program/${program?._id}/upload-program-report` },
-        photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/program-photos` }
+        photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/upload-program-photos` }
     }
 
 

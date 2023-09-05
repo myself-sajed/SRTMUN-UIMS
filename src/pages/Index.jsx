@@ -188,8 +188,8 @@ const Index = () => {
 
 
     return (
-        <>
-            <div className="w-full">
+        <div className='dashboard-gradient'>
+            <div className='mr-3 ml-3 sm:mx-3 md:mx-10 lg:mx-10 xl:mx-20'>
 
                 {/* News */}
                 <div className='flex items-center justify-start mt-2'>
@@ -267,7 +267,7 @@ const Index = () => {
             </div>
 
 
-        </>
+        </div>
     )
 }
 

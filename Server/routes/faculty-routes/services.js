@@ -442,13 +442,12 @@ function services(app) {
 
 
 function sendMail(req, res, mailTo, subject, typeOfFormat, matter, message, sendReponseAfterSuccess = true) {
-    let mailTransporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+
+    const mailTransporter = nodemailer.createTransport({
+        service: 'Outlook', // Use 'Outlook' for Outlook accounts
         auth: {
-            user: 'srtmun.iqac.naac@gmail.com',
-            pass: 'dqvnbquzevjtokyb'
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASSWORD
         }
     });
 
