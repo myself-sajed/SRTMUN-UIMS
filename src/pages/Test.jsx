@@ -9,14 +9,9 @@ const Test = () => {
     const [students, setStudents] = useState([
         { name: '', class: '', course: '', rollNo: '' },
     ]);
-<<<<<<< HEAD
-    const [editMode, setEditMode] = useState(true);
-    const [editedIndex, setEditedIndex] = useState(0);
-=======
     const [editMode, setEditMode] = useState(true); // State to track edit mode
     const [editedIndex, setEditedIndex] = useState(0); // Index of the row being edited
 
->>>>>>> c7e471e868ee2a6ef9e9d6fec50275880fb122a5
     console.log('students:', students)
 
     const handleAddRow = () => {
