@@ -144,7 +144,6 @@ function services(app) {
     app.post('/sendOTPOnEMail', async (req, res) => {
 
 
-
         let generatedOTP = OTPGenerator()
         subjectForEmail = `${generatedOTP} is your OTP for Email Verification at SRTMUN-UIMS.`
 
@@ -157,7 +156,7 @@ function services(app) {
                             <h2>OTP based Email Verification</h2>
                             <p style="font-size: 14px; line-height: 140%;">
                             <strong>${generatedOTP}</strong> is your OTP for
-                            registration as ${req.body.userType} at <strong>SRTMUN-UMIS</strong>. Please enter to verify
+                            registration as ${req.body.userType} at <strong>SRTMUN-UIMS</strong>. Please enter to verify
                             email now.
                             </p>
                         </div>`

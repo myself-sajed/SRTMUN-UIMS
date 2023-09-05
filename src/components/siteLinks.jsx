@@ -59,7 +59,9 @@ let siteLinks = {
     nssStudentAdmission: { title: "NSS Student Admission", link: '/nss/student-admission' },
     programs: { title: "Programs", link: '/programs' },
     addProgram: { title: "Add a Program", link: '/addProgram' },
-    yfCollegeRegistration: { title: "Youth Festival College Registration", link: '/youth-festival/college-registration' },
+    yfCollegeRegistration: { title: "Youth Festival College Registration", link: '/youthfestival/college-registration' },
+    yfCollegeLogin: { title: "Youth Festival College Login", link: '/youthfestival/college-login' },
+    yfCollegeHome: { title: "Youth Festival Home", link: '/youthfestival' },
 
 
 }

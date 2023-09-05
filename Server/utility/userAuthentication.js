@@ -4,8 +4,9 @@ const DirectorUser = require('../models/director-models/directorUser')
 const StudentUser = require('../models/student-models/studentUserSchema')
 const AlumniUser = require('../models/alumni-models/alumniUserSchema')
 const PROUser = require('../models/pro-models/proUser')
+const YFCollege = require('../models/youth-festival/yfColleges')
 
-const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser }
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege }
 
 const userAuthentication = (app, jwt) => {
 

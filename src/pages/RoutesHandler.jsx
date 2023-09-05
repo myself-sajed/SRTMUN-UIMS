@@ -96,6 +96,9 @@ import SingleProgram from '../services/programs/pages/SingleProgram'
 import RegistrationAck from '../services/programs/pages/RegistrationAck'
 import RegistrationDetails from '../services/programs/pages/RegistrationDetails'
 import AddProgramPhotos from '../services/programs/pages/AddProgramPhotos'
+import YFCollegeRegistration from '../services/youthfestival/pages/YFCollegeRegistration'
+import YFCollegeHome from '../services/youthfestival/pages/YFCollegeHome'
+import YFCollegeLogin from '../services/youthfestival/pages/YFCollegeLogin'
 
 
 
@@ -226,6 +229,11 @@ const RoutesHandler = () => {
                 <Route path="/program/:programId/upload-program-photos" exact element={<AddProgramPhotos />} />
                 <Route path="/program/:programId/registration-form/acknowledgement" exact element={<RegistrationAck />} />
                 <Route path="/addProgram" exact element={<AddProgram />} />
+
+                {/* Youth Festival Service */}
+                <Route path="/youthfestival/college-registration" exact element={<YFCollegeRegistration />} />
+                <Route path="/youthfestival/college-login" exact element={<YFCollegeLogin />} />
+                <Route path="/youthfestival" exact element={<YFCollegeHome />} />
 
 
 

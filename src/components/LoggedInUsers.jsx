@@ -18,6 +18,7 @@ const LoggedInUsers = () => {
         alumniUser: { homeLink: siteLinks.alumniHome.link, serviceName: 'student', title: "Alumni" },
         proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news', title: "PRO" },
         adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin', title: "Admin" },
+        youthUser: { homeLink: siteLinks.yfCollegeHome.link, serviceName: 'youthfestival', title: "YF", abbr: "YF" },
     }
 
     return (
@@ -32,7 +33,7 @@ const LoggedInUsers = () => {
                                     return users[serviceName] && <div key={index} className='cursor-pointer'
                                         onClick={() => navigate(redirectLinks[serviceName].homeLink)}>
                                         <div className='text-center'>
-                                            <Avatar draggable={false} src={serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName)} sx={{ fontSize: '15px', }} />
+                                            <Avatar draggable={false} src={users[serviceName]?.photoURL ? serverLinks.showFile(users[serviceName]?.photoURL, redirectLinks[serviceName].serviceName) : null} sx={{ fontSize: '15px', bgcolor: 'orange' }} >{redirectLinks[serviceName]?.abbr}</Avatar>
                                             <p className="text-xs text-muted mt-1 font-semibold">{redirectLinks[serviceName].title}</p>
                                         </div>
                                     </div>
