@@ -6,7 +6,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_student_placed: "Name of student placed/started Business", Program_graduated_from: "Program graduated from", Name_of_the_employer: "Name of the employer/business", Employer_contact_details: "Employer/business contact details", Pay_package_annum: "Pay package ( ₹ / annum)", Academic_Year: "Year of Placement", Upload_Proof: "Upload Proof", }
 
-function AlumniBusiness({ id, setState, yearFilter, schoolName, Heading }) {
+function AlumniBusiness({ id, setState, yearFilter, schoolName, Heading, setLoaded }) {
     const SendReq = "Placement";
     const module = 'Admin'
 
@@ -23,6 +23,9 @@ function AlumniBusiness({ id, setState, yearFilter, schoolName, Heading }) {
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

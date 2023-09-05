@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.",SchoolName: 'School', Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Level_of_program: "Level of Program", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", }
 
-function ConferencesSemiWorkshopOrganized({id, setState, yearFilter, schoolName, Heading}) {
+function ConferencesSemiWorkshopOrganized({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
  const SendReq = 'ConferencesSemiWorkshopOrganized';
  const module = 'Admin'
@@ -23,6 +23,9 @@ function ConferencesSemiWorkshopOrganized({id, setState, yearFilter, schoolName,
          [id]: data?.data
      }
  })
+if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
  }, [data && data])
  
  return (

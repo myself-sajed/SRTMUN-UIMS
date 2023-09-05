@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_the_capacity_development_schemes: "Name of the capacity development schemes", Academic_Year: "Academic Year", Date_of_implementation: "Date of implementation", Number_of_students_enrolled: "Number of students enrolled", Upload_Proof: "Upload proof", }
 
-function SkillsEnhancementInitiatives({ id, setState, yearFilter, schoolName, Heading }) {
+function SkillsEnhancementInitiatives({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = 'SkillsEnhancementInitiatives';
     const module = 'Admin'
@@ -23,6 +23,9 @@ function SkillsEnhancementInitiatives({ id, setState, yearFilter, schoolName, He
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

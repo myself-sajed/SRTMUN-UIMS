@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed", Duration_of_MoU: "Duration of MoU", Year_of_signing_MoU: "Year of signing MoU", Upload_Proof: "Actual activity list", }
 
-function MoUs({ id, setState, yearFilter, schoolName, Heading }) {
+function MoUs({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = "MoUs"
     const module = 'Admin'
@@ -23,6 +23,9 @@ function MoUs({ id, setState, yearFilter, schoolName, Heading }) {
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

@@ -7,7 +7,7 @@ import AdminTable from '../components/AdminTable'
 
 const tableHead = { index: 'Sr.No.', "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", exam: 'Exams', institute: 'Institute/Boards', year: 'Year', percentage: 'Percentage', subjects: 'Subjects', }
 
-const Qualification = ({id, setState, yearFilter, schoolName}) => {
+const Qualification = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
 
   const SendReq = "Qualification"
   const module = "Admin"
@@ -21,10 +21,13 @@ const Qualification = ({id, setState, yearFilter, schoolName}) => {
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

@@ -17,7 +17,7 @@ const tableHead = {
    proof: 'Uploaded Proof',
 }
 
-const Consultancy = ({id, setState, yearFilter, schoolName, Heading}) => {
+const Consultancy = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
  const SendReq = 'ConsultancyServices'
  const module = 'Admin'
  
@@ -29,13 +29,16 @@ let filter = yearFilter.length === 0? null : {year: {$in: yearFilter}}
  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
 
  useEffect(() => {
-  setState((pri) => {
-    return {
+    setState((pri) => {
+      return {
         ...pri,
         [id]: data?.data
+      }
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
     }
-})
-}, [data && data])
+  }, [data && data])
 
  return (
   <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty' isLoading={isLoading} />

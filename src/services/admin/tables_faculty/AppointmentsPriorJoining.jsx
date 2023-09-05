@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: 'Sr.No.', "userId.name": "Name Of Faculty", "userId.department": "School Of Faculty", designation: 'Designation', employerName: 'Employer Name', joiningDate: 'From', leavingDate: 'To', salaryWithGrade: 'Salary with Grade', leavingReason: 'Leaving Reason' }
 
-const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Heading }) => {
+const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = "AppointmentsHeldPrior"
   const module = "Admin"
   let condition = schoolName=== "All Schools"? null :{department: schoolName}
@@ -21,6 +21,9 @@ const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Headin
         [id]: data?.data
       }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

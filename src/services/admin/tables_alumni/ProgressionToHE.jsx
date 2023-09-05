@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_student_enrolling: "Name of student enrolling", Program_graduated_from: "Program graduated from", Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", Academic_Year: "Academic Year", Upload_Proof: "Upload Proof", }
 
-function ProgressionToHE({ id, setState, yearFilter, schoolName, Heading }) {
+function ProgressionToHE({ id, setState, yearFilter, schoolName, Heading, setLoaded }) {
 
     const SendReq = "ProgressionToHE";
     const module = 'Admin'
@@ -23,6 +23,9 @@ function ProgressionToHE({ id, setState, yearFilter, schoolName, Heading }) {
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

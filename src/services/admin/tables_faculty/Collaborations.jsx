@@ -7,7 +7,7 @@ const tableHead ={index:'Sr.No.', 'userId.name': 'Faculty Name','userId.departme
 duration: 'Duration',
 activityNature: 'Nature of the activity',
 year: 'Year', proof: 'Uploaded Proof'}
-const Collaborations = ({id, setState, yearFilter, schoolName, Heading}) => {
+const Collaborations = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'Collaboration'
   const module = 'Admin'
   
@@ -21,10 +21,13 @@ const Collaborations = ({id, setState, yearFilter, schoolName, Heading}) => {
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

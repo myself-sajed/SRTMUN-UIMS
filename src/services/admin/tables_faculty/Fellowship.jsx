@@ -16,7 +16,7 @@ const tableHead = {
    year: 'Year',
    proof: 'Uploaded Proof',
 }
-const Fellowship = ({id, setState, yearFilter, schoolName, Heading}) => {
+const Fellowship = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'Fellowship'
   const module = 'Admin'
   
@@ -30,10 +30,13 @@ let filter = yearFilter.length === 0? null : {year: {$in: yearFilter}}
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

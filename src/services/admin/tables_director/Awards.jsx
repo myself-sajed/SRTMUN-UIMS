@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no." , SchoolName: "School", Title_of_the_innovation : "Title of the innovation" ,  Name_of_the_Award: "Name of the Award" ,  Year_of_Award: "Year of Award" ,  Name_of_the_Awarding_Agency: "Name of the Awarding Agency" ,  Contact_details_Agency: "Contact details Agency" ,  Category: "Category" ,  Upload_Proof: "Proof" , }
 
-function Awards({id, setState, yearFilter, schoolName, Heading}) {
+function Awards({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
  const SendReq = 'Award';
  const module = 'Admin'
  
@@ -22,6 +22,9 @@ function Awards({id, setState, yearFilter, schoolName, Heading}) {
          [id]: data?.data
      }
  })
+if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
  }, [data && data])
  
  return (

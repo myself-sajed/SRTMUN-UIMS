@@ -14,7 +14,7 @@ const tableHead = {
    toDate: 'To',
    year: 'Year',
 }
-const ForaginVisit = ({id, setState, yearFilter, schoolName, Heading}) => {
+const ForaginVisit = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'ForeignVisit'
   const module = 'Admin'
   
@@ -28,10 +28,13 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

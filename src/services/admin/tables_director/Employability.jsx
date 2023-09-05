@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Course_Code: "Course Code", Name_of_the_Course: "Course name", Academic_Year: "Academic Year", Year_of_introduction: "Year of introduction", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "Activities / Content with direct bearing on Employability / Entrepreneurship / Skill development", Upload_Proof: "Proof"}
 
-function Employability({id, setState, yearFilter, schoolName, Heading}) {
+function Employability({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 const SendReq = 'Employability';
 const module = 'Admin'
 
@@ -22,6 +22,9 @@ useEffect(() => {
         [id]: data?.data
     }
 })
+if (!isLoading) {
+    setLoaded((pre) => {return{...pre,[id]: true}});
+  }
 }, [data && data])
 
 return (

@@ -17,7 +17,7 @@ const tableHead = {
   proof: "Uploaded Proof"
 }
 
-const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading}) => {
+const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'ConferenceOrganized'
   const module = 'Admin'
   
@@ -31,10 +31,13 @@ const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading}) =>
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

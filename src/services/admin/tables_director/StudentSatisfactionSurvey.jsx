@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_the_student: "Name of the student", Year_of_joining: "Year of joining", Category: "Category", State_of_Domicile: "State of Domicile", Nationality: "Nationality", Email_ID: "Email ID", Programme_name: "Programme name", Student_Unique_Enrolment_ID: "Student Unique Enrolment ID", Mobile_Number: "Mobile Number", Gender: "Gender", Upload_Proof: "Upload proof", }
 
-function StudentSatisfactionSurvey({ id, setState, yearFilter, schoolName, Heading }) {
+function StudentSatisfactionSurvey({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = 'StudentSatisfactionSurvey';
     const module = 'Admin'
@@ -23,6 +23,9 @@ function StudentSatisfactionSurvey({ id, setState, yearFilter, schoolName, Headi
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

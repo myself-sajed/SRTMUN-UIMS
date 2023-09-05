@@ -6,7 +6,7 @@ import Loader from '../../../components/Loader'
 import getReq from '../../../components/requestComponents/getReq'
 import AdminAcordinTable from '../components/AdminAcordinTable'
 
-const Alumnies = ({ id, setState, yearFilter, schoolName, Heading }) => {
+const Alumnies = ({ id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = "AlumniUser"
   const module = "Admin"
 
@@ -23,6 +23,9 @@ const Alumnies = ({ id, setState, yearFilter, schoolName, Heading }) => {
         [id]: data?.data
       }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

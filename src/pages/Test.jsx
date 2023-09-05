@@ -10,7 +10,7 @@ const Test = () => {
         { name: '', class: '', course: '', rollNo: '' },
     ]);
     const [editMode, setEditMode] = useState(true); // State to track edit mode
-    const [editedIndex, setEditedIndex] = useState(-1); // Index of the row being edited
+    const [editedIndex, setEditedIndex] = useState(0); // Index of the row being edited
 
     console.log('students:', students)
 

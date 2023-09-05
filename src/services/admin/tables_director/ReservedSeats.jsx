@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", Academic_Year: "Academic Year", Program_Name: "Program Name", NseSC: "SC", NseST: "ST", NseOBC: "OBC(VJNT)", NseDivyngjan: "Divyngjan", NseGeneral: "General", NseOthers: "Others",NsaSC: "SC", NsaST: "ST", NsaOBC: "OBC(VJNT)", NsaDivyngjan: "Divyngjan", NsaGeneral: "General", NsaOthers: "Others", Upload_Proof: "Upload Proof", }
 
-function ReservedSeats({ id, setState, yearFilter, schoolName, Heading }) {
+function ReservedSeats({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = 'ReservedSeats';
     const module = 'Admin'
@@ -23,6 +23,9 @@ function ReservedSeats({ id, setState, yearFilter, schoolName, Heading }) {
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

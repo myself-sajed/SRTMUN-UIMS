@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Room_number_or_Name_of_Classrooms: "Room number or Name of Classrooms", Type_of_ICT_facility: "Type of ICT facility ", Upload_Proof: "Gio taged photo" }
 
-function IctClassrooms({ id, setState, yearFilter, schoolName, Heading }) {
+function IctClassrooms({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
   const SendReq = 'IctClassrooms';
   const module = 'Admin'
