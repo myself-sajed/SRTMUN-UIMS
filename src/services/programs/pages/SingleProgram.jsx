@@ -85,7 +85,7 @@ const DetailTile = ({ id, title, program }) => {
         email: { icon: <ContactMailRoundedIcon />, url: `/program/${program?._id}/email-participants` },
         feedback: { icon: <MessageRoundedIcon />, url: `/program/${program?._id}/program-feedback` },
         report: { icon: <PictureAsPdfRoundedIcon />, url: `/program/${program?._id}/upload-program-report` },
-        photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/program-photos` }
+        photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/upload-program-photos` }
     }
 
 

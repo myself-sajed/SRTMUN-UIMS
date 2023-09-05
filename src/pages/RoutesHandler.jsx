@@ -95,6 +95,7 @@ import ProgramFlyer from '../services/programs/pages/ProgramFlyer'
 import SingleProgram from '../services/programs/pages/SingleProgram'
 import RegistrationAck from '../services/programs/pages/RegistrationAck'
 import RegistrationDetails from '../services/programs/pages/RegistrationDetails'
+import AddProgramPhotos from '../services/programs/pages/AddProgramPhotos'
 
 
 
@@ -222,6 +223,7 @@ const RoutesHandler = () => {
                 <Route path="/program/:programId" exact element={<SingleProgram />} />
                 <Route path="/program/:programId/registration-form" exact element={<ProgramRegistration />} />
                 <Route path="/program/:programId/registration-details" exact element={<RegistrationDetails />} />
+                <Route path="/program/:programId/upload-program-photos" exact element={<AddProgramPhotos />} />
                 <Route path="/program/:programId/registration-form/acknowledgement" exact element={<RegistrationAck />} />
                 <Route path="/addProgram" exact element={<AddProgram />} />
 
