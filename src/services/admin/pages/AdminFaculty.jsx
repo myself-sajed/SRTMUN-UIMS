@@ -33,115 +33,121 @@ import adminExcelObject from '../components/adminExcelObject';
 import AdminSchoolSelect from '../components/AdminSchoolSelect';
 import { toast } from 'react-hot-toast';
 import siteLinks from '../../../components/siteLinks';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const AdminFaculty = ({ school }) => {
 
   let directorLocation = window.location.pathname === siteLinks.fdc.link ? true : false;
 
-  const [childData, setChildData] = useState({ faculty: "", qualification: "", researchdegrees: "", econtentdeveloped: "", appointmentspriorjoining: "", awardrecognition: "", booksandchapters: "", collaborations: "", conferenceorganised: "", conferencepartipeted: "", consultancy: "", fellowship: "", researchprojects: "", postheldafterjoining: "", lectures: "", researchpapers: "", phdawarded: "", jrfsrfpdf: "", patents: "", invitedtalks: "", orientationrefreshercourse: "", financialsupport: "", responsibilities: "", foraginvisit: "", })
+  const [childData, setChildData] = useState({ faculty: null, qualification: null, researchdegrees: null, econtentdeveloped: null, appointmentspriorjoining: null, awardrecognition: null, booksandchapters: null, collaborations: null, conferenceorganised: null, conferencepartipeted: null, consultancy: null, fellowship: null, researchprojects: null, postheldafterjoining: null, lectures: null, researchpapers: null, phdawarded: null, jrfsrfpdf: null, patents: null, invitedtalks: null, orientationrefreshercourse: null, financialsupport: null, responsibilities: null, foraginvisit: null, })
   const [values, setValues] = useState({ yearFilter: [], schoolName: directorLocation ? school && school : "All Schools" })
   const { yearFilter, schoolName } = values
-  // console.log (yearFilter)
+  const [loaded, setLoaded] = useState(0)
+  const [loading, setLoading] = useState(true);
 
   const allFacultyComponents = [
     {
-      element: <Faculties id="faculty" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Faculties' />,
+      element: <Faculties id="faculty" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Faculties' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.faculty, filename: 'Faculties.xlsx', SendReq: "User", module: "faculty"
     },
     {
-      element: <Qualification id="qualification" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Qualifications' />,
+      element: <Qualification id="qualification" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Qualifications' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.qualification, filename: 'Qualification.xlsx', SendReq: "Qualification", module: "faculty"
     },
     {
-      element: <ResearchDegrees id="researchdegrees" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Degrees' />,
+      element: <ResearchDegrees id="researchdegrees" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Degrees' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.researchdegrees, filename: 'ResearchDegrees.xlsx', SendReq: "Degree", proof: "proof", module: "faculty"
     },
     {
-      element: <EContentDeveloped id="econtentdeveloped" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='E-Content Developed' />,
+      element: <EContentDeveloped id="econtentdeveloped" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='E-Content Developed' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.econtentdeveloped, filename: 'EContentDeveloped.xlsx', SendReq: "EContentDeveloped", module: "faculty"
     },
     {
-      element: <AppointmentsPriorJoining id="appointmentspriorjoining" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Appointments Prior Joining' />,
+      element: <AppointmentsPriorJoining id="appointmentspriorjoining" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Appointments Prior Joining' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.appointmentspriorjoining, filename: 'AppointmentsPriorJoining.xlsx', SendReq: "AppointmentsHeldPrior", module: "faculty"
     },
     {
-      element: <AwardRecognition id="awardrecognition" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Award Recognition' />,
+      element: <AwardRecognition id="awardrecognition" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Award Recognition' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.awardrecognition, filename: 'Award Recognition.xlsx', SendReq: "AwardRecognition", proof: "proof", module: "faculty"
     },
     {
-      element: <BooksAndChapters id="booksandchapters" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Books And Chapters' />,
+      element: <BooksAndChapters id="booksandchapters" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Books And Chapters' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.booksandchapters, filename: 'BooksAndChapters.xlsx', SendReq: "BookAndChapter", proof: "proof", module: "faculty"
     },
     {
-      element: <Collaborations id="collaborations" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Collaborations' />,
+      element: <Collaborations id="collaborations" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Collaborations' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.collaborations, filename: 'Collaborations.xlsx', SendReq: "Collaboration", proof: "proof", module: "faculty"
     },
     {
-      element: <ConferenceOrganised id="conferenceorganised" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Conference Organised' />,
+      element: <ConferenceOrganised id="conferenceorganised" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Conference Organised' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.conferenceorganised, filename: 'ConferenceOrganised.xlsx', SendReq: "ConferenceOrganized", proof: "proof", module: "faculty"
     },
     {
-      element: <ConferencePartipeted id="conferencepartipeted" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Conference Participated' />,
+      element: <ConferencePartipeted id="conferencepartipeted" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Conference Participated' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.conferencepartipeted, filename: 'Conference Participated.xlsx', SendReq: "ConferenceParticipated", proof: "proof", module: "faculty"
     },
     {
-      element: <Consultancy id="consultancy" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Consultancy Services' />,
+      element: <Consultancy id="consultancy" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Consultancy Services' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.consultancy, filename: 'Consultancy.xlsx', SendReq: "ConsultancyServices", proof: "proof", module: "faculty"
     },
     {
-      element: <Fellowship id="fellowship" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Fellowships' />,
+      element: <Fellowship id="fellowship" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Fellowships' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.fellowship, filename: 'Fellowship.xlsx', SendReq: "Fellowship", proof: "proof", module: "faculty"
     },
     {
-      element: <ResearchProjects id="researchprojects" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Projects' />,
+      element: <ResearchProjects id="researchprojects" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Projects' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.researchprojects, filename: 'ResearchProjects.xlsx', SendReq: "ResearchProject", proof: "proof", module: "faculty"
     },
     {
-      element: <PostHeldAfterJoining id="postheldafterjoining" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Post Held After Joining' />,
+      element: <PostHeldAfterJoining id="postheldafterjoining" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Post Held After Joining' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.postheldafterjoining, filename: 'PostHeldAfterJoining.xlsx', SendReq: "PostHeld", proof: "proof", module: "faculty"
     },
     {
-      element: <Lectures id="lectures" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Lectures' />,
+      element: <Lectures id="lectures" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Lectures' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.lectures, filename: 'Lectures.xlsx', SendReq: "Lectures", module: "faculty"
     },
     {
-      element: <ResearchPapers id="researchpapers" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Papers' />,
+      element: <ResearchPapers id="researchpapers" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Research Papers' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.researchpapers, filename: 'ResearchPapers.xlsx', SendReq: "ResearchPaper", proof: "proof", module: "faculty"
     },
     {
-      element: <PhdAwarded id="phdawarded" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Ph.D. Awarded' />,
+      element: <PhdAwarded id="phdawarded" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Ph.D. Awarded' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.phdawarded, filename: 'PhdAwarded.xlsx', SendReq: "PhdAwarded", proof: "proof", module: "faculty"
     },
     {
-      element: <JrfSrfPdf id="jrfsrfpdf" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='JRF, SRF, PDF, Research Associate' />,
+      element: <JrfSrfPdf id="jrfsrfpdf" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='JRF, SRF, PDF, Research Associate' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.jrfsrfpdf, filename: 'JrfSrfPdf.xlsx', SendReq: "JrfSrf", proof: "proof", module: "faculty"
     },
     {
-      element: <Patents id="patents" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Patents' />,
+      element: <Patents id="patents" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Patents' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.patents, filename: 'Patents.xlsx', SendReq: "Patent", proof: "proof", module: "faculty"
     },
     {
-      element: <InvitedTalks id="invitedtalks" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Invited Talks' />,
+      element: <InvitedTalks id="invitedtalks" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Invited Talks' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.invitedtalks, filename: 'InvitedTalks.xlsx', SendReq: "InvitedTalk", proof: "proof", module: "faculty"
     },
     {
-      element: <OrientationRefresherCourse id="orientationrefreshercourse" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Orientation Refresher Course' />,
+      element: <OrientationRefresherCourse id="orientationrefreshercourse" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Orientation Refresher Course' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.orientationrefreshercourse, filename: 'OrientationRefresherCourse.xlsx', SendReq: "Online", proof: "proof", module: "faculty"
     },
     {
-      element: <FinancialSupport id="financialsupport" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Financial Support' />,
+      element: <FinancialSupport id="financialsupport" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Financial Support' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.financialsupport, filename: 'FinancialSupport.xlsx', SendReq: "Financialsupport", proof: "proof", module: "faculty"
     },
     {
-      element: <Responsibilities id="responsibilities" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Responsibilities' />,
+      element: <Responsibilities id="responsibilities" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Responsibilities' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.responsibilities, filename: 'Responsibilities.xlsx', SendReq: "Responsibilities", proof: "proof", module: "faculty"
     },
     {
-      element: <ForaginVisit id="foraginvisit" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Foreign Visits' />,
+      element: <ForaginVisit id="foraginvisit" setState={setChildData} yearFilter={yearFilter} schoolName={schoolName} Heading='Foreign Visits' setLoaded={setLoaded} loaded={loaded} />,
       childData: childData?.foraginvisit, filename: 'Foreign Visits.xlsx', SendReq: "ForeignVisit", module: "faculty"
     },
   ]
+
+  useEffect(() => {
+    // isAdminDataLoad(setLoading,allFacultyComponents)
+  }, [childData]);
 
   return (
     <AdminDrower>
@@ -151,7 +157,7 @@ const AdminFaculty = ({ school }) => {
           <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Academic Year" />
           {!directorLocation && <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />}
 
-          <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success' style={{ margin: "37px 0px auto 0px" }} onClick={() => { downloadExcelZip(allFacultyComponents, 'allFacultiesExcel') }} >Export All Excels</button>
+          <button className='col-md-3 col-lg-3 col-12 btn btn-sm btn-success align-middle' style={{ margin: "37px 0px auto 0px" }} onClick={() => { downloadExcelZip(allFacultyComponents, 'allFacultiesExcel') }} disabled={loading} >{loading?<CircularProgress color="inherit" size={18}/>:"Export All Excels"}</button>
         </div>
         <div style={{ padding: "10px" }}>
 
@@ -254,6 +260,10 @@ const downloadExcelZip = async (allComponentData, zipName) => {
     toast.error("Error while generating try again")
   }
 };
+
+const increment = (count) => {
+  return count++
+}
 
 export default AdminFaculty
 export { downloadExcelZip }
