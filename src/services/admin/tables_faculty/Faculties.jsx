@@ -9,7 +9,7 @@ import designationWiseSorting from '../../../js/designationWiseSorting';
 import siteLinks from '../../../components/siteLinks';
 
 
-const Faculties = ({ id, setState, yearFilter, schoolName, Heading }) => {
+const Faculties = ({ id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = "User"
   const module = "Admin"
 
@@ -26,7 +26,12 @@ const Faculties = ({ id, setState, yearFilter, schoolName, Heading }) => {
         [id]: designationWiseSorting(data?.data)
       }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
+
+  
 
   return (
     <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} >

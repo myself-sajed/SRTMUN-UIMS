@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Programme_Code: "Programme Code", Programme_Name: "Programme Name", Academic_Year: "Academic Year", Year_of_Introduction: "Year of Introduction", Status_of_implementation: "Status of implementation", Year_of_Implimentation: "Year of Implimentation", Year_of_Revision: "Year of Revision", Percentage_of_content_added_or_replaced: "Percentage of content added or replaced", Upload_Proof: "Upload Proof", }
 
-function SyllabusRevision({ id, setState, yearFilter, schoolName, Heading }) {
+function SyllabusRevision({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
   const SendReq = 'SyllabusRevision';
   const module = 'Admin'
 
@@ -22,6 +22,9 @@ function SyllabusRevision({ id, setState, yearFilter, schoolName, Heading }) {
         [id]: data?.data
       }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

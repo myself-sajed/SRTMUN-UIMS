@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Programme_Code: "Program Code", Programme_name: "Program Name", Name_of_the_student: "Name of the student", Academic_Year: "Academic Year", Upload_Proof: "Document prrof ", Action: "Action" }
 
-function ProjectsInternships({ id, setState, yearFilter, schoolName, Heading }) {
+function ProjectsInternships({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = "ProjectsInternships"
     const module = 'Admin'
@@ -23,6 +23,9 @@ function ProjectsInternships({ id, setState, yearFilter, schoolName, Heading }) 
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

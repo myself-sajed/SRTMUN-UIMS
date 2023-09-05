@@ -18,7 +18,7 @@ const tableHead = {
    proof: 'Uploaded Proof',
 }
 
-const JrfSrfPdf = ({id, setState, yearFilter, schoolName, Heading}) => {
+const JrfSrfPdf = ({id, setState, yearFilter, schoolName, Heading, setLoaded}) => {
   const SendReq = 'JrfSrf'
   const module = 'Admin'
   
@@ -36,6 +36,9 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
           [id]: data?.data
       }
   })
+  if (!isLoading) {
+    setLoaded((pre) => {return{...pre,[id]: true}});
+  }
   }, [data && data])
 
   return (

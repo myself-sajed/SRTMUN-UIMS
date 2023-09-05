@@ -17,7 +17,7 @@ const tableHead = {
    proof: 'Uploaded Proof',
 }
 
-const ResearchPapers = ({id, setState, yearFilter, schoolName, Heading}) => {
+const ResearchPapers = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'ResearchPaper'
   const module = 'Admin'
   
@@ -31,10 +31,13 @@ let filter = yearFilter.length === 0? null : {year: {$in:yearFilter}}
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

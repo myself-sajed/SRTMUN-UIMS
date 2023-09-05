@@ -6,7 +6,7 @@ import { Avatar } from '@mui/material';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
 
-const Students = ({ id, setState, yearFilter, schoolName, Heading }) => {
+const Students = ({ id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = "StudentUser";
   const module = 'Admin'
 
@@ -23,6 +23,9 @@ const Students = ({ id, setState, yearFilter, schoolName, Heading }) => {
         [id]: data?.data
       }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
 
   return (

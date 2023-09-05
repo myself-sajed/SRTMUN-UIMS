@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.",SchoolName: "School", Name_of_The_Alumni_Contributed: "Name Of The Alumni", Program_graduated_from: "Program Graduated From", Amount_of_contribution: "Contribution Ammount in ₹", Academic_Year: "Academic Year of Contribution", Upload_Proof: "Proof"  }
 
-const AlumniContribution = ({id, setState, yearFilter, schoolName, Heading}) => {
+const AlumniContribution = ({id, setState, yearFilter, schoolName, Heading, setLoaded}) => {
     const SendReq = "AlumniContribution";
     const module = "Admin"
     
@@ -22,6 +22,9 @@ const AlumniContribution = ({id, setState, yearFilter, schoolName, Heading}) => 
             [id]: data?.data
         }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
     }, [data && data])
   
     return (

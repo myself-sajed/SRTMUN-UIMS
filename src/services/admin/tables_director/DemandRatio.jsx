@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 
 const tableHead = { index: "Sr. no." , SchoolName: 'School',  Programme_Code: "Programme Code" ,  Programme_name: "Programme name" ,  Academic_Year: "Academic Year" , Type_of_program: "Type of Program",  Number_of_seats_available: "Number of seats available" ,  Number_of_eligible_applications: "Number of eligible applications" ,  Number_of_Students_admitted: "Number of Students admitted" ,  Upload_Proof: "Proof" }
-function DemandRatio({id, setState, yearFilter, schoolName, Heading}) {
+function DemandRatio({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
   const SendReq = 'DemandRatio';
   const module = 'Admin'
@@ -23,6 +23,9 @@ function DemandRatio({id, setState, yearFilter, schoolName, Heading}) {
           [id]: data?.data
       }
   })
+  if (!isLoading) {
+    setLoaded((pre) => {return{...pre,[id]: true}});
+  }
   }, [data && data])
   
   return (

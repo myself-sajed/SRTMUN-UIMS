@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no." , SchoolName: 'School', Name_of_the_activity: "Name of the activity" ,  Organising_unit: "Organising unit/ agency/ collaborating agency" ,  Name_of_the_scheme: "Name of the scheme" ,  Year_of_activity: "Year of the activity " ,  Number_of_students: "Number of students participated in such activities" ,  Upload_Proof: "Proof"  }
 
-function ExtensionActivities({id, setState, yearFilter, schoolName, Heading}) {
+function ExtensionActivities({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 const SendReq = 'ExtensionActivities';
 const module = 'Admin'
 
@@ -22,6 +22,9 @@ useEffect(() => {
         [id]: data?.data
     }
 })
+if (!isLoading) {
+    setLoaded((pre) => {return{...pre,[id]: true}});
+  }
 }, [data && data])
 
 return (

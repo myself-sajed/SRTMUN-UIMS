@@ -16,7 +16,7 @@ const AdminAcordinTable = ({ children, Heading, data, SendReq, proof, tableHead,
         <Button className={`${textClass} normalBtn`} sx={{ background: directorLocation?'#28359b': '#f3e9d5'}} size="small" onClick={()=>{setOpen(true)}} >
           {Heading}
         </Button>
-        <AdminExcelExoprt data={data} fileTitle={Heading} SendReq={SendReq} module={module} proof={proof} />
+        <AdminExcelExoprt data={data} fileTitle={Heading} SendReq={SendReq} module={module} proof={proof} isLoading={isLoading} />
       </div>
       <Dialog fullScreen open={open} onClose={()=>{setOpen(false)}}>
         <DialogTitle className='flex gap-4 items-center'>

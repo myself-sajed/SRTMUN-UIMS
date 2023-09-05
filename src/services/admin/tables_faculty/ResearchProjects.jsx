@@ -23,7 +23,7 @@ const tableHead = {
    proof: 'Uploaded Proof',
 } 
 
-const ResearchProjects = ({id, setState, yearFilter, schoolName, Heading}) => {
+const ResearchProjects = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
   const SendReq = 'ResearchProject'
   const module = 'Admin'
   
@@ -37,12 +37,15 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
   useEffect(() => {
     setState((pri) => {
       return {
-          ...pri,
-          [id]: data?.data
+        ...pri,
+        [id]: data?.data
       }
-  })
+    })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
   }, [data && data])
-
+  
   return (
     <AdminAcordinTable  Heading={Heading} data={data?.data} SendReq={SendReq} proof='proof' tableHead={tableHead} year='year' module='faculty' isLoading={isLoading} />
   )

@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no." , SchoolName: 'School',  Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI" ,  Number_of_Students_Attended: "Number of Students Attended" ,  Year_of_Activity: "Year of Activity" , Upload_Proof: "Link to the relevant document" }
 
-function CounselingAndGuidance({id, setState, yearFilter, schoolName, Heading}) {
+function CounselingAndGuidance({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
     const SendReq = 'CounselingAndGuidance';
     const module = 'Admin'
     
@@ -22,6 +22,9 @@ function CounselingAndGuidance({id, setState, yearFilter, schoolName, Heading}) 
             [id]: data?.data
         }
     })
+    if (!isLoading) {
+      setLoaded((pre) => {return{...pre,[id]: true}});
+    }
     }, [data && data])
     
     return (

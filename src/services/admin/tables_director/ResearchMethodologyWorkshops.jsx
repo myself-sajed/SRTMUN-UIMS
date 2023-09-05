@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Name_of_the_workshop_seminar: "Name of the workshop/ seminar", Number_of_Participants: "Number of Participants", year: "year", From_Date: "From Date", To_Date: "To Date", Upload_Proof: "Upload Proof", }
 
-function ResearchMethodologyWorkshops({ id, setState, yearFilter, schoolName, Heading }) {
+function ResearchMethodologyWorkshops({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
 
     const SendReq = 'ResearchMethodologyWorkshops';
     const module = 'Admin'
@@ -23,6 +23,9 @@ function ResearchMethodologyWorkshops({ id, setState, yearFilter, schoolName, He
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (

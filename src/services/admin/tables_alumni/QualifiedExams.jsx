@@ -5,7 +5,7 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = { index: "Sr. no.", SchoolName: 'School', Registration_number_roll_number: "Registration number / roll number", Names_of_students_selected_qualified: "Name of student qualified", Name_of_the_Exam: "Exam Qualified", Acadmic_year: "Acadmic Year", Upload_Proof: "Upload Proof", }
 
-function QualifiedExams({ id, setState, yearFilter, schoolName, Heading }) {
+function QualifiedExams({ id, setState, yearFilter, schoolName, Heading, setLoaded }) {
 
     const SendReq = 'QualifiedExams';
     const module = 'Admin'
@@ -23,6 +23,9 @@ function QualifiedExams({ id, setState, yearFilter, schoolName, Heading }) {
                 [id]: data?.data
             }
         })
+        if (!isLoading) {
+            setLoaded((pre) => {return{...pre,[id]: true}});
+          }
     }, [data && data])
 
     return (
