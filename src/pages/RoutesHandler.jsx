@@ -97,7 +97,10 @@ import RegistrationAck from '../services/programs/pages/RegistrationAck'
 import RegistrationDetails from '../services/programs/pages/RegistrationDetails'
 import AddProgramPhotos from '../services/programs/pages/AddProgramPhotos'
 
-
+let model=  "Xyz"
+let module= 'abc'
+let filter= {}
+let tableObj= {name:'Name', class: 'Class', course: 'Course', rollNo: 'Roll No'}
 
 const RoutesHandler = () => {
 
@@ -126,7 +129,7 @@ const RoutesHandler = () => {
                 <Route path="/viewFile" exact element={<ViewFile />} />
                 <Route path="/director/viewFile/:fileName" exact element={<DirectorViewFile />} />
                 <Route path="/*" exact element={<PageNotFound />} />
-                <Route path="/test" exact element={<Test />} />
+                <Route path="/test" exact element={<Test model={model}  module={module} filter={filter} tableObj={tableObj} />} />
                 <Route path="/director/service/academic-audit" exact element={<AuditHome />} />
                 <Route path="/alumni-login" exact element={<StudentLogin />} />
                 <Route path="/alumni-registration" exact element={<StudentRegister />} />
