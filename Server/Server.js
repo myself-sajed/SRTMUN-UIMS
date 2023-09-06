@@ -148,6 +148,10 @@ require('./routes/faculty-routes/submitReportForm')(app)
 require('./routes/program-routes/saveRegistrationForm')(app)
 require('./routes/program-routes/programOperations')(app)
 
+// Youth Festival routes
+app.use(require('./routes/youthfestival-routes/youth-auth'))
+
+
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
