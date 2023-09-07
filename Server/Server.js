@@ -77,6 +77,8 @@ const upload = multer({ storage: storage });
 
 module.exports = upload;
 
+//temp routes
+app.use(require('./routes/xyz'))
 
 // faculty routes
 require("./routes/faculty-routes/routes.js").initRoutes(app);
