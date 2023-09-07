@@ -48,10 +48,10 @@ const Test = ({model, module, filter, tableObj }) => {
 
     const handleSaveRow = () => {
         setLoading(true)
-        let lastData = Data[Data.length-1];
+        let lastData = Data[editedIndex];
         axios.post(`${process.env.REACT_APP_MAIN_URL}/${module}/addEditRecord/${model}`, lastData).
         then(res=>{
-            if(res.status===200||res.status===201){
+            if(res.status===200 || res.status===201){
                 toast.success(res.data);
                 refetch(); 
                 setLoading(false)

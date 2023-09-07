@@ -7,7 +7,7 @@ const models = {Xyz}
 router.post('/abc/getData', async (req, res) => {
     const { model, id , filter} = req.body
     try {
-        const fetch = await models[model].find(filter).sort({ $natural: -1 });
+        const fetch = await models[model].find(filter);
         res.status(200).send(fetch);
     } catch (err) {
         console.log(err);
