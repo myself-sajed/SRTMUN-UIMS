@@ -526,7 +526,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     let SendData = null;
     const { id } = data
     const isfile = req.file;
-    console.log(isfile);
+    // console.log(isfile);
     if (isfile) {
         console.log('file found: ' + isfile)
         var up = req.file.filename

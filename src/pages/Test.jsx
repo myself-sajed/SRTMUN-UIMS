@@ -6,6 +6,9 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { CircularProgress, IconButton } from '@mui/material';
 import { useQuery } from 'react-query';
 import GetReq from '../components/requestComponents/getReq';
+import EditReq from '../components/requestComponents/editReq';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const Test = ({model, module, filter, tableObj }) => {
 
@@ -18,11 +21,13 @@ const Test = ({model, module, filter, tableObj }) => {
         });
 
     },[])
-    const [Data, setData] = useState(data?.data);
+    const [Data, setData] = useState([]);
     const [editMode, setEditMode] = useState(true); // State to track edit mode
     const [editedIndex, setEditedIndex] = useState(0); // Index of the row being edited
-
-    console.log('Data:', Data)
+    const [ loading, setLoading ] = useState(false)
+    useEffect(()=>{
+        setData(data?.data)
+    },[data])
 
     const handleAddRow = () => {
         setData([...Data, emptyfilds]);
@@ -42,6 +47,20 @@ const Test = ({model, module, filter, tableObj }) => {
     };
 
     const handleSaveRow = () => {
+        setLoading(true)
+        let lastData = Data[Data.length-1];
+        axios.post(`${process.env.REACT_APP_MAIN_URL}/${module}/addEditRecord/${model}`, lastData).
+        then(res=>{
+            if(res.status===200||res.status===201){
+                toast.success(res.data);
+                refetch(); 
+                setLoading(false)
+            } else{
+                toast.error("Something wrong");
+                setLoading(false);
+                refetch();
+            }})
+
         setEditMode(false);
         setEditedIndex(-1);
     };
@@ -93,7 +112,7 @@ const Test = ({model, module, filter, tableObj }) => {
                             }
                             <td>
                                 {editMode && editedIndex === index ? (
-                                    <SaveButton handleSaveRow={handleSaveRow} />
+                                    <SaveButton handleSaveRow={handleSaveRow} loading={loading} />
                                 ) : (
                                     <Actions index={index} handleDeleteRow={handleDeleteRow} handleEditRow={handleEditRow} />
                                 )}
@@ -126,9 +145,9 @@ const Actions = ({ index, handleEditRow, handleDeleteRow }) => {
     </div>
 }
 
-const SaveButton = ({ handleSaveRow }) => {
+const SaveButton = ({ handleSaveRow, loading }) => {
     return <button onClick={handleSaveRow} type="button" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white gap-2 bg-blue-700 rounded-lg hover:bg-blue-800 ">
-        <SaveRoundedIcon />
+        {loading?<CircularProgress/>:<SaveRoundedIcon />}
         Save Details
     </button>
 }
