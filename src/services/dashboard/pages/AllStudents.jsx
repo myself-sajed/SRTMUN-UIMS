@@ -38,7 +38,7 @@ const AllStudents = ({ showImage = false, school }) => {
                 <div className='mt-3'>
                     <div className='table-responsive'>
                         <table className="table table-bordered css-serial">
-                            <thead className='bg-[#1d4ed8] text-white'>
+                        <thead className='bg-[#1d4ed8] text-white'>
                                 <tr>
                                     <th scope="col">Sr No.</th>
                                     {
@@ -47,7 +47,8 @@ const AllStudents = ({ showImage = false, school }) => {
                                     <th scope="col">Student Name</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Enrolled Program</th>
-                                    <th scope="col">Current Year</th>
+                                    <th scope="col">Enrolment year</th>
+                                    <th scope="col">Current Status</th>
 
 
                                 </tr>
@@ -65,7 +66,8 @@ const AllStudents = ({ showImage = false, school }) => {
                                             <td>{capitalizeText(item?.name)}</td>
                                             <td>{item?.gender}</td>
                                             <td>{item?.programGraduated}</td>
-                                            <td>{item.currentIn ? item.currentIn : 'Not Added'}</td>
+                                            <td>{item?.programEnroledOn|| '--'}</td>
+                                            <td>{item.currentIn ? item.currentIn : '--'}</td>
                                         </tr>
                                     })
                                 }
