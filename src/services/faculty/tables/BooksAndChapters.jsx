@@ -229,10 +229,10 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />}
+            <Header user={user} model='BookAndChapter' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />}
                 title={title ? title : "Books and Chapters published and papers in national/international conference proceedings"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true}/>
+            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
 
             {/* // 2. FIELDS */}
 

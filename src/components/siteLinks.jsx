@@ -62,6 +62,7 @@ let siteLinks = {
     yfCollegeRegistration: { title: "Youth Festival College Registration", link: '/youthfestival/college-registration' },
     yfCollegeLogin: { title: "Youth Festival College Login", link: '/youthfestival/college-login' },
     yfCollegeHome: { title: "Youth Festival Home", link: '/youthfestival' },
+    yfCollegeYouthForm: { title: "Youth Festival Participant Details Form", link: '/youthfestival/participant-details-form' },
 
 
 }

@@ -152,7 +152,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
             {/* // HEADER */}
 
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
+            <Header user={user} model='Degree' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='DegreeFaculty' title='Research Degrees' SendReq='Degree' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

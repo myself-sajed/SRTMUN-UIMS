@@ -135,7 +135,7 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Awards and Recognition"} />
+            <Header user={user} model='AwardRecognition' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Awards and Recognition"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='AwardRecognitionFaculty' title='Award Recognition' SendReq='AwardRecognition' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

@@ -125,7 +125,7 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, 
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellow" editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<PersonSearchRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "JRF, SRF, Post Doctoral Fellows, Research Associate"} />
+            <Header user={user} model='JrfSrf' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellow" editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<PersonSearchRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "JRF, SRF, Post Doctoral Fellows, Research Associate"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='JrfSrfFaculty' title='JRF, SRF, Post Doctoral Fellows, Research Associate' SendReq='JrfSrf' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

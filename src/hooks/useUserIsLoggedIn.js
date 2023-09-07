@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Axios from 'axios'
-import { setAdminUser, setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser } from "../redux/slices/UserSlice"
+import { setAdminUser, setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setYouthUser } from "../redux/slices/UserSlice"
 const useUserIsLoggedIn = () => {
 
     const dispatch = useDispatch()
@@ -164,7 +164,31 @@ const useUserIsLoggedIn = () => {
         else {
             dispatch(setProUser(null))
             localStorage.removeItem('pro-token')
+        }
 
+        // youthfestival
+        const youthfestival_token = localStorage.getItem('youthfestival-token')
+        if (youthfestival_token) {
+
+            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: youthfestival_token, model: 'YFCollege', filterName: 'email' })
+                .then(res => {
+                    if (res.data.status === 'authenticated') {
+                        dispatch(setYouthUser(res.data.user))
+                    }
+                    else {
+                        dispatch(setYouthUser(null))
+                        localStorage.removeItem('youthfestival-token')
+                    }
+                })
+                .catch(err => {
+                    dispatch(setYouthUser(null))
+                    localStorage.removeItem('youthfestival-token')
+
+                })
+        }
+        else {
+            dispatch(setYouthUser(null))
+            localStorage.removeItem('youthfestival-token')
         }
 
 

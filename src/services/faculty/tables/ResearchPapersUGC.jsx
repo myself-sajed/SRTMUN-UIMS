@@ -158,7 +158,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} showTable={showTable} dataCount={filteredItems ? filteredItems.length : 0} add="Research Paper" editState={setEditModal} clearStates={clearStates} state={setResearchPaperModal} icon={<FindInPageRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Papers in the Journals notified by UGC"} />
+            <Header user={user} model='ResearchPaper' exceldialog={setOpen} showTable={showTable} dataCount={filteredItems ? filteredItems.length : 0} add="Research Paper" editState={setEditModal} clearStates={clearStates} state={setResearchPaperModal} icon={<FindInPageRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Papers in the Journals notified by UGC"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResearchPaperFaculty' title='Research Paper' SendReq='ResearchPaper' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

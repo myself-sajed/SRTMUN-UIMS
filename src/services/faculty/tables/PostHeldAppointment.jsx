@@ -160,7 +160,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
             {/* // HEADER */}
 
 
-            <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Posts" editState={setEditModal} state={setPostsModal} clearStates={clearStates} icon={<AirlineSeatReclineNormalRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Posts held after appointments at this institution" />
+            <Header user={user} model='PostHeld' exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Posts" editState={setEditModal} state={setPostsModal} clearStates={clearStates} icon={<AirlineSeatReclineNormalRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Posts held after appointments at this institution" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PostHeldFaculty' title='Posts held after appointments' SendReq='PostHeld' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

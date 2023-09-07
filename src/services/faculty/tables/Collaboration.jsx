@@ -131,7 +131,7 @@ const Collaboration = ({ filterByAcademicYear = false, academicYear, showTable =
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Collaboration" editState={setEditModal} clearStates={clearStates} state={setCollModal} icon={<GroupRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Collaborations"} />
+            <Header user={user} model='Collaboration' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Collaboration" editState={setEditModal} clearStates={clearStates} state={setCollModal} icon={<GroupRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Collaborations"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='CollaborationFaculty' title='Collaborations' SendReq='Collaboration' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

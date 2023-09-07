@@ -106,7 +106,7 @@ const CollegeRegistration = () => {
         // route at student-auth file line 136
         Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/auth/youthfestival-register`, formData).then(function (response) {
             if (response.data.status === 'success') {
-                localStorage.removeItem("collegeRegistrationForm")
+                localStorage.removeItem("CollegeRegistrationForm")
                 toast.success(response.data.message)
                 setStep(3)
             }

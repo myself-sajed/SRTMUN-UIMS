@@ -123,7 +123,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Consultancy Service" editState={setEditModal} clearStates={clearStates} state={setConModal} icon={<ConnectWithoutContactRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Consultancy Services"} />
+            <Header user={user} model='ConsultancyServices' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Consultancy Service" editState={setEditModal} clearStates={clearStates} state={setConModal} icon={<ConnectWithoutContactRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Consultancy Services"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConsultancyServicesFaculty' title='Consultancy Services' SendReq='ConsultancyServices' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

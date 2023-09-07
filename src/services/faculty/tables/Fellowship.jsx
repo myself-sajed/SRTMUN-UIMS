@@ -121,7 +121,7 @@ const Fellowship = ({ filterByAcademicYear = false, academicYear, showTable = tr
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellowship Assistance" editState={setEditModal} clearStates={clearStates} state={setFellowshipModal} icon={<AttachMoneyRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Fellowship/Financial assistance for advanced studies/research"} />
+            <Header user={user} model='Fellowship' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellowship Assistance" editState={setEditModal} clearStates={clearStates} state={setFellowshipModal} icon={<AttachMoneyRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Fellowship/Financial assistance for advanced studies/research"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='FellowshipFaculty' title='Fellowship/Financial assistance for advanced studies/research' SendReq='Fellowship' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}

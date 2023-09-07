@@ -118,7 +118,7 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = tru
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Programmes" editState={setEditModal} clearStates={clearStates} state={setOnlineFDPModal} icon={<SentimentVerySatisfiedRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Online/Face-to-face Faculty Development Programmes(FDP)"} />
+            <Header user={user} model='Online' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Programmes" editState={setEditModal} clearStates={clearStates} state={setOnlineFDPModal} icon={<SentimentVerySatisfiedRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Online/Face-to-face Faculty Development Programmes(FDP)"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='OnlineORFasetoFaseFDPFaculty' title='Online/Face-to-face Faculty Development Programmes(FDP)' SendReq='Online' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

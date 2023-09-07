@@ -163,7 +163,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
 
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
+            <Header user={user} model='Responsibilities' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResponsibilitiesFaculty' title='Administrative / Academic Responsibilities' SendReq='Responsibilities' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}

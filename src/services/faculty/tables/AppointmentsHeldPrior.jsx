@@ -114,7 +114,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
             {/* // 1. HEADER */}
 
 
-            <Header exceldialog={setOpen} add="Appointments" editState={setEditModal} clearStates={clearStates} state={setAppointmentModal} icon={<CoPresentRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Appointments held prior to joining this institute" />
+            <Header user={user} model='AppointmentsHeldPrior' exceldialog={setOpen} add="Appointments" editState={setEditModal} clearStates={clearStates} state={setAppointmentModal} icon={<CoPresentRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Appointments held prior to joining this institute" />
 
             <BulkExcel data={data?.data?.data} sampleFile='AppointmentsFaculty' title='Appointments' SendReq="AppointmentsHeldPrior" refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

@@ -229,7 +229,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
             {/* // HEADER */}
 
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Projects"} />
+            <Header user={user} model='ResearchProject' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Projects" editState={setEditModal} clearStates={clearStates} state={setProjectModal} icon={<ScienceRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Projects"} />
 
             {/* // 2. FIELDS */}
 

@@ -71,6 +71,8 @@ let nonAcademicYearModels = {
     Qualification, Degree, AppointmentsHeldPrior, PostHeld, Online, Experience, Responsibilities,
 }
 
+const AllModels = { ...models, ...nonAcademicYearModels }
+
 const excelObject = {
     AppointmentsHeldPrior: {
         'Designation': 'designation',
@@ -1179,7 +1181,7 @@ function initRoutes(app) {
                     file.Sheets[sheetNames[i]])
                 arr.forEach((response) => data.push(response))
             }
-           
+
 
             let dateInputs = ["From", "From Date", "To Date", "Duration From", "Duration To", "Award Date", "Enrolment Date"]
             data.forEach((item) => {
@@ -1225,4 +1227,4 @@ function initRoutes(app) {
     })
 }
 
-module.exports = { initRoutes, nonAcademicYearModels, models, excelObject }
+module.exports = { initRoutes, nonAcademicYearModels, models, excelObject, AllModels }

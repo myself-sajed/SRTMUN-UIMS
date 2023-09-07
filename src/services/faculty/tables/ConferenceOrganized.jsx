@@ -123,7 +123,7 @@ const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear, showT
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<DuoRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Conference / Workshop / Seminar Organized"} />
+            <Header user={user} model='ConferenceOrganized' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<DuoRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Conference / Workshop / Seminar Organized"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConferenceOrganizedFaculty' title='Conference Organized' SendReq='ConferenceOrganized' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

@@ -113,7 +113,7 @@ const ConferenceParticipated = ({ filterByAcademicYear = false, academicYear, sh
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Conference / Workshop / Seminar Participated"} />
+            <Header user={user} model='ConferenceParticipated' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="work" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Conference / Workshop / Seminar Participated"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConferenceParticipatedFaculty' title='Conference Participated' SendReq='ConferenceParticipated' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

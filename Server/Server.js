@@ -78,13 +78,14 @@ const upload = multer({ storage: storage });
 module.exports = upload;
 
 
-//routes
+// faculty routes
 require("./routes/faculty-routes/routes.js").initRoutes(app);
 require("./routes/faculty-routes/excelReport.js")(app);
 require("./routes/faculty-routes/editRoutes.js")(app);
 require("./routes/faculty-routes/casRoutes.js")(app);
 require("./routes/faculty-routes/pbasRoutes.js")(app);
 require("./routes/faculty-routes/teacherReport.js")(app);
+require("./routes/faculty-routes/getProofs")(app);
 require("./routes/faculty-routes/services.js").services(app)
 require("./routes/faculty-routes/authRoutes.js")(app, upload, jwt);
 

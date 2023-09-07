@@ -115,7 +115,7 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<CurrencyRupeeIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Financial Support To Attend Conferences"} />
+            <Header user={user} model='FinancialSupport' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<CurrencyRupeeIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Financial Support To Attend Conferences"} />
 
             <BulkExcel data={data?.data?.data} proof='proof' sampleFile='FinancialSupportToAttendConferencesFaculty' title='Financial Support To Attend Conferences' SendReq='FinancialSupport' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 

@@ -97,7 +97,7 @@ const ForeignVisits = ({ filterByAcademicYear = false, academicYear, showTable =
         <div>
             {/* // HEADER */}
 
-            <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
+            <Header user={user} model='ForeignVisit' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ConnectWithoutContactIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Foreign Visits" />
 
             <BulkExcel data={data?.data?.data} sampleFile='ForeignVisitFaculty' title='Foreign Visits' SendReq='ForeignVisit' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
