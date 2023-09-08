@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const krcUserSchema = new mongoose.Schema({
 
-    name: {
+    dName: {
         type: 'string',
         required: true,
     },
@@ -12,10 +12,6 @@ const krcUserSchema = new mongoose.Schema({
         unique: true,
     },
     photoURL: {
-        type: 'string',
-        required: true,
-    },
-    department: {
         type: 'string',
         required: true,
     },

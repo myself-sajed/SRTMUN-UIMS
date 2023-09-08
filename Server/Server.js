@@ -14,7 +14,11 @@ app.use(json());
 const mongoose = require("mongoose");
 const { router: directorRouter } = require("./routes/director-routes/director-routes")
 const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
-
+const nssUser = require('./models/nss-models/nssUserSchema');
+const dsdUser = require('./models/dsd-models/dsdUserSchema');
+const sportsUser = require('./models/sports-models/sportsUserSchema');
+const examUser = require('./models/exam-models/examUserSchema');
+const krcUser = require('./models/krc-models/krcUserSchema');
 
 app.use(cors());
 const path = require("path");
