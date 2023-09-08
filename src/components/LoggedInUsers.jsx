@@ -19,6 +19,12 @@ const LoggedInUsers = () => {
         proUser: { homeLink: siteLinks.proHome.link, serviceName: 'news', title: "PRO" },
         adminUser: { homeLink: siteLinks.adminHome.link, serviceName: 'admin', title: "Admin" },
         youthUser: { homeLink: siteLinks.yfCollegeHome.link, serviceName: 'youthfestival', title: "YF", abbr: "YF" },
+        dsdUser: { homeLink: siteLinks.dsdHome.link, serviceName: 'dsd', title: "DSD", abbr: "DSD" },
+        krcUser: { homeLink: siteLinks.krcHome.link, serviceName: 'krc', title: "KRC", abbr: "KRC" },
+        sportsUser: { homeLink: siteLinks.sportsHome.link, serviceName: 'sports', title: "Sports", abbr: "SPRT" },
+        nssUser: { homeLink: siteLinks.nssHome.link, serviceName: 'nss', title: "NSS", abbr: "NSS" },
+        examUser: { homeLink: siteLinks.examHome.link, serviceName: 'exam', title: "BOEE", abbr: "BOEE" },
+        placementUser: { homeLink: siteLinks.placementHome.link, serviceName: 'placement', title: "TPO", abbr: "TPO" },
     }
 
     return (

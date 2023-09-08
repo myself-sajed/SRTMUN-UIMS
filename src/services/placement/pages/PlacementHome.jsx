@@ -1,0 +1,33 @@
+import React from 'react'
+import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
+import siteLinks from '../../../components/siteLinks'
+import { setPlacementUser } from '../../../redux/slices/UserSlice'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import HomeProfileButtons from '../../dsd/components/HomeProfileButtons'
+import HomeProfile from '../../dsd/components/HomeProfile'
+import UserLoading from '../../../pages/UserLoading'
+import title from '../../../js/title'
+
+const placementAuthParams = { shouldNavigate: true, tokenName: "placement-token", setUser: setPlacementUser, navigationHomeLink: siteLinks.placementHome.link, navigationLoginLink: siteLinks.placementLogin.link, model: "PlacementUser" }
+
+const PlacementHome = () => {
+    useOtherServiceAuth(placementAuthParams)
+    const user = useSelector((state) => state.user.placementUser)
+    const bredLinks = [siteLinks.welcome, siteLinks.placementHome]
+    const navigate = useNavigate()
+    const profileButton1 = <HomeProfileButtons title="Fill AQAR Data" onClick={() => navigate(siteLinks.placementAQAR.link)} />
+    title(siteLinks.placementHome.title)
+    return (
+        <div>
+            {user ?
+                <HomeProfile bredLinks={bredLinks} user={user} setUser={setPlacementUser} userType="placement" profileButton1={profileButton1} tokenName="placement-token" />
+                :
+                <UserLoading title="Fetching User Details" />}
+        </div>
+    )
+}
+
+export default PlacementHome
+
+export { placementAuthParams }

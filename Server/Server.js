@@ -78,7 +78,7 @@ const upload = multer({ storage: storage });
 module.exports = upload;
 
 //temp routes
-app.use(require('./routes/xyz'))
+app.use(require('./routes/test-routes/xyz'))
 
 // faculty routes
 require("./routes/faculty-routes/routes.js").initRoutes(app);
@@ -135,6 +135,8 @@ require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
 require('./routes/feedback-routes/fetchFeedbackData')(app)
 require('./routes/feedback-routes/generateFeedbackReport')(app)
 require('./routes/feedback-routes/actionTakenReport')(app)
+
+// require('./models/placement-models/placementUserSchema')
 
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)
@@ -277,6 +279,12 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     FeedbackATR: `./uploads/feedback-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
     program: `./uploads/program-uploads/${filename}`,
+    dsd: `./uploads/dsd-uploads/${filename}`,
+    krc: `./uploads/krc-uploads/${filename}`,
+    sports: `./uploads/sports-uploads/${filename}`,
+    nss: `./uploads/nss-uploads/${filename}`,
+    exam: `./uploads/exam-uploads/${filename}`,
+    placement: `./uploads/placement-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);

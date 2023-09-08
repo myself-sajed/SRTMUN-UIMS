@@ -2,43 +2,41 @@ import React from 'react'
 import CredSkeleton from '../../../components/CredSkeleton'
 import CredInput from '../../../inputs/CredInput'
 import CredButton from '../../../inputs/CredButton'
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import siteLinks from '../../../components/siteLinks';
 import CredHeading from '../../../inputs/CredHeading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import title from '../../../js/title';
-import { setNSSUser } from '../../../redux/slices/UserSlice';
 import { useDispatch } from 'react-redux';
-import serviceLoginHandler from '../../dsd/js/serviceLoginHandler';
+import { examAuthParams } from './ExamHome';
+import { setExamUser } from '../../../redux/slices/UserSlice';
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth';
-import { nssAuthParams } from './NSSHome';
+import serviceLoginHandler from '../../dsd/js/serviceLoginHandler';
 
 
-let nssLogo = <img src="/assets/nsslogo.png" height="22px" width="22px" />
-
-
-const NSSLogin = () => {
+const ExamLogin = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const navigate = useNavigate()
+    title(siteLinks.examLogin.title)
+
     const dispatch = useDispatch()
-    title(siteLinks.nssLogin.title)
-    useOtherServiceAuth(nssAuthParams)
-
-
+    useOtherServiceAuth(examAuthParams)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        serviceLoginHandler({ email: username, password, model: "NSSUser", setUser: setNSSUser, navigate, navigationLink: siteLinks.nssHome.link, tokenName: "nss-token", setIsLoading, dispatch })
+        serviceLoginHandler({ email: username, password, model: "ExamUser", setUser: setExamUser, navigate, navigationLink: siteLinks.examHome.link, tokenName: "exam-token", setIsLoading, dispatch })
     }
 
 
     return (
         <div>
-            <CredSkeleton bred={[siteLinks.welcome, siteLinks.nssLogin]} onSubmit={handleSubmit} linkLine={null} head={<CredHeading spacing="mb-3 mt-6" icon={nssLogo}
-                title="NSS Login" />}>
+            <CredSkeleton bred={[siteLinks.welcome, siteLinks.examLogin]} onSubmit={handleSubmit} linkLine={null} head={<CredHeading spacing="mb-3 mt-6" icon={<GroupsRoundedIcon className="text-orange-700" />}
+                title={siteLinks.examLogin.title} />}>
 
                 <CredInput state={username} setState={setUsername} placeholder="Enter Email ID" type="text" spacing="mb-2" size={39} />
 
@@ -51,5 +49,4 @@ const NSSLogin = () => {
     )
 }
 
-export default NSSLogin
-
+export default ExamLogin

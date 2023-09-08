@@ -1,0 +1,33 @@
+import React from 'react'
+import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
+import { setExamUser } from '../../../redux/slices/UserSlice'
+import siteLinks from '../../../components/siteLinks'
+import { useSelector } from 'react-redux'
+import UserLoading from '../../../pages/UserLoading'
+import HomeProfile from '../../dsd/components/HomeProfile'
+import HomeProfileButtons from '../../dsd/components/HomeProfileButtons'
+import title from '../../../js/title'
+import { useNavigate } from 'react-router-dom'
+
+const examAuthParams = { shouldNavigate: true, tokenName: "exam-token", setUser: setExamUser, navigationHomeLink: siteLinks.examHome.link, navigationLoginLink: siteLinks.examLogin.link, model: "ExamUser" }
+
+const ExamHome = () => {
+    useOtherServiceAuth(examAuthParams)
+    const user = useSelector((state) => state.user.examUser)
+    const bredLinks = [siteLinks.welcome, siteLinks.examHome]
+    const navigate = useNavigate()
+    const profileButton1 = <HomeProfileButtons title="Fill AQAR Data" onClick={() => navigate(siteLinks.examAQAR.link)} />
+    title(siteLinks.examHome.title)
+    return (
+        <div>
+            {user ?
+                <HomeProfile bredLinks={bredLinks} user={user} setUser={setExamUser} userType="exam" profileButton1={profileButton1} tokenName="exam-token" />
+                :
+                <UserLoading title="Fetching User Details" />}
+        </div>
+    )
+}
+
+export default ExamHome
+
+export { examAuthParams }

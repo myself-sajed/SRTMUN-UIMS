@@ -100,11 +100,22 @@ import YFCollegeRegistration from '../services/youthfestival/pages/YFCollegeRegi
 import YFCollegeHome from '../services/youthfestival/pages/YFCollegeHome'
 import YFCollegeLogin from '../services/youthfestival/pages/YFCollegeLogin'
 import YFForm from '../services/youthfestival/pages/YFForm'
+import DSDLogin from '../services/dsd/pages/DSDLogin'
+import KRCLogin from '../services/krc/pages/KRCLogin'
+import ExamLogin from '../services/exam/pages/ExamLogin'
+import SportsLogin from '../services/sports/pages/SportsLogin'
+import PlacementLogin from '../services/placement/pages/PlacementLogin'
+import DSDHome from '../services/dsd/pages/DSDHome'
+import KRCHome from '../services/krc/pages/KRCHome'
+import NSSHome from '../services/nss/pages/NSSHome'
+import SportsHome from '../services/sports/pages/SportsHome'
+import ExamHome from '../services/exam/pages/ExamHome'
+import PlacementHome from '../services/placement/pages/PlacementHome'
 
-let model=  "Xyz"
-let module= 'abc'
-let filter= {}
-let tableObj= {name:'Name', class: 'Class', course: 'Course', rollNo: 'Roll No'}
+let model = "Xyz"
+let module = 'abc'
+let filter = {}
+let tableObj = { name: 'Name', class: 'Class', course: 'Course', rollNo: 'Roll No' }
 
 const RoutesHandler = () => {
 
@@ -133,7 +144,7 @@ const RoutesHandler = () => {
                 <Route path="/viewFile" exact element={<ViewFile />} />
                 <Route path="/director/viewFile/:fileName" exact element={<DirectorViewFile />} />
                 <Route path="/*" exact element={<PageNotFound />} />
-                <Route path="/test" exact element={<Test model={model}  module={module} filter={filter} tableObj={tableObj} />} />
+                <Route path="/test" exact element={<Test model={model} module={module} filter={filter} tableObj={tableObj} />} />
                 <Route path="/director/service/academic-audit" exact element={<AuditHome />} />
                 <Route path="/alumni-login" exact element={<StudentLogin />} />
                 <Route path="/alumni-registration" exact element={<StudentRegister />} />
@@ -220,9 +231,7 @@ const RoutesHandler = () => {
                 {/* SERVICE STATUS */}
                 <Route path="/director/service/status" exact element={<DirectorReportStatus />} />
 
-                {/* NSS Service */}
-                <Route path="/nss-login" exact element={<NSSLogin />} />
-                <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
+
 
                 {/* Workshop Service */}
                 <Route path="/programs" exact element={<ProgramHome />} />
@@ -239,6 +248,32 @@ const RoutesHandler = () => {
                 <Route path="/youthfestival/college-login" exact element={<YFCollegeLogin />} />
                 <Route path="/youthfestival" exact element={<YFCollegeHome />} />
                 <Route path="/youthfestival/participant-details-form" exact element={<YFForm />} />
+
+                {/* NSS Service */}
+                <Route path="/nss-login" exact element={<NSSLogin />} />
+                <Route path="/nss" exact element={<NSSHome />} />
+                <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
+
+                {/* DSD */}
+                <Route path="/dsd-login" exact element={<DSDLogin />} />
+                <Route path="/dsd" exact element={<DSDHome />} />
+
+                {/* KRC */}
+                <Route path="/krc-login" exact element={<KRCLogin />} />
+                <Route path="/krc" exact element={<KRCHome />} />
+
+                {/* EXAM BOEE */}
+                <Route path="/boee-login" exact element={<ExamLogin />} />
+                <Route path="/boee" exact element={<ExamHome />} />
+
+                {/* SPORTS */}
+                <Route path="/sports-login" exact element={<SportsLogin />} />
+                <Route path="/sports" exact element={<SportsHome />} />
+
+                {/* Training and placements */}
+                <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />
+                <Route path="/training-and-placement" exact element={<PlacementHome />} />
+
 
 
 
