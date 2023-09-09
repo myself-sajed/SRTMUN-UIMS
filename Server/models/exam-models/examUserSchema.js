@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const examUserSchema = new mongoose.Schema({
 
-    dName: {
+    name: {
         type: 'string',
         required: true,
     },
@@ -12,6 +12,10 @@ const examUserSchema = new mongoose.Schema({
         unique: true,
     },
     photoURL: {
+        type: 'string',
+        required: true,
+    },
+    department: {
         type: 'string',
         required: true,
     },

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const nssUserSchema = new mongoose.Schema({
+const placementUserSchema = new mongoose.Schema({
 
     name: {
         type: 'string',
@@ -26,4 +26,4 @@ const nssUserSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('nssUser', nssUserSchema);
+module.exports = mongoose.model('placementUser', placementUserSchema);

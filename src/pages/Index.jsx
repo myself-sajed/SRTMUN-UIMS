@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 import useScroll from '../hooks/useScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
-import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser } from '../redux/slices/UserSlice';
+import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 import { FloatButton, Tooltip } from 'antd';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
@@ -114,7 +114,7 @@ const Index = () => {
             user: users.proUser ? users.proUser : null,
             profileUrl: siteLinks.proHome.link,
             tokenId: 'pro-token',
-            loginUrl: '/pro-login',
+            loginUrl: siteLinks.proLogin.link,
             dispatchFunction: setProUser
 
         },
@@ -122,28 +122,29 @@ const Index = () => {
             icon: <DirectionsRunIcon sx={iconProps} />,
             title: 'Training & Placement',
             phrase: 'Login to avail Training & Placement services with your ID and Password.',
-            user: users.placement ? users.placement : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/training-and-placement-login'
+            user: users.placementUser ? users.placementUser : null,
+            profileUrl: siteLinks.placementHome.link,
+            tokenId: 'placement-token',
+            loginUrl: siteLinks.placementLogin.link,
+            dispatchFunction: setPlacementUser
         },
         {
             icon: <GroupsRoundedIcon sx={iconProps} />,
             title: 'Board of Examination and Evaluation(BoEE)',
             phrase: 'Login to Board of Examination and Evaluation(BoEE)',
-            user: users.boee ? users.boee : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/boee-login'
+            user: users.examUser ? users.examUser : null,
+            profileUrl: siteLinks.examHome.link,
+            tokenId: 'exam-token',
+            loginUrl: siteLinks.examLogin.link
         },
         {
             icon: <AutoStoriesRoundedIcon sx={iconProps} />,
             title: 'Knowledge Resource Center (KRC)',
             phrase: 'Login to the SRTMUN KRC with valid ID & Password',
-            user: users.krc ? users.krc : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/library-login'
+            user: users.krcUser ? users.krcUser : null,
+            profileUrl: siteLinks.krcHome.link,
+            tokenId: 'krc-token',
+            loginUrl: siteLinks.krcLogin.link
         },
         {
             icon: <BusinessRoundedIcon sx={iconProps} />,
@@ -158,28 +159,28 @@ const Index = () => {
             icon: <AutoGraphRoundedIcon sx={iconProps} />,
             title: 'Department of Student Development (DSD)',
             phrase: 'Login to Department of Student Development for Student Development related activities.',
-            user: users.dsd ? users.dsd : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/dsd-login'
+            user: users.dsdUser ? users.dsdUser : null,
+            profileUrl: siteLinks.dsdHome.link,
+            tokenId: 'dsd-token',
+            loginUrl: siteLinks.dsdLogin.link
         },
         {
             icon: <GroupsRoundedIcon sx={iconProps} />,
             title: 'National Service Scheme (NSS)',
             phrase: 'Login to National Service Scheme to know more about NSS',
-            user: users.nss ? users.nss : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/nss-login'
+            user: users.nssUser ? users.nssUser : null,
+            profileUrl: siteLinks.nssHome.link,
+            tokenId: 'nss-token',
+            loginUrl: siteLinks.nssLogin.link
         },
         {
             icon: <SportsHandballRoundedIcon sx={iconProps} />,
             title: 'Sports Department',
             phrase: 'Login to Sports Department for various Sports related activities & information',
-            user: users.sports ? users.sports : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/sports-login'
+            user: users.sportsUser ? users.sportsUser : null,
+            profileUrl: siteLinks.sportsHome.link,
+            tokenId: 'sports-token',
+            loginUrl: siteLinks.sportsLogin.link
         },
 
     ]
@@ -193,8 +194,8 @@ const Index = () => {
 
                 {/* News */}
                 <div className='flex items-center justify-start mt-2'>
-                    <span onClick={() => { navigate('/news') }} className='md:text-base cursor-pointer text-sm whitespace-nowrap bg-orange-500 hover:bg-orange-800 text-white px-1 md:px-2'>
-                        <div className='flex items-center justify-start gap-1'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />News Bulletin</div></span>
+                    <span onClick={() => { navigate('/news') }} className='md:text-base cursor-pointer text-sm whitespace-nowrap bg-orange-500 hover:bg-orange-800 text-white px-1 md:px-2 rounded-l-md'>
+                        <div className='flex items-center justify-start gap-1 '><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />News Bulletin</div></span>
                     <marquee className='bg-orange-100 text-orange-700' behavior="scroll" direction="left"
                     >
                         {
@@ -210,8 +211,8 @@ const Index = () => {
                                 </div> : <p className="md:text-base text-sm">No Recent News</p>
                         }
                     </marquee>
-                    <span onClick={() => { navigate('/news') }} className='sm:block hidden text-sm md:text-base whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2'>
-                        <div className='flex items-center justify-start gap-1 cursor-pointer'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />Explore all News</div></span>
+                    <span onClick={() => { navigate('/news') }} className='sm:block hidden text-sm md:text-base whitespace-nowrap hover:bg-orange-800 bg-orange-500 text-white px-2 rounded-r-md'>
+                        <div className='flex items-center justify-start gap-1  cursor-pointer'><NewspaperRoundedIcon sx={{ fontSize: '18px' }} />Explore all News</div></span>
 
 
                 </div>

@@ -87,22 +87,6 @@ router.post("/api/auth/youthfestival-register", upload.single("file"), async (re
     }
 });
 
-// student-user authentication handler
-// router.post("/api/auth/student", (req, res) => {
-
-//     // get token from body
-//     const token = req.body.student_token;
-//     const decoded = jwt.verify(token, "SRTMUN");
-//     // console.log('Token :', token, 'Decode :', decoded.username)
-//     StudentUser.findOne({ email: decoded.username }).then(function (user) {
-//         if (user) {
-
-//             res.send({ status: "authenticated", user: user });
-//         } else {
-//             res.send({ status: "error" });
-//         }
-//     });
-// });
 
 
 module.exports = router;

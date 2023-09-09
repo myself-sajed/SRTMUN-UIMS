@@ -2,9 +2,27 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Axios from 'axios'
 import { setAdminUser, setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setYouthUser } from "../redux/slices/UserSlice"
+import useYouthAuth from "./useYouthAuth"
+import useOtherServiceAuth from "./useOtherServiceAuth"
+import { dsdAuthParams } from "../services/dsd/pages/DSDHome"
+import { krcAuthParams } from "../services/krc/pages/KRCHome"
+import { sportsAuthParams } from "../services/sports/pages/SportsHome"
+import { nssAuthParams } from "../services/nss/pages/NSSHome"
+import { examAuthParams } from "../services/exam/pages/ExamHome"
+import { placementAuthParams } from "../services/placement/pages/PlacementHome"
+
+
 const useUserIsLoggedIn = () => {
 
     const dispatch = useDispatch()
+    useYouthAuth(false, true)
+    useOtherServiceAuth({ ...dsdAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...krcAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...sportsAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...nssAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...examAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...placementAuthParams, usingInIsUserLoggedInHook: true })
+
 
     useEffect(() => {
 
@@ -85,7 +103,6 @@ const useUserIsLoggedIn = () => {
         else {
             dispatch(setDirectorUser(null))
             localStorage.removeItem('director-token')
-
         }
 
         // student
@@ -165,33 +182,6 @@ const useUserIsLoggedIn = () => {
             dispatch(setProUser(null))
             localStorage.removeItem('pro-token')
         }
-
-        // youthfestival
-        const youthfestival_token = localStorage.getItem('youthfestival-token')
-        if (youthfestival_token) {
-
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`, { token: youthfestival_token, model: 'YFCollege', filterName: 'email' })
-                .then(res => {
-                    if (res.data.status === 'authenticated') {
-                        dispatch(setYouthUser(res.data.user))
-                    }
-                    else {
-                        dispatch(setYouthUser(null))
-                        localStorage.removeItem('youthfestival-token')
-                    }
-                })
-                .catch(err => {
-                    dispatch(setYouthUser(null))
-                    localStorage.removeItem('youthfestival-token')
-
-                })
-        }
-        else {
-            dispatch(setYouthUser(null))
-            localStorage.removeItem('youthfestival-token')
-        }
-
-
 
 
     }, [])

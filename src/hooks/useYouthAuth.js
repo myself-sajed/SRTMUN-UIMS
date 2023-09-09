@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setYouthUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 
-const useYouthAuth = (shouldNavigate = true) => {
+const useYouthAuth = (shouldNavigate = true, usingInIsUserLoggedInHook = false) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -19,22 +19,31 @@ const useYouthAuth = (shouldNavigate = true) => {
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setYouthUser(res.data.user))
-                        if (shouldNavigate) navigate(siteLinks.yfCollegeHome.link)
+                        if (!usingInIsUserLoggedInHook) {
+                            if (shouldNavigate) navigate(siteLinks.yfCollegeHome.link)
+                        }
                     }
                     else {
-                        navigate('/load/youth-login')
+                        if (!usingInIsUserLoggedInHook) {
+                            navigate('/load/youth-login')
+                        }
                         dispatch(setYouthUser(null))
                         localStorage.removeItem('youthfestival-token')
                     }
                 })
                 .catch(err => {
-                    navigate(siteLinks.yfCollegeLogin.link)
+
+                    if (!usingInIsUserLoggedInHook) {
+                        navigate(siteLinks.yfCollegeLogin.link)
+                    }
                     dispatch(setYouthUser(null))
                     localStorage.removeItem('youthfestival-token')
                 })
         }
         else {
-            navigate(siteLinks.yfCollegeLogin.link)
+            if (!usingInIsUserLoggedInHook) {
+                navigate(siteLinks.yfCollegeLogin.link)
+            }
             dispatch(setYouthUser(null))
             localStorage.removeItem('youthfestival-token')
         }
