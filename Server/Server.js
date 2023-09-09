@@ -14,11 +14,7 @@ app.use(json());
 const mongoose = require("mongoose");
 const { router: directorRouter } = require("./routes/director-routes/director-routes")
 const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
-const nssUser = require('./models/nss-models/nssUserSchema');
-const dsdUser = require('./models/dsd-models/dsdUserSchema');
-const sportsUser = require('./models/sports-models/sportsUserSchema');
-const examUser = require('./models/exam-models/examUserSchema');
-const krcUser = require('./models/krc-models/krcUserSchema');
+
 
 app.use(cors());
 const path = require("path");
@@ -103,6 +99,12 @@ require('./routes/director-routes/directorAuth')(app, jwt)
 //nss routes
 app.use(NssRouter)
 
+// DSD / Sports
+app.use(require('./routes/dsd-routes/dsd-routes'))
+
+// Exam 
+app.use(require('./routes/exam-routes/exam-routes'))
+
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes'));
 
@@ -155,6 +157,7 @@ require('./routes/program-routes/programOperations')(app)
 
 // Youth Festival routes
 app.use(require('./routes/youthfestival-routes/youth-auth'))
+
 
 
 
@@ -281,6 +284,9 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     FeedbackATR: `./uploads/feedback-uploads/${filename}`,
     admin: `./uploads/admin-uploads/${filename}`,
     program: `./uploads/program-uploads/${filename}`,
+    dsd: `./uploads/dsd-uploads/${filename}`,
+    nss: `./uploads/nss-uploads/${filename}`,
+    exam: `./uploads/exam-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);

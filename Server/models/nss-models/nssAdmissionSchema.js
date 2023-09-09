@@ -48,6 +48,4 @@ const nssAdmissionSchema = new mongoose.Schema({
 
 })
 
-const NssAdmission = new mongoose.model('NssAdmission', nssAdmissionSchema);
-
-module.exports = NssAdmission;
+module.exports = mongoose.model('NssAdmission', nssAdmissionSchema);

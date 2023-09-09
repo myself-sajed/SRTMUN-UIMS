@@ -248,7 +248,8 @@ let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio,
 const YearSelecter={
     academicYear:['CourceInAllProgram', 'NewPrograms'],
     Year_of_Award:['Award', 'UgcSapCasDstFistDBTICSSR'],
-    Academic_year:['ValueAddedCource',"DemandRatio","ProgressionToHE","ProjectsInternships","SkillsEnhancementInitiatives","SyllabusRevision","QualifiedExams","Placement","Employability","ReservedSeats","AlumniContribution"],
+    Academic_Year:["DemandRatio","ProgressionToHE","ProjectsInternships","SkillsEnhancementInitiatives","SyllabusRevision","Placement","Employability","ReservedSeats","AlumniContribution"],
+    Acadmic_year:['ValueAddedCource',"QualifiedExams"],
     Year_of_Activity:["CounselingAndGuidance"],
     Year_of_activity:["ExtensionActivities"],
     Year_of_signing_MoU:["MoUs"],
@@ -880,4 +881,4 @@ router.post('/director/aqar/excel', async (req, res)=> {
     }
 })
 
-module.exports = { router, excelObject }
+module.exports = { router, excelObject, YearSelecter }

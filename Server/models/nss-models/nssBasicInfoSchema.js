@@ -48,6 +48,4 @@ const nssBasicInfoSchema = new mongoose.Schema({
 
 })
 
-const NssBasicInfo = new mongoose.model('NssBasicInfo', nssBasicInfoSchema);
-
-module.exports = NssBasicInfo;
+module.exports = mongoose.model('NssBasicInfo', nssBasicInfoSchema);

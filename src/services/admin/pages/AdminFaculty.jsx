@@ -48,8 +48,6 @@ const AdminFaculty = ({ school }) => {
 
   const loadedInitial ={ faculty: false, qualification: false, researchdegrees: false, econtentdeveloped: false, appointmentspriorjoining: false, awardrecognition: false, booksandchapters: false, collaborations: false, conferenceorganised: false, conferencepartipeted: false, consultancy: false, fellowship: false, researchprojects: false, postheldafterjoining: false, lectures: false, researchpapers: false, phdawarded: false, jrfsrfpdf: false, patents: false, invitedtalks: false, orientationrefreshercourse: false, financialsupport: false, responsibilities: false, foraginvisit: false, }
   const [loaded, setLoaded] = useState(loadedInitial)
-
-  console.log(loaded);
   
   const loading = !(Object.values(loaded).every((value) => value === true));
   

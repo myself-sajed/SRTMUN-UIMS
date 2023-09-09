@@ -60,6 +60,7 @@ const ValueAddedCource = require('../../models/director-models/valueAddedCourceS
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
+const { YearSelecter } = require('../../routes/director-routes/director-routes')
 
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
 
@@ -184,47 +185,56 @@ router.post('/Admin/getData', async (req, res) => {
     }
 })
 
-//Get Route
-// router.post('/Admin/getData', async (req, res) => {
-
-//     const { model, filter, filterConditios } = req.body
-//     let fil = {};
-//     let filc = {};
-//     if (filterConditios !== null) {
-//         filc = filterConditios
-//     }
-//     if (filter !== null) {
-//         fil = filter
-//     }
-//     try {
-//         if (facultyModels.includes(model)) {
-//             models[model].find(fil).populate({
-//                 path: 'userId',
-//                 match: filc,
-//                 select: ('-password'),
-//             }).exec(function (err, fetch) {
-//                 let filterData = []
-//                 if (err) {
-//                     // throw err; 
-//                     console.log(err);
-//                 }
-//                 for (item of fetch) {
-//                     if (item.userId !== null) {
-//                         filterData.push(item)
-//                     }
-//                 }
-//                 res.status(200).send(filterData);
-//             });
-//         }
-//         else {
-//             const fetch = await models[model].find(fil).sort({ $natural: -1 });
-//             res.status(200).send(fetch);
-//         }
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send();
-//     }
-// })
+router.post('/Admin/getFiveYearData', async (req, res)=>{
+    try {
+        const genrateAcademicYears = () =>{
+            const d = new Date()
+            let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1;
+            const ly = year - 4;
+            let i = 1
+            let arr = []
+            for (year; year >= ly; year--) {
+                let privyear = year.toString().slice(-2);
+                let last = year - 1 + "-" + privyear;
+                last = last.toString();
+    
+                arr.push(last)
+                i++
+            }
+            return arr
+        }
+        const yearList = genrateAcademicYears();
+        const docs = {}
+        let oModels = Object.keys(models)
+        const itemsToRemove = ["User", "DirectorUser", "AlumniUser", "StudentUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms"];
+        const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
+        for (const model of filteredModels) {
+            
+            docs[model] = {};
+            await Promise.all(
+                yearList.map(async (year) => {
+                    let yearFieldNmae
+                    
+                    for (const yearField in YearSelecter) {
+                        if (YearSelecter[yearField].includes(model)) {
+                          yearFieldNmae= yearField;
+                          break;
+                        }
+                        else {
+                            yearFieldNmae= 'year'
+                        }
+                    }
+                    
+                    docs[model][year] = await models[model].countDocuments({[yearFieldNmae]:year});
+                })
+            );
+        }
+        res.status(200).send(docs);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send();
+    }
+})
 
 //registration page Enable/ Disable
 router.post('/Registration/pageToggler', async (req, res) => {

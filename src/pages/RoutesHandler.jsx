@@ -100,6 +100,8 @@ import YFCollegeRegistration from '../services/youthfestival/pages/YFCollegeRegi
 import YFCollegeHome from '../services/youthfestival/pages/YFCollegeHome'
 import YFCollegeLogin from '../services/youthfestival/pages/YFCollegeLogin'
 import YFForm from '../services/youthfestival/pages/YFForm'
+import StudentComplaintsGrievances from '../services/exam/pages/StudentComplaintsGrievances'
+
 
 let model=  "Xyz"
 let module= 'abc'
@@ -114,6 +116,7 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
+                <Route path="/test2" exact element={<StudentComplaintsGrievances/>}/>
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />
