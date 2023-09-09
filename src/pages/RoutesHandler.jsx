@@ -112,12 +112,13 @@ import SportsHome from '../services/sports/pages/SportsHome'
 import ExamHome from '../services/exam/pages/ExamHome'
 import PlacementHome from '../services/placement/pages/PlacementHome'
 import StudentComplaintsGrievances from '../services/exam/pages/StudentComplaintsGrievances'
+import StudentSatisfactionSurvey from '../services/feedback/pages/StudentSatisfactionSurvey'
 
 
-let model=  "Xyz"
-let module= 'abc'
-let filter= {}
-let tableObj= {name:'Name', class: 'Class', course: 'Course', rollNo: 'Roll No'}
+let model = "Xyz"
+let module = 'abc'
+let filter = {}
+let tableObj = { name: 'Name', class: 'Class', course: 'Course', rollNo: 'Roll No' }
 
 const RoutesHandler = () => {
 
@@ -127,7 +128,7 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-                <Route path="/test2" exact element={<StudentComplaintsGrievances/>}/>
+                <Route path="/test2" exact element={<StudentComplaintsGrievances />} />
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />
@@ -277,7 +278,8 @@ const RoutesHandler = () => {
                 <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />
                 <Route path="/training-and-placement" exact element={<PlacementHome />} />
 
-
+                {/* Student Satisfaction Survey */}
+                <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />
 
 
             </Routes>

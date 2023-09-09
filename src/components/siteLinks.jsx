@@ -55,6 +55,7 @@ let siteLinks = {
     alumniFeedack: { title: "Alumni Feedback Form", link: '/feedback/alumni' },
     expertFeedback: { title: "Subject Expert Feedback Form", link: '/feedback/expert' },
     employerFeedack: { title: "Employer Feedback Form", link: '/feedback/employer' },
+    studentSatisfactionSurvey: { title: "Student Satisfaction Survey", link: '/student-satisfaction-survey' },
     programs: { title: "Programs", link: '/programs' },
     addProgram: { title: "Add a Program", link: '/addProgram' },
     yfCollegeRegistration: { title: "Youth Festival College Registration", link: '/youthfestival/college-registration' },

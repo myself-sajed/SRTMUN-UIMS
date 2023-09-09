@@ -32,7 +32,7 @@ const DashbordButtons = [
     { element: <AdminDashboard />, title: "Dashboard", name: "Dashboard", },
     { element: <AdminFaculty />, title: "Faculties", name: "Faculties", },
     { element: <AdminDirector />, title: "Directors", name: "Directors", },
-    { element: <AdminNumaricalData />, title: "Numarical Data", name: "Numarical Data", },
+    { element: <AdminNumaricalData />, title: "Numerical Dashboard", name: "Numerical Dashboard", },
     { element: <AdminReportStatus />, title: "Report Status", name: "Report Status", },
     { element: <AdminFeedbackStatus />, title: "Feedback Status", name: "Feedback Status", },
     { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },

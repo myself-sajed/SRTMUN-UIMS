@@ -1774,6 +1774,8 @@ const EditableTd = ({ setState, title, state, keyName, tableName = 'program' }) 
     )
 }
 
+export { EditableTd }
+
 
 const FeedbackCheck = ({ setState, state, keyName, title, id }) => {
 
