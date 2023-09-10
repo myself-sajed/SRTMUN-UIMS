@@ -105,6 +105,12 @@ app.use(require('./routes/dsd-routes/dsd-routes'))
 // Exam 
 app.use(require('./routes/exam-routes/exam-routes'))
 
+//krc
+app.use(require('./routes/krc-routes/krc-routes'))
+
+//other
+app.use(require('./routes/other-routes/other-routes'))
+
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes'));
 

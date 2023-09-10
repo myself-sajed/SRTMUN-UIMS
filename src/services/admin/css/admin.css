@@ -189,7 +189,7 @@
 
 /* Set the scrollbar color*/
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
   height: 10px;
   /* width of the scrollbar */
 }

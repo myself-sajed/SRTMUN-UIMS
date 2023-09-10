@@ -4,25 +4,23 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
-const StudentComplaintsGrievances = require('../../models/exam-models/studentComplaintsGrevancesSchema')
-const DateOfResultDiclaration = require('../../models/exam-models/dateOfResultDiclarationSchema')
+const SubscriptionForKRC = require("../../models/krc-models/subscriptionForKRCSchema")
 
-const models = { ExamPassedDuringYear, StudentComplaintsGrievances, DateOfResultDiclaration }
+const models = { SubscriptionForKRC }
 
-const examstorage = multer.diskStorage({
+const krcstorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const link = path.join(__dirname, `../../uploads/exam-uploads/`)
+        const link = path.join(__dirname, `../../uploads/krc-uploads/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
         cb(null, `${new Date().getTime()}-${file.originalname}`)
     },
 })
-const examUpload = multer({ storage: examstorage })
+const krcUpload = multer({ storage: krcstorage })
 
 //get
-router.post('/exam/getData', async (req, res)=>{
+router.post('/krc/getData', async (req, res)=>{
     const { model, filter} = req.body
     try {
         const fetch = await models[model].find(filter);
@@ -34,23 +32,17 @@ router.post('/exam/getData', async (req, res)=>{
 })
 
 //set
-router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, res) => {
+router.post("/krc/newRecord/:model", krcUpload.single("Proof"), async (req, res) => {
     try {
         const model = req.params.model
         // console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
-        
-        const isFile = req.file
-        if(isFile){
-            var up = req.file.filename;
-        }
+        let SendData = null;
+        // const { } = data
+        const up = req.file.filename;
+        SendData = data
 
-        if(up){
-            var withUpData = Object.assign(data, { Proof: up })
-        }
-        else{
-            var withUpData = data
-        }
+        var withUpData = Object.assign(SendData, { Proof: up })
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
@@ -62,7 +54,7 @@ router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, re
 });
 
 //reset
-router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, res) => {
+router.post('/krc/editRecord/:model', krcUpload.single('Proof'), async (req, res) => {
     const model = req.params.model
     const data = JSON.parse(JSON.stringify(req.body));
     let SendData = null;
@@ -85,14 +77,14 @@ router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, r
 })
 
 //remove
-router.post('/exam/deleteRecord', async (req, res) => {
+router.post('/krc/deleteRecord', async (req, res) => {
     const { model, id } = req.body
 
     try {
         const Record = await models[model].findOne({ _id: id });
         await models[model].deleteOne({ _id: id })
         const Filename = Record.Proof;
-        const link = path.join(__dirname, `../../uploads/exam-uploads/${Filename}`);
+        const link = path.join(__dirname, `../../uploads/krc-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {
                 console.error(err);

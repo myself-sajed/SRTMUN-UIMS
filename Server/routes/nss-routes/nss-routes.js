@@ -7,6 +7,7 @@ const NssAdmission = require("../../models/nss-models/nssAdmissionSchema")
 const NssBasicInfo = require("../../models/nss-models/nssBasicInfoSchema")
 const AwardForExtensionActivities = require("../../models/nss-models/awardForExtensionActivitiesSchema")
 const ExtensionActivities = require("../../models/director-models/extensionActivitysSchema")
+const DemandRatio = require('../../models/director-models/demandRatioSchema');
 
 // multer configuration nss
 
@@ -48,7 +49,7 @@ const directorStorage = multer.diskStorage({
 })
 const dirtectorUpload = multer({ storage: directorStorage })
 
-const models = { NssAdmission, NssBasicInfo, AwardForExtensionActivities, ExtensionActivities }
+const models = { NssAdmission, NssBasicInfo, AwardForExtensionActivities, ExtensionActivities, DemandRatio }
 
 const excelObject = {
     //Nss

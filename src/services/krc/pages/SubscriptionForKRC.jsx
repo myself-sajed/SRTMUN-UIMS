@@ -10,13 +10,15 @@ import addReq from '../../../components/requestComponents/addReq'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
+import Select from '../../../components/formComponents/Select';
 
-const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Program Name", studentsAppeared: "Number of Students Appeared in Final Year Examination", studentsPassed: "Number of Students Passed in Final Year Examination", academicYear: 'Year',  Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", libraryResources: "Library resources	If yes, details of memberships/subscriptions", eBooks: "Expenditure on subscription to e-journals, e-books (INR in lakhs)", eResources: "Expenditure on subscription to other e-resources (INR in lakhs)", academicYear: 'Year', Proof: "Total Library Expenditure	Link to the relevant document", Action: "Action" }
+ 			
 
-const ExamPassedDuringYear = () => {
-    const model = 'ExamPassedDuringYear'
-    const module = 'exam';
-    const title = "Students Passed During The Year ";
+const SubscriptionForKRC = () => {
+    const model = 'SubscriptionForKRC'
+    const module = 'krc';
+    const title = "Institution has subscription for KRC";
   
   
     let filter = {};
@@ -24,10 +26,10 @@ const ExamPassedDuringYear = () => {
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
   
     const initialstate = {
-        programCode: "", programName: "", studentsAppeared: "", studentsPassed: "", academicYear: "",
+      libraryResources: "", eBooks: "", eResources: "", academicYear: "", Proof: "",
     }
     const [values, setValues] = useState(initialstate)
-    const { programCode, programName, studentsAppeared, studentsPassed, academicYear, } = values
+    const { libraryResources, eBooks, eResources, academicYear, } = values
     const [open, setOpen] = useState(false)
     const [excelOpen, setExcelOpen] = useState(false)
   
@@ -40,9 +42,9 @@ const ExamPassedDuringYear = () => {
       if (itemToEdit && data.data) {
         data?.data.forEach((item) => {
           if (item?._id === itemToEdit) {
-            const { programCode, programName, studentsAppeared, studentsPassed, academicYear, } = item
+            const { libraryResources, eBooks, eResources, academicYear, } = item
             setEdit(true); setOpen(true);
-            setValues({ programCode, programName, studentsAppeared, studentsPassed, academicYear,  })
+            setValues({ libraryResources, eBooks, eResources, academicYear,  })
           }
         })
       }
@@ -59,24 +61,24 @@ const ExamPassedDuringYear = () => {
   
     return (
       <>
-      {/* programCode, programName, studentsAppeared, studentsPassed, academicYear, */}
+      {/* libraryResources, eBooks, eResources, academicYear, */}
         <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
         <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
           <div className='flex flex-wrap'>
-            <Text className='col-md-6 col-lg-4' id="programCode" value={programCode} label={tableHead.programCode} setState={setValues} required={false} />
-            <Text className='col-md-6 col-lg-4' id="programName" value={programName} label={tableHead.programName} setState={setValues} />
-            <Text className='col-md-6 col-lg-4' type="number" id="studentsAppeared" value={studentsAppeared} label={tableHead.studentsAppeared} setState={setValues} />
-            <Text className='col-md-6 col-lg-4' type='number' id="studentsPassed" value={studentsPassed} label={tableHead.studentsPassed} setState={setValues} />
+            
+            <Select className='col-md-6 col-lg-4' id="libraryResources" value={libraryResources} label={tableHead.libraryResources} options={['Books Journals', 'e–Journals', 'e-books','e-ShodhSindhu', 'Shodhganga', 'Databases', ]} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="eBooks" value={eBooks} label={tableHead.eBooks} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="eResources" value={eResources} label={tableHead.eResources} setState={setValues} />
             <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
             <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
           </div>
         </DialogBox>
   
-        <BulkExcel data={data?.data} sampleFile="Students Passed During The Year" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+        <BulkExcel data={data?.data} sampleFile="Student Complaints Grievances" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
   
-        <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof"/>
+        <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
       </>
     )
 }
 
-export default ExamPassedDuringYear
+export default SubscriptionForKRC
