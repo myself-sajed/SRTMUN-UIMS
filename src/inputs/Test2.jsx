@@ -9,6 +9,8 @@ import NssAwardByInstitution from '../services/nss/pages/NssAwardByInstitution'
 import NssExtensionActivity from '../services/nss/pages/NssExtensionActivity'
 import TotalExpenditure from '../services/other/pages/TotalExpenditure'
 import OtherDemandRatio from '../services/other/pages/OtherDemandRatio'
+import Placements from '../services/director/pages/Placements'
+import ProgressionToHE from '../services/director/pages/ProgressionToHE'
 
 const Test2 = () => {
   return (
@@ -28,6 +30,9 @@ const Test2 = () => {
       <h2>Other</h2>
       <TotalExpenditure/> {/* 4.1.4 */}
       <OtherDemandRatio/> {/* 2.1.1 */}
+
+      <Placements school={true} />
+      <ProgressionToHE school={true} />
     </div>
   )
 }

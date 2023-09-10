@@ -432,6 +432,7 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         }
         //AlumniContribution, CourSeInAllProgram, QualifiedExams, Placement, ConferencesSemiWorkshopOrganized, Employability, ValueAddedCource, ReservedSeats
         else {
+            
             SendData = data
         }
         

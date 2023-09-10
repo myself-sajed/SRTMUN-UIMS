@@ -17,10 +17,16 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SCTextField from "../components/FormComponents/SCTextField";
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no.", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
+const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
 
 function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, school }) {
+
+    if(!school){
+        delete tableHead.SchoolName;
+    }
 
     const SendReq = "CounselingAndGuidance";
     const module = 'director'
@@ -33,14 +39,14 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
 
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school? school: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
+    let filter = school? yearFilter.length === 0 ? { } : { Academic_Year: { $in: yearFilter }}:yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
 
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
 
     //--------------values useState---------------
-    const initialState = { cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "" }
+    const initialState = { SchoolN: "", cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -85,9 +91,12 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: school? school: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school? values?.SchoolN:directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container className="flex_between">
+                            {
+                                school&&<SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item }) } />
+                            }
                             <CTextField label="Name of the Activity conducted by the HEI" type="text" value={values.cagnotacbth} id="cagnotacbth" required={true} onch={setvalues} />
                             <CTextField label="Number of Students Attended" type="number" value={values.cagnosa} id="cagnosa" required={true} onch={setvalues} />
                             <SYTextField label="Year of Activity" value={values.cagyoa} id="cagyoa" required={true} onch={setvalues} />

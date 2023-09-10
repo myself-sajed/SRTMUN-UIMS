@@ -2,6 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const addReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user ) => {
+  // console.log(valuesNC);
   setLoading(true)
   let formData = new FormData();
   Object.keys(values).map((key) => {
@@ -10,6 +11,8 @@ const addReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpe
   Object.keys(valuesNC).map((key) => {
     formData.append(key, valuesNC[key]);
   })
+
+  console.log(formData);
 
   axios
     .post(`${process.env.REACT_APP_MAIN_URL}/${user}/newRecord/${path}`, formData)
