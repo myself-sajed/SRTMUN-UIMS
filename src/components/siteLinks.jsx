@@ -68,7 +68,7 @@ let siteLinks = {
     nssStudentAdmission: { title: "NSS Student Admission", link: '/nss/student-admission' },
     dsdLogin: { title: "Department of Student Development Login", link: '/dsd-login' },
     dsdHome: { title: "Department of Student Development Home", link: '/dsd' },
-    dsdAQAR: { title: "DSD AQAR", link: '/dsd/aqar' },
+    dsdAQAR: { title: "DSD AQAR Form", link: '/dsd/aqar' },
     krcLogin: { title: "Knowledge Resource Center Login", link: '/krc-login' },
     krcHome: { title: "Knowledge Resource Center Home", link: '/krc' },
     krcAQAR: { title: "KRC AQAR", link: '/krc/aqar' },
