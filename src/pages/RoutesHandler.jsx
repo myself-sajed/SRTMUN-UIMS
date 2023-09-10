@@ -114,6 +114,11 @@ import PlacementHome from '../services/placement/pages/PlacementHome'
 import Test2 from '../inputs/Test2'
 import StudentSatisfactionSurvey from '../services/feedback/pages/StudentSatisfactionSurvey'
 import DSDAQAR from '../services/dsd/pages/DSDAQAR'
+import SportsAQAR from '../services/sports/pages/SportsAQAR'
+import KRCAQAR from '../services/krc/pages/KRCAQAR'
+import NSSAQAR from '../services/nss/pages/NSSAQAR'
+import ExamAQAR from '../services/exam/pages/ExamAQAR'
+import PlacementAQAR from '../services/placement/pages/PlacementAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -128,7 +133,7 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-                <Route path="/test2" exact element={<Test2/>}/>
+                <Route path="/test2" exact element={<Test2 />} />
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />
@@ -256,6 +261,7 @@ const RoutesHandler = () => {
                 {/* NSS Service */}
                 <Route path="/nss-login" exact element={<NSSLogin />} />
                 <Route path="/nss" exact element={<NSSHome />} />
+                <Route path="/nss/aqar" exact element={<NSSAQAR />} />
                 <Route path="/nss/student-admission" exact element={<NSSStudentAdmission />} />
 
                 {/* DSD */}
@@ -266,18 +272,22 @@ const RoutesHandler = () => {
                 {/* KRC */}
                 <Route path="/krc-login" exact element={<KRCLogin />} />
                 <Route path="/krc" exact element={<KRCHome />} />
+                <Route path="/krc/aqar" exact element={<KRCAQAR />} />
 
                 {/* EXAM BOEE */}
                 <Route path="/boee-login" exact element={<ExamLogin />} />
                 <Route path="/boee" exact element={<ExamHome />} />
+                <Route path="/boee/aqar" exact element={<ExamAQAR />} />
 
                 {/* SPORTS */}
                 <Route path="/sports-login" exact element={<SportsLogin />} />
                 <Route path="/sports" exact element={<SportsHome />} />
+                <Route path="/sports/aqar" exact element={<SportsAQAR />} />
 
                 {/* Training and placements */}
                 <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />
                 <Route path="/training-and-placement" exact element={<PlacementHome />} />
+                <Route path="/training-and-placement/aqar" exact element={<PlacementAQAR />} />
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />

@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 import useScroll from '../hooks/useScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
-import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser } from '../redux/slices/UserSlice';
+import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 import { FloatButton, Tooltip } from 'antd';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
@@ -135,7 +135,9 @@ const Index = () => {
             user: users.examUser ? users.examUser : null,
             profileUrl: siteLinks.examHome.link,
             tokenId: 'exam-token',
-            loginUrl: siteLinks.examLogin.link
+            loginUrl: siteLinks.examLogin.link,
+            dispatchFunction: setExamUser
+
         },
         {
             icon: <AutoStoriesRoundedIcon sx={iconProps} />,
@@ -144,7 +146,9 @@ const Index = () => {
             user: users.krcUser ? users.krcUser : null,
             profileUrl: siteLinks.krcHome.link,
             tokenId: 'krc-token',
-            loginUrl: siteLinks.krcLogin.link
+            loginUrl: siteLinks.krcLogin.link,
+            dispatchFunction: setKRCUser
+
         },
         {
             icon: <BusinessRoundedIcon sx={iconProps} />,
@@ -162,7 +166,8 @@ const Index = () => {
             user: users.dsdUser ? users.dsdUser : null,
             profileUrl: siteLinks.dsdHome.link,
             tokenId: 'dsd-token',
-            loginUrl: siteLinks.dsdLogin.link
+            loginUrl: siteLinks.dsdLogin.link,
+            dispatchFunction: setDSDUser
         },
         {
             icon: <GroupsRoundedIcon sx={iconProps} />,
@@ -171,7 +176,8 @@ const Index = () => {
             user: users.nssUser ? users.nssUser : null,
             profileUrl: siteLinks.nssHome.link,
             tokenId: 'nss-token',
-            loginUrl: siteLinks.nssLogin.link
+            loginUrl: siteLinks.nssLogin.link,
+            dispatchFunction: setNSSUser
         },
         {
             icon: <SportsHandballRoundedIcon sx={iconProps} />,
@@ -180,7 +186,8 @@ const Index = () => {
             user: users.sportsUser ? users.sportsUser : null,
             profileUrl: siteLinks.sportsHome.link,
             tokenId: 'sports-token',
-            loginUrl: siteLinks.sportsLogin.link
+            loginUrl: siteLinks.sportsLogin.link,
+            dispatchFunction: setSportsUser
         },
 
     ]

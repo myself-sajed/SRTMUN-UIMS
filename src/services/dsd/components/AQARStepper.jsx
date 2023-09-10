@@ -8,9 +8,10 @@ import { SaveButton } from '../../faculty/reports/pbas/PbasReportHome'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import Acknowledgement from '../../../components/Acknowledgement'
+import isReportSubmitted from '../js/isReportSubmitted'
 
 
-const AQARStepper = ({ children, bredLinks }) => {
+const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navigateToAfterSubmission }) => {
     title(siteLinks.dsdAQAR.title)
     const [aqarYearState, setAqarYearState] = useState(null)
     const steps = ["Select AQAR Academic Year", "Fill AQAR Form & Submit", "Acknowledgement"]
@@ -35,11 +36,15 @@ const AQARStepper = ({ children, bredLinks }) => {
         }
     }
 
+    const handleFormSubmit = () => {
+        isReportSubmitted(aqarYearState, submitModel, handleNext)
+    }
+
 
     return (
         <div>
-            <GoBack pageTitle={`Annual Quality Assurance Report Form ${aqarYearState && `(${aqarYearState})`}`} bredLinks={bredLinks} functionOnBack={navigateTabs} />
-            <div>
+            <GoBack pageTitle={`Annual Quality Assurance Report Form ${aqarYearState ? `(${aqarYearState})` : ''}`} bredLinks={bredLinks} functionOnBack={navigateTabs} />
+            <div className='w-full'>
                 <div className='mt-3'>
                     <StepStatus activeStep={activeStep} steps={steps} />
                 </div>
@@ -65,22 +70,36 @@ const AQARStepper = ({ children, bredLinks }) => {
                 }
 
                 {
-                    activeStep === 1 && <div className="mt-3">
+                    activeStep === 1 && <div className="my-5">
                         <div>{children}</div>
-                        <div className='mx-auto flex items-center justify-center'>
-                            <SaveButton title={`Save and Proceed`} onClickFunction={() => {
-                                if (aqarYearState) {
-                                    handleNext()
-                                } else {
-                                    toast.error('Select AQAR Year before you proceed.')
-                                }
-                            }} />
-                        </div>
+                        <SaveButton title={`Save and Submit`} onClickFunction={() => {
+                            if (aqarYearState) {
+                                handleFormSubmit();
+                            } else {
+                                toast.error('Select AQAR Year before you proceed.')
+                            }
+                        }} />
                     </div>
                 }
 
                 {
-                    activeStep === 2 && <Acknowledgement />
+                    activeStep === 2 && <Acknowledgement title="Successful AQAR Data Submission" navigateTo={navigateToAfterSubmission}>
+                        <>
+                            <p>Thank you, <b>{user?.name}</b> for successfully submitting the Annual Quality Assurance Report (AQAR) for the year <b>{aqarYearState}</b> of {user?.department}.</p>
+
+                            <div className='my-5 text-left'>
+                                <ul className="list-group">
+                                    <li className="list-group-item disabled" aria-disabled="true">Your AQAR Form has following information related to</li>
+                                    {
+                                        tableTitles?.map((title, index) => {
+                                            return <li className="list-group-item">{index + 1}. {title}</li>
+                                        })
+                                    }
+
+                                </ul>
+                            </div>
+                        </>
+                    </Acknowledgement>
                 }
 
             </div>

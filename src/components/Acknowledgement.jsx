@@ -14,7 +14,7 @@ const Acknowledgement = ({ children, title, navigateTo }) => {
                 <p className='text-muted mt-2'>{title}</p>
             </div>
 
-            <div className='my-5 w-3/5 text-center mx-auto'>
+            <div className='my-5 md:w-3/5 w-full text-center mx-auto'>
                 {children}
             </div>
 

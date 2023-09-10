@@ -4,6 +4,16 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+const DSDAQAR = require('../../models/dsd-models/dsdAqarSchema')
+const KRCAQAR = require('../../models/krc-models/krcAqarSchema')
+const SportsAQAR = require('../../models/sports-models/sportsAqarSchema')
+const NSSAQAR = require('../../models/nss-models/nssAqarSchema')
+const ExamAQAR = require('../../models/exam-models/examAqarSchema')
+const PlacementAQAR = require('../../models/placement-models/placementAqarSchema')
+
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR }
+
+
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');
 
@@ -20,9 +30,50 @@ const dsdstorage = multer.diskStorage({
 })
 const dsdUpload = multer({ storage: dsdstorage })
 
+
+// add aqar submissions year in the schema so that it will show if the aqar for that year has submitted or not
+router.post('/other/services/isReportSubmitted', (req, res) => {
+
+    const { year, model } = req.body;
+
+    NonTeachingModels[model].findOne({}, (err, doc) => {
+        if (err) {
+            console.error(err);
+            return res.send({ status: 'error', message: "Internal Server Error" });
+        } else {
+            if (!doc) {
+                doc = new NonTeachingModels[model]();
+            }
+
+
+            doc.submitted = [...new Set([...doc.submitted, year])]?.sort((a, b) => {
+                const numA = Number(a.replace('-', ''));
+                const numB = Number(b.replace('-', ''));
+                if (numA > numB) {
+                    return -1;
+                } else if (numA < numB) {
+                    return 1;
+                }
+                return 0;
+            });;
+
+            doc.save((saveErr, updatedDoc) => {
+                if (saveErr) {
+                    return res.send({ status: 'error', message: "Could not submit the form" });
+
+                } else {
+                    return res.send({ status: 'success', message: `AQAR Form (${year}) submission successful` });
+                }
+            });
+
+        }
+    });
+
+})
+
 //get
-router.post('/dsd/getData', async (req, res)=>{
-    const { model, filter} = req.body
+router.post('/dsd/getData', async (req, res) => {
+    const { model, filter } = req.body
     try {
         const fetch = await models[model].find(filter);
         res.status(200).send(fetch);
@@ -64,9 +115,9 @@ router.post('/dsd/editRecord/:model', dsdUpload.single('Proof'), async (req, res
     if (isfile) {
         var up = req.file.filename
     }
-    SendData=data
+    SendData = data
 
-     var alldata = null
+    var alldata = null
     if (up) {
         alldata = Object.assign(SendData, { Proof: up })
     }
