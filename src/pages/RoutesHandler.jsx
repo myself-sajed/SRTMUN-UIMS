@@ -113,6 +113,7 @@ import ExamHome from '../services/exam/pages/ExamHome'
 import PlacementHome from '../services/placement/pages/PlacementHome'
 import Test2 from '../inputs/Test2'
 import StudentSatisfactionSurvey from '../services/feedback/pages/StudentSatisfactionSurvey'
+import DSDAQAR from '../services/dsd/pages/DSDAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -260,6 +261,7 @@ const RoutesHandler = () => {
                 {/* DSD */}
                 <Route path="/dsd-login" exact element={<DSDLogin />} />
                 <Route path="/dsd" exact element={<DSDHome />} />
+                <Route path="/dsd/aqar" exact element={<DSDAQAR />} />
 
                 {/* KRC */}
                 <Route path="/krc-login" exact element={<KRCLogin />} />
