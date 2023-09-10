@@ -186,8 +186,8 @@ router.post('/Admin/getData', async (req, res) => {
 
 router.post('/Admin/getFiveYearData', async (req, res) => {
     const { schoolName } = req.body
-    console.log(schoolName);
     try {
+        
         const genrateAcademicYears = () => {
             const d = new Date()
             let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1;
@@ -207,10 +207,10 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const yearList = genrateAcademicYears();
         const docs = {}
         let oModels = Object.keys(models)
-        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper'];
+        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-
+            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : ""
             docs[model] = {};
             let totalCount = 0;
             await Promise.all(
@@ -228,15 +228,21 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
 
                     }
                     if(model==="AlumniUser"){
-                        docs[model][year] = await StudentUser.countDocuments({ programCompletedOn: year, isAlumni: true,});
+                        var filter = { programCompletedOn: year, isAlumni: true,}
+                        if(schoolName) filter[school]=schoolName
+                        docs[model][year] = await StudentUser.countDocuments(filter);
                         totalCount += docs[model][year]
                     }
                     else if(model==="StudentUser"){
-                        docs[model][year] = await models[model].countDocuments({ programEnroledOn: year, isAlumni: false, isActiveStudent: true });
+                        var filter = { programEnroledOn: year, isAlumni: false, isActiveStudent: true }
+                        if(schoolName) filter[school]=schoolName
+                        docs[model][year] = await models[model].countDocuments(filter);
                         totalCount += docs[model][year]
                     }
                     else{
-                        docs[model][year] = await models[model].countDocuments({ [yearFieldNmae]: year });
+                        var filter = { [yearFieldNmae]: year }
+                        if(schoolName) filter[school]=schoolName
+                        docs[model][year] = await models[model].countDocuments(filter);
                         totalCount += docs[model][year]
                     }
 
