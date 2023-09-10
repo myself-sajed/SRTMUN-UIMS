@@ -111,9 +111,10 @@ import NSSHome from '../services/nss/pages/NSSHome'
 import SportsHome from '../services/sports/pages/SportsHome'
 import ExamHome from '../services/exam/pages/ExamHome'
 import PlacementHome from '../services/placement/pages/PlacementHome'
-import StudentComplaintsGrievances from '../services/exam/pages/StudentComplaintsGrievances'
+import Test2 from '../inputs/Test2'
 import StudentSatisfactionSurvey from '../services/feedback/pages/StudentSatisfactionSurvey'
 import DSDAQAR from '../services/dsd/pages/DSDAQAR'
+
 
 
 let model = "Xyz"
@@ -129,7 +130,8 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-                <Route path="/test2" exact element={<StudentComplaintsGrievances />} />
+
+                <Route path="/test2" exact element={<Test2/>}/>
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />

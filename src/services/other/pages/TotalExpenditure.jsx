@@ -11,12 +11,12 @@ import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
 
-const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Program Name", studentsAppeared: "Number of Students Appeared in Final Year Examination", studentsPassed: "Number of Students Passed in Final Year Examination", academicYear: 'Year',  Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", academicYear: "Year", budjetAllocated: "Budget allocated for infrastructure augmentation", expenditureInfrastructure: "Expenditure for infrastructure augmentation", totalExpenditure: "Total expenditure excluding Salary", academicMaintenance: "Expenditure on maintenace of academic facilities (excluding salary for human resources)", physicalMaintenance: "Expenditure on maintenace of physical facilities (excluding salary for human resources)", Action: "Action" }
 
-const ExamPassedDuringYear = () => {
-    const model = 'ExamPassedDuringYear'
-    const module = 'exam';
-    const title = "Students Passed During The Year ";
+const TotalExpenditure = () => {
+    const model = 'TotalExpenditure'
+    const module = 'other';
+    const title = "Total Expenditure";
   
   
     let filter = {};
@@ -24,10 +24,10 @@ const ExamPassedDuringYear = () => {
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
   
     const initialstate = {
-        programCode: "", programName: "", studentsAppeared: "", studentsPassed: "", academicYear: "",
+        academicYear: "", budjetAllocated: "", expenditureInfrastructure: "", totalExpenditure: "", academicMaintenance: "", physicalMaintenance: "",
     }
     const [values, setValues] = useState(initialstate)
-    const { programCode, programName, studentsAppeared, studentsPassed, academicYear, } = values
+    const { academicYear, budjetAllocated, expenditureInfrastructure, totalExpenditure, academicMaintenance, physicalMaintenance, } = values
     const [open, setOpen] = useState(false)
     const [excelOpen, setExcelOpen] = useState(false)
   
@@ -40,9 +40,9 @@ const ExamPassedDuringYear = () => {
       if (itemToEdit && data.data) {
         data?.data.forEach((item) => {
           if (item?._id === itemToEdit) {
-            const { programCode, programName, studentsAppeared, studentsPassed, academicYear, } = item
+            const { academicYear, budjetAllocated, expenditureInfrastructure, totalExpenditure, academicMaintenance, physicalMaintenance, } = item
             setEdit(true); setOpen(true);
-            setValues({ programCode, programName, studentsAppeared, studentsPassed, academicYear,  })
+            setValues({ academicYear, budjetAllocated, expenditureInfrastructure, totalExpenditure, academicMaintenance, physicalMaintenance,  })
           }
         })
       }
@@ -59,24 +59,25 @@ const ExamPassedDuringYear = () => {
   
     return (
       <>
-      {/* programCode, programName, studentsAppeared, studentsPassed, academicYear, */}
+      {/* academicYear, budjetAllocated, expenditureInfrastructure, totalExpenditure, academicMaintenance, physicalMaintenance, */}
         <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
         <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
           <div className='flex flex-wrap'>
-            <Text className='col-md-6 col-lg-4' id="programCode" value={programCode} label={tableHead.programCode} setState={setValues} required={false} />
-            <Text className='col-md-6 col-lg-4' id="programName" value={programName} label={tableHead.programName} setState={setValues} />
-            <Text className='col-md-6 col-lg-4' type="number" id="studentsAppeared" value={studentsAppeared} label={tableHead.studentsAppeared} setState={setValues} />
-            <Text className='col-md-6 col-lg-4' type='number' id="studentsPassed" value={studentsPassed} label={tableHead.studentsPassed} setState={setValues} />
+            
             <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
-            <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
+            <Text className='col-md-6 col-lg-4' id="budjetAllocated" value={budjetAllocated} label={tableHead.budjetAllocated} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="expenditureInfrastructure" value={expenditureInfrastructure} label={tableHead.expenditureInfrastructure} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="totalExpenditure" value={totalExpenditure} label={tableHead.totalExpenditure} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="academicMaintenance" value={academicMaintenance} label={tableHead.academicMaintenance} setState={setValues} />
+            <Text className='col-md-6 col-lg-4' id="physicalMaintenance" value={physicalMaintenance} label={tableHead.physicalMaintenance} setState={setValues} />
           </div>
         </DialogBox>
   
-        <BulkExcel data={data?.data} sampleFile="Students Passed During The Year" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+        <BulkExcel data={data?.data} sampleFile="Total Expenditure" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
   
-        <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof"/>
+        <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model}/>
       </>
     )
 }
 
-export default ExamPassedDuringYear
+export default TotalExpenditure

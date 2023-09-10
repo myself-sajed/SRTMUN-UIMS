@@ -4,25 +4,23 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
-const StudentComplaintsGrievances = require('../../models/exam-models/studentComplaintsGrevancesSchema')
-const DateOfResultDiclaration = require('../../models/exam-models/dateOfResultDiclarationSchema')
+const TotalExpenditure = require("../../models/other-models/totalExpenditureSchema")
 
-const models = { ExamPassedDuringYear, StudentComplaintsGrievances, DateOfResultDiclaration }
+const models = { TotalExpenditure }
 
-const examstorage = multer.diskStorage({
+const otherstorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const link = path.join(__dirname, `../../uploads/exam-uploads/`)
+        const link = path.join(__dirname, `../../uploads/other-uploads/`)
         cb(null, link)
     },
     filename: (req, file, cb) => {
         cb(null, `${new Date().getTime()}-${file.originalname}`)
     },
 })
-const examUpload = multer({ storage: examstorage })
+const otherUpload = multer({ storage: otherstorage })
 
 //get
-router.post('/exam/getData', async (req, res)=>{
+router.post('/other/getData', async (req, res)=>{
     const { model, filter} = req.body
     try {
         const fetch = await models[model].find(filter);
@@ -34,12 +32,11 @@ router.post('/exam/getData', async (req, res)=>{
 })
 
 //set
-router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, res) => {
+router.post("/other/newRecord/:model", otherUpload.single("Proof"), async (req, res) => {
     try {
         const model = req.params.model
         // console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
-        
         const isFile = req.file
         if(isFile){
             var up = req.file.filename;
@@ -62,7 +59,7 @@ router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, re
 });
 
 //reset
-router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, res) => {
+router.post('/other/editRecord/:model', otherUpload.single('Proof'), async (req, res) => {
     const model = req.params.model
     const data = JSON.parse(JSON.stringify(req.body));
     let SendData = null;
@@ -85,14 +82,14 @@ router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, r
 })
 
 //remove
-router.post('/exam/deleteRecord', async (req, res) => {
+router.post('/other/deleteRecord', async (req, res) => {
     const { model, id } = req.body
 
     try {
         const Record = await models[model].findOne({ _id: id });
         await models[model].deleteOne({ _id: id })
         const Filename = Record.Proof;
-        const link = path.join(__dirname, `../../uploads/exam-uploads/${Filename}`);
+        const link = path.join(__dirname, `../../uploads/other-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {
                 console.error(err);

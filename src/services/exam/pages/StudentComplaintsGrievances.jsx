@@ -16,7 +16,7 @@ const tableHead = { index: "Sr. no.", noOfStudents: "No Of Students Appeared", n
 const StudentComplaintsGrievances = () => {
     const model = 'StudentComplaintsGrievances'
     const module = 'exam';
-    const title = "Student Complaints Grievances";
+    const title = "Student Complaints Grievances ";
   
   
     let filter = {};
