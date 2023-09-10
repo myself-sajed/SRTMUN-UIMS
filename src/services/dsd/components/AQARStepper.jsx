@@ -35,6 +35,10 @@ const AQARStepper = ({ children, bredLinks }) => {
         }
     }
 
+    const handleFormSubmit = () => {
+        toast.success(`AQAR Form (${aqarYearState}) submission successful`)
+    }
+
 
     return (
         <div>
@@ -67,15 +71,14 @@ const AQARStepper = ({ children, bredLinks }) => {
                 {
                     activeStep === 1 && <div className="mt-3">
                         <div>{children}</div>
-                        <div className='mx-auto flex items-center justify-center'>
-                            <SaveButton title={`Save and Proceed`} onClickFunction={() => {
-                                if (aqarYearState) {
-                                    handleNext()
-                                } else {
-                                    toast.error('Select AQAR Year before you proceed.')
-                                }
-                            }} />
-                        </div>
+                        <SaveButton title={`Save and Submit`} onClickFunction={() => {
+                            if (aqarYearState) {
+                                handleNext();
+                                handleFormSubmit();
+                            } else {
+                                toast.error('Select AQAR Year before you proceed.')
+                            }
+                        }} />
                     </div>
                 }
 
