@@ -114,8 +114,6 @@ import PlacementHome from '../services/placement/pages/PlacementHome'
 import Test2 from '../inputs/Test2'
 import StudentSatisfactionSurvey from '../services/feedback/pages/StudentSatisfactionSurvey'
 
-
-
 let model = "Xyz"
 let module = 'abc'
 let filter = {}
@@ -129,7 +127,6 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-
                 <Route path="/test2" exact element={<Test2/>}/>
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />

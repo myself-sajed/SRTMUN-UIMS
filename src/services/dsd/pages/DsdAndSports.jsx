@@ -21,8 +21,9 @@ const DsdAndSports = () => {
     const module = 'dsd';
     const title = "Sports and DSD"
   
-  
-    let filter = {};
+    const DsdLocation = window.location.pathname === ""
+
+    let filter = {isDsd: DsdLocation?true:false};
     const params = { model, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
   
@@ -57,7 +58,7 @@ const DsdAndSports = () => {
     const onSubmit = (e) => {
       e.preventDefault();
       edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-        addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+        addReq({isDsd: DsdLocation?true:false}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
   
     return (

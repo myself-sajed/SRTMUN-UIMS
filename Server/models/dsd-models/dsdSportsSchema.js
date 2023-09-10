@@ -26,6 +26,10 @@ const dsdSportsSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    isDsd: {
+        type: 'boolean',
+        required: true,
+    },
     Proof: {
         type: 'string',
         required: true
