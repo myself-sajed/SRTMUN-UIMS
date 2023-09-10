@@ -14,8 +14,8 @@ const sportsAndCulturalEventsSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    isDsd: {
-        type: 'boolean',
+    userType: {
+        type: 'string',
         required: true,
     },
     Proof: {
