@@ -7,7 +7,7 @@ const IntroStep = ({ setActiveStep, setAcademicYear, academicYear, schoolName, s
     return (
         <div className="flex items-center justify-center mt-4">
             <form className='text-center' onSubmit={() => { setActiveStep(1) }}>
-                <DeptSelect title="Select your School" setState={setSchoolName} state={schoolName} selectId="registerDept" classes='rounded-lg mb-2' />
+                {schoolName === 'donotshow' ? null : <DeptSelect title="Select your School" setState={setSchoolName} state={schoolName} selectId="registerDept" classes='rounded-lg mb-2' />}
                 <div className='mt-4'>
                     <label className='mb-2' htmlFor="selectFor">Choose Academic Year</label>
                     <select id="selectFor" value={academicYear} onChange={(e) => setAcademicYear(e.target.value)} className="rounded-lg form-select" aria-label="Default select example">

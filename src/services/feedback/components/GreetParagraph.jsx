@@ -11,6 +11,13 @@ const GreetParagraph = ({ userType }) => {
         alumni: <div> <p>Dear Esteemed Alumni,</p>
             <p>
                 We sincerely value your association with the University and would be extremely grateful if you could take a few minutes to share your valuable feedback with us. Your insights and experiences as an alumnus play a vital role in shaping the future of our university and improving the overall learning environment. We sincerely appreciate your participation in this feedback process. </p></div>,
+
+        studentSurvey: <div>
+            <p>Greetings to all our students. </p>
+            <p>
+                Your feedback is essential for us to enhance your learning environment. Please take a moment to share your candid responses in our student satisfaction survey to make a positive impact.
+            </p>
+        </div>
     }
 
     return <div className='bg-blue-50 p-2 text-xs sm:text-sm md:text-base rounded-md text-blue-900'> {paragraphs[userType]}</div>

@@ -3,7 +3,7 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
-import RepeatOneOnRoundedIcon from '@mui/icons-material/RepeatOneOnRounded';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import MoreIcon from '@mui/icons-material/More';
 import { DashbordButtons } from '../components/navcom';
@@ -16,7 +16,7 @@ import siteLinks from '../../../components/siteLinks';
 
 
 const AdminDrower = ({ children }) => {
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />,"Numarical Data":<RepeatOneOnRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
   title('Admin Panel')
   const dispatch = useDispatch();
   const AdminActive = useSelector(state => state.adminActive.adminActive)

@@ -9,7 +9,8 @@
   --sidebar-bg2-color: #8f4835e8;
   /* #69358fe8 */
   --dashboard-card-bg-color: #d8d2e7;
-  --dashboard-card-bg2-color: #e7d7d2;;
+  --dashboard-card-bg2-color: #e7d7d2;
+  ;
   /* #d8d2e7 */
   --dashboard-card-txt-color: #70329d;
   /* #70329d */
@@ -51,7 +52,7 @@
 }
 
 .sub-main {
-  width: 100%; 
+  width: 100%;
   overflow: hidden;
   background: #FFF;
   border: 1px solid #d8dadb;
@@ -59,34 +60,36 @@
   padding: 15px;
 }
 
-.button-wraper{
-  background: #f1f3f4; 
-  width: 100%; 
-  padding: 3px; 
-  margin: 20px 0; 
+.button-wraper {
+  background: #f1f3f4;
+  width: 100%;
+  padding: 3px;
+  margin: 20px 0;
   border-radius: 10px;
 }
 
-.directorBtn{
+.directorBtn {
   color: #fff !important;
   background: #28359b;
 }
-.directorBtn:hover{
+
+.directorBtn:hover {
   color: #28359b !important;
   background: transparent;
 }
 
-.adminBtn{
+.adminBtn {
   color: #997024 !important
 }
-.normalBtn{
+
+.normalBtn {
   text-transform: none !important;
   width: 100%;
 }
 
 /*Admin Drower*/
 .sidebar-admin-drower {
-  display:flex;
+  display: flex;
   gap: 5px;
   flex-wrap: wrap;
   padding: 10px;
@@ -97,24 +100,24 @@
   font-size: 14px;
 }
 
-.chart-button-section{
+.chart-button-section {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 10px;
 }
 
-.activeChartBtn{
+.activeChartBtn {
   background: #dbdbdb !important;
 }
 
 /*pie card*/
 .section-pie {
-    margin: 0px 20px 20px 20px;
-    padding: 10px;
-    background: var(--top-btn-background);
-    border-radius: 20px;
-    /* box-shadow: rgb(145 133 181) 7px 7px 8px; */
+  margin: 0px 20px 20px 20px;
+  padding: 10px;
+  background: var(--top-btn-background);
+  border-radius: 20px;
+  /* box-shadow: rgb(145 133 181) 7px 7px 8px; */
 }
 
 /*Dashboard*/
@@ -126,29 +129,35 @@
   padding: 8px;
   margin-bottom: 2px;
   color: #fff;
+  border-radius: 8px;
 }
+
 @media screen and (min-width: 0px) {
-  .DashbordButtons{
+  .DashbordButtons {
     width: 100% !important;
   }
 }
-@media screen and (min-width:350px ) {
-  .DashbordButtons{
+
+@media screen and (min-width:350px) {
+  .DashbordButtons {
     width: 49% !important;
   }
 }
-@media screen and (min-width:650px ) {
-  .DashbordButtons{
+
+@media screen and (min-width:650px) {
+  .DashbordButtons {
     width: 32% !important;
   }
 }
-@media screen and (min-width:1050px ) {
-  .DashbordButtons{
+
+@media screen and (min-width:1050px) {
+  .DashbordButtons {
     width: 150px !important;
   }
 }
 
-.DashbordButtons:hover, .active {
+.DashbordButtons:hover,
+.active {
   background: var(--top-btn-background) !important;
   color: var(--top-color-new) !important;
 }
@@ -162,7 +171,8 @@
   min-width: 145px;
 }
 
-.adminDashbordCard:hover, .active-dashbord-card {
+.adminDashbordCard:hover,
+.active-dashbord-card {
   background: var(--top-card-hover-background) !important;
   color: var(--top-color-new) !important;
 }
@@ -181,7 +191,8 @@
   border: 1px solid var(--top-color-new);
 }
 
-.sub-menu-card:hover, .sub-menu-card-active{
+.sub-menu-card:hover,
+.sub-menu-card-active {
   color: var(--top-color-new) !important;
   background-color: var(--top-card-hover-background) !important;
 
@@ -203,5 +214,5 @@
 ::-webkit-scrollbar-thumb {
   background-color: rgb(196, 196, 196);
   border-radius: 10px;
-  border:gray 1px solid;
+  border: gray 1px solid;
 }

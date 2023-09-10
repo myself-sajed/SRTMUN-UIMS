@@ -5,6 +5,7 @@ import Acknowlegement from './Acknowlegement';
 import IntroStep from './IntroStep';
 import StepStatus from '../../../components/StepStatus';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear, schoolName, setSchoolName, activeStep, setActiveStep, customfunctionOnBack = false, customSteps = false }) => {
 
@@ -15,7 +16,8 @@ const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear
 
     const functionOnBack = () => {
         if (activeStep === 2) {
-            setActiveStep(1);
+            // setActiveStep(1);
+            toast.error("You can not go back after successfull form submission.")
         } else if (activeStep === 1) {
             setActiveStep(0);
         } else if (activeStep === 0) {

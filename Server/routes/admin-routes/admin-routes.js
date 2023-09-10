@@ -185,9 +185,9 @@ router.post('/Admin/getData', async (req, res) => {
     }
 })
 
-router.post('/Admin/getFiveYearData', async (req, res)=>{
+router.post('/Admin/getFiveYearData', async (req, res) => {
     try {
-        const genrateAcademicYears = () =>{
+        const genrateAcademicYears = () => {
             const d = new Date()
             let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1;
             const ly = year - 4;
@@ -197,7 +197,7 @@ router.post('/Admin/getFiveYearData', async (req, res)=>{
                 let privyear = year.toString().slice(-2);
                 let last = year - 1 + "-" + privyear;
                 last = last.toString();
-    
+
                 arr.push(last)
                 i++
             }
@@ -209,26 +209,38 @@ router.post('/Admin/getFiveYearData', async (req, res)=>{
         const itemsToRemove = ["User", "DirectorUser", "AlumniUser", "StudentUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms"];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-            
+
             docs[model] = {};
+            let totalCount = 0;
             await Promise.all(
                 yearList.map(async (year) => {
                     let yearFieldNmae
-                    
+
                     for (const yearField in YearSelecter) {
                         if (YearSelecter[yearField].includes(model)) {
-                          yearFieldNmae= yearField;
-                          break;
+                            yearFieldNmae = yearField;
+                            break;
                         }
                         else {
-                            yearFieldNmae= 'year'
+                            yearFieldNmae = 'year'
                         }
+
                     }
-                    
-                    docs[model][year] = await models[model].countDocuments({[yearFieldNmae]:year});
-                })
-            );
+
+                    docs[model][year] = await models[model].countDocuments({ [yearFieldNmae]: year });
+                    totalCount += docs[model][year]
+
+                }));
+
+            docs[model]['Total'] = totalCount
         }
+
+
+
+        // total calculations
+
+
+
         res.status(200).send(docs);
     } catch (error) {
         console.log(error);
@@ -245,7 +257,7 @@ router.post('/Registration/pageToggler', async (req, res) => {
     res.send(status.idObject)
 })
 router.post('/Registration/pageStatus', async (req, res) => {
-    const status = await IsRegistration.findOne({name: "isRegToggle"}, {idObject: 1})
+    const status = await IsRegistration.findOne({ name: "isRegToggle" }, { idObject: 1 })
     res.send(status.idObject)
 })
 

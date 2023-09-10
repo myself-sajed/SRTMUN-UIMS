@@ -38,10 +38,13 @@ const listOfYears = Array(currentDate - (currentDate - 30)).fill('').map((v, idx
 
 export { listOfYears }
 
-const academicYearGenerator = (numberOfYearsToDisplay, showCurrentYear = true) => {
+const academicYearGenerator = (numberOfYearsToDisplay, showCurrentYear = true, extendYear = false) => {
     // generate years
     let now;
-    if (showCurrentYear) {
+    if (extendYear) {
+        now = new Date().getUTCFullYear() + 1;
+    }
+    else if (showCurrentYear) {
         now = new Date().getUTCFullYear();
     } else {
         now = new Date().getUTCFullYear() - 1
