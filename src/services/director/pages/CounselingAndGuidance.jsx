@@ -20,7 +20,7 @@ import BulkExcel from '../../../components/BulkExcel';
 
 const tableHead = { index: "Sr. no.", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
 
-function CounselingAndGuidance({ filterByAcademicYear = false, academicYear }) {
+function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, school }) {
 
     const SendReq = "CounselingAndGuidance";
     const module = 'director'
@@ -31,7 +31,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear }) {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school? school: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
@@ -85,7 +85,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear }) {
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school? school: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container className="flex_between">
                             <CTextField label="Name of the Activity conducted by the HEI" type="text" value={values.cagnotacbth} id="cagnotacbth" required={true} onch={setvalues} />

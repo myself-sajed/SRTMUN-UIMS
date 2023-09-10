@@ -13,7 +13,6 @@ const EContentDeveloped = require('../../models/faculty-models/eContentDeveloped
 const Petant = require('../../models/faculty-models/patent');
 const ConferenceOrganized = require('../../models/faculty-models/conferenceOrganized');
 const InvitedTalk = require('../../models/faculty-models/invitedTalk');
-const ResearchGuidance = require('../../models/faculty-models/researchGuidance');
 const Fellowship = require('../../models/faculty-models/fellowship');
 const Qualification = require('../../models/faculty-models/qualificationModel');
 const Degree = require('../../models/faculty-models/degreeModel');
@@ -62,7 +61,7 @@ const ValueAddedCource = require('../../models/director-models/valueAddedCourceS
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes')
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchGuidance, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "PostHeld", "Lectures", "ResearchPaper", "PhdAwarded", "JrfSrf", "Patent", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
@@ -186,6 +185,8 @@ router.post('/Admin/getData', async (req, res) => {
 })
 
 router.post('/Admin/getFiveYearData', async (req, res) => {
+    const { schoolName } = req.body
+    console.log(schoolName);
     try {
         const genrateAcademicYears = () => {
             const d = new Date()
@@ -206,7 +207,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const yearList = genrateAcademicYears();
         const docs = {}
         let oModels = Object.keys(models)
-        const itemsToRemove = ["User", "DirectorUser", "AlumniUser", "StudentUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper'];
+        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
 
@@ -226,9 +227,18 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         }
 
                     }
-
-                    docs[model][year] = await models[model].countDocuments({ [yearFieldNmae]: year });
-                    totalCount += docs[model][year]
+                    if(model==="AlumniUser"){
+                        docs[model][year] = await StudentUser.countDocuments({ programCompletedOn: year, isAlumni: true,});
+                        totalCount += docs[model][year]
+                    }
+                    else if(model==="StudentUser"){
+                        docs[model][year] = await models[model].countDocuments({ programEnroledOn: year, isAlumni: false, isActiveStudent: true });
+                        totalCount += docs[model][year]
+                    }
+                    else{
+                        docs[model][year] = await models[model].countDocuments({ [yearFieldNmae]: year });
+                        totalCount += docs[model][year]
+                    }
 
                 }));
 

@@ -22,7 +22,7 @@ import SchoolsProgram from "../../../components/SchoolsProgram";
 
 const tableHead = { index: "Sr. no.", Name_of_student_enrolling: "Name of student enrolling", Program_graduated_from: "Program graduated from", Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", Academic_Year: "Academic Year", Upload_Proof: "Upload Proof", Action: "Action" }
 
-function ProgressionToHE({ filterByAcademicYear = false, academicYear }) {
+function ProgressionToHE({ filterByAcademicYear = false, academicYear, school }) {
 
     const SendReq = "ProgressionToHE";
     const module = 'director'
@@ -33,7 +33,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear }) {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school? school:directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
@@ -87,7 +87,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear }) {
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school? school:directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField value={values.pthenose} id="pthenose" type="text" label="Name of student enrolling" required={true} onch={setvalues} />
