@@ -14,6 +14,10 @@ const sportsAndCulturalEventsSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    userType: {
+        type: 'string',
+        required: true,
+    },
     Proof: {
         type: 'string',
         required: true

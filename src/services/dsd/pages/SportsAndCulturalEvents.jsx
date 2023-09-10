@@ -7,8 +7,6 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
-import Lists from '../../../components/tableComponents/Lists'
-import Select from '../../../components/formComponents/Select'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
@@ -17,13 +15,12 @@ import UploadFile from '../../../components/formComponents/UploadFile'
 const tableHead = { index: "Sr. no.", dateOfEvent: "Date of event/competition", nameOfEvent: "Name  of the event/competition", academicYear: "Academic Year", Proof: "Proof of Report", Action: "Action" }
 
 
-const SportsAndCulturalEvents = () => {
+const SportsAndCulturalEvents = ({userType= 'dsd'}) => {
  const model = 'SportsAndCulturalEvents'
 const module = 'dsd';
 const title = "Sports And Cultural Event"
 
-
-let filter = {};
+let filter = {userType};
 const params = { model, id: '', module, filter }
 const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -58,7 +55,7 @@ const onCancel = () => {
 const onSubmit = (e) => {
   e.preventDefault();
   edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-    addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+  addReq({userType}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
 }
 
 return (

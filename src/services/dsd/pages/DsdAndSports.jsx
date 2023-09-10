@@ -16,13 +16,12 @@ import UploadFile from '../../../components/formComponents/UploadFile'
 
 const tableHead = { index: "Sr. no.", nameOfAward: "Name of the award/ medal", teamIndividual: "Team / Individual", isNat: "Inter-university / state / National / International", nameOfEvent: "Name of the event", nameOfStudnt: "Name of the student", academicYear: "Year", Proof: "Proof of Award", Action: "Action" }
 
-const DsdAndSports = () => {
+const DsdAndSports = ({userType= 'dsd'}) => {
     const model = 'DSDSports'
     const module = 'dsd';
     const title = "Sports and DSD"
-  
-  
-    let filter = {};
+
+    let filter = {userType};
     const params = { model, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
   
@@ -57,7 +56,7 @@ const DsdAndSports = () => {
     const onSubmit = (e) => {
       e.preventDefault();
       edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-        addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+        addReq({userType}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
   
     return (

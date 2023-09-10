@@ -206,7 +206,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const yearList = genrateAcademicYears();
         const docs = {}
         let oModels = Object.keys(models)
-        const itemsToRemove = ["User", "DirectorUser", "AlumniUser", "StudentUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms"];
+        const itemsToRemove = ["User", "DirectorUser", "AlumniUser", "StudentUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
 
@@ -234,13 +234,6 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
 
             docs[model]['Total'] = totalCount
         }
-
-
-
-        // total calculations
-
-
-
         res.status(200).send(docs);
     } catch (error) {
         console.log(error);

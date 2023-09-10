@@ -249,7 +249,7 @@ const YearSelecter={
     academicYear:['CourceInAllProgram', 'NewPrograms'],
     Year_of_Award:['Award', 'UgcSapCasDstFistDBTICSSR'],
     Academic_Year:["DemandRatio","ProgressionToHE","ProjectsInternships","SkillsEnhancementInitiatives","SyllabusRevision","Placement","Employability","ReservedSeats","AlumniContribution"],
-    Acadmic_year:['ValueAddedCource',"QualifiedExams"],
+    Acadmic_year:["ValueAddedCource","QualifiedExams"],
     Year_of_Activity:["CounselingAndGuidance"],
     Year_of_activity:["ExtensionActivities"],
     Year_of_signing_MoU:["MoUs"],
