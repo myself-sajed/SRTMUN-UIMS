@@ -3,8 +3,10 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const multerConfig = require('../../utility/multerConfig').multerConfig
 
 const SubscriptionForKRC = require("../../models/krc-models/subscriptionForKRCSchema")
+const AQARSupportingDocuments = require("../../models/aqar-models/aqarSupportingDocuments")
 
 const models = { SubscriptionForKRC }
 
@@ -19,9 +21,60 @@ const krcstorage = multer.diskStorage({
 })
 const krcUpload = multer({ storage: krcstorage })
 
+const supportingDocsUpload = multerConfig(`../uploads/aqar-uploads/`, 'AQAR-SupportingDocument')
+
+
+router.post('/aqar/uploadSupportingProof', supportingDocsUpload.single('file'), async (req, res) => {
+    try {
+        const formData = JSON.parse(JSON.stringify(req.body));
+        const filter = { academicYear: formData.academicYear, userType: formData.userType, proofType: formData.proofType }
+
+        let dataToUpdate = {}
+
+        if (req.file && req.file.filename) {
+            dataToUpdate = { ...formData, proof: req.file.filename }
+        } else {
+            dataToUpdate = { ...formData }
+        }
+
+        AQARSupportingDocuments.findOneAndUpdate(filter, dataToUpdate, { upsert: true, new: true }, (err, updatedDocument) => {
+            if (err) {
+                res.send({ status: 'error', message: err })
+            } else {
+                res.send({ status: 'success' })
+            }
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.send({ status: 'error', message: error.message })
+
+    }
+
+})
+
+
+router.post('/aqar/fetchSupportingProof', async (req, res) => {
+    try {
+        const { filter } = req.body
+        console.log(filter)
+        const doc = await AQARSupportingDocuments.findOne(filter)
+        if (doc) {
+            console.log(doc)
+            res.send({ status: 'success', data: doc })
+        } else {
+            res.send({ status: 'notfound' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.send({ status: 'error', message: error.message })
+    }
+
+})
+
 //get
-router.post('/krc/getData', async (req, res)=>{
-    const { model, filter} = req.body
+router.post('/krc/getData', async (req, res) => {
+    const { model, filter } = req.body
     try {
         const fetch = await models[model].find(filter);
         res.status(200).send(fetch);
@@ -63,9 +116,9 @@ router.post('/krc/editRecord/:model', krcUpload.single('Proof'), async (req, res
     if (isfile) {
         var up = req.file.filename
     }
-    SendData=data
+    SendData = data
 
-     var alldata = null
+    var alldata = null
     if (up) {
         alldata = Object.assign(SendData, { Proof: up })
     }

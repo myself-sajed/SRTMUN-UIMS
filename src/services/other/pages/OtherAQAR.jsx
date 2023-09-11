@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import title from '../../../js/title';
 import siteLinks from '../../../components/siteLinks';
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion';
@@ -7,6 +7,9 @@ import AQARStepper from '../../dsd/components/AQARStepper';
 import TotalExpenditure from './TotalExpenditure';
 import OtherDemandRatio from './OtherDemandRatio';
 import { TableSupportingProof } from '../../exam/pages/ExamAQAR';
+import uploadSupportingDocument, { fetchSupportingDocuments } from '../../krc/js/uploadSupportingDocument';
+import { useQuery } from 'react-query';
+import ArrowButton from '../../../components/ArrowButton';
 
 
 
@@ -51,8 +54,35 @@ export default OtherAQAR
 
 
 const Expenditure = ({ aqarYearState }) => {
+    const [file, setFile] = useState(null)
+    const [proof, setProof] = useState(null)
+
+    const filter = { academicYear: aqarYearState, userType: 'expenditure', proofType: 'TotalExpenditure' }
+    const { data, isLoading, refetch } = useQuery(`TotalExpenditure-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+
+    const submitProofFunction = () => {
+        const formData = new FormData()
+        if (file) {
+            formData.append('file', file)
+        }
+        formData.append('userType', 'expenditure')
+        formData.append('proofType', 'TotalExpenditure')
+        formData.append('academicYear', aqarYearState)
+
+        uploadSupportingDocument(formData, refetch)
+
+    }
+
+    useEffect(() => {
+        if (data?.data?.status === 'success') {
+            setProof(data?.data?.data?.proof)
+        }
+    }, [data])
     return <div>
-        <TableSupportingProof />
+        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+            <TableSupportingProof setFile={setFile} proof={proof} />
+            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
+        </div>
         <TotalExpenditure filterByAcademicYear={aqarYearState} />
     </div>
 }

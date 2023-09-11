@@ -1,6 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { TableSupportingProof } from '../../exam/pages/ExamAQAR';
+import ArrowButton from '../../../components/ArrowButton'
+import uploadSupportingDocument, { fetchSupportingDocuments } from '../js/uploadSupportingDocument';
+import toast from 'react-hot-toast';
+import { useQuery } from 'react-query';
+import UserLoading from '../../../pages/UserLoading';
 
-const AQARCheckWithProof = ({ setCheckData, checkData }) => {
+const AQARCheckWithProof = ({ setCheckData, checkData, academicYear }) => {
+
+    const [file, setFile] = useState(null)
+    const [proof, setProof] = useState(null)
+    const filter = { academicYear, userType: 'krc', proofType: 'checkForm' }
+    const { data, isLoading, refetch } = useQuery(`AQARCheckData-${academicYear}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+
+    const submitProofFunction = () => {
+        const formData = new FormData()
+        formData.append('info', checkData)
+        if (file) {
+            formData.append('file', file)
+        }
+        formData.append('userType', 'krc')
+        formData.append('proofType', 'checkForm')
+        formData.append('academicYear', academicYear)
+
+        uploadSupportingDocument(formData, refetch)
+
+    }
+
+    useEffect(() => {
+        if (data?.data?.status === 'success') {
+            setCheckData(data?.data?.data?.info)
+            setProof(data?.data?.data?.proof)
+            console.log(data?.data?.data)
+        }
+    }, [data])
+
 
     const checkObject = [
         { id: "1", title: 'Any 4 or all of the above' },
@@ -22,28 +56,35 @@ const AQARCheckWithProof = ({ setCheckData, checkData }) => {
             </ol>
         </div>
 
-        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
-            <p className='mb-2'>According to the above list check one of the following options:</p>
-            {
-                checkObject.map((item, index) => {
-                    return <div className="form-check" key={index}>
-                        <input onChange={() => setCheckData(() => item.title)} checked={checkData === item.title} className="form-check-input" name="libraryCheck" type="radio" value="" id={item.title} />
-                        <label className="form-check-label" htmlFor={item.title}>
-                            {item.title}
-                        </label>
-                    </div>
-                })
-            }
-        </div>
-
-        <div>
-            {
-                checkData && <div className='mt-3 bg-gray-50 rounded-md p-3 border'>
-                    <label htmlFor="radioFile">Upload Relevant proof based on the above choice</label>
-                    <input type="file" name="file" id="radioFile" className="form-control mt-1" />
+        {
+            isLoading ? <UserLoading title="Fetching Data..." /> : <div>
+                <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+                    <p className='mb-2'>According to the above list check one of the following options:</p>
+                    {
+                        checkObject.map((item, index) => {
+                            return <div className="form-check" key={index}>
+                                <input onChange={() => setCheckData(() => item.title)} checked={checkData === item.title} className="form-check-input" name="libraryCheck" type="radio" value="" id={item.title} />
+                                <label className="form-check-label" htmlFor={item.title}>
+                                    {item.title}
+                                </label>
+                            </div>
+                        })
+                    }
                 </div>
-            }
-        </div>
+
+                <div>
+                    {
+                        checkData && <div className='bg-gray-50 rounded-md p-3 mt-3 border'>
+                            <TableSupportingProof proof={proof} setFile={setFile} file={file} title='Upload relevant proof based on the above choice' />
+                        </div>
+                    }
+                </div>
+
+                {checkData && <div className='mt-2'>
+                    <ArrowButton title="Save Details" onClickFunction={submitProofFunction} />
+                </div>}
+            </div>
+        }
 
     </div>
 }

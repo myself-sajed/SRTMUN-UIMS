@@ -16,7 +16,7 @@ const TableAccordion = ({ AQARTables, showIndex = true }) => {
 
     return AQARTables.map((table, index) => {
         return <div className={`border-[#8c8cd9] rounded-lg p-1 border-2 my-3 text-sm lg:text-base w-full`}>
-            <Accordion sx={{ boxShadow: 'none' }} TransitionProps={{ unmountOnExit: true }} expanded={expandedAccordion === index} onChange={() => handleChangeAccordion(index)}>
+            <Accordion sx={{ boxShadow: 'none' }} TransitionProps={{ unmountOnExit: table.shouldUnmount ? table.shouldUnmount : true }} expanded={expandedAccordion === index} onChange={() => handleChangeAccordion(index)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}
                     aria-controls={`content-${index}`}
                     id={`accordion-${index}`}
