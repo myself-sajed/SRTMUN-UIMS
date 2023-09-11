@@ -210,7 +210,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : facultyModels.includes(model) ? "department" : ""
+            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : ""
             docs[model] = {};
             let totalCount = 0;
             await Promise.all(
@@ -230,44 +230,64 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                     if(model==="AlumniUser"){
                         var filter = { programCompletedOn: year, isAlumni: true,}
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await StudentUser.find(filter);
-                        totalCount += docs[model][year]
+                        docs[model][year] = await StudentUser.countDocuments(filter);
                     }
                     else if(model==="StudentUser"){
                         var filter = { programEnroledOn: year, isAlumni: false, isActiveStudent: true }
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await models[model].find(filter);
-                        totalCount += docs[model][year]
+                        docs[model][year] = await models[model].countDocuments(filter);
                     }
                     else if(facultyModels.includes(model)){
+                        let schoolFilter = schoolName? {department: schoolName}: {}
                         var filter = { [yearFieldNmae]: year }
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await models[model].find(filter).populate({
-                            path: 'userId',
-                            match: {department:school},
-                            select: ('-password'),
-                        }).exec(function (err, fetch) {
-                            let filterData = []
-                            if (err) {
-                                // throw err; 
-                                console.log(err);
-                            }
+
+                        try {
+                            const fetch = await models[model]
+                                .find(filter)
+                                .populate({
+                                    path: 'userId',
+                                    match: schoolFilter,
+                                    select: ('-password'),
+                                })
+                                .exec();
+        
+                            let filterData = [];
                             for (item of fetch) {
                                 if (item.userId !== null) {
-                                    filterData.push(item)
+                                    filterData.push(item);
                                 }
                             }
-                            // res.status(200).send(filterData);
-                        });
-                        totalCount += docs[model][year]
+        
+                            docs[model][year] = filterData.length;
+                        } catch (err) {
+                            // Handle the error, e.g., log it or return an error response
+                            console.log(err);
+                        }
+
+
+
+
+                        
+                        // let fetch = await models[model].find(filter).populate({
+                        //     path: 'userId',
+                        //     match: schoolFilter,
+                        //     select: ('-password'),
+                        // }).exec()
+                        //     for (item of fetch) {
+                        //         if (item.userId !== null) {
+                        //             filterData.push(item)
+                        //         }
+                        //     }
+                        //     docs[model][year] = filterData.length
+                        
                     }
                     else{
                         var filter = { [yearFieldNmae]: year }
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await models[model].find(filter);
-                        totalCount += docs[model][year]
+                        docs[model][year] = await models[model].countDocuments(filter);
                     }
-
+                    totalCount += docs[model][year]
                 }));
 
             docs[model]['Total'] = totalCount
