@@ -6,6 +6,7 @@ import Footer from '../../../components/Footer';
 import AQARStepper from '../../dsd/components/AQARStepper';
 import TotalExpenditure from './TotalExpenditure';
 import OtherDemandRatio from './OtherDemandRatio';
+import { TableSupportingProof } from '../../exam/pages/ExamAQAR';
 
 
 
@@ -24,7 +25,7 @@ const OtherAQAR = () => {
         },
         {
             title: "4.1.4 - Total Expenditure (FAO)",
-            component: <TotalExpenditure filterByAcademicYear={aqarYearState} />
+            component: <Expenditure aqarYearState={aqarYearState} />
         }
     ]
 
@@ -47,4 +48,12 @@ const OtherAQAR = () => {
 }
 
 export default OtherAQAR
+
+
+const Expenditure = ({ aqarYearState }) => {
+    return <div>
+        <TableSupportingProof />
+        <TotalExpenditure filterByAcademicYear={aqarYearState} />
+    </div>
+}
 

@@ -8,6 +8,7 @@ import HomeProfile from '../../dsd/components/HomeProfile'
 import HomeProfileButtons from '../../dsd/components/HomeProfileButtons'
 import title from '../../../js/title'
 import { useNavigate } from 'react-router-dom'
+import { Footer } from 'antd/es/layout/layout'
 
 const examAuthParams = { shouldNavigate: true, tokenName: "exam-token", setUser: setExamUser, navigationHomeLink: siteLinks.examHome.link, navigationLoginLink: siteLinks.examLogin.link, model: "ExamUser" }
 
@@ -20,10 +21,14 @@ const ExamHome = () => {
     title(siteLinks.examHome.title)
     return (
         <div>
-            {user ?
-                <HomeProfile bredLinks={bredLinks} user={user} setUser={setExamUser} userType="exam" profileButton1={profileButton1} tokenName="exam-token" />
-                :
-                <UserLoading title="Fetching User Details" />}
+            <div className="min-h-screen">
+
+                {user ?
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setExamUser} userType="exam" profileButton1={profileButton1} tokenName="exam-token" />
+                    :
+                    <UserLoading title="Fetching User Details" />}
+            </div>
+            <Footer />
         </div>
     )
 }

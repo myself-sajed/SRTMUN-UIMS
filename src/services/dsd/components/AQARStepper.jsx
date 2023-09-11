@@ -12,7 +12,6 @@ import isReportSubmitted from '../js/isReportSubmitted'
 
 
 const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navigateToAfterSubmission, setAqarYearState, aqarYearState }) => {
-    title(siteLinks.dsdAQAR.title)
     const steps = ["Select AQAR Academic Year", "Fill AQAR Form & Submit", "Acknowledgement"]
     const [activeStep, setActiveStep] = useState(0)
     const navigate = useNavigate()

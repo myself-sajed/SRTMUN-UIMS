@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import UserLoading from '../../../pages/UserLoading'
 import HomeProfile from '../../dsd/components/HomeProfile'
 import title from '../../../js/title'
+import Footer from '../../../components/Footer'
 
 const nssAuthParams = { shouldNavigate: true, tokenName: "nss-token", setUser: setNSSUser, navigationHomeLink: siteLinks.nssHome.link, navigationLoginLink: siteLinks.nssLogin.link, model: "NSSUser" }
 
@@ -20,10 +21,15 @@ const NSSHome = () => {
     title(siteLinks.nssHome.title)
     return (
         <div>
-            {user ?
-                <HomeProfile bredLinks={bredLinks} user={user} setUser={setNSSUser} userType="nss" profileButton1={profileButton1} tokenName="nss-token" />
-                :
-                <UserLoading title="Fetching User Details" />}
+            <div className="min-h-screen">
+
+                {user ?
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setNSSUser} userType="nss" profileButton1={profileButton1} tokenName="nss-token" />
+                    :
+                    <UserLoading title="Fetching User Details" />}
+
+            </div>
+            <Footer />
         </div>
     )
 }

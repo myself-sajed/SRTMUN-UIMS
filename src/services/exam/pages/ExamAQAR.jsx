@@ -59,22 +59,27 @@ export default ExamAQAR
 
 const ResultDeclarationWithProof = ({ aqarYearState }) => {
     return <div>
-        <div className="my-3">
-            <label htmlFor="resultFile">Upload a supporting / relevant document here for the table below  </label>
-            <input type="file" name="file" id="resultFile" className='form-control mt-1' />
-        </div>
+        <TableSupportingProof />
         <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
     </div>
 }
 
 const StudentComplaintWithProof = ({ aqarYearState }) => {
     return <div>
-        <div className="my-3">
-            <label htmlFor="complaintFile">Upload a supporting / relevant document here for the table below  </label>
-            <input type="file" name="file" id="complaintFile" className='form-control mt-1' />
-        </div>
+        <TableSupportingProof />
         <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
     </div>
 }
+
+
+const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  " }) => {
+    return <div className="my-3">
+        <label htmlFor="resultFile">{title}</label>
+        <input onChange={(e) => setFile(() => e.target.files[0])} type="file" name="file" id="resultFile" className='form-control mt-1' />
+    </div>
+}
+
+
+export { TableSupportingProof }
 
 
