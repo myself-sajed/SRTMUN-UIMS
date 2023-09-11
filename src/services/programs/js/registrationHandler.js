@@ -23,4 +23,25 @@ const handleRegistration = (setLoading, formData, programId, program, navigate) 
         })
 }
 
+
+const toggleResponseAcceptance = (programId, refetch) => {
+    const link = `${process.env.REACT_APP_MAIN_URL}/program/registration/toggleResponseAcceptance`
+    Axios.post(link, { programId })
+        .then((res) => {
+            if (res.data.status === 'success') {
+                toast.success(res.data.message)
+                refetch()
+            } else {
+                toast.error(res.data.message)
+                refetch()
+            }
+        }).catch((err) => {
+            console.log(err.message)
+            refetch()
+            toast.error('Could not toggle. Try again later...')
+        })
+}
+
 export default handleRegistration
+
+export { toggleResponseAcceptance }

@@ -42,6 +42,31 @@ async function registrationForm(app) {
             res.send({ status: 'error', error })
         }
     })
+
+    app.post('/program/registration/toggleResponseAcceptance', async (req, res) => {
+        const { programId } = req.body;
+        ProgramModel.findOne({ _id: programId }, (err, program) => {
+            if (err) {
+                console.error(err);
+                res.send({ status: 'error', err })
+
+            } else if (program) {
+                program.acceptingResponses = !program.acceptingResponses;
+
+                program.save((err, updatedProgram) => {
+                    if (err) {
+                        console.error(err);
+                        res.send({ status: 'error', message: 'Error toggling...' })
+                    } else {
+                        res.send({ status: 'success', message: updatedProgram?.acceptingResponses ? 'Registration form is enabled' : 'Registration form is disabled.' })
+                    }
+                });
+            } else {
+                console.log("Program not found");
+                res.send({ status: 'error', message: 'Program not found' })
+            }
+        });
+    })
 }
 
 module.exports = registrationForm;
