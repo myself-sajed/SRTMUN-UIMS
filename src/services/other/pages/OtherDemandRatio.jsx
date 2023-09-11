@@ -11,8 +11,9 @@ import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
 import Select from '../../../components/formComponents/Select';
+import SchoolsProgram from '../../../components/SchoolsProgram';
 
-const tableHead = { index: "Sr. no." ,  Programme_Code: "Programme Code" ,  Programme_name: "Programme name" ,  Academic_Year: "Academic Year" , Type_of_program: "Type of Program",  Number_of_seats_available: "Number of seats available" ,  Number_of_eligible_applications: "Number of eligible applications" ,  Number_of_Students_admitted: "Number of Students admitted" ,  Upload_Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", SchoolName: "School Name",  Programme_Code: "Programme Code" ,  Programme_name: "Programme name" ,  Academic_Year: "Academic Year" , Type_of_program: "Type of Program",  Number_of_seats_available: "Number of seats available" ,  Number_of_eligible_applications: "Number of eligible applications" ,  Number_of_Students_admitted: "Number of Students admitted" ,  Upload_Proof: "Proof", Action: "Action" }
 
 const OtherDemandRatio = () => {
     const model = 'DemandRatio'
@@ -20,15 +21,15 @@ const OtherDemandRatio = () => {
     const title = "Demand Ratio";
     const Types = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
   
-    let filter = {SchoolName: "Other"};
+    let filter = {};
     const params = { model, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
   
     const initialstate = {
-        Programme_Code: "", Programme_name: "", Academic_Year: "", Type_of_program: "", Number_of_seats_available: "", Number_of_eligible_applications: "", Number_of_Students_admitted: "", Upload_Proof: "",
+        SchoolName: "", Programme_Code: "", Programme_name: "", Academic_Year: "", Type_of_program: "", Number_of_seats_available: "", Number_of_eligible_applications: "", Number_of_Students_admitted: "", Upload_Proof: "",
     }
     const [values, setValues] = useState(initialstate)
-    const { Programme_Code, Programme_name, Academic_Year, Type_of_program, Number_of_seats_available, Number_of_eligible_applications, Number_of_Students_admitted, } = values
+    const { SchoolName, Programme_Code, Programme_name, Academic_Year, Type_of_program, Number_of_seats_available, Number_of_eligible_applications, Number_of_Students_admitted, } = values
     const [open, setOpen] = useState(false)
     const [excelOpen, setExcelOpen] = useState(false)
   
@@ -55,7 +56,7 @@ const OtherDemandRatio = () => {
     const onSubmit = (e) => {
       e.preventDefault();
       edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-        addReq({SchoolName: "Other"}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+        addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
   
     return (
@@ -64,6 +65,7 @@ const OtherDemandRatio = () => {
         <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
         <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
           <div className='flex flex-wrap'>
+          <Select className='col-md-6 col-lg-4' id="SchoolName" value={SchoolName} label={tableHead.SchoolName} options={Object.keys(SchoolsProgram).map(item => { return item }) } setState={setValues} />
             <Text className='col-md-6 col-lg-4' id="Programme_Code" value={Programme_Code} label={tableHead.Programme_Code} setState={setValues} />
             <Text className='col-md-6 col-lg-4' id="Programme_name" value={Programme_name} label={tableHead.Programme_name} setState={setValues} />
             <YearSelect className='col-md-6 col-lg-4' id="Academic_Year" value={Academic_Year} label={tableHead.Academic_Year} setState={setValues} />

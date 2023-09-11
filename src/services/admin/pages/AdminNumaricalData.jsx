@@ -23,9 +23,9 @@ const AdminNumaricalData = () => {
 
   const generateAcademicYears = [...academicYearGenerator(5, true, true), 'Total']
 
-  // useEffect(() => {
-  //   console.log("numerical data:", data?.data)
-  // }, [data])
+  useEffect(() => {
+    console.log("numerical data:", data?.data)
+  }, [data])
 
 
   const modelNames = {
@@ -49,7 +49,7 @@ const AdminNumaricalData = () => {
               </tr>
             </thead>
 
-            <tbody>
+            {/* <tbody>
 
               {
                 data?.data && Object.keys(data?.data)?.map((tableName) => {
@@ -68,7 +68,7 @@ const AdminNumaricalData = () => {
 
               </tr>
 
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       </div>
