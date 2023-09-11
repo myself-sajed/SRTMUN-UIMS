@@ -14,7 +14,9 @@ import { Empty } from 'antd';
 import TextSnippetRoundedIcon from '@mui/icons-material/TextSnippetRounded';
 import { toast } from 'react-hot-toast';
 import ExcelJS from 'exceljs';
-import { async } from 'q';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import ToggleOffRoundedIcon from '@mui/icons-material/ToggleOffRounded';
+import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
 
 
 const RegistrationDetails = () => {
@@ -107,6 +109,11 @@ const RegistrationDetails = () => {
 
     }
 
+    const copyLink = () => {
+        navigator.clipboard.writeText(`https://srtmun-uims.org/program/${programId}/registration-form`)
+        toast.success('Registration link copied')
+    }
+
 
     return (
         <div>
@@ -120,8 +127,13 @@ const RegistrationDetails = () => {
                         :
                         <div className="mt-4 animate-fade-up animate-once">
                             <ProgramTitle program={program} />
+                            {/*  */}
+                            <div className="mb-2 mt-3 bg-gray-100 border rounded-md p-2 flex items-center gap-3">
+                                <span onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ContentCopyRoundedIcon />Copy Registration Link</span>
+                                <span onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ToggleOnRoundedIcon />Turn-Off Registrations</span>
+                            </div>
 
-                            <div className="mt-4">
+                            <div className="mt-2">
                                 <div className="animate-fade-up animate-once bg-gray-100 border rounded-md p-2">
                                     <div className='sm:flex items-start justify-between'>
                                         <p className="flex items-center gap-2 text-xl"><GroupsRoundedIcon sx={{ fontSize: '35px' }} />
