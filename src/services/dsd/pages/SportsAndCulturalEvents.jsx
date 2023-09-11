@@ -15,12 +15,12 @@ import UploadFile from '../../../components/formComponents/UploadFile'
 const tableHead = { index: "Sr. no.", dateOfEvent: "Date of event/competition", nameOfEvent: "Name  of the event/competition", academicYear: "Academic Year", Proof: "Proof of Report", Action: "Action" }
 
 
-const SportsAndCulturalEvents = ({ userType = 'dsd' }) => {
+const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = false }) => {
   const model = 'SportsAndCulturalEvents'
   const module = 'dsd';
   const title = "Information of Sports And Cultural Event"
 
-  let filter = { userType };
+  let filter = filterByAcademicYear ? { userType, academicYear: filterByAcademicYear } : { userType };
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 

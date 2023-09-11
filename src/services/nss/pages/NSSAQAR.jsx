@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import title from '../../../js/title';
 import siteLinks from '../../../components/siteLinks';
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion';
@@ -17,15 +17,17 @@ const NSSAQAR = () => {
     const bredLinks = [siteLinks.welcome, siteLinks.nssHome, siteLinks.nssAQAR]
     const user = useSelector((state) => state.user.nssUser)
     useOtherServiceAuth({ ...nssAuthParams, shouldNavigate: false })
+    const [aqarYearState, setAqarYearState] = useState(null)
+
 
     const AQARTables = [
         {
             title: "[3.6.2] Awards received by the Institution, its teachers and students from Government / Government recognised bodies in recognition of the extension activities carried out  during the year",
-            component: <NssAwardByInstitution />
+            component: <NssAwardByInstitution filterByAcademicYear={aqarYearState} />
         },
         {
             title: "[3.6.3] Extension and outreach programs conducted  by the institution through NSS/NCC/Red cross/YRC etc. during the year ( including  Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs) ",
-            component: <NssExtensionActivity />
+            component: <NssExtensionActivity filterByAcademicYear={aqarYearState} />
         },
     ]
 
@@ -34,7 +36,7 @@ const NSSAQAR = () => {
 
     return (
         <div className="h-screen">
-            <AQARStepper bredLinks={bredLinks} submitModel="NSSAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.nssHome.link} >
+            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="NSSAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.nssHome.link} >
                 <TableAccordion AQARTables={AQARTables} />
             </AQARStepper>
 
