@@ -108,7 +108,7 @@ const surveyQuestions = [
     },
     {
         type: 'text',
-        required: true,
+        required: false,
         question: 'Mobile number',
     },
     {
@@ -257,7 +257,7 @@ const surveyQuestions = [
     },
     {
         type: 'text',
-        required: true,
+        required: false,
         question: 'Give three observation / suggestions to improve the overall teaching – learning experience in your institution.',
     },
 
