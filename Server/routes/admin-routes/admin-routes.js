@@ -56,16 +56,24 @@ const SyllabusRevision = require('../../models/director-models/syllabusRevisionS
 const TrainingProgramsOrganized = require('../../models/director-models/trainingProgramsOrganizedSchema')
 const UgcSapCasDstFistDBTICSSR = require('../../models/director-models/ugcSapCasDstFistDBTICSSRSchema')
 const ValueAddedCource = require('../../models/director-models/valueAddedCourceSchema')
+const StudentFeedback = require('../../models/feedback-models/studentFeedbackModel')
+const AlumniFeedback = require('../../models/feedback-models/alumniFeedbackModel')
+const TeacherFeedback = require('../../models/feedback-models/teacherFeedbackModel')
+const ParentFeedback = require('../../models/feedback-models/parentFeedbackModel')
+const EmployerFeedback = require('../../models/feedback-models/employerFeedbackModel')
+const ExpertFeedback = require('../../models/feedback-models/expertFeedbackModel')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes')
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent","Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
 const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopOrganized", "CounselingAndGuidance", "DemandRatio", "Employability", "ExtensionActivities", "IctClassrooms", "MoUs", "Placement", "ProgressionToHE", "ProjectsInternships", "QualifiedExams", "ResearchMethodologyWorkshops", "ReservedSeats", "SkillsEnhancementInitiatives", "StudentSatisfactionSurvey", "SyllabusRevision", "TrainingProgramsOrganized", "UgcSapCasDstFistDBTICSSR", "ValueAddedCource"]
+
+const feedbackModels = [ "StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback" ]
 
 const dataSetter = {
     "School of Computational Sciences": "compCount",
@@ -190,7 +198,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         
         const genrateAcademicYears = () => {
             const d = new Date()
-            let year = d.getMonth() <= 5 ? d.getFullYear() : d.getFullYear() + 1;
+            let year = d.getFullYear();
             const ly = year - 4;
             let i = 1
             let arr = []
@@ -210,7 +218,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : ""
+            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model)?"schoolName":""
             docs[model] = {};
             let totalCount = 0;
             await Promise.all(
@@ -221,6 +229,9 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         if (YearSelecter[yearField].includes(model)) {
                             yearFieldNmae = yearField;
                             break;
+                        }
+                        else if(feedbackModels.includes(model)) {
+                            yearFieldNmae = "academicYear"
                         }
                         else {
                             yearFieldNmae = 'year'
@@ -261,26 +272,8 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         
                             docs[model][year] = filterData.length;
                         } catch (err) {
-                            // Handle the error, e.g., log it or return an error response
                             console.log(err);
                         }
-
-
-
-
-                        
-                        // let fetch = await models[model].find(filter).populate({
-                        //     path: 'userId',
-                        //     match: schoolFilter,
-                        //     select: ('-password'),
-                        // }).exec()
-                        //     for (item of fetch) {
-                        //         if (item.userId !== null) {
-                        //             filterData.push(item)
-                        //         }
-                        //     }
-                        //     docs[model][year] = filterData.length
-                        
                     }
                     else{
                         var filter = { [yearFieldNmae]: year }
