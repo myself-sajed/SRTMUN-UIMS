@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import title from '../../../js/title';
 import siteLinks from '../../../components/siteLinks';
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion';
@@ -7,15 +7,30 @@ import { useSelector } from 'react-redux';
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth';
 import AQARStepper from '../../dsd/components/AQARStepper';
 import { placementAuthParams } from './PlacementHome';
+import CounselingAndGuidance from '../../director/pages/CounselingAndGuidance';
+import Placements from '../../director/pages/Placements';
 
 const PlacementAQAR = () => {
     title(siteLinks.placementAQAR.title)
     const bredLinks = [siteLinks.welcome, siteLinks.placementHome, siteLinks.placementAQAR]
     const user = useSelector((state) => state.user.placementUser)
     useOtherServiceAuth({ ...placementAuthParams, shouldNavigate: false })
+    const [aqarYearState, setAqarYearState] = useState(null)
+
 
     const AQARTables = [
-
+        {
+            title: '[5.1.2] Career Councelling & Guidance',
+            component: <CounselingAndGuidance school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
+        },
+        {
+            title: '[5.2.2] Placements',
+            component: <Placements school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
+        },
+        {
+            title: '[5.1.3] Progression to Higher Education',
+            component: <CounselingAndGuidance school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
+        },
     ]
 
     const tableTitles = AQARTables.map((table) => table.title)
@@ -23,7 +38,7 @@ const PlacementAQAR = () => {
 
     return (
         <div className="h-screen">
-            <AQARStepper bredLinks={bredLinks} submitModel="PlacementAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.placementHome.link} >
+            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="PlacementAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.placementHome.link} >
                 <TableAccordion AQARTables={AQARTables} />
             </AQARStepper>
 

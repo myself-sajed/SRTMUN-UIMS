@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import title from '../../../js/title';
 import siteLinks from '../../../components/siteLinks';
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion';
@@ -16,11 +16,13 @@ const KRCAQAR = () => {
     const bredLinks = [siteLinks.welcome, siteLinks.krcHome, siteLinks.krcAQAR]
     const user = useSelector((state) => state.user.krcUser)
     useOtherServiceAuth({ ...krcAuthParams, shouldNavigate: false })
+    const [aqarYearState, setAqarYearState] = useState(null)
+
 
     const AQARTables = [
         {
             title: "[4.2.3] Annual expenditure for purchase of books/ e-books and subscription to journals/e-journals during the year(INR in Lakhs)",
-            component: <SubscriptionForKRC />
+            component: <SubscriptionForKRC filterByAcademicYear={aqarYearState} />
         },
     ]
 
@@ -29,7 +31,7 @@ const KRCAQAR = () => {
 
     return (
         <div className="h-screen">
-            <AQARStepper bredLinks={bredLinks} submitModel="KRCAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.krcHome.link} >
+            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="KRCAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.krcHome.link} >
                 <TableAccordion AQARTables={AQARTables} />
             </AQARStepper>
 
