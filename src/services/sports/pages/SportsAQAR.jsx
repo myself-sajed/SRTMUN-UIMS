@@ -22,11 +22,11 @@ const SportsAQAR = () => {
 
     const AQARTables = [
         {
-            title: "[5.3.1] Awards/medals won by students for outstanding performance in sports / cultural activities at Inter-university / State / National / International events (award for a team event should be counted as one) during the year",
+            title: "5.3.1 - Awards/medals won by students for outstanding performance in sports / cultural activities at Inter-university / State / National / International events (award for a team event should be counted as one) during the year",
             component: <DsdAndSports userType='sports' filterByAcademicYear={aqarYearState} />
         },
         {
-            title: "[5.3.3] Information about Sports and cultural events / competitions organised by the institution during the year ",
+            title: "5.3.3 - Information about Sports and cultural events / competitions organised by the institution during the year ",
             component: <SportsAndCulturalEvents userType='sports' filterByAcademicYear={aqarYearState} />
         }
 
@@ -36,12 +36,12 @@ const SportsAQAR = () => {
 
 
     return (
-        <div className="h-screen">
-            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="SportsAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.sportsHome.link} >
-                <TableAccordion AQARTables={AQARTables} />
-            </AQARStepper>
+        <div>
+            <div className="min-h-screen">
+                <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="SportsAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.sportsHome.link} >
+                    <TableAccordion AQARTables={AQARTables} showIndex={false} />
+                </AQARStepper>
 
-            <div className="mt-5">
                 <Footer />
             </div>
         </div>

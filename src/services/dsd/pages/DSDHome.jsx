@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import UserLoading from '../../../pages/UserLoading'
 import title from '../../../js/title'
+import Footer from '../../../components/Footer'
 
 const dsdAuthParams = { shouldNavigate: true, tokenName: "dsd-token", setUser: setDSDUser, navigationHomeLink: siteLinks.dsdHome.link, navigationLoginLink: siteLinks.dsdLogin.link, model: "DSDUser" }
 
@@ -21,10 +22,13 @@ const DSDHome = () => {
     title(siteLinks.dsdHome.title)
     return (
         <div>
-            {user ?
-                <HomeProfile bredLinks={bredLinks} user={user} setUser={setDSDUser} userType="dsd" profileButton1={profileButton1} tokenName="dsd-token" />
-                :
-                <UserLoading title="Fetching User Details" />}
+            <div className="min-h-screen">
+                {user ?
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setDSDUser} userType="dsd" profileButton1={profileButton1} tokenName="dsd-token" />
+                    :
+                    <UserLoading title="Fetching User Details" />}
+            </div>
+            <Footer />
         </div>
     )
 }

@@ -16,7 +16,7 @@ const tableHead = { index: "Sr. no.", programmeName: "Programme Name", programme
 const DateOfResultDiclaration = ({ filterByAcademicYear = false }) => {
   const model = 'DateOfResultDiclaration'
   const module = 'exam';
-  const title = "Date Of Result Diclaration";
+  const title = "Date Of Result Declaration";
 
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};

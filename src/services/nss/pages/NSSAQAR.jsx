@@ -22,11 +22,11 @@ const NSSAQAR = () => {
 
     const AQARTables = [
         {
-            title: "[3.6.2] Awards received by the Institution, its teachers and students from Government / Government recognised bodies in recognition of the extension activities carried out  during the year",
+            title: "3.6.2 - Awards received by the Institution, its teachers and students from Government / Government recognised bodies in recognition of the extension activities carried out  during the year",
             component: <NssAwardByInstitution filterByAcademicYear={aqarYearState} />
         },
         {
-            title: "[3.6.3] Extension and outreach programs conducted  by the institution through NSS/NCC/Red cross/YRC etc. during the year ( including  Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs) ",
+            title: "3.6.3 - Extension and outreach programs conducted  by the institution through NSS/NCC/Red cross/YRC etc. during the year ( including  Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs) ",
             component: <NssExtensionActivity filterByAcademicYear={aqarYearState} />
         },
     ]
@@ -35,14 +35,14 @@ const NSSAQAR = () => {
 
 
     return (
-        <div className="h-screen">
-            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="NSSAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.nssHome.link} >
-                <TableAccordion AQARTables={AQARTables} />
-            </AQARStepper>
+        <div>
+            <div className="min-h-screen">
+                <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="NSSAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.nssHome.link} >
+                    <TableAccordion AQARTables={AQARTables} showIndex={false} />
+                </AQARStepper>
 
-            <div className="mt-5">
-                <Footer />
             </div>
+            <Footer />
         </div>
     )
 }

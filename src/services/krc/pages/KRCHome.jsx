@@ -8,6 +8,7 @@ import HomeProfile from '../../dsd/components/HomeProfile'
 import UserLoading from '../../../pages/UserLoading'
 import { useSelector } from 'react-redux'
 import title from '../../../js/title'
+import Footer from '../../../components/Footer'
 
 const krcAuthParams = { shouldNavigate: true, tokenName: "krc-token", setUser: setKRCUser, navigationHomeLink: siteLinks.krcHome.link, navigationLoginLink: siteLinks.krcLogin.link, model: "KRCUser" }
 
@@ -20,10 +21,14 @@ const KRCHome = () => {
     title(siteLinks.krcHome.title)
     return (
         <div>
-            {user ?
-                <HomeProfile bredLinks={bredLinks} user={user} setUser={setKRCUser} userType="krc" profileButton1={profileButton1} tokenName="krc-token" />
-                :
-                <UserLoading title="Fetching User Details" />}
+            <div className="min-h-screen">
+
+                {user ?
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setKRCUser} userType="krc" profileButton1={profileButton1} tokenName="krc-token" />
+                    :
+                    <UserLoading title="Fetching User Details" />}
+            </div>
+            <Footer />
         </div>
     )
 }

@@ -8,6 +8,7 @@ import HomeProfileButtons from '../../dsd/components/HomeProfileButtons'
 import HomeProfile from '../../dsd/components/HomeProfile'
 import UserLoading from '../../../pages/UserLoading'
 import title from '../../../js/title'
+import Footer from '../../../components/Footer'
 
 const placementAuthParams = { shouldNavigate: true, tokenName: "placement-token", setUser: setPlacementUser, navigationHomeLink: siteLinks.placementHome.link, navigationLoginLink: siteLinks.placementLogin.link, model: "PlacementUser" }
 
@@ -20,10 +21,15 @@ const PlacementHome = () => {
     title(siteLinks.placementHome.title)
     return (
         <div>
-            {user ?
-                <HomeProfile bredLinks={bredLinks} user={user} setUser={setPlacementUser} userType="placement" profileButton1={profileButton1} tokenName="placement-token" />
-                :
-                <UserLoading title="Fetching User Details" />}
+            <div className="min-h-screen">
+
+                {user ?
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setPlacementUser} userType="placement" profileButton1={profileButton1} tokenName="placement-token" />
+                    :
+                    <UserLoading title="Fetching User Details" />}
+            </div>
+            <Footer />
+
         </div>
     )
 }

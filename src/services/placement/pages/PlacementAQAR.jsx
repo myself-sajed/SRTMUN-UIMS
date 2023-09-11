@@ -20,15 +20,15 @@ const PlacementAQAR = () => {
 
     const AQARTables = [
         {
-            title: '[5.1.2] Career Councelling & Guidance',
+            title: '5.1.2 - Career Councelling & Guidance',
             component: <CounselingAndGuidance school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
         },
         {
-            title: '[5.2.2] Placements',
+            title: '5.2.2 - Placements',
             component: <Placements school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
         },
         {
-            title: '[5.1.3] Progression to Higher Education',
+            title: '5.1.3 - Progression to Higher Education',
             component: <CounselingAndGuidance school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
         },
     ]
@@ -37,14 +37,14 @@ const PlacementAQAR = () => {
 
 
     return (
-        <div className="h-screen">
-            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="PlacementAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.placementHome.link} >
-                <TableAccordion AQARTables={AQARTables} />
-            </AQARStepper>
+        <div>
+            <div className="min-h-screen">
+                <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="PlacementAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.placementHome.link} >
+                    <TableAccordion AQARTables={AQARTables} showIndex={false} />
+                </AQARStepper>
 
-            <div className="mt-5">
-                <Footer />
             </div>
+            <Footer />
         </div>
     )
 }
