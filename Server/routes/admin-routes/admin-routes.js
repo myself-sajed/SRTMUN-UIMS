@@ -63,7 +63,7 @@ const { YearSelecter } = require('../../routes/director-routes/director-routes')
 
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource }
 
-const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "PostHeld", "Lectures", "ResearchPaper", "PhdAwarded", "JrfSrf", "Patent", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
+const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent","Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
 const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopOrganized", "CounselingAndGuidance", "DemandRatio", "Employability", "ExtensionActivities", "IctClassrooms", "MoUs", "Placement", "ProgressionToHE", "ProjectsInternships", "QualifiedExams", "ResearchMethodologyWorkshops", "ReservedSeats", "SkillsEnhancementInitiatives", "StudentSatisfactionSurvey", "SyllabusRevision", "TrainingProgramsOrganized", "UgcSapCasDstFistDBTICSSR", "ValueAddedCource"]
 
@@ -210,7 +210,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : ""
+            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : facultyModels.includes(model) ? "department" : ""
             docs[model] = {};
             let totalCount = 0;
             await Promise.all(
@@ -230,19 +230,41 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                     if(model==="AlumniUser"){
                         var filter = { programCompletedOn: year, isAlumni: true,}
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await StudentUser.countDocuments(filter);
+                        docs[model][year] = await StudentUser.find(filter);
                         totalCount += docs[model][year]
                     }
                     else if(model==="StudentUser"){
                         var filter = { programEnroledOn: year, isAlumni: false, isActiveStudent: true }
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await models[model].countDocuments(filter);
+                        docs[model][year] = await models[model].find(filter);
+                        totalCount += docs[model][year]
+                    }
+                    else if(facultyModels.includes(model)){
+                        var filter = { [yearFieldNmae]: year }
+                        if(schoolName) filter[school]=schoolName
+                        docs[model][year] = await models[model].find(filter).populate({
+                            path: 'userId',
+                            match: {department:school},
+                            select: ('-password'),
+                        }).exec(function (err, fetch) {
+                            let filterData = []
+                            if (err) {
+                                // throw err; 
+                                console.log(err);
+                            }
+                            for (item of fetch) {
+                                if (item.userId !== null) {
+                                    filterData.push(item)
+                                }
+                            }
+                            // res.status(200).send(filterData);
+                        });
                         totalCount += docs[model][year]
                     }
                     else{
                         var filter = { [yearFieldNmae]: year }
                         if(schoolName) filter[school]=schoolName
-                        docs[model][year] = await models[model].countDocuments(filter);
+                        docs[model][year] = await models[model].find(filter);
                         totalCount += docs[model][year]
                     }
 
