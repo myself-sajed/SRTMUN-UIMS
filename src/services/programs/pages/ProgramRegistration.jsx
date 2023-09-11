@@ -119,38 +119,58 @@ const ProgramRegistration = () => {
 
                         <div className='lg:w-3/5 sm:w-full md:w-4/5'>
 
+                            {
+                                program?.acceptingResponses ? <div className='w-full'>
 
-                            <div className='w-full'>
-
-                                <div className='animate-fade-up animate-once'>
-                                    <div className='bg-blue-50 text-center rounded-xl p-2 border-2 border-blue-700'>
-                                        <p className='font-semibold text-sm mb-2'>{program?.prefix}</p>
-                                        <p className='font-semibold text-xl leading-5'>{program?.title}</p>
-                                        <p className='font-semibold text-lg leading-5'>{program?.programDate}</p>
-                                        <p className="text-sm mt-2">
-                                            Organized by {program?.arrangedBy}
-                                        </p>
+                                    <div className='animate-fade-up animate-once'>
+                                        <div className='bg-blue-50 text-center rounded-xl p-2 border-2 border-blue-700'>
+                                            <p className='font-semibold text-sm mb-2'>{program?.prefix}</p>
+                                            <p className='font-semibold text-xl leading-5'>{program?.title}</p>
+                                            <p className='font-semibold text-lg leading-5'>{program?.programDate}</p>
+                                            <p className="text-sm mt-2">
+                                                Organized by {program?.arrangedBy}
+                                            </p>
+                                        </div>
+                                        <Header title='Program Registration Form' schoolName={program?.arrangedBy} />
                                     </div>
-                                    <Header title='Program Registration Form' schoolName={program?.arrangedBy} />
+
+
+                                    <form onSubmit={(e) => { e.preventDefault(); validateForm(questions, setLoading, 'registration', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep, handleFormRegistration) }} className='w-full mt-5'>
+
+                                        <div id="part-1" className='animate-fade-up animate-once' >
+                                            {
+                                                questions.map((question) => {
+                                                    return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
+                                                })
+                                            }
+                                        </div>
+
+                                        <br /><br /><br /><br />
+
+                                        <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="alumniFeedback" />
+
+                                    </form>
+                                </div> : <div>
+
+                                    <div>
+
+                                        <p className="my-5 text-2xl font-bold text-red-600">We're sorry. Event Capacity Reached, Registration Closed</p>
+
+                                        <p className="font-semibold">Dear valued participants,</p>
+
+                                        <p className="my-3 text-justify"> We regret to inform you that our registration capacity has reached its maximum limit, and as a result, we are no longer able to accept any further registrations for this event. We sincerely appreciate your interest and enthusiasm in joining us.</p>
+
+                                        <p className="my-3 text-justify">We understand your eagerness to participate, and we hope to have the opportunity to welcome you in future events. Please stay connected with us for updates on upcoming programs and opportunities.</p>
+
+                                        <p className="my-3 text-justify">Thank you for your understanding and continued support.</p>
+
+                                        <button onClick={() => navigate('/')} className="btn btn-primary mt-4">Go to Home Page</button>
+
+                                    </div>
+
                                 </div>
+                            }
 
-
-                                <form onSubmit={(e) => { e.preventDefault(); validateForm(questions, setLoading, 'registration', formData, setFormData, { academicYear, schoolName }, navigate, setActiveStep, handleFormRegistration) }} className='w-full mt-5'>
-
-                                    <div id="part-1" className='animate-fade-up animate-once' >
-                                        {
-                                            questions.map((question) => {
-                                                return <QuestionHandler question={question} formData={formData} setFormData={setFormData} />
-                                            })
-                                        }
-                                    </div>
-
-                                    <br /><br /><br /><br />
-
-                                    <ActionButtons loading={loading} setFormData={setFormData} academicYear={academicYear} schoolName={schoolName} responseType="alumniFeedback" />
-
-                                </form>
-                            </div>
 
                         </div>
                     </div >

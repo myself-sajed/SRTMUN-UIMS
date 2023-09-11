@@ -104,6 +104,11 @@ const programSchema = new mongoose.Schema({
             ref: "programRegistrations"
         }],
         required: false
+    },
+    acceptingResponses: {
+        type: Boolean,
+        default: true,
+        required: false
     }
 
 }, { timestamps: true });

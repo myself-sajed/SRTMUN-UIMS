@@ -17,6 +17,7 @@ import ExcelJS from 'exceljs';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import ToggleOffRoundedIcon from '@mui/icons-material/ToggleOffRounded';
 import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
+import { toggleResponseAcceptance } from '../js/registrationHandler';
 
 
 const RegistrationDetails = () => {
@@ -30,7 +31,7 @@ const RegistrationDetails = () => {
     program?.registrationResponse.map((e, i) => { allres.push(JSON.parse(e.response)) })
 
     const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: true };
-    const { data, isLoading } = useQuery(['PopulatedSingleProgram', programId], () => fetchPrograms(params));
+    const { data, isLoading, refetch } = useQuery(['PopulatedSingleProgram', programId], () => fetchPrograms(params));
 
 
     useEffect(() => {
@@ -129,8 +130,10 @@ const RegistrationDetails = () => {
                             <ProgramTitle program={program} />
                             {/*  */}
                             <div className="mb-2 mt-3 bg-gray-100 border rounded-md p-2 flex items-center gap-3">
-                                <span onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ContentCopyRoundedIcon />Copy Registration Link</span>
-                                <span onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ToggleOnRoundedIcon />Turn-Off Registrations</span>
+                                <div onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ContentCopyRoundedIcon />Copy Registration Link</div>
+                                <div onClick={() => { toggleResponseAcceptance(programId, refetch) }} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer">
+                                    {program?.acceptingResponses ? <ToggleOnRoundedIcon /> : <ToggleOffRoundedIcon />} {program?.acceptingResponses ? `Turn-Off` : `Turn-On`} Registrations
+                                </div>
                             </div>
 
                             <div className="mt-2">
