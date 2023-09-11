@@ -10,8 +10,9 @@ const SportsAQAR = require('../../models/sports-models/sportsAqarSchema')
 const NSSAQAR = require('../../models/nss-models/nssAqarSchema')
 const ExamAQAR = require('../../models/exam-models/examAqarSchema')
 const PlacementAQAR = require('../../models/placement-models/placementAqarSchema')
+const OtherAQAR = require('../../models/other-models/otherAQARSchema')
 
-const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR }
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR }
 
 
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');

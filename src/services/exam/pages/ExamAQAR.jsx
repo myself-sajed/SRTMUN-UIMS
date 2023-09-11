@@ -20,18 +20,21 @@ const ExamAQAR = () => {
     useOtherServiceAuth({ ...examAuthParams, shouldNavigate: false })
     const [aqarYearState, setAqarYearState] = useState(null)
 
+    // other states
+    const [resultFile, setResultFile] = useState(null)
+
 
     const AQARTables = [
         {
-            title: "[2.5.1] Days from the date of last semester-end/ year- end examination till the declaration of  results during the year",
-            component: <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
+            title: "2.5.1 - Days from the date of last semester-end/ year- end examination till the declaration of  results during the year",
+            component: <ResultDeclarationWithProof setResultFile={setResultFile} resultFile={resultFile} aqarYearState={aqarYearState} />
         },
         {
-            title: "[2.5.2] Student complaints/grievances about evaluation against total number appeared in the examinations during the year ",
-            component: <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
+            title: "2.5.2 - Student complaints/grievances about evaluation against total number appeared in the examinations during the year ",
+            component: <StudentComplaintWithProof filterByAcademicYear={aqarYearState} />
         },
         {
-            title: "[2.6.3] Students passed during the year",
+            title: "2.6.3 - Students passed during the year",
             component: <ExamPassedDuringYear filterByAcademicYear={aqarYearState} />
         },
     ]
@@ -40,12 +43,12 @@ const ExamAQAR = () => {
 
 
     return (
-        <div className="h-screen">
-            <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="ExamAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.examHome.link} >
-                <TableAccordion AQARTables={AQARTables} />
-            </AQARStepper>
+        <div>
+            <div className="min-h-screen">
+                <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="ExamAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.examHome.link} >
+                    <TableAccordion AQARTables={AQARTables} showIndex={false} />
+                </AQARStepper>
 
-            <div className="mt-5">
                 <Footer />
             </div>
         </div>
@@ -53,3 +56,25 @@ const ExamAQAR = () => {
 }
 
 export default ExamAQAR
+
+const ResultDeclarationWithProof = ({ aqarYearState }) => {
+    return <div>
+        <div className="my-3">
+            <label htmlFor="resultFile">Upload a supporting / relevant document here for the table below  </label>
+            <input type="file" name="file" id="resultFile" className='form-control mt-1' />
+        </div>
+        <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
+    </div>
+}
+
+const StudentComplaintWithProof = ({ aqarYearState }) => {
+    return <div>
+        <div className="my-3">
+            <label htmlFor="complaintFile">Upload a supporting / relevant document here for the table below  </label>
+            <input type="file" name="file" id="complaintFile" className='form-control mt-1' />
+        </div>
+        <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
+    </div>
+}
+
+

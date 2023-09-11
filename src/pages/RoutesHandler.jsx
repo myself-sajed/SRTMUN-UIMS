@@ -119,6 +119,7 @@ import KRCAQAR from '../services/krc/pages/KRCAQAR'
 import NSSAQAR from '../services/nss/pages/NSSAQAR'
 import ExamAQAR from '../services/exam/pages/ExamAQAR'
 import PlacementAQAR from '../services/placement/pages/PlacementAQAR'
+import OtherAQAR from '../services/other/pages/OtherAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -288,6 +289,9 @@ const RoutesHandler = () => {
                 <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />
                 <Route path="/training-and-placement" exact element={<PlacementHome />} />
                 <Route path="/training-and-placement/aqar" exact element={<PlacementAQAR />} />
+
+                {/* Other AQAR */}
+                <Route path="/expenditure-and-demand-ratio/aqar" exact element={<OtherAQAR />} />
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />

@@ -5,7 +5,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Typography } from '@mui/material'
 
-const TableAccordion = ({ AQARTables }) => {
+const TableAccordion = ({ AQARTables, showIndex = true }) => {
 
     const [expandedAccordion, setExpandedAccordion] = useState();
 
@@ -21,7 +21,7 @@ const TableAccordion = ({ AQARTables }) => {
                     aria-controls={`content-${index}`}
                     id={`accordion-${index}`}
                 >
-                    <Typography sx={{ color: 'blue', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>{index + 1}. {table.title}</Typography>
+                    <Typography sx={{ color: 'blue', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>{showIndex ? `${index + 1}.` : ''} {table.title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     {table.component}
@@ -33,3 +33,11 @@ const TableAccordion = ({ AQARTables }) => {
 
 
 export default TableAccordion
+
+const AQARSection = ({ children }) => {
+    return <div className="border-[#8c8cd9] rounded-lg p-3 border-2 my-3 text-sm lg:text-base w-full">
+        {children}
+    </div>
+}
+
+export { AQARSection }
