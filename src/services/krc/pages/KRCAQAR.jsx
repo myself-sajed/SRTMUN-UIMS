@@ -32,7 +32,7 @@ const KRCAQAR = () => {
     const AQARTables = [
         {
             title: "4.2.2 - Institution has subscription for e-Library resources Library has regular subscription for the following",
-            component: <AQARCheckWithProof setCheckData={setCheckData} checkData={checkData} />
+            component: <AQARCheckWithProof academicYear={aqarYearState} setCheckData={setCheckData} checkData={checkData} />
         },
         {
             title: "4.2.3 - Annual expenditure for purchase of books / e-books and subscription to journals / e-journals during the year (INR in Lakhs)",
@@ -40,7 +40,7 @@ const KRCAQAR = () => {
         },
         {
             title: "4.2.4 - Number of usage of library by teachers and students per day (foot falls and login data for online access)",
-            component: <AQARLibraryUsageWithProof setUsage={setUsage} usage={usage} />
+            component: <AQARLibraryUsageWithProof academicYear={aqarYearState} setUsage={setUsage} usage={usage} />
         },
     ]
 

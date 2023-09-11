@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import title from '../../../js/title';
 import siteLinks from '../../../components/siteLinks';
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion';
@@ -10,6 +10,10 @@ import { examAuthParams } from './ExamHome';
 import DateOfResultDiclaration from './DateOfResultDiclaration';
 import StudentComplaintsGrievances from './StudentComplaintsGrievances';
 import ExamPassedDuringYear from './ExamPassedDuringYear';
+import FileViewer from '../../../components/FileViewer';
+import { useQuery } from 'react-query';
+import uploadSupportingDocument, { fetchSupportingDocuments } from '../../krc/js/uploadSupportingDocument';
+import ArrowButton from '../../../components/ArrowButton';
 
 
 
@@ -58,24 +62,88 @@ const ExamAQAR = () => {
 export default ExamAQAR
 
 const ResultDeclarationWithProof = ({ aqarYearState }) => {
+    const [file, setFile] = useState(null)
+    const [proof, setProof] = useState(null)
+
+    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'ResultDeclarationWithProof' }
+    const { data, isLoading, refetch } = useQuery(`ResultDeclarationWithProof-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+
+    const submitProofFunction = () => {
+        const formData = new FormData()
+        if (file) {
+            formData.append('file', file)
+        }
+        formData.append('userType', 'exam')
+        formData.append('proofType', 'ResultDeclarationWithProof')
+        formData.append('academicYear', aqarYearState)
+
+        uploadSupportingDocument(formData, refetch)
+
+    }
+
+    useEffect(() => {
+        if (data?.data?.status === 'success') {
+            setProof(data?.data?.data?.proof)
+        }
+    }, [data])
+
+
     return <div>
-        <TableSupportingProof />
+        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+            <TableSupportingProof setFile={setFile} proof={proof} />
+            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
+        </div>
         <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
     </div>
 }
 
 const StudentComplaintWithProof = ({ aqarYearState }) => {
+    const [file, setFile] = useState(null)
+    const [proof, setProof] = useState(null)
+
+    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'DateOfResultDiclaration' }
+    const { data, isLoading, refetch } = useQuery(`DateOfResultDiclaration-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+
+    const submitProofFunction = () => {
+        const formData = new FormData()
+        if (file) {
+            formData.append('file', file)
+        }
+        formData.append('userType', 'exam')
+        formData.append('proofType', 'DateOfResultDiclaration')
+        formData.append('academicYear', aqarYearState)
+
+        uploadSupportingDocument(formData, refetch)
+
+    }
+
+    useEffect(() => {
+        if (data?.data?.status === 'success') {
+            setProof(data?.data?.data?.proof)
+        }
+    }, [data])
     return <div>
-        <TableSupportingProof />
+        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+            <TableSupportingProof setFile={setFile} proof={proof} />
+            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
+        </div>
         <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
     </div>
+
 }
 
 
-const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  " }) => {
+const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  ", proof = false, }) => {
     return <div className="my-3">
         <label htmlFor="resultFile">{title}</label>
         <input onChange={(e) => setFile(() => e.target.files[0])} type="file" name="file" id="resultFile" className='form-control mt-1' />
+        {
+            proof && <div className="mt-3">
+                <p className="my-1 text-xs text-muted">Uploaded Document</p>
+                <FileViewer fileName={proof} showFullFileName={true} serviceName="aqar" />
+            </div>
+        }
+
     </div>
 }
 
