@@ -252,6 +252,7 @@ const RoutesHandler = () => {
                 <Route path="/program/:programId" exact element={<SingleProgram />} />
                 <Route path="/program/:programId/registration-form" exact element={<ProgramRegistration />} />
                 <Route path="/program/:programId/registration-details" exact element={<RegistrationDetails />} />
+                <Route path="/program/:programId/registration-details/participants" exact element={<RegistrationDetails forPublic={true} />} />
                 <Route path="/program/:programId/feedback-details" exact element={<ProgramFeedbackDetails />} />
                 <Route path="/program/:programId/program-feedback" exact element={<ProgramFeedback />} />
                 <Route path="/program/:programId/upload-program-photos" exact element={<AddProgramPhotos />} />

@@ -20,7 +20,7 @@ import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
 import { toggleResponseAcceptance } from '../js/registrationHandler';
 
 
-const RegistrationDetails = () => {
+const RegistrationDetails = ({ forPublic = false }) => {
 
     const navigate = useNavigate();
 
@@ -43,9 +43,9 @@ const RegistrationDetails = () => {
 
     }, [data]);
 
-    let bredLinks = [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program...', link: `/program/${programId}` }, { title: "Program Registration Details", url: '' }];
+    let bredLinks = forPublic ? [siteLinks.welcome] : [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program...', link: `/program/${programId}` }, { title: "Program Registration Details", url: '' }];
 
-    title("Program Registration Details")
+    title("Program Participation Details")
 
     const downloadDataToExcel = async (data, fileName) => {
 
@@ -118,7 +118,7 @@ const RegistrationDetails = () => {
 
     return (
         <div>
-            <GoBack pageTitle="Program Registration Details" bredLinks={bredLinks} />
+            <GoBack pageTitle="Program Participation Details" bredLinks={bredLinks} />
             <div className="animate-fade-up animate-once">
                 {
                     isLoading ?
@@ -129,23 +129,23 @@ const RegistrationDetails = () => {
                         <div className="mt-4 animate-fade-up animate-once">
                             <ProgramTitle program={program} />
                             {/*  */}
-                            <div className="mb-2 mt-3 bg-gray-100 border rounded-md p-2 flex items-center gap-3">
+                            {!forPublic && <div className="mb-2 mt-3 bg-gray-100 border rounded-md p-2 flex items-center gap-3">
                                 <div onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ContentCopyRoundedIcon />Copy Registration Link</div>
                                 <div onClick={() => { toggleResponseAcceptance(programId, refetch) }} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer">
                                     {program?.acceptingResponses ? <ToggleOnRoundedIcon /> : <ToggleOffRoundedIcon />} {program?.acceptingResponses ? `Turn-Off` : `Turn-On`} Registrations
                                 </div>
-                            </div>
+                            </div>}
 
                             <div className="mt-2">
                                 <div className="animate-fade-up animate-once bg-gray-100 border rounded-md p-2">
                                     <div className='sm:flex items-start justify-between'>
                                         <p className="flex items-center gap-2 text-xl"><GroupsRoundedIcon sx={{ fontSize: '35px' }} />
-                                            <span className="ml-3 tracking-tight">Registrations {`(${program?.registrationResponse?.length})`} </span>
+                                            <span className="ml-3 tracking-tight">Participant Details {`(${program?.registrationResponse?.length})`} </span>
                                         </p>
 
-                                        <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 mt-2 sm:mt-0 text-sm sm:text-base rounded-md hover:bg-green-800 p-1 sm:p-2 bg-green-700 text-white'>
+                                        {!forPublic && <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 mt-2 sm:mt-0 text-sm sm:text-base rounded-md hover:bg-green-800 p-1 sm:p-2 bg-green-700 text-white'>
                                             <TextSnippetRoundedIcon /> Export Responses in Excel
-                                        </button>
+                                        </button>}
 
                                     </div>
 
