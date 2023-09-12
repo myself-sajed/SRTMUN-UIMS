@@ -62,19 +62,20 @@ const TeacherFeedback = require('../../models/feedback-models/teacherFeedbackMod
 const ParentFeedback = require('../../models/feedback-models/parentFeedbackModel')
 const EmployerFeedback = require('../../models/feedback-models/employerFeedbackModel')
 const ExpertFeedback = require('../../models/feedback-models/expertFeedbackModel')
+const FeedbackStudentSatisfactionSurvey = require('../../models/feedback-models/feedbackStudentSatisfactionSurvey')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes');
 const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey  }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent", "Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
 const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopOrganized", "CounselingAndGuidance", "DemandRatio", "Employability", "ExtensionActivities", "IctClassrooms", "MoUs", "Placement", "ProgressionToHE", "ProjectsInternships", "QualifiedExams", "ResearchMethodologyWorkshops", "ReservedSeats", "SkillsEnhancementInitiatives", "StudentSatisfactionSurvey", "SyllabusRevision", "TrainingProgramsOrganized", "UgcSapCasDstFistDBTICSSR", "ValueAddedCource"]
 
-const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback"]
+const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback", "FeedbackStudentSatisfactionSurvey"]
 
 const dataSetter = {
     "School of Computational Sciences": "compCount",
@@ -94,6 +95,19 @@ const dataSetter = {
     "School of Technology, Sub-Campus, Latur": "techLaturCount",
     "School of Social Sciences, Sub-Campus, Latur": "socialLaturCount",
 }
+
+
+function getPreviousYears(yearsAgo) {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    
+    const previousYear = currentYear - yearsAgo;
+    const yearBeforePrevious = previousYear - 1;
+  
+    const previousYears = `${yearBeforePrevious}-${previousYear.toString().slice(2)}`;
+  
+    return previousYears;
+  }
 
 router.post('/admin/pdf/numericalData', async (req, res) => {
     try {
@@ -224,15 +238,17 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
             }
             return arr
         }
+
         const yearList = genrateAcademicYears();
         const docs = {}
         let oModels = Object.keys(models)
-        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
+        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey' ]; 
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
             let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model) ? "schoolName" : ""
             docs[model] = {};
             let totalCount = 0;
+            let alumniCount = 0
             await Promise.all(
                 yearList.map(async (year) => {
                     let yearFieldNmae
@@ -251,20 +267,42 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
 
                     }
                     if (model === "AlumniUser") {
-                        var filter = { programCompletedOn: year, isAlumni: true, }
+                        var filter = { isAlumni: true }
                         if (schoolName) filter[school] = schoolName
-                        docs[model][year] = await StudentUser.countDocuments(filter);
+                         docs[model][year] = "--"
+                         alumniCount = await StudentUser.countDocuments(filter);
+                    
                     }
                     else if (model === "StudentUser") {
-                        var filter = { programEnroledOn: year, isAlumni: false, isActiveStudent: true }
+                        var filter = { isAlumni: false, isActiveStudent: true }
                         if (schoolName) filter[school] = schoolName
-                        docs[model][year] = await models[model].countDocuments(filter);
+                        let fetch = await models[model].find(filter);
+                        let countStu= 0
+                        for(item of fetch){
+                            if(item.programEnroledOn===undefined){
+                                if(item.currentIn!==undefined){
+                                    let yeartosub =  parseInt(item.currentIn.split(' ')[1]);
+                                    if(year ==getPreviousYears(yeartosub)){
+                                        countStu++;
+                                    }
+                                }
+                            }
+                            else if(item.programEnroledOn!==undefined){
+                                if(item.programEnroledOn===year){
+                                    countStu++;
+                                  }
+                            }
+                        }
+                        docs[model][year] = countStu
                     }
                     else if (facultyModels.includes(model)) {
                         let schoolFilter = schoolName ? { department: schoolName } : {}
                         var filter = { [yearFieldNmae]: year }
                         if (schoolName) filter[school] = schoolName
-
+                        if (model === "PhdAwarded") {
+                                filter.degreeName= { $ne: 'PG Dissertation' }
+                                filter.awardSubmit= 'Awarded'
+                            }
                         try {
                             const fetch = await models[model]
                                 .find(filter)
@@ -275,14 +313,14 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                                 })
                                 .exec();
 
-                            let filterData = [];
+                            let filterDataCount = 0;
                             for (item of fetch) {
                                 if (item.userId !== null) {
-                                    filterData.push(item);
+                                    filterDataCount++;
                                 }
                             }
 
-                            docs[model][year] = filterData.length;
+                            docs[model][year] = filterDataCount;
                         } catch (err) {
                             console.log(err);
                         }
@@ -294,12 +332,114 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                     }
                     totalCount += docs[model][year]
                 }));
-
-            docs[model]['Total'] = totalCount
+            if (model === "AlumniUser") {
+                docs[model]['Total'] = alumniCount
+            } else {
+                docs[model]['Total'] = totalCount
+            }
         }
         res.status(200).send(docs);
     } catch (error) {
         console.log(error);
+        res.status(500).send();
+    }
+})
+
+router.post('/Admin/getNumaricalTileData', async (req, res) => {
+    const { schoolName, year, model } = req.body
+    try {
+        let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model) ? "schoolName" : ""
+        let yearFieldNmae
+        for (const yearField in YearSelecter) {
+            if (YearSelecter[yearField].includes(model)) {
+                yearFieldNmae = yearField;
+                break;
+            }
+            else if (feedbackModels.includes(model)) {
+                yearFieldNmae = "academicYear"
+            }
+            else {
+                yearFieldNmae = 'year'
+            }
+
+        }
+        let data 
+        let module
+        let proof
+
+        if (model === "AlumniUser") {
+            var filter = { isAlumni: true }
+            if (schoolName) filter[school] = schoolName
+             data = await StudentUser.find(filter);
+            module = 'student'
+            proof= 'uploadProof'
+        }
+        else if (model === "StudentUser") {
+            var filter = { isAlumni: false, isActiveStudent: true }
+            if (schoolName) filter[school] = schoolName
+            let fetch = await models[model].find(filter);
+            let countStu= []
+            for(item of fetch){
+                if(item.programEnroledOn===undefined){
+                    if(item.currentIn!==undefined){
+                        let yeartosub =  parseInt(item.currentIn.split(' ')[1]);
+                        if(year ==getPreviousYears(yeartosub)){
+                            countStu.push(item)
+                        }
+                    }
+                }
+                else if(item.programEnroledOn!==undefined){
+                    if(item.programEnroledOn===year){
+                        countStu.push(item)
+                      }
+                }
+            }
+            data = countStu
+            module = 'student'
+            proof= 'uploadProof'
+        }
+        else if (facultyModels.includes(model)) {
+            let schoolFilter = schoolName ? { department: schoolName } : {}
+            var filter = { [yearFieldNmae]: year }
+            if (schoolName) filter[school] = schoolName
+            if (model === "PhdAwarded") {
+                    filter.degreeName= { $ne: 'PG Dissertation' }
+                    filter.awardSubmit= 'Awarded'
+                }
+            try {
+                const fetch = await models[model]
+                    .find(filter)
+                    .populate({
+                        path: 'userId',
+                        match: schoolFilter,
+                        select: ('-password'),
+                    })
+                    .exec();
+
+                let filterData = [];
+                for (item of fetch) {
+                    if (item.userId !== null) {
+                        filterData.push(item)
+                    }
+                }
+
+                data = filterData;
+                module = 'faculty'
+                proof= 'proof'
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        else {
+            var filter = { [yearFieldNmae]: year }
+            if (schoolName) filter[school] = schoolName
+            data = await models[model].find(filter);
+            module = 'director'
+            proof= 'Upload_Proof'
+        }
+        res.status(200).send({data, module, proof});
+    } catch (err) {
+        console.log(err);
         res.status(500).send();
     }
 })
