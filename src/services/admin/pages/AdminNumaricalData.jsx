@@ -61,7 +61,7 @@ const AdminNumaricalData = () => {
       const worksheet = workbook.addWorksheet('Sheet 1');
 
       const columnNames = generateAcademicYears;
-      columnNames.unshift('Name Of Table');
+      columnNames.unshift('Particulars');
       columnNames.unshift('Sr.No.');
 
       // Set column headers and formatting
@@ -136,7 +136,7 @@ const AdminNumaricalData = () => {
             <thead className='sticky-top'>
               <tr className='bg-[#ae7e28] text-[#FFF]'>
                 <th>Sr.No.</th>
-                <th>Name Of Table</th>
+                <th>Particulars</th>
                 {generateAcademicYears.map((year) => {
                   return <th>{year}</th>
                 })}
@@ -148,11 +148,11 @@ const AdminNumaricalData = () => {
               {
                 data?.data && Object.keys(data?.data)?.map((tableName, i) => {
                   return <tr key={i}>
-                    <td>{i + 1}</td>
-                    <td style={{ background: "#f4f4f4" }} className='bg-[#ae7e28] font-semibold' > {modelNames?.[tableName]} </td>
+                    <td className='text-center font-bold'>{i + 1}</td>
+                    <td style={{ background: "#f4f4f4" }} className='font-semibold' > {modelNames?.[tableName]} </td>
 
                     {generateAcademicYears.map((year) => {
-                      return (<td className={year === 'Total' ? 'font-semibold' : ''} onClick={() => { console.log(`Year: ${year} model: ${tableName} school: ${schoolName}`) }} >{data?.data[tableName][year]}</td>)
+                      return (<td className={year === 'Total' ? 'font-bold text-center text-[#ae7e28]' : 'text-center'} style={{background: year === 'Total'? "#f4f4f4": ""}} onClick={() => { console.log(`Year: ${year} model: ${tableName} school: ${schoolName}`) }} >{data?.data[tableName][year]}</td>)
                     })}
 
                   </tr>
