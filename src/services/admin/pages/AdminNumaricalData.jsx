@@ -131,8 +131,8 @@ const AdminNumaricalData = () => {
         <div className="mb-2">
           {reportLoading && <ReportLoading loading={reportLoading} />}
         </div>
-        <div className='table-responsive' style={{ height: School ? '100%' : `90vh` }}>
-          <table className='table table-bordered '>
+        <div className='table-responsive' style={{ height: School ? 'fit-content' : `90vh` }}>
+          <table className='table table-bordered pb-3'>
             <thead className='sticky-top'>
               <tr className='bg-[#ae7e28] text-[#FFF]'>
                 <th>Sr.No.</th>
