@@ -25,7 +25,7 @@ function programOperations(app) {
         if (singleItem) {
             if (shouldPopulate) {
                 data = await Program.findOne(filter).populate({
-                    path: 'registrationResponse',
+                    path: shouldPopulate,
                     options: { sort: { createdAt: -1 } }
                 }).lean().exec()
             } else {

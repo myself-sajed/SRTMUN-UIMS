@@ -1,4 +1,5 @@
 const RegistrationResponse = require('../../models/program-models/registrationResponses');
+const ProgramFeedback = require('../../models/program-models/programFeedback');
 const ProgramModel = require('../../models/program-models/program');
 
 async function registrationForm(app) {
@@ -20,13 +21,42 @@ async function registrationForm(app) {
 
             // Save the registration response
             const savedResponse = await response.save();
-            console.log('savedResponse:', savedResponse);
 
             // Update the program's registrationResponse array
             program.registrationResponse.push(savedResponse._id);
             await program.save();
 
             return res.send({ status: 'success', message: 'Registration response saved successfully' });
+        } catch (error) {
+            console.error('Error:', error);
+            return res.send({ status: 'error', message: `Server Error: ${error} ` });
+        }
+    });
+
+    app.post('/program/feedback', async (req, res) => {
+        const { formData, programId } = req.body;
+
+        try {
+            // Check if the program exists
+            const program = await ProgramModel.findById(programId);
+            if (!program) {
+                return res.send({ status: 'error', message: "Could not found the program, it doest not exist at the moment." });
+            }
+
+            // Create a new registration response
+            const response = new ProgramFeedback({
+                response: JSON.stringify(formData),
+                program: programId,
+            });
+
+            // Save the registration response
+            const savedResponse = await response.save();
+
+            // Update the program's registrationResponse array
+            program.programFeedback.push(savedResponse._id);
+            await program.save();
+
+            return res.send({ status: 'success', message: 'Feedback sent successfully' });
         } catch (error) {
             console.error('Error:', error);
             return res.send({ status: 'error', message: `Server Error: ${error} ` });

@@ -105,6 +105,13 @@ const programSchema = new mongoose.Schema({
         }],
         required: false
     },
+    programFeedback: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "programFeedback"
+        }],
+        required: false
+    },
     acceptingResponses: {
         type: Boolean,
         default: true,

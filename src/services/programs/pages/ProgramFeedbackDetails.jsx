@@ -20,7 +20,7 @@ import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
 import { toggleResponseAcceptance } from '../js/registrationHandler';
 
 
-const RegistrationDetails = () => {
+const ProgramFeedbackDetails = () => {
 
     const navigate = useNavigate();
 
@@ -28,10 +28,10 @@ const RegistrationDetails = () => {
     const [program, setProgram] = useState(null);
 
     let allres = []
-    program?.registrationResponse.map((e, i) => { allres.push(JSON.parse(e.response)) })
+    program?.programFeedback.map((e, i) => { allres.push(JSON.parse(e.response)) })
 
-    const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: 'registrationResponse' };
-    const { data, isLoading, refetch } = useQuery(['PopulatedSingleProgram', programId], () => fetchPrograms(params));
+    const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: 'programFeedback' };
+    const { data, isLoading, refetch } = useQuery(['PopulatedSingleProgramFeedback', programId], () => fetchPrograms(params));
 
 
     useEffect(() => {
@@ -43,9 +43,9 @@ const RegistrationDetails = () => {
 
     }, [data]);
 
-    let bredLinks = [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program...', link: `/program/${programId}` }, { title: "Program Registration Details", url: '' }];
+    let bredLinks = [siteLinks.welcome, siteLinks.programs, { title: program?.title ? `${program?.title?.slice(0, 40)}...` : 'Loading Program...', link: `/program/${programId}` }, { title: "Program Feedback Details", url: '' }];
 
-    title("Program Registration Details")
+    title("Program Feedback Details")
 
     const downloadDataToExcel = async (data, fileName) => {
 
@@ -111,14 +111,14 @@ const RegistrationDetails = () => {
     }
 
     const copyLink = () => {
-        navigator.clipboard.writeText(`https://srtmun-uims.org/program/${programId}/registration-form`)
-        toast.success('Registration link copied')
+        navigator.clipboard.writeText(`https://srtmun-uims.org/program/${programId}/program-feedback`)
+        toast.success('Program Feedback link copied')
     }
 
 
     return (
         <div>
-            <GoBack pageTitle="Program Registration Details" bredLinks={bredLinks} />
+            <GoBack pageTitle="Program Feedback Details" bredLinks={bredLinks} />
             <div className="animate-fade-up animate-once">
                 {
                     isLoading ?
@@ -131,16 +131,13 @@ const RegistrationDetails = () => {
                             {/*  */}
                             <div className="mb-2 mt-3 bg-gray-100 border rounded-md p-2 flex items-center gap-3">
                                 <div onClick={copyLink} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer"><ContentCopyRoundedIcon />Copy Registration Link</div>
-                                <div onClick={() => { toggleResponseAcceptance(programId, refetch) }} className="flex hover:text-blue-700 rounded-lg items-center p-2 bg-blue-100 cursor-pointer">
-                                    {program?.acceptingResponses ? <ToggleOnRoundedIcon /> : <ToggleOffRoundedIcon />} {program?.acceptingResponses ? `Turn-Off` : `Turn-On`} Registrations
-                                </div>
                             </div>
 
                             <div className="mt-2">
                                 <div className="animate-fade-up animate-once bg-gray-100 border rounded-md p-2">
                                     <div className='sm:flex items-start justify-between'>
                                         <p className="flex items-center gap-2 text-xl"><GroupsRoundedIcon sx={{ fontSize: '35px' }} />
-                                            <span className="ml-3 tracking-tight">Registrations {`(${program?.registrationResponse?.length})`} </span>
+                                            <span className="ml-3 tracking-tight">Feedbacks {`(${program?.programFeedback?.length})`} </span>
                                         </p>
 
                                         <button onClick={() => { downloadDataToExcel(allres, `Participant Details of ${program?.title}.xlsx`) }} className='flex items-center justify-start gap-2 mt-2 sm:mt-0 text-sm sm:text-base rounded-md hover:bg-green-800 p-1 sm:p-2 bg-green-700 text-white'>
@@ -154,13 +151,13 @@ const RegistrationDetails = () => {
                                             <div className="mt-2 table-responsive h-screen">
 
                                                 {
-                                                    program?.registrationResponse?.length > 0 ?
+                                                    program?.programFeedback?.length > 0 ?
                                                         <table className="table table-bordered text-sm">
                                                             <thead className="bg-primary text-light sticky-top">
                                                                 <tr>
                                                                     <th>Sr.No.</th>
                                                                     {
-                                                                        Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response)).map((cells) => {
+                                                                        Object.keys(JSON.parse(program?.programFeedback?.[0]?.response)).map((cells) => {
                                                                             return <th>{cells} </th>
                                                                         })
                                                                     }
@@ -169,10 +166,10 @@ const RegistrationDetails = () => {
                                                             </thead>
                                                             <tbody>
                                                                 {
-                                                                    program?.registrationResponse?.map((item, index) => {
-                                                                        let cells = Object.keys(JSON.parse(program?.registrationResponse?.[0]?.response))
+                                                                    program?.programFeedback?.map((item, index) => {
+                                                                        let cells = Object.keys(JSON.parse(program?.programFeedback?.[0]?.response))
 
-                                                                        let itemData = JSON.parse(program?.registrationResponse?.[index]?.response)
+                                                                        let itemData = JSON.parse(program?.programFeedback?.[index]?.response)
 
 
                                                                         return <tr>
@@ -189,7 +186,7 @@ const RegistrationDetails = () => {
                                                             </tbody>
                                                         </table> :
                                                         <div className='mt-5 flex items-center justify-center'>
-                                                            <Empty description="No Program Registration made so far..." />
+                                                            <Empty description="No Program Feedback submitted yet..." />
                                                         </div>
                                                 }
 
@@ -210,4 +207,4 @@ const RegistrationDetails = () => {
     )
 }
 
-export default RegistrationDetails
+export default ProgramFeedbackDetails
