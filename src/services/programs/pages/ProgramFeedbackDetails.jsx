@@ -28,7 +28,7 @@ const ProgramFeedbackDetails = () => {
     const [program, setProgram] = useState(null);
 
     let allres = []
-    program?.programFeedback.map((e, i) => { allres.push(JSON.parse(e.response)) })
+    program?.programFeedback?.map((e, i) => { allres.push(JSON.parse(e.response)) })
 
     const params = { filter: { _id: programId }, singleItem: true, shouldPopulate: 'programFeedback' };
     const { data, isLoading, refetch } = useQuery(['PopulatedSingleProgramFeedback', programId], () => fetchPrograms(params));
@@ -78,7 +78,7 @@ const ProgramFeedbackDetails = () => {
 
             // Add data rows with auto-incrementing numbers
             data?.forEach((rowData, index) => {
-                const values = Object.keys(columnMapping).map((columnName) => rowData[columnName]);
+                const values = Object.keys(columnMapping)?.map((columnName) => rowData[columnName]);
                 values.unshift(index + 1);
                 worksheet.addRow(values);
             });
@@ -157,7 +157,7 @@ const ProgramFeedbackDetails = () => {
                                                                 <tr>
                                                                     <th>Sr.No.</th>
                                                                     {
-                                                                        Object.keys(JSON.parse(program?.programFeedback?.[0]?.response)).map((cells) => {
+                                                                        Object.keys(JSON.parse(program?.programFeedback?.[0]?.response))?.map((cells) => {
                                                                             return <th>{cells} </th>
                                                                         })
                                                                     }
