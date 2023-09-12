@@ -9,10 +9,13 @@ import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';
 import toast from 'react-hot-toast'
 import ExcelJS from 'exceljs'
+import { useParams } from 'react-router-dom'
 
 const AdminNumaricalData = () => {
 
-  const [values, setValues] = useState({schoolName: "All Schools" })
+  const {School} =useParams();
+
+  const [values, setValues] = useState({schoolName: School?School:"All Schools" })
   const {schoolName} = values
 
   const getCountData = async (filter) => {
@@ -37,14 +40,11 @@ const AdminNumaricalData = () => {
 
   const excelHandler = async(data) => {
     try {
-      const columnMapping = {name:"Name Of Table", "2022-23":"2022-23", "2021-22":"2021-22", "2020-21":"2020-21","2019-20":"2019-20", "2018-19":"2018-19",	"Total":"Total"};
-  
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Sheet 1');
-      
 
-
-      const columnNames = Object.values(columnMapping);
+      const columnNames = generateAcademicYears;
+      columnNames.unshift('Name Of Table');
       columnNames.unshift('Sr.No.');
   
       // Set column headers and formatting
@@ -52,7 +52,7 @@ const AdminNumaricalData = () => {
       headerRow.font = { bold: true, size: 12 };
   
       // Apply formatting to all cells
-      worksheet.columns.forEach((column) => {
+        worksheet.columns.forEach((column) => {
         column.width = 20;
         column.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
       });
@@ -94,9 +94,10 @@ const AdminNumaricalData = () => {
   }
 
   return (
-    <AdminDrower>
+    <AdminDrower hideHeader={School?true:false} >
       <div className='sub-main' >
         <div className='flex justify-end pb-2'>
+          {!School&&<>
           <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" /> 
           <Tooltip title="PDF Download" placement="top" >
             <IconButton sx={{height:"100%", bottom:"-25px", marginLeft: "15px"}} onClick={pdfHandler} > 
@@ -108,8 +109,9 @@ const AdminNumaricalData = () => {
               <SimCardDownloadTwoToneIcon color='success' sx={{fontSize:30}}/> 
             </IconButton>
           </Tooltip>
+          </>}
         </div>
-        <div className='table-responsive' style={{ height: "70vh" }}>
+        <div className='table-responsive' style={{ height: School?'100%':`80vh` }}>
           <table className='table table-bordered '>
           <thead className='sticky-top'>
             <tr className='bg-[#ae7e28] text-[#FFF]'>

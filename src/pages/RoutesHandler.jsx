@@ -134,7 +134,7 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-                <Route path="/test2" exact element={<Test2 />} />
+                <Route path="/NumaricalData/:School" exact element={<Test2 />} />
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />

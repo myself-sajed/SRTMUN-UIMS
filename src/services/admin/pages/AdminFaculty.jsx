@@ -162,7 +162,7 @@ const AdminFaculty = ({ school }) => {
     }
   }, [values.yearFilter, values.schoolName]);
   return (
-    <AdminDrower>
+    <AdminDrower hideHeader={directorLocation}>
 
       <div className='sub-main' >
         <div className='flex px-3 flex-wrap gap-2'>

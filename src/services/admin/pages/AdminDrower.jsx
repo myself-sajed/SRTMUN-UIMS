@@ -15,7 +15,7 @@ import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks';
 
 
-const AdminDrower = ({ children }) => {
+const AdminDrower = ({ children, hideHeader=false }) => {
   const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
   title('Admin Panel')
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const AdminDrower = ({ children }) => {
 
     <>
       <div className='col-12' style={{ height: "auto", display: 'flex', flexDirection: 'column' }}>
-        {window.location.pathname !== siteLinks.fdc.link && <div className='sidebar-admin-drower'>
+        {!hideHeader && <div className='sidebar-admin-drower'>
           {
             DashbordButtons?.map(button => <button onClick={() => { dispatch(setAdminActive(button.name)) }} className={`DashbordButtons ${AdminActive === button.name ? 'active' : null}`}><span style={{ paddingRight: "10px" }}>{iconsSetter[button.name]}</span>{button.title}</button>)
           }
