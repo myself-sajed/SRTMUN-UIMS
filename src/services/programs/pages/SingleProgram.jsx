@@ -83,7 +83,7 @@ const DetailTile = ({ id, title, program }) => {
         flyer: { icon: <ArticleRoundedIcon />, url: `/program/${program?._id}/program-flyer` },
         participants: { icon: <GroupsRoundedIcon />, url: `/program/${program?._id}/registration-details` },
         email: { icon: <ContactMailRoundedIcon />, url: `/program/${program?._id}/email-participants` },
-        feedback: { icon: <MessageRoundedIcon />, url: `/program/${program?._id}/program-feedback` },
+        feedback: { icon: <MessageRoundedIcon />, url: `/program/${program?._id}/feedback-details` },
         report: { icon: <PictureAsPdfRoundedIcon />, url: `/program/${program?._id}/upload-program-report` },
         photos: { icon: <AddAPhotoRoundedIcon />, url: `/program/${program?._id}/upload-program-photos` }
     }

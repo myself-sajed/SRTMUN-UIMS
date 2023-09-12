@@ -120,6 +120,9 @@ import NSSAQAR from '../services/nss/pages/NSSAQAR'
 import ExamAQAR from '../services/exam/pages/ExamAQAR'
 import PlacementAQAR from '../services/placement/pages/PlacementAQAR'
 import OtherAQAR from '../services/other/pages/OtherAQAR'
+import ProgramFeedback from '../services/programs/pages/ProgramFeedback'
+import ProgramFeedbackDetails from '../services/programs/pages/ProgramFeedbackDetails'
+import FeedbackAck from '../services/programs/pages/FeedbackAck'
 
 let model = "Xyz"
 let module = 'abc'
@@ -249,8 +252,11 @@ const RoutesHandler = () => {
                 <Route path="/program/:programId" exact element={<SingleProgram />} />
                 <Route path="/program/:programId/registration-form" exact element={<ProgramRegistration />} />
                 <Route path="/program/:programId/registration-details" exact element={<RegistrationDetails />} />
+                <Route path="/program/:programId/feedback-details" exact element={<ProgramFeedbackDetails />} />
+                <Route path="/program/:programId/program-feedback" exact element={<ProgramFeedback />} />
                 <Route path="/program/:programId/upload-program-photos" exact element={<AddProgramPhotos />} />
                 <Route path="/program/:programId/registration-form/acknowledgement" exact element={<RegistrationAck />} />
+                <Route path="/program/:programId/feedback-form/acknowledgement" exact element={<FeedbackAck />} />
                 <Route path="/addProgram" exact element={<AddProgram />} />
 
                 {/* Youth Festival Service */}
