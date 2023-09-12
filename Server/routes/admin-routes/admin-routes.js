@@ -65,15 +65,16 @@ const ExpertFeedback = require('../../models/feedback-models/expertFeedbackModel
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
-const { YearSelecter } = require('../../routes/director-routes/director-routes')
+const { YearSelecter } = require('../../routes/director-routes/director-routes');
+const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback }
 
-const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent","Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
+const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent", "Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
 const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopOrganized", "CounselingAndGuidance", "DemandRatio", "Employability", "ExtensionActivities", "IctClassrooms", "MoUs", "Placement", "ProgressionToHE", "ProjectsInternships", "QualifiedExams", "ResearchMethodologyWorkshops", "ReservedSeats", "SkillsEnhancementInitiatives", "StudentSatisfactionSurvey", "SyllabusRevision", "TrainingProgramsOrganized", "UgcSapCasDstFistDBTICSSR", "ValueAddedCource"]
 
-const feedbackModels = [ "StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback" ]
+const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback"]
 
 const dataSetter = {
     "School of Computational Sciences": "compCount",
@@ -94,6 +95,17 @@ const dataSetter = {
     "School of Social Sciences, Sub-Campus, Latur": "socialLaturCount",
 }
 
+router.post('/admin/pdf/numericalData', async (req, res) => {
+    try {
+        const { schoolName } = req.body
+        const linkToNavigate = `${process.env.Report_Main_URL}/NumaricalData/${schoolName}`
+        const fileName = `${schoolName}-NumericalDashboard-${new Date().getTime()}.pdf`
+        await pupetteerSetting({ linkToNavigate, fileName })
+        res.send({ status: 'generated', fileName })
+    } catch (error) {
+        res.send({ status: 'error' })
+    }
+})
 
 router.post("/getDepartmentWiseDocumentCount", async (req, res) => {
     const { model, property } = req.body
@@ -195,7 +207,7 @@ router.post('/Admin/getData', async (req, res) => {
 router.post('/Admin/getFiveYearData', async (req, res) => {
     const { schoolName } = req.body
     try {
-        
+
         const genrateAcademicYears = () => {
             const d = new Date()
             let year = d.getFullYear();
@@ -218,7 +230,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
-            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model)?"schoolName":""
+            let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model) ? "schoolName" : ""
             docs[model] = {};
             let totalCount = 0;
             await Promise.all(
@@ -230,7 +242,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                             yearFieldNmae = yearField;
                             break;
                         }
-                        else if(feedbackModels.includes(model)) {
+                        else if (feedbackModels.includes(model)) {
                             yearFieldNmae = "academicYear"
                         }
                         else {
@@ -238,20 +250,20 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         }
 
                     }
-                    if(model==="AlumniUser"){
-                        var filter = { programCompletedOn: year, isAlumni: true,}
-                        if(schoolName) filter[school]=schoolName
+                    if (model === "AlumniUser") {
+                        var filter = { programCompletedOn: year, isAlumni: true, }
+                        if (schoolName) filter[school] = schoolName
                         docs[model][year] = await StudentUser.countDocuments(filter);
                     }
-                    else if(model==="StudentUser"){
+                    else if (model === "StudentUser") {
                         var filter = { programEnroledOn: year, isAlumni: false, isActiveStudent: true }
-                        if(schoolName) filter[school]=schoolName
+                        if (schoolName) filter[school] = schoolName
                         docs[model][year] = await models[model].countDocuments(filter);
                     }
-                    else if(facultyModels.includes(model)){
-                        let schoolFilter = schoolName? {department: schoolName}: {}
+                    else if (facultyModels.includes(model)) {
+                        let schoolFilter = schoolName ? { department: schoolName } : {}
                         var filter = { [yearFieldNmae]: year }
-                        if(schoolName) filter[school]=schoolName
+                        if (schoolName) filter[school] = schoolName
 
                         try {
                             const fetch = await models[model]
@@ -262,22 +274,22 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                                     select: ('-password'),
                                 })
                                 .exec();
-        
+
                             let filterData = [];
                             for (item of fetch) {
                                 if (item.userId !== null) {
                                     filterData.push(item);
                                 }
                             }
-        
+
                             docs[model][year] = filterData.length;
                         } catch (err) {
                             console.log(err);
                         }
                     }
-                    else{
+                    else {
                         var filter = { [yearFieldNmae]: year }
-                        if(schoolName) filter[school]=schoolName
+                        if (schoolName) filter[school] = schoolName
                         docs[model][year] = await models[model].countDocuments(filter);
                     }
                     totalCount += docs[model][year]

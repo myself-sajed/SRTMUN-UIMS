@@ -137,7 +137,6 @@ const RoutesHandler = () => {
             <Navbar />
 
             <Routes>
-                <Route path="/NumaricalData/:School" exact element={<Test2 />} />
                 <Route path="/" exact element={<Index />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />
@@ -149,6 +148,7 @@ const RoutesHandler = () => {
                 <Route path="/director/service/generateAAAReport" exact element={<GenerateAAAPage />} />
                 <Route path="/faculty" exact element={<Home />} />
                 <Route path="/admin-login" exact element={<AdminLogin />} />
+                <Route path="/NumaricalData/:School" exact element={<Test2 />} />
                 <Route path="/director-login" exact element={<DirectorLogin />} />
                 <Route path="/faculty-registration" exact element={<FacultyRegistration />} />
                 <Route path="/contractual-faculty-registration" exact element={<ContractualFacultyRegistration />} />

@@ -10,6 +10,7 @@ import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTo
 import toast from 'react-hot-toast'
 import ExcelJS from 'exceljs'
 import { useParams } from 'react-router-dom'
+import ReportLoading from '../../../components/ReportLoading'
 
 const AdminNumaricalData = () => {
 
@@ -17,15 +18,31 @@ const AdminNumaricalData = () => {
 
   const [values, setValues] = useState({ schoolName: School ? School : "All Schools" })
   const { schoolName } = values
+  const [reportLoading, setReportLoading] = useState(false)
 
   const getCountData = async (filter) => {
     return await axios.post(`${process.env.REACT_APP_MAIN_URL}/Admin/getFiveYearData`, filter)
   }
 
 
-
   const pdfHandler = () => {
-    console.log("pdf Clicked");
+    setReportLoading(true)
+    axios.post(`${process.env.REACT_APP_MAIN_URL}/admin/pdf/numericalData`, { schoolName })
+      .then(function (res) {
+        if (res.data.status === 'generated') {
+          setReportLoading(false)
+          toast.success('File generated successfully');
+          window.open(`${process.env.REACT_APP_MAIN_URL}/downloadPdf/${res.data.fileName}`, '_blank');
+        }
+        else if (res.data.status === 'error') {
+          setReportLoading(false)
+          toast.error(res.data.message);
+        }
+      })
+      .catch(function (err) {
+        setReportLoading(false)
+        toast.error('Something went wrong');
+      })
   }
 
   const countFilter = schoolName === "All Schools" ? {} : { schoolName }
@@ -111,7 +128,10 @@ const AdminNumaricalData = () => {
             </Tooltip>
           </>}
         </div>
-        <div className='table-responsive' style={{ height: School ? '100%' : `80vh` }}>
+        <div className="mb-2">
+          {reportLoading && <ReportLoading loading={reportLoading} />}
+        </div>
+        <div className='table-responsive' style={{ height: School ? '100%' : `90vh` }}>
           <table className='table table-bordered '>
             <thead className='sticky-top'>
               <tr className='bg-[#ae7e28] text-[#FFF]'>
