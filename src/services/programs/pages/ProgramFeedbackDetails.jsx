@@ -51,14 +51,15 @@ const ProgramFeedbackDetails = () => {
 
         try {
             const columnMapping = {
-                "Name of the Teacher": "Name of the Teacher",
-                "Email Address": "Email Address",
-                "Designation": "Designation",
-                "Contact Number": "Contact Number",
-                "Name of the Department/School": "Name of the Department/School",
-                "Name of the College/University": "Name of the College/University",
-                "Address of the institution": "Address of the institution",
+                'The objectives of the workshop were clearly stated': 'The objectives of the workshop were clearly stated',
+                'The lectures were organized properly and easy to follow': 'The lectures were organized properly and easy to follow',
+                'Resource persons were well prepared their lectures': 'Resource persons were well prepared their lectures',
+                'Lunch/refreshment arrangements were good': 'Lunch/refreshment arrangements were good',
+                'Performance of the Resource Person': 'Performance of the Resource Person',
+                'Are you going to prepare MOOCs after this workshop?': 'Are you going to prepare MOOCs after this workshop?',
+                'Your suggestions for the betterment': 'Your suggestions for the betterment',
             };
+            ;
 
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Sheet 1');
