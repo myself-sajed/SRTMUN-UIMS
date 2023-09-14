@@ -15,6 +15,7 @@ import AlumniExamQualified from '../pages/AlumniExamQualified';
 import AlumniBusiness from '../pages/AlumniBusiness';
 import AlumniJobs from '../pages/AlumniJobs';
 import AlumniContribution from '../pages/AlumniContribution';
+import StudentPatents from '../pages/StudentPatents';
 
 const PhDStudent = [
     {
@@ -28,6 +29,12 @@ const PhDStudent = [
         icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
         name: 'studentJRFSRF',
         value: 'JRF, SRF, Post Doctoral Fellows, Research Associate',
+    },
+    {
+        element: <StudentPatents />,
+        icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
+        name: 'studentPatents',
+        value: 'Patents',
     },
     {
         element: <AlumniHE />,
