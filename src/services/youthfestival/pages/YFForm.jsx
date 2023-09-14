@@ -13,8 +13,7 @@ import { useSelector } from 'react-redux'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import GeneralInfo from '../components/GeneralInfo'
 import Footer from '../../../components/Footer'
-import Spardhak from '../components/Spardhak'
-import VadakSathidar from '../components/VadakSathidar'
+import useYouthAuth from '../../../hooks/useYouthAuth'
 import ArrowButton from '../../../components/ArrowButton'
 import YfTable1 from '../components/YfTable1'
 import YfTable2 from '../components/YfTable2'
@@ -29,6 +28,7 @@ const YFForm = () => {
     const [academicYear, setAcademicYear] = useState(null)
     title(siteLinks.yfCollegeYouthForm.title)
     const user = useSelector((state) => state.user.youthUser)
+    useYouthAuth(false)
 
     const AQARTables = [
         {
@@ -67,7 +67,9 @@ const YFForm = () => {
 
     const handleFormSubmit = () => {
         const customMessage = `Youth Festival form for ${academicYear} has been submitted successfully.`
-        isReportSubmitted(academicYear, 'YFReportIsSubmitted', handleNext, customMessage)
+        const filter = { college: user?._id }
+
+        isReportSubmitted(academicYear, 'YFReportIsSubmitted', handleNext, customMessage, filter, filter)
     }
 
 

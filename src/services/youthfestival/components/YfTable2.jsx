@@ -16,14 +16,14 @@ import handleAvatarChange from '../../../js/handleAvatar'
 import Select from '../../../components/formComponents/Select'
 
 
-const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", nameOfCollege: "महाविद्यालयाचे नाव", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", namesOfCompetition: "भाग घेतलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
+const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", namesOfCompetition: "भाग घेतलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
 
 const YfTable2 = ({ user, filterByAcademicYear }) => {
   const model = 'YfTable2'
   const module = 'youth';
   const title = "युवक महोत्सवात सहभाग - स्पर्धक योग्यता"
 
-  let filter = { academicYear: filterByAcademicYear }
+  let filter = { academicYear: filterByAcademicYear, college: user?._id }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -46,8 +46,6 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
 
   const { namesOfCompetition } = values2
 
-  console.log("namesOfCompetition:", namesOfCompetition)
-
   useEffect(() => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
@@ -62,13 +60,13 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
   }, [itemToEdit])
 
   const onCancel = () => {
-    setValues(initialstate); setValues2({ namesOfCompetition: "" }); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
+    setValues(initialstate); setValues2([]); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
   }
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ photoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, { namesOfCompetition }) :
-      addReq({ photoURL, collageId: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, { namesOfCompetition })
-    setValues2({ namesOfCompetition: "" })
+      addReq({ photoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, { namesOfCompetition })
+    setValues2([])
     setPhotoURL(null)
   }
 

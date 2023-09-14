@@ -2,9 +2,9 @@ import toast from "react-hot-toast"
 import Axios from 'axios'
 
 // route filename : dsd-routes.js
-const isReportSubmitted = (year, model, handleNext, customMessage) => {
+const isReportSubmitted = (year, model, handleNext, customMessage, filter = null, dataToAdd = null) => {
     const link = `${process.env.REACT_APP_MAIN_URL}/other/services/isReportSubmitted`
-    Axios.post(link, { year, model })
+    Axios.post(link, { year, model, filter, dataToAdd })
         .then((res) => {
             if (res.data.status === 'success') {
                 toast.success(customMessage ? customMessage : res.data.message)

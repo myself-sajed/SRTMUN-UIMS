@@ -159,7 +159,7 @@ const ExamPassedDuringYearWithProof = ({ aqarYearState }) => {
             <TableSupportingProof setFile={setFile} proof={proof} />
             {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
         </div>
-        <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
+        <ExamPassedDuringYear filterByAcademicYear={aqarYearState} />
     </div>
 
 }

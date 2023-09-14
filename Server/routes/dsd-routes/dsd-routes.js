@@ -36,15 +36,17 @@ const dsdUpload = multer({ storage: dsdstorage })
 // add aqar submissions year in the schema so that it will show if the aqar for that year has submitted or not
 router.post('/other/services/isReportSubmitted', (req, res) => {
 
-    const { year, model } = req.body;
-
-    NonTeachingModels[model].findOne({}, (err, doc) => {
+    const { year, model, filter, dataToAdd } = req.body;
+    console.log(filter, dataToAdd);
+    const modelFilter = filter ? filter : {}
+    const data = dataToAdd ? dataToAdd : {}
+    NonTeachingModels[model].findOne(modelFilter, (err, doc) => {
         if (err) {
             console.error(err);
             return res.send({ status: 'error', message: "Internal Server Error" });
         } else {
             if (!doc) {
-                doc = new NonTeachingModels[model]();
+                doc = new NonTeachingModels[model](data);
             }
 
 
@@ -61,6 +63,7 @@ router.post('/other/services/isReportSubmitted', (req, res) => {
 
             doc.save((saveErr, updatedDoc) => {
                 if (saveErr) {
+                    console.log(saveErr)
                     return res.send({ status: 'error', message: "Could not submit the form" });
 
                 } else {

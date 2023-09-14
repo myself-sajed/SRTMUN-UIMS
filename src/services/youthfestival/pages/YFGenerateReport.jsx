@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import useYouthAuth from '../../../hooks/useYouthAuth'
 import UserLoading from '../../../pages/UserLoading'
 import { Link } from 'react-router-dom'
+import Note from '../../director/reports/academic-audit/components/Note'
 
 
 const YFGenerateReport = () => {
@@ -16,8 +17,8 @@ const YFGenerateReport = () => {
     const [selectedYear, setSelectedYear] = useState(null)
     useYouthAuth(false)
     const user = useSelector((state) => state.user?.youthUser)
-    const { data, isLoading } = useQuery('YFSubmittedYears', getYears)
-
+    const filter = { college: user?._id }
+    const { data, isLoading } = useQuery('YFSubmittedYears', () => getYears(filter))
 
     return (
         <div>
@@ -38,7 +39,12 @@ const YFGenerateReport = () => {
                                         ?
                                         <SelectYearRadio sortedYear={data?.data?.data?.[0].submitted} setSelectedYear={setSelectedYear} selectedYear={selectedYear} />
                                         :
-                                        <Link to={siteLinks.yfCollegeYouthForm.link} className="text-red-600">No Youth Festival Form Submitted Yet, Click to Fill Form</Link>
+                                        <div className="text-center">
+                                            <Link to={siteLinks.yfCollegeYouthForm.link} className="text-red-600">No Youth Festival Form Submitted Yet, Click to Fill Form</Link> <br /><br />
+                                            <Note title="जोपर्यंत तुम्ही संपूर्ण फॉर्म सबमिट करत नाही, तोपर्यंत तुम्ही अर्ज किंवा अहवाल तयार करू शकणार नाही." />
+
+
+                                        </div>
                             }
 
 

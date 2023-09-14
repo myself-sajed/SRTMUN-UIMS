@@ -7,6 +7,10 @@ const schema = new mongoose.Schema({
         require: false,
         default: [],
     },
+    college: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
 
 }, { timestamps: true });
 

@@ -27,9 +27,9 @@ async function yfGeneratePDF(selectedYear, youthUser, setReportLoading) {
         })
 }
 
-function getYears() {
+function getYears(filter) {
     const link = `${process.env.REACT_APP_MAIN_URL}/api/get/dashboardData`
-    return Axios.post(link, { model: "YFCollegeSubmit", filter: {} })
+    return Axios.post(link, { model: "YFCollegeSubmit", filter })
 }
 
 export default yfGeneratePDF

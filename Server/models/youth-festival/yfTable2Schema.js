@@ -42,8 +42,9 @@ const yfTable2Schema = new mongoose.Schema({
         type: 'string',
         required: true
     },
-    collageId: {
-        type: 'string',
+    college: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "yfcolleges",
         required: true
     },
 

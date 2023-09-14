@@ -15,14 +15,15 @@ import serverLinks from '../../../js/serverLinks'
 import handleAvatarChange from '../../../js/handleAvatar'
 
 
-const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", nameOfCollege: "महाविद्यालयाचे नाव", partnerName: "प्रशिक्षक / वादक / साथीदार पूर्ण नाव", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", dob: "जन्म दिनांक", bloodGroup: "रक्त गट", namesOfCompetition: "मार्गदर्शन करत असलेल्या किंवा साथीदार / वादक  म्हणून भाग घेत असलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
+const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", partnerName: "प्रशिक्षक / वादक / साथीदार पूर्ण नाव", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", dob: "जन्म दिनांक", bloodGroup: "रक्त गट", namesOfCompetition: "मार्गदर्शन करत असलेल्या किंवा साथीदार / वादक  म्हणून भाग घेत असलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
 
 const YfTable1 = ({ user, filterByAcademicYear }) => {
   const model = 'YfTable1'
   const module = 'youth';
   const title = "युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार"
 
-  let filter = { academicYear: filterByAcademicYear }
+  let filter = { academicYear: filterByAcademicYear, college: user?._id }
+
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -64,8 +65,8 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ photoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, { namesOfCompetition }) :
-      addReq({ photoURL, collageId: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, { namesOfCompetition })
-    setValues2({ namesOfCompetition: "" }); setPhotoURL(null);
+      addReq({ photoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, { namesOfCompetition })
+    setValues2([]); setPhotoURL(null);
   }
 
   return (

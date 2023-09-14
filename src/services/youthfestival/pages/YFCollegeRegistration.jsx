@@ -293,10 +293,10 @@ const CollegeRegistration = () => {
 
 
                                                     <div className="my-5 flex items-center justify-center md:gap-4 gap-2">
-                                                        <button onClick={() => { navigate(siteLinks.yfCollegeLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                        <button onClick={() => { navigate('/') }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
                                                             Home Page
                                                         </button>
-                                                        <button onClick={() => { navigate("/") }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
+                                                        <button onClick={() => { navigate(siteLinks.yfCollegeLogin.link) }} className="flex items-center justify-start gap-3 hover:bg-blue-800 md:text-base text-sm bg-blue-600 text-white py-2 px-4 rounded-lg" >
                                                             Login to Fill Details
                                                         </button>
                                                     </div>
