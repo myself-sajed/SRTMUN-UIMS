@@ -18,12 +18,12 @@ import Select from '../../../components/formComponents/Select'
 
 const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", nameOfCollege: "महाविद्यालयाचे नाव", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", namesOfCompetition: "भाग घेतलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
 
-const YfTable2 = ({ user }) => {
+const YfTable2 = ({ user, filterByAcademicYear }) => {
   const model = 'YfTable2'
   const module = 'youth';
   const title = "युवक महोत्सवात सहभाग - स्पर्धक योग्यता"
 
-  let filter = {}
+  let filter = { academicYear: filterByAcademicYear }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
@@ -42,9 +42,11 @@ const YfTable2 = ({ user }) => {
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [openCroper, setOpenCroper] = useState(false)
-  const [values2, setValues2] = useState({ namesOfCompetition: "" })
+  const [values2, setValues2] = useState([])
 
   const { namesOfCompetition } = values2
+
+  console.log("namesOfCompetition:", namesOfCompetition)
 
   useEffect(() => {
     if (itemToEdit && data.data) {
@@ -95,9 +97,8 @@ const YfTable2 = ({ user }) => {
             </div>
           </div>
 
-          <MultiSelectWithLimit className='col-md-6 col-lg-4' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "समुह गायन - भारतीय" }, { value: "समुह गायन - पाश्चात्य" }, { value: "कव्वाली" }, { value: "फोक  ऑर्केस्ट्रा  (लोक संगीत)" }, { value: "लोकनृत्य / आदिवासी नृत्य" }, { value: "शास्त्रीय नृत्य" }, { value: "एकांकिका" }, { value: "विडंबन अभिनय" }, { value: "मूक अभिनय" }, { value: "नक्कल" }, { value: "वादविवाद" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" }, { value: "कलात्मक जुळवणी (इंस्टॉलेशन)" }, { value: "पोवाडा" }, { value: "लावणी" }, { value: "जलसा" },]} limit={4} />
+          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "समुह गायन - भारतीय" }, { value: "समुह गायन - पाश्चात्य" }, { value: "कव्वाली" }, { value: "फोक  ऑर्केस्ट्रा  (लोक संगीत)" }, { value: "लोकनृत्य / आदिवासी नृत्य" }, { value: "शास्त्रीय नृत्य" }, { value: "एकांकिका" }, { value: "विडंबन अभिनय" }, { value: "मूक अभिनय" }, { value: "नक्कल" }, { value: "वादविवाद" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" }, { value: "कलात्मक जुळवणी (इंस्टॉलेशन)" }, { value: "पोवाडा" }, { value: "लावणी" }, { value: "जलसा" },]} limit={4} />
 
-          <Text className='col-md-6 col-lg-4' id="nameOfCollege" value={nameOfCollege} label={tableHead.nameOfCollege} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="mobileNo" value={mobileNo} label={tableHead.mobileNo} setState={setValues} />

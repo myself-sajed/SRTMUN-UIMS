@@ -37,11 +37,11 @@ const YFForm = () => {
         },
         {
             title: 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता',
-            component: <YfTable2 user={user} />
+            component: <YfTable2 user={user} filterByAcademicYear={academicYear} />
         },
         {
             title: 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार',
-            component: <YfTable1 user={user} />
+            component: <YfTable1 user={user} filterByAcademicYear={academicYear} />
         },
     ]
     const tableTitles = [...AQARTables.map((table) => table.title)]

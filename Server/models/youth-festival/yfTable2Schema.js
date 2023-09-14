@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
-const yfTable2Schema = new mongoose.Schema({ 
-    nameOfCollege: {
-        type: 'string',
-        required: true,
-    },
+const yfTable2Schema = new mongoose.Schema({
+
     ParticpantName: {
         type: 'string',
         required: true,

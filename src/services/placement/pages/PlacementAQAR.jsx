@@ -9,6 +9,7 @@ import AQARStepper from '../../dsd/components/AQARStepper';
 import { placementAuthParams } from './PlacementHome';
 import CounselingAndGuidance from '../../director/pages/CounselingAndGuidance';
 import Placements from '../../director/pages/Placements';
+import ProgressionToHE from '../../director/pages/ProgressionToHE';
 
 const PlacementAQAR = () => {
     title(siteLinks.placementAQAR.title)
@@ -29,7 +30,7 @@ const PlacementAQAR = () => {
         },
         {
             title: '5.1.3 - Progression to Higher Education',
-            component: <CounselingAndGuidance school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
+            component: <ProgressionToHE school={true} filterByAcademicYear={true} academicYear={aqarYearState} />
         },
     ]
 

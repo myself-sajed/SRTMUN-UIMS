@@ -24,22 +24,19 @@ const ExamAQAR = () => {
     useOtherServiceAuth({ ...examAuthParams, shouldNavigate: false })
     const [aqarYearState, setAqarYearState] = useState(null)
 
-    // other states
-    const [resultFile, setResultFile] = useState(null)
-
 
     const AQARTables = [
         {
             title: "2.5.1 - Days from the date of last semester-end/ year- end examination till the declaration of  results during the year",
-            component: <ResultDeclarationWithProof setResultFile={setResultFile} resultFile={resultFile} aqarYearState={aqarYearState} />
+            component: <ResultDeclarationWithProof aqarYearState={aqarYearState} />
         },
         {
             title: "2.5.2 - Student complaints/grievances about evaluation against total number appeared in the examinations during the year ",
-            component: <StudentComplaintWithProof filterByAcademicYear={aqarYearState} />
+            component: <StudentComplaintWithProof aqarYearState={aqarYearState} />
         },
         {
             title: "2.6.3 - Students passed during the year",
-            component: <ExamPassedDuringYear filterByAcademicYear={aqarYearState} />
+            component: <ExamPassedDuringYearWithProof aqarYearState={aqarYearState} />
         },
     ]
 
@@ -101,8 +98,8 @@ const StudentComplaintWithProof = ({ aqarYearState }) => {
     const [file, setFile] = useState(null)
     const [proof, setProof] = useState(null)
 
-    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'DateOfResultDiclaration' }
-    const { data, isLoading, refetch } = useQuery(`DateOfResultDiclaration-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'StudentComplaint' }
+    const { data, isLoading, refetch } = useQuery(`StudentComplaint-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
 
     const submitProofFunction = () => {
         const formData = new FormData()
@@ -110,7 +107,7 @@ const StudentComplaintWithProof = ({ aqarYearState }) => {
             formData.append('file', file)
         }
         formData.append('userType', 'exam')
-        formData.append('proofType', 'DateOfResultDiclaration')
+        formData.append('proofType', 'StudentComplaint')
         formData.append('academicYear', aqarYearState)
 
         uploadSupportingDocument(formData, refetch)
@@ -127,7 +124,42 @@ const StudentComplaintWithProof = ({ aqarYearState }) => {
             <TableSupportingProof setFile={setFile} proof={proof} />
             {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
         </div>
-        <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
+        <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
+    </div>
+
+}
+
+const ExamPassedDuringYearWithProof = ({ aqarYearState }) => {
+    const [file, setFile] = useState(null)
+    const [proof, setProof] = useState(null)
+
+    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'ExamPassedDuringYear' }
+    const { data, isLoading, refetch } = useQuery(`ExamPassedDuringYear-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+
+    const submitProofFunction = () => {
+        const formData = new FormData()
+        if (file) {
+            formData.append('file', file)
+        }
+        formData.append('userType', 'exam')
+        formData.append('proofType', 'ExamPassedDuringYear')
+        formData.append('academicYear', aqarYearState)
+
+        uploadSupportingDocument(formData, refetch)
+
+    }
+
+    useEffect(() => {
+        if (data?.data?.status === 'success') {
+            setProof(data?.data?.data?.proof)
+        }
+    }, [data])
+    return <div>
+        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+            <TableSupportingProof setFile={setFile} proof={proof} />
+            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
+        </div>
+        <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
     </div>
 
 }
