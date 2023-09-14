@@ -53,7 +53,7 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
           const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, namesOfCompetition, } = item
           setEdit(true); setOpen(true);
           setValues({ nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, })
-          setValues2({ namesOfCompetition })
+          setValues2({ namesOfCompetition: namesOfCompetition.filter((item) => item !== "") })
         }
       })
     }
