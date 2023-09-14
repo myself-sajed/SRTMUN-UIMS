@@ -18,7 +18,7 @@ const NSSStudentAdmission = () => {
 
     return (
         <div>
-            <GoBack backUrl="/" pageTitle="NSS Student Admission" bredLinks={[siteLinks.welcome, siteLinks.nssStudentAdmission]} />
+            <GoBack pageTitle="NSS Student Admission" bredLinks={[siteLinks.welcome, siteLinks.nssStudentAdmission]} />
 
 
             <div className="w-full border-b">
