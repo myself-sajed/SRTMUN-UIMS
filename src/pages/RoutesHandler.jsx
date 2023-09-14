@@ -125,6 +125,7 @@ import ProgramFeedbackDetails from '../services/programs/pages/ProgramFeedbackDe
 import FeedbackAck from '../services/programs/pages/FeedbackAck'
 import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
 import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
+import PDFNumericalTable from '../services/admin/pages/PDFNumericalTable'
 
 let model = "Xyz"
 let module = 'abc'
@@ -171,6 +172,7 @@ const RoutesHandler = () => {
                 <Route path='/student/resume' exact element={<StudentResume />} />
                 <Route path="/student/student-status" exact element={<StudentMain />} />
                 <Route path='/admin' exact element={<AdminMain />} />
+                <Route path='/admin/numericalData/:School' exact element={<PDFNumericalTable />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
 

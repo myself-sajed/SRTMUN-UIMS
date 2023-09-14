@@ -16,6 +16,8 @@ import Footer from '../../../components/Footer'
 import Spardhak from '../components/Spardhak'
 import VadakSathidar from '../components/VadakSathidar'
 import ArrowButton from '../../../components/ArrowButton'
+import YfTable1 from '../components/YfTable1'
+import YfTable2 from '../components/YfTable2'
 
 
 const YFForm = () => {
@@ -30,16 +32,16 @@ const YFForm = () => {
 
     const AQARTables = [
         {
-            title: 'General Form',
+            title: 'मूलभूत / सामान्य माहिती',
             component: <GeneralInfo academicYear={academicYear} user={user} />
         },
         {
-            title: 'Spardhak',
-            component: <Spardhak />
+            title: 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता',
+            component: <YfTable2 user={user} />
         },
         {
-            title: 'Vadak and Sathidar',
-            component: <VadakSathidar />
+            title: 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार',
+            component: <YfTable1 user={user} />
         },
     ]
     const tableTitles = [...AQARTables.map((table) => table.title)]

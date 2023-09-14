@@ -4,6 +4,7 @@ import ArrowButton from '../../../components/ArrowButton'
 import { fetchInfo, saveGeneralInfo } from '../js/generalInfoHandler'
 import { useQuery } from 'react-query'
 import UserLoading from '../../../pages/UserLoading'
+import Note from '../../director/reports/academic-audit/components/Note'
 
 const GeneralInfo = ({ academicYear, user }) => {
     const [info, setInfo] = useState({ maleName: "", femaleName: "", maleMobile: "", femaleMobile: "", admissionFees: "", dsdFees: "" })
@@ -26,6 +27,7 @@ const GeneralInfo = ({ academicYear, user }) => {
     return (
         <div className='my-3'>
             {isLoading ? <UserLoading title="Fetching Details" /> : <form onSubmit={saveForm}>
+                <Note title="तुम्ही फॉर्म बदलल्यानंतर सबमिट बटणावर क्लिक करा, तुमचे बदल अन्यथा दिसून येणार नाहीत." />
                 <div className='row grid grid-cols-2'>
                     {
                         formDetails?.map((formDetail) => {

@@ -69,7 +69,7 @@ const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes');
 const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey  }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent", "Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
@@ -100,19 +100,19 @@ const dataSetter = {
 function getPreviousYears(yearsAgo) {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-    
+
     const previousYear = currentYear - yearsAgo;
     const yearBeforePrevious = previousYear - 1;
-  
+
     const previousYears = `${yearBeforePrevious}-${previousYear.toString().slice(2)}`;
-  
+
     return previousYears;
-  }
+}
 
 router.post('/admin/pdf/numericalData', async (req, res) => {
     try {
         const { schoolName } = req.body
-        const linkToNavigate = `${process.env.Report_Main_URL}/NumaricalData/${schoolName}`
+        const linkToNavigate = `${process.env.Report_Main_URL}/admin/numericalData/${schoolName}`
         const fileName = `${schoolName}-NumericalDashboard-${new Date().getTime()}.pdf`
         await pupetteerSetting({ linkToNavigate, fileName })
         res.send({ status: 'generated', fileName })
@@ -242,7 +242,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const yearList = genrateAcademicYears();
         const docs = {}
         let oModels = Object.keys(models)
-        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey' ]; 
+        const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey'];
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
         for (const model of filteredModels) {
             let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model) ? "schoolName" : ""
@@ -269,28 +269,28 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                     if (model === "AlumniUser") {
                         var filter = { isAlumni: true }
                         if (schoolName) filter[school] = schoolName
-                         docs[model][year] = "--"
-                         alumniCount = await StudentUser.countDocuments(filter);
-                    
+                        docs[model][year] = "--"
+                        alumniCount = await StudentUser.countDocuments(filter);
+
                     }
                     else if (model === "StudentUser") {
                         var filter = { isAlumni: false, isActiveStudent: true }
                         if (schoolName) filter[school] = schoolName
                         let fetch = await models[model].find(filter);
-                        let countStu= 0
-                        for(item of fetch){
-                            if(item.programEnroledOn===undefined){
-                                if(item.currentIn!==undefined){
-                                    let yeartosub =  parseInt(item.currentIn.split(' ')[1]);
-                                    if(year ==getPreviousYears(yeartosub)){
+                        let countStu = 0
+                        for (item of fetch) {
+                            if (item.programEnroledOn === undefined) {
+                                if (item.currentIn !== undefined) {
+                                    let yeartosub = parseInt(item.currentIn.split(' ')[1]);
+                                    if (year == getPreviousYears(yeartosub)) {
                                         countStu++;
                                     }
                                 }
                             }
-                            else if(item.programEnroledOn!==undefined){
-                                if(item.programEnroledOn===year){
+                            else if (item.programEnroledOn !== undefined) {
+                                if (item.programEnroledOn === year) {
                                     countStu++;
-                                  }
+                                }
                             }
                         }
                         docs[model][year] = countStu
@@ -300,9 +300,9 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         var filter = { [yearFieldNmae]: year }
                         if (schoolName) filter[school] = schoolName
                         if (model === "PhdAwarded") {
-                                filter.degreeName= { $ne: 'PG Dissertation' }
-                                filter.awardSubmit= 'Awarded'
-                            }
+                            filter.degreeName = { $ne: 'PG Dissertation' }
+                            filter.awardSubmit = 'Awarded'
+                        }
                         try {
                             const fetch = await models[model]
                                 .find(filter)
@@ -363,49 +363,49 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
             }
 
         }
-        let data 
+        let data
         let module
         let proof
 
         if (model === "AlumniUser") {
             var filter = { isAlumni: true }
             if (schoolName) filter[school] = schoolName
-             data = await StudentUser.find(filter);
+            data = await StudentUser.find(filter);
             module = 'student'
-            proof= 'uploadProof'
+            proof = 'uploadProof'
         }
         else if (model === "StudentUser") {
             var filter = { isAlumni: false, isActiveStudent: true }
             if (schoolName) filter[school] = schoolName
             let fetch = await models[model].find(filter);
-            let countStu= []
-            for(item of fetch){
-                if(item.programEnroledOn===undefined){
-                    if(item.currentIn!==undefined){
-                        let yeartosub =  parseInt(item.currentIn.split(' ')[1]);
-                        if(year ==getPreviousYears(yeartosub)){
+            let countStu = []
+            for (item of fetch) {
+                if (item.programEnroledOn === undefined) {
+                    if (item.currentIn !== undefined) {
+                        let yeartosub = parseInt(item.currentIn.split(' ')[1]);
+                        if (year == getPreviousYears(yeartosub)) {
                             countStu.push(item)
                         }
                     }
                 }
-                else if(item.programEnroledOn!==undefined){
-                    if(item.programEnroledOn===year){
+                else if (item.programEnroledOn !== undefined) {
+                    if (item.programEnroledOn === year) {
                         countStu.push(item)
-                      }
+                    }
                 }
             }
             data = countStu
             module = 'student'
-            proof= 'uploadProof'
+            proof = 'uploadProof'
         }
         else if (facultyModels.includes(model)) {
             let schoolFilter = schoolName ? { department: schoolName } : {}
             var filter = { [yearFieldNmae]: year }
             if (schoolName) filter[school] = schoolName
             if (model === "PhdAwarded") {
-                    filter.degreeName= { $ne: 'PG Dissertation' }
-                    filter.awardSubmit= 'Awarded'
-                }
+                filter.degreeName = { $ne: 'PG Dissertation' }
+                filter.awardSubmit = 'Awarded'
+            }
             try {
                 const fetch = await models[model]
                     .find(filter)
@@ -425,7 +425,7 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
 
                 data = filterData;
                 module = 'faculty'
-                proof= 'proof'
+                proof = 'proof'
             } catch (err) {
                 console.log(err);
             }
@@ -435,9 +435,9 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
             if (schoolName) filter[school] = schoolName
             data = await models[model].find(filter);
             module = 'director'
-            proof= 'Upload_Proof'
+            proof = 'Upload_Proof'
         }
-        res.status(200).send({data, module, proof});
+        res.status(200).send({ data, module, proof });
     } catch (err) {
         console.log(err);
         res.status(500).send();

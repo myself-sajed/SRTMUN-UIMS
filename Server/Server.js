@@ -165,7 +165,7 @@ require('./routes/program-routes/programOperations')(app)
 
 // Youth Festival routes
 app.use(require('./routes/youthfestival-routes/youth-auth'))
-app.use(require('./routes/youthfestival-routes/youth-routes'))
+require('./routes/youthfestival-routes/youth-routes')(app)
 
 
 
