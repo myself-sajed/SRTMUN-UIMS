@@ -165,7 +165,8 @@ require('./routes/program-routes/programOperations')(app)
 
 // Youth Festival routes
 app.use(require('./routes/youthfestival-routes/youth-auth'))
-require('./routes/youthfestival-routes/youth-routes')(app)
+app.use(require('./routes/youthfestival-routes/youth-routes'))
+
 
 
 
@@ -300,6 +301,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     exam: `./uploads/exam-uploads/${filename}`,
     placement: `./uploads/placement-uploads/${filename}`,
     aqar: `./uploads/aqar-uploads/${filename}`,
+    youth: `./uploads/youth-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const addReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user ) => {
+const addReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user, array=null ) => {
   // console.log(valuesNC);
   setLoading(true)
   let formData = new FormData();
@@ -12,7 +12,12 @@ const addReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpe
     formData.append(key, valuesNC[key]);
   })
 
-  console.log(formData);
+  if (array !== null){
+      let arrayname = Object.keys(array)[0];
+    for(let i = 0; i < array[arrayname].length; i++) {
+      formData.append(`${Object.keys(array)[0]}`, array[arrayname][i]);
+    }
+  }
 
   axios
     .post(`${process.env.REACT_APP_MAIN_URL}/${user}/newRecord/${path}`, formData)
