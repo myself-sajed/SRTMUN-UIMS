@@ -388,7 +388,7 @@ body {
 
 .indexCard {
   width: 49%;
-  height: 340px;
+  height: 286px;
   background-color: #fee2e2;
   border: solid #f89786 1px;
   border-radius: 10px;
@@ -430,7 +430,7 @@ body {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  height: 15%;
+  height: 18%;
   bottom: 65px;
   right: 4%;
   left: 4%;
