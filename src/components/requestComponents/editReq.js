@@ -12,10 +12,11 @@ const editReq = ( valuesNC, path, initialstate, values, setValues,refetch, setOp
   })
 
   if (array !== null){
-    for(let i = 0; i < array.length; i++) {
-      formData.append('array', array[i]);
-    }
+    let arrayname = Object.keys(array)[0];
+  for(let i = 0; i < array[arrayname].length; i++) {
+    formData.append(`${Object.keys(array)[0]}`, array[arrayname][i]);
   }
+}
 
   axios
     .post(`${process.env.REACT_APP_MAIN_URL}/${user}/editRecord/${path}`, formData)

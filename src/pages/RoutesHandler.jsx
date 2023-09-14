@@ -148,7 +148,7 @@ const RoutesHandler = () => {
                 <Route path="/director/service/generateAAAReport" exact element={<GenerateAAAPage />} />
                 <Route path="/faculty" exact element={<Home />} />
                 <Route path="/admin-login" exact element={<AdminLogin />} />
-                <Route path="/NumaricalData/:School" exact element={<Test2 />} />
+                <Route path="/Test2" exact element={<Test2 />} />
                 <Route path="/director-login" exact element={<DirectorLogin />} />
                 <Route path="/faculty-registration" exact element={<FacultyRegistration />} />
                 <Route path="/contractual-faculty-registration" exact element={<ContractualFacultyRegistration />} />
@@ -245,7 +245,6 @@ const RoutesHandler = () => {
                 <Route path="/director/service/status" exact element={<DirectorReportStatus />} />
 
 
-
                 {/* Workshop Service */}
                 <Route path="/programs" exact element={<ProgramHome />} />
                 <Route path="/program/:programId/program-flyer" exact element={<ProgramFlyer />} />
@@ -302,7 +301,6 @@ const RoutesHandler = () => {
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />
-
 
             </Routes>
 
