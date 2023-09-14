@@ -17,6 +17,7 @@ import useAdminAuth from '../../../hooks/useAdminAuth';
 import AdminReportStatus from '../pages/AdminReportStatus';
 import AdminFeedbackStatus from '../pages/AdminFeedbackStatus';
 import AdminNumaricalData from '../pages/AdminNumaricalData';
+import AdminPrograms from './AdminPrograms';
 // import EContentDeveloped from '../tables/EContentDeveloped';
 // import Faculties from '../table2/Faculties';
 // import Qualification from '../table2/Qualification';
@@ -37,6 +38,8 @@ const DashbordButtons = [
     { element: <AdminFeedbackStatus />, title: "Feedback Status", name: "Feedback Status", },
     { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
     { element: <AdminStudent />, title: "Students", name: "Students", },
+    { element: <AdminStudent />, title: "Students", name: "Students", },
+    { element: <AdminPrograms />, title: "University Programs", name: "University Programs", },
     { element: <AdminMore />, title: "More", name: "More", },
 ]
 

@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAdminActive } from '../../../redux/slices/AdminActiveSlice'
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
+import FestivalRoundedIcon from '@mui/icons-material/FestivalRounded';
 import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks';
 
 
-const AdminDrower = ({ children, hideHeader=false }) => {
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon /> }
+const AdminDrower = ({ children, hideHeader = false }) => {
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "University Programs": <FestivalRoundedIcon />, "More": <MoreIcon />, }
   title('Admin Panel')
   const dispatch = useDispatch();
   const AdminActive = useSelector(state => state.adminActive.adminActive)
