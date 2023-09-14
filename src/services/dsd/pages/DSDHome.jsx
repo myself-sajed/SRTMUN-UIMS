@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import UserLoading from '../../../pages/UserLoading'
 import title from '../../../js/title'
 import Footer from '../../../components/Footer'
+import { ServiceTile } from '../../../components/Service'
 
 const dsdAuthParams = { shouldNavigate: true, tokenName: "dsd-token", setUser: setDSDUser, navigationHomeLink: siteLinks.dsdHome.link, navigationLoginLink: siteLinks.dsdLogin.link, model: "DSDUser" }
 
@@ -24,7 +25,13 @@ const DSDHome = () => {
         <div>
             <div className="min-h-screen">
                 {user ?
-                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setDSDUser} userType="dsd" profileButton1={profileButton1} tokenName="dsd-token" />
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setDSDUser} userType="dsd" profileButton1={profileButton1} tokenName="dsd-token" >
+                        <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
+                            <ServiceTile fullForm="DSD AQAR Form" title="AQAR" link1={siteLinks.dsdAQAR.link} link1Title="Fill AQAR Form" />
+                            <ServiceTile fullForm="Intercollegiate Youth Festival" title="Youth Festival" link1={siteLinks.yfCollegeLogin.link} link1Title="College Login" />
+                        </div>
+
+                    </HomeProfile>
                     :
                     <UserLoading title="Fetching User Details" />}
             </div>

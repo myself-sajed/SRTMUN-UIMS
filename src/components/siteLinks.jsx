@@ -62,6 +62,7 @@ let siteLinks = {
     yfCollegeLogin: { title: "Youth Festival College Login", link: '/youthfestival/college-login' },
     yfCollegeHome: { title: "Youth Festival Home", link: '/youthfestival' },
     yfCollegeYouthForm: { title: "Youth Festival Participant Details Form", link: '/youthfestival/participant-details-form' },
+    yfCollegeReport: { title: "Youth Festival Participant Report", link: '/youthfestival/generate-report' },
     nssLogin: { title: "NSS Login", link: '/nss-login' },
     nssHome: { title: "Department of NSS Home", link: '/nss' },
     nssAQAR: { title: "NSS AQAR", link: '/nss/aqar' },
