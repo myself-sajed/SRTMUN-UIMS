@@ -15,94 +15,124 @@ const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 function youthRoutes(app) {
 
     //get
-app.post('/youth/getData', async (req, res) => {
-    const { model, filter } = req.body
-    try {
-        const fetch = await models[model].find(filter);
-        res.status(200).send(fetch);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-})
+    app.post('/youth/getData', async (req, res) => {
+        const { model, filter } = req.body
+        try {
+            const fetch = await models[model].find(filter);
+            res.status(200).send(fetch);
+        } catch (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+    })
 
-//set
-app.post("/youth/newRecord/:model", youthUpload.single("photoURL"), async (req, res) => {
-    try {
+    //set
+    app.post("/youth/newRecord/:model", youthUpload.single("photoURL"), async (req, res) => {
+        try {
+            const model = req.params.model
+            // console.log(model)
+            const data = JSON.parse(JSON.stringify(req.body));
+            let SendData = null;
+            // const { } = data
+            const up = req.file.filename;
+            SendData = data
+
+            var withUpData = Object.assign(SendData, { photoURL: up })
+            const obj = new models[model](withUpData);
+            await obj.save();
+            res.status(201).send("Entry Succeed")
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).send()
+        }
+    });
+
+    //reset
+    app.post('/youth/editRecord/:model', youthUpload.single('photoURL'), async (req, res) => {
         const model = req.params.model
-        // console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;
-        // const { } = data
-        const up = req.file.filename;
+        const { id } = data
+        const isfile = req.file;
+        if (isfile) {
+            var up = req.file.filename
+        }
         SendData = data
 
-        var withUpData = Object.assign(SendData, { photoURL: up })
-        const obj = new models[model](withUpData);
-        await obj.save();
-        res.status(201).send("Entry Succeed")
-    }
-    catch (err) {
-        console.log(err)
-        res.status(500).send()
-    }
-});
+        var alldata = null
+        if (up) {
+            alldata = Object.assign(SendData, { photoURL: up })
+        }
+        else {
+            alldata = SendData
+        }
+        await models[model].findOneAndUpdate({ _id: id }, alldata)
+        res.status(200).send("Edited Successfully")
+    })
 
-//reset
-app.post('/youth/editRecord/:model', youthUpload.single('photoURL'), async (req, res) => {
-    const model = req.params.model
-    const data = JSON.parse(JSON.stringify(req.body));
-    let SendData = null;
-    const { id } = data
-    const isfile = req.file;
-    if (isfile) {
-        var up = req.file.filename
-    }
-    SendData = data
+    //remove
+    app.post('/youth/deleteRecord', async (req, res) => {
+        const { model, id } = req.body
 
-    var alldata = null
-    if (up) {
-        alldata = Object.assign(SendData, { photoURL: up })
-    }
-    else {
-        alldata = SendData
-    }
-    await models[model].findOneAndUpdate({ _id: id }, alldata)
-    res.status(200).send("Edited Successfully")
-})
-
-//remove
-app.post('/youth/deleteRecord', async (req, res) => {
-    const { model, id } = req.body
-
-    try {
-        const Record = await models[model].findOne({ _id: id });
-        await models[model].deleteOne({ _id: id })
-        const Filename = Record.photoURL;
-        const link = path.join(__dirname, `../../uploads/youth-uploads/${Filename}`);
-        fs.unlink(link, function (err) {
-            if (err) {
-                console.error(err);
-            }
-            console.log("file deleted successfullay ");
-        });
-        res.status(200).send("Entry Deleted Successfully");
-    }
-    catch (e) {
-        res.status(500).send({ massage: e.massage });
-    }
-})
+        try {
+            const Record = await models[model].findOne({ _id: id });
+            await models[model].deleteOne({ _id: id })
+            const Filename = Record.photoURL;
+            const link = path.join(__dirname, `../../uploads/youth-uploads/${Filename}`);
+            fs.unlink(link, function (err) {
+                if (err) {
+                    console.error(err);
+                }
+                console.log("file deleted successfullay ");
+            });
+            res.status(200).send("Entry Deleted Successfully");
+        }
+        catch (e) {
+            res.status(500).send({ massage: e.massage });
+        }
+    })
 
     app.post('/youthfestival/allData', async (req, res) => {
         const { collegeId, academicYear } = req.body
         const user = await College.findOne({ _id: collegeId }).lean()
         const reportData = {}
+        const filter = { college: collegeId, academicYear }
         if (user) {
             reportData.college = user;
 
-            const info = await YFGeneralInfo.findOne({ college: collegeId, academicYear })
+            const info = await YFGeneralInfo.findOne(filter)
             if (info) {
                 reportData.info = JSON.parse(info.info)
+
+                const Table1Students = await YfTable1.find(filter).lean()
+                const Table2Students = await YfTable2.find(filter).lean()
+
+                reportData.Table1Students = Table1Students
+                reportData.Table2Students = Table2Students
+
+                const totalStudents = [...Table1Students || [], ...Table2Students || []]
+                let male = 0;
+                let female = 0;
+                let other = 0;
+
+                totalStudents.forEach((item) => {
+                    if (item?.gender === "Male") {
+                        male += 1;
+                    } else if (item?.gender === "Female") {
+                        female += 1;
+                    } else {
+                        other += 1;
+                    }
+                })
+
+                let totalCount = male + female + other
+                reportData.male = male;
+                reportData.female = female;
+                reportData.other = other;
+                reportData.total = totalCount;
+                reportData.totalStudents = totalStudents;
+
             }
             res.send({ status: 'success', data: reportData })
 

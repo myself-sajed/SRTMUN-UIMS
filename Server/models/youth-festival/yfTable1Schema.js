@@ -22,6 +22,10 @@ const yfTable1Schema = new mongoose.Schema({
         type: 'string',
         required: true
     },
+    gender: {
+        type: 'string',
+        required: true
+    },
     namesOfCompetition: {
         type: 'array',
         required: true

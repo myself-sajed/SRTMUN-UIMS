@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InfoPage = ({ college, info }) => {
+const InfoPage = ({ college, info, data }) => {
 
     const formDetails = [
         {
@@ -48,24 +48,28 @@ const InfoPage = ({ college, info }) => {
                 स्वामी रामानंद तीर्थ मराठवाडा विद्यापीठ, <br />
                 विष्णुपुरी, नांदेड - 431 606<br />
             </div>
-            <div className="mt-4">
-
+            <div className="mt-4 border p-2 rounded-md">
+                <p className="text-sm">स्पर्धकांची संख्या</p>
+                <div className="mt-2 flex items-start gap-5">
+                    <span><span>मुले: </span><b>{data?.male}</b></span>
+                    <span><span>मुली: </span><b>{data?.female}</b></span>
+                    <span><span>इतर: </span><b>{data?.other}</b></span>
+                    <span><span>एकूण: </span><b>{data?.total}</b></span>
+                </div>
             </div>
             <div className="mt-5">
 
-                <table className="table table-bordered border-dark">
-                    <tbody>
+                <div className="flex items-center justify-center w-full">
+                    <ul class="list-group w-full">
                         {
                             formDetails?.map((item, index) => {
-                                return <tr>
-                                    <th>{index + 1}</th>
-                                    <td className="w-[35%]">{item.title}</td>
-                                    <td className="w-[60%]">{item.value}</td>
-                                </tr>
+                                return <div key={index} className="list-group-item grid grid-cols-2 gap-3">
+                                    <span>{index + 1}. {item.title} </span> <span className="font-medium">{item.value}</span></div>
                             })
                         }
-                    </tbody>
-                </table>
+
+                    </ul>
+                </div>
 
             </div>
             <br /><br /><br /><br />
