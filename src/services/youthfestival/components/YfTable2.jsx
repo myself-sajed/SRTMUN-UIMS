@@ -60,12 +60,14 @@ const YfTable2 = () => {
   }, [itemToEdit])
 
   const onCancel = () => {
-    setValues(initialstate); setItemToEdit(null); setEdit(false); setOpen(false)
+    setValues(initialstate); setValues2({namesOfCompetition: ""}); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
   }
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ photoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, {namesOfCompetition}) :
       addReq({photoURL, collageId:"id123456"}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, {namesOfCompetition})
+      setValues2({namesOfCompetition: ""})
+      setPhotoURL(null)
   }
 
   return (
