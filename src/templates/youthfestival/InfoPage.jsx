@@ -78,11 +78,6 @@ const InfoPage = ({ college, info }) => {
                 </div>
             </div>
             <br />
-            {/* <hr className="w-[80%] h-3 mx-auto my-4 bg-gray-800 border-0 rounded md:my-10" />
-            <br />
-            <div>
-                <YFOfficeWork />
-            </div> */}
         </div>
     )
 }
@@ -95,10 +90,16 @@ const YFOfficeWork = () => {
         <div>
 
             <p className="text-center font-semibold">कार्यालयीन कामाकरिता</p>
-            <div className="my-3">
+            <div className="my-3 px-10">
                 <p>1. वरील माहिती तपासली.</p>
                 <p>2. स्पर्धेत भाग घेण्यास योग्य / अयोग्य.</p>
                 <p>3. अयोग्य असेल तर कारण _______________________________________________________________________</p>
+            </div>
+            <br /><br />
+            <br /><br />
+            <div className='flex items-start justify-evenly gap-10'>
+                <p className='mr-10'>सदस्य, सल्लागार समिती </p>
+                <p className='ml-10'>संचालक, विद्यार्थी विकास विभाग </p>
             </div>
 
 
