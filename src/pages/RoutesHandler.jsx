@@ -125,6 +125,7 @@ import ProgramFeedbackDetails from '../services/programs/pages/ProgramFeedbackDe
 import FeedbackAck from '../services/programs/pages/FeedbackAck'
 import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
 import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
+import PDFNumericalTable from '../services/admin/pages/PDFNumericalTable'
 
 let model = "Xyz"
 let module = 'abc'
@@ -150,7 +151,7 @@ const RoutesHandler = () => {
                 <Route path="/director/service/generateAAAReport" exact element={<GenerateAAAPage />} />
                 <Route path="/faculty" exact element={<Home />} />
                 <Route path="/admin-login" exact element={<AdminLogin />} />
-                <Route path="/NumaricalData/:School" exact element={<AdminNumaricalData />} />
+                {/* <Route path="/NumaricalData/:School" exact element={<AdminNumaricalData />} /> */}
                 <Route path="/Test2" exact element={<Test2 />} />
                 <Route path="/director-login" exact element={<DirectorLogin />} />
                 <Route path="/faculty-registration" exact element={<FacultyRegistration />} />
