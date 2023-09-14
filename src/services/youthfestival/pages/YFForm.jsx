@@ -8,13 +8,14 @@ import { SaveButton } from '../../faculty/reports/pbas/PbasReportHome'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import Acknowledgement from '../../../components/Acknowledgement'
-// import isReportSubmitted from '../js/isReportSubmitted'
+import isReportSubmitted from '../../dsd/js/isReportSubmitted'
 import { useSelector } from 'react-redux'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import GeneralInfo from '../components/GeneralInfo'
 import Footer from '../../../components/Footer'
 import Spardhak from '../components/Spardhak'
 import VadakSathidar from '../components/VadakSathidar'
+import ArrowButton from '../../../components/ArrowButton'
 
 
 const YFForm = () => {
@@ -30,7 +31,7 @@ const YFForm = () => {
     const AQARTables = [
         {
             title: 'General Form',
-            component: <GeneralInfo academicYear={academicYear} />
+            component: <GeneralInfo academicYear={academicYear} user={user} />
         },
         {
             title: 'Spardhak',
@@ -63,8 +64,8 @@ const YFForm = () => {
     }
 
     const handleFormSubmit = () => {
-        // isReportSubmitted(academicYear, submitModel, handleNext)
-        handleNext()
+        const customMessage = `Youth Festival form for ${academicYear} has been submitted successfully.`
+        isReportSubmitted(academicYear, 'YFReportIsSubmitted', handleNext, customMessage)
     }
 
 
@@ -114,7 +115,9 @@ const YFForm = () => {
                 {
                     activeStep === 2 && <Acknowledgement title="Successful AQAR Data Submission" navigateTo={siteLinks.yfCollegeHome.link}>
                         <>
-                            <p>Thank you, staff of <b>{user?.collegeName}</b> for successfully submitting the table forms for the year <b>{academicYear}</b></p>
+                            <p>Thank you, staff of <b>{user?.collegeName}</b> for successfully submitting the Youth Festival form for gathering participant's information for the year <b>{academicYear}</b></p>
+
+                            <ArrowButton onClickFunction={() => { navigate(siteLinks.yfCollegeReport.link) }} title={`Generate PDF Report for ${academicYear}`} colorClasses='text-white bg-green-700 hover:bg-green-800' className="my-4" />
 
                             <div className='my-5 text-left'>
                                 <ul className="list-group">

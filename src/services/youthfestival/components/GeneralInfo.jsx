@@ -5,15 +5,16 @@ import { fetchInfo, saveGeneralInfo } from '../js/generalInfoHandler'
 import { useQuery } from 'react-query'
 import UserLoading from '../../../pages/UserLoading'
 
-const GeneralInfo = ({ academicYear }) => {
+const GeneralInfo = ({ academicYear, user }) => {
     const [info, setInfo] = useState({ maleName: "", femaleName: "", maleMobile: "", femaleMobile: "", admissionFees: "", dsdFees: "" })
+
 
     const filter = { academicYear }
     const { data, isLoading, refetch } = useQuery(`GeneralInfo-${academicYear}`, () => fetchInfo(filter), { refetchOnWindowFocus: false })
 
     const saveForm = (e) => {
         e.preventDefault();
-        saveGeneralInfo(JSON.stringify(info), academicYear, refetch)
+        saveGeneralInfo(JSON.stringify(info), academicYear, user)
     }
 
     useEffect(() => {
@@ -58,7 +59,7 @@ const formDetails = [
         stateKey: "maleMobile"
     },
     {
-        title: "संघव्यवस्थापिका भ्रमणव्वनी क्रमांक",
+        title: "संघव्यवस्थापिकाचे भ्रमणव्वनी क्रमांक",
         stateKey: "femaleMobile"
     },
     {

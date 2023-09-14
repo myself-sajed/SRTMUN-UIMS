@@ -82,27 +82,18 @@ const Service = () => {
 export default Service
 
 
-const ServiceTile = ({ fullForm, title, link1, link1Title, link2, link2Title, icon }) => {
+const ServiceTile = ({ fullForm, title, link1, link1Title, link2, link2Title }) => {
     return (
-        <div className="mb-5">
-            {/* <Service /> */}
-            <div className="col w-full sm:w-[400px]">
-                <div className={`card radius-10 border-start border-0 border-3 border-success h-52`}>
-                    <div className="card-body ">
-                        <div className="d-flex align-items-start h-[100%]">
-                            <div className='flex flex-col items-start justify-between h-[100%]'>
-                                <div>
-                                    <p className="mb-0 text-secondary">{fullForm}</p>
-                                    <h4 className={`my-1 text-success text-[40px]`}>{title}</h4>
-                                </div>
-                                <div className='flex items-center justify-center gap-2'>
-                                    <Link to={`${link1}`} className="duration-200 bg-success text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">{link1Title}</Link>
-                                    <Link to={`${link2}`} className="duration-200 bg-success text-white hover:bg-success p-2 rounded-lg ease-in-out mt-5 text-decoration-none">{link2Title}</Link>
-                                </div>
-                            </div>
-                            <div className={`widgets-icons-2 mt-4 rounded-circle bg-gradient-ohhappiness text-white ms-auto`}>{icon}
-                            </div>
-                        </div>
+        <div className="p-3 flex-auto w-full lg:w-fit">
+            <div className="wrap-price">
+                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                    <div>
+                        <h5>{fullForm}</h5>
+                        <p className="prices">{title}</p>
+                    </div>
+                    <div className='flex items-center justify-center gap-2'>
+                        {link1 && <Link to={link1} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> {link1Title}</Link>}
+                        {link2 && <Link to={link2} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> {link2Title}</Link>}
                     </div>
                 </div>
             </div>

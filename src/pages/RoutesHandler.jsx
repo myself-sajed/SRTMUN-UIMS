@@ -123,6 +123,8 @@ import OtherAQAR from '../services/other/pages/OtherAQAR'
 import ProgramFeedback from '../services/programs/pages/ProgramFeedback'
 import ProgramFeedbackDetails from '../services/programs/pages/ProgramFeedbackDetails'
 import FeedbackAck from '../services/programs/pages/FeedbackAck'
+import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
+import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
 
 let model = "Xyz"
 let module = 'abc'
@@ -265,6 +267,8 @@ const RoutesHandler = () => {
                 <Route path="/youthfestival/college-login" exact element={<YFCollegeLogin />} />
                 <Route path="/youthfestival" exact element={<YFCollegeHome />} />
                 <Route path="/youthfestival/participant-details-form" exact element={<YFForm />} />
+                <Route path="/youthfestival/generate-report" exact element={<YFGenerateReport />} />
+                <Route path="/youthfestival/application-form/:collegeId/:academicYear" exact element={<YFApplicationForm />} />
 
                 {/* NSS Service */}
                 <Route path="/nss-login" exact element={<NSSLogin />} />

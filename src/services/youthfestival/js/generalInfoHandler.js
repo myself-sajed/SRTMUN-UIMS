@@ -1,10 +1,10 @@
 import Axios from 'axios'
 import toast from 'react-hot-toast'
 
-function saveGeneralInfo(info, academicYear) {
+function saveGeneralInfo(info, academicYear, user) {
     console.log(info, academicYear)
     const link = `${process.env.REACT_APP_MAIN_URL}/youth/saveInfo`
-    Axios.post(link, { info, academicYear }).then((res) => {
+    Axios.post(link, { info, academicYear, user }).then((res) => {
         if (res.data.status === 'success') {
             toast.success('Data saved successfully')
         } else {

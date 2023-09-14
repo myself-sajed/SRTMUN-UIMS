@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import GoBack from '../../../components/GoBack'
 import siteLinks from '../../../components/siteLinks'
 import useYouthAuth from '../../../hooks/useYouthAuth'
@@ -24,11 +24,6 @@ const YFCollegeHome = () => {
     title(siteLinks.yfCollegeHome.title)
     const user = useSelector((state) => state.user.youthUser)
 
-    useEffect(() => {
-        console.log("user :", user)
-    }, [user])
-
-
     return (
         <div>
             <GoBack pageTitle="Youth Festival College" bredLinks={bredLinks} >
@@ -37,11 +32,16 @@ const YFCollegeHome = () => {
 
             <div className='my-3 border rounded-xl bg-gradient-to-t from-blue-50 via-blue-100 to-blue-200 animate-fade-up animate-once h-screen'>
                 <div className='p-3'>
-                    <div class="flex items-center p-3 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 " role="alert">
-                        <DomainAddRoundedIcon />
-                        <span class="sr-only">Info</span>
+                    <div class="flex items-center justify-between p-3 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 " role="alert">
+                        <div className="flex items-center flex-auto">
+                            <DomainAddRoundedIcon />
+                            <span class="sr-only">Info</span>
+                            <div>
+                                <span class="font-medium text-xl ml-3">{user?.collegeName}</span>
+                            </div>
+                        </div>
                         <div>
-                            <span class="font-medium text-xl ml-3">{user?.collegeName}</span>
+                            <ArrowButton onClickFunction={() => { navigate(siteLinks.yfCollegeReport.link) }} title="Generate PDF Report" colorClasses='text-white bg-green-700 hover:bg-green-800' />
                         </div>
                     </div>
 
