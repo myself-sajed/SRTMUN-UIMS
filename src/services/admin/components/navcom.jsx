@@ -39,7 +39,7 @@ const DashbordButtons = [
     { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
     { element: <AdminStudent />, title: "Students", name: "Students", },
     { element: <AdminStudent />, title: "Students", name: "Students", },
-    { element: <AdminPrograms />, title: "University Programs", name: "University Programs", },
+    // { element: <AdminPrograms />, title: "University Programs", name: "University Programs", },
     { element: <AdminMore />, title: "More", name: "More", },
 ]
 
