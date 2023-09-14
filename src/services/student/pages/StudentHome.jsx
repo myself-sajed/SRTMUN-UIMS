@@ -56,7 +56,7 @@ const StudentHome = () => {
     const user = useSelector(state => isAlumniLink ? state.user.alumniUser : state.user.studentUser)
     title(user?.isAlumni ? 'Alumni Home' : 'Student Home')
 
-    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", programCompletedOn: "" }
+    const initialstate = { salutation: "", name: "", address: "", mobile: "", programGraduated: "", schoolName: "", gender: "", dob: "", abcNo: "", ResearchGuide: "", Title: "", dateOfRac: "", ReceivesFelloship: "", ResearchGuideId: "", currentIn: "", cast: "", country: "", religion: "", programEnroledOn: "", programCompletedOn: "", isGideListed: true }
 
     const [avatar, setAvatar] = useState(null)
     const [uploadProof, setUploadProof] = useState(null)
@@ -65,7 +65,7 @@ const StudentHome = () => {
     const [programDuration, setProgramDuration] = useState(null)
     const [openCroper, setOpenCroper] = useState(false)
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn } = values
+    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn, isGideListed } = values
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
@@ -95,19 +95,32 @@ const StudentHome = () => {
 
     }, [open])
 
+    console.log(values.ResearchGuideId);
+
     const setResearchGuideId = () => {
-        guidesData.forEach(item => {
-            if (item.name == ResearchGuide) {
-                setValues(pri => {
-                    return {
-                        ...pri,
-                        ResearchGuideId: item._id
-                    }
-                })
-            }
+        if(isGideListed){
 
-        })
-
+            setValues(pri => {
+                return {
+                    ...pri,
+                    ResearchGuideId: 'notUniversityFaclty'
+                }
+            })
+            
+        }
+        else{
+            guidesData.forEach(item => {
+                if (item.name == ResearchGuide) {
+                    setValues(pri => {
+                        return {
+                            ...pri,
+                            ResearchGuideId: item._id
+                        }
+                    })
+                }
+    
+            })   
+        }
     }
     useEffect(() => {
         setResearchGuideId()
@@ -294,8 +307,6 @@ const StudentHome = () => {
                             </div>
                         </div>
 
-
-
                         <Select className='col-md-2' id="salutation" value={salutation} label="Salutation" setState={setValues} options={Salutations} />
                         <Text className='col-md-5' id="name" value={name} label="Full Name" setState={setValues} />
                         <Text className='col-md-2' type='number' id='mobile' value={mobile} label="Mobile" setState={setValues} />
@@ -326,9 +337,19 @@ const StudentHome = () => {
                             user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
-                            <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
-                            <Text className='col-md-7' type='text' id="Title" value={Title} label="Title" setState={setValues} />
+                        
+                            
+                            {
+                                isGideListed?<Text className='col-md-6 col-lg-3' id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />:<Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
+                            }
+                            <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
+                              <div className="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
+                                <input className="form-check-input" checked={isGideListed} onChange={() => { setValues((pri) => { return { ...pri, 'isGideListed': !pri.isGideListed, ResearchGuide: "", } }) }} type="checkbox" role="switch" id="checkbox"  />
+                                <label className="form-check-label" htmlFor="checkbox">Research Guide not Listed?</label>
+                              </div>
+                            </div>
                             <Text className='col-md-2' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
+                            <Text className='col-md-7' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />
                         </>}
                     </div>
