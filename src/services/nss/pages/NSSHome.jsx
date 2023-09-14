@@ -9,6 +9,7 @@ import UserLoading from '../../../pages/UserLoading'
 import HomeProfile from '../../dsd/components/HomeProfile'
 import title from '../../../js/title'
 import Footer from '../../../components/Footer'
+import { ServiceTile } from '../../../components/Service'
 
 const nssAuthParams = { shouldNavigate: true, tokenName: "nss-token", setUser: setNSSUser, navigationHomeLink: siteLinks.nssHome.link, navigationLoginLink: siteLinks.nssLogin.link, model: "NSSUser" }
 
@@ -24,7 +25,12 @@ const NSSHome = () => {
             <div className="min-h-screen">
 
                 {user ?
-                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setNSSUser} userType="nss" profileButton1={profileButton1} tokenName="nss-token" />
+                    <HomeProfile bredLinks={bredLinks} user={user} setUser={setNSSUser} userType="nss" profileButton1={profileButton1} tokenName="nss-token" >
+                        <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
+                            <ServiceTile fullForm="NSS AQAR Form" title="AQAR" link1={siteLinks.nssAQAR.link} link1Title="Fill AQAR Form" />
+                            <ServiceTile fullForm="NSS Student Admission" title="Student Enrollment" link1={siteLinks.nssStudentAdmission.link} link1Title="Enroll Students" />
+                        </div>
+                    </HomeProfile>
                     :
                     <UserLoading title="Fetching User Details" />}
 
