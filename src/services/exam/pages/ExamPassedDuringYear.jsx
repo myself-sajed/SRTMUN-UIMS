@@ -9,9 +9,8 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
-import UploadFile from '../../../components/formComponents/UploadFile'
 
-const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Program Name", studentsAppeared: "Number of Students Appeared in Final Year Examination", studentsPassed: "Number of Students Passed in Final Year Examination", academicYear: 'Year', Proof: "Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", programCode: "Program Code", programName: "Program Name", studentsAppeared: "Number of Students Appeared in Final Year Examination", studentsPassed: "Number of Students Passed in Final Year Examination", academicYear: 'Year', Action: "Action" }
 
 const ExamPassedDuringYear = ({ filterByAcademicYear = false }) => {
   const model = 'ExamPassedDuringYear'
@@ -67,13 +66,12 @@ const ExamPassedDuringYear = ({ filterByAcademicYear = false }) => {
           <Text className='col-md-6 col-lg-4' type="number" id="studentsAppeared" value={studentsAppeared} label={tableHead.studentsAppeared} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type='number' id="studentsPassed" value={studentsPassed} label={tableHead.studentsPassed} setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
-          <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
         </div>
       </DialogBox>
 
       <BulkExcel data={data?.data} sampleFile="Students Passed During The Year" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
 
-      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
+      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model}  />
     </>
   )
 }
