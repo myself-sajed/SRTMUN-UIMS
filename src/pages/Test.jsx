@@ -5,7 +5,6 @@ import AuditTable from '../services/director/reports/academic-audit/components/A
 import Lists from '../components/tableComponents/Lists'
 import Select from '../components/formComponents/Select'
 import YearSelect from '../components/formComponents/YearSelect'
-import { v4 as uuidv4 } from 'uuid';
 import { useQuery } from 'react-query'
 import getReq from '../components/requestComponents/getReq'
 import addReq from '../components/requestComponents/addReq'
@@ -15,7 +14,7 @@ const Test = () => {
         auditHead: ["Sr. No.", "स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट", "Action"],
         childHead: ['name', 'address', 'mobile', 'gender', 'dob', 'age', 'bloodGroup',],
         fieldOptions: [
-            // { field: 'Select', keyName: "name", label: "स्पर्धकाचे नाव", options: Lists.yfGgroup },
+            { field: 'text', keyName: "name", label: "स्पर्धकाचे नाव", },
             { field: 'Text', keyName: "address", label: "कायमचा पत्ता" },
             { field: 'Text', keyName: "mobile", label: "भ्रमणध्वनी क्रमांक" },
             { field: 'Select', keyName: "gender", label: "लिंग", options: Lists.gender },

@@ -2,11 +2,12 @@ const xlsxPopulate = require('xlsx-populate');
 const {excelObject: facultyExcelObj} = require("../routes/faculty-routes/routes")
 const {excelObject: directorExcelObj} = require("../routes/director-routes/director-routes")
 const {excelObject: nssExcelObj} = require("../routes/nss-routes/nss-routes")
+const {excelObject: examExcelObj} = require("../routes/exam-routes/exam-routes")
 
 const path = require("path");
 
 
-const ExcelObj = {...directorExcelObj, ...facultyExcelObj, ...nssExcelObj}
+const ExcelObj = {...directorExcelObj, ...facultyExcelObj, ...nssExcelObj, ...examExcelObj}
 
 const SchoolsProgram = {
     "School of Computational Sciences": '"Ph.D. (Computer Science),M.Phil (Computer Science),MCA,M.Sc.(Computer Science),M.Sc(Computer Applications),M.Sc(Computer Networking)"',
@@ -253,7 +254,20 @@ async function generateExcelFile(filename,model,school) {
     },
     NssAdmission:{
     },
-    
+    //Exam
+    DateOfResultDiclaration:{
+        "Semester/ year":"academicYear",
+    },
+    StudentComplaintsGrievances: {
+        "No Of Students Appeared": 'number',
+        "No Of Grievances": 'number',
+        'Year': "academicYear",
+    },
+    ExamPassedDuringYear: {
+        "Number of Students Appeared in Final Year Examination": 'number',
+        "Number of Students Passed in Final Year Examination": 'number',
+        'Year': "academicYear",
+    }
     
     };
     const headings = Object.keys(columnMapping);

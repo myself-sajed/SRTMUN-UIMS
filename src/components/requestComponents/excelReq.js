@@ -3,6 +3,8 @@ import toast from "react-hot-toast";
 
 const excelReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user ) => {
 
+  console.log({valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user});
+
   let formData = new FormData();
   Object.keys(values).map((key) => {
     formData.append(key, values[key]);
