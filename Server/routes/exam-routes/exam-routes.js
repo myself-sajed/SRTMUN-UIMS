@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const xlsx = require('xlsx');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 
 const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
@@ -140,7 +141,7 @@ router.post('/exam/excelRecord/:model', excelUpload.single('excelFile'), (req, r
             arr.forEach((response) => data.push(response))
         }
 
-        let dateInputs = ["From Date", "To Date", "Date of implementation", "Date of Birth"]
+        let dateInputs = ["Number of Students Appeared in Final Year Examination", "Number of Students Passed in Final Year Examination", "Last date of the last semester-end/ year- end examination", "Date of declaration of results of semester-end/ year- end examination","No Of Students Appeared", "No Of Grievances"]
         data.forEach((item) => {
             Object.keys(excelObject[model]).forEach(key => {
                 if (dateInputs.includes(key)) {
