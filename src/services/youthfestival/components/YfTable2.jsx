@@ -14,6 +14,7 @@ import ProfileCroper from '../../../components/ProfileCroper'
 import serverLinks from '../../../js/serverLinks'
 import handleAvatarChange from '../../../js/handleAvatar'
 import Select from '../../../components/formComponents/Select'
+import Lists from '../../../components/tableComponents/Lists'
 
 
 const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", namesOfCompetition: "भाग घेतलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
@@ -70,6 +71,10 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
     setPhotoURL(null)
   }
 
+  // useEffect(()=>{
+  //   setValues((pri)=>{...pri})
+  // },[dob])
+
   return (
     <>
       {/* nameOfCollege, ParticpantName, permentAddress, mobileNo, dob, bloodGroup, academicYear, */}
@@ -100,10 +105,10 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="mobileNo" value={mobileNo} label={tableHead.mobileNo} setState={setValues} />
-          <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={["Male", "Female", "Other"]} />
+          <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={Lists.gender} />
           <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label={tableHead.dob} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="age" value={age} label={tableHead.age} setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="bloodGroup" value={bloodGroup} label={tableHead.bloodGroup} setState={setValues} />
+          <Select className='col-md-6 col-lg-4' id="bloodGroup" value={bloodGroup} label={tableHead.bloodGroup} setState={setValues} options={Lists.bloodGr} />
           <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
         </div>
       </DialogBox>

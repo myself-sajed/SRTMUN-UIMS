@@ -1,5 +1,6 @@
 const Lists = {
   gender: ["Male", "Female", "Other"],
+  bloodGr: ["A+","A-","B+","B-","AB+","AB-","O+","O-"],
   statesInIndia: {
     "Andhra Pradesh": [
       "Anantapur",
