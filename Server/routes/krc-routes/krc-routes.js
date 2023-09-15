@@ -57,7 +57,6 @@ router.post('/aqar/uploadSupportingProof', supportingDocsUpload.single('file'), 
 router.post('/aqar/fetchSupportingProof', async (req, res) => {
     try {
         const { filter } = req.body
-        console.log(filter)
         const doc = await AQARSupportingDocuments.findOne(filter)
         if (doc) {
             console.log(doc)
