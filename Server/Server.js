@@ -14,6 +14,7 @@ app.use(json());
 const mongoose = require("mongoose");
 const { router: directorRouter } = require("./routes/director-routes/director-routes")
 const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
+const { router: ExamRouter } = require("./routes/exam-routes/exam-routes")
 
 
 app.use(cors());
@@ -103,7 +104,7 @@ app.use(NssRouter)
 app.use(require('./routes/dsd-routes/dsd-routes'))
 
 // Exam 
-app.use(require('./routes/exam-routes/exam-routes'))
+app.use(ExamRouter)
 
 //krc
 app.use(require('./routes/krc-routes/krc-routes'))

@@ -400,6 +400,16 @@ const excelObject = {
         'projectName': "Project Assigned", 
         'bloodGroup': "Blood Group",
     },
+     //EXAM
+     ExamPassedDuringYear: {
+       'programCode': "Program Code", 'programName': "Program Name", 'studentsAppeared': "Number of Students Appeared in Final Year Examination", 'studentsPassed': "Number of Students Passed in Final Year Examination", 'academicYear': 'Year',
+   },
+   StudentComplaintsGrievances:{
+       'noOfStudents': "No Of Students Appeared", 'noOfGrievances': "No Of Grievances", 'academicYear': 'Year',
+   },
+   DateOfResultDiclaration:{
+       'programmeName': "Programme Name", 'programmeCode': "Programme Code", 'academicYear': "Semester/ year", 'lastDate': "Last date of the last semester-end/ year- end examination", 'diclarationDate': "Date of declaration of results of semester-end/ year- end examination",
+   }
 }
 
 export default excelObject;
