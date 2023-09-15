@@ -10,7 +10,7 @@ import getReq from '../../../components/requestComponents/getReq'
 import DialogBox from '../../../components/formComponents/DialogBox'
 import AddButton from '../../student/components/AddButton'
 
-const GroupTable = ({ user, filterByAcademicYear }) => {
+const YFGroupTable = ({ user, filterByAcademicYear }) => {
 
     const thead = ["स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट"]
 
@@ -59,7 +59,7 @@ const GroupTable = ({ user, filterByAcademicYear }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        addReq({ participantNames: JSON.stringify(students?.data), college: user?._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+        addReq({ participantNames: JSON.stringify(students), college: user?._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
 
     return (
@@ -113,7 +113,7 @@ const GroupTable = ({ user, filterByAcademicYear }) => {
                                             <tbody>
 
                                                 {
-                                                    JSON.parse(item.participantNames)?.map((student, index) => {
+                                                    JSON.parse(item.participantNames)?.data?.map((student, index) => {
                                                         return <tr>
 
                                                             <th>{index + 1}</th>
@@ -140,7 +140,7 @@ const GroupTable = ({ user, filterByAcademicYear }) => {
     )
 }
 
-export default GroupTable
+export default YFGroupTable
 
 
 
