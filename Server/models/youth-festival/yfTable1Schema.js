@@ -6,6 +6,10 @@ const yfTable1Schema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    partnerType: {
+        type: 'string',
+        required: true,
+    },
     permentAddress: {
         type: 'string',
         required: true,

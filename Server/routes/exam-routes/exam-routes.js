@@ -11,7 +11,7 @@ const DateOfResultDiclaration = require('../../models/exam-models/dateOfResultDi
 
 const models = { ExamPassedDuringYear, StudentComplaintsGrievances, DateOfResultDiclaration }
 
-const excelUpload = multerConfig(`../../../excels/`)
+const excelUpload = multerConfig(`../../excels/`)
 
 
 const examstorage = multer.diskStorage({
