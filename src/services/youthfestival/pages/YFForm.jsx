@@ -17,7 +17,7 @@ import useYouthAuth from '../../../hooks/useYouthAuth'
 import ArrowButton from '../../../components/ArrowButton'
 import YfTable1 from '../components/YfTable1'
 import YfTable2 from '../components/YfTable2'
-import GroupTable from '../components/GroupTable'
+import YFGroupTable from '../components/YFGroupTable'
 
 
 const YFForm = () => {
@@ -46,7 +46,7 @@ const YFForm = () => {
         },
         {
             title: 'युवक महोत्सवात सहभागी गट (Group)',
-            component: <GroupTable user={user} filterByAcademicYear={academicYear} />
+            component: <YFGroupTable user={user} filterByAcademicYear={academicYear} />
         },
     ]
     const tableTitles = [...AQARTables.map((table) => table.title)]
