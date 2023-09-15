@@ -8,7 +8,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import Lists from '../../../components/tableComponents/Lists'
 import getReq from '../../../components/requestComponents/getReq'
 import DialogBox from '../../../components/formComponents/DialogBox'
-import TableTitle from '../../director/components/UtilityComponents/TableTitle'
+import AddButton from '../../student/components/AddButton'
 
 const GroupTable = ({ user, filterByAcademicYear }) => {
 
@@ -72,7 +72,7 @@ const GroupTable = ({ user, filterByAcademicYear }) => {
                         <Select className="col-md-5" id="namesOfCompetition" value={namesOfCompetition} label="स्पर्धकाचे नाव" setState={setValues} options={Lists.yfGgroup} />
                         <YearSelect className='col-md-5' id="academicYear" value={academicYear} label="शैक्षणिक वर्ष" setState={setValues} />
                     </div>
-                    <NumberToTextField state={students} setState={setStudents} setAutoSaveLoader={() => { }} autoSaveLoader={null} label="Enter number of Students participating in the competition" isForm={true} classes='my-3'
+                    <NumberToTextField state={students} setState={setStudents} setAutoSaveLoader={() => { }} autoSaveLoader={null} label="Add Data बटण वर क्लिक करून स्पर्धेत सहभागी होणाऱ्या विद्यार्थ्यांची संख्या प्रविष्ट करा" isForm={true} classes='my-3'
                         options={studentsInfo.fieldOptions}>
 
                         <AuditTable setAutoSaveLoader={() => { }} tableHead={studentsInfo.auditHead}
@@ -83,7 +83,7 @@ const GroupTable = ({ user, filterByAcademicYear }) => {
                 </div>
             </DialogBox>
 
-            <TableTitle clickd={() => setOpen(true)} customName="युवक महोत्सवात सहभागी गट (Group)" />
+            <AddButton onclick={() => setOpen(true)} title="युवक महोत्सवात सहभागी गट (Group)" />
             <div className='mt-3'>
                 <table className='table table-bordered'>
                     <thead className='bg-primary text-light'>
