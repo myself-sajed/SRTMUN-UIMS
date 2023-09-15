@@ -101,9 +101,9 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
             </div>
           </div>
 
-          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" }, ]} limit={4} />
-
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
+          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" },]} limit={4} />
+
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="mobileNo" value={mobileNo} label={tableHead.mobileNo} setState={setValues} />
           <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={Lists.gender} />
