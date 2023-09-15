@@ -22,10 +22,6 @@ const examPassedDuringYearSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    Proof: {
-        type: 'string',
-        required: true
-    }
 
 }, { timestamps: true });
 
