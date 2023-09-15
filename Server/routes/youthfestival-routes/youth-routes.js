@@ -36,9 +36,9 @@ function youthRoutes(app) {
             let SendData = null;
             // const { } = data
             const isfile = req.file;
-        if (isfile) {
-            var up = req.file.filename
-        }
+            if (isfile) {
+                var up = req.file.filename
+            }
             SendData = data
 
             if (up) {
@@ -115,6 +115,7 @@ function youthRoutes(app) {
 
                 const Table1Students = await YfTable1.find(filter).lean()
                 const Table2Students = await YfTable2.find(filter).lean()
+                const GroupStudents = await YfTable2.find(filter).lean()
 
                 reportData.Table1Students = Table1Students
                 reportData.Table2Students = Table2Students

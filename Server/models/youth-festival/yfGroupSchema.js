@@ -10,6 +10,11 @@ const yfGroupSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    college: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "yfcolleges"
+    },
     academicYear: {
         type: 'string',
         required: true
