@@ -1,9 +1,8 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const excelReq = ( valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user ) => {
+const excelReq = (valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user) => {
 
-  console.log({valuesNC, path, initialstate, values, setState, refetch, setOpen, setLoading, user});
 
   let formData = new FormData();
   Object.keys(values).map((key) => {
@@ -13,8 +12,10 @@ const excelReq = ( valuesNC, path, initialstate, values, setState, refetch, setO
     formData.append(key, valuesNC[key]);
   })
 
+  const link = `${process.env.REACT_APP_MAIN_URL}/${user}/excelRecord/${path}`
+
   axios
-    .post(`${process.env.REACT_APP_MAIN_URL}/${user}/excelRecord/${path}`, formData)
+    .post(link, formData)
     .then((res) => {
       const status = res.status;
       if (!status) {
@@ -33,7 +34,6 @@ const excelReq = ( valuesNC, path, initialstate, values, setState, refetch, setO
       }
     })
     .catch((error) => {
-      // console.log(error);
       toast.error(`Edited Hedings of Sample File or Passing empty fild to required value`);
       setLoading(false);
       setOpen(false);

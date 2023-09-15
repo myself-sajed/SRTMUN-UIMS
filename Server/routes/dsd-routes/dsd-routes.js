@@ -37,7 +37,6 @@ const dsdUpload = multer({ storage: dsdstorage })
 router.post('/other/services/isReportSubmitted', (req, res) => {
 
     const { year, model, filter, dataToAdd } = req.body;
-    console.log(filter, dataToAdd);
     const modelFilter = filter ? filter : {}
     const data = dataToAdd ? dataToAdd : {}
     NonTeachingModels[model].findOne(modelFilter, (err, doc) => {

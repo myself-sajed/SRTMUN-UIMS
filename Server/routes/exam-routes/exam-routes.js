@@ -29,19 +29,19 @@ const examUpload = multer({ storage: examstorage })
 const excelObject = {
     //EXAM
     ExamPassedDuringYear: {
-         "Program Code": 'programCode',  "Program Name": 'programName',  "Number of Students Appeared in Final Year Examination": 'studentsAppeared',  "Number of Students Passed in Final Year Examination": 'studentsPassed',  'Year': 'academicYear',
+        "Program Code": 'programCode', "Program Name": 'programName', "Number of Students Appeared in Final Year Examination": 'studentsAppeared', "Number of Students Passed in Final Year Examination": 'studentsPassed', 'Year': 'academicYear',
     },
-    StudentComplaintsGrievances:{
-         "No Of Students Appeared": 'noOfStudents',  "No Of Grievances": 'noOfGrievances',  'Year': 'academicYear',
+    StudentComplaintsGrievances: {
+        "No Of Students Appeared": 'noOfStudents', "No Of Grievances": 'noOfGrievances', 'Year': 'academicYear',
     },
-    DateOfResultDiclaration:{
-         "Programme Name": 'programmeName',  "Programme Code": 'programmeCode',  "Semester/ year": 'academicYear',  "Last date of the last semester-end/ year- end examination": 'lastDate',  "Date of declaration of results of semester-end/ year- end examination": 'diclarationDate',
+    DateOfResultDiclaration: {
+        "Programme Name": 'programmeName', "Programme Code": 'programmeCode', "Semester/ year": 'academicYear', "Last date of the last semester-end/ year- end examination": 'lastDate', "Date of declaration of results of semester-end/ year- end examination": 'diclarationDate',
     }
 }
 
 //get
-router.post('/exam/getData', async (req, res)=>{
-    const { model, filter} = req.body
+router.post('/exam/getData', async (req, res) => {
+    const { model, filter } = req.body
     try {
         const fetch = await models[model].find(filter);
         res.status(200).send(fetch);
@@ -55,18 +55,17 @@ router.post('/exam/getData', async (req, res)=>{
 router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, res) => {
     try {
         const model = req.params.model
-        // console.log(model)
         const data = JSON.parse(JSON.stringify(req.body));
-        
+
         const isFile = req.file
-        if(isFile){
+        if (isFile) {
             var up = req.file.filename;
         }
 
-        if(up){
+        if (up) {
             var withUpData = Object.assign(data, { Proof: up })
         }
-        else{
+        else {
             var withUpData = data
         }
         const obj = new models[model](withUpData);
@@ -80,7 +79,7 @@ router.post("/exam/newRecord/:model", examUpload.single("Proof"), async (req, re
 });
 
 //reset
-router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, res) => {
+router.post('/exam/editRecord/:model', async (req, res) => {
     const model = req.params.model
     const data = JSON.parse(JSON.stringify(req.body));
     let SendData = null;
@@ -89,9 +88,9 @@ router.post('/exam/editRecord/:model', examUpload.single('Proof'), async (req, r
     if (isfile) {
         var up = req.file.filename
     }
-    SendData=data
+    SendData = data
 
-     var alldata = null
+    var alldata = null
     if (up) {
         alldata = Object.assign(SendData, { Proof: up })
     }
@@ -125,6 +124,7 @@ router.post('/exam/deleteRecord', async (req, res) => {
 })
 
 router.post('/exam/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
+    console.log('req came')
     const excelFile = req.file.filename
     const model = req.params.model
     let sendData = {};
@@ -139,35 +139,35 @@ router.post('/exam/excelRecord/:model', excelUpload.single('excelFile'), (req, r
                 file.Sheets[sheetNames[i]])
             arr.forEach((response) => data.push(response))
         }
-       
-        let dateInputs = ["From Date", "To Date","Date of implementation", "Date of Birth"]
-           data.forEach((item)=>{
+
+        let dateInputs = ["From Date", "To Date", "Date of implementation", "Date of Birth"]
+        data.forEach((item) => {
             Object.keys(excelObject[model]).forEach(key => {
-                if(dateInputs.includes(key)){
-                    let d = new Date((item[key] - (25567 + 2))*86400*1000)
-                    fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
+                if (dateInputs.includes(key)) {
+                    let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
+                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
                     sendData[excelObject[model][key]] = fullDate
                 }
-                else{
+                else {
                     sendData[excelObject[model][key]] = item[key]
                 }
-                
+
             })
             const obj = new models[model](sendData);
-            obj.save(function(error){
-                if(error){
+            obj.save(function (error) {
+                if (error) {
                     res.status(500).send()
-                    console.log(error)  
+                    console.log(error)
                 }
             })
         })
-         res.status(201).send(`Entry suceeed`)  
+        res.status(201).send(`Entry suceeed`)
     }
-    catch(err){
+    catch (err) {
         console.log(err);
         return res.status(500).send()
     }
 })
 
 
-module.exports = {router, excelObject};
+module.exports = { router, excelObject };

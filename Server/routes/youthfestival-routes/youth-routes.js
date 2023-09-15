@@ -31,7 +31,6 @@ function youthRoutes(app) {
     app.post("/youth/newRecord/:model", youthUpload.single("photoURL"), async (req, res) => {
         try {
             const model = req.params.model
-            console.log(model)
             const data = JSON.parse(JSON.stringify(req.body));
             let SendData = null;
             // const { } = data
@@ -92,7 +91,6 @@ function youthRoutes(app) {
                 if (err) {
                     console.error(err);
                 }
-                console.log("file deleted successfullay ");
             });
             res.status(200).send("Entry Deleted Successfully");
         }
@@ -154,7 +152,6 @@ function youthRoutes(app) {
         const { user, academicYear } = req.body;
         const linkToNavigate = `${process.env.Report_Main_URL}/youthfestival/application-form/${user._id}/${academicYear}`
         const fileName = `${user.collegeName}-${academicYear}-ApplicationForm.pdf`
-        console.log(linkToNavigate)
 
         await pupetteerSetting({ linkToNavigate, fileName })
         res.send({ status: 'generated', fileName })
