@@ -75,6 +75,7 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
   //   setValues((pri)=>{...pri})
   // },[dob])
 
+
   return (
     <>
       {/* nameOfCollege, ParticpantName, permentAddress, mobileNo, dob, bloodGroup, academicYear, */}
@@ -100,7 +101,7 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
             </div>
           </div>
 
-          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "समुह गायन - भारतीय" }, { value: "समुह गायन - पाश्चात्य" }, { value: "कव्वाली" }, { value: "फोक  ऑर्केस्ट्रा  (लोक संगीत)" }, { value: "लोकनृत्य / आदिवासी नृत्य" }, { value: "शास्त्रीय नृत्य" }, { value: "एकांकिका" }, { value: "विडंबन अभिनय" }, { value: "मूक अभिनय" }, { value: "नक्कल" }, { value: "वादविवाद" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" }, { value: "कलात्मक जुळवणी (इंस्टॉलेशन)" }, { value: "पोवाडा" }, { value: "लावणी" }, { value: "जलसा" },]} limit={4} />
+          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" }, ]} limit={4} />
 
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />

@@ -2,28 +2,62 @@ import React, { useState } from 'react'
 import NumberToTextField from '../services/director/reports/academic-audit/components/NumberToTextField'
 import TableData from '../services/director/reports/academic-audit/components/TableData'
 import AuditTable from '../services/director/reports/academic-audit/components/AuditTable'
+import Lists from '../components/tableComponents/Lists'
+import Select from '../components/formComponents/Select'
+import YearSelect from '../components/formComponents/YearSelect'
+import { v4 as uuidv4 } from 'uuid';
+import { useQuery } from 'react-query'
+import getReq from '../components/requestComponents/getReq'
+import addReq from '../components/requestComponents/addReq'
 
 const Test = () => {
     let studentsInfo = {
         auditHead: ["Sr. No.", "स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट", "Action"],
         childHead: ['name', 'address', 'mobile', 'gender', 'dob', 'age', 'bloodGroup',],
         fieldOptions: [
-            { field: 'Text', keyName: "name", label: "स्पर्धकाचे नाव" },
+            // { field: 'Select', keyName: "name", label: "स्पर्धकाचे नाव", options: Lists.yfGgroup },
             { field: 'Text', keyName: "address", label: "कायमचा पत्ता" },
             { field: 'Text', keyName: "mobile", label: "भ्रमणध्वनी क्रमांक" },
-            { field: 'Select', keyName: "gender", label: "लिंग", options: ["Male", "Female", "Other"] },
+            { field: 'Select', keyName: "gender", label: "लिंग", options: Lists.gender },
             { field: 'Date', keyName: "dob", label: "जन्म दिनांक" },
             { field: 'Text', keyName: "age", label: "१ जुलै २०२३ रोजी स्पर्धकांचे वय" },
-            { field: 'Text', keyName: "bloodGroup", label: "रक्त गट" },
+            { field: 'Select', keyName: "bloodGroup", label: "रक्त गट", options: Lists.bloodGr },
         ]
 
     }
+    const module = "youth"
+    const model = "YfGroup"
+
+    let filter = {}
+
+    const params = { model, id: '', module, filter }
+    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+
+    console.log(data);
 
     const [students, setStudents] = useState({ input: 0 })
+    const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const initialstate = {
+         namesOfCompetition: "", academicYear: "",
+      }
+    const [values, setValues] = useState(initialstate)
+    const {namesOfCompetition, academicYear} =values
 
     console.log("Students :", students)
+    const onSubmit = (e) => {
+        e.preventDefault();
+          addReq({ participantNames: JSON.stringify(students) }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+      }
+
     return (
+
+
         <div>
+            <div className='flex justify-around'>
+                <Select className="col-md-5" id="namesOfCompetition" value={namesOfCompetition} label="स्पर्धकाचे नाव" setState={setValues} options={Lists.yfGgroup} />
+                <YearSelect className='col-md-5' id="academicYear" value={academicYear} label="शैक्षणिक वर्ष" setState={setValues} />
+            </div>
             <NumberToTextField state={students} setState={setStudents} setAutoSaveLoader={() => { }} autoSaveLoader={null} label="Enter number of Students participating in the competition" isForm={true} classes='my-3'
                 options={studentsInfo.fieldOptions}>
 
@@ -32,6 +66,7 @@ const Test = () => {
                     setState={setStudents} cellAsInput={false} options={studentsInfo.fieldOptions} isForm={true} editTitle="Students" />
 
             </NumberToTextField>
+            <button onClick={onSubmit}> Submit</button>
         </div>
     )
 }

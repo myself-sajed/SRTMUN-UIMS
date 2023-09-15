@@ -5,8 +5,9 @@ const fs = require('fs');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 const YfTable1 = require('../../models/youth-festival/yfTable1Schema')
 const YfTable2 = require('../../models/youth-festival/yfTable2Schema')
+const YfGroup = require('../../models/youth-festival/yfGroupSchema')
 
-const models = { YfTable1, YfTable2 }
+const models = { YfTable1, YfTable2, YfGroup }
 
 const youthUpload = multerConfig(`../uploads/youth-uploads/`)
 
@@ -30,14 +31,21 @@ function youthRoutes(app) {
     app.post("/youth/newRecord/:model", youthUpload.single("photoURL"), async (req, res) => {
         try {
             const model = req.params.model
-            // console.log(model)
+            console.log(model)
             const data = JSON.parse(JSON.stringify(req.body));
             let SendData = null;
             // const { } = data
-            const up = req.file.filename;
+            const isfile = req.file;
+        if (isfile) {
+            var up = req.file.filename
+        }
             SendData = data
 
-            var withUpData = Object.assign(SendData, { photoURL: up })
+            if (up) {
+                var withUpData = Object.assign(SendData, { photoURL: up })
+            } else {
+                var withUpData = SendData
+            }
             const obj = new models[model](withUpData);
             await obj.save();
             res.status(201).send("Entry Succeed")
