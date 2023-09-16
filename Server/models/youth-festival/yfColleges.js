@@ -10,6 +10,14 @@ const collegeSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    district: {
+        type: 'string',
+        required: true,
+    },
+    collegeCode: {
+        type: 'string',
+        required: true,
+    },
     email: {
         type: 'string',
         required: true,
