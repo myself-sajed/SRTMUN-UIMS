@@ -28,7 +28,7 @@ function youthRoutes(app) {
     })
 
     //set
-    app.post("/youth/newRecord/:model", youthUpload.single("photoURL"), async (req, res) => {
+    app.post("/youth/newRecord/:model", youthUpload.single("PhotoURL"), async (req, res) => {
         try {
             const model = req.params.model
             const data = JSON.parse(JSON.stringify(req.body));
