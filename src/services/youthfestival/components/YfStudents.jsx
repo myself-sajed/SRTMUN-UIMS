@@ -30,7 +30,6 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
-  const [photoURL2, setPhotoURL2] = useState(null)
 
   const initialstate = {
     nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
