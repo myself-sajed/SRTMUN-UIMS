@@ -17,19 +17,22 @@ import Select from '../../../components/formComponents/Select'
 import Lists from '../../../components/tableComponents/Lists'
 
 
-const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", namesOfCompetition: "भाग घेतलेल्या स्पर्धेचे नाव", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
+const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
 
-const YfTable2 = ({ user, filterByAcademicYear }) => {
-  const model = 'YfTable2'
+const YfStudents = ({ user, filterByAcademicYear }) => {
+  const model = 'YfStudents'
   const module = 'youth';
   const title = "युवक महोत्सवात सहभाग - स्पर्धक योग्यता"
 
-  let filter = { academicYear: filterByAcademicYear, college: user?._id }
+  let filter = { college: user?._id }
+  if(filterByAcademicYear){
+    filter.academicYear= filterByAcademicYear
+  }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
-    nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: "",
+    nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear? filterByAcademicYear:"",
   }
   const [values, setValues] = useState(initialstate)
   const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, } = values
@@ -38,42 +41,43 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
 
   //---------------edit state-------------------
   const [avatar, setAvatar] = useState(null)
-  const [photoURL, setPhotoURL] = useState(null)
+  const [PhotoURL, setPhotoURL] = useState(null)
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [openCroper, setOpenCroper] = useState(false)
-  const [values2, setValues2] = useState([])
 
-  const { namesOfCompetition } = values2
 
   useEffect(() => {
     if (itemToEdit && data.data) {
       data?.data.forEach((item) => {
         if (item?._id === itemToEdit) {
-          const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, namesOfCompetition, } = item
+          const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, } = item
           setEdit(true); setOpen(true);
           setValues({ nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, })
-          setValues2({ namesOfCompetition: namesOfCompetition.filter((item) => item !== "") })
         }
       })
     }
   }, [itemToEdit])
 
   const onCancel = () => {
-    setValues(initialstate); setValues2([]); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
+    setValues(initialstate); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
   }
   const onSubmit = (e) => {
     e.preventDefault();
-    edit ? editReq({ photoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module, { namesOfCompetition }) :
-      addReq({ photoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module, { namesOfCompetition })
-    setValues2([])
+    edit ? editReq({ PhotoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module,) :
+      addReq({ PhotoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module,)
     setPhotoURL(null)
   }
 
-  // useEffect(()=>{
-  //   setValues((pri)=>{...pri})
-  // },[dob])
+  useEffect(()=>{
+    let age = calculateAge(dob, "2023-07-01")
+    setValues((pri)=>{
+      return{
+        ...pri, age
+      }
+    })
+  },[dob])
 
 
   return (
@@ -86,7 +90,7 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
 
           <div className='flex-items-center justify-center flex-col w-full mb-4'>
             {
-              photoURL ?
+              PhotoURL ?
                 <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
                 <img src={serverLinks.showFile(data?.data?.photoURL, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
             }
@@ -94,27 +98,27 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
               <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
               <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
                 handleAvatarChange(e, setAvatar, setPhotoURL, setOpenCroper)
-              }} />
+              }} required={!edit} />
               {
-                photoURL && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setPhotoURL(null); }}>Reset Picture</button>
+                PhotoURL && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setPhotoURL(null); }}>Reset Picture</button>
               }
             </div>
           </div>
 
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
-          <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" },]} limit={4} />
+          {/* <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" },]} limit={4} /> */}
 
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="mobileNo" value={mobileNo} label={tableHead.mobileNo} setState={setValues} />
           <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={Lists.gender} />
           <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label={tableHead.dob} setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="age" value={age} label={tableHead.age} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="age" value={age} label={tableHead.age} setState={setValues} desable={true} />
           <Select className='col-md-6 col-lg-4' id="bloodGroup" value={bloodGroup} label={tableHead.bloodGroup} setState={setValues} options={Lists.bloodGr} />
-          <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
+          {!filterByAcademicYear && <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />}
         </div>
       </DialogBox>
 
-      <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={photoURL} setFile={setPhotoURL} setAvatar={setAvatar} />
+      <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={PhotoURL} setFile={setPhotoURL} setAvatar={setAvatar} />
 
       <BulkExcel data={data?.data} sampleFile="युवक महोत्सवात सहभाग - स्पर्धक योग्यता" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
 
@@ -124,4 +128,31 @@ const YfTable2 = ({ user, filterByAcademicYear }) => {
 
 }
 
-export default YfTable2
+// note:-  input date and end date must be yyyy-mm-dd format
+function calculateAge(inputDate, endDate = new Date()) {
+  const parts = inputDate.split('-');
+  const inputYear = parseInt(parts[0], 10);
+  const inputMonth = parseInt(parts[1], 10) - 1; 
+  const inputDay = parseInt(parts[2], 10);
+
+  const currentDate = new Date(endDate);
+  const birthDate = new Date(inputYear, inputMonth, inputDay);
+
+  let ageInYears = currentDate.getFullYear() - birthDate.getFullYear();
+  let ageInMonths = currentDate.getMonth() - birthDate.getMonth();
+  let ageInDays = currentDate.getDate() - birthDate.getDate();
+
+  if (ageInDays < 0) {
+    ageInMonths--;
+    ageInDays += new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+  }
+  if (ageInMonths < 0) {
+    ageInYears--;
+    ageInMonths += 12;
+  }
+
+  return `${ageInYears} Years ${ageInMonths} Months ${ageInDays} Days`;
+}
+
+export default YfStudents
+export {calculateAge}

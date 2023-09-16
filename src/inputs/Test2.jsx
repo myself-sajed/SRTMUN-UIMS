@@ -13,7 +13,7 @@ import Placements from '../services/director/pages/Placements'
 import ProgressionToHE from '../services/director/pages/ProgressionToHE'
 import AdminNumaricalData from '../services/admin/pages/AdminNumaricalData'
 import YfTable1 from '../services/youthfestival/components/YfTable1'
-import YfTable2 from '../services/youthfestival/components/YfTable2'
+// import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
   return (
@@ -39,7 +39,7 @@ const Test2 = () => {
 
       {/* <AdminNumaricalData School="All Schools"/> */}
       < YfTable1 />
-      < YfTable2 />
+      {/* < YfTable2 /> */}
     </div>
   )
 }

@@ -3,11 +3,12 @@ const {excelObject: facultyExcelObj} = require("../routes/faculty-routes/routes"
 const {excelObject: directorExcelObj} = require("../routes/director-routes/director-routes")
 const {excelObject: nssExcelObj} = require("../routes/nss-routes/nss-routes")
 const {excelObject: examExcelObj} = require("../routes/exam-routes/exam-routes")
+const {excelObject: dsdExcelObj} = require("../routes/dsd-routes/dsd-routes")
 
 const path = require("path");
 
 
-const ExcelObj = {...directorExcelObj, ...facultyExcelObj, ...nssExcelObj, ...examExcelObj}
+const ExcelObj = {...directorExcelObj, ...facultyExcelObj, ...nssExcelObj, ...examExcelObj, ...dsdExcelObj}
 
 const SchoolsProgram = {
     "School of Computational Sciences": '"Ph.D. (Computer Science),M.Phil (Computer Science),MCA,M.Sc.(Computer Science),M.Sc(Computer Applications),M.Sc(Computer Networking)"',
@@ -267,6 +268,15 @@ async function generateExcelFile(filename,model,school) {
         "Number of Students Appeared in Final Year Examination": 'number',
         "Number of Students Passed in Final Year Examination": 'number',
         'Year': "academicYear",
+    },
+    //Dsd
+    DSDSports:{
+        "Team / Individual": 'teamIndividual', 
+        "Inter-university / state / National / International": 'isNat4', 
+        "Year": 'academicYear',
+    }, 
+    SportsAndCulturalEvents:{
+        "Academic Year": "academicYear",
     }
     
     };
@@ -446,6 +456,13 @@ async function generateExcelFile(filename,model,school) {
             errorTitle: 'Invalid option',
             error: 'Please select a value from the list',
           },
+        isNat4: {
+            type: 'list',
+            formula1: '"Inter-university,State,National,International"',
+            showErrorMessage: true,
+            errorTitle: 'Invalid option',
+            error: 'Please select a value from the list',
+          },
         talkNature: {
             type: 'list',
             formula1: '"Invited Talk,Resource Person,Paper Presentation"',
@@ -453,6 +470,13 @@ async function generateExcelFile(filename,model,school) {
             errorTitle: 'Invalid value',
             error: 'Please select a value from the list',
         },
+        teamIndividual: {
+            type: 'list',
+            formula1: '"Team,Individual"',
+            showErrorMessage: true,
+            errorTitle: 'Invalid value',
+            error: 'Please select a value from the list',
+        } 
                 
       };
 

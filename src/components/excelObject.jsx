@@ -401,15 +401,22 @@ const excelObject = {
         'bloodGroup': "Blood Group",
     },
      //EXAM
-     ExamPassedDuringYear: {
+    ExamPassedDuringYear: {
        'programCode': "Program Code", 'programName': "Program Name", 'studentsAppeared': "Number of Students Appeared in Final Year Examination", 'studentsPassed': "Number of Students Passed in Final Year Examination", 'academicYear': 'Year',
-   },
-   StudentComplaintsGrievances:{
-       'noOfStudents': "No Of Students Appeared", 'noOfGrievances': "No Of Grievances", 'academicYear': 'Year',
-   },
-   DateOfResultDiclaration:{
-       'programmeName': "Programme Name", 'programmeCode': "Programme Code", 'academicYear': "Semester/ year", 'lastDate': "Last date of the last semester-end/ year- end examination", 'diclarationDate': "Date of declaration of results of semester-end/ year- end examination",
-   }
+    },
+    StudentComplaintsGrievances:{
+        'noOfStudents': "No Of Students Appeared", 'noOfGrievances': "No Of Grievances", 'academicYear': 'Year',
+    },
+    DateOfResultDiclaration:{
+        'programmeName': "Programme Name", 'programmeCode': "Programme Code", 'academicYear': "Semester/ year", 'lastDate': "Last date of the last semester-end/ year- end examination", 'diclarationDate': "Date of declaration of results of semester-end/ year- end examination",
+    },
+    //DSD
+    DSDSports:{
+        'nameOfAward': "Name of the award/ medal", 'teamIndividual': "Team / Individual", 'isNat': "Inter-university / state / National / International", 'nameOfEvent': "Name of the event", 'nameOfStudnt': "Name of the student", 'academicYear': "Year",
+    }, 
+    SportsAndCulturalEvents:{
+        'dateOfEvent': "Date of event/competition", 'nameOfEvent': "Name  of the event/competition", 'academicYear': "Academic Year",
+    }
 }
 
 export default excelObject;

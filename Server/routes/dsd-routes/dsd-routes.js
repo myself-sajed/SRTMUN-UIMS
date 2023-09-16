@@ -3,6 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const xlsx = require('xlsx');
+const multerConfig = require('../../utility/multerConfig').multerConfig
 
 const DSDAQAR = require('../../models/dsd-models/dsdAqarSchema')
 const KRCAQAR = require('../../models/krc-models/krcAqarSchema')
@@ -15,11 +17,12 @@ const YFReportIsSubmitted = require('../../models/youth-festival/yfSubmitted')
 
 const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted }
 
-
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');
 
 const models = { DSDSports, SportsAndCulturalEvents }
+
+const excelUpload = multerConfig(`../../excels/`)
 
 const dsdstorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -31,6 +34,15 @@ const dsdstorage = multer.diskStorage({
     },
 })
 const dsdUpload = multer({ storage: dsdstorage })
+
+const excelObject = {
+    DSDSports:{
+        "Name of the award/ medal": 'nameOfAward', "Team / Individual": 'teamIndividual', "Inter-university / state / National / International": 'isNat', "Name of the event": 'nameOfEvent', "Name of the student": 'nameOfStudnt', "Year": 'academicYear',
+    }, 
+    SportsAndCulturalEvents:{
+        "Date of event/competition": "dateOfEvent", "Name  of the event/competition": "nameOfEvent", "Academic Year": "academicYear",
+    }
+}
 
 
 // add aqar submissions year in the schema so that it will show if the aqar for that year has submitted or not
@@ -154,5 +166,50 @@ router.post('/dsd/deleteRecord', async (req, res) => {
     }
 })
 
+router.post('/dsd/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
+    const excelFile = req.file.filename
+    const model = req.params.model
+    let sendData = {};
+    const values = JSON.parse(JSON.stringify(req.body));
 
-module.exports = router;
+    let data = []
+    try {
+        const file = xlsx.readFile(path.join(__dirname, `../../../excels/${excelFile}`))
+        const sheetNames = file.SheetNames
+        for (let i = 0; i < sheetNames.length; i++) {
+            const arr = xlsx.utils.sheet_to_json(
+                file.Sheets[sheetNames[i]])
+            arr.forEach((response) => data.push(response))
+        }
+
+        let dateInputs = ["Date of event/competition"]
+        data.forEach((item) => {
+            Object.keys(excelObject[model]).forEach(key => {
+                if (dateInputs.includes(key)) {
+                    let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
+                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
+                    sendData[excelObject[model][key]] = fullDate
+                }
+                else {
+                    sendData[excelObject[model][key]] = item[key]
+                }
+
+            })
+            const obj = new models[model](sendData);
+            obj.save(function (error) {
+                if (error) {
+                    res.status(500).send()
+                    console.log(error)
+                }
+            })
+        })
+        res.status(201).send(`Entry suceeed`)
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).send()
+    }
+})
+
+
+module.exports = {router, excelObject}
