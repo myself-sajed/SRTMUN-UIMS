@@ -8,8 +8,12 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import { useSelector } from 'react-redux'
 import { addCompetition } from '../js/competitionHandler'
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import Note from '../../director/reports/academic-audit/components/Note'
+import ShowIndividualCompetitions from './ShowIndividualCompetitions'
 
-const StudentSelection = ({ filterByAcademicYear }) => {
+const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
     const initialState = { competitionName: null }
     const [compDetails, setCompDetails] = useState(initialState)
     const { competitionName } = compDetails
@@ -37,7 +41,7 @@ const StudentSelection = ({ filterByAcademicYear }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        addCompetition({ college: user, selectedStudents, competitionName, academicYear: filterByAcademicYear, isGroup: false, clearFunction: clearState })
+        addCompetition({ college: user, selectedStudents, competitionName, academicYear: filterByAcademicYear, isGroup, clearFunction: clearState })
     }
 
     const clearState = () => {
@@ -48,18 +52,30 @@ const StudentSelection = ({ filterByAcademicYear }) => {
 
     return (
         <div>
+
             <div className="grid grid-cols-3 gap-3 mt-4">
                 <div className="col-span-2 border rounded-md p-3">
-                    <div>
-                        <Select className="col-md-5" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={Lists.yfIndividual} />
+                    <p className="text-center pb-2 border-b flex items-center justify-center gap-2 text-blue-700 font-bold"> {isGroup ? <><GroupsRoundedIcon />स्पर्धेत गट सहभागासाठी विद्यार्थी व्यवस्थापन</> : <><PersonRoundedIcon />स्पर्धेत वैयक्तिक सहभागासाठी विद्यार्थी व्यवस्थापन</>}  </p>
+
+                    {
+                        isGroup ? <Note title="ही प्रणाली स्पर्धांमध्ये गट सहभागाचे व्यवस्थापन सुलभ करते. प्रारंभ करण्यासाठी, स्पर्धेचे नाव निवडा, त्यानंतर तुम्हाला त्या स्पर्धेत समाविष्ट करायचे असलेले विद्यार्थी निवडा. त्या स्पर्धेसाठी निवडलेल्या सर्व विद्यार्थ्यांना एक युनिट म्हणून एकत्र केले जाईल. गट जतन करण्यासाठी सबमिट क्लिक करा करा आणि तुम्ही ही प्रक्रिया इतर कोणत्याही गटांसाठी देखील पुनरावृत्त करू शकता." classes="mt-3" /> : <Note title="स्पर्धांमध्ये वैयक्तिक सहभाग व्यवस्थापित करण्यासाठी ही एक प्रणाली आहे. कृपया स्पर्धेचे नाव निवडा, निवडलेल्या स्पर्धेत सहभागी होऊ इच्छिणाऱ्या विद्यार्थ्यांची संख्या निवडा आणि फॉर्म सबमिट करा. त्याचप्रमाणे, लागू असल्यास, इतर कोणत्याही स्पर्धांसाठी प्रक्रिया पुन्हा करा." classes="mt-3" />
+                    }
+
+                    <div className='mt-3'>
+                        <Select className="col-md-5" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={isGroup ? Lists.yfGgroup : Lists.yfIndividual} />
                     </div>
-                    <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={data?.data} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
+
+                    <div className='mt-3'>
+                        <ShowIndividualCompetitions />
+                    </div>
 
                 </div>
                 <div>
                     <YFStudentsList students={data?.data} />
                 </div>
             </div>
+
+            <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={data?.data} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
         </div>
     )
 }
