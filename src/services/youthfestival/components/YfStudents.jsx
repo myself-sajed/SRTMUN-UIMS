@@ -29,7 +29,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
     filter.academicYear = filterByAcademicYear
   }
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, isError, error, refetch } = useQuery(model, () => getReq(params))
   const [photoURL2, setPhotoURL2] = useState(null)
 
   const initialstate = {
@@ -64,12 +64,14 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
 
   const onCancel = () => {
     setValues(initialstate); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
+    setPhotoURL2(null)
   }
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ PhotoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module,) :
       addReq({ PhotoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module,)
     setPhotoURL(null)
+    setPhotoURL2(null)
   }
 
   useEffect(() => {
@@ -81,12 +83,9 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
     })
   }, [dob])
 
-  console.log(PhotoURL, data?.data)
-
 
   return (
     <>
-      {/* nameOfCollege, ParticpantName, permentAddress, mobileNo, dob, bloodGroup, academicYear, */}
       <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>

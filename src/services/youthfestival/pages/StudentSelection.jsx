@@ -3,12 +3,26 @@ import YFStudentsList from '../components/YFStudentsList'
 import Lists from '../../../components/tableComponents/Lists'
 import Select from '../../../components/formComponents/Select'
 import SelectStudents from '../components/SelectStudents'
+import useScroll from '../../../hooks/useScroll'
+import { useQuery } from 'react-query'
+import getReq from '../../../components/requestComponents/getReq'
+import { useSelector } from 'react-redux'
 
-const StudentSelection = () => {
+const StudentSelection = ({ filterByAcademicYear }) => {
     const initialState = { competitionName: null, selectedStudents: [] }
     const [compDetails, setCompDetails] = useState(initialState)
-    const { competitionName, selectedStudents } = compDetails
+    const { competitionName } = compDetails
+    const [selectedStudents, setSelectedStudents] = useState([])
     const [open, setOpen] = useState(false)
+    useScroll()
+
+    const user = useSelector((state) => state.state?.youthUser)
+    let filter = { college: user?._id }
+    if (filterByAcademicYear) {
+        filter.academicYear = filterByAcademicYear
+    }
+    const params = { model: "YfStudents", id: '', module: "youth", filter }
+    const { data, isLoading, isError, error, refetch } = useQuery("YfStudents", () => getReq(params))
 
     useEffect(() => {
         if (competitionName) {
@@ -20,10 +34,13 @@ const StudentSelection = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        setCompDetails(initialState)
+
+        // clearState()
     }
-    const onCancel = () => {
+
+    const clearState = () => {
         setCompDetails(initialState)
+        setSelectedStudents([])
     }
 
 
@@ -34,11 +51,11 @@ const StudentSelection = () => {
                     <div>
                         <Select className="col-md-5" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={Lists.yfIndividual} />
                     </div>
-                    <SelectStudents students={students} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={onCancel} />
+                    <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={students} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
 
                 </div>
                 <div>
-                    <YFStudentsList students={students} />
+                    <YFStudentsList students={data?.data} />
                 </div>
             </div>
         </div>

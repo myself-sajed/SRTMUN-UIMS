@@ -119,7 +119,7 @@ const YFForm = () => {
 
                 {
                     activeStep === 2 && <div>
-                        <StudentSelection />
+                        <StudentSelection filterByAcademicYear={academicYear} />
                         <div className="mt-4">
                             <SaveButton title={`Save and Select Group Students`} onClickFunction={() => {
                                 if (academicYear) {

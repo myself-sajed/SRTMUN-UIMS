@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import DialogBox from '../../../components/formComponents/DialogBox'
 import { StudentInfo } from './YFStudentsList'
 
-const SelectStudents = ({ isModalOpen, setIsModalOpen, compDetails, setCompDetails, onSubmit, onCancel, students }) => {
+const SelectStudents = ({ isModalOpen, setIsModalOpen, compDetails, setCompDetails, onSubmit, onCancel, students, setSelectedStudents, selectedStudents }) => {
 
-    const [selectedStudents, setSelectedStudents] = useState([]);
 
     const handleCheckboxChange = (id) => {
         if (selectedStudents.includes(id)) {
