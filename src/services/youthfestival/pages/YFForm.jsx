@@ -45,10 +45,7 @@ const YFForm = () => {
             title: 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार',
             component: <YfTable1 user={user} filterByAcademicYear={academicYear} />
         },
-        {
-            title: 'युवक महोत्सवात सहभागी गट (Group)',
-            component: <YFGroupTable user={user} filterByAcademicYear={academicYear} />
-        },
+
     ]
     const tableTitles = [...AQARTables.map((table) => table.title)]
 
