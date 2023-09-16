@@ -7,7 +7,7 @@ const yfCompetitionSchema = new mongoose.Schema({
     },
     students: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "yfstudent",
+        ref: "yfstudents",
         required: true
     },
     isGroup: {
