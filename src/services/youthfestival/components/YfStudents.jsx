@@ -30,7 +30,6 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
-  const [photoURL2, setPhotoURL2] = useState(null)
 
   const initialstate = {
     nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
@@ -43,6 +42,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   //---------------edit state-------------------
   const [avatar, setAvatar] = useState(null)
   const [PhotoURL, setPhotoURL] = useState(null)
+  const [PhotoURL2, setPhotoURL2] = useState(null)
   const [itemToEdit, setItemToEdit] = useState(null)
   const [edit, setEdit] = useState(false);
   const [Loading, setLoading] = useState(false);
@@ -63,13 +63,14 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   }, [itemToEdit])
 
   const onCancel = () => {
-    setValues(initialstate); setPhotoURL(null); setItemToEdit(null); setEdit(false); setOpen(false)
+    setValues(initialstate); setPhotoURL(null); setPhotoURL2(null); setItemToEdit(null); setEdit(false); setOpen(false)
   }
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ PhotoURL, id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module,) :
       addReq({ PhotoURL, college: user._id }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module,)
     setPhotoURL(null)
+    setPhotoURL2(null)
   }
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
             {
               PhotoURL ?
                 <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                photoURL2 && <img src={serverLinks.showFile(photoURL2, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                <img src={serverLinks.showFile(PhotoURL2, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
             }
             <div className='flex items-center justify-center gap-3'>
               <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>

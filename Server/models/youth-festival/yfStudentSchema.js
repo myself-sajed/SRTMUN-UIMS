@@ -38,6 +38,10 @@ const yfStudentSchema = new mongoose.Schema({
         type: 'string',
         required: false
     },
+    competitions: {
+        type: 'array',
+        required: false
+    },
     college: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "yfcolleges",
