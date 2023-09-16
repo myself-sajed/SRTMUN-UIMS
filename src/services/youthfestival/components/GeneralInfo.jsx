@@ -32,7 +32,7 @@ const GeneralInfo = ({ academicYear, user }) => {
                     {
                         formDetails?.map((formDetail) => {
                             return <div className='my-3' key={formDetail.title}>
-                                <Text title={formDetail.title} space='' state={info} setState={setInfo} objectWiseState={true} stateKey={formDetail.stateKey} />
+                                <Text type={formDetail.type ? formDetail.type : 'text'} title={formDetail.title} space='' state={info} setState={setInfo} objectWiseState={true} stateKey={formDetail.stateKey} />
                             </div>
                         })
                     }
@@ -69,7 +69,17 @@ const formDetails = [
         stateKey: "admissionFees"
     },
     {
+        title: "युवक महोत्सव प्रवेशिका शुल्क पावती दिनांक",
+        stateKey: "admissionDate",
+        type: 'date'
+    },
+    {
         title: "विद्यार्थी विकास निधी शुल्क पावती क्रमांक",
         stateKey: "dsdFees"
+    },
+    {
+        title: "विद्यार्थी विकास निधी शुल्क पावती दिनांक",
+        stateKey: "dsdDate",
+        type: 'date'
     },
 ]

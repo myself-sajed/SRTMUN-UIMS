@@ -18,11 +18,12 @@ import ArrowButton from '../../../components/ArrowButton'
 import YfTable1 from '../components/YfTable1'
 import YfTable2 from '../components/YfTable2'
 import YFGroupTable from '../components/YFGroupTable'
+import StudentSelection from './StudentSelection'
 
 
 const YFForm = () => {
 
-    const steps = ["Select Academic Year", "Fill Youth Festival Tables", "Acknowledgement"]
+    const steps = ["Select Academic Year", "General Info", "Individual Participation", "Group Participation", "Acknowledgement"]
     const [activeStep, setActiveStep] = useState(0)
     const navigate = useNavigate()
     const bredLinks = [siteLinks.welcome, siteLinks.yfCollegeHome, siteLinks.yfCollegeYouthForm]
@@ -39,17 +40,9 @@ const YFForm = () => {
         {
             title: 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता',
             component: <YfTable2 user={user} filterByAcademicYear={academicYear} />
-        },
-        {
-            title: 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार',
-            component: <YfTable1 user={user} filterByAcademicYear={academicYear} />
-        },
-        {
-            title: 'युवक महोत्सवात सहभागी गट (Group)',
-            component: <YFGroupTable user={user} filterByAcademicYear={academicYear} />
-        },
+        }
     ]
-    const tableTitles = [...AQARTables.map((table) => table.title)]
+    const tableTitles = ["मूलभूत / सामान्य माहिती", 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता', 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार', 'युवक महोत्सवात सहभागी गट (Group)']
 
 
     const handleNext = () => {
@@ -61,11 +54,9 @@ const YFForm = () => {
     };
 
     const navigateTabs = () => {
-        if (activeStep === 2) {
-            handleBack()
-        } else if (activeStep === 1) {
-            handleBack()
-        } else if (activeStep === 0) {
+        if (activeStep !== 0) {
+            handleBack();
+        } else {
             navigate(-1)
         }
     }
@@ -111,7 +102,35 @@ const YFForm = () => {
                         <div>
                             <TableAccordion AQARTables={AQARTables} />
                         </div>
-                        <SaveButton title={`Save and Submit`} onClickFunction={() => {
+                        <SaveButton title={`Save and Select Individual Students`} onClickFunction={() => {
+                            if (academicYear) {
+                                handleNext();
+                            } else {
+                                toast.error('Select AQAR Year before you proceed.')
+                            }
+                        }} />
+                    </div>
+                }
+
+                {
+                    activeStep === 2 && <div>
+                        <StudentSelection />
+                        <div className="mt-4">
+                            <SaveButton title={`Save and Select Group Students`} onClickFunction={() => {
+                                if (academicYear) {
+                                    handleNext();
+                                } else {
+                                    toast.error('Select AQAR Year before you proceed.')
+                                }
+                            }} />
+                        </div>
+                    </div>
+                }
+
+                {
+                    activeStep === 3 && <div>
+                        <p className="my-5 text-center">For Groups</p>
+                        <SaveButton title={`Save and Submit Form`} onClickFunction={() => {
                             if (academicYear) {
                                 handleFormSubmit();
                             } else {
@@ -122,7 +141,7 @@ const YFForm = () => {
                 }
 
                 {
-                    activeStep === 2 && <Acknowledgement title="Successful AQAR Data Submission" navigateTo={siteLinks.yfCollegeHome.link}>
+                    activeStep === 4 && <Acknowledgement title="Successful AQAR Data Submission" navigateTo={siteLinks.yfCollegeHome.link}>
                         <>
                             <p>Thank you, staff of <b>{user?.collegeName}</b> for successfully submitting the Youth Festival form for gathering participant's information for the year <b>{academicYear}</b></p>
 

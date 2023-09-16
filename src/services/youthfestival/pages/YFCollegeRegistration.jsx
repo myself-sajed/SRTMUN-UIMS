@@ -17,6 +17,7 @@ import Bred from '../../../components/Bred';
 import StepStatus from '../../../components/StepStatus';
 import Note from '../../director/reports/academic-audit/components/Note';
 import title from '../../../js/title';
+import Select from '../../../components/formComponents/Select';
 
 
 const CollegeRegistration = () => {
@@ -24,7 +25,7 @@ const CollegeRegistration = () => {
     // all states
     const initialState = { collegeName: "", principalName: "", password: "", cPassword: "", mobile: "", email: "", address: "" }
     const [values, setValues] = useState(initialState)
-    const { collegeName, principalName, password, cPassword, mobile, email, address } = values
+    const { collegeName, principalName, password, cPassword, mobile, email, address, district, collegeCode } = values
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [otp, setOtp] = useState({ serverOTP: null, clientOTP: null })
@@ -188,7 +189,9 @@ const CollegeRegistration = () => {
                             {step === 1 &&
                                 <form className="row g-3 needs-validation sm:p-3" onSubmit={handleFirstStep}   >
 
-                                    <Text className="col-md-12" id="collegeName" value={collegeName} setState={setValues} label="College Name" />
+                                    <Text className="col-md-6" id="collegeName" value={collegeName} setState={setValues} label="College Name" />
+                                    <Text className="col-md-3" id="collegeCode" value={collegeCode} setState={setValues} label="College Code" />
+                                    <Select options={["Nanded", "Latur", "Parbhani", "Hingoli"]} className="col-md-3" id="district" value={district} setState={setValues} label="Distict" />
 
                                     <Text className="col-md-6" id="principalName" value={principalName} setState={setValues} label="Principal Name" />
 
