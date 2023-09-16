@@ -25,14 +25,15 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   const title = "युवक महोत्सवात सहभाग - स्पर्धक योग्यता"
 
   let filter = { college: user?._id }
-  if(filterByAcademicYear){
-    filter.academicYear= filterByAcademicYear
+  if (filterByAcademicYear) {
+    filter.academicYear = filterByAcademicYear
   }
   const params = { model, id: '', module, filter }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const [photoURL2, setPhotoURL2] = useState(null)
 
   const initialstate = {
-    nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear? filterByAcademicYear:"",
+    nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
   }
   const [values, setValues] = useState(initialstate)
   const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, } = values
@@ -55,6 +56,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
           const { nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, } = item
           setEdit(true); setOpen(true);
           setValues({ nameOfCollege, ParticpantName, permentAddress, mobileNo, gender, dob, age, bloodGroup, academicYear, })
+          setPhotoURL2(item?.photoURL)
         }
       })
     }
@@ -70,14 +72,16 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
     setPhotoURL(null)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     let age = calculateAge(dob, "2023-07-01")
-    setValues((pri)=>{
-      return{
+    setValues((pri) => {
+      return {
         ...pri, age
       }
     })
-  },[dob])
+  }, [dob])
+
+  console.log(PhotoURL, data?.data)
 
 
   return (
@@ -92,7 +96,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
             {
               PhotoURL ?
                 <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                <img src={serverLinks.showFile(data?.data?.photoURL, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                photoURL2 && <img src={serverLinks.showFile(photoURL2, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
             }
             <div className='flex items-center justify-center gap-3'>
               <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
@@ -132,7 +136,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
 function calculateAge(inputDate, endDate = new Date()) {
   const parts = inputDate.split('-');
   const inputYear = parseInt(parts[0], 10);
-  const inputMonth = parseInt(parts[1], 10) - 1; 
+  const inputMonth = parseInt(parts[1], 10) - 1;
   const inputDay = parseInt(parts[2], 10);
 
   const currentDate = new Date(endDate);
@@ -155,4 +159,4 @@ function calculateAge(inputDate, endDate = new Date()) {
 }
 
 export default YfStudents
-export {calculateAge}
+export { calculateAge }
