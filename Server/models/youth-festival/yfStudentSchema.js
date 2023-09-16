@@ -39,7 +39,10 @@ const yfStudentSchema = new mongoose.Schema({
         required: false
     },
     competitions: {
-        type: 'array',
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "yfCompetition"
+        }],
         required: false
     },
     college: {
@@ -50,4 +53,4 @@ const yfStudentSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('YfStudnet', yfStudentSchema);
+module.exports = mongoose.model('yfstudent', yfStudentSchema);

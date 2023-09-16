@@ -7,16 +7,19 @@ import useScroll from '../../../hooks/useScroll'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import { useSelector } from 'react-redux'
+import { addCompetition } from '../js/competitionHandler'
 
 const StudentSelection = ({ filterByAcademicYear }) => {
-    const initialState = { competitionName: null, selectedStudents: [] }
+    const initialState = { competitionName: null }
     const [compDetails, setCompDetails] = useState(initialState)
     const { competitionName } = compDetails
     const [selectedStudents, setSelectedStudents] = useState([])
     const [open, setOpen] = useState(false)
+    const [isLoad, setIsAdding] = useState(false)
+
     useScroll()
 
-    const user = useSelector((state) => state.state?.youthUser)
+    const user = useSelector((state) => state.user?.youthUser)
     let filter = { college: user?._id }
     if (filterByAcademicYear) {
         filter.academicYear = filterByAcademicYear
@@ -34,8 +37,7 @@ const StudentSelection = ({ filterByAcademicYear }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-        // clearState()
+        addCompetition({ college: user, selectedStudents, competitionName, academicYear: filterByAcademicYear, isGroup: false, clearFunction: clearState })
     }
 
     const clearState = () => {
@@ -51,7 +53,7 @@ const StudentSelection = ({ filterByAcademicYear }) => {
                     <div>
                         <Select className="col-md-5" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={Lists.yfIndividual} />
                     </div>
-                    <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={students} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
+                    <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={data?.data} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
 
                 </div>
                 <div>

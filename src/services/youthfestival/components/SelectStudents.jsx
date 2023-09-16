@@ -23,7 +23,7 @@ const SelectStudents = ({ isModalOpen, setIsModalOpen, compDetails, setCompDetai
                 <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg ">
 
                     {
-                        students.map((student, i) => {
+                        students?.map((student, i) => {
                             return <li class={`w-full ${i !== students?.length - 1 && "border-b"} border-gray-200 rounded-t-lg p-2`}>
                                 <div class="flex items-center gap-3">
                                     <input onChange={() => handleCheckboxChange(student?._id)} id={student?._id} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />

@@ -6,12 +6,13 @@ const yfCompetitionSchema = new mongoose.Schema({
         required: true,
     },
     students: {
-        type: Array,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "yfstudent",
+        required: true
     },
     isGroup: {
         type: Boolean,
-        default:true,
+        default: true,
         required: true
     },
     academicYear: {
@@ -26,4 +27,4 @@ const yfCompetitionSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('yfCompetitionyfCompetition', yfCompetitionSchema);
+module.exports = mongoose.model('yfCompetition', yfCompetitionSchema);
