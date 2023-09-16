@@ -29,7 +29,7 @@ const SchoolsProgram = {
         ["M.Sc.(Mathematics)", 2], ["M.Sc.(Statistics)", 2], ["M.Phil.(Mathematics)", 7], ["Ph.D.(Mathematics)", 7], ["Ph.D.(Statistics)", 7],
     ],
     "School of Media Studies": [
-        ["M.A./M.Sc(Electronic Media)", 2], ["M.A.(Mass Communication & Journalism)", 2], ["M.Phil.(Mass Communication & Journalism)", 2], ["Ph.D.(Mass Communication & Journalism)", 7],
+        ["M.A./M.Sc(Electronic Media)", 2], ["M.A.(Mass Communication & Journalism)", 2], ["M.Phil.(Mass Communication & Journalism)", 2], ["Ph.D.(Mass Communication & Journalism)", 7], ["Ph.D.(Library and Information science)", 7],
     ],
     "School of Pharmacy": [
         ["B.Pharm", 4], ["M.Pharm(Pharmaceutics)", 2], ["M.Pharm(Pharmaceutical Chemistry)", 2], ["M.Pharm(Pharmacology)", 2], ["M.Pharm(Quality Assurance)", 2], ["M.Pharm(Pharmaceutical Sciences)", 2], ["Ph.D.(Pharmaceutical Sciences)", 7]
