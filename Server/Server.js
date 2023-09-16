@@ -12,10 +12,6 @@ const { json } = require("express");
 const jwt = require("jsonwebtoken");
 app.use(json());
 const mongoose = require("mongoose");
-const { router: directorRouter } = require("./routes/director-routes/director-routes")
-const { router: NssRouter } = require("./routes/nss-routes/nss-routes")
-const { router: ExamRouter } = require("./routes/exam-routes/exam-routes")
-
 
 app.use(cors());
 const path = require("path");
@@ -93,18 +89,18 @@ require("./routes/faculty-routes/services.js").services(app)
 require("./routes/faculty-routes/authRoutes.js")(app, upload, jwt);
 
 /// director routes
-app.use(directorRouter);
+app.use(require("./routes/director-routes/director-routes").router);
 app.use(require('./routes/director-routes/academic-audit-routes/routes'));
 require('./routes/director-routes/directorAuth')(app, jwt)
 
 //nss routes
-app.use(NssRouter)
+app.use(require("./routes/nss-routes/nss-routes").router)
 
 // DSD / Sports
-app.use(require('./routes/dsd-routes/dsd-routes'))
+app.use(require('./routes/dsd-routes/dsd-routes').router)
 
 // Exam 
-app.use(ExamRouter)
+app.use(require('./routes/exam-routes/exam-routes').router)
 
 //krc
 app.use(require('./routes/krc-routes/krc-routes'))

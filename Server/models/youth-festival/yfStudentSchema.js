@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const yfTable2Schema = new mongoose.Schema({
+const yfStudentSchema = new mongoose.Schema({
 
     ParticpantName: {
         type: 'string',
@@ -30,17 +30,13 @@ const yfTable2Schema = new mongoose.Schema({
         type: 'string',
         required: true
     },
-    namesOfCompetition: {
-        type: 'array',
-        required: true
-    },
     academicYear: {
         type: 'string',
         required: true
     },
     photoURL: {
         type: 'string',
-        required: true
+        required: false
     },
     college: {
         type: mongoose.Schema.Types.ObjectId,
@@ -50,4 +46,4 @@ const yfTable2Schema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('YfTable2', yfTable2Schema);
+module.exports = mongoose.model('YfStudnet', yfStudentSchema);

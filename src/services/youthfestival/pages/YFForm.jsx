@@ -16,7 +16,7 @@ import Footer from '../../../components/Footer'
 import useYouthAuth from '../../../hooks/useYouthAuth'
 import ArrowButton from '../../../components/ArrowButton'
 import YfTable1 from '../components/YfTable1'
-import YfTable2 from '../components/YfTable2'
+import YfStudents from '../components/YfStudents'
 import YFGroupTable from '../components/YFGroupTable'
 import StudentSelection from './StudentSelection'
 
@@ -39,10 +39,18 @@ const YFForm = () => {
         },
         {
             title: 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता',
-            component: <YfTable2 user={user} filterByAcademicYear={academicYear} />
-        }
+            component: <YfStudents user={user} filterByAcademicYear={academicYear} />
+        },
+        {
+            title: 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार',
+            component: <YfTable1 user={user} filterByAcademicYear={academicYear} />
+        },
+        {
+            title: 'युवक महोत्सवात सहभागी गट (Group)',
+            component: <YFGroupTable user={user} filterByAcademicYear={academicYear} />
+        },
     ]
-    const tableTitles = ["मूलभूत / सामान्य माहिती", 'युवक महोत्सवात सहभाग - स्पर्धक योग्यता', 'युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार', 'युवक महोत्सवात सहभागी गट (Group)']
+    const tableTitles = [...AQARTables.map((table) => table.title)]
 
 
     const handleNext = () => {

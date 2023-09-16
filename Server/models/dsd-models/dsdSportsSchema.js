@@ -32,7 +32,7 @@ const dsdSportsSchema = new mongoose.Schema({
     },
     Proof: {
         type: 'string',
-        required: true
+        required: false
     }
 
 }, { timestamps: true });

@@ -4,10 +4,10 @@ const path = require('path');
 const fs = require('fs');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 const YfTable1 = require('../../models/youth-festival/yfTable1Schema')
-const YfTable2 = require('../../models/youth-festival/yfTable2Schema')
+const YfStudents = require('../../models/youth-festival/yfStudentSchema')
 const YfGroup = require('../../models/youth-festival/yfGroupSchema')
 
-const models = { YfTable1, YfTable2, YfGroup }
+const models = { YfTable1, YfStudents, YfGroup }
 
 const youthUpload = multerConfig(`../uploads/youth-uploads/`)
 
@@ -56,7 +56,7 @@ function youthRoutes(app) {
     });
 
     //reset
-    app.post('/youth/editRecord/:model', youthUpload.single('photoURL'), async (req, res) => {
+    app.post('/youth/editRecord/:model', youthUpload.single('PhotoURL'), async (req, res) => {
         const model = req.params.model
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;

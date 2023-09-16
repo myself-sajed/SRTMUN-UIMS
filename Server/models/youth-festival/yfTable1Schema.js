@@ -40,7 +40,7 @@ const yfTable1Schema = new mongoose.Schema({
     },
     photoURL: {
         type: 'string',
-        required: true
+        required: false
     },
     college: {
         type: mongoose.Schema.Types.ObjectId,
