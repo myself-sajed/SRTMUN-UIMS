@@ -5,9 +5,9 @@ const fs = require('fs');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 const YfTable1 = require('../../models/youth-festival/yfTable1Schema')
 const YfStudents = require('../../models/youth-festival/yfStudentSchema')
-const YfGroup = require('../../models/youth-festival/yfGroupSchema')
+const YfCompetitions = require('../../models/youth-festival/yfCompetitionSchema')
 
-const models = { YfTable1, YfStudents, YfGroup }
+const models = { YfTable1, YfStudents }
 
 const youthUpload = multerConfig(`../uploads/youth-uploads/`)
 
@@ -111,19 +111,22 @@ function youthRoutes(app) {
             if (info) {
                 reportData.info = JSON.parse(info.info)
 
-                const Table1Students = await YfTable1.find(filter).lean()
-                const Table2Students = await YfTable2.find(filter).lean()
-                const GroupStudents = await YfTable2.find(filter).lean()
+                const students = await YfStudents.find(filter).lean().populate('competitions').exec()
+                const competitions = await YfCompetitions.find(filter).lean().populate('students').exec()
+                const sathidars = await YfTable1.find(filter).lean()
 
-                reportData.Table1Students = Table1Students
-                reportData.Table2Students = Table2Students
+                const individualComp = competitions?.filter((item) => item.isGroup === false)
+                const groupComp = competitions?.filter((item) => item.isGroup === true)
+                reportData.individualComp = individualComp;
+                reportData.groupComp = groupComp;
 
-                const totalStudents = [...Table1Students || [], ...Table2Students || []]
+                reportData.totalComp = competitions?.length;
+
                 let male = 0;
                 let female = 0;
                 let other = 0;
 
-                totalStudents.forEach((item) => {
+                students.forEach((item) => {
                     if (item?.gender === "Male") {
                         male += 1;
                     } else if (item?.gender === "Female") {
@@ -138,7 +141,11 @@ function youthRoutes(app) {
                 reportData.female = female;
                 reportData.other = other;
                 reportData.total = totalCount;
-                reportData.totalStudents = totalStudents;
+                reportData.students = students;
+                reportData.competitions = competitions;
+                reportData.sathidars = sathidars;
+
+
 
             }
             res.send({ status: 'success', data: reportData })
@@ -152,6 +159,7 @@ function youthRoutes(app) {
         const { user, academicYear } = req.body;
         const linkToNavigate = `${process.env.Report_Main_URL}/youthfestival/application-form/${user._id}/${academicYear}`
         const fileName = `${user.collegeName}-${academicYear}-ApplicationForm.pdf`
+        console.log(linkToNavigate)
 
         await pupetteerSetting({ linkToNavigate, fileName })
         res.send({ status: 'generated', fileName })

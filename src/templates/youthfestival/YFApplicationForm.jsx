@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 import InfoPage from './InfoPage'
 import ParticipantDetails from './ParticipantDetails'
 import moment from 'moment/moment'
+import Lists from '../../components/tableComponents/Lists'
 
 const YFApplicationForm = () => {
     const { collegeId, academicYear } = useParams()
@@ -25,15 +26,15 @@ const YFApplicationForm = () => {
                     <p className="academic-start"></p>
                     <div className="academic-start">
                         {
-                            (data?.data?.data?.Table2Students && data?.data?.data?.Table2Students?.length > 0)
+                            (data?.data?.data?.students && data?.data?.data?.students?.length > 0)
                                 ?
-                                data?.data?.data?.Table2Students?.map((student) => {
+                                data?.data?.data?.students?.map((student) => {
                                     return <div className='p-5 border rounded-lg academic-start mt-5'>
                                         <ParticipantDetails
                                             student={student}
                                             college={data?.data?.data?.college}
                                             academicYear={academicYear}
-                                            type="student2"
+                                            type="student"
                                         />
                                     </div>
                                 })
@@ -43,14 +44,15 @@ const YFApplicationForm = () => {
                     </div>
                     <div>
                         {
-                            (data?.data?.data?.Table1Students && data?.data?.data?.Table1Students?.length > 0)
+                            (data?.data?.data?.sathidars && data?.data?.data?.sathidars?.length > 0)
                                 ?
-                                data?.data?.data?.Table1Students?.map((student) => {
+                                data?.data?.data?.sathidars?.map((student) => {
                                     return <div className='p-5 border rounded-lg mt-5'>
                                         <ParticipantDetails title="युवक महोत्सव सहभाग -- प्रशिक्षक / वादक / साथीदार योग्यता प्रमाणपत्र"
                                             student={student}
                                             college={data?.data?.data?.college}
                                             academicYear={academicYear}
+                                            type="sathidar"
                                         />
                                     </div>
                                 })
@@ -60,6 +62,7 @@ const YFApplicationForm = () => {
                         }
                     </div>
                     <p className="academic-start"></p>
+                    <br />
                     <div>
                         <div className="text-center">
                             <p className="mt-3 text-lg font-semibold">अंतरमहाविद्यालयीन युवक महोत्सव  -- शै. वर्ष {academicYear}</p>
@@ -67,27 +70,39 @@ const YFApplicationForm = () => {
                         </div>
                         <table className='table table-bordered'>
                             <thead>
-                                <tr>
+                                <tr
+                                // className="text-sm"
+                                >
                                     <th>Sr.</th>
-                                    <th>स्पर्धकाचे नाव</th>
-                                    <th>जन्म दिनांक</th>
+                                    <td>स्पर्धकाचे नाव</td>
+                                    <td>जन्म दिनांक</td>
                                     <th>भाग घेतलेल्या स्पर्धेचे नाव</th>
+                                    {/* {
+                                        [...Lists.yfIndividual, ...Lists.yfGgroup].map((item) => {
+                                            return <td>{item}</td>
+                                        })
+                                    } */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    data?.data?.data?.totalStudents?.map((student, index) => {
+                                    data?.data?.data?.students?.map((student, index) => {
                                         return <tr>
                                             <th>{index + 1}</th>
-                                            <td>{student?.ParticpantName || student?.partnerName}</td>
+                                            <td>{student?.ParticpantName}</td>
                                             <td>{moment(student?.dob, 'YYYY-MM-DD').format('DD-MM-YYYY')}</td>
                                             <td>
                                                 <div>
-                                                    {student?.namesOfCompetition?.filter((item) => item !== "")?.map((el, i) => {
-                                                        return <p>{i + 1}. {el}</p>
+                                                    {student?.competitions?.map((el, i) => {
+                                                        return <p>{i + 1}. {el?.competitionName}</p>
                                                     })}
                                                 </div>
                                             </td>
+                                            {/* {
+                                                [...Lists.yfIndividual, ...Lists.yfGgroup].map((item) => {
+                                                    return <td className="text-sm">item</td>
+                                                })
+                                            } */}
                                         </tr>
                                     })
 
