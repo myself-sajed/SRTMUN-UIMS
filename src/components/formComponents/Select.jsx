@@ -31,7 +31,7 @@ function Select({
                 value={value || ''}
                 disabled={disable}
             >
-                <option value="">Choose</option>
+                <option selected disabled value="">Choose</option>
                 {options?.map((e) => (
                     <option key={e} value={e}>
                         {e}

@@ -191,11 +191,6 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
                 }
             })
 
-
-
-
-
-
         } else {
             if (type === 'Conference') {
                 setBookTitle('-')

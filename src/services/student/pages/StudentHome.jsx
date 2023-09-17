@@ -103,7 +103,7 @@ const StudentHome = () => {
             setValues(pri => {
                 return {
                     ...pri,
-                    ResearchGuideId: 'notUniversityFaclty'
+                    ResearchGuideId: ''
                 }
             })
             
@@ -211,7 +211,7 @@ const StudentHome = () => {
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return ['studentJRFSRF', 'studentPatents'].includes(item.name) ?
+                                        return ['studentJRFSRF'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
                                                 <div className="accordion-item bg-gray-50 ">
                                                     <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
@@ -236,6 +236,29 @@ const StudentHome = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                    })
+                                }
+                            </div>
+
+                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?<div className=''>Reserch Cenetr</div>:""}
+
+                            <div className="accordion" id="accordionExample">
+                                {
+                                    navcom.map((item, index) => {
+                                        return ['studentPatents', 'studentBooksAndChapters'].includes(item.name) ?
+                                            (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                                <div className="accordion-item bg-gray-50 ">
+                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                            {item.value}
+                                                        </button>
+                                                    </h2>
+                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <div key={item}>{item.element}</div>
+                                                        </div>
+                                                    </div>
+                                                </div> : null : null
                                     })
                                 }
                             </div>

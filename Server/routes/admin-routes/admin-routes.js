@@ -201,9 +201,9 @@ router.post('/Admin/getData', async (req, res) => {
                     console.log(err);
                 }
                 for (item of fetch) {
-                    if (item.userId !== null) {
+                    // if (item.userId !== null) {
                         filterData.push(item)
-                    }
+                    // }
                 }
                 res.status(200).send(filterData);
             });

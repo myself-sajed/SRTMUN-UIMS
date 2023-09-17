@@ -20,7 +20,7 @@ const StudentJRFSRF = () => {
 
   const user = useSelector(state => state.user.studentUser)
 
-  const params = { model, id: user?._id, module, filterConditios: { ResearchGuideId: user.ResearchGuideId } }
+  const params = { model, id: user?._id, module }
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Upload_Proof: '' }
@@ -51,7 +51,8 @@ const StudentJRFSRF = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-      addReq({ researchName: user?.name, studentId: user?._id, userId: user.ResearchGuideId }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+    user.ResearchGuideId=== ''?addReq({ researchName: user?.name, studentId: user?._id, schoolName: user.schoolName, guideName: user.ResearchGuide }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module):
+    addReq({ researchName: user?.name, studentId: user?._id, userId: user.ResearchGuideId, }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
   }
 
   return (
