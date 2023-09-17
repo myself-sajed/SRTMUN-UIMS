@@ -163,7 +163,7 @@ require('./routes/program-routes/programOperations')(app)
 // Youth Festival routes
 app.use(require('./routes/youthfestival-routes/youth-auth'))
 require('./routes/youthfestival-routes/youth-routes')(app)
-app.use(require('./routes/youthfestival-routes/compitition-routes'))
+app.use(require('./routes/youthfestival-routes/competition-routes'))
 
 
 

@@ -7,11 +7,11 @@ import useScroll from '../../../hooks/useScroll'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import { useSelector } from 'react-redux'
-import { addCompetition } from '../js/competitionHandler'
+import { addCompetition, fetchYouthData } from '../js/competitionHandler'
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Note from '../../director/reports/academic-audit/components/Note'
-import ShowIndividualCompetitions from './ShowIndividualCompetitions'
+import CompetitionList from './CompetitionList'
 
 const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
     const initialState = { competitionName: null }
@@ -19,7 +19,7 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
     const { competitionName } = compDetails
     const [selectedStudents, setSelectedStudents] = useState([])
     const [open, setOpen] = useState(false)
-    const [isLoad, setIsAdding] = useState(false)
+    const [isAdding, setIsAdding] = useState(false)
 
     useScroll()
 
@@ -31,30 +31,43 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
     const params = { model: "YfStudents", id: '', module: "youth", filter }
     const { data, isLoading, isError, error, refetch } = useQuery("YfStudents", () => getReq(params))
 
+    const key = `${filterByAcademicYear}-${user?._id}-${isGroup}`
+    const param = { model: "YFCompetitions", filter: { academicYear: filterByAcademicYear, college: user?._id, isGroup } }
+    const { data: compData, isLoading: isCompLoading, refetch: compRefetch } = useQuery(key, () => fetchYouthData(param))
+
+    const [compId, setCompId] = useState(null)
+    const [edit, setEdit] = useState(null)
+
     useEffect(() => {
         if (competitionName) {
             setOpen(true)
         } else {
             setOpen(false)
+
         }
     }, [competitionName])
 
-    const onSubmit = (e) => {
+    const refresh = () => { compRefetch(); refetch(); setCompId(null); setEdit(false) }
+    const onSubmit = (e, isEdit, alreadySelectedStudents) => {
         e.preventDefault()
-        addCompetition({ college: user, selectedStudents, competitionName, academicYear: filterByAcademicYear, isGroup, clearFunction: clearState })
+        console.log(isEdit, alreadySelectedStudents)
+        addCompetition({ college: user, selectedStudents, competitionName, academicYear: filterByAcademicYear, isGroup, clearFunction: clearState, refetch: refresh, setIsLoading: setIsAdding, isEdit, alreadySelectedStudents, edit, compId })
+
     }
 
     const clearState = () => {
         setCompDetails(initialState)
         setSelectedStudents([])
+        setCompId(null)
+        setEdit(false)
     }
 
 
     return (
         <div>
 
-            <div className="grid grid-cols-3 gap-3 mt-4">
-                <div className="col-span-2 border rounded-md p-3">
+            <div className="grid grid-cols-4 gap-3 mt-4">
+                <div className="col-span-3 border rounded-md p-3">
                     <p className="text-center pb-2 border-b flex items-center justify-center gap-2 text-blue-700 font-bold"> {isGroup ? <><GroupsRoundedIcon />स्पर्धेत गट सहभागासाठी विद्यार्थी व्यवस्थापन</> : <><PersonRoundedIcon />स्पर्धेत वैयक्तिक सहभागासाठी विद्यार्थी व्यवस्थापन</>}  </p>
 
                     {
@@ -66,7 +79,7 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
                     </div>
 
                     <div className='mt-3'>
-                        <ShowIndividualCompetitions />
+                        <CompetitionList setCompId={setCompId} setEdit={setEdit} isGroup={isGroup} isLoading={isCompLoading} data={compData?.data?.data} setCompDetails={setCompDetails} refetch={refresh} />
                     </div>
 
                 </div>
@@ -75,7 +88,7 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
                 </div>
             </div>
 
-            <SelectStudents setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={data?.data} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} />
+            {competitionName && <SelectStudents filterByAcademicYear={filterByAcademicYear} user={user} isGroup={isGroup} setSelectedStudents={setSelectedStudents} selectedStudents={selectedStudents} students={data?.data} isModalOpen={open} setIsModalOpen={setOpen} compDetails={compDetails} setCompDetails={setCompDetails} onSubmit={onSubmit} onCancel={clearState} isLoading={isAdding} edit={edit} compId={compId} />}
         </div>
     )
 }

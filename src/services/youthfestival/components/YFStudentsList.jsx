@@ -31,7 +31,7 @@ const StudentInfo = ({ student }) => {
                 {student?.ParticpantName}
             </p>
             <p className="text-sm text-gray-500 truncate">
-                <span className="text-medium"><b>{student?.competitions?.length ? student?.competitions?.length : 0}</b> मध्ये भाग घेतला</span>
+                <span className={student?.competitions?.length === 4 ? `text-red-600 text-medium` : `text-medium text-green-700`}><b>{student?.competitions?.length ? student?.competitions?.length : 0}</b> मध्ये भाग घेतला</span>
             </p>
         </div>
     </div>
