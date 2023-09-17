@@ -63,11 +63,12 @@ const ParentFeedback = require('../models/feedback-models/parentFeedbackModel')
 const EmployerFeedback = require('../models/feedback-models/employerFeedbackModel');
 const StudentUser = require('../models/student-models/studentUserSchema');
 const YFCollegeSubmit = require('../models/youth-festival/yfSubmitted')
+const YFCompetitions = require('../models/youth-festival/yfCompetitionSchema')
 
 let models = {
     User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience,
     DirectorUser, Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey,
-    Alumni, Student, AlumniContribution, StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback, YFCollegeSubmit
+    Alumni, Student, AlumniContribution, StudentFeedback, TeacherFeedback, AlumniFeedback, ParentFeedback, EmployerFeedback, YFCollegeSubmit, YFCompetitions
 }
 
 function feedback(app) {

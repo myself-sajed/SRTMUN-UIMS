@@ -5,11 +5,11 @@ const yfCompetitionSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    students: {
+    students: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "yfstudents",
+        ref: "yfstudent",
         required: true
-    },
+    }],
     isGroup: {
         type: Boolean,
         default: true,

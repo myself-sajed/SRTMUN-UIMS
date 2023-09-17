@@ -134,14 +134,17 @@ const YFForm = () => {
 
                 {
                     activeStep === 3 && <div>
-                        <p className="my-5 text-center">For Groups</p>
-                        <SaveButton title={`Save and Submit Form`} onClickFunction={() => {
-                            if (academicYear) {
-                                handleFormSubmit();
-                            } else {
-                                toast.error('Select AQAR Year before you proceed.')
-                            }
-                        }} />
+                        <StudentSelection filterByAcademicYear={academicYear} isGroup={true} />
+                        <div className="mt-4">
+
+                            <SaveButton title={`Save and Submit Form`} onClickFunction={() => {
+                                if (academicYear) {
+                                    handleFormSubmit();
+                                } else {
+                                    toast.error('Select AQAR Year before you proceed.')
+                                }
+                            }} />
+                        </div>
                     </div>
                 }
 
