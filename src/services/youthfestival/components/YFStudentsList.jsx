@@ -3,7 +3,7 @@ import serverLinks from '../../../js/serverLinks'
 
 const YFStudentsList = ({ students }) => {
     return (
-        <div className='border rounded-md p-3'>
+        <div>
             <p className="text-muted text-sm">सर्व विद्यार्थी</p>
             <ul className="max-w-md mt-3">
                 {
