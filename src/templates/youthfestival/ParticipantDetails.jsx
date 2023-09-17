@@ -2,7 +2,7 @@ import React from 'react'
 import { YFOfficeWork } from './InfoPage'
 import serverLinks from '../../js/serverLinks'
 
-const ParticipantDetails = ({ title = "युवक महोत्सव सहभाग -- स्पर्धक योग्यता प्रमाणपत्र", student, type = "student1", college, academicYear }) => {
+const ParticipantDetails = ({ title = "युवक महोत्सव सहभाग -- स्पर्धक योग्यता प्रमाणपत्र", student, type = "student", college, academicYear }) => {
 
     const details = [
         {
@@ -11,7 +11,7 @@ const ParticipantDetails = ({ title = "युवक महोत्सव सह
         },
         {
             title: "स्पर्धकाचे नाव",
-            value: [type === "student2" ? student?.ParticpantName : student?.partnerName]
+            value: [type === "student" ? student?.ParticpantName : student?.partnerName]
         },
         {
             title: "कायमचा पत्ता",
@@ -30,7 +30,7 @@ const ParticipantDetails = ({ title = "युवक महोत्सव सह
             value: student?.dob
         },
         {
-            title: "१ जुलै २०२३ रोजी स्पर्धकांचे वय",
+            title: "१ जुलै २०२३ रोजी स्पर्धकाचे वय",
             value: student?.age
         },
         {
@@ -41,11 +41,15 @@ const ParticipantDetails = ({ title = "युवक महोत्सव सह
             title: "भाग घेतलेल्या स्पर्धेचे नाव",
             value: <div>
                 {
-                    student?.namesOfCompetition.filter((item) => item !== "").map((element, index) => {
-                        return <p className="font-medium">{index + 1}. {element}</p>
+                    student?.[type === 'student' ? 'competitions' : 'namesOfCompetition']?.map((element, index) => {
+                        return <p className="font-medium">{index + 1}. {type === 'student' ? element?.competitionName : element}</p>
                     })
                 }
             </div>
+        },
+        {
+            title: "स्पर्धकाची सही",
+            value: <p className="mt-5 tracking-tighter">- - - - - - - - - - - - - - - -</p>
         },
     ]
 
@@ -72,11 +76,16 @@ const ParticipantDetails = ({ title = "युवक महोत्सव सह
             </div>
 
             <br />
+            <p className='px-10'>माझ्या माहितीप्रमाणे वरील स्पर्धकाची माहिती बरोबर आहे. </p>
+
             <br />
             <br />
             <br />
             <br />
-            <br />
+            <div className='flex items-start justify-evenly gap-10'>
+                <p className='mr-10'>सांस्कृतिक विभागप्रमुख  </p>
+                <p className='ml-10'>प्राचार्याची सही व शिक्का</p>
+            </div>
             <br />
             <hr className="w-[80%] h-3 mx-auto my-4 bg-gray-800 border-0 rounded md:my-10" />
             <br />

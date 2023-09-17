@@ -12,6 +12,9 @@ import { IconButton } from '@mui/material'
 const CompetitionList = ({ setCompId, setEdit, isGroup, isLoading, data, setCompDetails, refetch }) => {
     const thead = ["स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "वय", "रक्त गट"]
     const accessor = ['ParticpantName', 'permentAddress', 'mobileNo', 'gender', 'dob', 'age', 'bloodGroup']
+    const groupMaximumParticipationsList = {
+
+    }
 
     const editItem = (item) => {
         if (!isGroup) {
