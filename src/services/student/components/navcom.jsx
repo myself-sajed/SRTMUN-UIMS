@@ -16,6 +16,7 @@ import AlumniBusiness from '../pages/AlumniBusiness';
 import AlumniJobs from '../pages/AlumniJobs';
 import AlumniContribution from '../pages/AlumniContribution';
 import StudentPatents from '../pages/StudentPatents';
+import SrtudentBooksAndChapters from '../pages/SrtudentBooksAndChapters';
 
 const PhDStudent = [
     {
@@ -35,6 +36,12 @@ const PhDStudent = [
         icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
         name: 'studentPatents',
         value: 'Patents',
+    },
+    {
+        element: <SrtudentBooksAndChapters />,
+        icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
+        name: 'studentBooksAndChapters',
+        value: 'Books and Chapters published and papers in national/international conference proceedings',
     },
     {
         element: <AlumniHE />,

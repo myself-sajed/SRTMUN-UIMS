@@ -6,6 +6,8 @@ const multer = require('multer');
 const StudentUser = require('../../models/student-models/studentUserSchema');
 const User = require('../../models/faculty-models/userModel');
 const JrfSrf = require('../../models/faculty-models/jrfsrf');
+const Patent = require('../../models/faculty-models/patent');
+const BooksAndChapters = require('../../models/faculty-models/booksAndChapters');
 const StudentQualification = require('../../models/student-models/studentQualificationSchema')
 const path = require('path');
 
@@ -34,16 +36,16 @@ const facultystorage = multer.diskStorage({
 const facultyupload = multer({ storage: facultystorage })
 
 
-let models = { StudentUser, User, JrfSrf, StudentQualification }
+let models = { StudentUser, User, JrfSrf, Patent, BooksAndChapters, StudentQualification }
 
 
-//Get Route  faculty jrfsrf 
+//Get Route  faculty jrfsrf patent
 router.post('/studentF/getData', async (req, res) => {
 
     const { model, id, filterConditios } = req.body
     
     try {
-        const fetch = await models[model].find({ studentId: id, userId: filterConditios?.ResearchGuideId })
+        const fetch = await models[model].find({ studentId: id })
         res.status(200).send(fetch);
     } catch (err) {
         console.log(err);
@@ -51,7 +53,7 @@ router.post('/studentF/getData', async (req, res) => {
     }
 })
 
-//Create Route faculty jrfsrf
+//Create Route faculty jrfsrf patent
 router.post('/studentF/newRecord/:model', facultyupload.single("Upload_Proof"),async (req, res) => {
     try{
         const model = req.params.model
@@ -69,7 +71,7 @@ router.post('/studentF/newRecord/:model', facultyupload.single("Upload_Proof"),a
     }     
 })
 
-//Edit Route faculty jrfsrf
+//Edit Route faculty jrfsrf patent
 router.post('/studentF/editRecord/:model', facultyupload.single("Upload_Proof"),async (req, res) => {
     try{
         const model = req.params.model
@@ -89,7 +91,7 @@ router.post('/studentF/editRecord/:model', facultyupload.single("Upload_Proof"),
     }     
 })
 
-//Delete Route faculty jrfsrf
+//Delete Route faculty jrfsrf patent
 router.post('/studentF/deleteRecord', async (req, res) => {
     const { model, id } = req.body
     try {

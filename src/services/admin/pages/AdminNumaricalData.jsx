@@ -160,7 +160,7 @@ const AdminNumaricalData = () => {
     ProjectsInternships: 'Projects Internships',
     SkillsEnhancementInitiatives: 'Skills Enhancement Initiatives',
     SyllabusRevision: 'Syllabus Revision',
-    ValueAddedCource: 'Value Added Cource',
+    ValueAddedCource: 'Value Added Course',
     ResearchMethodologyWorkshops: 'Research Methodology Workshops',
     MoUs: 'MoUs',
     StudentFeedback: "Student Feedback", AlumniFeedback: "Alumni Feedback", TeacherFeedback: "Teacher Feedback", ParentFeedback: "Parent Feedback", EmployerFeedback: "Employer Feedback", ExpertFeedback: "Expert Feedback",
