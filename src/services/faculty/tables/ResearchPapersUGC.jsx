@@ -275,3 +275,5 @@ const IndexLink = ({ placeholder, id, indexLinkData, setIndexLinkData, indexData
         }} placeholder={placeholder} disabled={!indexData.includes(id)} />
     </div>
 }
+
+export {FormCheck, IndexLink}

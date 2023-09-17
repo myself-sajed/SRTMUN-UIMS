@@ -8,6 +8,8 @@ const User = require('../../models/faculty-models/userModel');
 const JrfSrf = require('../../models/faculty-models/jrfsrf');
 const Patent = require('../../models/faculty-models/patent');
 const BooksAndChapters = require('../../models/faculty-models/booksAndChapters');
+const ResearchProjects = require('../../models/faculty-models/researchProjects');
+const ResearchPapers = require('../../models/faculty-models/researchPapers');
 const StudentQualification = require('../../models/student-models/studentQualificationSchema')
 const path = require('path');
 
@@ -36,7 +38,7 @@ const facultystorage = multer.diskStorage({
 const facultyupload = multer({ storage: facultystorage })
 
 
-let models = { StudentUser, User, JrfSrf, Patent, BooksAndChapters, StudentQualification }
+let models = { StudentUser, User, JrfSrf, Patent, BooksAndChapters, ResearchProjects, ResearchPapers, StudentQualification }
 
 
 //Get Route  faculty jrfsrf patent

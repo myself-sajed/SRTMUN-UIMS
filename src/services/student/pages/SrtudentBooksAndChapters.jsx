@@ -77,8 +77,8 @@ const SrtudentBooksAndChapters = () => {
     const onSubmit = (e) => {
       e.preventDefault();
       edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-      user.ResearchGuideId=== ''?addReq({ patenterName: user?.name, studentId: user?._id, schoolName: user.schoolName, guideName: user.ResearchGuide }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module):
-      addReq({ patenterName: user?.name, studentId: user?._id, userId: user.ResearchGuideId, }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+      user.ResearchGuideId=== ''?addReq({ studentId: user?._id, schoolName: user.schoolName, guideName: user.ResearchGuide }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module):
+      addReq({ studentId: user?._id, userId: user.ResearchGuideId, }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
     //{ type, titleOfBook, chapterTitle, paperTitle, transType, titleOfProceeding, conName, isNat, publicationYear, issnNumber, aff,publisherName, year }
     return (

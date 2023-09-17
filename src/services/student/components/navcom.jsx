@@ -17,6 +17,8 @@ import AlumniJobs from '../pages/AlumniJobs';
 import AlumniContribution from '../pages/AlumniContribution';
 import StudentPatents from '../pages/StudentPatents';
 import SrtudentBooksAndChapters from '../pages/SrtudentBooksAndChapters';
+import StudentResearchProjects from '../pages/StudentResearchProjects';
+import StudentResearchPapers from '../pages/StudentResearchPapers';
 
 const PhDStudent = [
     {
@@ -42,6 +44,18 @@ const PhDStudent = [
         icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
         name: 'studentBooksAndChapters',
         value: 'Books and Chapters published and papers in national/international conference proceedings',
+    },
+    {
+        element: <StudentResearchProjects />,
+        icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
+        name: 'studentResearchProjects',
+        value: 'Research Projects',
+    },
+    {
+        element: <StudentResearchPapers />,
+        icon: <PersonSearchRoundedIcon style={{ fontSize: '20px', color: "#1E3A8A" }} />,
+        name: 'studentResearchPapers',
+        value: 'Research Papers in the Journals notified by UGC',
     },
     {
         element: <AlumniHE />,

@@ -70,9 +70,21 @@ const researchProjectSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    studentId:{
+        type: 'string',
+        required: false,
+    },
+    schoolName: {
+        type: 'string',
+        required: false
+    },
+    guideName: {
+        type: 'string',
+        required: false
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: "users"
     }
 

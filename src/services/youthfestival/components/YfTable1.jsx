@@ -30,7 +30,7 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
   const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
-    nameOfCollege: "", partnerType: "", partnerName: "", permentAddress: "", gender: "", mobileNo: "", dob: "", bloodGroup: "", namesOfCompetition: [], academicYear: "",
+    nameOfCollege: "", partnerType: "", partnerName: "", permentAddress: "", gender: "", mobileNo: "", dob: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
   }
   const [values, setValues] = useState(initialstate)
   const { partnerType, partnerName, permentAddress, mobileNo, gender, dob, bloodGroup, academicYear, } = values
@@ -57,7 +57,7 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
           setEdit(true); setOpen(true);
           setValues({ nameOfCollege, partnerName, partnerType, permentAddress, mobileNo, dob, gender, bloodGroup, academicYear, })
           setValues2({ namesOfCompetition: namesOfCompetition.filter((item) => item !== "") })
-          setPhotoURL2(item?.PhotoURL)
+          setPhotoURL2(item?.photoURL)
 
         }
       })
@@ -109,7 +109,7 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
           <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={["Male", "Female", "Other"]} />
           <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label={tableHead.dob} setState={setValues} />
           <Select className='col-md-6 col-lg-4' id="bloodGroup" value={bloodGroup} label={tableHead.bloodGroup} setState={setValues} options={Lists.bloodGr} />
-          <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
+          {!filterByAcademicYear && <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />}
         </div>
       </DialogBox>
 
@@ -117,7 +117,7 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
 
       <BulkExcel data={data?.data} sampleFile="युवक महोत्सवात सहभागी प्रशिक्षक / वादक / साथीदार" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
 
-      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} propic="PhotoURL" />
+      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} propic="photoURL" />
     </>
   )
 

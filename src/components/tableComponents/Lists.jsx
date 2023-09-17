@@ -8,6 +8,8 @@ const Lists = {
   bookChapConfIsNat: ["National", "International"],
   bookCapType: ["Book", "Chapter", "Editor", "Translator", "Conference",],
   bookCapTranswork: ["Research Paper / Chapter","Book"],
+  reserchProjectIsGov: ["Government", "Non-Government"],
+  reserchProjectStatus: ["Completed", "Ongoing"],
   
   statesInIndia: {
     "Andhra Pradesh": [

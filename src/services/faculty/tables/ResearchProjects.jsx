@@ -125,8 +125,6 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
 
         handleEditWithFile(formData, 'ResearchProject', setEditModal, refetch, setLoading, setIsFormOpen)
-
-
     }
 
 

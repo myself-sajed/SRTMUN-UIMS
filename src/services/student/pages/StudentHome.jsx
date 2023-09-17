@@ -67,6 +67,8 @@ const StudentHome = () => {
     const [values, setValues] = useState(initialstate);
     const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn, isGideListed } = values
 
+   const researchCenter = ['studentPatents', 'studentBooksAndChapters', 'studentResearchProjects', 'studentResearchPapers']
+
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
         dispatch(isAlumniLink ? setAlumniUser(userrefetch?.data[0]) : setStudentUser(userrefetch?.data[0]))
@@ -211,8 +213,9 @@ const StudentHome = () => {
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return ['studentJRFSRF'].includes(item.name) ?
+                                        return [...researchCenter, 'studentJRFSRF'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                                researchCenter.includes(item.name) ?null:
                                                 <div className="accordion-item bg-gray-50 ">
                                                     <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
@@ -240,12 +243,12 @@ const StudentHome = () => {
                                 }
                             </div>
 
-                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?<div className=''>Reserch Cenetr</div>:""}
+                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?<div className='pt-3 pb-2 pl-2 font-semibold text-lg'>Research Center</div>:""}
 
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return ['studentPatents', 'studentBooksAndChapters'].includes(item.name) ?
+                                        return researchCenter.includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
                                                 <div className="accordion-item bg-gray-50 ">
                                                     <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
