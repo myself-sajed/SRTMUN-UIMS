@@ -65,7 +65,7 @@ const StudentHome = () => {
     const [programDuration, setProgramDuration] = useState(null)
     const [openCroper, setOpenCroper] = useState(false)
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn, isGideListed } = values
+    const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn, isGideListed, otherGuide } = values
 
     const researchCenter = ['studentPatents',
         'studentBooksAndChapters',
@@ -80,7 +80,7 @@ const StudentHome = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit, uploadProof }, "", initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        editReq({ id: itemToEdit, uploadProof }, "", initialstate, { ...values, ResearchGuide: ResearchGuide === 'Other' ? otherGuide : ResearchGuide }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
     }
 
     const onCancel = () => {
@@ -353,7 +353,7 @@ const StudentHome = () => {
 
                         <Text className='col-md-2' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
 
-                        {!isAlumniLink && <Text className='col-md-2' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />}
+                        {/* {!isAlumniLink && <Text className='col-md-2' type="number" id="abcNo" value={abcNo} label="ABC ID" setState={setValues} />} */}
 
 
 
@@ -368,16 +368,13 @@ const StudentHome = () => {
                         }
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
 
+                            <Select className='col-md-6 col-lg-3' options={guides ?
+                                [...new Set([...guides, ResearchGuide, "Other"])]
+                                : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
 
                             {
-                                isGideListed ? <Text className='col-md-6 col-lg-3' id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} /> : <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
+                                ResearchGuide === "Other" && <Text className='col-md-6 col-lg-3' id="otherGuide" value={otherGuide} label="Name of the Research Guide" setState={setValues} />
                             }
-                            <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
-                                <div className="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
-                                    <input className="form-check-input" checked={isGideListed} onChange={() => { setValues((pri) => { return { ...pri, 'isGideListed': !pri.isGideListed, ResearchGuide: "", } }) }} type="checkbox" role="switch" id="checkbox" />
-                                    <label className="form-check-label" htmlFor="checkbox">Research Guide not Listed?</label>
-                                </div>
-                            </div>
                             <Text className='col-md-2' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Text className='col-md-7' type='text' id="Title" value={Title} label="Title" setState={setValues} />
                             <Select className='col-md-6 col-lg-4' options={["Yes", "No"]} id="ReceivesFelloship" value={ReceivesFelloship} label="Receives any Fellowship?" setState={setValues} />

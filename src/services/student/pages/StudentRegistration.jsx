@@ -96,24 +96,19 @@ const StudentRegistration = () => {
         e.preventDefault()
 
         // check if file is selected
-        if (file) {
-            setLoading(true)
-            // check if username already exists
-            Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
-                if (res.data.status === 'taken') {
-                    toast.error(res.data.message)
-                    setLoading(false)
-                    return
-                }
-                else {
-                    sendOTP()
-                }
-            })
-        } else {
-            setLoading(false)
-            toast.error('Please select a photo')
-            return
-        }
+        setLoading(true)
+        // check if username already exists
+        Axios.post(`${process.env.REACT_APP_MAIN_URL}/service/student-checkAndEmail`, { email }).then(function (res) {
+            if (res.data.status === 'taken') {
+                toast.error(res.data.message)
+                setLoading(false)
+                return
+            }
+            else {
+                sendOTP()
+            }
+        })
+
     }
 
     useEffect(() => {
@@ -306,8 +301,8 @@ const StudentRegistration = () => {
 
 
                                                 }
-                                                <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-100 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Required)*</p>
-                                                <div className='text-xs text-muted text-center my-2'>Photo size should be less than 10MB</div>
+                                                <p htmlFor='avatar' className="text-blue-800 text-center cursor-pointer hover:text-blue-900 p-2 bg-blue-200 rounded-xl my-2 hover:bg-blue-100 duration-200 ease-in-out col-sm-6 mx-auto" onClick={handleAvatar} >Choose Photo (Optional)</p>
+                                                <div className='text-xs text-muted text-center my-2'>If chosen, photo size should be less than 10MB</div>
                                             </div>
                                             <ProfileCroper open={open} setOpen={setOpen} file={file} setFile={setFile} setAvatar={setAvatar} />
 
@@ -326,9 +321,9 @@ const StudentRegistration = () => {
 
                                                             <Text className='col-md-12 mt-2' type='number' id="mobile" value={mobile} setState={setValues} label="Mobile Number" placeholder='Enter your Mobile Number (WhatsApp)' inputclassName="py-3" />
 
-                                                            {
+                                                            {/* {
                                                                 !isAlumniLink && <Text className='col-md-12 mt-2' type='number' id="abcNo" value={abcNo} setState={setValues} label="Academic Bank Credit ID" placeholder='Academic Bank Credit (ABC) ID' inputclassName="py-3" />
-                                                            }
+                                                            } */}
 
 
                                                         </div>

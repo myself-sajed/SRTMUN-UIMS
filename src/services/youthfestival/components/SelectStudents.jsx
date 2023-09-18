@@ -71,7 +71,7 @@ const SelectStudents = ({ isLoading, isModalOpen, setIsModalOpen, compDetails, s
 
     return (
         <div>
-            <DialogBox loading={isLoading} title={compDetails?.competitionName ? `${compDetails?.competitionName}साठीचे विद्यार्थी निवडा ` : ''} buttonName="Submit" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onClickFunction={submitFunction} onCancel={onCancel} maxWidth="sm">
+            <DialogBox loading={isLoading} title={compDetails?.competitionName ? `${compDetails?.competitionName}साठीचे विद्यार्थी निवडा ` : ''} buttonName="Submit" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onClickFunction={submitFunction} onCancel={onCancel} maxWidth="lg">
 
                 {
                     filteredStudents?.length > 0 ? <div>
@@ -79,24 +79,24 @@ const SelectStudents = ({ isLoading, isModalOpen, setIsModalOpen, compDetails, s
                         <div className="mb-2 p-2 mt-2 border rounded-md">
                             <p>{compDetails?.competitionName}साठी निवडलेल्या विद्यार्थ्यांची संख्या : <span className="mx-1 font-bold">{selectedStudents?.length ? selectedStudents.length : 0}</span></p>
                         </div>
-                        <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg ">
+                        <div className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg grid grid-cols-4 ">
 
                             {
                                 filteredStudents?.map((student, i) => {
-                                    return <li class={`w-full ${i !== students?.length - 1 && "border-b"} border-gray-200 rounded-t-lg p-2`}>
+                                    return <div class={`w-full ${i !== students?.length - 1 && "border-b"} border-gray-200 rounded-t-lg p-2`}>
                                         <div class="flex items-center gap-3">
                                             <input checked={selectedStudents.includes(student?._id)} onChange={() => handleCheckboxChange(student?._id)} id={student?._id} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
-                                            <label className="cursor-pointer" htmlFor={student?._id}>
+                                            <label className="cursor-pointer truncate" htmlFor={student?._id}>
                                                 <StudentInfo student={student} />
                                             </label>
                                         </div>
-                                    </li>
+                                    </div>
                                 })
                             }
 
 
 
-                        </ul>
+                        </div>
                     </div> : <div className="my-5">
                         <Note title="प्रत्येक विद्यार्थी जास्तीत जास्त 4 स्पर्धांमध्ये भाग घेऊ शकतो, आणि या महाविद्यालयातील प्रत्येक नोंदणीकृत विद्यार्थ्याने 4 स्पर्धांमध्ये भाग घेतला आहे, त्यामुळे या स्पर्धेत सहभागी होण्यासाठी कोणताही विद्यार्थी येथे दिसणार नाही." />
                     </div>

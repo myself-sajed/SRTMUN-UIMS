@@ -108,6 +108,48 @@ router.post('/youthfestival/get/student/select', async (req, res) => {
     res.send({ status: 'success', data: docs })
 })
 
+router.post('/youthfestival/delete/student', async (req, res) => {
+    const { studentId } = req.body;
+    const student = await YfStudent({ _id: studentId })
+    if (student) {
+        const competitions = student.competitions
+
+        try {
+            const updatePromises = competitions.map(async (compId) => {
+                const competition = await YfCompetition.findById({ _id: compId });
+
+                if (!competition) {
+                    console.error(`Competition with ID ${compId} not found.`);
+                    return null;
+                }
+
+                // Remove the competitionId from the student's competitions array
+                competition.students = competition.students.filter((id) => id.toString() !== studentId.toString());
+
+                // Save the updated student document
+                return competition.save();
+            });
+
+            const updatedCompetition = await Promise.all(updatePromises);
+
+            // Handle errors or null values in updatedStudents as needed
+            const errors = updatedCompetition.filter((updatedStudent) => updatedStudent === null);
+            if (errors.length > 0) {
+                console.error(`There were ${errors.length} errors when updating students.`);
+            }
+            await student.delete()
+            res.send({ status: 'success' })
+        } catch (error) {
+            console.error(error);
+            throw error; // You can handle the error as needed
+        }
+
+
+    } else {
+        res.send({ status: 'error' })
+    }
+})
+
 
 module.exports = router;
 

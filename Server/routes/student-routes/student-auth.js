@@ -99,7 +99,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             }
             const user = new StudentUser({
                 mobile, salutation, name: capitalizeText(name), schoolName, programGraduated, password, gender,
-                email: email.toLowerCase(), photoURL: req.file.filename,
+                email: email.toLowerCase(), photoURL: req?.file?.filename || (gender === 'Male' ? 'male.jpg' : 'female.jpg'),
                 abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: true, isAlumni: false
             })
             await user.save();
@@ -112,7 +112,7 @@ router.post("/api/auth/student-register", StudentUpload.single("file"), async (r
             if (isMatch) {
                 const user = new StudentUser({
                     mobile, salutation, name: capitalizeText(name), schoolName, programGraduated, password, gender,
-                    email: email.toLowerCase(), photoURL: req.file.filename,
+                    email: email.toLowerCase(), photoURL: req?.file?.filename || (gender === 'Male' ? 'male.jpg' : 'female.jpg'),
                     abcNo, currentIn, country, cast, religion, programEnroledOn, isActiveStudent: true, isCreatedByDirector: false, isAlumni: JSON.parse(isAlumni), programCompletedOn
                 });
                 await user.save();

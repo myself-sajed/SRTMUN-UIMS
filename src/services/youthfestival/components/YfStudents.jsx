@@ -15,6 +15,7 @@ import serverLinks from '../../../js/serverLinks'
 import handleAvatarChange from '../../../js/handleAvatar'
 import Select from '../../../components/formComponents/Select'
 import Lists from '../../../components/tableComponents/Lists'
+import { deleteStudent } from '../js/competitionHandler'
 
 
 const tableHead = { index: "क्रमांक", propic: "परिचय चित्र", ParticpantName: "स्पर्धकाचे नाव ", permentAddress: "कायमचा पत्ता", mobileNo: "भ्रमणध्वनी क्रमांक", gender: "लिंग", dob: "जन्म दिनांक", age: "१ जुलै २०२३ रोजी स्पर्धकांचे वय", bloodGroup: "रक्त गट", academicYear: "शैक्षणिक वर्ष", Action: "क्रिया" }
@@ -108,8 +109,6 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
           </div>
 
           <Text className='col-md-6 col-lg-4' id="ParticpantName" value={ParticpantName} label={tableHead.ParticpantName} setState={setValues} />
-          {/* <MultiSelectWithLimit className='col-md-8 col-lg-6' id="namesOfCompetition" label={tableHead.namesOfCompetition} setState={setValues2} value={namesOfCompetition} options={[{ value: "शास्त्रीय गायन" }, { value: "शास्त्रीय तालवाद्य" }, { value: "शास्त्रीय सुरवाद्य" }, { value: "सुगम गायन - भारतीय" }, { value: "सुगम गायन - पाश्चात्य" }, { value: "शास्त्रीय नृत्य" }, { value: "नक्कल" }, { value: "वक्तृत्व" }, { value: "चित्रकला" }, { value: "कोलाज" }, { value: "पोस्टर पेंटिंग" }, { value: "मृदमूर्तिकला" }, { value: "व्यंग्यचित्रकाला" }, { value: "रांगोळी" }, { value: "स्थळ छायाचित्रण" },]} limit={4} /> */}
-
           <Text className='col-md-6 col-lg-4' id="permentAddress" value={permentAddress} label={tableHead.permentAddress} setState={setValues} />
           <Text className='col-md-6 col-lg-4' type="number" id="mobileNo" value={mobileNo} label={tableHead.mobileNo} setState={setValues} />
           <Select className="col-md-3" id="gender" value={gender} label={tableHead.gender} setState={setValues} options={Lists.gender} />
@@ -124,7 +123,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
 
       <BulkExcel data={data?.data} sampleFile="युवक महोत्सवात सहभाग - स्पर्धक योग्यता" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
 
-      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} propic="photoURL" />
+      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} propic="photoURL" customDelete={deleteStudent} />
     </>
   )
 

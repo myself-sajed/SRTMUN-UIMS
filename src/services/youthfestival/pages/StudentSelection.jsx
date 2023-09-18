@@ -66,8 +66,8 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
     return (
         <div>
 
-            <div className="grid grid-cols-4 gap-3 mt-4 h-[25rem]">
-                <div className="col-span-3 border rounded-md p-3 overflow-auto">
+            <div className="grid grid-cols-4 gap-3 mt-4 h-[30rem]">
+                <div className="border rounded-md p-3 overflow-auto">
                     <p className="text-center pb-2 border-b flex items-center justify-center gap-2 text-blue-700 font-bold"> {isGroup ? <><GroupsRoundedIcon />स्पर्धेत गट सहभागासाठी विद्यार्थी व्यवस्थापन</> : <><PersonRoundedIcon />स्पर्धेत वैयक्तिक सहभागासाठी विद्यार्थी व्यवस्थापन</>}  </p>
 
                     {
@@ -75,12 +75,12 @@ const StudentSelection = ({ filterByAcademicYear, isGroup = false }) => {
                     }
 
                     <div className='mt-3'>
-                        <Select className="col-md-5" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={isGroup ? Lists.yfGgroup : Lists.yfIndividual} />
+                        <Select className="col-md-8" id="competitionName" value={competitionName} label="स्पर्धेचे नाव निवडा" setState={setCompDetails} options={isGroup ? Lists.yfGgroup : Lists.yfIndividual} />
                     </div>
 
 
                 </div>
-                <div className='border rounded-md p-3 overflow-auto'>
+                <div className='col-span-3 border rounded-md p-3 overflow-auto'>
                     <YFStudentsList students={data?.data} />
                 </div>
             </div>

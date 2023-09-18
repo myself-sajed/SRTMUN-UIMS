@@ -5,15 +5,15 @@ const YFStudentsList = ({ students }) => {
     return (
         <div>
             <p className="text-muted text-sm">सर्व विद्यार्थी</p>
-            <ul className="max-w-md mt-3">
+            <div className="grid grid-cols-4 mt-3">
                 {
                     students?.map((student) => {
-                        return <li className="p-2 m-2 sm:pb-4 bg-blue-50 rounded-md">
+                        return <div className="p-2 m-2 sm:pb-4 bg-blue-50 rounded-md">
                             <StudentInfo student={student} />
-                        </li>
+                        </div>
                     })
                 }
-            </ul>
+            </div>
         </div>
     )
 }

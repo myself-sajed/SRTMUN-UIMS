@@ -49,8 +49,8 @@ function TableComponent(props) {
                                             })
                                         }
 
-                                        {tableKeys.includes("Upload_Proof")||tableKeys.includes("Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
-                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} CheckBox={props.CheckBox} checkedData={props.checkedData} setCheckedData={props.setCheckedData} />
+                                        {tableKeys.includes("Upload_Proof") || tableKeys.includes("Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
+                                        <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} CheckBox={props.CheckBox} checkedData={props.checkedData} setCheckedData={props.setCheckedData} customDelete={props.customDelete} />
                                     </TableRow>
                                 ))
                             }
