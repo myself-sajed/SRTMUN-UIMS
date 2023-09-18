@@ -19,7 +19,7 @@ const excelReq = (valuesNC, path, initialstate, values, setState, refetch, setOp
     .then((res) => {
       const status = res.status;
       if (!status) {
-        toast.error("Entry Faild!");
+        toast.error("Entry Failed!");
       } else if (status === 201) {
         toast.success(res.data);
         refetch();
@@ -29,6 +29,7 @@ const excelReq = (valuesNC, path, initialstate, values, setState, refetch, setOp
       } else if (status === 500) {
         toast.error(res.data);
         setLoading(false);
+        refetch();
       } else {
         toast.error("Something wrong");
       }
