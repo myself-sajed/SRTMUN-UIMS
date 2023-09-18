@@ -369,7 +369,7 @@ const StudentHome = () => {
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
 
                             <Select className='col-md-6 col-lg-3' options={guides ?
-                                [...new Set([...guides, ResearchGuide, "Other"])]
+                                [...new Set([...guides, ResearchGuide, "Other"])].filter((item) => item !== null)
                                 : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
 
                             {
