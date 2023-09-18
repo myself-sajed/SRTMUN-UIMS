@@ -364,12 +364,13 @@ const StudentHome = () => {
                         <Select className='col-md-2' id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 
                         {
+
                             user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
 
                             <Select className='col-md-6 col-lg-3' options={guides ?
-                                [...new Set([...guides, ResearchGuide, "Other"])].filter((item) => item !== null)
+                                [...new Set([...guides, ResearchGuide || "", "Other"])].filter((item) => item !== "")
                                 : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
 
                             {
