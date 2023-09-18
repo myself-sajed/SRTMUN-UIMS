@@ -266,6 +266,10 @@ const Home = () => {
                                             Report Status
                                         </button>
 
+                                        <button onClick={() => { navigate(`/director/numericalData/${user.department}`) }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
+                                            Numerical Dashboard
+                                        </button>
+
                                         <button onClick={() => { dispatch(setDirectorUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('director-token'); }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
                                             Logout
                                         </button>

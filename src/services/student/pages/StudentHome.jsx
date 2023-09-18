@@ -217,7 +217,7 @@ const StudentHome = () => {
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return [...researchCenter, 'studentJRFSRF'].includes(item.name) ?
+                                        return ['studentPatents', 'studentBooksAndChapters', 'studentJRFSRF', 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
                                                 researchCenter.includes(item.name) ? null :
                                                     <div className="accordion-item bg-gray-50 ">
