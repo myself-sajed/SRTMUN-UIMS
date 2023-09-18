@@ -24,7 +24,7 @@ const tableHead = { index: "Sr. no.", Name_of_student_enrolling: "Name of studen
 
 function ProgressionToHE({ filterByAcademicYear = false, academicYear, school }) {
 
-    if(!school){
+    if (!school) {
         delete tableHead.SchoolName;
     }
 
@@ -37,9 +37,9 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school? school:directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school ? school : directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = school? yearFilter.length === 0 ? { } : { Academic_Year: { $in: yearFilter }}: yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
@@ -91,18 +91,18 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: school? values?.SchoolN:directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school ? values?.SchoolN : directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField value={values.pthenose} id="pthenose" type="text" label="Name of student enrolling" required={true} onch={setvalues} />
                             {
-                                school&&<SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item }) } />
+                                school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
                             }
                             <SCTextField value={values.pthepgf} id="pthepgf" type="text" label="Program graduated from" required={true} onch={setvalues} select={school
                                 ? SchoolsProgram[values?.SchoolN]?.map(item => item[0]) || []
                                 : directorUser
-                                ? SchoolsProgram[directorUser.department]?.map(item => item[0]) || []
-                                : []
+                                    ? SchoolsProgram[directorUser.department]?.map(item => item[0]) || []
+                                    : []
                             } />
 
                             <CTextField value={values.pthenoia} id="pthenoia" type="text" label="Name of institution admitted" required={true} onch={setvalues} />
@@ -115,7 +115,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProgressionToHEDirector${school? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProgressionToHE Director ${school ? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>

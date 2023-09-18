@@ -86,7 +86,7 @@ function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
               PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
-              <SCTextField label= "Program Name" value={values.Program_Name} id="Program_Name" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
+              <SCTextField label="Program Name" value={values.Program_Name} id="Program_Name" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
               <CTextField label="Name of the value added courses offered" type="text" value={values.Name_of_the_value_added_courses_offered} id="Name_of_the_value_added_courses_offered" required={true} onch={setvalues} />
               <CTextField label="Course Code (if any)" type="text" value={values.Course_Code_if_any} id="Course_Code_if_any" required={false} onch={setvalues} />
               <SYTextField label="Academic year" value={values.Academic_year} id="Academic_year" required={true} onch={setvalues} />
@@ -102,7 +102,7 @@ function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ValueAddedCourceDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Value Added Course Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year='Academic_year' fatchdata={refetch} isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

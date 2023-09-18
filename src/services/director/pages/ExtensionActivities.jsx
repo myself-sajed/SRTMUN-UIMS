@@ -99,7 +99,7 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivities' title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ExtensionActivities Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="Year_of_activity" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

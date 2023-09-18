@@ -24,7 +24,7 @@ const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Act
 
 function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, school }) {
 
-    if(!school){
+    if (!school) {
         delete tableHead.SchoolName;
     }
 
@@ -37,9 +37,9 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school? school: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school ? school : directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = school? yearFilter.length === 0 ? { } : { Academic_Year: { $in: yearFilter }}:yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
 
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
@@ -91,11 +91,11 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: school? values?.SchoolN:directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school ? values?.SchoolN : directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container className="flex_between">
                             {
-                                school&&<SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item }) } />
+                                school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
                             }
                             <CTextField label="Name of the Activity conducted by the HEI" type="text" value={values.cagnotacbth} id="cagnotacbth" required={true} onch={setvalues} />
                             <CTextField label="Number of Students Attended" type="number" value={values.cagnosa} id="cagnosa" required={true} onch={setvalues} />
@@ -107,7 +107,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='CounselingAndGuidanceDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Counseling And Guidance Director${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Activity" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

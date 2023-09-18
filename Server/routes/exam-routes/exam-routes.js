@@ -141,7 +141,7 @@ router.post('/exam/excelRecord/:model', excelUpload.single('excelFile'), (req, r
             arr.forEach((response) => data.push(response))
         }
 
-        let dateInputs = ["Number of Students Appeared in Final Year Examination", "Number of Students Passed in Final Year Examination", "Last date of the last semester-end/ year- end examination", "Date of declaration of results of semester-end/ year- end examination","No Of Students Appeared", "No Of Grievances"]
+        let dateInputs = ["Last date of the last semester-end/ year- end examination", "Date of declaration of results of semester-end/ year- end examination"]
         data.forEach((item) => {
             Object.keys(excelObject[model]).forEach(key => {
                 if (dateInputs.includes(key)) {

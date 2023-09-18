@@ -165,13 +165,14 @@ const excelObject = {
         "Mobile Number": "Mobile_Number",
         "Gender": "Gender",
     },
-    SkillsEnhancementInitiatives:{
-        "Name of the capacity development schemes":"Name_of_the_capacity_development_schemes",
-        "Academic Year":"Academic_Year",
-        "Number of students enrolled":"Number_of_students_enrolled",
-        "Date of implementation":"Date_of_implementation"
+    SkillsEnhancementInitiatives: {
+        "Name of the capacity development schemes": "Name_of_the_capacity_development_schemes",
+        "Academic Year": "Academic_Year",
+        "Number of students enrolled": "Number_of_students_enrolled",
+        "Date of implementation": "Date_of_implementation"
     },
     ValueAddedCource: {
+        "Programme name": "Programme_name",
         "Name of the value added courses offered": "Name_of_the_value_added_courses_offered",
         "Course Code (if any)": "Course_Code_if_any",
         "Academic year": "Academic_year",
@@ -200,7 +201,7 @@ const excelObject = {
     CourceInAllProgram: {
         "Program Name": 'programName',
         "Program Code": 'programCode',
-        "Course Name": 'courseName', 
+        "Course Name": 'courseName',
         "Course Code": 'courseCode',
         "Academic Year": 'academicYear',
     },
@@ -245,18 +246,18 @@ const excelUpload = multer({ storage: excelStorage })
 
 let models = { Award, MoUs, CounselingAndGuidance, ProgressionToHE, DemandRatio, ProjectsInternships, Employability, ReservedSeats, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ResearchMethodologyWorkshops, ExtensionActivities, IctClassrooms, SyllabusRevision, Placement, ValueAddedCource, QualifiedExams, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, AlumniContribution, ConferencesSemiWorkshopOrganized, StudentUser, AlumniUser, CourceInAllProgram, NewPrograms }
 
-const YearSelecter={
-    academicYear:['CourceInAllProgram', 'NewPrograms'],
-    Year_of_Award:['Award', 'UgcSapCasDstFistDBTICSSR'],
-    Academic_Year:["DemandRatio","ProgressionToHE","ProjectsInternships","SkillsEnhancementInitiatives","SyllabusRevision","Placement","Employability","ReservedSeats","AlumniContribution"],
-    Acadmic_year:["QualifiedExams"],
-    Academic_year:["ValueAddedCource"],
-    Year_of_Activity:["CounselingAndGuidance"],
-    Year_of_activity:["ExtensionActivities"],
-    Year_of_signing_MoU:["MoUs"],
-    year:["ResearchMethodologyWorkshops"],
-    Year:["TrainingProgramsOrganized","ConferencesSemiWorkshopOrganized"],
-    Year_of_joining:["StudentSatisfactionSurvey"]
+const YearSelecter = {
+    academicYear: ['CourceInAllProgram', 'NewPrograms'],
+    Year_of_Award: ['Award', 'UgcSapCasDstFistDBTICSSR'],
+    Academic_Year: ["DemandRatio", "ProgressionToHE", "ProjectsInternships", "SkillsEnhancementInitiatives", "SyllabusRevision", "Placement", "Employability", "ReservedSeats", "AlumniContribution"],
+    Acadmic_year: ["QualifiedExams"],
+    Academic_year: ["ValueAddedCource"],
+    Year_of_Activity: ["CounselingAndGuidance"],
+    Year_of_activity: ["ExtensionActivities"],
+    Year_of_signing_MoU: ["MoUs"],
+    year: ["ResearchMethodologyWorkshops"],
+    Year: ["TrainingProgramsOrganized", "ConferencesSemiWorkshopOrganized"],
+    Year_of_joining: ["StudentSatisfactionSurvey"]
 }
 
 //Set Route
@@ -267,7 +268,7 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         const data = JSON.parse(JSON.stringify(req.body));
         let SendData = null;
         const { School, schoolName } = data
-        const up = req.file?req.file.filename:"";
+        const up = req.file ? req.file.filename : "";
         //Award
         if (model == 'Award') {
             const { atoti, anota, anotaa, acda, ayoa, ac } = data
@@ -432,17 +433,17 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         }
         //AlumniContribution, CourSeInAllProgram, QualifiedExams, Placement, ConferencesSemiWorkshopOrganized, Employability, ValueAddedCource, ReservedSeats
         else {
-            
+
             SendData = data
         }
-        
-        
+
+
         var withUpData = Object.assign(SendData, { Upload_Proof: up, SchoolName: School })
-      
+
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
-        
+
     } catch (err) {
         console.log(err)
         res.status(500).send()
@@ -476,9 +477,9 @@ router.post("/faculty/newRecord/:model", upload.single("Upload_Proof"), async (r
 //Get Route
 router.post('/director/getData', async (req, res) => {
 
-    const { model, id , filter} = req.body
+    const { model, id, filter } = req.body
     try {
-        const fil = id === ""?filter: {SchoolName: id}
+        const fil = id === "" ? filter : { SchoolName: id }
         const fetch = await models[model].find(fil).sort({ $natural: -1 });
         res.status(200).send(fetch);
     } catch (err) {
@@ -568,7 +569,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Number_of_Students_admitted: drnosad,
             Type_of_program: drtop
         }
-    }    
+    }
     //ExtensionActivities
     else if (model == 'ExtensionActivities') {
         const { eanota, eaouaca, eanots, eanosp, eayota } = data
@@ -596,7 +597,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Duration_of_MoU: mudom,
             Year_of_signing_MoU: muyosm
         }
-    }    
+    }
     //ProgressionToHE
     else if (model == 'ProgressionToHE') {
         const { pthenose, pthepgf, pthenoia, pthenopa, ptheya } = data
@@ -723,10 +724,10 @@ router.post('/faculty/editRecord/:model', upload.single('Upload_Proof'), async (
     if (isfile) {
         var up = req.file.filename
     }
-     //ExtensionActivities, MoUs
-    SendData=data
+    //ExtensionActivities, MoUs
+    SendData = data
 
-     var alldata = null
+    var alldata = null
     if (up) {
         alldata = Object.assign(SendData, { Upload_Proof: up })
     }
@@ -749,7 +750,7 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     let sendData = {};
     const values = JSON.parse(JSON.stringify(req.body));
     const { School } = values
-    const multiData = model=="MoUs"|| model=="ExtensionActivities"? JSON.parse(School):School
+    const multiData = model == "MoUs" || model == "ExtensionActivities" ? JSON.parse(School) : School
 
     let data = []
     try {
@@ -758,35 +759,35 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
         for (let i = 0; i < sheetNames.length; i++) {
             const arr = xlsx.utils.sheet_to_json(
                 file.Sheets[sheetNames[i]])
-            arr.forEach((response) => data.push(response))
+            arr.forEach((response) => { data.push(response) })
         }
-       
-        let dateInputs = ["From Date", "To Date","Date of implementation"]
-           data.forEach((item)=>{
+
+        let dateInputs = ["From Date", "To Date", "Date of implementation"]
+        data.forEach((item) => {
             Object.keys(excelObject[model]).forEach(key => {
-                
-                    if(dateInputs.includes(key)){
-                        let d = new Date((item[key] - (25567 + 2))*86400*1000)
-                        fullDate = (`${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0"+d.getDate()).slice(-2)}`)
-                        sendData[excelObject[model][key]] = fullDate
-                    }
-                    else{
-                        sendData[excelObject[model][key]] = item[key]
-                    }    
-                
+
+                if (dateInputs.includes(key)) {
+                    let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
+                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
+                    sendData[excelObject[model][key]] = fullDate
+                }
+                else {
+                    sendData[excelObject[model][key]] = item[key]
+                }
+
             })
-            const allData =  Object.assign(sendData, multiData.userId? multiData :{SchoolName: multiData })
+            const allData = Object.assign(sendData, multiData.userId ? multiData : { SchoolName: multiData })
             const obj = new models[model](allData);
-            obj.save(function(error){
-                if(error){
+            obj.save(function (error) {
+                if (error) {
                     res.status(500).send()
-                    console.log(error)  
+                    console.log(error)
                 }
             })
         })
-         res.status(201).send(`Entry suceeed`)  
+        res.status(201).send(`Entry suceeed`)
     }
-    catch(err){
+    catch (err) {
         console.log(err);
         return res.status(500).send()
     }
@@ -794,18 +795,18 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
 
 //Activate Diactivate Student
 router.post('/inactive-active/student', async (req, res) => {
-    const {isActiveStudent,itemToEdit} = req.body
-    try{
-        await StudentUser.updateOne({_id: itemToEdit},{$set:{isActiveStudent}});
-        const userdetails = await StudentUser.findOne({_id: itemToEdit});
+    const { isActiveStudent, itemToEdit } = req.body
+    try {
+        await StudentUser.updateOne({ _id: itemToEdit }, { $set: { isActiveStudent } });
+        const userdetails = await StudentUser.findOne({ _id: itemToEdit });
 
-        const { email, schoolName, isActiveStudent:isActive } = userdetails
-        const activestate = isActive===true ? "Activated":"Disabled";
+        const { email, schoolName, isActiveStudent: isActive } = userdetails
+        const activestate = isActive === true ? "Activated" : "Disabled";
         subjectForEmail = `Your account is ${activestate} by director of ${schoolName} at SRTMUN-UIMS.`
 
         // message to send on res
-        const statematter = isActive===true ? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
-        let message = { status: 'success', message: 'Email sent successfully, Please check your Email Account'}
+        const statematter = isActive === true ? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
+        let message = { status: 'success', message: 'Email sent successfully, Please check your Email Account' }
 
         let htmlMatter = `<div>
                             <h2>Your student account ${activestate} by Director of ${schoolName}</h2>
@@ -817,68 +818,68 @@ router.post('/inactive-active/student', async (req, res) => {
         // send mail
         sendMail(req, res, email, subjectForEmail, 'html', emailTemplate(htmlMatter), message);
     }
-    catch(err) {
+    catch (err) {
         console.log(err)
-        res.send({status:"error"})
+        res.send({ status: "error" })
     }
 })
 
 // Convert student to alumni in single/bulk
-router.post('/student-to-alumni/bulk', async (req,res)=> {
+router.post('/student-to-alumni/bulk', async (req, res) => {
 
-    const {arr} = req.body
-    try{
+    const { arr } = req.body
+    try {
         let NonConverted = [];
 
-        
-        for (id of arr){
-            let student = await StudentUser.findOne({_id: id});
-            if(student){
+
+        for (id of arr) {
+            let student = await StudentUser.findOne({ _id: id });
+            if (student) {
                 const { programEnroledOn, currentIn } = student
 
-                let yStarted = new Date().getFullYear()-parseInt(currentIn[0]);
-                let YNext = (yStarted+1).toString().slice(-2);
-                let doStarted = programEnroledOn===undefined?`${yStarted}-${YNext}`:programEnroledOn;
+                let yStarted = new Date().getFullYear() - parseInt(currentIn[0]);
+                let YNext = (yStarted + 1).toString().slice(-2);
+                let doStarted = programEnroledOn === undefined ? `${yStarted}-${YNext}` : programEnroledOn;
                 let yComplited = new Date().getFullYear();
-                let yCNext = (yComplited+1).toString().slice(-2);
+                let yCNext = (yComplited + 1).toString().slice(-2);
                 let doCompleted = `${yComplited}-${yCNext}`;
 
-                await StudentUser.updateOne({_id:id}, {$set:{isAlumni:true, programEnroledOn: doStarted, doCompletion: doCompleted }})
-                
-            }else{
+                await StudentUser.updateOne({ _id: id }, { $set: { isAlumni: true, programEnroledOn: doStarted, doCompletion: doCompleted } })
+
+            } else {
                 NonConverted.push(id);
             }
         }
-        if(NonConverted.length===0){
-            res.status(201).send({status:"allCoverted", message:`Student converted to alumni successfully`}) 
+        if (NonConverted.length === 0) {
+            res.status(201).send({ status: "allCoverted", message: `Student converted to alumni successfully` })
         }
-        else{
-            res.status(201).send({status:"error", message:`${NonConverted.length} out of ${arr.length} are not converted`})
+        else {
+            res.status(201).send({ status: "error", message: `${NonConverted.length} out of ${arr.length} are not converted` })
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err)
     }
 })
 
 //aqar director 
-router.post('/director/aqar/excel', async (req, res)=> {
-    const {SchoolName,years} = req.body.filter
-    try{
-        let report={}
-        let aqarModels = [ 'Award', 'MoUs', 'CounselingAndGuidance', 'ProgressionToHE', 'DemandRatio', 'ProjectsInternships', 'Employability', 'ReservedSeats', 'TrainingProgramsOrganized', 'UgcSapCasDstFistDBTICSSR', 'ResearchMethodologyWorkshops', 'ExtensionActivities', 'SyllabusRevision', 'Placement', 'ValueAddedCource', 'QualifiedExams', 'SkillsEnhancementInitiatives', 'AlumniContribution', 'CourceInAllProgram', 'NewPrograms' ]
+router.post('/director/aqar/excel', async (req, res) => {
+    const { SchoolName, years } = req.body.filter
+    try {
+        let report = {}
+        let aqarModels = ['Award', 'MoUs', 'CounselingAndGuidance', 'ProgressionToHE', 'DemandRatio', 'ProjectsInternships', 'Employability', 'ReservedSeats', 'TrainingProgramsOrganized', 'UgcSapCasDstFistDBTICSSR', 'ResearchMethodologyWorkshops', 'ExtensionActivities', 'SyllabusRevision', 'Placement', 'ValueAddedCource', 'QualifiedExams', 'SkillsEnhancementInitiatives', 'AlumniContribution', 'CourceInAllProgram', 'NewPrograms']
         for (const model of aqarModels) {
             let year
             for (const yearField in YearSelecter) {
                 if (YearSelecter[yearField].includes(model)) {
-                  year= yearField;
+                    year = yearField;
                 }
             }
-            report[model] = await models[model].find({SchoolName,[year]:{$in:years}});
+            report[model] = await models[model].find({ SchoolName, [year]: { $in: years } });
         }
-        res.send({report})
+        res.send({ report })
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 })

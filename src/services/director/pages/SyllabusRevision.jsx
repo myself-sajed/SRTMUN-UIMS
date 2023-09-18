@@ -94,7 +94,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
           }}>
             <Grid container >
               <CTextField label="Program Code" value={values.srpc} id="srpc" type="text" onch={setvalues} required={true} />
-              <SCTextField label= "Program Name" value={values.srpn} id="srpn" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
+              <SCTextField label="Program Name" value={values.srpn} id="srpn" required={true} type="text" onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
               <SYTextField label="Academic Year" value={values.sray} id="sray" onch={setvalues} required={true} />
               <CDatePicker label="Year of Introduction" value={values.sryoi} id="sryoi" onch={setvalues} required={true} />
               <SCTextField label="Status of implementation" value={values.srsoioce} id="srsoioce" select={CE} required={true} onch={setvalues} />
@@ -108,7 +108,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='SyllabusRevisionDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`SyllabusRevision${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} year='Academic_Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} />
     </>

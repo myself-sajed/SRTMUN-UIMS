@@ -26,7 +26,7 @@ const typesOfPlacements = ["Placement", "Business Started"];
 
 function Placements({ filterByAcademicYear = false, academicYear, school }) {
 
-    if(!school){
+    if (!school) {
         delete tableHead.SchoolName;
     }
 
@@ -41,7 +41,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
 
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = school? yearFilter.length === 0 ? { } : { Academic_Year: { $in: yearFilter }}: yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
@@ -78,7 +78,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
         }
     }, [academicYear])
     //--------------Frant end ui------------
-    console.log(school?values?.SchoolN:directorUser?.department);
+    console.log(school ? values?.SchoolN : directorUser?.department);
 
     return (
         <>
@@ -91,18 +91,18 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({School: school?values?.SchoolN:directorUser?.department}, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: school ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
                             <CTextField label="Name of student placed/started Business" type="text" value={values.Name_of_student_placed} id="Name_of_student_placed" required={true} onch={setvalues} />
                             {
-                                school&&<SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item }) } />
+                                school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
                             }
                             <SCTextField value={values.Program_graduated_from} id="Program_graduated_from" type="text" label="Program Graduated From" required={true} onch={setvalues} select={school
                                 ? SchoolsProgram[values?.SchoolN]?.map(item => item[0]) || []
                                 : directorUser
-                                ? SchoolsProgram[directorUser.department]?.map(item => item[0]) || []
-                                : []
+                                    ? SchoolsProgram[directorUser.department]?.map(item => item[0]) || []
+                                    : []
                             } />
                             <CTextField label="Name of the employer/business" type="text" value={values.Name_of_the_employer} id="Name_of_the_employer" required={true} onch={setvalues} />
                             <CTextField label="Employer/business contact details" type="text" value={values.Employer_contact_details} id="Employer_contact_details" required={true} onch={setvalues} />
@@ -116,7 +116,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`PlacementsDirector${school? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Placements Director${school ? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
