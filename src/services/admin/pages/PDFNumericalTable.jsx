@@ -1,10 +1,12 @@
 import React from 'react'
 import AdminNumaricalData from './AdminNumaricalData'
+import title from '../../../js/title'
 
-const PDFNumericalTable = () => {
+const PDFNumericalTable = ({ isDirector = false }) => {
+    title("School Numerical Dashboard")
     return (
         <div>
-            <AdminNumaricalData School="All Schools" />
+            <AdminNumaricalData isDirector={isDirector} School="All Schools" />
         </div>
     )
 }

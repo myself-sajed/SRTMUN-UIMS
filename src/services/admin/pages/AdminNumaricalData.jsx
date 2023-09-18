@@ -14,8 +14,9 @@ import ReportLoading from '../../../components/ReportLoading'
 import ClearIcon from '@mui/icons-material/Clear';
 import AdminExcelExoprt from '../components/AdminExcelExoprt'
 import AdminTable from '../components/AdminTable'
+import GoBack from '../../../components/GoBack'
 
-const AdminNumaricalData = () => {
+const AdminNumaricalData = ({ isDirector = false }) => {
 
   const { School } = useParams();
 
@@ -225,110 +226,114 @@ const AdminNumaricalData = () => {
     }
   }
 
+
   return (
-    <AdminDrower hideHeader={School ? true : false} >
-      <div className='sub-main' >
-        <div className='flex justify-end pb-2'>
-          {!School && <>
-            <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
-            <Tooltip title="PDF Download" placement="top" >
-              <IconButton sx={{ height: "100%", bottom: "-25px", marginLeft: "15px" }} onClick={pdfHandler} >
-                <PictureAsPdfRoundedIcon color='error' sx={{ fontSize: 30 }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Excel Download" placement="top" >
-              <IconButton sx={{ height: "100%", bottom: "-25px" }} onClick={() => { excelHandler(data?.data) }}>
-                <SimCardDownloadTwoToneIcon color='success' sx={{ fontSize: 30 }} />
-              </IconButton>
-            </Tooltip>
-          </>}
-        </div>
-        <div className="mb-2">
-          {reportLoading && <ReportLoading loading={reportLoading} />}
-          {tileDataLoading && <LinearProgress />}
-        </div>
-        <p className="text-center my-2 font-bold">{schoolName}</p>
-        <div className='table-responsive' style={{ height: School ? 'fit-content' : `90vh` }}>
-          <table className='table table-bordered pb-3'>
-            <thead className='sticky-top'>
-              <tr className='bg-[#ae7e28] text-[#FFF]'>
-                <th>Sr.No.</th>
-                <th>Particulars</th>
-                {generateAcademicYears.map((year) => {
-                  return <th>{year}</th>
-                })}
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {
-                data?.data && Object.keys(modelNames)?.map((tableName, i) => {
-                  return <tr key={i}>
-                    <td className='text-center font-bold'>{i + 1}</td>
-                    <td style={{ background: "#f4f4f4" }} className='font-semibold' > {modelNames?.[tableName]} </td>
-
-                    {generateAcademicYears.map((year) => {
-                      return (<td className={year === 'Total' ? 'font-bold text-center text-[#ae7e28]' : 'text-center cursor-pointer'} style={{ background: year === 'Total' ? "#f4f4f4" : "" }} onClick={(e) => { let tdData = parseInt(e.target.textContent); getTileData(tdData, year, tableName) }} >{data?.data[tableName][year]}</td>)
-                    })}
-
-                  </tr>
-                })
-              }
-
-            </tbody>
-          </table>
-          {isLoading && <div className='flex justify-center'><CircularProgress /></div>}
-        </div>
-      </div>
-      <Dialog fullScreen open={open} onClose={() => { setOpen(false) }}>
-        <DialogTitle className='flex gap-4 items-center'>
-          <IconButton onClick={() => { setOpen(false) }}>
-            <ClearIcon />
-          </IconButton>
-          {modelNames[model]}
-          <div className='flex w-full justify-end'>
-            <p className='px-2 mx-2 text-[#ae7e28]' style={{ border: "1px solid", borderRadius: "5px" }}>{tileData?.length}</p>
+    <div>
+      {isDirector && <div className='mb-4'><GoBack pageTitle="School Numerical Dashboard" /></div>}
+      <AdminDrower hideHeader={School ? true : false} >
+        <div className='sub-main' >
+          <div className='flex justify-end pb-2'>
+            {!School && <>
+              <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
+              <Tooltip title="PDF Download" placement="top" >
+                <IconButton sx={{ height: "100%", bottom: "-25px", marginLeft: "15px" }} onClick={pdfHandler} >
+                  <PictureAsPdfRoundedIcon color='error' sx={{ fontSize: 30 }} />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Excel Download" placement="top" >
+                <IconButton sx={{ height: "100%", bottom: "-25px" }} onClick={() => { excelHandler(data?.data) }}>
+                  <SimCardDownloadTwoToneIcon color='success' sx={{ fontSize: 30 }} />
+                </IconButton>
+              </Tooltip>
+            </>}
           </div>
-        </DialogTitle>
-        <DialogContent>
-          {model === "StudentUser" ?
-            <div className='table-responsive' style={{ height: "100%" }}>
-              <table className="table">
-                <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
-                  <tr>
-                    <th>Sr. No.</th>
-                    <th>profile Pic</th>
-                    <th>Name</th>
-                    <th>School</th>
-                    <th>Gender</th>
-                    <th>Email</th>
-                    <th>Eanroled Program</th>
-                    <th>Program Enroled on</th>
+          <div className="mb-2">
+            {reportLoading && <ReportLoading loading={reportLoading} />}
+            {tileDataLoading && <LinearProgress />}
+          </div>
+          <p className="text-center my-2 font-bold">{schoolName}</p>
+          <div className='table-responsive' style={{ height: School ? 'fit-content' : `90vh` }}>
+            <table className='table table-bordered pb-3'>
+              <thead className='sticky-top'>
+                <tr className='bg-[#ae7e28] text-[#FFF]'>
+                  <th>Sr.No.</th>
+                  <th>Particulars</th>
+                  {generateAcademicYears.map((year) => {
+                    return <th>{year}</th>
+                  })}
+                </tr>
+              </thead>
 
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    tileData?.map((item, index) => <tr>
-                      <td>{index + 1}</td>
-                      <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/student`} /></td>
-                      <td>{`${item.salutation} ${item.name}`}</td>
-                      <td>{item.schoolName}</td>
-                      <td>{item.gender}</td>
-                      <td>{item.email}</td>
-                      <td>{item.programGraduated}</td>
-                      <td>{item.programEnroledOn}</td>
+              <tbody>
+
+                {
+                  data?.data && Object.keys(modelNames)?.map((tableName, i) => {
+                    return <tr key={i}>
+                      <td className='text-center font-bold'>{i + 1}</td>
+                      <td style={{ background: "#f4f4f4" }} className='font-semibold' > {modelNames?.[tableName]} </td>
+
+                      {generateAcademicYears.map((year) => {
+                        return (<td className={year === 'Total' ? 'font-bold text-center text-[#ae7e28]' : 'text-center cursor-pointer'} style={{ background: year === 'Total' ? "#f4f4f4" : "" }} onClick={(e) => { let tdData = parseInt(e.target.textContent); getTileData(tdData, year, tableName) }} >{data?.data[tableName][year]}</td>)
+                      })}
+
                     </tr>
-                    )
-                  }
-                </tbody>
-              </table>
+                  })
+                }
+
+              </tbody>
+            </table>
+            {isLoading && <div className='flex justify-center'><CircularProgress /></div>}
+          </div>
+        </div>
+        <Dialog fullScreen open={open} onClose={() => { setOpen(false) }}>
+          <DialogTitle className='flex gap-4 items-center'>
+            <IconButton onClick={() => { setOpen(false) }}>
+              <ClearIcon />
+            </IconButton>
+            {modelNames[model]}
+            <div className='flex w-full justify-end'>
+              <p className='px-2 mx-2 text-[#ae7e28]' style={{ border: "1px solid", borderRadius: "5px" }}>{tileData?.length}</p>
             </div>
-            : <AdminTable data={tileData} tableHead={tableHead[model]} proof={proof} serviceName={module} Heading={modelNames[model]} SendReq={model} />}
-        </DialogContent>
-      </Dialog>
-    </AdminDrower>
+          </DialogTitle>
+          <DialogContent>
+            {model === "StudentUser" ?
+              <div className='table-responsive' style={{ height: "100%" }}>
+                <table className="table">
+                  <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
+                    <tr>
+                      <th>Sr. No.</th>
+                      <th>profile Pic</th>
+                      <th>Name</th>
+                      <th>School</th>
+                      <th>Gender</th>
+                      <th>Email</th>
+                      <th>Eanroled Program</th>
+                      <th>Program Enroled on</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      tileData?.map((item, index) => <tr>
+                        <td>{index + 1}</td>
+                        <td><Avatar src={`${process.env.REACT_APP_MAIN_URL}/showFile/${item.photoURL}/student`} /></td>
+                        <td>{`${item.salutation} ${item.name}`}</td>
+                        <td>{item.schoolName}</td>
+                        <td>{item.gender}</td>
+                        <td>{item.email}</td>
+                        <td>{item.programGraduated}</td>
+                        <td>{item.programEnroledOn}</td>
+                      </tr>
+                      )
+                    }
+                  </tbody>
+                </table>
+              </div>
+              : <AdminTable data={tileData} tableHead={tableHead[model]} proof={proof} serviceName={module} Heading={modelNames[model]} SendReq={model} />}
+          </DialogContent>
+        </Dialog>
+      </AdminDrower>
+    </div>
   )
 }
 

@@ -28,6 +28,10 @@ import { ShowLocalDashboard } from '../../faculty/pages/Home'
 import { setDirectorActive, setSsmActive } from '../../../redux/slices/DirectorActiveSlice'
 import ProfileCroper from '../../../components/ProfileCroper'
 import capitalizeText from '../../../js/capitalizeText'
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+
+
+
 
 const Home = () => {
     const navigate = useNavigate()
@@ -266,13 +270,11 @@ const Home = () => {
                                             Report Status
                                         </button>
 
-                                        <button onClick={() => { navigate(`/director/numericalData/${user.department}`) }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
+                                        <button onClick={() => { navigate(`/director/numericalData/${user.department}`) }} className='p-2 rounded-full border-2 flex-auto text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
                                             Numerical Dashboard
                                         </button>
 
-                                        <button onClick={() => { dispatch(setDirectorUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('director-token'); }} className='p-2 flex-auto text-sm sm:text-base rounded-full text-blue-700 border-2 hover:bg-blue-200 border-blue-700'>
-                                            Logout
-                                        </button>
+
 
                                     </div>
                                 </div>
@@ -292,8 +294,11 @@ const Home = () => {
                             <div>
                                 <p className='font-bold text-base sm:text-xl text-black'>Personal Infomation</p>
                             </div>
-                            <div>
+                            <div className='flex items-center gap-3'>
+
+
                                 <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-blue-800 border-2 hover:bg-blue-700 border-blue-800 text-white' onClick={() => { setEditModal(true) }}><EditRoundedIcon fontSize="small" />Edit Profile</button>
+                                <button className='flex items-center justify-start gap-1 p-2 rounded-full sm:text-base text-sm bg-red-800 border-2 hover:bg-red-700 border-red-800 text-white' onClick={() => { dispatch(setDirectorUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem('director-token'); }}><LogoutRoundedIcon fontSize="small" />Logout</button>
                             </div>
 
                         </div>

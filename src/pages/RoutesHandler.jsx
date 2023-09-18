@@ -174,7 +174,7 @@ const RoutesHandler = () => {
                 <Route path="/student/student-status" exact element={<StudentMain />} />
                 <Route path='/admin' exact element={<AdminMain />} />
                 <Route path='/admin/numericalData/:School' exact element={<PDFNumericalTable />} />
-                <Route path='/director/numericalData/:School' exact element={<PDFNumericalTable />} />
+                <Route path='/director/numericalData/:School' exact element={<PDFNumericalTable isDirector={true} />} />
                 <Route path="/IQAC-NAAC/DEVELOPERS" exact element={<DeveloperServices />} />
 
 
