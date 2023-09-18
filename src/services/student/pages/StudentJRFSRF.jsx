@@ -10,6 +10,7 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
+import Select from '../../../components/formComponents/Select'
 
 
 const tableHead = { index: "Sr. no.", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
@@ -51,8 +52,8 @@ const StudentJRFSRF = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-    user.ResearchGuideId=== ''?addReq({ researchName: user?.name, studentId: user?._id, schoolName: user.schoolName, guideName: user.ResearchGuide }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module):
-    addReq({ researchName: user?.name, studentId: user?._id, userId: user.ResearchGuideId, }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
+      user.ResearchGuideId === '' ? addReq({ researchName: user?.name, studentId: user?._id, schoolName: user.schoolName, guideName: user.ResearchGuide }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module) :
+        addReq({ researchName: user?.name, studentId: user?._id, userId: user.ResearchGuideId, }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
   }
 
   return (
@@ -61,8 +62,8 @@ const StudentJRFSRF = () => {
       <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrollment Year" setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration" setState={setValues} />
-          <Text className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Fellowship Type" setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration (in Months)" setState={setValues} />
+          <Select options={["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Fellowship Type" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label="Granting Agency" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Qualified Exam" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />

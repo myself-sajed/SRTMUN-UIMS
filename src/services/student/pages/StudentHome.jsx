@@ -67,7 +67,11 @@ const StudentHome = () => {
     const [values, setValues] = useState(initialstate);
     const { salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, currentIn, cast, country, religion, programEnroledOn, programCompletedOn, isGideListed } = values
 
-   const researchCenter = ['studentPatents', 'studentBooksAndChapters', 'studentResearchProjects', 'studentResearchPapers']
+    const researchCenter = ['studentPatents',
+        'studentBooksAndChapters',
+        //    'studentResearchProjects', 
+        //    'studentResearchPapers'
+    ]
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: 'studentEdit' })
@@ -100,7 +104,7 @@ const StudentHome = () => {
     console.log(values.ResearchGuideId);
 
     const setResearchGuideId = () => {
-        if(isGideListed){
+        if (isGideListed) {
 
             setValues(pri => {
                 return {
@@ -108,9 +112,9 @@ const StudentHome = () => {
                     ResearchGuideId: ''
                 }
             })
-            
+
         }
-        else{
+        else {
             guidesData.forEach(item => {
                 if (item.name == ResearchGuide) {
                     setValues(pri => {
@@ -120,8 +124,8 @@ const StudentHome = () => {
                         }
                     })
                 }
-    
-            })   
+
+            })
         }
     }
     useEffect(() => {
@@ -215,35 +219,35 @@ const StudentHome = () => {
                                     navcom.map((item, index) => {
                                         return [...researchCenter, 'studentJRFSRF'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                                researchCenter.includes(item.name) ?null:
-                                                <div className="accordion-item bg-gray-50 ">
-                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                            {item.value}
-                                                        </button>
-                                                    </h2>
-                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <div key={item}>{item.element}</div>
+                                                researchCenter.includes(item.name) ? null :
+                                                    <div className="accordion-item bg-gray-50 ">
+                                                        <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                                {item.value}
+                                                            </button>
+                                                        </h2>
+                                                        <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                            <div className="accordion-body">
+                                                                <div key={item}>{item.element}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
+                                                        <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                                {item.value}
+                                                            </button>
+                                                        </h2>
+                                                        <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                            <div className="accordion-body">
+                                                                <div key={item}>{item.element}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
-                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                            {item.value}
-                                                        </button>
-                                                    </h2>
-                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <div key={item}>{item.element}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                     })
                                 }
                             </div>
 
-                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?<div className='pt-3 pb-2 pl-2 font-semibold text-lg'>Research Center</div>:""}
+                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ? <div className='pt-3 pb-2 pl-2 font-semibold text-lg'>Research Center</div> : ""}
 
                             <div className="accordion" id="accordionExample">
                                 {
@@ -363,16 +367,16 @@ const StudentHome = () => {
                             user?.isAlumni === true && <UploadFile className='col-md-6 col-lg-4' id="uploadProof" label="Upload Alumni Proof" setState={setValues} required={user?.uploadProof == undefined ? true : false} />
                         }
                         {programGraduated.includes("Ph.D") && user.isAlumni === false && <>
-                        
-                            
+
+
                             {
-                                isGideListed?<Text className='col-md-6 col-lg-3' id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />:<Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
+                                isGideListed ? <Text className='col-md-6 col-lg-3' id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} /> : <Select className='col-md-6 col-lg-3' options={guides ? guides : []} id="ResearchGuide" value={ResearchGuide} label="Research Guide" setState={setValues} />
                             }
                             <div className='col-12 col-md-6 col-lg-4 border rounded-md mt-[35px] mb-[10px]'>
-                              <div className="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
-                                <input className="form-check-input" checked={isGideListed} onChange={() => { setValues((pri) => { return { ...pri, 'isGideListed': !pri.isGideListed, ResearchGuide: "", } }) }} type="checkbox" role="switch" id="checkbox"  />
-                                <label className="form-check-label" htmlFor="checkbox">Research Guide not Listed?</label>
-                              </div>
+                                <div className="form-check form-switch py-[0.20rem] mt-[0.28rem] ml-2">
+                                    <input className="form-check-input" checked={isGideListed} onChange={() => { setValues((pri) => { return { ...pri, 'isGideListed': !pri.isGideListed, ResearchGuide: "", } }) }} type="checkbox" role="switch" id="checkbox" />
+                                    <label className="form-check-label" htmlFor="checkbox">Research Guide not Listed?</label>
+                                </div>
                             </div>
                             <Text className='col-md-2' type='date' id="dateOfRac" value={dateOfRac} label="Date of RAC" setState={setValues} />
                             <Text className='col-md-7' type='text' id="Title" value={Title} label="Title" setState={setValues} />
