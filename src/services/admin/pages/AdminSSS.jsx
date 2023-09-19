@@ -45,7 +45,7 @@ const AdminSSS = () => {
     }
 
     const excelClick = () => {
-        alert('Excel clicked')
+        alert('Excel report is yet under construction, PDF report is available. Please try again, later.')
     }
 
     return <div>
