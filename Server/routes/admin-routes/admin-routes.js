@@ -383,13 +383,13 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
                 if (item.programEnroledOn === undefined) {
                     if (item.currentIn !== undefined) {
                         let yeartosub = parseInt(item.currentIn.split(' ')[1]);
-                        if (year == getPreviousYears(yeartosub)) {
+                        if (year['$in'].includes(getPreviousYears(yeartosub))) {
                             countStu.push(item)
                         }
                     }
                 }
                 else if (item.programEnroledOn !== undefined) {
-                    if (item.programEnroledOn === year) {
+                    if (year['$in'].includes(item.programEnroledOn)) {
                         countStu.push(item)
                     }
                 }
