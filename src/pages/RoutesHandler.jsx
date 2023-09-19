@@ -127,6 +127,9 @@ import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
 import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
 import PDFNumericalTable from '../services/admin/pages/PDFNumericalTable'
 import SSSReport from '../templates/feedback/SSSReport'
+import IILLogin from '../services/iil/pages/IILLogin'
+import IILHome from '../services/iil/pages/IILHome'
+import IILAQAR from '../services/iil/pages/IILAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -285,6 +288,11 @@ const RoutesHandler = () => {
                 <Route path="/dsd-login" exact element={<DSDLogin />} />
                 <Route path="/dsd" exact element={<DSDHome />} />
                 <Route path="/dsd/aqar" exact element={<DSDAQAR />} />
+
+                {/* KRC */}
+                <Route path="/iil-login" exact element={<IILLogin />} />
+                <Route path="/iil" exact element={<IILHome />} />
+                <Route path="/iil/aqar" exact element={<IILAQAR />} />
 
                 {/* KRC */}
                 <Route path="/krc-login" exact element={<KRCLogin />} />

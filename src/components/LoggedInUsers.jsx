@@ -25,6 +25,7 @@ const LoggedInUsers = () => {
         nssUser: { homeLink: siteLinks.nssHome.link, serviceName: 'nss', title: "NSS", abbr: "NSS" },
         examUser: { homeLink: siteLinks.examHome.link, serviceName: 'exam', title: "BOEE", abbr: "BOEE" },
         placementUser: { homeLink: siteLinks.placementHome.link, serviceName: 'placement', title: "TPO", abbr: "TPO" },
+        iilUser: { homeLink: siteLinks.iilHome.link, serviceName: 'iil', title: "IIL", abbr: "IIL" },
     }
 
     return (

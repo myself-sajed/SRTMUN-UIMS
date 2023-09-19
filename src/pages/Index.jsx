@@ -7,6 +7,7 @@ import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
+import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded';
 import AutoGraphRoundedIcon from '@mui/icons-material/AutoGraphRounded';
 import SportsHandballRoundedIcon from '@mui/icons-material/SportsHandballRounded';
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
@@ -15,7 +16,7 @@ import { useNavigate } from 'react-router';
 import useScroll from '../hooks/useScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
-import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser } from '../redux/slices/UserSlice';
+import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser, setIILUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 import { FloatButton, Tooltip } from 'antd';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
@@ -137,6 +138,17 @@ const Index = () => {
             tokenId: 'exam-token',
             loginUrl: siteLinks.examLogin.link,
             dispatchFunction: setExamUser
+
+        },
+        {
+            icon: <ScienceRoundedIcon sx={iconProps} />,
+            title: 'Innovation, Incubation and Linkages',
+            phrase: 'Login to the Innovation, Incubation and Linkages with valid ID & Password',
+            user: users.iilUser ? users.iilUser : null,
+            profileUrl: siteLinks.iilHome.link,
+            tokenId: 'iil-token',
+            loginUrl: siteLinks.iilLogin.link,
+            dispatchFunction: setIILUser
 
         },
         {
