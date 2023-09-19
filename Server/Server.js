@@ -144,6 +144,7 @@ require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
 require('./routes/feedback-routes/fetchFeedbackData')(app)
 require('./routes/feedback-routes/generateFeedbackReport')(app)
 require('./routes/feedback-routes/actionTakenReport')(app)
+require('./routes/feedback-routes/studentSurveryRoutes')(app)
 
 // require('./models/placement-models/placementUserSchema')
 

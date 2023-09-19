@@ -24,7 +24,7 @@ export default function ShowAnalysisModal({ open, handleClose, children, title }
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
-                <div className='border-b-2'>
+                <div className='border-b-2 sticky-top z-30 bg-white'>
                     <Toolbar>
                         <IconButton
                             edge="start"
@@ -41,7 +41,7 @@ export default function ShowAnalysisModal({ open, handleClose, children, title }
                     </Toolbar>
 
                 </div>
-                <div className="p-3">
+                <div className="p-3 z-20">
                     {children}
                 </div>
 

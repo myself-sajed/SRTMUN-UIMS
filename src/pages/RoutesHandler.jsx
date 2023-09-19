@@ -126,6 +126,7 @@ import FeedbackAck from '../services/programs/pages/FeedbackAck'
 import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
 import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
 import PDFNumericalTable from '../services/admin/pages/PDFNumericalTable'
+import SSSReport from '../templates/feedback/SSSReport'
 
 let model = "Xyz"
 let module = 'abc'
@@ -240,6 +241,7 @@ const RoutesHandler = () => {
                 <Route path="/director/service/feedback/action" exact element={<ActionOnFeedback />} />
                 <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
                 <Route path="/feedback/generateFeedbackReport/:schoolName/:feedbackUser/:academicYear" exact element={<FeedbackReport />} />
+                <Route path="/SSS/report/:schoolName/:academicYear" exact element={<SSSReport />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
