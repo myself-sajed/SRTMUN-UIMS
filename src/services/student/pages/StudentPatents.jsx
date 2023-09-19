@@ -61,7 +61,7 @@ const StudentPatents = () => {
   return (
     <>
       <AddButton title={title} onclick={setOpen} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="patentNumber" value={patentNumber} label={tableHead.patentNumber} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="patentTitle" value={patentTitle} label={tableHead.patentTitle} setState={setValues} />

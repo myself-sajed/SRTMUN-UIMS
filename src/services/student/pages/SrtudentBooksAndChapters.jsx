@@ -84,7 +84,7 @@ const SrtudentBooksAndChapters = () => {
     return (
       <>
         <AddButton title={title} onclick={setOpen} />
-        <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+        <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
           <div className='flex flex-wrap'>
             <Select className='col-md-6 col-lg-4' id="type" value={type} label={tableHead.type} setState={setValues} options={Lists.bookCapType} />
             <Text className='col-md-6 col-lg-4' id="titleOfBook" value={titleOfBook} label={tableHead.titleOfBook} setState={setValues} desable={type==="Conference"?true:false} />

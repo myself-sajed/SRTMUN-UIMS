@@ -46,7 +46,7 @@ const StudentHome = () => {
 
     const [open, setOpen] = useState(false);
     const [edit, setEdit] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [Loading, setLoading] = useState(false)
     const [itemToEdit, setItemToEdit] = useState(null)
 
     const navigate = useNavigate()
@@ -60,6 +60,7 @@ const StudentHome = () => {
 
     const [avatar, setAvatar] = useState(null)
     const [uploadProof, setUploadProof] = useState(null)
+    const [photoURL, setPhotoURL] = useState(null)
     const [guides, setGuides] = useState([])
     const [guidesData, setGuidesData] = useState([])
     const [programDuration, setProgramDuration] = useState(null)
@@ -80,12 +81,14 @@ const StudentHome = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setEdit(true);
-        editReq({ id: itemToEdit, uploadProof }, "", initialstate, { ...values, ResearchGuide: ResearchGuide === 'Other' ? otherGuide : ResearchGuide }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        editReq({ id: itemToEdit, uploadProof, photoURL }, "", initialstate, { ...values, ResearchGuide: ResearchGuide === 'Other' ? otherGuide : ResearchGuide }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module)
+        setUploadProof(null); setAvatar(null); setPhotoURL(null)
     }
 
     const onCancel = () => {
         setValues(initialstate)
         setItemToEdit(null)
+        setUploadProof(null); setAvatar(null); setPhotoURL(null)
     }
 
     const fetchFacutys = async () => {
@@ -217,9 +220,9 @@ const StudentHome = () => {
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return ['studentPatents', 'studentBooksAndChapters', 'studentJRFSRF', 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
+                                        return [...researchCenter, 'studentJRFSRF', 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                                researchCenter.includes(item.name) ? null :
+                                                [...researchCenter,'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ? null :
                                                     <div className="accordion-item bg-gray-50 ">
                                                         <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
                                                             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
@@ -252,7 +255,7 @@ const StudentHome = () => {
                             <div className="accordion" id="accordionExample">
                                 {
                                     navcom.map((item, index) => {
-                                        return researchCenter.includes(item.name) ?
+                                        return [...researchCenter,'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
                                             (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
                                                 <div className="accordion-item bg-gray-50 ">
                                                     <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
@@ -316,23 +319,23 @@ const StudentHome = () => {
                 </div>
             }
 
-            <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+            <DialogBox title="Edit Profile" buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" >
                 {
                     <div className='flex flex-wrap bg-gray-50 rounded-xl border p-2 '>
 
                         <div className='flex-items-center justify-center flex-col w-full mb-4'>
                             {
-                                uploadProof ?
+                                photoURL ?
                                     <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
                                     <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>
                                 <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg" className='hidden mx-auto' onChange={(e) => {
-                                    handleAvatarChange(e, setAvatar, setUploadProof, setOpenCroper)
+                                    handleAvatarChange(e, setAvatar, setPhotoURL, setOpenCroper)
                                 }} />
                                 {
-                                    uploadProof && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setUploadProof(null); }}>Reset Picture</button>
+                                    photoURL && <button className='w-[20%] bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs  duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' onClick={(e) => { setPhotoURL(null); }}>Reset Picture</button>
                                 }
                             </div>
                         </div>
@@ -382,7 +385,7 @@ const StudentHome = () => {
                     </div>
                 }
             </DialogBox>
-            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={uploadProof} setFile={setUploadProof} setAvatar={setAvatar} />
+            <ProfileCroper open={openCroper} setOpen={setOpenCroper} file={photoURL} setFile={setPhotoURL} setAvatar={setAvatar} />
             <Footer />
         </div>
 
