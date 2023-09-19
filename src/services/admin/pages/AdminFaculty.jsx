@@ -42,7 +42,7 @@ const AdminFaculty = ({ school }) => {
 
   const [childData, setChildData] = useState({ faculty: null, qualification: null, researchdegrees: null, econtentdeveloped: null, appointmentspriorjoining: null, awardrecognition: null, booksandchapters: null, collaborations: null, conferenceorganised: null, conferencepartipeted: null, consultancy: null, fellowship: null, researchprojects: null, postheldafterjoining: null, lectures: null, researchpapers: null, phdawarded: null, jrfsrfpdf: null, patents: null, invitedtalks: null, orientationrefreshercourse: null, financialsupport: null, responsibilities: null, foraginvisit: null, })
   
-  const [values, setValues] = useState({ yearFilter: [], schoolName: directorLocation ? school && school : "All Schools" })
+  const [values, setValues] = useState({ yearFilter: [], schoolName: school ? school : "All Schools" })
 
   const { yearFilter, schoolName } = values
 

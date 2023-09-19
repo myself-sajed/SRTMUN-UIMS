@@ -6,10 +6,12 @@ import Bred from '../../../components/Bred'
 import siteLinks from '../../../components/siteLinks'
 import OnlyNav from '../../../components/OnlyNav'
 import Footer from '../../../components/Footer'
+import title from '../../../js/title'
 
 const DirectorFRCC = () => {
   const user = useSelector(state => state.user.directorUser)
   useDirectorAuth()
+  title('Numarical Dashboard')
   return (
     <>
       <OnlyNav user={user} logout={{ token: 'director-token', link: siteLinks.welcome.link }}
@@ -22,7 +24,7 @@ const DirectorFRCC = () => {
         <Bred links={[siteLinks.welcome, siteLinks.directorHome, siteLinks.fdc]} />
       </div>
 
-      <AdminFaculty school={user?.department} />
+      {user&&<AdminFaculty school={user.department} />}
 
       <div className="">
         <br /><br />

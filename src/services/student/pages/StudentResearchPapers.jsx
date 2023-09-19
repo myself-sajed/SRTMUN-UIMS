@@ -82,7 +82,7 @@ const StudentResearchPapers = () => {
   return (
     <>
       <AddButton title={title} onclick={setOpen} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="paperTitle" value={paperTitle} label={tableHead.paperTitle} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="journalName" value={journalName} label={tableHead.journalName} setState={setValues} />

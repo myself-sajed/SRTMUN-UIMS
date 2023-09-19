@@ -63,7 +63,7 @@ const CombineQualification = () => {
   return (
     <>
       <AddButton onclick={setOpen} title="Your Qualifications" />
-      <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <div className={`col-12 p-1 col-md-6 col-lg-4 text-sm md:text-base`}>
             <label htmlFor="choose" className="form-label" >Exam / Program Type</label>
@@ -94,10 +94,10 @@ const CombineQualification = () => {
             </div>
           }
           {
-            <Select className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} options={ProgramType === "UG" ? ["School of Fine and Performing Arts", "School of Pharmacy", "School of Technology, Sub-Campus, Latur"] : Object.keys(SchoolsProgram)} desable={!isStudied} />
+            isStudied?<Select className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} options={ProgramType === "UG" ? ["School of Fine and Performing Arts", "School of Pharmacy", "School of Technology, Sub-Campus, Latur"] : Object.keys(SchoolsProgram)} />:<Text className='col-md-6 col-lg-4' id="school" value={school} label="School Name" setState={setValues} /> 
           }
           {
-            <Select className='col-md-6 col-lg-4' id="Program" value={Program} label="Program Name" setState={setValues} options={ProgramType === "UG" && school === "School of Fine and Performing Arts" ? ["Bachalor in Performing Arts"] : ProgramType === "UG" && school === "School of Pharmacy" ? ["B.Pharm"] : ProgramType === "UG" && school === "School of Technology, Sub-Campus, Latur" ? ["B.Voc.(Software Development)"] : SchoolsProgram[school] ? SchoolsProgram[school].map(item => { return item[0] }) : []} desable={!isStudied} />
+            isStudied?<Select className='col-md-6 col-lg-4' id="Program" value={Program} label="Program Name" setState={setValues} options={ProgramType === "UG" && school === "School of Fine and Performing Arts" ? ["Bachalor in Performing Arts"] : ProgramType === "UG" && school === "School of Pharmacy" ? ["B.Pharm"] : ProgramType === "UG" && school === "School of Technology, Sub-Campus, Latur" ? ["B.Voc.(Software Development)"] : SchoolsProgram[school] ? SchoolsProgram[school].map(item => { return item[0] }) : []} desable={!isStudied} />: <Text className='col-md-6 col-lg-4' id="Program" value={Program} label="Program Name" setState={setValues} />
           }
 
           <Text className='col-md-6 col-lg-4' id="InstitutionBoard" value={InstitutionBoard} label="Institute / Board" setState={setValues} desable={isStudied} />

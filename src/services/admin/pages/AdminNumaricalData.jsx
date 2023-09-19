@@ -29,7 +29,8 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   const [module, setModule] = useState(null)
   const [model, setModel] = useState(null)
   const [proof, setProof] = useState(null)
-
+  const fiveYears = academicYearGenerator(5, true)
+  const generateAcademicYears = [...fiveYears, 'Total']
 
   const tableHead = {
     ResearchPapers: { index: 'Sr.No.', 'userId.name': 'Faculty Name', 'userId.department': 'Faculty School', paperTitle: 'Paper Title', journalName: 'Journal Name', authors: "Author(s)", publicationYear: 'Publication Year', issnNumber: 'ISSN Number', year: 'Year', proof: 'Uploaded Proof', },
@@ -74,10 +75,11 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback", "FeedbackStudentSatisfactionSurvey"]
 
   const getTileData = async (tdData, year, model) => {
-    if (!(feedbackModels.includes(model)) && year !== "Total" && model !== "AlumniUser" && tdData !== 0 && tdData !== NaN) {
+    if (!(feedbackModels.includes(model)) && tdData !== 0 && tdData !== NaN) {
       setModel(model)
       setTileDataLoading(true)
-      const Filter = schoolName === "All Schools" ? { year, model } : { year, schoolName, model }
+      const yearFilter = year==="Total"?fiveYears: [year]
+      const Filter = schoolName === "All Schools" ? { year: {$in: yearFilter}, model } : { year: {$in: yearFilter}, schoolName, model }
       axios.post(`${process.env.REACT_APP_MAIN_URL}/Admin/getNumaricalTileData`, Filter)
         .then((res) => {
           const { status, data } = res
@@ -94,10 +96,10 @@ const AdminNumaricalData = ({ isDirector = false }) => {
           }
         })
     }
-    else if (tdData === 0 && year !== "Total" || tdData === NaN && year !== "Total") {
+    else if (tdData === 0 || tdData === NaN) {
       toast.success("No data available")
     }
-    else if (feedbackModels.includes(model) && year !== "Total") {
+    else if (feedbackModels.includes(model)) {
       toast.error("Feedback Data Huge size")
     }
   }
@@ -124,8 +126,6 @@ const AdminNumaricalData = ({ isDirector = false }) => {
 
   const countFilter = schoolName === "All Schools" ? {} : { schoolName }
   const { data, isLoading, isError, error, refetch } = useQuery(['getFiveYearData', schoolName], () => getCountData(countFilter))
-
-  const generateAcademicYears = [...academicYearGenerator(5, true), 'Total']
 
   const modelNames = {
     ResearchPapers: 'Research Papers',
@@ -273,7 +273,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
                       <td style={{ background: "#f4f4f4" }} className='font-semibold' > {modelNames?.[tableName]} </td>
 
                       {generateAcademicYears.map((year) => {
-                        return (<td className={year === 'Total' ? 'font-bold text-center text-[#ae7e28]' : 'text-center cursor-pointer'} style={{ background: year === 'Total' ? "#f4f4f4" : "" }} onClick={(e) => { let tdData = parseInt(e.target.textContent); getTileData(tdData, year, tableName) }} >{data?.data[tableName][year]}</td>)
+                        return (<td className={`text-center cursor-pointer ${year === 'Total' ? 'font-bold text-[#ae7e28]' : 'text-center'}`} style={{ background: year === 'Total' ? "#f4f4f4" : "" }} onClick={(e) => { let tdData = parseInt(e.target.textContent); getTileData(tdData, year, tableName) }} >{data?.data[tableName][year]}</td>)
                       })}
 
                     </tr>
@@ -296,7 +296,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
             </div>
           </DialogTitle>
           <DialogContent>
-            {model === "StudentUser" ?
+            {["StudentUser", "AlumniUser"].includes(model)?
               <div className='table-responsive' style={{ height: "100%" }}>
                 <table className="table">
                   <thead className="sticky-top" style={{ background: "#ae7e28", color: '#FFF' }}>
@@ -308,7 +308,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
                       <th>Gender</th>
                       <th>Email</th>
                       <th>Eanroled Program</th>
-                      <th>Program Enroled on</th>
+                      <th>{`Program ${model==="StudentUser"?'Enroled':'completed'} on`}</th>
 
                     </tr>
                   </thead>
@@ -322,7 +322,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
                         <td>{item.gender}</td>
                         <td>{item.email}</td>
                         <td>{item.programGraduated}</td>
-                        <td>{item.programEnroledOn}</td>
+                        <td>{model==="StudentUser"?item.programEnroledOn:item.programCompletedOn}</td>
                       </tr>
                       )
                     }

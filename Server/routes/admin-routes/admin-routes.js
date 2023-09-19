@@ -201,9 +201,9 @@ router.post('/Admin/getData', async (req, res) => {
                     console.log(err);
                 }
                 for (item of fetch) {
-                    // if (item.userId !== null) {
+                    if (item.userId !== null) {
                         filterData.push(item)
-                    // }
+                    }
                 }
                 res.status(200).send(filterData);
             });
@@ -300,7 +300,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         var filter = { [yearFieldNmae]: year }
                         if (schoolName) filter[school] = schoolName
                         if (model === "PhdAwarded") {
-                            filter.degreeName = { $ne: 'PG Dissertation' }
+                            filter.degreeName = "Ph.D."
                             filter.awardSubmit = 'Awarded'
                         }
                         try {
@@ -383,13 +383,13 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
                 if (item.programEnroledOn === undefined) {
                     if (item.currentIn !== undefined) {
                         let yeartosub = parseInt(item.currentIn.split(' ')[1]);
-                        if (year == getPreviousYears(yeartosub)) {
+                        if (year['$in'].includes(getPreviousYears(yeartosub))) {
                             countStu.push(item)
                         }
                     }
                 }
                 else if (item.programEnroledOn !== undefined) {
-                    if (item.programEnroledOn === year) {
+                    if (year['$in'].includes(item.programEnroledOn)) {
                         countStu.push(item)
                     }
                 }
@@ -403,7 +403,7 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
             var filter = { [yearFieldNmae]: year }
             if (schoolName) filter[school] = schoolName
             if (model === "PhdAwarded") {
-                filter.degreeName = { $ne: 'PG Dissertation' }
+                filter.degreeName = "Ph.D."
                 filter.awardSubmit = 'Awarded'
             }
             try {
