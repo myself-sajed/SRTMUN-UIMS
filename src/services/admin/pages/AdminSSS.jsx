@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import DownloadReportButtons from '../../feedback/components/DownloadReportButtons'
 import ChartsPieGenerator from '../../feedback/analysis/ChartsPieGenerator'
 import ReportLoading from '../../../components/ReportLoading'
+import UserLoading from '../../../pages/UserLoading'
 
 const AdminSSS = () => {
 
@@ -50,57 +51,67 @@ const AdminSSS = () => {
 
     return <div>
         <AdminDrower>
+
+
             <div className='sub-main'>
                 <p className="font-bold text-lg text-center mb-2">Student Satisfaction Survey</p>
-                <table className='table table-bordered'>
-                    <thead>
-                        <tr>
-                            <th>School Names</th>
-                            {
-                                academicYearsToFetch.map((year) => {
-                                    return <th>{year}</th>
-                                })
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            Object.keys(SchoolsProgram).map((school) => {
-                                return <tr>
-                                    <td>{school}</td>
+                {
+                    isLoading ? <UserLoading title="Fetching SSS Numerical Data" /> :
+                        <table className='table table-bordered'>
+                            <thead>
+                                <tr>
+                                    <th>School Names</th>
                                     {
                                         academicYearsToFetch.map((year) => {
-                                            return <td onClick={() => showAnalytics(school, year)}>
-                                                <Button sx={{ fontWeight: 'bold', fontSize: '16px' }}>{numericalData?.data?.data[school][year]}</Button>
-                                            </td>
+                                            return <th>{year}</th>
                                         })
                                     }
                                 </tr>
-                            })
-                        }
-                        <tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    Object.keys(SchoolsProgram).map((school) => {
+                                        return <tr>
+                                            <td>{school}</td>
+                                            {
+                                                academicYearsToFetch.map((year) => {
+                                                    return <td onClick={() => showAnalytics(school, year)}>
+                                                        <Button sx={{ fontWeight: 'bold', fontSize: '16px' }}>{numericalData?.data?.data[school][year]}</Button>
+                                                    </td>
+                                                })
+                                            }
+                                        </tr>
+                                    })
+                                }
+                                <tr>
 
 
-                        </tr>
-                    </tbody>
-                </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                }
+
             </div>
+
+
 
 
 
             <div>
                 {schoolNameAndYear && <ShowAnalysisModal open={open} total="Student Satisfaction Survey Analysis" handleClose={onClose} title={`Student Satisfaction Survey Analysis for ${schoolNameAndYear?.schoolName} of ${schoolNameAndYear?.academicYear}`} >
 
-                    {
-                        reportLoading && <ReportLoading loading={reportLoading} />
-                    }
+                    {isAnalyticsLoading ? <UserLoading title="Generating SSS Report" /> : <div>
+                        {
+                            reportLoading && <ReportLoading loading={reportLoading} />
+                        }
 
 
-                    <div className="my-3">
-                        <DownloadReportButtons customFunction={generateSSSReportPDF} params={{ schoolName: schoolNameAndYear?.schoolName, academicYear: schoolNameAndYear?.academicYear, setReportLoading }} excelClick={excelClick} />
-                    </div>
+                        <div className="my-3">
+                            <DownloadReportButtons customFunction={generateSSSReportPDF} params={{ schoolName: schoolNameAndYear?.schoolName, academicYear: schoolNameAndYear?.academicYear, setReportLoading }} excelClick={excelClick} />
+                        </div>
 
-                    <ChartsPieGenerator forReport={forReport} analytics={analytics?.data?.data} />
+                        <ChartsPieGenerator forReport={forReport} analytics={analytics?.data?.data} />
+                    </div>}
                 </ShowAnalysisModal>}
             </div>
 
