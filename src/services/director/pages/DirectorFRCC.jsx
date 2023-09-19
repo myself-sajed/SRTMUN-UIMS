@@ -22,7 +22,7 @@ const DirectorFRCC = () => {
         <Bred links={[siteLinks.welcome, siteLinks.directorHome, siteLinks.fdc]} />
       </div>
 
-      <AdminFaculty school={user?.department} />
+      {user&&<AdminFaculty school={user.department} />}
 
       <div className="">
         <br /><br />
