@@ -8,6 +8,7 @@ import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth';
 import AQARStepper from '../../dsd/components/AQARStepper';
 import { iilAuthParams } from './IILHome';
 import IncubationDetails from '../components/IncubationDetails';
+import IILScopusWebOfScience from '../components/IILScopusWebOfScience';
 
 
 
@@ -31,10 +32,12 @@ const IILAQAR = () => {
             title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year'
         },
         {
-            title: '3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus Web of Science / PubMed'
+            title: '3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus Web of Science / PubMed',
+            component: <IILScopusWebOfScience academicYear={aqarYearState} type="CitationIndex" />
         },
         {
-            title: '3.4.9 - Bibliometrics of the publications during the year based on Scopus / Web of Science - h-Index of the University'
+            title: '3.4.9 - Bibliometrics of the publications during the year based on Scopus / Web of Science - h-Index of the University',
+            component: <IILScopusWebOfScience academicYear={aqarYearState} type="H-Index" />
         },
         {
             title: '3.5.2 - Revenue generated from consultancy and corporate training during the year (INR in Lakhs)'
