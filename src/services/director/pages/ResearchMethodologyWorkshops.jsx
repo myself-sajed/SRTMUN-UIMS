@@ -18,10 +18,16 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SchoolsProgram from "../../../components/SchoolsProgram";
+import SCTextField from "../components/FormComponents/SCTextField";
 
-const tableHead = { index: "Sr. no.", Name_of_the_workshop_seminar: "Name of the workshop/ seminar", Number_of_Participants: "Number of Participants", year: "year", From_Date: "From Date", To_Date: "To Date", Upload_Proof: "Upload Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_workshop_seminar: "Name of the workshop/ seminar", Number_of_Participants: "Number of Participants", year: "year", From_Date: "From Date", To_Date: "To Date", Upload_Proof: "Upload Proof", Action: "Action" }
 
-function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYear }) {
+function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYear, school }) {
+
+    if (!school) {
+        delete tableHead.SchoolName;
+      }
 
     const SendReq = 'ResearchMethodologyWorkshops';
     const module = 'director'
@@ -33,12 +39,12 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
 
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = yearFilter.length === 0 ? { SchoolName } : { year: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
     //--------------values useState---------------
-    const initialState = { rmwnotws: "", rmwnop: "", rmwy: "", rmwfd: "", rmwtd: "", rmwloarfw: "", Upload_Proof: "" }
+    const initialState = { rmwnotws: "", rmwnop: "", rmwy: "", rmwfd: "", rmwtd: "", rmwloarfw: "", Upload_Proof: "", SchoolN: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -58,6 +64,7 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
                         rmwy: item.year,
                         rmwfd: item.From_Date,
                         rmwtd: item.To_Date,
+                        SchoolN:school? item.SchoolName : ""
                     })
                 }
             })
@@ -84,10 +91,13 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit, School:values?.SchoolN }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: school ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
+                        {
+                            school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
+                        }
                             <CTextField label="Name of the workshop/ seminar" type="text" value={values.rmwnotws} id="rmwnotws" onch={setvalues} required={true} />
                             <CTextField label="Number of Participants" type="number" value={values.rmwnop} id="rmwnop" onch={setvalues} required={true} />
                             <SYTextField label="year" value={values.rmwy} id="rmwy" onch={setvalues} required={true} />
@@ -100,7 +110,7 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Research Methodology Workshops Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Research Methodology Workshops Director ${school ? "Innovation Incubation and Linkages" : directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

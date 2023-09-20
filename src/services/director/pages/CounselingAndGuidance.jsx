@@ -64,6 +64,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                         cagnotacbth: item.Name_of_the_Activity_conducted_by_the_HEI,
                         cagnosa: item.Number_of_Students_Attended,
                         cagyoa: item.Year_of_Activity,
+                        SchoolN:school? item.SchoolName : ""
                     })
                 }
             })
@@ -107,7 +108,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Counseling And Guidance Director${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Counseling And Guidance Director${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Activity" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

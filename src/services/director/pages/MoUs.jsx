@@ -17,10 +17,16 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import SCTextField from "../components/FormComponents/SCTextField";
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
-const tableHead = { index: "Sr. no.", Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed", Duration_of_MoU: "Duration of MoU", Year_of_signing_MoU: "Year of signing MoU", Upload_Proof: "Actual activity list", Action: "Action" }
+const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed", Duration_of_MoU: "Duration of MoU", Year_of_signing_MoU: "Year of signing MoU", Upload_Proof: "Actual activity list", Action: "Action" }
 
-function MoUs({ filterByAcademicYear = false, academicYear }) {
+function MoUs({ filterByAcademicYear = false, academicYear, school }) {
+
+    if (!school) {
+        delete tableHead.SchoolName;
+      }
 
     const SendReq = "MoUs"
     const module = "director"
@@ -33,11 +39,11 @@ function MoUs({ filterByAcademicYear = false, academicYear }) {
 
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_signing_MoU: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
-    const initialState = { munoowwms: "", mudom: "", muyosm: "", Upload_Proof: "" }
+    const initialState = { munoowwms: "", mudom: "", muyosm: "", Upload_Proof: "", SchoolN:"", }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -56,6 +62,7 @@ function MoUs({ filterByAcademicYear = false, academicYear }) {
                         munoowwms: item.Name_of_Organisation_with_whome_mou_signed,
                         mudom: item.Duration_of_MoU,
                         muyosm: item.Year_of_signing_MoU,
+                        SchoolN:school? item.SchoolName : ""
                     })
                 }
             })
@@ -85,10 +92,13 @@ function MoUs({ filterByAcademicYear = false, academicYear }) {
                         e.preventDefault();
                         setLoading(true)
                         edit ?
-                            EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            EditReq({ id: itemToEdit, School:values?.SchoolN }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+                            PostReq({ School: school ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container >
+                        {
+                            school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
+                        }
                             <CTextField label="Name of Organisation with whome mou signed" type="text" value={values.munoowwms} id="munoowwms" required={!edit} onch={setvalues} />
                             <CTextField label="Duration of MoU" type="text" value={values.mudom} id="mudom" required={!edit} onch={setvalues} />
                             <SYTextField label="Year of signing MoU" value={values.muyosm} id="muyosm" required={!edit} onch={setvalues} />
@@ -99,7 +109,7 @@ function MoUs({ filterByAcademicYear = false, academicYear }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`MoUs Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`MoUs Director ${school ? "Innovation Incubation and Linkages" : directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} disableUpload={school?true:false}/>
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_signing_MoU" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

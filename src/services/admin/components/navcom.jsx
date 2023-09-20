@@ -18,6 +18,7 @@ import AdminReportStatus from '../pages/AdminReportStatus';
 import AdminFeedbackStatus from '../pages/AdminFeedbackStatus';
 import AdminNumaricalData from '../pages/AdminNumaricalData';
 import AdminPrograms from './AdminPrograms';
+import AdminResearchCenter from '../pages/AdminResearchCenter';
 // import EContentDeveloped from '../tables/EContentDeveloped';
 // import Faculties from '../table2/Faculties';
 // import Qualification from '../table2/Qualification';
@@ -34,6 +35,7 @@ const DashbordButtons = [
     { element: <AdminFaculty />, title: "Faculties", name: "Faculties", },
     { element: <AdminDirector />, title: "Directors", name: "Directors", },
     { element: <AdminNumaricalData />, title: "Numerical Dashboard", name: "Numerical Dashboard", },
+    { element: <AdminResearchCenter />, title: "Research Center", name: "Research Center", },
     { element: <AdminReportStatus />, title: "Report Status", name: "Report Status", },
     { element: <AdminFeedbackStatus />, title: "Feedback Status", name: "Feedback Status", },
     { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },

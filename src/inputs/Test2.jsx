@@ -13,6 +13,9 @@ import Placements from '../services/director/pages/Placements'
 import ProgressionToHE from '../services/director/pages/ProgressionToHE'
 import AdminNumaricalData from '../services/admin/pages/AdminNumaricalData'
 import YfTable1 from '../services/youthfestival/components/YfTable1'
+import Awards from '../services/director/pages/Awards'
+import MoUs from '../services/director/pages/MoUs'
+import ResearchMethodologyWorkshops from '../services/director/pages/ResearchMethodologyWorkshops'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -34,11 +37,14 @@ const Test2 = () => {
       {/* <TotalExpenditure/> 4.1.4 */}
       {/* <OtherDemandRatio/> 2.1.1 */}
 
-      {/* <Placements school={true} />
-      <ProgressionToHE school={true} /> */}
+      {/* <Placements school={true} />  */}
+      {/* <ProgressionToHE school={true} />  */}
+      <Awards school={true} /> 
+      <MoUs school={true} /> 
+      <ResearchMethodologyWorkshops school={true} /> 
 
       {/* <AdminNumaricalData School="All Schools"/> */}
-      < YfTable1 />
+      {/* < YfTable1 /> */}
       {/* < YfTable2 /> */}
     </div>
   )

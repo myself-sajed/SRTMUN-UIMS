@@ -14,10 +14,11 @@ import StatusPage from '../../status/pages/StatusPage';
 import AdminReportStatus from './AdminReportStatus';
 import AdminFeedbackStatus from './AdminFeedbackStatus';
 import AdminNumaricalData from './AdminNumaricalData';
+import AdminResearchCenter from './AdminResearchCenter';
 
 
 const AdminMain = () => {
-  const ComponentSetter = { "Dashboard": <AdminDashboard />, "Faculties": <AdminFaculty />, "Directors": <AdminDirector />, "Numerical Dashboard": <AdminNumaricalData />, "Report Status": <AdminReportStatus />, "Feedback Status": <AdminFeedbackStatus />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "More": <AdminMore /> }
+  const ComponentSetter = { "Dashboard": <AdminDashboard />, "Faculties": <AdminFaculty />, "Directors": <AdminDirector />, "Numerical Dashboard": <AdminNumaricalData />, "Research Center": <AdminResearchCenter/>, "Report Status": <AdminReportStatus />, "Feedback Status": <AdminFeedbackStatus />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "More": <AdminMore /> }
 
   // title('SDM | School Data Management')
   const AdminActive = useSelector(state => state.adminActive.adminActive)

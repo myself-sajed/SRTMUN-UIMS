@@ -64,6 +64,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
                         pthenoia: item.Name_of_institution_admitted,
                         pthenopa: item.Name_of_programme_admitted,
                         ptheya: item.Academic_Year,
+                        SchoolN:school? item.SchoolName : ""
                     })
                 }
             })
@@ -115,7 +116,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProgressionToHE Director ${school ? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ProgressionToHE Director ${school ? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>

@@ -372,7 +372,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="p-3 flex-auto w-full lg:w-fit">
+                        <div className="p-3 flex-auto w-full lg:w-fit">
                             <div className="wrap-price">
                                 <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                     <div>
@@ -384,7 +384,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="p-3 flex-auto w-full lg:w-fit">
                             <div className="wrap-price">

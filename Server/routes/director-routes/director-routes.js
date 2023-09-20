@@ -538,7 +538,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
 
     //Award
     if (model == "Award") {
-        const { atoti, anota, anotaa, acda, ayoa, ac } = data
+        const { atoti, anota, anotaa, acda, ayoa, ac, School } = data
         SendData = {
             Title_of_the_innovation: atoti,
             Name_of_the_Award: anota,
@@ -546,6 +546,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Contact_details_Agency: acda,
             Year_of_Award: ayoa,
             Category: ac,
+        }
+        if(School!==""){
+            SendData.SchoolName= School
         }
     }
     //CounselingAndGuidance
@@ -555,6 +558,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Name_of_the_Activity_conducted_by_the_HEI: cagnotacbth,
             Number_of_Students_Attended: cagnosa,
             Year_of_Activity: cagyoa
+        }
+        if(School!==""){
+            SendData.SchoolName= School
         }
     }
     //DemandRatio
@@ -591,16 +597,19 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     }
     //MoUs
     else if (model == "MoUs") {
-        const { munoowwms, mudom, muyosm } = data
+        const { munoowwms, mudom, muyosm, School } = data
         SendData = {
             Name_of_Organisation_with_whome_mou_signed: munoowwms,
             Duration_of_MoU: mudom,
             Year_of_signing_MoU: muyosm
         }
+        if(School!==""){
+            SendData.SchoolName= School
+        }
     }
     //ProgressionToHE
     else if (model == 'ProgressionToHE') {
-        const { pthenose, pthepgf, pthenoia, pthenopa, ptheya } = data
+        const { pthenose, pthepgf, pthenoia, pthenopa, ptheya, School } = data
         SendData = {
             Name_of_student_enrolling: pthenose,
             Program_graduated_from: pthepgf,
@@ -608,6 +617,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Name_of_programme_admitted: pthenopa,
             Academic_Year: ptheya
         }
+        if(School!==""){
+            SendData.SchoolName= School
+        }        
     }
     //ProjectsInternships
     else if (model == 'ProjectsInternships') {
@@ -622,13 +634,16 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     }
     //ResearchMethodologyWorkshops
     else if (model == 'ResearchMethodologyWorkshops') {
-        const { rmwnotws, rmwnop, rmwy, rmwfd, rmwtd } = data
+        const { rmwnotws, rmwnop, rmwy, rmwfd, rmwtd, School } = data
         SendData = {
             Name_of_the_workshop_seminar: rmwnotws,
             Number_of_Participants: rmwnop,
             year: rmwy,
             From_Date: rmwfd,
             To_Date: rmwtd
+        }
+        if(School!==""){
+            SendData.SchoolName= School
         }
     }
     //TrainingProgramsOrganized
@@ -701,6 +716,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     //AlumniContribution, ConferencesSemiWorkshopOrganized, QualifiedExams, Placement, CourceInAllProgram, Employability, ValueAddedCource, ReservedSeats
     else {
         SendData = data
+        if(model==="Placement" && data.School!==""){
+            SendData.SchoolName= School
+        }
     }
 
     var alldata = null

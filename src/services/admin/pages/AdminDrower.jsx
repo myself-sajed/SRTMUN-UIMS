@@ -12,12 +12,13 @@ import { setAdminActive } from '../../../redux/slices/AdminActiveSlice'
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import FestivalRoundedIcon from '@mui/icons-material/FestivalRounded';
+import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks';
 
 
 const AdminDrower = ({ children, hideHeader = false }) => {
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon />, }
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon />, }
   // "University Programs": <FestivalRoundedIcon />,
   title('Admin Panel')
   const dispatch = useDispatch();
