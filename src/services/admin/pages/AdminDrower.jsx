@@ -13,12 +13,15 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import FestivalRoundedIcon from '@mui/icons-material/FestivalRounded';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import title from '../../../js/title'
 import siteLinks from '../../../components/siteLinks';
 
 
 const AdminDrower = ({ children, hideHeader = false }) => {
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon />, }
+  
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Student Satisfaction Survey": <GroupsRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon />, }
+
   // "University Programs": <FestivalRoundedIcon />,
   title('Admin Panel')
   const dispatch = useDispatch();
@@ -29,7 +32,7 @@ const AdminDrower = ({ children, hideHeader = false }) => {
       <div className='col-12' style={{ height: "auto", display: 'flex', flexDirection: 'column' }}>
         {!hideHeader && <div className='sidebar-admin-drower'>
           {
-            DashbordButtons?.map(button => <button onClick={() => { dispatch(setAdminActive(button.name)) }} className={`DashbordButtons ${AdminActive === button.name ? 'active' : null}`}><span style={{ paddingRight: "10px" }}>{iconsSetter[button.name]}</span>{button.title}</button>)
+            DashbordButtons?.map(button => <button onClick={() => { dispatch(setAdminActive(button.name)) }} className={`DashbordButtons ${AdminActive === button.name ? 'active' : null} text-left`}><span style={{ paddingRight: "10px" }}>{iconsSetter[button.name]}</span>{button.title}</button>)
           }
         </div>}
 

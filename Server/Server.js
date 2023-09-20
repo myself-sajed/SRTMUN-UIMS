@@ -105,6 +105,9 @@ app.use(require('./routes/exam-routes/exam-routes').router)
 //krc
 app.use(require('./routes/krc-routes/krc-routes'))
 
+// iil
+require('./routes/iil-routes/iil-routes')(app)
+
 //other
 app.use(require('./routes/other-routes/other-routes'))
 
@@ -144,6 +147,7 @@ require('./routes/feedback-routes/feedbackRoutes').studentFeedbackRoutes(app)
 require('./routes/feedback-routes/fetchFeedbackData')(app)
 require('./routes/feedback-routes/generateFeedbackReport')(app)
 require('./routes/feedback-routes/actionTakenReport')(app)
+require('./routes/feedback-routes/studentSurveryRoutes')(app)
 
 // require('./models/placement-models/placementUserSchema')
 
@@ -298,6 +302,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     nss: `./uploads/nss-uploads/${filename}`,
     exam: `./uploads/exam-uploads/${filename}`,
     placement: `./uploads/placement-uploads/${filename}`,
+    iil: `./uploads/iil-uploads/${filename}`,
     aqar: `./uploads/aqar-uploads/${filename}`,
     youth: `./uploads/youth-uploads/${filename}`,
   }

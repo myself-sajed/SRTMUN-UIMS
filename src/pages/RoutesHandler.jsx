@@ -126,6 +126,10 @@ import FeedbackAck from '../services/programs/pages/FeedbackAck'
 import YFGenerateReport from '../services/youthfestival/pages/YFGenerateReport'
 import YFApplicationForm from '../templates/youthfestival/YFApplicationForm'
 import PDFNumericalTable from '../services/admin/pages/PDFNumericalTable'
+import SSSReport from '../templates/feedback/SSSReport'
+import IILLogin from '../services/iil/pages/IILLogin'
+import IILHome from '../services/iil/pages/IILHome'
+import IILAQAR from '../services/iil/pages/IILAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -240,6 +244,7 @@ const RoutesHandler = () => {
                 <Route path="/director/service/feedback/action" exact element={<ActionOnFeedback />} />
                 <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
                 <Route path="/feedback/generateFeedbackReport/:schoolName/:feedbackUser/:academicYear" exact element={<FeedbackReport />} />
+                <Route path="/SSS/report/:schoolName/:academicYear" exact element={<SSSReport />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
@@ -283,6 +288,11 @@ const RoutesHandler = () => {
                 <Route path="/dsd-login" exact element={<DSDLogin />} />
                 <Route path="/dsd" exact element={<DSDHome />} />
                 <Route path="/dsd/aqar" exact element={<DSDAQAR />} />
+
+                {/* KRC */}
+                <Route path="/iil-login" exact element={<IILLogin />} />
+                <Route path="/iil" exact element={<IILHome />} />
+                <Route path="/iil/aqar" exact element={<IILAQAR />} />
 
                 {/* KRC */}
                 <Route path="/krc-login" exact element={<KRCLogin />} />

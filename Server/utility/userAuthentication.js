@@ -11,9 +11,10 @@ const SportsUser = require('../models/sports-models/sportsUserSchema')
 const NSSUser = require('../models/nss-models/nssUserSchema')
 const ExamUser = require('../models/exam-models/examUserSchema')
 const PlacementUser = require('../models/placement-models/placementUserSchema')
+const IILUser = require('../models/iil-models/iilUserSchema')
 
 
-const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser }
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser }
 
 const userAuthentication = (app, jwt) => {
 

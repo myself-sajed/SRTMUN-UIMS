@@ -5,13 +5,18 @@ import { downloadAnalysisPDF } from '../js/generateFeedbackReport';
 import ReportLoading from '../../../components/ReportLoading';
 import { useState } from 'react';
 
-const DownloadReportButtons = ({ schoolName, feedbackUser, academicYear, excelClick }) => {
+const DownloadReportButtons = ({ schoolName, feedbackUser, academicYear, excelClick, customFunction = false, params }) => {
 
     const [isLoading, setIsLoading] = useState(false)
 
     const downloadPDFReport = () => {
-        setIsLoading({ title: `Generating ${feedbackUser} Feedback Analysis PDF` })
-        downloadAnalysisPDF({ schoolName, feedbackUser, academicYear, setIsLoading })
+        if (customFunction) {
+            customFunction(params)
+        } else {
+            setIsLoading({ title: `Generating ${feedbackUser} Feedback Analysis PDF` })
+            downloadAnalysisPDF({ schoolName, feedbackUser, academicYear, setIsLoading })
+        }
+
     }
 
 

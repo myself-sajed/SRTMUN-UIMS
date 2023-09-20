@@ -12,10 +12,11 @@ const SportsAQAR = require('../../models/sports-models/sportsAqarSchema')
 const NSSAQAR = require('../../models/nss-models/nssAqarSchema')
 const ExamAQAR = require('../../models/exam-models/examAqarSchema')
 const PlacementAQAR = require('../../models/placement-models/placementAqarSchema')
+const IILAQAR = require('../../models/iil-models/iilAQARSchema')
 const OtherAQAR = require('../../models/other-models/otherAQARSchema')
 const YFReportIsSubmitted = require('../../models/youth-festival/yfSubmitted')
 
-const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted }
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR }
 
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');
@@ -36,10 +37,10 @@ const dsdstorage = multer.diskStorage({
 const dsdUpload = multer({ storage: dsdstorage })
 
 const excelObject = {
-    DSDSports:{
+    DSDSports: {
         "Name of the award/ medal": 'nameOfAward', "Team / Individual": 'teamIndividual', "Inter-university / state / National / International": 'isNat', "Name of the event": 'nameOfEvent', "Name of the student": 'nameOfStudnt', "Year": 'academicYear',
-    }, 
-    SportsAndCulturalEvents:{
+    },
+    SportsAndCulturalEvents: {
         "Date of event/competition": "dateOfEvent", "Name  of the event/competition": "nameOfEvent", "Academic Year": "academicYear",
     }
 }
@@ -212,4 +213,4 @@ router.post('/dsd/excelRecord/:model', excelUpload.single('excelFile'), (req, re
 })
 
 
-module.exports = {router, excelObject}
+module.exports = { router, excelObject }

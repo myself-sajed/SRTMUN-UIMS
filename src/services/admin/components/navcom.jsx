@@ -1,7 +1,3 @@
-// icons
-// import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-
-// import AdminResearchDegrees from "../tables/AdminResearchDegrees"
 
 
 import AdminFaculty from '../pages/AdminFaculty';
@@ -10,15 +6,13 @@ import AdminAlumni from '../pages/AdminAlumni';
 import AdminStudent from '../pages/AdminStudent';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminMore from '../pages/AdminMore';
-
-// import AppointmentsHeldPrior from '../tables/AppointmentsHeldPrior';
-import StatusPage from '../../status/pages/StatusPage';
 import useAdminAuth from '../../../hooks/useAdminAuth';
 import AdminReportStatus from '../pages/AdminReportStatus';
 import AdminFeedbackStatus from '../pages/AdminFeedbackStatus';
 import AdminNumaricalData from '../pages/AdminNumaricalData';
 import AdminPrograms from './AdminPrograms';
 import AdminResearchCenter from '../pages/AdminResearchCenter';
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 // import EContentDeveloped from '../tables/EContentDeveloped';
 // import Faculties from '../table2/Faculties';
 // import Qualification from '../table2/Qualification';
@@ -38,8 +32,9 @@ const DashbordButtons = [
     { element: <AdminResearchCenter />, title: "Research Center", name: "Research Center", },
     { element: <AdminReportStatus />, title: "Report Status", name: "Report Status", },
     { element: <AdminFeedbackStatus />, title: "Feedback Status", name: "Feedback Status", },
-    { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
+    { element: <GroupsRoundedIcon />, title: "Student Satisfaction Survey", name: "Student Satisfaction Survey", },
     { element: <AdminStudent />, title: "Students", name: "Students", },
+    { element: <AdminAlumni />, title: "Alumni", name: "Alumnis", },
     // { element: <AdminPrograms />, title: "University Programs", name: "University Programs", },
     { element: <AdminMore />, title: "More", name: "More", },
 ]
