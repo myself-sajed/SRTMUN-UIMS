@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const subscriptionForKRCSchema = new mongoose.Schema({
- 
-    libraryResources: {
+const iilRevenueConsultancySchema = new mongoose.Schema({
+
+    nameOfConsultant: {
         type: 'string',
         required: true,
     },
-    eBooks: {
+    nameOfConsultancyProject: {
         type: 'string',
         required: true,
     },
-    eResources: {
+    agencyName: {
         type: 'string',
         required: true,
     },
@@ -18,11 +18,16 @@ const subscriptionForKRCSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    revenueGenerated: {
+        type: 'string',
+        required: true
+    },
     Proof: {
         type: 'string',
-        required: false
-    }
+        required: true
+    },
+
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('SubscriptionForKRC', subscriptionForKRCSchema);
+module.exports = mongoose.model('IilRevenueConsultancy', iilRevenueConsultancySchema);

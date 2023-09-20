@@ -6,7 +6,6 @@ import AdminAlumni from '../pages/AdminAlumni';
 import AdminStudent from '../pages/AdminStudent';
 import AdminDashboard from '../pages/AdminDashboard';
 import AdminMore from '../pages/AdminMore';
-import useAdminAuth from '../../../hooks/useAdminAuth';
 import AdminReportStatus from '../pages/AdminReportStatus';
 import AdminFeedbackStatus from '../pages/AdminFeedbackStatus';
 import AdminNumaricalData from '../pages/AdminNumaricalData';

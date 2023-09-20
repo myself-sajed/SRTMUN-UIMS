@@ -16,6 +16,9 @@ import YfTable1 from '../services/youthfestival/components/YfTable1'
 import Awards from '../services/director/pages/Awards'
 import MoUs from '../services/director/pages/MoUs'
 import ResearchMethodologyWorkshops from '../services/director/pages/ResearchMethodologyWorkshops'
+import IILCollaborativeActivities from '../services/iil/components/IILCollaborativeActivities'
+import IILRevenueConsultancy from '../services/iil/components/IILRevenueConsultancy'
+import IILRevenueCorporateTraining from '../services/iil/components/IILRevenueCorporateTraining'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -39,13 +42,17 @@ const Test2 = () => {
 
       {/* <Placements school={true} />  */}
       {/* <ProgressionToHE school={true} />  */}
-      <Awards school={true} /> 
-      <MoUs school={true} /> 
-      <ResearchMethodologyWorkshops school={true} /> 
+      {/* <Awards school={true} />  */}
+      {/* <MoUs school={true} />  */}
+      {/* <ResearchMethodologyWorkshops school={true} />  */}
 
       {/* <AdminNumaricalData School="All Schools"/> */}
       {/* < YfTable1 /> */}
       {/* < YfTable2 /> */}
+
+      <IILCollaborativeActivities/>
+      <IILRevenueConsultancy />
+      <IILRevenueCorporateTraining />
     </div>
   )
 }
