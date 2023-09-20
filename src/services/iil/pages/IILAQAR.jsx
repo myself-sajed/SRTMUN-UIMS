@@ -9,6 +9,9 @@ import AQARStepper from '../../dsd/components/AQARStepper';
 import { iilAuthParams } from './IILHome';
 import IncubationDetails from '../components/IncubationDetails';
 import IILScopusWebOfScience from '../components/IILScopusWebOfScience';
+import MoUs from '../../director/pages/MoUs';
+import Awards from '../../director/pages/Awards';
+import ResearchMethodologyWorkshops from '../../director/pages/ResearchMethodologyWorkshops';
 
 
 
@@ -26,10 +29,12 @@ const IILAQAR = () => {
             component: <IncubationDetails academicYear={aqarYearState} />
         },
         {
-            title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year'
+            title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year',
+            component: <ResearchMethodologyWorkshops school={true} academicYear={aqarYearState} filterByAcademicYear={true} />
         },
         {
-            title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year'
+            title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year',
+            component: <Awards school={true} academicYear={aqarYearState} filterByAcademicYear={true} />
         },
         {
             title: '3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus Web of Science / PubMed',
@@ -46,7 +51,8 @@ const IILAQAR = () => {
             title: '3.7.1 - Number of collaborative activities with other institutions/ research establishment/industry for research and academic development of faculty and students during the year'
         },
         {
-            title: '3.7.2 - Number of functional MoUs with institutions/ industries in India and abroad for internship, on-the-job training, project work, student / faculty exchange and collaborative research during the year'
+            title: '3.7.2 - Number of functional MoUs with institutions/ industries in India and abroad for internship, on-the-job training, project work, student / faculty exchange and collaborative research during the year',
+            component: <MoUs school={true} academicYear={aqarYearState} filterByAcademicYear={true} />
         },
     ]
 

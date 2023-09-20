@@ -59,7 +59,6 @@ router.post('/aqar/fetchSupportingProof', async (req, res) => {
         const { filter } = req.body
         const doc = await AQARSupportingDocuments.findOne(filter)
         if (doc) {
-            console.log(doc)
             res.send({ status: 'success', data: doc })
         } else {
             res.send({ status: 'notfound' })

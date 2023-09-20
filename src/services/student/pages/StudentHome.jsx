@@ -169,111 +169,114 @@ const StudentHome = () => {
             </div>
 
             {user ?
-                <div className="main-div xl:flex flex-row items-start my-3 gap-3 animate-fade-up animate-once">
-                    <div className="mb-3 md:mb-0 xl:h-screen">
-                        <div className="p-3 sm:flex flex-row xl:block items-start justify-start gap-4 bg-gray-50 rounded-lg border xl:h-full">
-                            <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] xl:mx-auto rounded-full object-cover sm:mt-4 border- border-[#4566ac] sm:mx-10' />
+                <div>
+                    <div className="main-div xl:flex flex-row items-start my-3 gap-3 animate-fade-up animate-once">
+                        <div className="mb-3 md:mb-0 xl:h-screen">
+                            <div className="p-3 sm:flex flex-row xl:block items-start justify-start gap-4 bg-gray-50 rounded-lg border xl:h-full">
+                                <img src={serverLinks.showFile(user?.photoURL, 'student')} className='h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] xl:mx-auto rounded-full object-cover sm:mt-4 border- border-[#4566ac] sm:mx-10' />
 
-                            <div className='xl:mt-4'>
-                                <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)}</p>
+                                <div className='xl:mt-4'>
+                                    <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {capitalizeText(user?.name)}</p>
 
-                                <div className='text-left gap-2 mt-2'>
-                                    <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
-                                    <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
-                                    <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
-                                    <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
-                                </div>
+                                    <div className='text-left gap-2 mt-2'>
+                                        <ContactTile keyName="User" value={`${user && user?.isAlumni ? 'Verified Alumni' : 'Verified Student'}`} />
+                                        <ContactTile keyName="School" value={`${user && user.schoolName || 'Not Added'}`} />
+                                        <ContactTile keyName="Email" value={`${user && user.email || 'Not Added'}`} />
+                                        <ContactTile keyName="Phone" value={`${user && user.mobile || 'Not Added'}`} />
+                                    </div>
 
-                                <div className="mt-3">
-                                    {/* <button type="button" className="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
+                                    <div className="mt-3">
+                                        {/* <button type="button" className="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
                                         <ContactPageRoundedIcon />
                                         Download Resume
                                     </button> */}
 
-                                    <button type="button" className="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2" onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
-                                        <EditRoundedIcon />
-                                        Edit Profile
-                                    </button>
+                                        <button type="button" className="text-black bg-yellow-300 hover:bg-yellow-400 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2" onClick={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }}>
+                                            <EditRoundedIcon />
+                                            Edit Profile
+                                        </button>
 
-                                    <button onClick={() => { dispatch(user?.isAlumni ? setAlumniUser(null) : setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem(user?.isAlumni ? 'alumni-token' : 'student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
-                                        <LogoutRoundedIcon />
-                                        Log out
-                                    </button>
+                                        <button onClick={() => { dispatch(user?.isAlumni ? setAlumniUser(null) : setStudentUser(null)); navigate(siteLinks.welcome.link); localStorage.removeItem(user?.isAlumni ? 'alumni-token' : 'student-token'); }} type="button" className="text-gray-900 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm p-2 text-center inline-flex gap-2 items-center mr-2 mb-2">
+                                            <LogoutRoundedIcon />
+                                            Log out
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div className='flex-1'>
+                            <div className=" font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
+                                <p aria-current="true" className="w-full p-2 font-medium text-left text-black  border-b border-gray-200 rounded-t-lg ">
+                                    Other Relevant Information
+                                </p>
+                                <div className="w-full">
+                                    <OtherDetails user={user} editFunction={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }} />
+                                </div>
+
+                            </div>
+
+                            <div className="mt-3">
+
+                                <div className="accordion" id="accordionExample">
+                                    {
+                                        navcom.map((item, index) => {
+                                            return [...researchCenter, 'studentJRFSRF', 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
+                                                (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                                    [...researchCenter, 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ? null :
+                                                        <div className="accordion-item bg-gray-50 ">
+                                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                                    {item.value}
+                                                                </button>
+                                                            </h2>
+                                                            <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                                <div className="accordion-body">
+                                                                    <div key={item}>{item.element}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
+                                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                                    {item.value}
+                                                                </button>
+                                                            </h2>
+                                                            <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                                <div className="accordion-body">
+                                                                    <div key={item}>{item.element}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                        })
+                                    }
+                                </div>
+
+
+
+                            </div>
+                        </div>
                     </div>
+                    {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ? <div className='Stupb-2 pl-2 font-semibold text-lg'>Research Center</div> : ""}
 
-                    <div className='flex-1'>
-                        <div className=" font-medium text-gray-900 border border-gray-200 rounded-lg bg-gray-50">
-                            <p aria-current="true" className="w-full p-2 font-medium text-left text-black  border-b border-gray-200 rounded-t-lg ">
-                                Other Relevant Information
-                            </p>
-                            <div className="w-full">
-                                <OtherDetails user={user} editFunction={() => { setOpen(true); setEdit(true); setItemToEdit(user?._id); }} />
-                            </div>
-
-                        </div>
-
-                        <div className="mt-3">
-
-                            <div className="accordion" id="accordionExample">
-                                {
-                                    navcom.map((item, index) => {
-                                        return [...researchCenter, 'studentJRFSRF', 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
-                                            (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                                [...researchCenter,'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ? null :
-                                                    <div className="accordion-item bg-gray-50 ">
-                                                        <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                                {item.value}
-                                                            </button>
-                                                        </h2>
-                                                        <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                            <div className="accordion-body">
-                                                                <div key={item}>{item.element}</div>
-                                                            </div>
-                                                        </div>
-                                                    </div> : null : ['higherEducation', 'examQualified', 'jobs', 'business', 'alumniContribution'].includes(item.name) && !isAlumniLink ? null : <div className="accordion-item bg-gray-50 ">
-                                                        <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                                {item.value}
-                                                            </button>
-                                                        </h2>
-                                                        <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                            <div className="accordion-body">
-                                                                <div key={item}>{item.element}</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                    })
-                                }
-                            </div>
-
-                            {(user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ? <div className='pt-3 pb-2 pl-2 font-semibold text-lg'>Research Center</div> : ""}
-
-                            <div className="accordion" id="accordionExample">
-                                {
-                                    navcom.map((item, index) => {
-                                        return [...researchCenter,'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
-                                            (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
-                                                <div className="accordion-item bg-gray-50 ">
-                                                    <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
-                                                            {item.value}
-                                                        </button>
-                                                    </h2>
-                                                    <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <div key={item}>{item.element}</div>
-                                                        </div>
-                                                    </div>
-                                                </div> : null : null
-                                    })
-                                }
-                            </div>
-
-                        </div>
+                    <div className="accordion" id="accordionExample">
+                        {
+                            navcom.map((item, index) => {
+                                return [...researchCenter, 'studentResearchProjects', 'studentResearchPapers'].includes(item.name) ?
+                                    (user?.programGraduated.includes("Ph.D") && user?.ReceivesFelloship == 'Yes' && !user?.isAlumni) ?
+                                        <div className="accordion-item bg-gray-50 ">
+                                            <h2 className="accordion-header accordionHeader" id={`heading-${index}`}>
+                                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${index}`} aria-expanded="false" aria-controls={`collapse-${index}`}>
+                                                    {item.value}
+                                                </button>
+                                            </h2>
+                                            <div id={`collapse-${index}`} className="accordion-collapse collapse" aria-labelledby={`heading-${index}`} data-bs-parent="#accordionExample">
+                                                <div className="accordion-body">
+                                                    <div key={item}>{item.element}</div>
+                                                </div>
+                                            </div>
+                                        </div> : null : null
+                            })
+                        }
                     </div>
                 </div> : <div className="mt-3 flex flex-col md:flex-row items-start gap-5">
                     <div className="h-screen w-full bg-gray-50 border rounded-xl p-2">
