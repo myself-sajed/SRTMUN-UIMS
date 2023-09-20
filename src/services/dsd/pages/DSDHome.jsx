@@ -28,7 +28,7 @@ const DSDHome = () => {
                     <HomeProfile bredLinks={bredLinks} user={user} setUser={setDSDUser} userType="dsd" profileButton1={profileButton1} tokenName="dsd-token" >
                         <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
                             <ServiceTile fullForm="DSD AQAR Form" title="AQAR" link1={siteLinks.dsdAQAR.link} link1Title="Fill AQAR Form" />
-                            <ServiceTile fullForm="Intercollegiate Youth Festival" title="Youth Festival" link1={siteLinks.yfCollegeLogin.link} link1Title="College Login" link2={siteLinks.yfCollegeRegistration.link} link2Title="College Registration" />
+                            <ServiceTile fullForm="Intercollegiate Youth Festival" title="Youth Festival" link1={siteLinks.dsdDashboard.link} link1Title="Analytical Dashboard" />
                         </div>
 
                     </HomeProfile>

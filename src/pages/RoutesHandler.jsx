@@ -130,6 +130,7 @@ import SSSReport from '../templates/feedback/SSSReport'
 import IILLogin from '../services/iil/pages/IILLogin'
 import IILHome from '../services/iil/pages/IILHome'
 import IILAQAR from '../services/iil/pages/IILAQAR'
+import YouthDashboard from '../services/dsd/pages/YouthDashboard'
 
 let model = "Xyz"
 let module = 'abc'
@@ -288,6 +289,7 @@ const RoutesHandler = () => {
                 <Route path="/dsd-login" exact element={<DSDLogin />} />
                 <Route path="/dsd" exact element={<DSDHome />} />
                 <Route path="/dsd/aqar" exact element={<DSDAQAR />} />
+                <Route path="/dsd/youthfestival/dashboard" exact element={<YouthDashboard />} />
 
                 {/* KRC */}
                 <Route path="/iil-login" exact element={<IILLogin />} />

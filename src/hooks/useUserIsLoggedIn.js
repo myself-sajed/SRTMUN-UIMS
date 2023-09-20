@@ -10,6 +10,7 @@ import { sportsAuthParams } from "../services/sports/pages/SportsHome"
 import { nssAuthParams } from "../services/nss/pages/NSSHome"
 import { examAuthParams } from "../services/exam/pages/ExamHome"
 import { placementAuthParams } from "../services/placement/pages/PlacementHome"
+import { iilAuthParams } from "../services/iil/pages/IILHome"
 
 
 const useUserIsLoggedIn = () => {
@@ -22,6 +23,7 @@ const useUserIsLoggedIn = () => {
     useOtherServiceAuth({ ...nssAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...examAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...placementAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...iilAuthParams, usingInIsUserLoggedInHook: true })
 
 
     useEffect(() => {
