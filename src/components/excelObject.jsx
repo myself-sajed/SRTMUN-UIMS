@@ -416,6 +416,16 @@ const excelObject = {
     }, 
     SportsAndCulturalEvents:{
         'dateOfEvent': "Date of event/competition", 'nameOfEvent': "Name  of the event/competition", 'academicYear': "Academic Year",
+    },
+    //iil  
+    IilRevenueCorporateTraining:{
+        'nameOfCorporate': "Names of the teacher-consultants/corporate trainers", 'nameOfCorporateProgram': "Title of the corporate training program", 'agencyName': "Agency seeking training with contact details", 'revenueGenerated': "Revenue generated (amount in rupees)",'numberOfTrainees': "Number of trainees", 'academicYear': 'Year',
+    },
+    IilRevenueConsultancy:{
+        'nameOfConsultant': "Name of the consultant", 'nameOfConsultancyProject': "Name of consultancy project", 'agencyName': "Consulting/Sponsoring agency with contact details", 'revenueGenerated': "Revenue generated (INR in Lakhs)", 'academicYear': 'Year',
+    },
+    IilCollaborativeActivities:{
+        'titleOfActivity': "Title of the collaborative activity", 'nameOfAgency': "Name of the collaborating agency with contact details", 'nameOfParticipant': "Name of the participant ", 'duration': "Duration",'natureOfActivity': "Nature of the activity", 'academicYear': 'Year of collaboration',
     }
 }
 

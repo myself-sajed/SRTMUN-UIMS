@@ -106,7 +106,7 @@ app.use(require('./routes/exam-routes/exam-routes').router)
 app.use(require('./routes/krc-routes/krc-routes'))
 
 // iil
-require('./routes/iil-routes/iil-routes')(app)
+require('./routes/iil-routes/iil-routes').iilRoutes(app)
 
 //other
 app.use(require('./routes/other-routes/other-routes'))
