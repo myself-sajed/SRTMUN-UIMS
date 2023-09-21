@@ -243,7 +243,9 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const docs = {}
         let oModels = Object.keys(models)
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey'];
+        
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
+
         for (const model of filteredModels) {
             let school = directorModels.includes(model) ? "SchoolName" : model === "AlumniUser" || model === "StudentUser" ? "schoolName" : feedbackModels.includes(model) ? "schoolName" : ""
             docs[model] = {};
@@ -442,6 +444,13 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
         console.log(err);
         res.status(500).send();
     }
+})
+
+router.post('/Admin/reserchCenterData', async (req, res)=>{
+
+    const {model, schoolName} = req.body
+    console.log(model, schoolName);
+
 })
 
 //registration page Enable/ Disable

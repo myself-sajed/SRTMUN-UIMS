@@ -28,10 +28,6 @@
   background-color: #9185b5;
 }
 
-/* .ant-input-search-button:hover {
-    background-color: ;
-  } */
-
 .ant-input-search-button:hover {
   background-color: #6957a0;
   color: #fff;
@@ -90,7 +86,7 @@
 /*Admin Drower*/
 .sidebar-admin-drower {
   display: flex;
-  gap: 5px;
+  gap: 7px 0;
   flex-wrap: wrap;
   padding: 10px;
   background: var(--top-background-color);
@@ -117,43 +113,18 @@
   padding: 10px;
   background: var(--top-btn-background);
   border-radius: 20px;
-  /* box-shadow: rgb(145 133 181) 7px 7px 8px; */
 }
 
 /*Dashboard*/
 
 .DashbordButtons {
   display: flex;
-  padding: 9px;
   background: var(--top-color-new);
   padding: 8px;
-  margin-bottom: 2px;
   color: #fff;
   border-radius: 8px;
-}
-
-@media screen and (min-width: 0px) {
-  .DashbordButtons {
-    width: 100% !important;
-  }
-}
-
-@media screen and (min-width:350px) {
-  .DashbordButtons {
-    width: 49% !important;
-  }
-}
-
-@media screen and (min-width:650px) {
-  .DashbordButtons {
-    width: 32% !important;
-  }
-}
-
-@media screen and (min-width:1050px) {
-  .DashbordButtons {
-    width: 150px !important;
-  }
+  width: 100%;
+  height: 100%;
 }
 
 .DashbordButtons:hover,

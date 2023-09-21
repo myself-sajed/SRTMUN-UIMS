@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AdminDrower from './AdminDrower'
 import axios from 'axios'
 import { useQuery } from 'react-query'
@@ -12,7 +12,6 @@ import ExcelJS from 'exceljs'
 import { useParams } from 'react-router-dom'
 import ReportLoading from '../../../components/ReportLoading'
 import ClearIcon from '@mui/icons-material/Clear';
-import AdminExcelExoprt from '../components/AdminExcelExoprt'
 import AdminTable from '../components/AdminTable'
 import GoBack from '../../../components/GoBack'
 
@@ -75,7 +74,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback", "FeedbackStudentSatisfactionSurvey"]
 
   const getTileData = async (tdData, year, model) => {
-    if (!(feedbackModels.includes(model)) && tdData !== 0 && tdData !== NaN) {
+    if (!(feedbackModels.includes(model)) && tdData !== 0 &&  !(isNaN(tdData))) {
       setModel(model)
       setTileDataLoading(true)
       const yearFilter = year==="Total"?fiveYears: [year]
@@ -96,7 +95,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
           }
         })
     }
-    else if (tdData === 0 || tdData === NaN) {
+    else if (tdData === 0 || isNaN(tdData)) {
       toast.success("No data available")
     }
     else if (feedbackModels.includes(model)) {
@@ -125,7 +124,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   }
 
   const countFilter = schoolName === "All Schools" ? {} : { schoolName }
-  const { data, isLoading, isError, error, refetch } = useQuery(['getFiveYearData', schoolName], () => getCountData(countFilter))
+  const { data, isLoading} = useQuery(['getFiveYearData', schoolName], () => getCountData(countFilter))
 
   const modelNames = {
     ResearchPapers: 'Research Papers',
@@ -166,7 +165,6 @@ const AdminNumaricalData = ({ isDirector = false }) => {
     MoUs: 'MoUs',
     StudentFeedback: "Student Feedback", AlumniFeedback: "Alumni Feedback", TeacherFeedback: "Teacher Feedback", ParentFeedback: "Parent Feedback", EmployerFeedback: "Employer Feedback", ExpertFeedback: "Expert Feedback",
   }
-
 
   const excelHandler = async (data) => {
     try {
@@ -225,7 +223,6 @@ const AdminNumaricalData = ({ isDirector = false }) => {
       toast.error("Error while generating try again")
     }
   }
-
 
   return (
     <div>
