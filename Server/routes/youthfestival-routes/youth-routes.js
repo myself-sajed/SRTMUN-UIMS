@@ -28,7 +28,6 @@ function youthRoutes(app) {
         let collegeMap = {}
         let allCompetition = []
         const collegePromise = colleges.map(async (college) => {
-            console.log(college?._id)
             const competitions = await YfCompetitions.find({ college: college._id }).populate('students college')
             let individual = 0;
             let group = 0;
@@ -38,9 +37,6 @@ function youthRoutes(app) {
                 } else if (!compet.isGroup) {
                     individual += compet.students?.length || 0
                 }
-            })
-            console.log("in group", college._id, {
-                individual, group, total: individual + group
             })
             collegeMap[college._id] = {
                 individual, group, total: individual + group, competitions
