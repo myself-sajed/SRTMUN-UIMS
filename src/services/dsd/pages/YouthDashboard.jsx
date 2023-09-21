@@ -26,6 +26,9 @@ const YouthDashboard = () => {
 
     const { data, isLoading } = useQuery(JSON.stringify(dataFilter), () => getYFDashboardData(dataFilter))
 
+    useEffect(() => {
+        setDataFilter({ ...dataFilter, competitionName: null })
+    }, [dataFilter?.category])
 
     return (
         <div>
@@ -39,7 +42,7 @@ const YouthDashboard = () => {
                         :
                         <div>
 
-                            {((dataFilter.district || dataFilter.district === null) && dataFilter.category === null && dataFilter.competitionName) ? <div>
+                            {((dataFilter.district || dataFilter.district === null) && dataFilter.category === null && dataFilter.competitionName === null) ? <div>
                                 <p className="my-2">Colleges {`(${dataFilter?.district ? dataFilter?.district : 'All'})`}</p>
                                 <CollegeList collegeData={data?.data?.data} />
                             </div> : <div>
