@@ -4,11 +4,12 @@ const { excelObject: directorExcelObj } = require("../routes/director-routes/dir
 const { excelObject: nssExcelObj } = require("../routes/nss-routes/nss-routes")
 const { excelObject: examExcelObj } = require("../routes/exam-routes/exam-routes")
 const { excelObject: dsdExcelObj } = require("../routes/dsd-routes/dsd-routes")
+const { excelObject: iilExcelObj } = require("../routes/iil-routes/iil-routes")
 
 const path = require("path");
 
 
-const ExcelObj = { ...directorExcelObj, ...facultyExcelObj, ...nssExcelObj, ...examExcelObj, ...dsdExcelObj }
+const ExcelObj = { ...directorExcelObj, ...facultyExcelObj, ...nssExcelObj, ...examExcelObj, ...dsdExcelObj, ...iilExcelObj }
 
 const SchoolsProgram = {
     "School of Computational Sciences": '"Ph.D. (Computer Science),M.Phil (Computer Science),MCA,M.Sc.(Computer Science),M.Sc(Computer Applications),M.Sc(Computer Networking)"',
@@ -278,6 +279,19 @@ async function generateExcelFile(filename, model, school) {
         },
         SportsAndCulturalEvents: {
             "Academic Year": "academicYear",
+        },
+        //Iil
+        IilRevenueCorporateTraining:{
+            "Revenue generated (amount in rupees)": 'number',
+            "Number of trainees": 'number', 
+            'Year': 'academicYear',
+        },
+        IilRevenueConsultancy:{
+            "Revenue generated (INR in Lakhs)": 'number', 
+            'Year': 'academicYear',
+        },
+        IilCollaborativeActivities:{
+            'Year of collaboration': 'academicYear',
         }
 
     };

@@ -7,7 +7,17 @@ const IilRevenueConsultancy = require('../../models/iil-models/iilRevenueConsult
 const IilRevenueCorporateTraining = require('../../models/iil-models/iilRevenueCorporateTrainingSchema')
 const { multerConfig } = require('../../utility/multerConfig')
 
-const excelObject = {}
+const excelObject = {
+    IilRevenueCorporateTraining:{
+        "Names of the teacher-consultants/corporate trainers": 'nameOfCorporate', "Title of the corporate training program": 'nameOfCorporateProgram', "Agency seeking training with contact details": 'agencyName', "Revenue generated (amount in rupees)": 'revenueGenerated',"Number of trainees": 'numberOfTrainees', 'Year': 'academicYear',
+    },
+    IilRevenueConsultancy:{
+        "Name of the consultant": 'nameOfConsultant', "Name of consultancy project": 'nameOfConsultancyProject', "Consulting/Sponsoring agency with contact details": 'agencyName', "Revenue generated (INR in Lakhs)": 'revenueGenerated', 'Year': 'academicYear',
+    },
+    IilCollaborativeActivities:{
+        "Title of the collaborative activity": 'titleOfActivity', "Name of the collaborating agency with contact details": 'nameOfAgency', "Name of the participant ": 'nameOfParticipant', "Duration": 'duration',"Nature of the activity": 'natureOfActivity', 'Year of collaboration': 'academicYear',
+    }
+}
 
 function iilRoutes(app) {
 
@@ -178,4 +188,4 @@ app.post('/iil2/excelRecord/:model', excelUpload.single('excelFile'), (req, res)
 })
 }
 
-module.exports = iilRoutes;
+module.exports = {iilRoutes, excelObject}
