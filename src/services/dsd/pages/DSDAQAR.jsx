@@ -10,8 +10,6 @@ import { useSelector } from 'react-redux';
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
 import { dsdAuthParams } from './DSDHome'
 
-
-
 const DSDAQAR = () => {
     title(siteLinks.dsdAQAR.title)
     const bredLinks = [siteLinks.welcome, siteLinks.dsdHome, siteLinks.dsdAQAR]

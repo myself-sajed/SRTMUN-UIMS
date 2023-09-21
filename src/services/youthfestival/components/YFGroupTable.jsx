@@ -10,11 +10,12 @@ import getReq from '../../../components/requestComponents/getReq'
 import DialogBox from '../../../components/formComponents/DialogBox'
 import AddButton from '../../student/components/AddButton'
 
+const thead = ["स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट"]
+const accessor = ['name', 'address', 'mobile', 'gender', 'dob', 'age', 'bloodGroup']
+
+
 const YFGroupTable = ({ user, filterByAcademicYear }) => {
 
-    const thead = ["स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट"]
-
-    const accessor = ['name', 'address', 'mobile', 'gender', 'dob', 'age', 'bloodGroup',]
 
     let studentsInfo = {
         auditHead: ["Sr. No.", "स्पर्धकाचे नाव", "कायमचा पत्ता", "भ्रमणध्वनी क्रमांक", "लिंग", "जन्म दिनांक", "१ जुलै २०२३ रोजी स्पर्धकांचे वय", "रक्त गट", "Action"],
@@ -142,6 +143,7 @@ const YFGroupTable = ({ user, filterByAcademicYear }) => {
 
 export default YFGroupTable
 
+export {thead, accessor}
 
 
 

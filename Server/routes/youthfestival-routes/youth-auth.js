@@ -45,6 +45,18 @@ router.post("/api/auth/youthfestival-login", (req, res) => {
 
 
 // check if email is already taken by student
+router.post('/youthfestival/editProfile', async function (req, res) {
+    try {
+        const { user, data } = req.body;
+        const doc = await College.findOneAndUpdate({ _id: user?._id }, data, { new: true })
+        res.send({ status: "success", data: doc })
+    } catch (error) {
+        res.send({ status: "error" })
+    }
+
+})
+
+// check if email is already taken by student
 router.post('/service/youthfestival-checkAndEmail', function (req, res) {
     const { email } = req.body;
     // check if mail already taken
