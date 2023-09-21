@@ -15,7 +15,45 @@ const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
 function youthRoutes(app) {
 
-    //get
+    //get dashboard data
+    app.post('/dsd/youthfestival/dashboard', async (req, res) => {
+        const { dataFilter } = req.body
+
+        // college filters
+        let collegeFilter = {}
+        if (dataFilter?.district) {
+            collegeFilter.district = dataFilter.district
+        }
+        const colleges = await College.find(collegeFilter).lean()
+        let collegeMap = {}
+        let allCompetition = []
+        const collegePromise = colleges.map(async (college) => {
+            console.log(college?._id)
+            const competitions = await YfCompetitions.find({ college: college._id }).populate('students college')
+            let individual = 0;
+            let group = 0;
+            competitions.forEach((compet) => {
+                if (compet.isGroup) {
+                    group += compet.students?.length || 0
+                } else if (!compet.isGroup) {
+                    individual += compet.students?.length || 0
+                }
+            })
+            console.log("in group", college._id, {
+                individual, group, total: individual + group
+            })
+            collegeMap[college._id] = {
+                individual, group, total: individual + group, competitions
+            }
+            allCompetition.push(competitions)
+            return collegeMap
+        })
+
+        await Promise.all(collegePromise)
+        res.send({ status: 'success', data: { colleges, collegeMap, allCompetition: allCompetition.flat() } })
+    })
+
+    //get data
     app.post('/youth/getData', async (req, res) => {
         const { model, filter } = req.body
         try {

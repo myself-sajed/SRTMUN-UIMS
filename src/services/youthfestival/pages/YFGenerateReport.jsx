@@ -27,7 +27,7 @@ const YFGenerateReport = () => {
 
                     <div className='bg-blue-100 rounded-xl p-5 mt-4 sm:w-[90%] md:w-[80%] lg:w-[60%] w-full sm:mx-auto'>
 
-                        <p className='text-base md:text-lg text-center'>Select Year(s) of which CAS Report to be generated</p>
+                        <p className='text-base md:text-lg text-center'>Select Year(s) of which Youth Festival Report to be generated</p>
                         <p className='text-center text-muted text-xs md:text-sm'>Click on the respective year to select, and click the button below to generate report.</p>
                         <div className='flex items-center justify-center gap-3 mt-3'>
 
