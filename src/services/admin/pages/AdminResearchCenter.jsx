@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminDrower from './AdminDrower'
 import ScienceIcon from '@mui/icons-material/Science';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -9,13 +9,15 @@ import GoBack from '../../../components/GoBack';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import AcadmicYearSelect from '../components/AcadmicYearSelect';
+import { CircularProgress } from '@mui/material';
 
 const AdminResearchCenter = ({ isDirector = false }) => {
 
   const { School } = useParams();
 
-  const [values, setValues] = useState({ schoolName: School ? School : "All Schools" })
-  const { schoolName } = values
+  const [values, setValues] = useState({ schoolName: School ? School : "All Schools", yearFilter: [] })
+  const { schoolName, yearFilter } = values
   const [active, setActive] = useState("BooksAndChapters")
 
   const Btns ={
@@ -29,15 +31,23 @@ const AdminResearchCenter = ({ isDirector = false }) => {
     return await axios.post(`${process.env.REACT_APP_MAIN_URL}/Admin/reserchCenterData`, filter)
   }
 
-  const countFilter = schoolName === "All Schools" ? { model:active } : { schoolName, model:active }
-  const { data, isLoading} = useQuery(['getReserchData', schoolName, active], () => getReserchData(countFilter))
+  let schoolFilter = schoolName==='All Schools'? {} :{department: schoolName}
+  let academicYearFilter = yearFilter.length === 0? {} : {year: {$in:yearFilter}}
 
+  const { data, isLoading, refetch} = useQuery(['getReserchData', schoolName, yearFilter], () => getReserchData({schoolFilter, academicYearFilter}))
+
+  useEffect(()=>{
+    refetch()
+  },[schoolName, yearFilter])
+
+  console.log(data);
   return (
     <div>
       {isDirector && <div className='mb-4'><GoBack pageTitle={`${School} Research Center`} /></div>}
       <AdminDrower hideHeader={School ? true : false}>
         <div className='sub-main'>
         <div className='flex justify-end pb-2'>
+            <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Academic Year" />
             {!School && <>
               <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
             </>}
@@ -50,7 +60,7 @@ const AdminResearchCenter = ({ isDirector = false }) => {
                   <div className='bg-red h-full w-1/4 flex justify-end items-center p-3'>{Btns[e].icon}</div>
                   <div className='bg-red h-full w-3/4 flex flex-col'>
                     <div className='h-1/2 w-full flex items-end text-[18px] font-semibold' >{Btns[e].name}</div>
-                    <div className='h-1/2 w-full flex items-start font-semibold text-[14px]'>42</div>
+                    <div className='h-1/2 w-full flex items-start font-semibold text-[14px]'>{data?.data?data.data[e].length:<CircularProgress color="inherit" size={18} />}</div>
                   </div>
                 </div>
               </div>

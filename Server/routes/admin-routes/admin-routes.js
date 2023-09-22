@@ -448,9 +448,54 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
 
 router.post('/Admin/reserchCenterData', async (req, res)=>{
 
-    const {model, schoolName} = req.body
-    console.log(model, schoolName);
+    const {schoolFilter, academicYearFilter} = req.body
+    let researchModels = [ "ResearchProjects", "ResearchPapers", "BooksAndChapters", "Patent" ]
+    let docs = {};
 
+try {
+  const promises = researchModels.map(async (model) => {
+    const fetch = await models[model]
+      .find(academicYearFilter)
+      .populate({
+        path: 'userId',
+        match: schoolFilter,
+        select: '-password',
+      })
+      .exec();
+
+    let filterData = [];
+
+    for (item of fetch) {
+      if (item.userId !== undefined && item.userId !== null) {
+        item.facultyName = item.userId.name;
+        item.School = item.userId.department;
+        delete item.userId;
+        filterData.push(item);
+      } else {
+        item.facultyName = item.guideName || '';
+        item.School = item.schoolName || '';
+        filterData.push(item);
+      }
+    }
+
+    docs[model] = filterData;
+  });
+
+  // Wait for all promises to resolve
+  Promise.all(promises)
+    .then(() => {
+    //   console.log(docs);
+      res.status(200).send(docs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send();
+    });
+} catch (err) {
+  console.log(err);
+  res.status(500).send();
+}
+    
 })
 
 //registration page Enable/ Disable
