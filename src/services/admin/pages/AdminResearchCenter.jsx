@@ -26,11 +26,10 @@ const AdminResearchCenter = ({ isDirector = false }) => {
 
 
   const Btns ={
-    "JrfSrf":{name:"JRF, SRF, PDF, RA", icon: <PersonSearchIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", researchName: "Reserchar Name", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", proof: "Uploaded Proof", },},
-    "BooksAndChapters":{name:"Books And Chapters", icon: <MenuBookIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", type: 'Type', titleOfBook: 'Title of Book / Chapter / Edited Book / Translation', chapterTitle: "Title of Chapter / Translation", paperTitle: 'Paper Title', transType: "Translation work", titleOfProceeding: 'Title of proceedings of the conference', conName: 'Conference Name', isNat: 'Wheather National / International', publicationYear: 'Year of Publication', issnNumber: 'ISBN/ISSN number of proceeding', aff: 'Affiliation Institute at the time of publication',publisherName: 'Publisher Name', year: 'Academic Year',  proof: "Uploaded Proof" },},
-    "ResearchProjects": {name:"Research Projects", icon: <ScienceIcon sx={{fontSize: "30px !important"}} />, tableHead:{index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", schemeName: 'Scheme / Project Title', principalName: 'Principal Invigilator', coInvestigator: 'Co-Invigilator', fundingName: 'Funding Agency', isGov: 'Govt. / Non-Govt.', awardYear: 'Award Year', providedFunds: 'Funds (INR)', fundType: 'Major / Minor', status: 'Project Status', duration: 'Project Duration', year: 'Academic Year', proof: 'Upload Proof',},},
-    "ResearchPapers": {name:"Research Papers", icon: <PlagiarismIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: "Sr.No.", facultyName: 'Faculty Name', School: "School", paperTitle:'Paper Title', journalName:'Journal Name', authors:'Author(s)', publicationYear:'Publication Year', issnNumber:'ISSN Number', indexedIn:'Indexed in', indexLink:'Links', year: 'Academic Year', proof: 'Upload Proof'},},
-    "Patent": {name:"Patents", icon: <DocumentScannerIcon sx={{fontSize: "30px !important"}}/>, tableHead: { index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", patentNumber: 'Patent Number', patentTitle: 'Patent Title', isNat: 'Wheather National / International', awardYear: 'Award Year of Patent', year: 'Academic Year', proof: 'Upload Proof' }}
+    "BooksAndChapters":{tableHead:{},name:"Books And Chapters", icon: <MenuBookIcon sx={{fontSize: "30px !important"}}/>},
+    "ResearchProjects": {tableHead:{},name:"Research Projects", icon: <ScienceIcon sx={{fontSize: "30px !important"}} />},
+    "ResearchPapers": {tableHead:{},name:"Research Papers", icon: <PlagiarismIcon sx={{fontSize: "30px !important"}}/>},
+    "Patent": {tableHead:{},name:"Patents", icon: <DocumentScannerIcon sx={{fontSize: "30px !important"}}/>}
   }
 
   const getReserchData = async (filter) => {
@@ -41,10 +40,6 @@ const AdminResearchCenter = ({ isDirector = false }) => {
   let academicYearFilter = yearFilter.length === 0? {} : {year: {$in:yearFilter}}
 
   const { data, isLoading, refetch} = useQuery(['getReserchData', schoolName, yearFilter], () => getReserchData({schoolFilter, academicYearFilter}))
-
-  // useEffect(()=>{
-  //   refetch()
-  // },[schoolName, yearFilter])
 
   useEffect(()=>{
     let Cells = Object.keys(Btns[active].tableHead)
