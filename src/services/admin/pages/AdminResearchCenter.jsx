@@ -98,6 +98,10 @@ const AdminResearchCenter = ({ isDirector = false }) => {
                       facultyName = `${item.userId.salutation} ${item.userId.name}`;
                       school = item.userId.department;
                     }
+                    else if(item.userId === undefined){
+                      facultyName = item.guideName
+                      school = item.schoolName;
+                    }
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
