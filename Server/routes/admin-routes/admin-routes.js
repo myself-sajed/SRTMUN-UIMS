@@ -449,7 +449,6 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
 router.post('/Admin/reserchCenterData', async (req, res)=>{
 
     const {schoolFilter, academicYearFilter} = req.body
-    console.log(schoolFilter);
     let researchModels = [ "JrfSrf", "ResearchProjects", "ResearchPapers", "BooksAndChapters", "Patent", ]
     let docs = {};
 try {
@@ -465,16 +464,17 @@ try {
     let filterData = [];
 
     for (item of fetch) {
-    //   if (item.userId !== undefined && item.userId !== null) {
-    //     item.facultyName = item.userId.name;
-    //     item.School = item.userId.department;
-    //     delete item.userId;
-    //     filterData.push(item);
-    //   } else if(item.userId !== undefined) {
-    //     item.facultyName = item.guideName || '';
-    //     item.School = item.schoolName || '';
+      if (item.userId !== undefined && item.userId !== null) {
         filterData.push(item);
-    //   }
+      } else if (item.userId === undefined && item.guideName!==undefined && item.schoolName!==undefined){
+        if(schoolFilter!={}&& schoolFilter.department===item.schoolName){
+            filterData.push(item);
+        }
+        else if(schoolFilter=={}){
+            filterData.push(item);
+        }
+        
+      }
     }
     docs[model] = filterData;
   });
