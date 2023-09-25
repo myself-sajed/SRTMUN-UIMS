@@ -15,9 +15,9 @@ import { CircularProgress } from '@mui/material';
 import FileViewer from '../../../components/FileViewer';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
-const AdminResearchCenter = ({ isDirector = false }) => {
+const AdminResearchCenter = ({ School = false }) => {
 
-  const { School } = useParams();
+  // const { School } = useParams();
 
   const [values, setValues] = useState({ schoolName: School ? School : "All Schools", yearFilter: [] })
   const { schoolName, yearFilter } = values
@@ -55,7 +55,7 @@ const AdminResearchCenter = ({ isDirector = false }) => {
   console.log(data?.data?.[active])
   return (
     <div>
-      {isDirector && <div className='mb-4'><GoBack pageTitle={`${School} Research Center`} /></div>}
+      {School && <div className='mb-4'><GoBack pageTitle={`${School} Research Center`} /></div>}
       <AdminDrower hideHeader={School ? true : false}>
         <div className='sub-main'>
         <div className='flex px-3 flex-wrap gap-2'>
