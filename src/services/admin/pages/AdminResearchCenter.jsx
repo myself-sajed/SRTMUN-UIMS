@@ -21,12 +21,12 @@ const AdminResearchCenter = ({ isDirector = false }) => {
 
   const [values, setValues] = useState({ schoolName: School ? School : "All Schools", yearFilter: [] })
   const { schoolName, yearFilter } = values
-  const [active, setActive] = useState("BooksAndChapters")
+  const [active, setActive] = useState("JrfSrf")
   const [tableCells, setTableCells] = useState([])
 
 
   const Btns ={
-    "JrfSrf":{name:"JRF, SRF, PDF, RA", icon: <PersonSearchIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", proof: "Uploaded Proof", },},
+    "JrfSrf":{name:"JRF, SRF, PDF, RA", icon: <PersonSearchIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", researchName: "Reserchar Name", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", proof: "Uploaded Proof", },},
     "BooksAndChapters":{name:"Books And Chapters", icon: <MenuBookIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", type: 'Type', titleOfBook: 'Title of Book / Chapter / Edited Book / Translation', chapterTitle: "Title of Chapter / Translation", paperTitle: 'Paper Title', transType: "Translation work", titleOfProceeding: 'Title of proceedings of the conference', conName: 'Conference Name', isNat: 'Wheather National / International', publicationYear: 'Year of Publication', issnNumber: 'ISBN/ISSN number of proceeding', aff: 'Affiliation Institute at the time of publication',publisherName: 'Publisher Name', year: 'Academic Year',  proof: "Uploaded Proof" },},
     "ResearchProjects": {name:"Research Projects", icon: <ScienceIcon sx={{fontSize: "30px !important"}} />, tableHead:{index: 'Sr.No.', facultyName: 'Faculty Name', School: "School", schemeName: 'Scheme / Project Title', principalName: 'Principal Invigilator', coInvestigator: 'Co-Invigilator', fundingName: 'Funding Agency', isGov: 'Govt. / Non-Govt.', awardYear: 'Award Year', providedFunds: 'Funds (INR)', fundType: 'Major / Minor', status: 'Project Status', duration: 'Project Duration', year: 'Academic Year', proof: 'Upload Proof',},},
     "ResearchPapers": {name:"Research Papers", icon: <PlagiarismIcon sx={{fontSize: "30px !important"}}/>, tableHead:{ index: "Sr.No.", facultyName: 'Faculty Name', School: "School", paperTitle:'Paper Title', journalName:'Journal Name', authors:'Author(s)', publicationYear:'Publication Year', issnNumber:'ISSN Number', indexedIn:'Indexed in', indexLink:'Links', year: 'Academic Year', proof: 'Upload Proof'},},
@@ -58,7 +58,7 @@ const AdminResearchCenter = ({ isDirector = false }) => {
       {isDirector && <div className='mb-4'><GoBack pageTitle={`${School} Research Center`} /></div>}
       <AdminDrower hideHeader={School ? true : false}>
         <div className='sub-main'>
-        <div className='flex justify-end pb-2'>
+        <div className='flex px-3 flex-wrap gap-2'>
             <AcadmicYearSelect className="col-md-4 col-lg-4 col-12" value={yearFilter} setState={setValues} id="yearFilter" label="Filter By Academic Year" />
             {!School && <>
               <AdminSchoolSelect className="col-md-4 col-lg-4 col-12" value={schoolName} setState={setValues} id="schoolName" label="Filter By School" />
@@ -67,15 +67,15 @@ const AdminResearchCenter = ({ isDirector = false }) => {
           <div className='flex flex-wrap w-full'>
             {Object.keys(Btns).map((e,i)=>{
               return(
-                <div className='col-12 col-sm-6 col-lg-3 px-1 pb-1 h-[90px]' onClick={()=>{setActive(e)}} key={i}>
-                <div className={`w-full h-full flex flex-row ${active===e?'bg-[#c19038]':'bg-[#f1f3f4]'} rounded-md border-t-4 border-[#deb66f] ${active===e?'text-[#f1f3f4]':'text-[#ae7e28]'} cursor-pointer`}>
-                  <div className='bg-red h-full w-1/4 flex justify-end items-center p-3'>{Btns[e].icon}</div>
-                  <div className='bg-red h-full w-3/4 flex flex-col'>
-                    <div className='h-1/2 w-full flex items-end text-[18px] font-semibold' >{Btns[e].name}</div>
-                    <div className='h-1/2 w-full flex items-start font-semibold text-[14px]'>{isLoading? <CircularProgress color="inherit" size={18} /> : data.data[e].length}</div>
+                <div className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-1 pb-1 h-[90px]' onClick={() => { setActive(e) }} key={i}>
+                  <div className={`w-full h-full flex flex-row ${active === e ? 'bg-[#c19038]' : 'bg-[#f1f3f4]'} rounded-md border-t-4 border-[#deb66f] ${active === e ? 'text-[#f1f3f4]' : 'text-[#ae7e28]'} cursor-pointer`}>
+                    <div className='bg-red h-full w-1/4 flex justify-end items-center p-3'>{Btns[e].icon}</div>
+                      <div className='bg-red h-full w-3/4 flex flex-col'>
+                      <div className='h-1/2 w-full flex items-end text-[15px] font-semibold'>{Btns[e].name}</div>
+                      <div className='h-1/2 w-full flex items-start font-semibold text-[14px]'>{isLoading ? <CircularProgress color="inherit" size={18} /> : data.data[e].length}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
               )
             })
               
