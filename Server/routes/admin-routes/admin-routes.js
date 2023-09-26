@@ -479,9 +479,6 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
 })
 
 router.post('/Admin/reserchCenterData', async (req, res) => {
-
-    const { schoolFilter, academicYearFilter } = req.body
-
     const { schoolFilter, academicYearFilter } = req.body
     console.log(schoolFilter);
     let researchModels = ["JrfSrf", "ResearchProjects", "ResearchPapers", "BooksAndChapters", "Patent",]
