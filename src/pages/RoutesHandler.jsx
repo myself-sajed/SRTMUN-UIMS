@@ -131,6 +131,7 @@ import IILLogin from '../services/iil/pages/IILLogin'
 import IILHome from '../services/iil/pages/IILHome'
 import IILAQAR from '../services/iil/pages/IILAQAR'
 import YouthDashboard from '../services/dsd/pages/YouthDashboard'
+import DirectorRC from '../services/director/pages/DirectorRC'
 
 let model = "Xyz"
 let module = 'abc'
@@ -188,6 +189,7 @@ const RoutesHandler = () => {
                 <Route path='/director/sdm' element={<DirectorMain />} />
                 <Route path='/director/fdc' element={<DirectorFRCC />} />
                 <Route path='/director/ssm' element={<DirectorSSM />} />
+                <Route path='/director/research-center' element={<DirectorRC />} />
                 <Route path='/director-registration' element={<DirectorRegistration />} />
 
                 {/* report routes */}
