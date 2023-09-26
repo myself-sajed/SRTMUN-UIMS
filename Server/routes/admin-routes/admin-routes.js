@@ -77,6 +77,8 @@ const directorModels = ["AlumniContribution", "Award", "ConferencesSemiWorkshopO
 
 const feedbackModels = ["StudentFeedback", "AlumniFeedback", "TeacherFeedback", "ParentFeedback", "EmployerFeedback", "ExpertFeedback", "FeedbackStudentSatisfactionSurvey"]
 
+const researchModels = ["JrfSrf", "ResearchProjects", "ResearchPapers", "BooksAndChapters", "Patent",]
+
 const dataSetter = {
     "School of Computational Sciences": "compCount",
     "School of Chemical Sciences": "chemiCount",
@@ -201,9 +203,25 @@ router.post('/Admin/getData', async (req, res) => {
                     console.log(err);
                 }
                 for (item of fetch) {
-                    if (item.userId !== null) {
-                        filterData.push(item)
+                    if (researchModels.includes(model)) {
+                        if (item.userId !== undefined && item.userId !== null) {
+                            filterData.push(item);
+                        } else if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
+                            if (filc != {} && filc.department === item.schoolName) {
+                                filterData.push(item);
+                            }
+                            else if (filc == {}) {
+                                filterData.push(item);
+                            }
+
+                        }
                     }
+                    else {
+                        if (item.userId !== null) {
+                            filterData.push(item)
+                        }
+                    }
+
                 }
                 res.status(200).send(filterData);
             });
@@ -243,7 +261,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
         const docs = {}
         let oModels = Object.keys(models)
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey'];
-        
+
         const filteredModels = oModels.filter(item => !itemsToRemove.includes(item));
 
         for (const model of filteredModels) {
@@ -317,8 +335,23 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
 
                             let filterDataCount = 0;
                             for (item of fetch) {
-                                if (item.userId !== null) {
-                                    filterDataCount++;
+                                if (researchModels.includes(model)) {
+                                    if (item.userId !== undefined && item.userId !== null) {
+                                        filterDataCount++;
+                                    } else if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
+                                        if (schoolFilter != {} && schoolFilter.department === item.schoolName) {
+                                            filterDataCount++;
+                                        }
+                                        else if (schoolFilter == {}) {
+                                            filterDataCount++;
+                                        }
+
+                                    }
+                                }
+                                else {
+                                    if (item.userId !== null) {
+                                        filterDataCount++;
+                                    }
                                 }
                             }
 
@@ -420,8 +453,23 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
 
                 let filterData = [];
                 for (item of fetch) {
-                    if (item.userId !== null) {
-                        filterData.push(item)
+                    if (researchModels.includes(model)) {
+                        if (item.userId !== undefined && item.userId !== null) {
+                            filterData.push(item)
+                        } else if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
+                            if (schoolFilter != {} && schoolFilter.department === item.schoolName) {
+                                filterData.push(item)
+                            }
+                            else if (schoolFilter == {}) {
+                                filterData.push(item)
+                            }
+
+                        }
+                    }
+                    else {
+                        if (item.userId !== null) {
+                            filterData.push(item)
+                        }
                     }
                 }
 
@@ -446,51 +494,51 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
     }
 })
 
-router.post('/Admin/reserchCenterData', async (req, res)=>{
+router.post('/Admin/reserchCenterData', async (req, res) => {
 
-    const {schoolFilter, academicYearFilter} = req.body
-    let researchModels = [ "JrfSrf", "ResearchProjects", "ResearchPapers", "BooksAndChapters", "Patent", ]
+    const { schoolFilter, academicYearFilter } = req.body
+
     let docs = {};
-try {
-  const promises = researchModels.map(async (model) => {
-    const fetch = await models[model]
-      .find(academicYearFilter)
-      .populate({
-        path: 'userId',
-        match: schoolFilter,
-        select: '-password',
-      })
-      .exec();
-    let filterData = [];
+    try {
+        const promises = researchModels.map(async (model) => {
+            const fetch = await models[model]
+                .find(academicYearFilter)
+                .populate({
+                    path: 'userId',
+                    match: schoolFilter,
+                    select: '-password',
+                })
+                .exec();
+            let filterData = [];
 
-    for (item of fetch) {
-      if (item.userId !== undefined && item.userId !== null) {
-        filterData.push(item);
-      } else if (item.userId === undefined && item.guideName!==undefined && item.schoolName!==undefined){
-        if(schoolFilter!={}&& schoolFilter.department===item.schoolName){
-            filterData.push(item);
-        }
-        else if(schoolFilter=={}){
-            filterData.push(item);
-        }
-        
-      }
+            for (item of fetch) {
+                if (item.userId !== undefined && item.userId !== null) {
+                    filterData.push(item);
+                } else if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
+                    if (schoolFilter != {} && schoolFilter.department === item.schoolName) {
+                        filterData.push(item);
+                    }
+                    else if (schoolFilter == {}) {
+                        filterData.push(item);
+                    }
+
+                }
+            }
+            docs[model] = filterData;
+        });
+        Promise.all(promises)
+            .then(() => {
+                res.status(200).send(docs);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).send();
+            });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
     }
-    docs[model] = filterData;
-  });
-  Promise.all(promises)
-    .then(() => {
-      res.status(200).send(docs);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send();
-    });
-} catch (err) {
-  console.log(err);
-  res.status(500).send();
-}
-    
+
 })
 
 //registration page Enable/ Disable
