@@ -512,13 +512,11 @@ try {
     let filterData = [];
 
     for (item of fetch) {
-      if (item.userId !== undefined && item.userId !== null) {
-        filterData.push(item);
-      } else if (item.userId === undefined && item.guideName!==undefined && item.schoolName!==undefined){
+      if (item.userId === undefined && item.guideName!==undefined && item.schoolName!==undefined){
         if(schoolFilter!={}&& schoolFilter.department===item.schoolName){
             filterData.push(item);
         }
-        else if(schoolFilter=={}){
+        else{
             filterData.push(item);
         }
         
