@@ -258,16 +258,14 @@ const Index = () => {
                 <div className='z-30 animate-fade-up animate-once'>
 
 
-                    <div className={` `}>
-                        <div className='md:p-5 sm:p-4 p-3 rounded-lg'>
-                            <Dashboard />
-                        </div>
+                    <div className='md:p-3 rounded-lg'>
+                        <Dashboard />
                     </div>
 
 
 
 
-                    <div className={`flex-wrap flex items-center mt-9 gap-auto ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
+                    <div className={`flex-wrap justify-between md:p-2 flex items-center mt-9 gap-auto ${sessionStorage.getItem('animate') === 'false' ? '' : 'main__cards'}`}>
                         {serviceList.map((item, index) => {
                             return <MainService data={item} key={index} />
                         })}

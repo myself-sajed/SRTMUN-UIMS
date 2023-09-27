@@ -106,18 +106,8 @@ const AdminSSS = () => {
             <div>
                 {schoolNameAndYear && <ShowAnalysisModal open={open} total="Student Satisfaction Survey Analysis" handleClose={onClose} title={`Student Satisfaction Survey Analysis for ${schoolNameAndYear?.schoolName} of ${schoolNameAndYear?.academicYear}`} >
 
-                    {isAnalyticsLoading ? <UserLoading title="Generating SSS Report" /> : <div>
-                        {
-                            reportLoading && <ReportLoading loading={reportLoading} />
-                        }
+                    <SSSAnalyticalData isAnalyticsLoading={isAnalyticsLoading} reportLoading={reportLoading} setReportLoading={setReportLoading} forReport={forReport} analytics={analytics} schoolNameAndYear={schoolNameAndYear} excelClick={excelClick} />
 
-
-                        <div className="my-3">
-                            <DownloadReportButtons customFunction={generateSSSReportPDF} params={{ schoolName: schoolNameAndYear?.schoolName, academicYear: schoolNameAndYear?.academicYear, setReportLoading }} excelClick={excelClick} />
-                        </div>
-
-                        <ChartsPieGenerator forReport={forReport} analytics={analytics?.data?.data} />
-                    </div>}
                 </ShowAnalysisModal>}
             </div>
 
@@ -126,3 +116,24 @@ const AdminSSS = () => {
 }
 
 export default AdminSSS
+
+
+const SSSAnalyticalData = ({ isAnalyticsLoading, reportLoading, setReportLoading, forReport, analytics, schoolNameAndYear, excelClick }) => {
+    return <div>
+        {isAnalyticsLoading ? <UserLoading title="Generating SSS Report" /> : <div>
+            {
+                reportLoading && <ReportLoading loading={reportLoading} />
+            }
+
+
+            <div className="my-3">
+                <DownloadReportButtons customFunction={generateSSSReportPDF} params={{ schoolName: schoolNameAndYear?.schoolName, academicYear: schoolNameAndYear?.academicYear, setReportLoading }} excelClick={excelClick} />
+            </div>
+
+            <ChartsPieGenerator forReport={forReport} analytics={analytics?.data?.data} />
+        </div>}
+    </div>
+}
+
+
+export { SSSAnalyticalData }

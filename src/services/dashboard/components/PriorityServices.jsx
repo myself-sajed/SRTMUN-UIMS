@@ -39,19 +39,19 @@ const PriorityServices = () => {
             url: `/dashboard/select-department/alumni`,
             icon: <Diversity3RoundedIcon sx={{ color: 'red', fontSize: '32px' }} />
         },
-        {
-            title: 'Academic Working Processes',
-            phrase: "Timetables, Academic Activities etc.",
-            countModelName: 'AlumniCount',
-            color: 'cyan',
-            buttonTitle: "Check Management",
-            url: "",
-            icon: <TodayRoundedIcon sx={{ color: 'blue', fontSize: '30px' }} />
-        },
+        // {
+        //     title: 'Academic Working Processes',
+        //     phrase: "Timetables, Academic Activities etc.",
+        //     countModelName: 'AlumniCount',
+        //     color: 'cyan',
+        //     buttonTitle: "Check Management",
+        //     url: "",
+        //     icon: <TodayRoundedIcon sx={{ color: 'blue', fontSize: '30px' }} />
+        // },
     ]
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4 justify-between'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 justify-between'>
             {
                 services.map((service, index) => {
                     return <div onClick={() => navigate(service.url)} key={index} className="relative bg-[#fff6] w-full cursor-pointer rounded-lg border py-2 px-[6px] border-[#d8d5d5]  hover:bg-[#ffffff91] flex-auto md:max-w-md h-full md:h-auto">
