@@ -17,8 +17,6 @@ import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 const AdminResearchCenter = ({ School = false }) => {
 
-  // const { School } = useParams();
-
   const [values, setValues] = useState({ schoolName: School ? School : "All Schools", yearFilter: [] })
   const { schoolName, yearFilter } = values
   const [active, setActive] = useState("JrfSrf")

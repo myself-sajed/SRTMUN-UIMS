@@ -215,6 +215,15 @@ function studentSurveryRoutes(app) {
         }
     })
 
+    app.post('/SSS/getFeedbackData', async (req, res) => {
+        try {
+            const filter = req.body
+            const data = await SSS.find(filter)
+            res.status(200).send(data);
+        } catch (error) {
+            res.status(500).send();
+        }
+    })
 }
 
 module.exports = studentSurveryRoutes
