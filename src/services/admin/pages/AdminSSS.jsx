@@ -13,6 +13,8 @@ import DownloadReportButtons from '../../feedback/components/DownloadReportButto
 import ChartsPieGenerator from '../../feedback/analysis/ChartsPieGenerator'
 import ReportLoading from '../../../components/ReportLoading'
 import UserLoading from '../../../pages/UserLoading'
+import { genrateFeedbackExcel } from '../../feedback/pages/FeedbackDashboard'
+import axios from 'axios'
 
 const AdminSSS = () => {
 
@@ -28,6 +30,11 @@ const AdminSSS = () => {
     const numericalDataFilter = { academicYear: { $in: academicYearsToFetch } }
     const { data: numericalData, isLoading } = useQuery("SSSData", () => getSSSData(numericalDataFilter, academicYearsToFetch))
 
+
+    const getSSSWoleData = (schoolName, acadmicYear) => {
+       return axios.post(`${process.env.REACT_APP_MAIN_URL}/SSS/getFeedbackData`, {schoolName, acadmicYear})
+    }
+
     const showAnalytics = (schoolName, academicYear) => {
         setSchoolNameAndYear(() => { return { schoolName, academicYear } })
         setShouldFetchData(() => true)
@@ -39,6 +46,8 @@ const AdminSSS = () => {
 
     const { data: analytics, isLoading: isAnalyticsLoading } = useQuery(key, () => getSSSAnalytics(schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear), { enabled: shouldFetchData })
 
+    const { data: response , isLoading: responseLoading } = useQuery(["wholeData", schoolNameAndYear?.schoolName,schoolNameAndYear?.academicYear], () => getSSSWoleData(schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear))
+    // console.log(response);
     const onClose = () => {
         setOpen(false);
         setSchoolNameAndYear(null)
@@ -47,7 +56,7 @@ const AdminSSS = () => {
 
     console.log("numericalData", numericalData);
     const excelClick = () => {
-        alert('Excel report is yet under construction, PDF report is available. Please try again, later.')
+        genrateFeedbackExcel("",response.data ,"SSS",schoolNameAndYear?.schoolName)
     }
 
     return <div>
@@ -93,10 +102,6 @@ const AdminSSS = () => {
                 }
 
             </div>
-
-
-
-
 
             <div>
                 {schoolNameAndYear && <ShowAnalysisModal open={open} total="Student Satisfaction Survey Analysis" handleClose={onClose} title={`Student Satisfaction Survey Analysis for ${schoolNameAndYear?.schoolName} of ${schoolNameAndYear?.academicYear}`} >
