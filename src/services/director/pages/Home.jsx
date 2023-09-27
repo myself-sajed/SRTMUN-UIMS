@@ -49,8 +49,6 @@ const Home = () => {
     const [file, setFile] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [academicData, setAcademicData] = useState(null)
-    const [serverAuditData, setServerAuditData] = useState(null)
-    const [auditError, setAuditError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [openCroper, setOpenCroper] = useState(false)
 
@@ -93,14 +91,6 @@ const Home = () => {
                 }).catch((err) => {
                     toast.error('Could not fetch dashboard data...')
                 })
-        }
-    }, [user])
-
-
-    // fetch aaa data for showing it.
-    useEffect(() => {
-        if (user) {
-            getAuditData(user.department, null, setServerAuditData, setAuditError, false)
         }
     }, [user])
 
@@ -270,6 +260,9 @@ const Home = () => {
                                             Report Status
                                         </button>
 
+                                        <button onClick={() => { navigate(`/director/sss/${user.department}`) }} className='p-2 rounded-full border-2 flex-auto text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
+                                            SSS
+                                        </button>
                                         <button onClick={() => { navigate(`/director/numericalData/${user.department}`) }} className='p-2 rounded-full border-2 flex-auto text-sm sm:text-base hover:bg-blue-700 border-blue-800 bg-blue-800 text-white'>
                                             Numerical Dashboard
                                         </button>
@@ -409,7 +402,13 @@ const Home = () => {
                                         <p className="prices">AAA</p>
                                     </div>
 
-                                    <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <Link to={siteLinks.aaa.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
+                                        <Link to={siteLinks.aaaReport.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Download AAA Report </Link>
+
+                                    </div>
+
+                                    {/* <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
                                         {serverAuditData?.AAAData?.sort((a, b) => {
                                             let yearA = JSON.parse(a)?.['auditYear']?.split('-')[0];
                                             let yearB = JSON.parse(b)?.['auditYear']?.split('-')[0];
@@ -439,7 +438,7 @@ const Home = () => {
                                         <Button onClick={() => { navigate(siteLinks.aaa.link) }} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 rounded-lg ease-in-out text-decoration-none" > Fill Form </Button>
 
 
-                                    </div>
+                                    </div> */}
 
 
                                 </div>

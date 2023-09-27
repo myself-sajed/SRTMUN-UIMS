@@ -132,6 +132,7 @@ import IILHome from '../services/iil/pages/IILHome'
 import IILAQAR from '../services/iil/pages/IILAQAR'
 import YouthDashboard from '../services/dsd/pages/YouthDashboard'
 import DirectorRC from '../services/director/pages/DirectorRC'
+import DirectorSSS from '../services/director/pages/DirectorSSS'
 
 let model = "Xyz"
 let module = 'abc'
@@ -157,7 +158,6 @@ const RoutesHandler = () => {
                 <Route path="/director/service/generateAAAReport" exact element={<GenerateAAAPage />} />
                 <Route path="/faculty" exact element={<Home />} />
                 <Route path="/admin-login" exact element={<AdminLogin />} />
-                {/* <Route path="/NumaricalData/:School" exact element={<AdminNumaricalData />} /> */}
                 <Route path="/Test2" exact element={<Test2 />} />
                 <Route path="/director-login" exact element={<DirectorLogin />} />
                 <Route path="/faculty-registration" exact element={<FacultyRegistration />} />
@@ -191,6 +191,7 @@ const RoutesHandler = () => {
                 <Route path='/director/ssm' element={<DirectorSSM />} />
                 <Route path='/director/research-center' element={<DirectorRC />} />
                 <Route path='/director-registration' element={<DirectorRegistration />} />
+                <Route path='/director/sss/:schoolName' element={<DirectorSSS />} />
 
                 {/* report routes */}
                 <Route path="/report/CASReport/:userId/:selectedYear/:forPrintOut" exact element={<CASReport />} />
