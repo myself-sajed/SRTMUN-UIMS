@@ -77,6 +77,12 @@ const excelObject = {
         "Project Assigned":'projectName',
         "Blood Group":'bloodGroup',
     },
+    AwardForExtensionActivities:{
+        "Name of the activity": 'nameOfActivity', 
+        "Name of the Award/ recognition": 'nameOfAward', 
+        "Name of the Awarding government/ government recognised bodies": 'nameOfGovBody', 
+        "Year of award": 'academicYear',
+    }
 }
 
 router.post("/nss/newRecord/:model", upload.single("Upload_Proof"), async (req, res) => {
@@ -252,7 +258,7 @@ router.post('/nss/excelRecord/:model', excelUpload.single('excelFile'), (req, re
             arr.forEach((response) => data.push(response))
         }
        
-        let dateInputs = ["From Date", "To Date","Date of implementation", "Date of Birth"]
+        let dateInputs = ["Date of implementation", "Date of Birth"]
            data.forEach((item)=>{
             Object.keys(excelObject[model]).forEach(key => {
                 if(dateInputs.includes(key)){

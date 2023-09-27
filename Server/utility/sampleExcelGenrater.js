@@ -255,7 +255,8 @@ async function generateExcelFile(filename, model, school) {
             "Gender": 'gender',
             "Mobile No": 'number',
         },
-        NssAdmission: {
+        AwardForExtensionActivities:{
+            "Year of award": 'academicYear',
         },
         //Exam
         DateOfResultDiclaration: {

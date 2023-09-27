@@ -9,7 +9,7 @@ import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';
 import toast from 'react-hot-toast'
 import ExcelJS from 'exceljs'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ReportLoading from '../../../components/ReportLoading'
 import ClearIcon from '@mui/icons-material/Clear';
 import AdminTable from '../components/AdminTable'
@@ -18,7 +18,7 @@ import GoBack from '../../../components/GoBack'
 const AdminNumaricalData = ({ isDirector = false }) => {
 
   const { School } = useParams();
-
+  const navigate = useNavigate()
   const [values, setValues] = useState({ schoolName: School ? School : "All Schools" })
   const { schoolName } = values
   const [reportLoading, setReportLoading] = useState(false)
@@ -99,7 +99,19 @@ const AdminNumaricalData = ({ isDirector = false }) => {
       toast.success("No data available")
     }
     else if (feedbackModels.includes(model)) {
-      toast.error("Feedback Data Huge size")
+      if(schoolName==="All Schools" || year==="Total"){
+        toast.error('Feedback is only avalable for single School and single year.')
+      }
+      else{
+        if(model!=="FeedbackStudentSatisfactionSurvey"){
+  
+          const userSelecter= {"StudentFeedback": "Student", "AlumniFeedback": "Alumni", "TeacherFeedback": "Teacher", "ParentFeedback": "Parent", "EmployerFeedback": "Employer", "ExpertFeedback": "Expert",}
+          window.open(`/feedback/generateFeedbackReport/${schoolName}/${userSelecter[model]}/${year}`, '_blank');
+        }
+        else if(model==="FeedbackStudentSatisfactionSurvey"){
+          window.open(`/SSS/report/${schoolName}/${year}`, '_blank')
+        }
+      }
     }
   }
 
