@@ -72,7 +72,7 @@ const NssExtensionActivity = ({ filterByAcademicYear = false }) => {
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} sampleFile="Nss Extension Activities" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+      <BulkExcel data={data?.data} sampleFile="Nss Extension Activities" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} disableUpload={true} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} proof="director" />
     </>

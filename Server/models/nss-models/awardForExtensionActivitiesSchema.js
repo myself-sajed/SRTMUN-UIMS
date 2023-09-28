@@ -19,7 +19,7 @@ const awardForExtensionActivitiesSchema = new mongoose.Schema({
     },
     Upload_Proof: {
         type: 'string',
-        required: true
+        required: false
     }
 
 }, { timestamps: true });
