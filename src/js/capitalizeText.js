@@ -11,4 +11,4 @@ function capitalizeText(text) {
     return capitalizedName;
 }
 
-export default capitalizeText;
+export default capitalizeText
