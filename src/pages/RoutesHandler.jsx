@@ -297,7 +297,7 @@ const RoutesHandler = () => {
                 <Route path="/dsd/aqar" exact element={<DSDAQAR />} />
                 <Route path="/dsd/youthfestival/dashboard" exact element={<YouthDashboard />} />
 
-                {/* KRC */}
+                {/* IIL */}
                 <Route path="/iil-login" exact element={<IILLogin />} />
                 <Route path="/iil" exact element={<IILHome />} />
                 <Route path="/iil/aqar" exact element={<IILAQAR />} />

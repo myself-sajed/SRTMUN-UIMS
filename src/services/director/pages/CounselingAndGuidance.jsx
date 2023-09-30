@@ -22,10 +22,10 @@ import SchoolsProgram from "../../../components/SchoolsProgram";
 
 const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
 
-function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, school }) {
+function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, newSchool=false, school }) {
 
-    if (!school) {
-        delete tableHead.SchoolName;
+    if(!school && !newSchool) {
+            delete tableHead.SchoolName;
     }
 
     const SendReq = "CounselingAndGuidance";
@@ -37,7 +37,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: school ? school : directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: (school || newSchool) || directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
@@ -46,7 +46,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
 
 
     //--------------values useState---------------
-    const initialState = { SchoolN: "", cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "" }
+    const initialState = { SchoolN: newSchool || "", cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -64,7 +64,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                         cagnotacbth: item.Name_of_the_Activity_conducted_by_the_HEI,
                         cagnosa: item.Number_of_Students_Attended,
                         cagyoa: item.Year_of_Activity,
-                        SchoolN:school? item.SchoolName : ""
+                        SchoolN:(school || newSchool)? item.SchoolName : ""
                     })
                 }
             })
@@ -92,7 +92,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, sch
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: school ? values?.SchoolN : directorUser.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: (school || newSchool) ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container className="flex_between">
                             {

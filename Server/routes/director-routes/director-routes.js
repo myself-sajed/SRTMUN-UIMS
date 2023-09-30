@@ -547,20 +547,20 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Year_of_Award: ayoa,
             Category: ac,
         }
-        if(School!==""){
-            SendData.SchoolName= School
+        if (School !== "") {
+            SendData.SchoolName = School
         }
     }
     //CounselingAndGuidance
     else if (model == "CounselingAndGuidance") {
-        const { cagnotacbth, cagnosa, cagyoa, } = data
+        const { cagnotacbth, cagnosa, cagyoa, School } = data
         SendData = {
             Name_of_the_Activity_conducted_by_the_HEI: cagnotacbth,
             Number_of_Students_Attended: cagnosa,
             Year_of_Activity: cagyoa
         }
-        if(School!==""){
-            SendData.SchoolName= School
+        if (School !== "") {
+            SendData.SchoolName = School
         }
     }
     //DemandRatio
@@ -603,8 +603,8 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Duration_of_MoU: mudom,
             Year_of_signing_MoU: muyosm
         }
-        if(School!==""){
-            SendData.SchoolName= School
+        if (School !== "") {
+            SendData.SchoolName = School
         }
     }
     //ProgressionToHE
@@ -617,9 +617,9 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             Name_of_programme_admitted: pthenopa,
             Academic_Year: ptheya
         }
-        if(School!==""){
-            SendData.SchoolName= School
-        }        
+        if (School !== "") {
+            SendData.SchoolName = School
+        }
     }
     //ProjectsInternships
     else if (model == 'ProjectsInternships') {
@@ -642,8 +642,8 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
             From_Date: rmwfd,
             To_Date: rmwtd
         }
-        if(School!==""){
-            SendData.SchoolName= School
+        if (School !== "") {
+            SendData.SchoolName = School
         }
     }
     //TrainingProgramsOrganized
@@ -716,8 +716,8 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     //AlumniContribution, ConferencesSemiWorkshopOrganized, QualifiedExams, Placement, CourceInAllProgram, Employability, ValueAddedCource, ReservedSeats
     else {
         SendData = data
-        if(model==="Placement" && data.School!==""){
-            SendData.SchoolName= School
+        if (model === "Placement" && data.School !== "") {
+            SendData.SchoolName = School
         }
     }
 

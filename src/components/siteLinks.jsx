@@ -75,6 +75,8 @@ let siteLinks = {
     krcLogin: { title: "Knowledge Resource Center Login", link: '/krc-login' },
     krcHome: { title: "Knowledge Resource Center Home", link: '/krc' },
     krcAQAR: { title: "KRC AQAR", link: '/krc/aqar' },
+    pgLogin: { title: "PG Section Login", link: '/pg-login' },
+    pgHome: { title: "PG Section Home", link: '/pg' },
     examLogin: { title: "BOEE Login", link: '/boee-login' },
     examHome: { title: "BOEE Home", link: '/boee' },
     examAQAR: { title: "BOEE AQAR", link: '/boee/aqar' },
