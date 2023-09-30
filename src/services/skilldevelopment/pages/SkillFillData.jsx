@@ -13,7 +13,7 @@ const SkillFillData = () => {
     <div>
       <GoBack pageTitle={siteLinks.skillFillData.title} bredLinks={bredLinks} />
       <div className="mt-4">
-      <CounselingAndGuidance school={true} />
+      <CounselingAndGuidance newSchool="Centre for Competitive Exams, Training & Skills Development" />
       </div>
     </div>
   )
