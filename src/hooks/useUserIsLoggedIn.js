@@ -11,6 +11,7 @@ import { nssAuthParams } from "../services/nss/pages/NSSHome"
 import { examAuthParams } from "../services/exam/pages/ExamHome"
 import { placementAuthParams } from "../services/placement/pages/PlacementHome"
 import { iilAuthParams } from "../services/iil/pages/IILHome"
+import { skillsAuthParams } from "../services/skilldevelopment/pages/SkillsHome"
 
 
 const useUserIsLoggedIn = () => {
@@ -24,6 +25,7 @@ const useUserIsLoggedIn = () => {
     useOtherServiceAuth({ ...examAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...placementAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...iilAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...skillsAuthParams, usingInIsUserLoggedInHook: true })
 
 
     useEffect(() => {

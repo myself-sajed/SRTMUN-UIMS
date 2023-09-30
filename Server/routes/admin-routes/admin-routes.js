@@ -1,5 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const fs = require('fs');
+const multerConfig = require('../../utility/multerConfig').multerConfig
+
+const excelUpload = multerConfig(`../../excels/`)
+const adminTableUpload = multerConfig('../uploads/admin-uploads')
 
 const User = require('../../models/faculty-models/userModel')
 const DirectorUser = require('../../models/director-models/directorUser');
@@ -64,12 +70,15 @@ const EmployerFeedback = require('../../models/feedback-models/employerFeedbackM
 const ExpertFeedback = require('../../models/feedback-models/expertFeedbackModel')
 const FeedbackStudentSatisfactionSurvey = require('../../models/feedback-models/feedbackStudentSatisfactionSurvey')
 
+
+const JrfSrfAdmin = require('../../models/admin-models/jrfsrfAdminSchema')
+
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes');
 const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, JrfSrfAdmin }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent", "Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
@@ -495,32 +504,156 @@ router.post('/Admin/reserchCenterData', async (req, res) => {
                 .exec();
             let filterData = [];
 
-    for (item of fetch) {
-      if (item.userId === undefined && item.guideName!==undefined && item.schoolName!==undefined){
-        if(schoolFilter!={}&& schoolFilter.department===item.schoolName){
-            filterData.push(item);
-        }
-        else{
-            filterData.push(item);
-        }
-        
-      }
+            for (item of fetch) {
+                if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
+                    if (schoolFilter != {} && schoolFilter.department === item.schoolName) {
+                        filterData.push(item);
+                    }
+                    else {
+                        filterData.push(item);
+                    }
+
+                }
+            }
+            docs[model] = filterData;
+        });
+        Promise.all(promises)
+            .then(() => {
+                res.status(200).send(docs);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).send();
+            });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
     }
-    docs[model] = filterData;
-  });
-  Promise.all(promises)
-    .then(() => {
-      res.status(200).send(docs);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send();
-    });
-} catch (err) {
-  console.log(err);
-  res.status(500).send();
-}
-    
+
+})
+// added to tables at admin lavel
+//get
+router.post('/adminTable/getData', async (req, res) => {
+    const { model, filter } = req.body
+    try {
+        const fetch = await models[model].find(filter);
+        res.status(200).send(fetch);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
+//set
+router.post("/adminTable/newRecord/:model", adminTableUpload.single("Proof"), async (req, res) => {
+    try {
+        const model = req.params.model
+        // console.log(model)
+        const data = JSON.parse(JSON.stringify(req.body));
+        let SendData = null;
+        // const { } = data
+        const up = req.file.filename;
+        SendData = data
+
+        var withUpData = Object.assign(SendData, { proof: up })
+        const obj = new models[model](withUpData);
+        await obj.save();
+        res.status(201).send("Entry Succeed")
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send()
+    }
+});
+
+//reset
+router.post('/adminTable/editRecord/:model', adminTableUpload.single('Proof'), async (req, res) => {
+    const model = req.params.model
+    const data = JSON.parse(JSON.stringify(req.body));
+    let SendData = null;
+    const { id } = data
+    const isfile = req.file;
+    if (isfile) {
+        var up = req.file.filename
+    }
+    SendData = data
+
+    var alldata = null
+    if (up) {
+        alldata = Object.assign(SendData, { proof: up })
+    }
+    else {
+        alldata = SendData
+    }
+    await models[model].findOneAndUpdate({ _id: id }, alldata)
+    res.status(200).send("Edited Successfully")
+})
+
+//remove
+router.post('/adminTable/deleteRecord', async (req, res) => {
+    const { model, id } = req.body
+
+    try {
+        const Record = await models[model].findOne({ _id: id });
+        await models[model].deleteOne({ _id: id })
+        const Filename = Record.Proof;
+        const link = path.join(__dirname, `../../uploads/adminTable-uploads/${Filename}`);
+        fs.unlink(link, function (err) {
+            if (err) {
+                console.error(err);
+            }
+            console.log("file deleted successfullay ");
+        });
+        res.status(200).send("Entry Deleted Successfully");
+    }
+    catch (e) {
+        res.status(500).send({ massage: e.massage });
+    }
+})
+
+router.post('/adminTable/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
+    const excelFile = req.file.filename
+    const model = req.params.model
+    let sendData = {};
+    const values = JSON.parse(JSON.stringify(req.body));
+
+    let data = []
+    try {
+        const file = xlsx.readFile(path.join(__dirname, `../../../excels/${excelFile}`))
+        const sheetNames = file.SheetNames
+        for (let i = 0; i < sheetNames.length; i++) {
+            const arr = xlsx.utils.sheet_to_json(
+                file.Sheets[sheetNames[i]])
+            arr.forEach((response) => data.push(response))
+        }
+
+        let dateInputs = ["Date of event/competition"]
+        data.forEach((item) => {
+            Object.keys(excelObject[model]).forEach(key => {
+                if (dateInputs.includes(key)) {
+                    let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
+                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
+                    sendData[excelObject[model][key]] = fullDate
+                }
+                else {
+                    sendData[excelObject[model][key]] = item[key]
+                }
+
+            })
+            const obj = new models[model](sendData);
+            obj.save(function (error) {
+                if (error) {
+                    res.status(500).send()
+                    console.log(error)
+                }
+            })
+        })
+        res.status(201).send(`Entry suceeed`)
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).send()
+    }
 })
 
 //registration page Enable/ Disable

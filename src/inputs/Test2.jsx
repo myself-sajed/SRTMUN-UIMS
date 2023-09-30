@@ -19,6 +19,7 @@ import ResearchMethodologyWorkshops from '../services/director/pages/ResearchMet
 import IILCollaborativeActivities from '../services/iil/components/IILCollaborativeActivities'
 import IILRevenueConsultancy from '../services/iil/components/IILRevenueConsultancy'
 import IILRevenueCorporateTraining from '../services/iil/components/IILRevenueCorporateTraining'
+import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -50,9 +51,12 @@ const Test2 = () => {
       {/* < YfTable1 /> */}
       {/* < YfTable2 /> */}
 
-      <IILCollaborativeActivities/>
+      {/* <IILCollaborativeActivities/>
       <IILRevenueConsultancy />
-      <IILRevenueCorporateTraining />
+      <IILRevenueCorporateTraining /> */}
+
+
+      <AdminJRFSRF />
     </div>
   )
 }
