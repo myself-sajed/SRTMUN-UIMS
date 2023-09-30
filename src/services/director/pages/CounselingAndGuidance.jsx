@@ -24,8 +24,8 @@ const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Act
 
 function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, newSchool=false, school }) {
 
-    if (!school) {
-        delete tableHead.SchoolName;
+    if(!school && !newSchool) {
+            delete tableHead.SchoolName;
     }
 
     const SendReq = "CounselingAndGuidance";
