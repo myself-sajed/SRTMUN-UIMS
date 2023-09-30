@@ -140,13 +140,14 @@ const AdminNumaricalData = ({ isDirector = false }) => {
 
   const modelNames = {
     JrfSrf: 'JRF, SRF, Post Doctoral Fellows,',
-    Patent: 'Patents',
+    Placement: 'Placement',
     ProgressionToHE: 'Progression To HE',
     QualifiedExams: 'Qualified Exams',
     FeedbackStudentSatisfactionSurvey: 'Student Satisfaction Survey',
     AlumniContribution: 'Alumni Contribution',
     StudentFeedback: "Student Feedback", AlumniFeedback: "Alumni Feedback", TeacherFeedback: "Teacher Feedback", ParentFeedback: "Parent Feedback", EmployerFeedback: "Employer Feedback", ExpertFeedback: "Expert Feedback",
     ValueAddedCource: 'Value Added Course',
+    Patent: 'Patents',
     ResearchPapers: 'Research Papers',
     ResearchProjects: 'Research Projects',
     BooksAndChapters: 'Books And Chapters',
@@ -158,7 +159,6 @@ const AdminNumaricalData = ({ isDirector = false }) => {
     AwardRecognition: 'Award Recognition',
     InvitedTalk: 'Invited Talk',
     StudentUser: 'Students',
-    Placement: 'Placement',
     CounselingAndGuidance: 'Counseling And Guidance',
     AlumniUser: 'Alumni',
     ConferenceParticipated: 'Conference Participated',
