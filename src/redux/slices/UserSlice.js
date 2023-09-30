@@ -17,6 +17,7 @@ export const UserSlice = createSlice({
         examUser: null,
         placementUser: null,
         iilUser: null,
+        skillUser: null,
     },
     reducers: {
         setUser(state, action) {
@@ -60,12 +61,15 @@ export const UserSlice = createSlice({
         },
         setIILUser(state, action) {
             state.iilUser = action.payload
-        }
+        },
+        setSkillUser(state, action) {
+            state.skillUser = action.payload
+        },
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser, setAdminUser, setDirectorUser, setAlumniUser, setStudentUser, setProUser, setYouthUser, setDSDUser, setKRCUser, setSportsUser, setNSSUser, setExamUser, setPlacementUser, setIILUser } = UserSlice.actions
+export const { setUser, setAdminUser, setDirectorUser, setAlumniUser, setStudentUser, setProUser, setYouthUser, setDSDUser, setKRCUser, setSportsUser, setNSSUser, setExamUser, setPlacementUser, setIILUser, setSkillUser } = UserSlice.actions
 
 export default UserSlice.reducer

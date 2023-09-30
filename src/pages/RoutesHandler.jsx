@@ -133,6 +133,9 @@ import IILAQAR from '../services/iil/pages/IILAQAR'
 import YouthDashboard from '../services/dsd/pages/YouthDashboard'
 import DirectorRC from '../services/director/pages/DirectorRC'
 import DirectorSSS from '../services/director/pages/DirectorSSS'
+import SkillLogin from '../services/skilldevelopment/pages/SkillLogin'
+import SkillsHome from '../services/skilldevelopment/pages/SkillsHome'
+import SkillFillData from '../services/skilldevelopment/pages/SkillFillData'
 
 let model = "Xyz"
 let module = 'abc'
@@ -313,6 +316,11 @@ const RoutesHandler = () => {
                 <Route path="/sports-login" exact element={<SportsLogin />} />
                 <Route path="/sports" exact element={<SportsHome />} />
                 <Route path="/sports/aqar" exact element={<SportsAQAR />} />
+
+                {/* SKILLS */}
+                <Route path="/competativeExams-training-skillsDevelopment-login" exact element={<SkillLogin />} />
+                <Route path="/competativeExams-training-skillsDevelopment" exact element={<SkillsHome />} />
+                <Route path="/competativeExams-training-skillsDevelopment/data-center" exact element={<SkillFillData />} />
 
                 {/* Training and placements */}
                 <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />

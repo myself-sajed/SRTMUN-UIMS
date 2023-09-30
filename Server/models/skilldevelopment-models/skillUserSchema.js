@@ -1,27 +1,33 @@
 const mongoose = require('mongoose');
 
-const awardForExtensionActivitiesSchema = new mongoose.Schema({
-    nameOfActivity: {
+const skillUserSchema = new mongoose.Schema({
+
+    name: {
         type: 'string',
         required: true,
     },
-    nameOfAward: {
+    designation: {
         type: 'string',
         required: true,
     },
-    nameOfGovBody: {
+    email: {
+        type: 'string',
+        required: true,
+        unique: true,
+    },
+    photoURL: {
         type: 'string',
         required: true,
     },
-    academicYear: {
+    department: {
         type: 'string',
         required: true,
     },
-    Upload_Proof: {
+    password: {
         type: 'string',
-        required: false
+        required: true
     }
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('AwardForExtensionActivities', awardForExtensionActivitiesSchema);
+module.exports = mongoose.model('skillUser', skillUserSchema);

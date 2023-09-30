@@ -88,6 +88,9 @@ let siteLinks = {
     iilLogin: { title: "Innovation, Incubation and Linkages Login", link: '/iil-login' },
     iilHome: { title: "Innovation, Incubation and Linkages Home", link: '/iil' },
     iilAQAR: { title: "IIL AQAR", link: '/iil/aqar' },
+    skillLogin: { title: "Centre for Competitive Exams, Training & Skills Development Login", link: '/competativeExams-training-skillsDevelopment-login' },
+    skillHome: { title: "Centre for Competitive Exams, Training & Skills Development Home", link: '/competativeExams-training-skillsDevelopment' },
+    skillFillData: { title: "Data Center", link: '/competativeExams-training-skillsDevelopment/data-center' },
 
 
 

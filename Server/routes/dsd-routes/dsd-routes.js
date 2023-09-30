@@ -171,7 +171,6 @@ router.post('/dsd/excelRecord/:model', excelUpload.single('excelFile'), (req, re
     const excelFile = req.file.filename
     const model = req.params.model
     let sendData = {};
-    const values = JSON.parse(JSON.stringify(req.body));
 
     let data = []
     try {
@@ -188,7 +187,7 @@ router.post('/dsd/excelRecord/:model', excelUpload.single('excelFile'), (req, re
             Object.keys(excelObject[model]).forEach(key => {
                 if (dateInputs.includes(key)) {
                     let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
-                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
+                    const fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
                     sendData[excelObject[model][key]] = fullDate
                 }
                 else {
