@@ -12,9 +12,10 @@ const NSSUser = require('../models/nss-models/nssUserSchema')
 const ExamUser = require('../models/exam-models/examUserSchema')
 const PlacementUser = require('../models/placement-models/placementUserSchema')
 const IILUser = require('../models/iil-models/iilUserSchema')
+const SkillUser = require('../models/skilldevelopment-models/skillUserSchema')
 
 
-const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser }
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser, SkillUser }
 
 const userAuthentication = (app, jwt) => {
 
