@@ -14,7 +14,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
 
 
-const tableHead = { index: "Sr. no.", researchName: "Researcher Name", schoolName: "School / Department Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
 const AdminJRFSRF = () => {
 
     const model = 'JrfSrfAdmin'
@@ -75,20 +75,20 @@ const AdminJRFSRF = () => {
             <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} />
             <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
-                    <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label="Researcher Name" setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label="Research Fellow Name" setState={setValues} />
                     <Select options={schools
                         ? [
-                            ...new Set([...schools, schoolName || null, "Other"]),
+                            ...new Set([...schools, schoolName || '', "Other"]),
                           ].filter((item) => item !== "")
                         : []
-                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School Name" setState={setValues} /> 
+                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} /> 
                     {
-                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
+                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
                     }
                     {
                         schoolName!=="Other" && <Select options={guides
                             ? [
-                                ...new Set([...guides, guideName || null, "Other"]),
+                                ...new Set([...guides, guideName || '', "Other"]),
                               ].filter((item) => item !== "")
                             : []
                         } className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} />

@@ -76,17 +76,17 @@ const AdminPhdAwarded = () => {
                     <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
                     <Select options={schools
                         ? [
-                            ...new Set([...schools, schoolName || null, "Other"]),
+                            ...new Set([...schools, schoolName || "", "Other"]),
                           ].filter((item) => item !== "")
                         : []
-                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School Name" setState={setValues} /> 
+                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} /> 
                     {
-                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
+                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
                     }
                     {
                         schoolName!=="Other" && <Select options={guides
                             ? [
-                                ...new Set([...guides, guideName || null, "Other"]),
+                                ...new Set([...guides, guideName || "", "Other"]),
                               ].filter((item) => item !== "")
                             : []
                         } className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} />

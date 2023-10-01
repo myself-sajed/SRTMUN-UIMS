@@ -1,6 +1,6 @@
 import React from 'react'
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
-import { setPGUser } from '../../../redux/slices/UserSlice'
+import { setAPDSUser } from '../../../redux/slices/UserSlice'
 import siteLinks from '../../../components/siteLinks'
 import UserLoading from '../../../pages/UserLoading'
 import { useSelector } from 'react-redux'
@@ -8,25 +8,25 @@ import title from '../../../js/title'
 import Footer from '../../../components/Footer'
 import GoBack from '../../../components/GoBack'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
-import AdminPhdAwarded from '../../admin/tables/AdminPhdAwarded'
+import AdminJRFSRF from '../../admin/tables/AdminJRFSRF'
 
-const pgAuthParams = { shouldNavigate: true, tokenName: "pg-token", setUser: setPGUser, navigationHomeLink: siteLinks.pgHome.link, navigationLoginLink: siteLinks.pgLogin.link, model: "PGUser" }
+const apdsAuthParams = { shouldNavigate: true, tokenName: "apds-token", setUser: setAPDSUser, navigationHomeLink: siteLinks.apdsHome.link, navigationLoginLink: siteLinks.apdsLogin.link, model: "APDSUser" }
 
-const PGHome = () => {
-    useOtherServiceAuth(pgAuthParams)
-    const user = useSelector((state) => state.user.pgUser)
-    const bredLinks = [siteLinks.welcome, siteLinks.pgHome]
-    title(siteLinks.pgHome.title)
+const APDSHome = () => {
+    useOtherServiceAuth(apdsAuthParams)
+    const user = useSelector((state) => state.user.apdsUser)
+    const bredLinks = [siteLinks.welcome, siteLinks.apdsHome]
+    title(siteLinks.apdsHome.title)
 
     const tables = [
         {
-            title : "Research Guidance",
-            component : <AdminPhdAwarded/>
+            title : "JRF, SRF, Post Doctoral Fellows, Research Associate",
+            component : <AdminJRFSRF/>
         }
     ]
     return (
         <div>
-            <GoBack bredLinks={bredLinks} pageTitle={siteLinks.pgHome.title} />
+            <GoBack bredLinks={bredLinks} pageTitle={siteLinks.apdsHome.title} />
             <div className="min-h-screen">
 
                 {user ?
@@ -41,6 +41,6 @@ const PGHome = () => {
     )
 }
 
-export default PGHome
+export default APDSHome
 
-export { pgAuthParams }
+export { apdsAuthParams }

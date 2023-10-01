@@ -136,6 +136,11 @@ import DirectorSSS from '../services/director/pages/DirectorSSS'
 import SkillLogin from '../services/skilldevelopment/pages/SkillLogin'
 import SkillsHome from '../services/skilldevelopment/pages/SkillsHome'
 import SkillFillData from '../services/skilldevelopment/pages/SkillFillData'
+import PGLogin from '../services/pgsection/pages/PGLogin'
+import PGHome from '../services/pgsection/pages/PGHome'
+import APDSLogin from '../services/apds/pages/APDSLogin'
+import APDSHome from '../services/apds/pages/APDSHome'
+import ServicesList from './ServicesList'
 
 let model = "Xyz"
 let module = 'abc'
@@ -151,6 +156,7 @@ const RoutesHandler = () => {
 
             <Routes>
                 <Route path="/" exact element={<Index />} />
+                <Route path="/services-list" exact element={<ServicesList />} />
                 <Route path="/load/:url" exact element={<LoadingPage />} />
                 <Route path="/faculty/faculty-profile" exact element={<Main />} />
                 <Route path="/faculty-login" exact element={<FacultyLogin />} />
@@ -316,6 +322,14 @@ const RoutesHandler = () => {
                 <Route path="/sports-login" exact element={<SportsLogin />} />
                 <Route path="/sports" exact element={<SportsHome />} />
                 <Route path="/sports/aqar" exact element={<SportsAQAR />} />
+
+                {/* PG Section */}
+                <Route path="/pg-login" exact element={<PGLogin />} />
+                <Route path="/pg" exact element={<PGHome />} />
+
+                {/* PG Section */}
+                <Route path="/apds-login" exact element={<APDSLogin />} />
+                <Route path="/apds" exact element={<APDSHome />} />
 
                 {/* SKILLS */}
                 <Route path="/competativeExams-training-skillsDevelopment-login" exact element={<SkillLogin />} />

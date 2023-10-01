@@ -1,5 +1,6 @@
 let siteLinks = {
     welcome: { title: 'Welcome', link: '/' },
+    srtmunUimsServices: { title: 'Services List', link: '/services-list' },
     adminHome: { title: 'Admin Dashboard', link: '/admin' },
     facultyHome: { title: 'Faculty Home', link: '/faculty' },
     facultyProfile: { title: 'Faculty Profile', link: '/faculty/faculty-profile' },
@@ -77,6 +78,8 @@ let siteLinks = {
     krcAQAR: { title: "KRC AQAR", link: '/krc/aqar' },
     pgLogin: { title: "PG Section Login", link: '/pg-login' },
     pgHome: { title: "PG Section Home", link: '/pg' },
+    apdsHome: { title: "Academic Planning & Development Section Home", link: '/apds' },
+    apdsLogin: { title: "Academic Planning & Development Section Login", link: '/apds-login' },
     examLogin: { title: "BOEE Login", link: '/boee-login' },
     examHome: { title: "BOEE Home", link: '/boee' },
     examAQAR: { title: "BOEE AQAR", link: '/boee/aqar' },
