@@ -20,6 +20,7 @@ import IILCollaborativeActivities from '../services/iil/components/IILCollaborat
 import IILRevenueConsultancy from '../services/iil/components/IILRevenueConsultancy'
 import IILRevenueCorporateTraining from '../services/iil/components/IILRevenueCorporateTraining'
 import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
+import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -57,6 +58,7 @@ const Test2 = () => {
 
 
       <AdminJRFSRF />
+      <AdminPhdAwarded />
     </div>
   )
 }

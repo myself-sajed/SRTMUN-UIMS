@@ -12,12 +12,12 @@ import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
+import Lists from '../../../components/tableComponents/Lists'
 
+const tableHead = { index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category", yearOfScholar: 'Year of Scholar Registration', phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof',  Action: "Action" }
 
-const tableHead = { index: "Sr. no.", researchName: "Researcher Name", schoolName: "School / Department Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
-const AdminJRFSRF = () => {
-
-    const model = 'JrfSrfAdmin'
+const AdminPhdAwarded = () => {
+    const model = 'PhdAwardedAdmin'
     const module = 'adminTable'
 
     const filter = {}
@@ -25,9 +25,9 @@ const AdminJRFSRF = () => {
     const params = { model, module, filter }
     const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
 
-    const initialstate = { researchName: "", guideName: "", otherGuide: "", otherSchool: "", schoolName: "", enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Proof: '' }
+    const initialstate = { scholarName: "", schoolName: "", otherSchool: "", guideName: "", otherGuide: "", degreeName: "", awardSubmit: "", thesisTitle: "", rac: "", gender: "", category: "", yearOfScholar: "", phdAwardYear: "", year: "", Proof: "" }
     const [values, setValues] = useState(initialstate)
-    const { researchName, guideName, otherGuide, otherSchool, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year } = values
+    const { scholarName, schoolName, otherSchool, guideName, otherGuide, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, } = values
     const [open, setOpen] = useState(false)
 
     //---------------edit state-------------------
@@ -51,11 +51,9 @@ const AdminJRFSRF = () => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
                 if (item?._id === itemToEdit) {
-                    const { researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName } = item
+                    const { scholarName, schoolName, guideName, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, } = item
                     setEdit(true); setOpen(true);
-                    setValues({ 
-                             researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName
-                     })
+                    setValues({ scholarName, schoolName, guideName, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, })
                 }
             })
         }
@@ -69,13 +67,13 @@ const AdminJRFSRF = () => {
         edit ? editReq({ id: itemToEdit }, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
             addReq({}, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setLoading, module)
     }
-
+    // { scholarName, schoolName, guideName, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, }
     return (
         <>
-            <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} />
+            <AddButton title="Research Guidance" onclick={setOpen} />
             <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
-                    <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label="Researcher Name" setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
                     <Select options={schools
                         ? [
                             ...new Set([...schools, schoolName || null, "Other"]),
@@ -97,12 +95,19 @@ const AdminJRFSRF = () => {
                         guideName==="Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
                     }
 
-                    <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrollment Year" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration (in Months)" setState={setValues} />
-                    <Select options={["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Fellowship Type" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label="Granting Agency" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Qualified Exam" setState={setValues} />
-                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="thesisTitle" value={thesisTitle} label={tableHead.thesisTitle} setState={setValues} />
+                    <Select options={["Ph.D.","M.Phil","PG Dissertation"]} className='col-md-6 col-lg-4' id="degreeName" value={degreeName} label={tableHead.degreeName} setState={setValues} />
+                    {
+                        degreeName === 'Ph.D.' && <Text className='col-md-6 col-lg-4' type="date" id="rac" title={tableHead.rac} value={rac} setState={setValues} />
+                    }
+                    <Select options={["Awarded","Submitted","Ongoing"]} className='col-md-6 col-lg-4' id="awardSubmit" value={awardSubmit} label={tableHead.awardSubmit} setState={setValues} />
+                    <Select options={Lists.gender} className='col-md-6 col-lg-4' id="gender" value={gender} label={tableHead.gender} setState={setValues} />
+                    <Select options={["Open", "SC", "ST", "VJ / NT(A)", "VJ / NT(B)", "VJ / NT(C)", "VJ / NT(D)", "SBC", "OBC", "PH", "EWS", "Minority", "NRI", "Foreign National"]} className='col-md-6 col-lg-4' id="category" value={category} label={tableHead.category} setState={setValues} />
+                    <YearSelect className='col-md-6 col-lg-4' id="yearOfScholar" value={yearOfScholar} label={tableHead.yearOfScholar} setState={setValues} />
+                    {
+                        awardSubmit === 'Awarded' && <Text className='col-md-6 col-lg-4' id="phdAwardYear" label={tableHead.phdAwardYear} type="number" value={phdAwardYear} setState={setValues} />
+                    }
+                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label={tableHead.year} setState={setValues} />
                     <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
@@ -111,4 +116,4 @@ const AdminJRFSRF = () => {
     )
 }
 
-export default AdminJRFSRF
+export default AdminPhdAwarded
