@@ -11,12 +11,11 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
-import { TOP } from '../../director/pages/DemandRatio'
 
 const tableHead = { index: "Sr. no.", schoolName: 'School', programmeCode: "Program Code", programmeName: "Program name", programType: "Type of Program", seatsAvailable: "Name of programme admitted", eligibleApplications: "Number of eligible applications", studentsAdmitted: "Number of Students admitted", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action"}
 
 const AdminDemandRatio = () => {
-
+    const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
     const model = 'DemandRatioAdmin'
     const module = 'adminTable'
     const title = 'Demand Ratio'

@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import AddIcon from '@mui/icons-material/Add';
-import { Button } from '@mui/material';
+import React from 'react'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 export default function AddButton(props) {
-    const [data, setData] = useState(null);
 
     const clickd = (e) => {
         props.onclick(true)
