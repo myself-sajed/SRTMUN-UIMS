@@ -9,6 +9,8 @@ import Footer from '../../../components/Footer'
 import GoBack from '../../../components/GoBack'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import AdminPhdAwarded from '../../admin/tables/AdminPhdAwarded'
+import AdminHE from '../../admin/tables/AdminHE'
+// import AdminDemandRatio from '../../admin/tables/AdminDemandRatio'
 
 const pgAuthParams = { shouldNavigate: true, tokenName: "pg-token", setUser: setPGUser, navigationHomeLink: siteLinks.pgHome.link, navigationLoginLink: siteLinks.pgLogin.link, model: "PGUser" }
 
@@ -22,7 +24,15 @@ const PGHome = () => {
         {
             title : "Research Guidance",
             component : <AdminPhdAwarded/>
-        }
+        },
+        {
+            title : "Progression to Higher Education",
+            component : <AdminHE/>
+        },
+        {
+            title : "Demand Ratio",
+            // component : <AdminDemandRatio/>
+        },
     ]
     return (
         <div>
