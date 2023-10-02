@@ -9,6 +9,7 @@ import Footer from '../../../components/Footer'
 import GoBack from '../../../components/GoBack'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import AdminJRFSRF from '../../admin/tables/AdminJRFSRF'
+import AdminResearchProjects from '../../admin/tables/AdminResearchProjects'
 
 const apdsAuthParams = { shouldNavigate: true, tokenName: "apds-token", setUser: setAPDSUser, navigationHomeLink: siteLinks.apdsHome.link, navigationLoginLink: siteLinks.apdsLogin.link, model: "APDSUser" }
 
@@ -22,6 +23,10 @@ const APDSHome = () => {
         {
             title : "JRF, SRF, Post Doctoral Fellows, Research Associate",
             component : <AdminJRFSRF/>
+        },
+        {
+            title : "Research Projects",
+            component : <AdminResearchProjects/>
         }
     ]
     return (
