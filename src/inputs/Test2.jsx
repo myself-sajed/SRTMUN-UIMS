@@ -23,6 +23,7 @@ import React from 'react'
 // import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
 import AdminHE from '../services/admin/tables/AdminHE'
 import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
+import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -61,6 +62,7 @@ const Test2 = () => {
       <AdminPhdAwarded /> */}
       <AdminHE />
       <AdminDemandRatio />
+      <AdminResearchProjects />
     </div>
   )
 }
