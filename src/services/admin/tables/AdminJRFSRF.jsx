@@ -23,7 +23,7 @@ const AdminJRFSRF = () => {
     const filter = {}
 
     const params = { model, module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
     const initialstate = { researchName: "", guideName: "", otherGuide: "", otherSchool: "", schoolName: "", enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Proof: '' }
     const [values, setValues] = useState(initialstate)
@@ -59,7 +59,7 @@ const AdminJRFSRF = () => {
                 }
             })
         }
-    }, [itemToEdit])
+    }, [itemToEdit, data?.data])
 
     const onCancel = () => {
         setValues(initialstate); setItemToEdit(null); setEdit(false); setOpen(false)

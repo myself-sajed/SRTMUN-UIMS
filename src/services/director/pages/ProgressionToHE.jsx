@@ -32,7 +32,6 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
     const module = 'director'
 
     //--------------fetch data from db----------
-    const [tableBody, setTableBody] = useState();
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
@@ -41,7 +40,7 @@ function ProgressionToHE({ filterByAcademicYear = false, academicYear, school })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
     //--------------values useState---------------
     const initialState = { SchoolN: "", pthenose: "", pthepgf: "", pthenoia: "", pthenopa: "", ptheya: "", Upload_Proof: "" }

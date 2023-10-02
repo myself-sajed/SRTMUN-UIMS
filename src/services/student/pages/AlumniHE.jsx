@@ -18,7 +18,7 @@ const AlumniHE = () => {
   const user = useSelector(state => state.user.alumniUser)
 
   const params = { model, id: user?._id, module }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { Name_of_institution_admitted: '', Name_of_programme_admitted: '', Academic_Year: '', Upload_Proof: '' }
   const [values, setValues] = useState(initialstate)
@@ -56,7 +56,7 @@ const AlumniHE = () => {
   return (
     <>
       <AddButton onclick={setOpen} title="Your Higher Education" />
-      <DialogBox title="Higher Education" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title="Higher Education" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_institution_admitted" value={Name_of_institution_admitted} label="Name of the Current Institution" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Name_of_programme_admitted" value={Name_of_programme_admitted} label="Name of the program admitted" setState={setValues} />

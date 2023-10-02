@@ -23,7 +23,7 @@ const AdminPhdAwarded = () => {
     const filter = {}
 
     const params = { model, module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
     const initialstate = { scholarName: "", schoolName: "", otherSchool: "", guideName: "", otherGuide: "", degreeName: "", awardSubmit: "", thesisTitle: "", rac: "", gender: "", category: "", yearOfScholar: "", phdAwardYear: "", year: "", Proof: "" }
     const [values, setValues] = useState(initialstate)
@@ -67,11 +67,11 @@ const AdminPhdAwarded = () => {
         edit ? editReq({ id: itemToEdit }, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
             addReq({}, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setLoading, module)
     }
-    // { scholarName, schoolName, guideName, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, }
+    
     return (
         <>
             <AddButton title="Research Guidance" onclick={setOpen} />
-            <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+            <DialogBox title={`${edit ? "Edit" : "Add"} Research Guidance`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
                     <Select options={schools

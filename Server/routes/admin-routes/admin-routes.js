@@ -73,13 +73,15 @@ const FeedbackStudentSatisfactionSurvey = require('../../models/feedback-models/
 
 const JrfSrfAdmin = require('../../models/admin-models/jrfsrfAdminSchema')
 const PhdAwardedAdmin = require('../../models/admin-models/phdAwardedAdminSchema')
+const HEAdmin = require('../../models/admin-models/heAdminSchema')
+const DemandRatioAdmin = require('../../models/admin-models/demandRatioAdminSchema')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
 const { YearSelecter } = require('../../routes/director-routes/director-routes');
 const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, JrfSrfAdmin, PhdAwardedAdmin }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, JrfSrfAdmin, PhdAwardedAdmin, HEAdmin, DemandRatioAdmin }
 
 const facultyModels = ["BooksAndChapters", "Qualification", "Degree", "AppointmentsHeldPrior", "AwardRecognition", "BookAndChapter", "Collaboration", "ConferenceOrganized", "ConferenceParticipated", "ConsultancyServices", "EContentDeveloped", "ResearchProject", "ResearchProjects", "PostHeld", "Lectures", "ResearchPaper", "ResearchPapers", "PhdAwarded", "JrfSrf", "Patent", "Petant", "Online", "Financialsupport", "ForeignVisit", "InvitedTalk", "Fellowship", "Responsibilities"]
 
@@ -212,7 +214,7 @@ router.post('/Admin/getData', async (req, res) => {
                     // throw err; 
                     console.log(err);
                 }
-                for (item of fetch) {
+                for (const item of fetch) {
                     if (item.userId !== null) {
                         filterData.push(item)
                     }
@@ -292,7 +294,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                         if (schoolName) filter[school] = schoolName
                         let fetch = await models[model].find(filter);
                         let countStu = 0
-                        for (item of fetch) {
+                        for (const item of fetch) {
                             if (item.programEnroledOn === undefined) {
                                 if (item.currentIn !== undefined) {
                                     let yeartosub = parseInt(item.currentIn.split(' ')[1]);
@@ -328,7 +330,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
                                 .exec();
 
                             let filterDataCount = 0;
-                            for (item of fetch) {
+                            for (const item of fetch) {
                                 if (researchModels.includes(model)) {
                                     if (item.userId !== undefined && item.userId !== null) {
                                         filterDataCount++;
@@ -408,7 +410,7 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
             if (schoolName) filter[school] = schoolName
             let fetch = await models[model].find(filter);
             let countStu = []
-            for (item of fetch) {
+            for (const item of fetch) {
                 if (item.programEnroledOn === undefined) {
                     if (item.currentIn !== undefined) {
                         let yeartosub = parseInt(item.currentIn.split(' ')[1]);
@@ -446,7 +448,7 @@ router.post('/Admin/getNumaricalTileData', async (req, res) => {
                     .exec();
 
                 let filterData = [];
-                for (item of fetch) {
+                for (const item of fetch) {
                     if (researchModels.includes(model)) {
                         if (item.userId !== undefined && item.userId !== null) {
                             filterData.push(item)
@@ -505,7 +507,7 @@ router.post('/Admin/reserchCenterData', async (req, res) => {
                 .exec();
             let filterData = [];
 
-            for (item of fetch) {
+            for (const item of fetch) {
                 if (item.userId === undefined && item.guideName !== undefined && item.schoolName !== undefined) {
                     if (schoolFilter != {} && schoolFilter.department === item.schoolName) {
                         filterData.push(item);
@@ -609,51 +611,6 @@ router.post('/adminTable/deleteRecord', async (req, res) => {
     }
     catch (e) {
         res.status(500).send({ massage: e.massage });
-    }
-})
-
-router.post('/adminTable/excelRecord/:model', excelUpload.single('excelFile'), (req, res) => {
-    const excelFile = req.file.filename
-    const model = req.params.model
-    let sendData = {};
-    const values = JSON.parse(JSON.stringify(req.body));
-
-    let data = []
-    try {
-        const file = xlsx.readFile(path.join(__dirname, `../../../excels/${excelFile}`))
-        const sheetNames = file.SheetNames
-        for (let i = 0; i < sheetNames.length; i++) {
-            const arr = xlsx.utils.sheet_to_json(
-                file.Sheets[sheetNames[i]])
-            arr.forEach((response) => data.push(response))
-        }
-
-        let dateInputs = ["Date of event/competition"]
-        data.forEach((item) => {
-            Object.keys(excelObject[model]).forEach(key => {
-                if (dateInputs.includes(key)) {
-                    let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
-                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
-                    sendData[excelObject[model][key]] = fullDate
-                }
-                else {
-                    sendData[excelObject[model][key]] = item[key]
-                }
-
-            })
-            const obj = new models[model](sendData);
-            obj.save(function (error) {
-                if (error) {
-                    res.status(500).send()
-                    console.log(error)
-                }
-            })
-        })
-        res.status(201).send(`Entry suceeed`)
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(500).send()
     }
 })
 

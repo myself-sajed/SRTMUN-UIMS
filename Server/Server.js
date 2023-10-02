@@ -149,7 +149,6 @@ require('./routes/feedback-routes/generateFeedbackReport')(app)
 require('./routes/feedback-routes/actionTakenReport')(app)
 require('./routes/feedback-routes/studentSurveryRoutes')(app)
 
-// require('./models/placement-models/placementUserSchema')
 
 // AQAR routes
 require('./routes/director-routes/directorAqarRoutes')(app)
@@ -168,9 +167,6 @@ require('./routes/program-routes/programOperations')(app)
 app.use(require('./routes/youthfestival-routes/youth-auth'))
 require('./routes/youthfestival-routes/youth-routes')(app)
 app.use(require('./routes/youthfestival-routes/competition-routes'))
-
-
-
 
 
 mongoose
@@ -203,9 +199,7 @@ const capitalizeNames = async () => {
 // capitalizeNames();
 
 
-
 // FILE MANAGEMENT SECTION
-
 // 1. File Deletion function
 async function deleteFile(fileName, desiredPath, callback) {
   let paths = {
@@ -216,10 +210,6 @@ async function deleteFile(fileName, desiredPath, callback) {
   }
   fs.unlink(paths[desiredPath], callback)
 }
-
-
-
-
 
 app.get("/downloadPdf/:fileName", (req, res) => {
   const fileName = req.params.fileName
@@ -306,7 +296,6 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     aqar: `./uploads/aqar-uploads/${filename}`,
     youth: `./uploads/youth-uploads/${filename}`,
     skill: `./uploads/skilldevelopment-uploads/${filename}`,
-    admin: `./uploads/admin-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
