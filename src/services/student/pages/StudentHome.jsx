@@ -36,9 +36,9 @@ import { Skeleton } from "@mui/material";
 import { getOrdinalSuffix } from "../../director/pages/NewStudent";
 import capitalizeText from "../../../js/capitalizeText";
 
-const fetchFacutys = async ( params, setGuidesData, setGuides ) => {
+const fetchFacutys = async (params, setGuidesData, setGuides) => {
   let arr = [];
-  const userrefetch = await getReq( params );
+  const userrefetch = await getReq(params);
   if (setGuidesData) {
     setGuidesData(userrefetch?.data);
   }
@@ -133,7 +133,7 @@ const StudentHome = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setEdit(true);
-    editReq({ id: itemToEdit, uploadProof, photoURL },"",initialstate, { ...values, ResearchGuide: ResearchGuide === "Other" ? otherGuide : ResearchGuide,}, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module);
+    editReq({ id: itemToEdit, uploadProof, photoURL }, "", initialstate, { ...values, ResearchGuide: ResearchGuide === "Other" ? otherGuide : ResearchGuide, }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module);
     setUploadProof(null);
     setAvatar(null);
     setPhotoURL(null);
@@ -148,7 +148,7 @@ const StudentHome = () => {
   };
 
   useEffect(() => {
-    fetchFacutys({ model: "User", id: "", module, filter: { department: user.schoolName, salutation: "Dr." }, }, setGuidesData, setGuides);
+    fetchFacutys({ model: "User", id: "", module, filter: { department: user?.schoolName, salutation: "Dr." }, }, setGuidesData, setGuides);
   }, [open]);
 
   console.log(values.ResearchGuideId);
@@ -187,7 +187,7 @@ const StudentHome = () => {
         setEdit(true);
         setOpen(true);
         setValues({
-            salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, cast, country, religion, programEnroledOn, programCompletedOn,
+          salutation, name, programGraduated, address, mobile, schoolName, gender, dob, abcNo, ResearchGuide, Title, dateOfRac, ReceivesFelloship, ResearchGuideId, currentIn, cast, country, religion, programEnroledOn, programCompletedOn,
         });
       }
     }
@@ -195,7 +195,7 @@ const StudentHome = () => {
 
   useEffect(() => {
     if (programGraduated) {
-      SchoolsProgram[schoolName].forEach((programs) => {
+      SchoolsProgram?.[schoolName].forEach((programs) => {
         if (programs[0] === programGraduated) {
           setProgramDuration(
             Array.from(
@@ -227,7 +227,7 @@ const StudentHome = () => {
       </div>
 
       <div className="mt-2">
-        <Bred links={[ siteLinks.welcome, isAlumniLink ? siteLinks.alumniHome : siteLinks.studentHome, ]} />
+        <Bred links={[siteLinks.welcome, isAlumniLink ? siteLinks.alumniHome : siteLinks.studentHome,]} />
       </div>
 
       {user ? (
@@ -235,7 +235,7 @@ const StudentHome = () => {
           <div className="main-div xl:flex flex-row items-start my-3 gap-3 animate-fade-up animate-once">
             <div className="mb-3 md:mb-0 xl:h-screen">
               <div className="p-3 sm:flex flex-row xl:block items-start justify-start gap-4 bg-gray-50 rounded-lg border xl:h-full">
-                <img src={serverLinks.showFile(user?.photoURL, "student")} className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] xl:mx-auto rounded-full object-cover sm:mt-4 border- border-[#4566ac] sm:mx-10"/>
+                <img src={serverLinks.showFile(user?.photoURL, "student")} className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] xl:mx-auto rounded-full object-cover sm:mt-4 border- border-[#4566ac] sm:mx-10" />
 
                 <div className="xl:mt-4">
                   <p className="text-lg sm:text-2xl font-bold">
@@ -245,15 +245,14 @@ const StudentHome = () => {
                   <div className="text-left gap-2 mt-2">
                     <ContactTile
                       keyName="User"
-                      value={`${
-                        user && user?.isAlumni
+                      value={`${user && user?.isAlumni
                           ? "Verified Alumni"
                           : "Verified Student"
-                      }`}
+                        }`}
                     />
                     <ContactTile
                       keyName="School"
-                      value={`${(user && user.schoolName) || "Not Added"}`}
+                      value={`${(user && user?.schoolName) || "Not Added"}`}
                     />
                     <ContactTile
                       keyName="Email"
@@ -323,8 +322,8 @@ const StudentHome = () => {
                   {navcom.map((item, index) => {
                     return ["studentJRFSRF"].includes(item.name) ? (
                       user?.programGraduated.includes("Ph.D") &&
-                      user?.ReceivesFelloship == "Yes" &&
-                      !user?.isAlumni ? (
+                        user?.ReceivesFelloship == "Yes" &&
+                        !user?.isAlumni ? (
                         <div className="accordion-item bg-gray-50 ">
                           <h2
                             className="accordion-header accordionHeader"
@@ -354,12 +353,12 @@ const StudentHome = () => {
                         </div>
                       ) : null
                     ) : [
-                        "higherEducation",
-                        "examQualified",
-                        "jobs",
-                        "business",
-                        "alumniContribution",
-                      ].includes(item.name) && !isAlumniLink ? null : (
+                      "higherEducation",
+                      "examQualified",
+                      "jobs",
+                      "business",
+                      "alumniContribution",
+                    ].includes(item.name) && !isAlumniLink ? null : (
                       <div className="accordion-item bg-gray-50 ">
                         <h2
                           className="accordion-header accordionHeader"
@@ -392,8 +391,8 @@ const StudentHome = () => {
                 </div>
 
                 {user?.programGraduated.includes("Ph.D") &&
-                user?.ReceivesFelloship == "Yes" &&
-                !user?.isAlumni && !guides.includes(user?.ResearchGuide) ? (
+                  user?.ReceivesFelloship == "Yes" &&
+                  !user?.isAlumni && !guides.includes(user?.ResearchGuide) ? (
                   <div className="Stupb-2 pl-2 font-semibold text-lg">
                     Research Center
                   </div>
@@ -599,9 +598,9 @@ const StudentHome = () => {
               setState={setValues}
               options={
                 schoolName
-                  ? SchoolsProgram[schoolName].map((item) => {
-                      return item[0];
-                    })
+                  ? SchoolsProgram?.[schoolName].map((item) => {
+                    return item[0];
+                  })
                   : []
               }
             />
@@ -689,8 +688,8 @@ const StudentHome = () => {
                   options={
                     guides
                       ? [
-                          ...new Set([...guides, ResearchGuide || "", "Other"]),
-                        ].filter((item) => item !== "")
+                        ...new Set([...guides, ResearchGuide || "", "Other"]),
+                      ].filter((item) => item !== "")
                       : []
                   }
                   id="ResearchGuide"
@@ -863,10 +862,10 @@ const DetailTile = ({ keyName, value, editFunction, user }) => {
       <p className="text-muted">{keyName}</p>
       <p className="">
         {value === undefined ||
-        value === "undefined" ||
-        value === "null" ||
-        value === null ||
-        value === "" ? (
+          value === "undefined" ||
+          value === "null" ||
+          value === null ||
+          value === "" ? (
           <span
             onClick={editFunction}
             className="bg-yellow-300 cursor-pointer hover:bg-yellow-200 px-2 py-1 rounded-full text-black text-xs"
