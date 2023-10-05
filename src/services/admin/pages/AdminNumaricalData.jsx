@@ -28,7 +28,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   const [module, setModule] = useState(null)
   const [model, setModel] = useState(null)
   const [proof, setProof] = useState(null)
-  const fiveYears = academicYearGenerator(5, true)
+  const fiveYears = academicYearGenerator(5, true, true)
   const generateAcademicYears = [...fiveYears, 'Total']
 
   const tableHead = {
