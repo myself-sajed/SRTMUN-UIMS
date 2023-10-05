@@ -14,7 +14,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
 
 
-const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDuration: "Fellowship Duration", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDate: "Fellowship Starting Date", fellowshipDuration: "Fellowship Duration (in Years)", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
 const AdminJRFSRF = () => {
 
     const model = 'JrfSrfAdmin'
@@ -25,9 +25,9 @@ const AdminJRFSRF = () => {
     const params = { model, module, filter }
     const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
-    const initialstate = { researchName: "", guideName: "", otherGuide: "", otherSchool: "", schoolName: "", enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Proof: '' }
+    const initialstate = { researchName: "", guideName: "", otherGuide: "", otherSchool: "", schoolName: "", enrolmentYear: '', fellowshipDate: "", fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Proof: '' }
     const [values, setValues] = useState(initialstate)
-    const { researchName, guideName, otherGuide, otherSchool, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year } = values
+    const { researchName, guideName, otherGuide, otherSchool, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, fellowshipDate } = values
     const [open, setOpen] = useState(false)
 
     //---------------edit state-------------------
@@ -51,10 +51,10 @@ const AdminJRFSRF = () => {
         if (itemToEdit && data.data) {
             data?.data.forEach((item) => {
                 if (item?._id === itemToEdit) {
-                    const { researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName } = item
+                    const { researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName, fellowshipDate } = item
                     setEdit(true); setOpen(true);
                     setValues({ 
-                             researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName
+                             researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName, fellowshipDate
                      })
                 }
             })
@@ -66,6 +66,7 @@ const AdminJRFSRF = () => {
     }
     const onSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
         edit ? editReq({ id: itemToEdit }, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
             addReq({}, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setLoading, module)
     }
@@ -75,7 +76,7 @@ const AdminJRFSRF = () => {
             <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} />
             <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
-                    <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label="Research Fellow Name" setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label={tableHead.researchName} setState={setValues} />
                     <Select options={schools
                         ? [
                             ...new Set([...schools, schoolName || '', "Other"]),
@@ -97,13 +98,14 @@ const AdminJRFSRF = () => {
                         guideName==="Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
                     }
 
-                    <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrollment Year" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="fellowshipDuration" type='number' value={fellowshipDuration} label="Fellowship Duration (in Months)" setState={setValues} />
-                    <Select options={["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label="Fellowship Type" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label="Granting Agency" setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label="Qualified Exam" setState={setValues} />
-                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />
-                    <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
+                    <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label={tableHead.enrolmentYear} setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="fellowshipDate" value={fellowshipDate} type="date" label={tableHead.fellowshipDate} setState={setValues} />
+                    <Select options={[1,2,3,4,5,6,7]} className='col-md-6 col-lg-4' id="fellowshipDuration" value={fellowshipDuration} label={tableHead.fellowshipDuration} setState={setValues} />
+                    <Select options={["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label={tableHead.fellowshipType} setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label={tableHead.grantingAgency} setState={setValues} />
+                    <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label={tableHead.qualifyingExam} setState={setValues} />
+                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label={tableHead.year} setState={setValues} />
+                    <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />

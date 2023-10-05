@@ -21,9 +21,9 @@ import React from 'react'
 // import IILRevenueCorporateTraining from '../services/iil/components/IILRevenueCorporateTraining'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
-import AdminHE from '../services/admin/tables/AdminHE'
-import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
-import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
+// import AdminHE from '../services/admin/tables/AdminHE'
+// import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
+// import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 // import YfTable2 from '../services/youthfestival/components/YfTable2'
 
 const Test2 = () => {
@@ -58,11 +58,11 @@ const Test2 = () => {
       {/* <IILCollaborativeActivities/>
       <IILRevenueConsultancy />
       <IILRevenueCorporateTraining /> */}
-      {/* <AdminJRFSRF />
-      <AdminPhdAwarded /> */}
-      <AdminHE />
+      {/* <AdminJRFSRF /> */}
+      {/* <AdminPhdAwarded />  */}
+      {/* <AdminHE />
       <AdminDemandRatio />
-      <AdminResearchProjects />
+      <AdminResearchProjects /> */}
     </div>
   )
 }

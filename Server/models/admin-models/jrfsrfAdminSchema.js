@@ -10,6 +10,10 @@ const jrfsrfAdminSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
+    fellowshipDate: {
+        type: 'string',
+        required: true,
+    },
     fellowshipDuration: {
         type: 'string',
         required: true,
