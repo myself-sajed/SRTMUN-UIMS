@@ -18,13 +18,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
 import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser, setIILUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
-import { FloatButton, Tooltip } from 'antd';
-import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
-import DialogBox from '../components/DialogBox';
-import { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import RichText from '../services/director/reports/academic-audit/inputs/RichText'
-import Axios from 'axios'
 import Dashboard from '../services/dashboard/pages/Dashboard';
 import useUserIsLoggedIn from '../hooks/useUserIsLoggedIn';
 import NewspaperRoundedIcon from '@mui/icons-material/NewspaperRounded';
@@ -34,7 +27,7 @@ import { useQuery } from 'react-query';
 import LoggedInUsers from '../components/LoggedInUsers';
 import VisitorCount from '../services/dashboard/components/VisitorCount';
 import navcom from '../services/director/components/UtilityComponents/navcom';
-import PriorityServices from '../services/dashboard/components/PriorityServices';
+// import PriorityServices from '../services/dashboard/components/PriorityServices';
 
 const Index = () => {
     let iconProps = { fontSize: '65px', color: '#fc4829', borderRadius: '50%', margin: '10px', padding: '5px', }

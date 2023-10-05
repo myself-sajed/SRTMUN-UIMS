@@ -14,7 +14,7 @@ const SchoolsProgram = {
     ],
     "School of Earth Sciences": [
         ["M.Sc.(Geology)", 2], ["M.Sc.(Environmental Science)", 2], ["M.A/M.Sc.(Geography)", 2], ["M.Sc.(Geophysics)", 2], ["M.Phil.(Geology)", 2], ["M.Phil.(Environmental Science)", 2], ["M.Phil.(Geography)", 2], ["Ph.D.(Geology)", 7], ["Ph.D.(Environmental Science)", 7], ["Ph.D.(Geography)", 7], ["Ph.D.(Geophysics)", 7], ["Post-Graduate Diploma in Geoinformatics", 2],
-        ["Certificate Course in Industrial Safety,Health and Environmental Management (dual course with PG, M.Phil & Ph.D.)", 2]
+        ["Certificate Course in Industrial Safety,Health and Environmental Management (dual course with PG, M.Phil & Ph.D.)", 2],["Ph.D (Home Sciences)", 7]
     ],
     "School of Fine and Performing Arts": [
         ["Bachalor in Performing Arts", 3], ["M.A.(Theater Arts & Film)", 2], ["M.A.(Music)", 2], ["Diploma in Theater Arts", 2], ["Certificate Course in Music", 2], ["Certificate Course in Dance", 2]
