@@ -27,7 +27,7 @@ const ServicesList = () => {
     },
     {
       title: "Academic Planning & Development Section",
-      desc: "Demand Ratio",
+      desc: "JRF-SRF, Research Projects",
       loginLink: user?.apdsUser ? siteLinks.apdsHome.link : siteLinks.apdsLogin.link
     }
 

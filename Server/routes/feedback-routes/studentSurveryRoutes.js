@@ -53,7 +53,7 @@ function studentSurveryRoutes(app) {
                 type: 'radio',
                 required: true,
                 question: 'What degree program are you pursuing?',
-                options: ["Bachelor's", "Master’s", "M. Phil.", "Doctorate"],
+                options: ["Bachelor's", "Master’s", "M. Phil.", "Doctorate", "Diploma", "Vocational"],
                 show: 'Chart'
             },
             {
