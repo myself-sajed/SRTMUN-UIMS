@@ -19,6 +19,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 
 const tableHead = { index: "Sr. no.", Name_of_student_placed: "Name of student placed/started Business", SchoolName: "School Name", Program_graduated_from: "Program graduated from", Name_of_the_employer: "Name of the employer/business", Employer_contact_details: "Employer/business contact details", Pay_package_annum: "Pay package ( ₹ / annum)", Academic_Year: "Year of Placement", Type_Of_Placement: "Type of placemnt", Upload_Proof: "Upload Proof", Action: "Action" }
@@ -29,7 +30,6 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
     if (!school) {
         delete tableHead.SchoolName;
     }
-
     const SendReq = "Placement";
     const module = 'director';
 
@@ -38,11 +38,17 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
+    const typeObject = {
+        Name_of_student_placed: "text", SchoolName: Object.keys(SchoolsProgram), Program_graduated_from: school?Object.values(SchoolsProgram).flat().map(programArray => programArray[0]):SchoolsProgram[directorUser?.department]?.map(item => item[0]), Name_of_the_employer: "text", Employer_contact_details: "text", Pay_package_annum: "number", Academic_Year: academicYearGenerator( 29, true ), Type_Of_Placement: typesOfPlacements,
+    }
+    if (!school) {
+        delete typeObject.SchoolName;
+    }
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "}Gr/e0&]Gpc<'SgJ2)xu"], () => GetReq(params))
 
 
     //--------------values useState---------------
@@ -77,7 +83,6 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
         }
     }, [academicYear])
     //--------------Frant end ui------------
-    console.log(school ? values?.SchoolN : directorUser?.department);
 
     return (
         <>
@@ -115,7 +120,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Placements Director${school ? "Placement Officer" : directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false} />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>

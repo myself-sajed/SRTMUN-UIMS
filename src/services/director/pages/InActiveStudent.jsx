@@ -18,7 +18,7 @@ const InActiveStudent = () => {
   
   const filter =  {schoolName, isAlumni:false ,isActiveStudent:false }
   const params = { model: model, id: "", module, filter: filter, }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, "j]cFtYKJD_mdAn'us7t{"], () => getReq(params))
 
   const [activeProgram, setActiveProgram] = useState(SchoolsProgram[schoolName][0][0])
   const [itemToEdit, setItemToEdit] = useState(null)

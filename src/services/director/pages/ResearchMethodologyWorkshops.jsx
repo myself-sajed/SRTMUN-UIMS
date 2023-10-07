@@ -20,13 +20,18 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import SCTextField from "../components/FormComponents/SCTextField";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_workshop_seminar: "Name of the workshop/ seminar", Number_of_Participants: "Number of Participants", year: "year", From_Date: "From Date", To_Date: "To Date", Upload_Proof: "Upload Proof", Action: "Action" }
+const typeObject = {
+    SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Name_of_the_workshop_seminar: "text", Number_of_Participants: "number", year: academicYearGenerator( 29, true ), From_Date: "date", To_Date: "date",
+}
 
 function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYear, school }) {
 
     if (!school) {
         delete tableHead.SchoolName;
+        delete typeObject.SchoolName;
       }
 
     const SendReq = 'ResearchMethodologyWorkshops';
@@ -37,11 +42,12 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
+
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, params], () => GetReq(params))
 
     //--------------values useState---------------
     const initialState = { rmwnotws: "", rmwnop: "", rmwy: "", rmwfd: "", rmwtd: "", rmwloarfw: "", Upload_Proof: "", SchoolN: "" }
@@ -110,7 +116,7 @@ function ResearchMethodologyWorkshops({ filterByAcademicYear = false, academicYe
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Research Methodology Workshops Director ${school ? "Innovation Incubation and Linkages" : directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false} />
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

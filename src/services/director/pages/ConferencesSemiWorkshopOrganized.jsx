@@ -3,7 +3,6 @@ import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
 
-import CDatePicker from "../components/FormComponents/CDatePicker";
 import DateRPick from "../components/FormComponents/DateRPick";
 import CTextField from "../components/FormComponents/CTextField";
 import SCTextField from "../components/FormComponents/SCTextField";
@@ -20,6 +19,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SYTextField from "../components/FormComponents/SYTextField";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Level_of_program: "Level of Program", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", Action: "Action" }
 
@@ -32,7 +32,6 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
   const module = 'director';
 
   //--------------fetch data from db----------
-  const [tableBody, setTableBody] = useState();
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
@@ -40,8 +39,8 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
-
+  const { data, isLoading, refetch } = useQuery([SendReq, "RM4,(t+D;l|P_h};;z1{"], () => GetReq(params))
+  const typeObject = {Year: academicYearGenerator(29,true), From_Date: "date", To_Date: "date", Title_Of_the_Program: "text", Level_of_program: level, Number_of_Participants: "number",}
   //--------------values useState---------------
   const initialState = {
     Year: "", From_Date: "", To_Date: "", Title_Of_the_Program: "", Number_of_Participants: "", Level_of_program: "", Upload_Proof: ""
@@ -69,8 +68,6 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
     }
   }, [itemToEdit])
 
-
-
   useEffect(() => {
     if (filterByAcademicYear) {
       setFiletr((prev) => {
@@ -78,11 +75,8 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
       })
     }
   }, [academicYear])
+
   //--------------Frant end ui------------
-
-
-
-
   return (
     <>
       <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={Filter.yearFilter} setState={setFiletr} />
@@ -111,7 +105,7 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ConferencesSemiWorkshopOrganized Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} tableHead={tableHead} typeObject={typeObject} />
 
       <Table TB={data?.data} module={module} year="Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>

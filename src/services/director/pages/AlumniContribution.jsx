@@ -18,8 +18,10 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import BulkExcel from '../../../components/BulkExcel';
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Name_of_The_Alumni_Contributed: "Name Of The Alumni", Program_graduated_from: "Program Graduated From", Amount_of_contribution: "Contribution Ammount in ₹", Academic_Year: "Academic Year of Contribution", Upload_Proof: "Proof", Action: "Action" }
+
 const AlumniContribution = ({ filterByAcademicYear = false, academicYear }) => {
   const SendReq = "AlumniContribution";
   const module = "director"
@@ -28,12 +30,14 @@ const AlumniContribution = ({ filterByAcademicYear = false, academicYear }) => {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
 
+  const typeObject = {Name_of_The_Alumni_Contributed: "text", Program_graduated_from: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Amount_of_contribution: "number", Academic_Year: academicYearGenerator(29, true),}
+
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_year: { in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
 
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, ">mI:d>v73H[*+Fl@i9^E"], () => GetReq(params))
 
   //--------------values useState---------------
   const initialState = { Name_of_The_Alumni_Contributed: "", Program_graduated_from: "", Amount_of_contribution: "", Academic_Year: "", Upload_Proof: "" }
@@ -97,7 +101,7 @@ const AlumniContribution = ({ filterByAcademicYear = false, academicYear }) => {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`AlumniContributionDirector${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} typeObject={typeObject} tableHead={tableHead} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="Academic_Year" setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>

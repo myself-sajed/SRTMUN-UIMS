@@ -1,21 +1,17 @@
 import { Button } from '@mui/material';
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import DialogBox from './formComponents/DialogBox'
-import excelReq from './requestComponents/excelReq';
-import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
+// import excelReq from './requestComponents/excelReq';
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';
-import UploadFile from './formComponents/UploadFile';
 import excelObject from './excelObject';
 import ExcelJS from 'exceljs';
 import { toast } from 'react-hot-toast';
-import { acadmicYearArr } from './formComponents/YearSelect';
+import Test2 from '../inputs/Test2';
 import axios from 'axios';
 
-const BulkExcel = ({ SendReq, refetch, module, department, sampleFile, title, open, setOpen, note = null, data, proof, disableUpload = false }) => {
-    const initialState = { excelFile: "" }
-    const [value, setValues] = useState(initialState);
+const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof, disableUpload = false, tableHead, typeObject, commonFilds }) => {
+    const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const AcademicYears= acadmicYearArr()
     
     async function generateExcelFile(data, columnMappingKey, fileName) {
       try {
@@ -97,35 +93,34 @@ const BulkExcel = ({ SendReq, refetch, module, department, sampleFile, title, op
     }
 
     const onCancel = () => {
-        setOpen(false)
+        setOpen(false); 
+        setLoading(false); 
+        setTableData([])
     }
     const onSubmit = (e) => {
         e.preventDefault();
-        excelReq({ School: department }, SendReq, initialState, value, setValues, refetch, setOpen, setLoading, module)
+        setLoading(true)
+        axios.post(`${process.env.REACT_APP_MAIN_URL}/excelclone/singlesingleroute`,{ commonFilds, model: SendReq, tableData }).then((res)=>{
+          if(res.status===201){toast.success(res.data)}
+          else if(res.status===500){toast.error("Something went wrong")}
+          setLoading(false); 
+          refetch(); 
+          setOpen(false); 
+          setTableData([])
+        })
     }
-    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={disableUpload}>
 
-
+    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={disableUpload} maxWidth='lg' loading={loading}>
         <div className='p-2 bg-blue-100 rounded-md'>
-            <div className='p-1 flex items-start justify-between'>
-                <div>
-
-                {/* onClick={() => {}} */}
-
-                    <div><Button variant="contained" component="label" onClick={ ()=>{window.open(`${process.env.REACT_APP_MAIN_URL}/downloadSampleExcel/${sampleFile}/${SendReq}/${department}`)}} startIcon={<CloudUploadRoundedIcon />} sx={{ right: 0, fontSize: 14, maxHeight: 100 }} disabled={disableUpload}>
-                        Sample Excel File to Fill
-                    </Button> </div>
-                    <div className='text-xs text-muted mt-2'>{disableUpload? <p>Due to the large validation, bulk data upload using Excel is not available for this table.</p>:note ? <p>Note: Do not forgot to Upload proofs after bulk entry. <span style={{color:"Red"}}>{note}</span></p> : `Note: Do not forgot to Upload proofs after bulk entry.`}</div>
-                </div>
+            <div className='p-1 flex items-start justify-end'>
                 <div className=''>
                     <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100 }} onClick={()=>{generateExcelFile(data, SendReq, `${title}.xlsx`);}} >
                         Download Data In Excel
                     </Button>
-
                 </div>
             </div>
-            <div className='w-full mt-3'>
-                <UploadFile className='col-md-12' accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excelFile" label="Upload Filled Sample Excel File" setState={setValues} desable={disableUpload}/>
+            <div className='mt-2'>
+              <Test2 tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} />
             </div>
         </div>
 

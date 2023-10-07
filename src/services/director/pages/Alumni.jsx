@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import { useQuery } from 'react-query';
 import getReq from '../../../components/requestComponents/getReq';
 import Table from '../../../components/tableComponents/TableComponent'
-import axios from 'axios';
-import { toast } from 'react-hot-toast'
 
 const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No.",  doCompletion: "completed on", Action: "Action" }
 const Alumni = () => {
@@ -17,7 +15,7 @@ const Alumni = () => {
   
   const filter =  {schoolName, isAlumni:true}
   const params = { model: model, id: "", module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const [activeProgram, setActiveProgram] = useState(SchoolsProgram[schoolName][0][0])
 

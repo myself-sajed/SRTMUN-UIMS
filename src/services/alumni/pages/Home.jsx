@@ -15,20 +15,17 @@ import Text from '../../../components/formComponents/Text'
 import UploadFile from '../../../components/formComponents/UploadFile'
 import editReq from '../../../components/requestComponents/editReq'
 import getReq from '../../../components/requestComponents/getReq'
-// import Header from '../components/Header'
 import navcom from '../components/navcom'
 import SchoolsProgram from '../../../components/SchoolsProgram'
-import { style } from '@mui/system'
 import serverLinks from '../../../js/serverLinks'
 import DynamicCheckboxes from '../../../components/formComponents/DynamicChackboxes'
 import handleAvatarChange from '../../../js/handleAvatar'
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import Year from '../../../inputs/Year'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import FileViewer from '../../../components/FileViewer'
-import countries from '../../director/components/FormComponents/country'
 import ProfileCroper from '../../../components/ProfileCroper'
 import UnderConstruction from '../../../pages/UnderConstruction'
+import Lists from '../../../components/tableComponents/Lists'
 
 const Home = () => {
 
@@ -248,7 +245,7 @@ const Home = () => {
                         <Select className='col-md-6 col-lg-4' id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
                         <UploadFile className='col-md-6 col-lg-4' id="Upload_Proof2" label="Upload Alumni Proof" setState={setValues} required={false} />
                         <Text className='col-md-6 col-lg-4' type='date' id="dob" value={dob} label="Date of birth" setState={setValues} />
-                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={Lists.countrys} />
                         {/* <YearSelect className='col-md-6 col-lg-4' id="doStarted" value={doStarted} label="Admited In School" setState={setValues} /> */}
                         <YearSelect className='col-md-6 col-lg-4' id="doCompleted" value={doCompleted} label="Completed Programs" setState={setValues} />
                     </div>

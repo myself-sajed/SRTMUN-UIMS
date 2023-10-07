@@ -19,6 +19,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Name_of_the_Scheme_Project_Endowments_Chairs: "Name of the Scheme/Project/ Endowments/ Chairs", Name_of_the_Principal_Investigator_Co_Investigator: "Name of the Principal Investigator/ Co Investigator", Name_of_the_Funding_agency: "Name of the Funding agency ", Type_of_Agency: "Type of Agency", Name_of_Department: "Name of Department", Year_of_Award: "Year of Award", Funds_provided_in_lakhs: "Funds provided ( ₹ / in lakhs)", Duration_of_the_project_in_Years: "Duration of the project (in Years)", Upload_Proof: "Upload proof", Action: "Action" }
 
@@ -29,15 +30,17 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
     const module = 'director';
 
     //--------------fetch data from db----------
-    const [tableBody, setTableBody] = useState();
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
+    const typeObject = {
+        Name_of_the_Scheme_Project_Endowments_Chairs: "text", Name_of_the_Principal_Investigator_Co_Investigator: "text", Name_of_the_Funding_agency: "text", Type_of_Agency: TyofAgency, Name_of_Department: Object.keys(SchoolsProgram), Year_of_Award: academicYearGenerator(29, true, true), Funds_provided_in_lakhs: "number", Duration_of_the_project_in_Years: "number"
+    }
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_Award: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "oi6&|BpE<z'M?@N:S|4U"], () => GetReq(params))
 
 
     //--------------values useState---------------
@@ -110,7 +113,8 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Ugc Sap Cas Dst Fist DBT ICSSR Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
+            
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Award" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

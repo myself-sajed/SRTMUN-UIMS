@@ -4,12 +4,9 @@ import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
 
 import CTextField from "../components/FormComponents/CTextField";
-import RowRadioButtonsGroup from '../components/FormComponents/RowRadioButtonsGroup';
 import SCTextField from '../components/FormComponents/SCTextField';
-import CDatePicker from '../components/FormComponents/CDatePicker';
 import SubmitButton from '../components/FormComponents/SubmitButton';
 import UTextField from "../components/FormComponents/UTextField";
-import country from '../components/FormComponents/country'
 
 import Table from "../../../components/tableComponents/TableComponent";
 
@@ -22,6 +19,8 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import SYTextField from "../components/FormComponents/SYTextField";
+import { academicYearGenerator } from "../../../inputs/Year";
+import Lists from "../../../components/tableComponents/Lists";
 
 const tableHead = { index: "Sr. no.", Name_of_the_student: "Name of the student", Year_of_joining: "Year of joining", Category: "Category", State_of_Domicile: "State of Domicile", Nationality: "Nationality", Email_ID: "Email ID", Programme_name: "Program name", Student_Unique_Enrolment_ID: "Student Unique Enrolment ID", Mobile_Number: "Mobile Number", Gender: "Gender", Upload_Proof: "Upload proof", Action: "Action" }
 
@@ -33,15 +32,17 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
     const module = 'director';
 
     //--------------fetch data from db----------
-    const [tableBody, setTableBody] = useState();
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
+    const typeObject = {
+        Name_of_the_student: "text", Year_of_joining: academicYearGenerator(29,true,true), Category: Category, State_of_Domicile: "text", Nationality: Lists.countrys, Email_ID: "text", Programme_name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Student_Unique_Enrolment_ID: "text", Mobile_Number: "number", Gender: Lists.gender,
+    }
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_joining: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, ">=rHe+>/%O2x3Cm,D-cU"], () => GetReq(params))
 
 
     //--------------values useState---------------
@@ -93,13 +94,13 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
                             <CTextField label="Name of the student" type="Text" value={values.Name_of_the_student} id="Name_of_the_student" onch={setvalues} />
                             <SYTextField label="Year of joining" value={values.Year_of_joining} id="Year_of_joining" onch={setvalues} />
                             <SCTextField select={Category} label="Category" value={values.Category} id="Category" onch={setvalues} />
-                            <SCTextField select={country()} label="Nationality" value={values.Nationality} id="Nationality" onch={setvalues} />
+                            <SCTextField select={Lists.countrys} label="Nationality" value={values.Nationality} id="Nationality" onch={setvalues} />
                             <CTextField label="State of Domicile" type="Text" value={values.State_of_Domicile} id="State_of_Domicile" onch={setvalues} />
                             <CTextField label="Email ID" type="Text" value={values.Email_ID} id="Email_ID" onch={setvalues} />
                             <SCTextField value={values.Programme_name} id="Programme_name" type="text" label="Program name" required={true} onch={setvalues} select={directorUser ? SchoolsProgram[directorUser.department].map(item => { return item[0] }) : []} />
                             <CTextField label="Student Unique Enrolment ID" type="Text" value={values.Student_Unique_Enrolment_ID} id="Student_Unique_Enrolment_ID" onch={setvalues} />
                             <CTextField label="Mobile Number" type="number" value={values.Mobile_Number} id="Mobile_Number" onch={setvalues} />
-                            <SCTextField label="Gender" value={values.Gender} id="Gender" onch={setvalues} select={["Male", "Female", "Other"]} />
+                            <SCTextField label="Gender" value={values.Gender} id="Gender" onch={setvalues} select={Lists.gender} />
                             <UTextField label="Upload proof" id="Upload_Proof" required={!edit} onch={setvalues} />
                             <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
                         </Grid>
@@ -107,7 +108,7 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`StudentSatisfactionSurvey Director ${directorUser.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
             <Table TB={data?.data} module={module} year='Year_of_joining' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>

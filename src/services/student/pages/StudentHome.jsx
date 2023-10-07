@@ -22,12 +22,9 @@ import SchoolsProgram from "../../../components/SchoolsProgram";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import handleAvatarChange from "../../../js/handleAvatar";
 import YearSelect from "../../../components/formComponents/YearSelect";
-import countries from "../../director/components/FormComponents/country";
 import ProfileCroper from "../../../components/ProfileCroper";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
-import { toast } from "react-hot-toast";
-import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import MapsHomeWorkRoundedIcon from "@mui/icons-material/MapsHomeWorkRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
@@ -35,6 +32,7 @@ import FileViewer from "../../../components/FileViewer";
 import { Skeleton } from "@mui/material";
 import { getOrdinalSuffix } from "../../director/pages/NewStudent";
 import capitalizeText from "../../../js/capitalizeText";
+import Lists from "../../../components/tableComponents/Lists";
 
 const fetchFacutys = async (params, setGuidesData, setGuides) => {
   let arr = [];
@@ -51,18 +49,7 @@ const fetchFacutys = async (params, setGuidesData, setGuides) => {
 const StudentHome = () => {
   const Salutations = ["Mr.", "Miss.", "Mrs.", "Shri", "Shrimati"];
   const genders = ["Male", "Female", "Other"];
-  const Casts = [
-    "General",
-    "OBC",
-    "SC",
-    "SBC",
-    "SEBC",
-    "ST",
-    "VJ",
-    "NT-B",
-    "NT-C",
-    "NT-D",
-  ];
+  const Casts = [ "General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D", ];
   const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain"];
   const model = "StudentUser";
   const module = "student";
@@ -651,7 +638,7 @@ const StudentHome = () => {
               value={country}
               label="Nationality"
               setState={setValues}
-              options={countries()}
+              options={Lists.countrys}
             />
 
             <Select

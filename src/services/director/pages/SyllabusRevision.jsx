@@ -20,6 +20,8 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
+import YearPicker from "../components/FormComponents/YearPicker";
 
 const tableHead = { index: "Sr. no.", Programme_Code: "Program Code", Programme_Name: "Program Name", Academic_Year: "Academic Year", Year_of_Introduction: "Year of Introduction", Status_of_implementation: "Status of implementation", Year_of_Implimentation: "Year of Implimentation", Year_of_Revision: "Year of Revision", Percentage_of_content_added_or_replaced: "Percentage of content added or replaced", Upload_Proof: "Upload Proof", Action: "Action" }
 
@@ -33,11 +35,14 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+  const typeObject = {
+      Programme_Code: "text", Programme_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: YearPicker(), Status_of_implementation: CE, Year_of_Implimentation: YearPicker(), Year_of_Revision: YearPicker(), Percentage_of_content_added_or_replaced: "number"
+  }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "yoZ-'}Wkv=r$T9B)xN/c"], () => GetReq(params))
 
 
   //--------------values useState---------------
@@ -108,7 +113,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`SyllabusRevision${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} year='Academic_Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} />
     </>

@@ -19,6 +19,7 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 
 const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
@@ -32,11 +33,14 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+  const typeObject = {
+    Programme_Code: "text", Programme_name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Academic_Year: academicYearGenerator( 29, true ), Type_of_program: TOP, Number_of_seats_available: "number", Number_of_eligible_applications: "number", Number_of_Students_admitted: "number",
+  }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "dy|A0zgd}E/0$3!d,Oqv"], () => GetReq(params))
 
   //--------------values useState---------------
   const initialState = { drpc: "", drpn: "", dray: "", drnosav: "", drnoea: "", drnosad: "", Upload_Proof: "", drtop: "" }
@@ -105,7 +109,7 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='DemandRatioDirector' title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Academic_Year" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>

@@ -19,13 +19,17 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_Organisation_with_whome_mou_signed: "Name of Organisation with whome mou signed", Duration_of_MoU: "Duration of MoU", Year_of_signing_MoU: "Year of signing MoU", Upload_Proof: "Actual activity list", Action: "Action" }
-
+const typeObject = {
+    SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Name_of_Organisation_with_whome_mou_signed: "text", Duration_of_MoU: "text", Year_of_signing_MoU: academicYearGenerator( 29, true ),
+}
 function MoUs({ filterByAcademicYear = false, academicYear, school }) {
 
     if (!school) {
         delete tableHead.SchoolName;
+        delete typeObject.SchoolName;
       }
 
     const SendReq = "MoUs"
@@ -41,7 +45,7 @@ function MoUs({ filterByAcademicYear = false, academicYear, school }) {
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "hluX%z1d~8KFhGj/%lt$"], () => GetReq(params))
 
     const initialState = { munoowwms: "", mudom: "", muyosm: "", Upload_Proof: "", SchoolN:"", }
     const [values, setvalues] = useState(initialState);
@@ -68,7 +72,6 @@ function MoUs({ filterByAcademicYear = false, academicYear, school }) {
             })
         }
     }, [itemToEdit])
-
 
     useEffect(() => {
         if (filterByAcademicYear) {
@@ -109,7 +112,8 @@ function MoUs({ filterByAcademicYear = false, academicYear, school }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`MoUs Director ${school ? "Innovation Incubation and Linkages" : directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} disableUpload={school?true:false}/>
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false}/>
+            
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_signing_MoU" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

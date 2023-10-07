@@ -24,16 +24,18 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
   const module = 'director'
 
   //--------------fetch data from db----------
-  const [tableBody, setTableBody] = useState();
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+const typeObject = {
+ 
+}
 
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { academicYear: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "18S7;7z?5&]e0]Z3CDA,"], () => GetReq(params))
 
 
   const initialState = { programCode: "", programName: "", academicYear: "" }
@@ -93,7 +95,7 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} sampleFile={`New Programs Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} sampleFile={`New Programs Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="academicYear" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

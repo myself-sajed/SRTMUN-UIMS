@@ -19,16 +19,17 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Academic_Year: "Academic Year", Program_Name: "Program Name", NseSC: "SC", NseST: "ST", NseOBC: "OBC(VJNT)", NseDivyngjan: "Divyngjan", NseGeneral: "General", NseOthers: "Others", NsaSC: "SC", NsaST: "ST", NsaOBC: "OBC(VJNT)", NsaDivyngjan: "Divyngjan", NsaGeneral: "General", NsaOthers: "Others", Upload_Proof: "Upload Proof", Action: "Action" }
 
 function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
-
     const SendReq = 'ReservedSeats';
     const module = 'director'
-
     const directorUser = useSelector(state => state.user.directorUser)
-
+    const typeObject = {
+        Academic_Year: academicYearGenerator(29,true), Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), NseSC: "number", NseST: "number", NseOBC: "number", NseDivyngjan: "number", NseGeneral: "number", NseOthers: "number", NsaSC: "SCnumber", NsaST: "number", NsaOBC: "number", NsaDivyngjan: "number", NsaGeneral: "number", NsaOthers: "number",
+    }
     //--------------fetch data from db----------
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "9obMqP&NK,p.@i.{,W5I"], () => GetReq(params))
 
     //--------------values useState---------------
     const initialState = { NseSC: "", NseST: "", NseOBC: "", NseDivyngjan: "", NseGeneral: "", NseOthers: "", NsaSC: "", NsaST: "", NsaOBC: "", NsaDivyngjan: "", NsaGeneral: "", NsaOthers: "", Program_Name: "", Academic_Year: "", Upload_Proof: "" }
@@ -121,7 +122,7 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ReservedSeats Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} note="In the Sample file, '1' refers to the available seats count, and '2' refers to the admitted students count." />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} note="In the Sample file, '1' refers to the available seats count, and '2' refers to the admitted students count." />
 
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year='Academic_Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>

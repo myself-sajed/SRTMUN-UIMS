@@ -22,7 +22,7 @@ const StudentToAlumni = () => {
   const [maxClass, setMaxClass] = useState(SchoolsProgram[schoolName][0][1] == 7 ? 3 : SchoolsProgram[schoolName][0][1])
   const filter = { schoolName, isActiveStudent: true, isAlumni: false }
   const params = { model: model, id: "", module, filter: filter, }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const [activeProgram, setActiveProgram] = useState(SchoolsProgram[schoolName][0][0])
 

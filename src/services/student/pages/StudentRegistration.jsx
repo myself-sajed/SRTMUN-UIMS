@@ -15,7 +15,6 @@ import Select from '../../../components/formComponents/Select';
 import Text from '../../../components/formComponents/Text';
 import SchoolsProgram from '../../../components/SchoolsProgram';
 import checkPasswordStrength from '../../../js/passwordChecker';
-import countries from '../../director/components/FormComponents/country'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import Skeleton from '@mui/material/Skeleton';
@@ -24,6 +23,7 @@ import StepStatus from '../../../components/StepStatus';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import EnterOTPComponent from '../components/EnterOTPComponent';
 import { getOrdinalSuffix } from '../../director/pages/NewStudent';
+import Lists from '../../../components/tableComponents/Lists';
 
 const StudentRegistration = () => {
 
@@ -270,7 +270,7 @@ const StudentRegistration = () => {
 
                                         <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
 
-                                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+                                        <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={Lists.countrys} />
 
                                         <Select className={isAlumniLink ? 'col-md-2' : 'col-md-3'} id='religion' value={religion} label="Religion" setState={setValues} options={religions} />
 

@@ -16,6 +16,7 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", programName: "Program Name", programCode: "Program Code", courseName: "Course Name", courseCode: "Course Code", academicYear: "Academic Year", Action: "Action" }
 
@@ -24,16 +25,15 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   const module = 'director'
 
   //--------------fetch data from db----------
-  const [tableBody, setTableBody] = useState();
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
-
+  const typeObject = {programName: "text", programCode: "text", courseName: "text", courseCode: "text", academicYear: academicYearGenerator(29,true),}
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { academicYear: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "@#t#m<-u4<EQh;~S'tD]"], () => GetReq(params))
 
 
   const initialState = { programCode: "", programName: "", courseCode: "", courseName: "", academicYear: "" }
@@ -95,7 +95,7 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} sampleFile={`Course In All Programs Director${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="academicYear" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

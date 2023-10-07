@@ -19,30 +19,32 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
+
+const typeObject = {SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Name_of_the_Activity_conducted_by_the_HEI: "text", Number_of_Students_Attended: "number", Year_of_Activity: academicYearGenerator(29, true),}
 
 function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, newSchool=false, school }) {
 
     if(!school && !newSchool) {
             delete tableHead.SchoolName;
+            delete typeObject.SchoolName;
     }
 
     const SendReq = "CounselingAndGuidance";
     const module = 'director'
     //--------------fetch data from db----------
-
-    const [tableBody, setTableBody] = useState();
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
-
+    
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: (school || newSchool) || directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
 
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "fUAjg+wzc-MW^;R&V-hI"], () => GetReq(params))
 
 
     //--------------values useState---------------
@@ -108,7 +110,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, new
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Counseling And Guidance Director${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} disableUpload={school?true:false} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false} />
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Activity" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import DialogBox from '../../../components/formComponents/DialogBox'
-import countries from '../components/FormComponents/country'
 import Select from '../../../components/formComponents/Select'
 import Text from '../../../components/formComponents/Text'
 import SchoolsProgram from '../../../components/SchoolsProgram'
@@ -16,6 +15,7 @@ import serverLinks from '../../../js/serverLinks'
 import Axios from 'axios'
 import { toast } from 'react-hot-toast'
 import ProfileCroper from '../../../components/ProfileCroper'
+import Lists from '../../../components/tableComponents/Lists'
 
 const tableHead = { index: "Sr. no.",propic: "Profile Pic", name : "Name Of Student" ,  email: "Email Id" ,  mobile: "Mobile No." ,  programGraduated: "Enrolled Program" ,  programEnroledOn: "Program Enroled On",  Action: "Action" }
 
@@ -25,7 +25,7 @@ const NewStudent = () => {
     const model = "StudentUser"
 
     const user = useSelector(state => state.user.directorUser)
-    const Salutations = ["Mr.", "Mrs.", , "Miss.", "Shri", "Shrimati"]
+    const Salutations = ["Mr.", "Mrs.", "Miss.", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
     const Casts = ["Genral", "OBC", "SC","SBC","SEBC", "ST","VJ","NT-B","NT-C","NT-D"]
     const religions = ["Hindu","muslim","Christian","Sikh","Buddh","Jain",]
@@ -45,7 +45,7 @@ const NewStudent = () => {
     const schoolName = user? user.department : null
     const filter =  {schoolName,isCreatedByDirector: true, isAlumni: false}
     const params = { model: model, id: "", module, filter: filter, }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, "5[?AjJ{6:v;Fnx~PI`l,"], () => getReq(params))
 
 
     const onSubmit = (e) => {
@@ -185,7 +185,7 @@ const NewStudent = () => {
 
             <Select className="col-md-3" id="gender" value={gender} label="Gender" setState={setValues} options={genders} />
 
-            <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={countries()} />
+            <Select className='col-md-3' id='country' value={country} label="Nationality" setState={setValues} options={Lists.countrys} />
 
             <Select className='col-md-3' id='religion' value ={religion} label="Religion" setState={setValues} options={religions} />
 

@@ -104,16 +104,16 @@ const navcom = [
             "2.1.2.1: Number of actual students admitted from the reserved categories year wise during the last five years "
         ],
     },
-    // {
-    //     element: <StudentSatisfactionSurvey />,
-    //     icon: <SchoolIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
-    //     name: 'StudentSatisfactionSurvey',
-    //     value: 'Student Satisfaction Survey',
-    //     instruction: [
-    //         "2.7 Student Satisfaction Survey (30)",
-    //         "2.7.1 Online student satisfaction survey regarding teaching learning process. (30)"
-    //     ],
-    // },
+    {
+        element: <StudentSatisfactionSurvey />,
+        icon: <SchoolIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,
+        name: 'StudentSatisfactionSurvey',
+        value: 'Student Satisfaction Survey',
+        instruction: [
+            "2.7 Student Satisfaction Survey (30)",
+            "2.7.1 Online student satisfaction survey regarding teaching learning process. (30)"
+        ],
+    },
     {
         element: <UgcSapCasDstFistDbtICssr />,
         icon: <ContentPasteIcon style={{ fontSize: '18px', color: "#1E3A8A" }} />,

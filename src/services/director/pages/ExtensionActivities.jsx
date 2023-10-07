@@ -17,6 +17,7 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Name_of_the_activity: "Name of the activity", Organising_unit: "Organising unit/ agency/ collaborating agency", Name_of_the_scheme: "Name of the scheme", Year_of_activity: "Year of the activity ", Number_of_students: "Number of students participated in such activities", Upload_Proof: "Proof", Action: "Action" }
 
@@ -25,16 +26,18 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
   const module = 'director'
 
   //--------------fetch data from db----------
-  const [tableBody, setTableBody] = useState();
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+  const typeObject = {
+    Name_of_the_activity: "text", Organising_unit: "text", Name_of_the_scheme: "text", Year_of_activity: academicYearGenerator( 29, true ), Number_of_students: "number"
+  }
 
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_activity: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "zB+)0cq/Hear59-?,z]g"], () => GetReq(params))
 
 
   const initialState = { eanota: "", eaouaca: "", eanots: "", eanosp: "", eayota: "", Upload_Proof: "" }
@@ -99,7 +102,7 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`ExtensionActivities Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={JSON.stringify(directorUser?.department)} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} fatchdata={refetch} year="Year_of_activity" isLoading={isLoading} setItemToEdit={setItemToEdit} tableHead={tableHead} SendReq={SendReq} />
     </>

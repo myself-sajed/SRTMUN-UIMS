@@ -3,7 +3,6 @@ import { Dialog, DialogContent, Grid } from "@mui/material";
 import { useSelector } from 'react-redux';
 import { useQuery } from "react-query";
 
-import CDatePicker from "../components/FormComponents/CDatePicker";
 import DateRPick from "../components/FormComponents/DateRPick";
 import CTextField from "../components/FormComponents/CTextField";
 import SCTextField from "../components/FormComponents/SCTextField";
@@ -20,11 +19,12 @@ import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SYTextField from "../components/FormComponents/SYTextField";
+import { academicYearGenerator } from "../../../inputs/Year";
 
 const tableHead = { index: "Sr. no.", Year: "Year", From_Date: "From Date", To_Date: "To Date", Title_Of_the_Program: "Title Of the Program", Type_of_staff: "Type of staff", Number_of_Participants: "Number of Participants", Upload_Proof: "Upload proof", Action: "Action" }
 
 const StaffType = ["Teaching staff & Student", "Non-Teaching Staff"]
-const level = ["University", "State"]
+// const level = ["University", "State"]
 
 function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear }) {
 
@@ -32,15 +32,17 @@ function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear 
   const module = 'director';
 
   //--------------fetch data from db----------
-  const [tableBody, setTableBody] = useState();
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+  const typeObject = {
+    Year: academicYearGenerator(29,true,true), From_Date: "date", To_Date: "date", Title_Of_the_Program: "text", Type_of_staff: StaffType, Number_of_Participants: "number"
+  }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery([SendReq, "=R]{Ujz2_bvIAESVU:3d"], () => GetReq(params))
 
   //--------------values useState---------------
   const initialState = { tpoy: "", tpofd: "", tpotd: "", tpototp: "", tpotos: "", tponop: "", Upload_Proof: "", }
@@ -109,7 +111,7 @@ function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear 
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`Training Programs Organized Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser?.department} open={open} setOpen={setOpen} />
+      <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year='Year' fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>

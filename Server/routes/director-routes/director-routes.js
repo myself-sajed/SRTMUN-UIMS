@@ -786,7 +786,7 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
 
                 if (dateInputs.includes(key)) {
                     let d = new Date((item[key] - (25567 + 2)) * 86400 * 1000)
-                    fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
+                    let fullDate = (`${d.getFullYear()}-${("0" + (d.getMonth() + 1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}`)
                     sendData[excelObject[model][key]] = fullDate
                 }
                 else {
@@ -811,6 +811,20 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     }
 })
 
+router.post('/excelclone/singlesingleroute', (req, res) => {
+    const {commonFilds, model, tableData } = req.body
+    try {
+        tableData.forEach(async(e) =>{
+            const singleItem = new models[model]({...e, ...commonFilds});
+            await singleItem.save();
+        })
+        res.status(201).send("Bulk Entry Suceeed")
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
 //Activate Diactivate Student
 router.post('/inactive-active/student', async (req, res) => {
     const { isActiveStudent, itemToEdit } = req.body
@@ -820,7 +834,7 @@ router.post('/inactive-active/student', async (req, res) => {
 
         const { email, schoolName, isActiveStudent: isActive } = userdetails
         const activestate = isActive === true ? "Activated" : "Disabled";
-        subjectForEmail = `Your account is ${activestate} by director of ${schoolName} at SRTMUN-UIMS.`
+        let subjectForEmail = `Your account is ${activestate} by director of ${schoolName} at SRTMUN-UIMS.`
 
         // message to send on res
         const statematter = isActive === true ? "Please utilize the provided username and password which were entered during registration, to access your student account at <strong>SRTMUN-UIMS</strong>" : `Visit to ${schoolName} with any admission proof to activate your student account`
@@ -850,7 +864,7 @@ router.post('/student-to-alumni/bulk', async (req, res) => {
         let NonConverted = [];
 
 
-        for (id of arr) {
+        for (const id of arr) {
             let student = await StudentUser.findOne({ _id: id });
             if (student) {
                 const { programEnroledOn, currentIn } = student

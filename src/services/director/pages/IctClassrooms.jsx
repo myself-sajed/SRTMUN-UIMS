@@ -28,9 +28,12 @@ function IctClassrooms() {
     const [add, setAdd] = useState(false);
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
+    const typeObject = {
+        Room_number_or_Name_of_Classrooms: "text", Type_of_ICT_facility: "text"
+    }
 
     const params = { model: SendReq, id: directorUser.department, module }
-    const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery([SendReq, "a58pRj6;?ewz'x{&6ANy"], () => GetReq(params))
 
     //--------------values useState---------------
     const initialState = { icrnonoc: "", ictoif: "", Upload_Proof: "" }
@@ -80,7 +83,7 @@ function IctClassrooms() {
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile={`IctCLassroom Director ${directorUser?.department}`} title={title} SendReq={SendReq} refetch={refetch} module={module} department={directorUser.department} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
             <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )
