@@ -237,7 +237,7 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
 
         const genrateAcademicYears = () => {
             const d = new Date()
-            let year = d.getFullYear();
+            let year = d.getFullYear() + 1;
             const ly = year - 4;
             let i = 1
             let arr = []
@@ -252,7 +252,10 @@ router.post('/Admin/getFiveYearData', async (req, res) => {
             return arr
         }
 
+
+
         const yearList = genrateAcademicYears();
+        console.log('year list:', yearList)
         const docs = {}
         let oModels = Object.keys(models)
         const itemsToRemove = ["User", "DirectorUser", "Qualification", "Degree", "AppointmentsHeldPrior", "PostHeld", "Online", "Responsibilities", "BookAndChapter", "IctClassrooms", 'Petant', 'ResearchProject', 'ResearchPaper', 'Lectures', 'ReservedSeats', 'DemandRatio', 'StudentSatisfactionSurvey'];

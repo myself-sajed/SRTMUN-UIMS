@@ -14,7 +14,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
 
 
-const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date", fellowshipDate: "Fellowship Starting Date", fellowshipDuration: "Fellowship Duration (in Years)", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date (RAC)", fellowshipDate: "Fellowship Starting Date", fellowshipDuration: "Fellowship Duration (in Years)", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
 const AdminJRFSRF = () => {
 
     const model = 'JrfSrfAdmin'
@@ -42,7 +42,7 @@ const AdminJRFSRF = () => {
         //     return{...pri, guideName: ""} 
 
         // })
-        if(schoolName!=="Other"){
+        if (schoolName !== "Other") {
             fetchFacutys({ model: "User", id: "", module, filter: { department: schoolName, salutation: "Dr." }, }, null, setGuides);
         }
     }, [schoolName]);
@@ -53,9 +53,9 @@ const AdminJRFSRF = () => {
                 if (item?._id === itemToEdit) {
                     const { researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName, fellowshipDate } = item
                     setEdit(true); setOpen(true);
-                    setValues({ 
-                             researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName, fellowshipDate
-                     })
+                    setValues({
+                        researchName, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, guideName, fellowshipDate
+                    })
                 }
             })
         }
@@ -67,41 +67,41 @@ const AdminJRFSRF = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        edit ? editReq({ id: itemToEdit }, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-            addReq({}, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setLoading, module)
+        edit ? editReq({ id: itemToEdit }, model, initialstate, { ...values, guideName: guideName === "Other" ? otherGuide : guideName, schoolName: schoolName === "Other" ? otherSchool : schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
+            addReq({}, model, initialstate, { ...values, guideName: guideName === "Other" ? otherGuide : guideName, schoolName: schoolName === "Other" ? otherSchool : schoolName }, setValues, refetch, setOpen, setLoading, module)
     }
 
     return (
         <>
-            <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} />
-            <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+            <AddButton title="JRF & SRF" onclick={setOpen} />
+            <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label={tableHead.researchName} setState={setValues} />
                     <Select options={schools
                         ? [
                             ...new Set([...schools, schoolName || '', "Other"]),
-                          ].filter((item) => item !== "")
+                        ].filter((item) => item !== "")
                         : []
-                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} /> 
+                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} />
                     {
-                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
+                        schoolName === "Other" && <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
                     }
                     {
-                        schoolName!=="Other" && <Select options={guides
+                        schoolName !== "Other" && <Select options={guides
                             ? [
                                 ...new Set([...guides, guideName || '', "Other"]),
-                              ].filter((item) => item !== "")
+                            ].filter((item) => item !== "")
                             : []
                         } className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} />
                     }
                     {
-                        guideName==="Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
+                        guideName === "Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
                     }
 
                     <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label={tableHead.enrolmentYear} setState={setValues} />
                     <Text className='col-md-6 col-lg-4' id="fellowshipDate" value={fellowshipDate} type="date" label={tableHead.fellowshipDate} setState={setValues} />
-                    <Select options={[1,2,3,4,5,6,7]} className='col-md-6 col-lg-4' id="fellowshipDuration" value={fellowshipDuration} label={tableHead.fellowshipDuration} setState={setValues} />
-                    <Select options={["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label={tableHead.fellowshipType} setState={setValues} />
+                    <Select options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} className='col-md-6 col-lg-4' id="fellowshipDuration" value={fellowshipDuration} label={tableHead.fellowshipDuration} setState={setValues} />
+                    <Select options={["JRF", "SRF"]} className='col-md-6 col-lg-4' id="fellowshipType" value={fellowshipType} label={tableHead.fellowshipType} setState={setValues} />
                     <Text className='col-md-6 col-lg-4' id="grantingAgency" value={grantingAgency} label={tableHead.grantingAgency} setState={setValues} />
                     <Text className='col-md-6 col-lg-4' id="qualifyingExam" value={qualifyingExam} label={tableHead.qualifyingExam} setState={setValues} />
                     <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label={tableHead.year} setState={setValues} />

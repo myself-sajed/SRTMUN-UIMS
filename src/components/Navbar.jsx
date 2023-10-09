@@ -16,7 +16,7 @@ const Navbar = () => {
                         <p className="text-gray-500 text-center sm:text-sm text-xs">Nanded- 431 606, Maharashtra State, India</p>
                         <p className='text-center text-muted p-1 rounded-full hidden sm:block text-xs md:text-sm'>Established on 17th September 1994, Recognized by UGC U/s 2(f) and 12(B) NAAC Re-accredited with 'B++' grade</p>
                     </div>
-                    <img src="/assets/logo.jpg" style={{ mixBlendMode: 'darken' }} className={`h-20 hidden sm:block md:block lg:block xl:block 2xl:block opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'opacity-100' : ''}`} onLoad={() => setIsVisible(true)} alt="" />
+                    <img src="/assets/logo.png" style={{ mixBlendMode: 'darken' }} className={`h-20 hidden sm:block md:block lg:block xl:block 2xl:block opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'opacity-100' : ''}`} onLoad={() => setIsVisible(true)} alt="" />
                 </div>
 
             </div>
