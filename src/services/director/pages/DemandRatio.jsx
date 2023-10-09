@@ -112,4 +112,4 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
   )
 }
 
-export default DemandRatio
+export default DemandRatio;

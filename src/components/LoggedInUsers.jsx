@@ -27,6 +27,8 @@ const LoggedInUsers = () => {
         placementUser: { homeLink: siteLinks.placementHome.link, serviceName: 'placement', title: "TPO", abbr: "TPO" },
         iilUser: { homeLink: siteLinks.iilHome.link, serviceName: 'iil', title: "IIL", abbr: "IIL" },
         skillUser: { homeLink: siteLinks.skillHome.link, serviceName: 'skill', title: "CETSD", abbr: "CETSD" },
+        pgUser: { homeLink: siteLinks.pgHome.link, serviceName: 'pg', title: "PG", abbr: "PG" },
+        apdsUser: { homeLink: siteLinks.apdsHome.link, serviceName: 'apds', title: "APDS", abbr: "APDS" },
     }
 
     return (

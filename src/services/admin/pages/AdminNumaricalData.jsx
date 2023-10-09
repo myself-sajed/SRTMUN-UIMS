@@ -28,7 +28,7 @@ const AdminNumaricalData = ({ isDirector = false }) => {
   const [module, setModule] = useState(null)
   const [model, setModel] = useState(null)
   const [proof, setProof] = useState(null)
-  const fiveYears = academicYearGenerator(5, true)
+  const fiveYears = academicYearGenerator(5, true, true)
   const generateAcademicYears = [...fiveYears, 'Total']
 
   const tableHead = {
@@ -155,12 +155,12 @@ const AdminNumaricalData = ({ isDirector = false }) => {
     Financialsupport: 'Financial Support',
     EContentDeveloped: 'E-Content Developed',
     Award: 'Innovation and Research Awards',
-    Fellowship: 'Fellowship',
+    Fellowship: 'Teachers Fellowship',
     AwardRecognition: 'Award Recognition',
     InvitedTalk: 'Invited Talk',
     StudentUser: 'Students',
     CounselingAndGuidance: 'Counseling And Guidance',
-    AlumniUser: 'Alumni',
+    AlumniUser: 'Registered Alumni',
     ConferenceParticipated: 'Conference Participated',
     ConferenceOrganized: 'Conference Organized',
     ConferencesSemiWorkshopOrganized: 'Conferences Seminar Workshop Organized',

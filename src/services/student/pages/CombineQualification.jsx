@@ -27,7 +27,7 @@ const CombineQualification = () => {
   const user = useSelector(state => isAlumniLink ? state.user.alumniUser : state.user.studentUser)
   const filter = { userId: user?._id }
   const params = { model, id: "", module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { Program: '', InstitutionBoard: '', Persentage: '', StartYear: '', Year: '', ProgramType: '', Upload_Proof: '', isStudied: false, school: '' }
   const [values, setValues] = useState(initialstate)

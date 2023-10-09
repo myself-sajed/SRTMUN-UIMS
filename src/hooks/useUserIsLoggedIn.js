@@ -12,6 +12,8 @@ import { examAuthParams } from "../services/exam/pages/ExamHome"
 import { placementAuthParams } from "../services/placement/pages/PlacementHome"
 import { iilAuthParams } from "../services/iil/pages/IILHome"
 import { skillsAuthParams } from "../services/skilldevelopment/pages/SkillsHome"
+import { pgAuthParams } from "../services/pgsection/pages/PGHome"
+import { apdsAuthParams } from "../services/apds/pages/APDSHome"
 
 
 const useUserIsLoggedIn = () => {
@@ -26,6 +28,8 @@ const useUserIsLoggedIn = () => {
     useOtherServiceAuth({ ...placementAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...iilAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...skillsAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...pgAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...apdsAuthParams, usingInIsUserLoggedInHook: true })
 
 
     useEffect(() => {

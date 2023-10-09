@@ -1,42 +1,10 @@
 const mongoose = require('mongoose');
 
-const jrfsrfAdminSchema = new mongoose.Schema({
+const phdAwardedAdminSchema = new mongoose.Schema({
 
-    researchName: {
+    scholarName: {
         type: 'string',
         required: true,
-    },
-    enrolmentYear: {
-        type: 'string',
-        required: false,
-    },
-    fellowshipDate: {
-        type: 'string',
-        required: true,
-    },
-    fellowshipDuration: {
-        type: 'string',
-        required: true,
-    },
-    fellowshipType: {
-        type: 'string',
-        required: true,
-    },
-    grantingAgency: {
-        type: 'string',
-        required: true,
-    },
-    qualifyingExam: {
-        type: 'string',
-        required: true,
-    },
-    year: {
-        type: 'string',
-        required: true,
-    },
-    proof: {
-        type: 'string',
-        required: false,
     },
     schoolName: {
         type: 'string',
@@ -46,7 +14,47 @@ const jrfsrfAdminSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    degreeName: {
+        type: 'string',
+        required: true,
+    },
+    awardSubmit: {
+        type: 'string',
+        required: true,
+    },
+    thesisTitle: {
+        type: 'string',
+        required: true,
+    },
+    yearOfScholar: {
+        type: 'string',
+        required: true,
+    },
+    rac: {
+        type: 'string',
+        required: false,
+    },
+    gender: {
+        type: 'string',
+        required: true,
+    },
+    category: {
+        type: 'string',
+        required: true,
+    },
+    phdAwardYear: {
+        type: 'string',
+        required: false,
+    },
+    year: {
+        type: 'string',
+        required: true,
+    },
+    proof: {
+        type: 'string',
+        required: false,
+    },
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('jrfsrfAdmin', jrfsrfAdminSchema);
+module.exports = mongoose.model('phdAwardedAdmin', phdAwardedAdminSchema);

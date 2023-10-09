@@ -22,7 +22,7 @@ const StudentJRFSRF = () => {
   const user = useSelector(state => state.user.studentUser)
 
   const params = { model, id: user?._id, module }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { enrolmentYear: '', fellowshipDuration: '', fellowshipType: '', grantingAgency: '', qualifyingExam: '', year: '', Upload_Proof: '' }
   const [values, setValues] = useState(initialstate)
