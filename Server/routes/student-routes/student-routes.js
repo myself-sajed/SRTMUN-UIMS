@@ -40,6 +40,80 @@ const facultyupload = multer({ storage: facultystorage })
 
 let models = { StudentUser, User, JrfSrf, Patent, BooksAndChapters, ResearchProjects, ResearchPapers, StudentQualification }
 
+//Get Route  faculty jrfsrf patent
+router.post('/ssm/getData', async (req, res) => {
+
+    const { model,filter } = req.body
+    
+    try {
+        const fetch = await models[model].find({ filter })
+        res.status(200).send(fetch);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
+//Create Route faculty jrfsrf patent
+router.post('/ssm/newRecord/:model', studentuploads.single("PhotoURL"),async (req, res) => {
+    try{
+        const model = req.params.model
+        const data = JSON.parse(JSON.stringify(req.body));
+        const up = req.file.filename;
+ 
+        var withUpData = Object.assign(data, { photoURL: up })
+        
+        const obj = new models[model](withUpData);
+        await obj.save();
+        res.status(201).send("Entry Succeed")
+    }catch(err){
+        console.log(err)
+        res.status(500).send()
+    }     
+})
+
+//Edit Route faculty jrfsrf patent
+router.post('/ssm/editRecord/:model', studentuploads.single("PhotoURL"),async (req, res) => {
+    try{
+        const model = req.params.model
+        const data = JSON.parse(JSON.stringify(req.body));
+        const {id}=data 
+        const isfile = req.file;
+        if (isfile) {
+            var up = req.file.filename
+        }
+        
+        var allData = up?Object.assign(data, { photoURL: up }):data
+        await models[model].findOneAndUpdate({_id:id},allData);
+        res.status(200).send("Entry Succeed")
+    }catch(err){
+        console.log(err)
+        res.status(500).send()
+    }     
+})
+
+//Delete Route faculty jrfsrf patent
+router.post('/ssm/deleteRecord', async (req, res) => {
+    const { model, id } = req.body
+    try {
+        const Record = await models[model].findOne({ _id: id });
+        console.log(Record);
+        
+        await models[model].deleteOne({ _id: id })
+        const Filename =  Record.PhotoURL;
+        const link = path.join(__dirname,`../../uploads/student-uploads/${Filename}`);
+        fs.unlink(link, function (err) {
+            if (err) {
+                console.error(err);
+            }
+            console.log("file deleted successfullay ");
+        });
+        res.status(200).send("Entry Deleted Successfully");
+    }
+    catch (e) {
+        res.status(500).send({ massage: e.massage });
+    }
+})
 
 //Get Route  faculty jrfsrf patent
 router.post('/studentF/getData', async (req, res) => {
