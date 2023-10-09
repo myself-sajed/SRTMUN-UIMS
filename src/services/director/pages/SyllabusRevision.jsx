@@ -36,7 +36,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
   const typeObject = {
-      Programme_Code: "text", Programme_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: YearPicker(), Status_of_implementation: CE, Year_of_Implimentation: YearPicker(), Year_of_Revision: YearPicker(), Percentage_of_content_added_or_replaced: "number"
+      Programme_Code: "text", Programme_Name:directorUser? SchoolsProgram[directorUser?.department].map(item => { return item[0] }): [], Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: YearPicker(), Status_of_implementation: CE, Year_of_Implimentation: YearPicker(), Year_of_Revision: YearPicker(), Percentage_of_content_added_or_replaced: "number"
   }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter

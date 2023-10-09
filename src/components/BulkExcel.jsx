@@ -110,8 +110,8 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
         })
     }
 
-    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={disableUpload} maxWidth='lg' loading={loading}>
-        <div className='p-2 bg-blue-100 rounded-md'>
+    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={disableUpload} maxWidth="xl" loading={loading}>
+        <div className='p-2 bg-blue-100'>
             <div className='p-1 flex items-start justify-end'>
                 <div className=''>
                     <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100 }} onClick={()=>{generateExcelFile(data, SendReq, `${title}.xlsx`);}} >
@@ -120,7 +120,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
                 </div>
             </div>
             <div className='mt-2'>
-              <Test2 tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} />
+              <Test2 tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
             </div>
         </div>
 

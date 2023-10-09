@@ -495,12 +495,12 @@ const StudentHome = () => {
           <div className="flex flex-wrap bg-gray-50 rounded-xl border p-2 ">
             <div className="flex-items-center justify-center flex-col w-full mb-4">
               {photoURL ? (
-                <img
+                <img alt=""
                   src={avatar}
                   className="h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto"
                 />
               ) : (
-                <img
+                <img alt=""
                   src={serverLinks.showFile(user?.photoURL, "student")}
                   className="h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto"
                 />

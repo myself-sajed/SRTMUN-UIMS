@@ -35,7 +35,7 @@ const StudentRegistration = () => {
 
 
     // all states
-    const Salutations = ["Mr.", "Mrs.", , "Miss", "Shri", "Shrimati"]
+    const Salutations = ["Mr.", "Mrs.", "Miss", "Shri", "Shrimati"]
     const genders = ["Male", "Female", "Other"]
     const Casts = ["General", "OBC", "SC", "SBC", "SEBC", "ST", "VJ", "NT-B", "NT-C", "NT-D"]
     const religions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddh", "Jain", "Other"]

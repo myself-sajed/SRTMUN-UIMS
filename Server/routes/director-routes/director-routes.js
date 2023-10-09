@@ -756,7 +756,6 @@ router.post('/faculty/editRecord/:model', upload.single('Upload_Proof'), async (
     res.status(200).send("Edited Successfully")
 })
 
-
 router.get('/viewer/director/:filename', (req, res) => {
     const link = path.join(__dirname, `../../uploads/director-uploads/${req.params.filename}`)
     res.sendFile(link);

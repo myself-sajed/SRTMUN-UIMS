@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import MultiSelectWithLimit from '../../../components/formComponents/MultiSelectWithLimit'
+// import MultiSelectWithLimit from '../../../components/formComponents/MultiSelectWithLimit'
 import DialogBox from '../../../components/formComponents/DialogBox'
 import Text from '../../../components/formComponents/Text'
 import AddButton from '../../director/components/UtilityComponents/AddButton'
@@ -30,7 +30,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
     filter.academicYear = filterByAcademicYear
   }
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     nameOfCollege: "", ParticpantName: "", permentAddress: "", mobileNo: "", gender: "", dob: "", age: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
@@ -87,7 +87,7 @@ const YfStudents = ({ user, filterByAcademicYear }) => {
   return (
     <>
       <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
 
 

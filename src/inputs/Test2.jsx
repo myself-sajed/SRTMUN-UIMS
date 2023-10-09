@@ -3,7 +3,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-function Test2({tableHead, typeObject, tableData, setTableData }) {
+function Test2({tableHead, typeObject, tableData, setTableData, model }) {
   const [filds, setFilds] = useState("");
   const [columnToFill, setColumnToFill] = useState("");
   
@@ -25,7 +25,7 @@ function Test2({tableHead, typeObject, tableData, setTableData }) {
     setTableData(updatedTableData);
     setFilds(updatedTableData.length)
   };
-console.log(filds);
+// console.log(filds);
   const handleInputChange = (event, index, columnName) => {
     const newValue = event.target.value;
 
@@ -50,6 +50,10 @@ console.log(filds);
   //   setFilds([...tableData, newRow].length)
   // };
 
+  useEffect(()=>{
+    console.log('Table data is:', tableData)
+  }, [tableData])
+
   const HandleDataPaste = async (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').trim();
@@ -57,6 +61,7 @@ console.log(filds);
   
     if (pastedData) {
       const cleanedData = pastedData.replace(/\r/g, '');
+
   
       if (cleanedData.includes("\n")) {
         filteredData = cleanedData.split('\n');
@@ -68,17 +73,10 @@ console.log(filds);
         toast.error(filteredData.includes("") ? "Randomly cell selection or Empty cell selection not allowed" : "Column Field can not be empty");
         filteredData = [];
       }
-      console.log(filteredData);
-  
+      
       if (filteredData.length > 0) {
         for (let i = 0; i < filteredData.length; i++) {
-          if (tableData.length === i) {
-            await setTableData((pri) => [
-              ...pri,
-              ...Array.from({ length: filteredData.length - pri.length }, () => ({})),
-            ]);
-            setFilds(filteredData.length)
-          }
+          
           if (typeObject[columnToFill] === "date") {
             const parsedDate = new Date(filteredData[i]);
             if (!isNaN(parsedDate.getTime())) {
@@ -88,12 +86,22 @@ console.log(filds);
                 ...pri.slice(i + 1), 
               ]);
             }
+
+            // tabledata : [{year:2022}, {year:2023}, {year:2024}]
+            // filterdata: ['2025', '2026']
+
           } else {
-            setTableData((pri) => [
-              ...pri.slice(0, i),
-              { ...pri[i], [columnToFill]: filteredData[i] },
-              ...pri.slice(i + 1),
-            ]);
+            // setTableData((pri) => [
+            //   ...pri.slice(0, i),
+            //   { ...pri[i], [columnToFill]: filteredData[i] },
+            //   ...pri.slice(i + 1),
+            // ]);
+
+            setTableData((prev)=>{
+              return [...prev || [], {[columnToFill]: filteredData[i]}]
+            })
+
+            
           }
         }
       } else {
@@ -117,7 +125,7 @@ console.log(filds);
           >
             <option selected disabled value="">Choose</option>
             {Object.keys(typeObject).map((option) => (
-              <option key={option} value={option}>
+              <option key={`opt${option}`} value={option}>
                 {tableHead[option]}
               </option>
             ))}
@@ -128,9 +136,18 @@ console.log(filds);
           <input className='form-control' id='dataSetter' onPaste={HandleDataPaste} />
         </div>
       </div>
-      <div className='table-responsive' style={{ maxHeight: "80vh" }}>
+      <div className='table-responsive mt-4' style={{ maxHeight: "80vh" }}>
       <table className="table table-bordered" >
-        <thead className="sticky-top" >
+        <thead className="sticky-top bg-blue-600 text-[#fff]" >
+          {
+            model==="ReservedSeats"?
+            <tr>
+              <th colSpan={2}></th>
+              <th colSpan={6}>Number of seats earmarked for reserved category as per GOI or State Government rule</th>
+              <th colSpan={6}>Number of students admitted from the reserved category</th>
+              <th></th>
+            </tr>: null
+          }
           <tr>
             {Object.keys(typeObject).map((columnName) => (
               <th key={columnName}>{tableHead[columnName]}</th>
@@ -138,20 +155,20 @@ console.log(filds);
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='bg-slate-300'>
           {tableData.map((rowData, rowIndex) => (
-            <tr key={rowIndex}>
-              {Object.keys(typeObject).map((columnName) => (
-                <td key={columnName}>
+            <tr key={`row${rowIndex}`} >
+              {Object.keys(typeObject).map((columnName, cellIndex) => (
+                <td key={`${columnName}${cellIndex}`} className='px-1 w-full'>
                   {Array.isArray(typeObject[columnName]) ? (
                     <select
                       value={rowData[columnName]}
-                      className="form-select"
+                      className="w-full"
                       onChange={(e) => handleInputChange(e, rowIndex, columnName)}
                     >
                       <option selected disabled value="">Choose</option>
-                      {typeObject[columnName].map((option) => (
-                        <option key={option} value={option}>
+                      {typeObject[columnName].map((option, index) => (
+                        <option key={`option${index}`} value={option}>
                           {option}
                         </option>
                       ))}
@@ -159,7 +176,7 @@ console.log(filds);
                   ) : (
                     <input
                       type={typeObject[columnName]}
-                      className='form-control'
+                      className={`${typeObject[columnName]==="number"?"w-24":"w-full"}`}
                       value={rowData[columnName]}
                       onChange={(e) => handleInputChange(e, rowIndex, columnName)}
                     />
@@ -181,6 +198,19 @@ console.log(filds);
 }
 
 export default Test2;
+
+// if (tableData.length === i) {
+          //   await setTableData((pri) => [
+          //     ...pri,
+          //     ...Array.from({ length: filteredData.length - pri.length }, () => ({})),
+          //   ]);
+
+          //   const tb =[
+          //     {}, {}, {}
+          //   ]
+            
+          //   setFilds(filteredData.length)
+          // }
 
 
 

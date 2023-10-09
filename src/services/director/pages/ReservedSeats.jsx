@@ -28,7 +28,7 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
     const module = 'director'
     const directorUser = useSelector(state => state.user.directorUser)
     const typeObject = {
-        Academic_Year: academicYearGenerator(29,true), Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), NseSC: "number", NseST: "number", NseOBC: "number", NseDivyngjan: "number", NseGeneral: "number", NseOthers: "number", NsaSC: "SCnumber", NsaST: "number", NsaOBC: "number", NsaDivyngjan: "number", NsaGeneral: "number", NsaOthers: "number",
+        Academic_Year: academicYearGenerator(29,true), Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), NseSC: "number", NseST: "number", NseOBC: "number", NseDivyngjan: "number", NseGeneral: "number", NseOthers: "number", NsaSC: "number", NsaST: "number", NsaOBC: "number", NsaDivyngjan: "number", NsaGeneral: "number", NsaOthers: "number",
     }
     //--------------fetch data from db----------
     const [add, setAdd] = useState(false);
@@ -38,7 +38,7 @@ function ReservedSeats({ filterByAcademicYear = false, academicYear }) {
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, refetch } = useQuery([SendReq, "9obMqP&NK,p.@i.{,W5I"], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery(`${SendReq}9obMqP&NK,p.@i.{,W5I`, () => GetReq(params))
 
     //--------------values useState---------------
     const initialState = { NseSC: "", NseST: "", NseOBC: "", NseDivyngjan: "", NseGeneral: "", NseOthers: "", NsaSC: "", NsaST: "", NsaOBC: "", NsaDivyngjan: "", NsaGeneral: "", NsaOthers: "", Program_Name: "", Academic_Year: "", Upload_Proof: "" }
