@@ -183,18 +183,7 @@ const Dashboard = () => {
             {
                 localData ? <div className='flex items-center justify-between flex-wrap gap-6'>
                     <DashboardCard data={localData} />
-                </div> : <div className='flex items-center justify-between flex-wrap gap-8'>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                    <div className='flex-auto'> <Skeleton variant="rounded" width={210} height={80} /></div>
-                </div>
+                </div> : null
             }
 
         </div>
