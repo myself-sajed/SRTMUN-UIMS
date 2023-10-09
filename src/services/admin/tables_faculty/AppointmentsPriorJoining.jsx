@@ -12,7 +12,7 @@ const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Headin
 
   const params = { model: SendReq, id: "", module, filterConditios: condition }
 
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -32,3 +32,5 @@ const AppointmentsPriorJoining = ({ id, setState, yearFilter, schoolName, Headin
 }
 
 export default AppointmentsPriorJoining
+
+export {tableHead}

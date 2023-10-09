@@ -79,7 +79,7 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
     let param = { model: 'Qualification', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     // useeffect for scroll to top
     useEffect(() => {
@@ -97,7 +97,7 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
 
             <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Qualification" editState={setEditModal} clearStates={clearStates} state={setQualificationModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Qualifications" />
 
-            <BulkExcel data={data?.data?.data} sampleFile='QualificationFaculty' title='Qualification' SendReq='Qualification' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='QualificationFaculty' title='Qualification' SendReq='Qualification' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
 
 

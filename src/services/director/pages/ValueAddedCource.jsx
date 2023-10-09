@@ -21,7 +21,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import { academicYearGenerator } from "../../../inputs/Year";
-import YearPicker from "../components/FormComponents/YearPicker";
+import {yearArray} from "../components/FormComponents/YearPicker";
 
 const tableHead = { index: "Sr. no.", Program_Name: "Program Name", Name_of_the_value_added_courses_offered: "Name of the value added courses offered", Course_Code_if_any: "Course Code (if any)", Academic_year: "Academic year", Year_of_offering: "Year of offering", No_of_times_offered_during_the_same_year: "No. of times offered during the same year", Duration_of_the_course: "Duration of the course (in Months)", Number_of_students_enrolled: "Number of students enrolled", Number_of_Students_completing_the_course: "Number of Students completing the course", Upload_Proof: "Upload proof", Action: "Action" }
 
@@ -34,13 +34,13 @@ function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
   const typeObject = {
-    Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Name_of_the_value_added_courses_offered: "text", Course_Code_if_any: "text", Academic_year: academicYearGenerator(29,true,true), Year_of_offering: YearPicker(), No_of_times_offered_during_the_same_year: "number", Duration_of_the_course: "number", Number_of_students_enrolled: "number", Number_of_Students_completing_the_course: "number"
+    Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Name_of_the_value_added_courses_offered: "text", Course_Code_if_any: "text", Academic_year: academicYearGenerator(29,true,true), Year_of_offering: yearArray(), No_of_times_offered_during_the_same_year: "number", Duration_of_the_course: "number", Number_of_students_enrolled: "number", Number_of_Students_completing_the_course: "number"
   }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: "", module, filter }
-  const { data, isLoading, refetch } = useQuery([SendReq, "0[Idi:3g6#n%xB'Dnl^)"], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery(`${SendReq}0[Idi:3g6#n%xB'Dnl^)`, () => GetReq(params))
 
 
   //--------------values useState---------------
@@ -79,7 +79,7 @@ function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
 
   return (
     <>
-      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={Filter.yearFilter} setState={setFiletr} />
+      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={Filter.yearFilter} setState={setFiletr} dataCount={data?.data.length} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>

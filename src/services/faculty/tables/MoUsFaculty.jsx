@@ -33,6 +33,12 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear, showTable = t
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     //states
     const initialstate = { Name_of_Organisation_with_whome_mou_signed: "", Duration_of_MoU: "", Year_of_signing_MoU: "", Upload_Proof: "" }
@@ -40,7 +46,7 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear, showTable = t
     const { Name_of_Organisation_with_whome_mou_signed, Duration_of_MoU, Year_of_signing_MoU } = values
 
     const params = { model: model, id: user?._id, module: module }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
 
     function handleSubmit(e) {
@@ -88,7 +94,7 @@ const MoUsFaculty = ({ filterByAcademicYear = false, academicYear, showTable = t
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="MoUs" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="MoUS" />
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='MoUs' title='MoUs' SendReq='MoUs' refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='MoUs' title='MoUs' SendReq='MoUs' refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

@@ -28,6 +28,12 @@ const Profile = () => {
     const profile = useSelector(state => state.modal.profile);
     const navigate = useNavigate();
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
     const [userData, setUserData] = useState({});
     // useAuth()
 

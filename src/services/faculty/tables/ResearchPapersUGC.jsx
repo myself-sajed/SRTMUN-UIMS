@@ -40,6 +40,12 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     // indexedIn management
     const [indexData, setIndexData] = useState([])
@@ -146,7 +152,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
     let param = { model: 'ResearchPaper', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -160,7 +166,7 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
 
             <Header user={user} model='ResearchPaper' exceldialog={setOpen} showTable={showTable} dataCount={filteredItems ? filteredItems.length : 0} add="Research Paper" editState={setEditModal} clearStates={clearStates} state={setResearchPaperModal} icon={<FindInPageRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Papers in the Journals notified by UGC"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResearchPaperFaculty' title='Research Paper' SendReq='ResearchPaper' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='ResearchPaperFaculty' title='Research Paper' SendReq='ResearchPaper' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

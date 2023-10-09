@@ -42,7 +42,9 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
                     <>
                         {
 
-                            !children ? <Button onClick={handleClickOpen}
+                        !children ? fileName===""||fileName===undefined?<Button sx={{ textTransform: "none", border: 'none', color: '#9a3412', outline: 'none', backgroundColor: '#ffedd5' }}>
+                            No File
+                        </Button>:<Button onClick={handleClickOpen}
                                 sx={{ textTransform: "none", border: 'none', color: `${serviceName === 'AAA' ? 'green' : 'blue'}`, outline: 'none', backgroundColor: '#d2ebff' }}>
                                 {replace ? fileName.replace(replace.target, replace.with) : (serviceName === "AAA" || showFullFileName === true) ? truncateFileName(fileName) : 'View File'}
                             </Button> : <div onClick={handleClickOpen}>

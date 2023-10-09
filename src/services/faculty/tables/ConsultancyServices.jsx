@@ -39,6 +39,12 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
     const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -112,7 +118,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
     let param = { model: 'ConsultancyServices', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -125,7 +131,7 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
 
             <Header user={user} model='ConsultancyServices' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Consultancy Service" editState={setEditModal} clearStates={clearStates} state={setConModal} icon={<ConnectWithoutContactRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Consultancy Services"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ConsultancyServicesFaculty' title='Consultancy Services' SendReq='ConsultancyServices' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='ConsultancyServicesFaculty' title='Consultancy Services' SendReq='ConsultancyServices' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

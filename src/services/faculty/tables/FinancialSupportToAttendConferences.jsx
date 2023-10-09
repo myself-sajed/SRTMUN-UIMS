@@ -37,6 +37,12 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -105,7 +111,7 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
     let param = { model: 'FinancialSupport', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
@@ -117,7 +123,7 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
 
             <Header user={user} model='FinancialSupport' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<CurrencyRupeeIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Financial Support To Attend Conferences"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='FinancialSupportToAttendConferencesFaculty' title='Financial Support To Attend Conferences' SendReq='FinancialSupport' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='FinancialSupportToAttendConferencesFaculty' title='Financial Support To Attend Conferences' SendReq='FinancialSupport' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

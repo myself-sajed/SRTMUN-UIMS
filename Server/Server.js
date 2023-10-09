@@ -74,9 +74,11 @@ const upload = multer({ storage: storage });
 
 module.exports = upload;
 
-//temp routes
-app.use(require('./routes/test-routes/xyz'))
+// //temp routes
+// app.use(require('./routes/test-routes/xyz'))
 
+//Excel routes
+app.use(require('./routes/excel-routes/excel-routes'))
 // faculty routes
 require("./routes/faculty-routes/routes.js").initRoutes(app);
 require("./routes/faculty-routes/excelReport.js")(app);

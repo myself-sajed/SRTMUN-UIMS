@@ -38,6 +38,12 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, 
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
     const [filteredItems, setFilteredItems] = useState([])
 
     function handleSubmit(e) {
@@ -115,7 +121,7 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, 
     let param = { model: 'JrfSrf', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -127,7 +133,7 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, 
 
             <Header user={user} model='JrfSrf' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellow" editState={setEditModal} clearStates={clearStates} state={setJrfModal} icon={<PersonSearchRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "JRF, SRF, Post Doctoral Fellows, Research Associate"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='JrfSrfFaculty' title='JRF, SRF, Post Doctoral Fellows, Research Associate' SendReq='JrfSrf' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='JrfSrfFaculty' title='JRF, SRF, Post Doctoral Fellows, Research Associate' SendReq='JrfSrf' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

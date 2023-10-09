@@ -25,6 +25,12 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
 
     const [open, setOpen] = useState(false);
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
 
     // states
@@ -149,7 +155,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
     let param = { model: 'PostHeld', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear, true, 'date'))
@@ -162,7 +168,7 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
 
             <Header user={user} model='PostHeld' exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Posts" editState={setEditModal} state={setPostsModal} clearStates={clearStates} icon={<AirlineSeatReclineNormalRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Posts held after appointments at this institution" />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PostHeldFaculty' title='Posts held after appointments' SendReq='PostHeld' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='PostHeldFaculty' title='Posts held after appointments' SendReq='PostHeld' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

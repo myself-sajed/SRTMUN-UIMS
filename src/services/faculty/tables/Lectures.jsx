@@ -43,6 +43,12 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
 
     function handleSubmit(e) {
@@ -96,7 +102,7 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
     let param = { model: 'Lectures', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
 
     useEffect(() => {
@@ -117,7 +123,7 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
 
             <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Details of Course taught" editState={setEditModal} clearStates={clearStates} state={setLectureModal} icon={<TvRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Lectures, Seminars, Tutorials, Practicals, Contact Hours" />
 
-            <BulkExcel data={data?.data?.data} sampleFile='LecturesFaculty' title='Lectures, Seminars' SendReq='Lectures' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='LecturesFaculty' title='Lectures, Seminars' SendReq='Lectures' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 
