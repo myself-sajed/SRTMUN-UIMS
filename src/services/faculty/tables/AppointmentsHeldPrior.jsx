@@ -15,11 +15,12 @@ import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import View from './View';
 import File from '../../../inputs/File';
 import handleEditWithFile from '../js/handleEditWithFile';
+import { tableHead } from '../../admin/tables_faculty/AppointmentsPriorJoining';
 
 
 const AppointmentsHeldPrior = ({ showTable = true }) => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [appointmentModal, setAppointmentModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -32,10 +33,13 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
     const [salaryWithGrade, setSalaryWithGrade] = useState('')
     const [leavingReason, setLeavingReason] = useState('')
     const [Proof, setProof] = useState(null)
-    const [res, setRes] = useState('')
+    // const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const user = useSelector(state => state.user.user);
+const typeObject = {
+    designation: 'text', employerName: 'text', joiningDate: 'date', leavingDate: 'date', salaryWithGrade: 'text', leavingReason: 'text'
+}
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     function handleSubmit(e) {
@@ -105,7 +109,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
     let param = { model: 'AppointmentsHeldPrior', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
 
 
@@ -116,7 +120,7 @@ const AppointmentsHeldPrior = ({ showTable = true }) => {
 
             <Header user={user} model='AppointmentsHeldPrior' exceldialog={setOpen} add="Appointments" editState={setEditModal} clearStates={clearStates} state={setAppointmentModal} icon={<CoPresentRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Appointments held prior to joining this institute" />
 
-            <BulkExcel data={data?.data?.data} sampleFile='AppointmentsFaculty' title='Appointments' SendReq="AppointmentsHeldPrior" refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{userId: user?._id}} title='Appointments' SendReq="AppointmentsHeldPrior" refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
 
             {/* // 2. FIELDS */}

@@ -39,6 +39,12 @@ const Fellowship = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -110,7 +116,7 @@ const Fellowship = ({ filterByAcademicYear = false, academicYear, showTable = tr
     let param = { model: 'Fellowship', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -123,7 +129,7 @@ const Fellowship = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
             <Header user={user} model='Fellowship' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Fellowship Assistance" editState={setEditModal} clearStates={clearStates} state={setFellowshipModal} icon={<AttachMoneyRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Fellowship/Financial assistance for advanced studies/research"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='FellowshipFaculty' title='Fellowship/Financial assistance for advanced studies/research' SendReq='Fellowship' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='FellowshipFaculty' title='Fellowship/Financial assistance for advanced studies/research' SendReq='Fellowship' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
 
 

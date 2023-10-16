@@ -38,6 +38,12 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = tru
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -108,7 +114,7 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = tru
     let param = { model: 'Online', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
@@ -120,7 +126,7 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = tru
 
             <Header user={user} model='Online' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Programmes" editState={setEditModal} clearStates={clearStates} state={setOnlineFDPModal} icon={<SentimentVerySatisfiedRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Online/Face-to-face Faculty Development Programmes(FDP)"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='OnlineORFasetoFaseFDPFaculty' title='Online/Face-to-face Faculty Development Programmes(FDP)' SendReq='Online' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='OnlineORFasetoFaseFDPFaculty' title='Online/Face-to-face Faculty Development Programmes(FDP)' SendReq='Online' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

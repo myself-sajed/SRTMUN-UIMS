@@ -21,7 +21,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import { academicYearGenerator } from "../../../inputs/Year";
-import YearPicker from "../components/FormComponents/YearPicker";
+import {yearArray} from "../components/FormComponents/YearPicker";
 
 const tableHead = { index: "Sr. no.", Program_Name: "Program Name", Course_Code: "Course Code", Name_of_the_Course: "Course name", Academic_Year: "Academic Year", Year_of_introduction: "Year of introduction", Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "Activities / Content with direct bearing on Employability / Entrepreneurship / Skill development", Upload_Proof: "Proof", Action: "Action" }
 
@@ -35,13 +35,13 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
     const typeObject = {
-        Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Course_Code: "text", Name_of_the_Course: "text", Academic_Year: academicYearGenerator( 29, true ), Year_of_introduction: YearPicker(), Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "text",
+        Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Course_Code: "text", Name_of_the_Course: "text", Academic_Year: academicYearGenerator( 29, true ), Year_of_introduction: yearArray(), Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "text",
     }
     const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
-    const { data, isLoading, refetch } = useQuery([SendReq, "a^jg#l2]8}CfzKzV(Ugv"], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery(`${SendReq}a^jg#l2]8}CfzKzV(Ugv`, () => GetReq(params))
 
 
     //--------------values useState---------------
@@ -80,7 +80,7 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
 
     return (
         <>
-            <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+            <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} dataCount={data?.data.length} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>

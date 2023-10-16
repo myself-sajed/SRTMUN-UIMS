@@ -49,6 +49,12 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -147,7 +153,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     let param = { model: 'PhdAwarded', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
     }, [data])
@@ -201,7 +207,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
             <Header user={user} model='PhdAwarded' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Guidance"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
 
             {/* // 2. FIELDS */}
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>

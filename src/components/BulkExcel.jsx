@@ -1,13 +1,12 @@
 import { Button } from '@mui/material';
 import React, { useState } from 'react'
 import DialogBox from './formComponents/DialogBox'
-// import excelReq from './requestComponents/excelReq';
 import SimCardDownloadTwoToneIcon from '@mui/icons-material/SimCardDownloadTwoTone';
 import excelObject from './excelObject';
 import ExcelJS from 'exceljs';
 import { toast } from 'react-hot-toast';
-import Test2 from '../inputs/Test2';
 import axios from 'axios';
+import BulkTableEntry from './BulkTableEntry';
 
 const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof, disableUpload = false, tableHead, typeObject, commonFilds }) => {
     const [tableData, setTableData] = useState([]);
@@ -100,7 +99,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
     const onSubmit = (e) => {
         e.preventDefault();
         setLoading(true)
-        axios.post(`${process.env.REACT_APP_MAIN_URL}/excelclone/singlesingleroute`,{ commonFilds, model: SendReq, tableData }).then((res)=>{
+        axios.post(`${process.env.REACT_APP_MAIN_URL}/bulktableentry/Excel`,{ commonFilds, model: SendReq, tableData }).then((res)=>{
           if(res.status===201){toast.success(res.data)}
           else if(res.status===500){toast.error("Something went wrong")}
           setLoading(false); 
@@ -120,7 +119,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
                 </div>
             </div>
             <div className='mt-2'>
-              <Test2 tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
+              <BulkTableEntry tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
             </div>
         </div>
 

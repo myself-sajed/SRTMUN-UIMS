@@ -30,6 +30,12 @@ const ResearchGuidance = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -88,7 +94,7 @@ const ResearchGuidance = () => {
     let param = { model: 'ResearchGuidance', userId: user._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
 
 

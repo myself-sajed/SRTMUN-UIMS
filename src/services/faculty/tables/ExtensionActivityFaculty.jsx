@@ -32,6 +32,12 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear, 
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     //states
     const initialstate = { Name_of_the_activity: "", Organising_unit: "", Name_of_the_scheme: "", Year_of_activity: "", Number_of_students: "", Upload_Proof: "" }
@@ -39,7 +45,7 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear, 
     const { Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students } = values
 
     const params = { model: model, id: user?._id, module: module }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
 
     function handleSubmit(e) {
@@ -89,7 +95,7 @@ const ExtensionActivityFaculty = ({ filterByAcademicYear = false, academicYear, 
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<Diversity3Icon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Extension Activities"} />
 
-            <BulkExcel data={data?.data} proof='Upload_Proof' sampleFile='ExtensionActivities' title='Extension Activities' SendReq={model} refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data} proof='Upload_Proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='ExtensionActivities' title='Extension Activities' SendReq={model} refetch={refetch} module='director' department={JSON.stringify({SchoolName:user?.department, userId:user?._id})} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

@@ -21,7 +21,7 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import { academicYearGenerator } from "../../../inputs/Year";
-import YearPicker from "../components/FormComponents/YearPicker";
+import {yearArray} from "../components/FormComponents/YearPicker";
 
 const tableHead = { index: "Sr. no.", Programme_Code: "Program Code", Programme_Name: "Program Name", Academic_Year: "Academic Year", Year_of_Introduction: "Year of Introduction", Status_of_implementation: "Status of implementation", Year_of_Implimentation: "Year of Implimentation", Year_of_Revision: "Year of Revision", Percentage_of_content_added_or_replaced: "Percentage of content added or replaced", Upload_Proof: "Upload Proof", Action: "Action" }
 
@@ -35,8 +35,9 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
+  const years = yearArray()
   const typeObject = {
-      Programme_Code: "text", Programme_Name:directorUser? SchoolsProgram[directorUser?.department].map(item => { return item[0] }): [], Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: YearPicker(), Status_of_implementation: CE, Year_of_Implimentation: YearPicker(), Year_of_Revision: YearPicker(), Percentage_of_content_added_or_replaced: "number"
+      Programme_Code: "text", Programme_Name:directorUser? SchoolsProgram[directorUser?.department].map(item => { return item[0] }): [], Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: years, Status_of_implementation: CE, Year_of_Implimentation: years, Year_of_Revision: years, Percentage_of_content_added_or_replaced: "number"
   }
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
@@ -86,7 +87,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
 
   return (
     <>
-      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} dataCount={data?.data.length} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>

@@ -7,7 +7,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 
-const TableTitle = ({ title, clickd, excelClicked, customName }) => {
+const TableTitle = ({ title, clickd, excelClicked, customName, dataCount }) => {
 
     const [currentPage, setCurrentPage] = useState(null)
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
@@ -30,7 +30,9 @@ const TableTitle = ({ title, clickd, excelClicked, customName }) => {
                 <div className="bg-blue-300 p-3 text-blue-900 rounded-full w-full flex items-center justify-between">
                     <div className='flex items-center justify-start gap-2 text-lg'>
                         {data?.icon}
-                        <p>{customName ? customName : currentPage}</p>
+                        <p>{customName ? customName : currentPage}<span className="mx-2 px-2 rounded-md bg-blue-200 text-blue-900 font-semibold">
+                                {dataCount ? dataCount : 0}
+                            </span></p>
                     </div>
                 </div>
 

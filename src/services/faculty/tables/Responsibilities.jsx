@@ -44,6 +44,12 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     const [filteredItems, setFilteredItems] = useState([])
     const [responsibilitiesModal, setResponsibitiesModal] = useState(false)
     const [editItem, setEditItem] = useState(null)
+const typeObject = {
+
+}
+const tableHead = {
+    
+}
 
     useEffect(() => {
         if (active) {
@@ -150,7 +156,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
     let param = { model: 'Responsibilities', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, null, false, null, true,))
@@ -165,7 +171,7 @@ const Responsibities = ({ filterByAcademicYear = false, academicYear, showTable 
 
             <Header user={user} model='Responsibilities' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Responsibilities" editState={setEditModal} clearStates={clearStates} state={setResponsibitiesModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Administrative / Academic Responsibilities" />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResponsibilitiesFaculty' title='Administrative / Academic Responsibilities' SendReq='Responsibilities' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='ResponsibilitiesFaculty' title='Administrative / Academic Responsibilities' SendReq='Responsibilities' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
 
 

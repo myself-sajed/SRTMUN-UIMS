@@ -74,7 +74,7 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
 
   return (
     <>
-      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} />
+      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={yearFilter} setState={setFiletr} dataCount={data?.data.length} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>

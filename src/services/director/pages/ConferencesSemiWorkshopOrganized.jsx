@@ -79,7 +79,7 @@ function ConferencesSemiWorkshopOrganized({ filterByAcademicYear = false, academ
   //--------------Frant end ui------------
   return (
     <>
-      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={Filter.yearFilter} setState={setFiletr} />
+      <AddButton title={title} filterByAcademicYear={filterByAcademicYear} onclick={setAdd} exceldialog={setOpen} yearFilter={Filter.yearFilter} setState={setFiletr} dataCount={data?.data.length} />
       <Dialog fullWidth maxWidth='lg' open={add}>
         <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
         <DialogContent dividers sx={{ background: "#e5eaf0" }}>

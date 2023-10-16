@@ -43,6 +43,12 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -147,7 +153,7 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     let param = { model: 'BookAndChapter', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -227,7 +233,7 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
             <Header user={user} model='BookAndChapter' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />}
                 title={title ? title : "Books and Chapters published and papers in national/international conference proceedings"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
 
             {/* // 2. FIELDS */}
 

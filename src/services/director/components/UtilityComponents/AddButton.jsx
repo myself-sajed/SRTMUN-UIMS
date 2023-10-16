@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import navcom from './navcom'
-import AddIcon from '@mui/icons-material/Add';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import TableTitle from './TableTitle';
 import AcadmicYearSelect from '../../../admin/components/AcadmicYearSelect';
 
-export default function AddButton({ title, onclick, exceldialog, yearFilter, setState, filterByAcademicYear, customName = false }) {
+export default function AddButton({ title, onclick, exceldialog, yearFilter, setState, filterByAcademicYear, customName = false, dataCount}) {
     const DirectorActive = useSelector(state => state.directorActive.directorActive)
     const clickd = () => {
         onclick(true)
@@ -32,11 +29,11 @@ export default function AddButton({ title, onclick, exceldialog, yearFilter, set
 
         <div>
             <div>
-                <TableTitle title={title} excelClicked={excelClicked} clickd={clickd} customName={customName} />
+                <TableTitle title={title} excelClicked={excelClicked} clickd={clickd} customName={customName} dataCount={dataCount} />
             </div>
             <div style={{ display: "flex", width: "100%", background: `${data?.instruction.length > 0 ? '#ebebeb' : 'white'}`, borderRadius: "10px", margin: "auto" }} >
                 <div className={`${data?.instruction.length > 0 ? 'text-gray-800 p-2 rounded-md ' : 'white'}`} style={{ width: "70%" }}>
-                    {data?.instruction === [] ? null : data?.instruction.map((e, index) => {
+                    {data?.instruction.length===0 ? null : data?.instruction.map((e, index) => {
                         return <p key={index} className='md:text-sm text-xs'>{e}</p>
                     })}
                 </div>

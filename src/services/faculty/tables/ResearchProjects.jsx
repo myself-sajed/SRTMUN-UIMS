@@ -54,6 +54,12 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
+const typeObject = {
+
+}
+const tableHead = {
+
+}
 
     useEffect(() => {
         if (active) {
@@ -196,7 +202,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     let param = { model: 'ResearchProject', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -231,7 +237,7 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
 
             {/* // 2. FIELDS */}
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='ResearchProjectFaculty' title='Research Projects' SendReq='ResearchProject' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='ResearchProjectFaculty' title='Research Projects' SendReq='ResearchProject' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
                 <DialogContent >

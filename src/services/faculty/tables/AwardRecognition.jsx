@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/AwardRecognition'
 
 const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [awardModal, setAwardModal] = useState('')
@@ -39,9 +40,10 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
+const typeObject = {
+    teacherName: 'text', awardYear: 'date', pan: 'text', designation: 'text', awardName: 'text', isNat: ["National", "International"],agencyName:"text",incentive:"text",year: academicYearGenerator(29,true,true),
+}
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -125,7 +127,7 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
     let param = { model: 'AwardRecognition', userId: user?._id }
 
     // main fetcher
-    const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param))
+    const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
 
     useEffect(() => {
         data && setFilteredItems(sortByAcademicYear(data?.data?.data, 'year', filterByAcademicYear, academicYear))
@@ -137,7 +139,7 @@ const AwardRecognition = ({ filterByAcademicYear = false, academicYear, showTabl
 
             <Header user={user} model='AwardRecognition' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-lg" editState={setEditModal} clearStates={clearStates} add="Awards and Recognition" state={setAwardModal} icon={<EmojiEventsRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Awards and Recognition"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' sampleFile='AwardRecognitionFaculty' title='Award Recognition' SendReq='AwardRecognition' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId: user?._id}} sampleFile='AwardRecognitionFaculty' title='Award Recognition' SendReq='AwardRecognition' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

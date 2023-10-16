@@ -810,20 +810,6 @@ router.post('/director/excelRecord/:model', excelUpload.single('excelFile'), (re
     }
 })
 
-router.post('/excelclone/singlesingleroute', (req, res) => {
-    const {commonFilds, model, tableData } = req.body
-    try {
-        tableData.forEach(async(e) =>{
-            const singleItem = new models[model]({...e, ...commonFilds});
-            await singleItem.save();
-        })
-        res.status(201).send("Bulk Entry Suceeed")
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-})
-
 //Activate Diactivate Student
 router.post('/inactive-active/student', async (req, res) => {
     const { isActiveStudent, itemToEdit } = req.body
@@ -915,4 +901,4 @@ router.post('/director/aqar/excel', async (req, res) => {
     }
 })
 
-module.exports = { router, excelObject, YearSelecter }
+module.exports = { router, excelObject, models, YearSelecter }
