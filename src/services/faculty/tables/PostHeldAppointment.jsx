@@ -25,12 +25,12 @@ const PostHeldAppointment = ({ filterByAcademicYear = false, academicYear, showT
 
     const [open, setOpen] = useState(false);
     const user = useSelector(state => state.user.user);
-const typeObject = {
+    const typeObject = {
 
-}
-const tableHead = {
+    }
+    const tableHead = {
 
-}
+    }
 
 
     // states

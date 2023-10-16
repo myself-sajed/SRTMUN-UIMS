@@ -54,12 +54,12 @@ const ResearchProjects = ({ filterByAcademicYear = false, academicYear, showTabl
     const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
+    const typeObject = {
 
-}
-const tableHead = {
-
-}
+    }
+    const tableHead = {
+    
+    }
 
     useEffect(() => {
         if (active) {

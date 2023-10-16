@@ -40,12 +40,12 @@ const ResearchPapersUGC = ({ filterByAcademicYear = false, academicYear, showTab
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
+    const typeObject = {
 
-}
-const tableHead = {
-
-}
+    }
+    const tableHead = {
+    
+    }
 
     // indexedIn management
     const [indexData, setIndexData] = useState([])
