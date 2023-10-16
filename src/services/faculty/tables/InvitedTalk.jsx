@@ -244,3 +244,26 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = t
 
 
 export default InvitedTalk
+
+
+
+// for test imports
+// import React, { useEffect, useState } from 'react'
+// import HeadsetMicRoundedIcon from '@mui/icons-material/HeadsetMicRounded';
+// import { useSelector } from 'react-redux';
+// import { useQuery } from 'react-query'
+// import { Dialog, DialogContent, LinearProgress } from '@mui/material';
+// import sortByAcademicYear from '../js/sortByAcademicYear';
+// import refresh from '../services/faculty/js/refresh';
+// import Text from '../inputs/Text';
+// import Year from '../inputs/Year';
+// import EmptyBox from '../components/EmptyBox';
+// import Loader from '../components/Loader';
+// import { submitWithFile } from '../services/faculty/js/submit';
+// import handleEditWithFile from '../services/faculty/js/handleEditWithFile';
+// import BulkExcel from '../components/BulkExcel';
+// import FormWrapper from '../services/faculty/components/FormWrapper';
+// import File from '../inputs/File';
+// import View from '../services/faculty/tables/View';
+// import Actions from '../services/faculty/tables/Actions';
+// import Header from '../services/faculty/components/Header';
