@@ -58,7 +58,7 @@ const StudentJRFSRF = () => {
 
   return (
     <>
-      <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} />
+      <AddButton title="JRF, SRF, Post Doctoral Fellows, Research Associate" onclick={setOpen} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF, Post Doctoral Fellows, Research Associate`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="enrolmentYear" value={enrolmentYear} type="date" label="Enrollment Year" setState={setValues} />

@@ -121,7 +121,7 @@ useEffect(() => {
   //{ schemeName, principalName, coInvestigator, fundingName, isGov, awardYear, providedFunds, fundType, status, duration, durationYears, year }
   return (
     <>
-      <AddButton title={title} onclick={setOpen} />
+      <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
         <Select options={schools

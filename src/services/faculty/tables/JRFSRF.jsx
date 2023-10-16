@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/JrfSrfPdf'
+import Lists from '../../../components/tableComponents/Lists';
 
 const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [jrfModal, setJrfModal] = useState(false)
@@ -32,18 +34,14 @@ const JRFSRF = ({ filterByAcademicYear = false, academicYear, showTable = true, 
     const [exam, setExam] = useState('')
     const [proof, setProof] = useState(null)
     const [year, setYear] = useState('')
-    const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        researchName: 'text', enrolmentYear: 'date', fellowshipDuration: 'text', fellowshipType: Lists.jrfsrfFellowshipType, grantingAgency: 'text', qualifyingExam: 'text', year: academicYearGenerator( 29, true, true ),
+    }
     const [filteredItems, setFilteredItems] = useState([])
 
     function handleSubmit(e) {

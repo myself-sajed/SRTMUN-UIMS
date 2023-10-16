@@ -43,18 +43,18 @@ const Home = () => {
     const [file, setFile] = useState(null)
     const [openCroper, setOpenCroper] = useState(false)
 
-    const [alumniProof, setAlumniProoof] = useState(null)
+    // const [alumniProof, setAlumniProoof] = useState(null)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.alumniUser)
-    const alumniActive = useSelector(state => state.alumniActive.alumniActive)
+    // const alumniActive = useSelector(state => state.alumniActive.alumniActive)
     useAlumniAuth()
     title('Alumni Home')
 
     const initialstate = { salutation: "", name: "", address: "", mobile: "", schoolName: "", gender: "", dob: "", doStarted: "", doCompleted: "", country: "", Upload_Proof2: "" }
     const [values, setValues] = useState(initialstate);
-    const { salutation, name, address, mobile, schoolName, gender, dob, doStarted, doCompleted, country } = values
+    const { salutation, name, address, mobile, schoolName, gender, dob, /*doStarted,*/ doCompleted, country } = values
 
     const refetch = async () => {
         const userrefetch = await getReq({ model, id: user?._id, module, filter: "AlumniUser" })
@@ -105,7 +105,7 @@ const Home = () => {
                     {user &&
                         <div className='p-4'>
                             <div className='sm:flex items-start justify-start gap-5 '>
-                                <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
+                                <img alt='' src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[100px] w-[100px] sm:h-[170px] sm:w-[170px] rounded-full object-cover border-4 border-[#344e87]' />
                                 <div className='text-black '>
                                     <p className='text-lg sm:text-2xl font-bold'>{user && user.salutation} {user && user.name}</p>
                                     <p className='text-base sm:text-lg'>{user && user.programGraduated.map((item) => { return (`${item},`) })}</p>
@@ -147,12 +147,12 @@ const Home = () => {
                                         <DetailTile keyName="Email" value={`${user && user.email}`} />
                                         <DetailTile keyName="School Name" value={`${user && user.schoolName}`} />
                                         <DetailTile keyName="Last Program Graduated " value={`${user && user.programGraduated.map((item) => { return (`${item}`) })}`} />
-                                        <DetailTile keyName="year of Last Program Completed" value={`${user && user.doCompleted === undefined || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
-                                        <DetailTile keyName="Address" value={`${user && user.address === undefined || user.address === '' ? "Not Added" : user.address}`} />
+                                        <DetailTile keyName="year of Last Program Completed" value={`${(user && user.doCompleted === undefined) || user.doCompleted === '' ? "Not Added" : user.doCompleted}`} />
+                                        <DetailTile keyName="Address" value={`${(user && user.address === undefined) || user.address === '' ? "Not Added" : user.address}`} />
                                         {/* <DetailTile keyName="Admited In School" value={`${user && user.doStarted=== undefined || user.doStarted === '' ? "Not Added" : user.doStarted}`} /> */}
-                                        <DetailTile keyName="Date Of Birth" value={`${user && user.dob == undefined || user.dob == '' ? "Not Added" : user.dob}`} />
-                                        <DetailTile keyName="Nationality" value={`${user && user.country == undefined || user.country == '' ? "Not Added" : user.country}`} />
-                                        <DetailTile keyName="Alumni Proof" value={user && user.Upload_Proof === undefined || user.Upload_Proof === '' ? "Not Added" : <FileViewer fileName={user.Upload_Proof} serviceName="faculty" />} />
+                                        <DetailTile keyName="Date Of Birth" value={`${(user && user.dob === undefined) || user.dob === '' ? "Not Added" : user.dob}`} />
+                                        <DetailTile keyName="Nationality" value={`${(user && user.country === undefined) || user.country === '' ? "Not Added" : user.country}`} />
+                                        <DetailTile keyName="Alumni Proof" value={(user && user.Upload_Proof === undefined) || user.Upload_Proof === '' ? "Not Added" : <FileViewer fileName={user.Upload_Proof} serviceName="faculty" />} />
                                     </div>
                                 </div>
                             }
@@ -214,14 +214,14 @@ const Home = () => {
                 </div>
             </div>
 
-            <DialogBox title="Edit Profile" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+            <DialogBox title="Edit Profile" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={loading}>
                 {
                     <div className='flex flex-wrap'>
                         <div className='flex-items-center justify-center flex-col w-full mb-4'>
                             {
                                 file ?
-                                    <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                                    <img src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                                    <img alt='' src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
+                                    <img alt='' src={serverLinks.showFile(user?.photoURL, 'faculty')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
                             }
                             <div className='flex items-center justify-center gap-3'>
                                 <label className=' bg-blue-100 mt-3 p-1 rounded-xl text-blue-700 text-sm text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>

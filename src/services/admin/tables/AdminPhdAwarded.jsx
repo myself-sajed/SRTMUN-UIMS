@@ -70,7 +70,7 @@ const AdminPhdAwarded = () => {
     
     return (
         <>
-            <AddButton title="Research Guidance" onclick={setOpen} />
+            <AddButton title="Research Guidance" onclick={setOpen} dataCount={data ? data?.data.length : 0} />
             <DialogBox title={`${edit ? "Edit" : "Add"} Research Guidance`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
@@ -96,13 +96,13 @@ const AdminPhdAwarded = () => {
                     }
 
                     <Text className='col-md-6 col-lg-4' id="thesisTitle" value={thesisTitle} label={tableHead.thesisTitle} setState={setValues} />
-                    <Select options={["Ph.D.","M.Phil","PG Dissertation"]} className='col-md-6 col-lg-4' id="degreeName" value={degreeName} label={tableHead.degreeName} setState={setValues} />
+                    <Select options={Lists.phdAwardedDegree} className='col-md-6 col-lg-4' id="degreeName" value={degreeName} label={tableHead.degreeName} setState={setValues} />
                     {
                         degreeName === 'Ph.D.' && <Text className='col-md-6 col-lg-4' type="date" id="rac" title={tableHead.rac} value={rac} setState={setValues} />
                     }
-                    <Select options={["Awarded","Submitted","Ongoing"]} className='col-md-6 col-lg-4' id="awardSubmit" value={awardSubmit} label={tableHead.awardSubmit} setState={setValues} />
+                    <Select options={Lists.phdAwardedSubmit} className='col-md-6 col-lg-4' id="awardSubmit" value={awardSubmit} label={tableHead.awardSubmit} setState={setValues} />
                     <Select options={Lists.gender} className='col-md-6 col-lg-4' id="gender" value={gender} label={tableHead.gender} setState={setValues} />
-                    <Select options={["Open", "SC", "ST", "VJ / NT(A)", "VJ / NT(B)", "VJ / NT(C)", "VJ / NT(D)", "SBC", "OBC", "PH", "EWS", "Minority", "NRI", "Foreign National"]} className='col-md-6 col-lg-4' id="category" value={category} label={tableHead.category} setState={setValues} />
+                    <Select options={Lists.phdAwardedCategory} className='col-md-6 col-lg-4' id="category" value={category} label={tableHead.category} setState={setValues} />
                     <YearSelect className='col-md-6 col-lg-4' id="yearOfScholar" value={yearOfScholar} label={tableHead.yearOfScholar} setState={setValues} />
                     {
                         awardSubmit === 'Awarded' && <Text className='col-md-6 col-lg-4' id="phdAwardYear" label={tableHead.phdAwardYear} type="number" value={phdAwardYear} setState={setValues} />
@@ -117,3 +117,4 @@ const AdminPhdAwarded = () => {
 }
 
 export default AdminPhdAwarded
+export { tableHead }

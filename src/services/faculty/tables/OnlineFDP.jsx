@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import File from '../../../inputs/File';
 import Text from '../../../inputs/Text';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/OrientationRefresherCourse'
 
 const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
 
@@ -38,13 +39,9 @@ const OnlineFDP = ({ filterByAcademicYear = false, academicYear, showTable = tru
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
-
+    const typeObject = {
+        programTitle: 'text', nameOfAttendedTeacher: 'text', durationFrom: 'date', durationTo: 'date', year: academicYearGenerator( 29, true, true ),
+    }
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -140,16 +137,13 @@ const tableHead = {
                         <Text title='Program Title' state={programTitle} setState={setProgramTitle} />
                         <Text title='Organized by' state={teacherName} setState={setTeacherName} />
 
-
                         <Text title='Duration From' state={from} setState={setFrom} type='date' />
 
                         <Text title='Duration to' state={to} setState={setTo} type='date' />
 
                         <Year state={year} setState={setYear} />
 
-
                         <File space='col-md-6' title='Upload Proof' setState={setProof} />
-
 
                     </FormWrapper>
                 </DialogContent>

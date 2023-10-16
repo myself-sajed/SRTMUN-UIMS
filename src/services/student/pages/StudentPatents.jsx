@@ -24,7 +24,7 @@ const StudentPatents = () => {
   const user = useSelector(state => state.user.studentUser)
 
   const params = { model, id: user?._id, module}
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { patentNumber: '', patentTitle: '', isNat: '', awardYear: '', year: '', Upload_Proof: '' }
   const [values, setValues] = useState(initialstate)
@@ -60,7 +60,7 @@ const StudentPatents = () => {
   //{ patentNumber, patentTitle, isNat, awardYear, year }
   return (
     <>
-      <AddButton title={title} onclick={setOpen} />
+      <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="patentNumber" value={patentNumber} label={tableHead.patentNumber} setState={setValues} />

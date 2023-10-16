@@ -5,7 +5,6 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
   index: "Sr.No.",
-   
   'userId.name': 'Faculty Name',
   'userId.department': 'Faculty School',
   programTitle: 'Program Title',
@@ -26,7 +25,7 @@ const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading, set
   
    const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -46,3 +45,4 @@ const ConferenceOrganised = ({id, setState, yearFilter, schoolName, Heading, set
 }
 
 export default ConferenceOrganised
+export {tableHead}

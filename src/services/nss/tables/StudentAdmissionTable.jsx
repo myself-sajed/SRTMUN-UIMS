@@ -59,7 +59,7 @@ function StudentAdmissionTable({ filterByAcademicYear = false, academicYear }) {
 
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}  customName="Enrolled Students into NSS" filterByAcademicYear={true} />
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen}  customName="Enrolled Students into NSS" filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>

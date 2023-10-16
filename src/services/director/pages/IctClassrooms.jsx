@@ -62,7 +62,7 @@ function IctClassrooms() {
 
     return (
         <>
-            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} filterByAcademicYear={true} />
+            <AddButton title={title} onclick={setAdd} exceldialog={setOpen} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
             <Dialog fullWidth maxWidth='lg' open={add}>
                 <Diatitle title={title} clear={setAdd} setItemToEdit={setItemToEdit} EditClear={setEdit} Edit={edit} init={initialState} setval={setvalues} />
                 <DialogContent dividers sx={{ background: "#e5eaf0" }}>

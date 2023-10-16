@@ -30,14 +30,14 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
   const typeObject = {
-    Name_of_the_activity: "text", Organising_unit: "text", Name_of_the_scheme: "text", Year_of_activity: academicYearGenerator( 29, true ), Number_of_students: "number"
+    Name_of_the_activity: "text", Organising_unit: "text", Name_of_the_scheme: "text", Year_of_activity: academicYearGenerator( 29, true, true ), Number_of_students: "number"
   }
 
   const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_activity: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
-  const { data, isLoading, refetch } = useQuery([SendReq, "zB+)0cq/Hear59-?,z]g"], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery(`${SendReq}zB+)0cq/Hear59-?,z]g`, () => GetReq(params))
 
 
   const initialState = { eanota: "", eaouaca: "", eanots: "", eanosp: "", eayota: "", Upload_Proof: "" }

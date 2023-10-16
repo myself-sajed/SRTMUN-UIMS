@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/ConferenceOrganised'
+import Lists from '../../../components/tableComponents/Lists'
 
 
 const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
@@ -39,13 +41,8 @@ const ConferenceOrganized = ({ filterByAcademicYear = false, academicYear, showT
 
     const user = useSelector(state => state.user.user);
 const typeObject = {
-
+    programTitle: 'text', schoolName: 'text', fundedBy: 'text', isNational: Lists.ConferenceOrganisedIsNational , noOfParticipants: 'number', year: academicYearGenerator(29,true,true),
 }
-const tableHead = {
-
-}
-
-
     function handleSubmit(e) {
         e.preventDefault();
 

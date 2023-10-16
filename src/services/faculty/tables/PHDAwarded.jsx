@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
 import Header from '../components/Header';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -18,6 +18,8 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear'
 import GenderSelect, { CasteSelect } from '../../../inputs/GenderSelect';
+import { tableHead } from '../../admin/tables/AdminPhdAwarded';
+import Lists from '../../../components/tableComponents/Lists'
 
 const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [phdModal, setPhdModal] = useState(false)
@@ -44,18 +46,13 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [editId, setEditId] = useState(null)
-
-    const [res, setRes] = useState('')
+    const [editId, setEditId] = useState(null);
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
-
+    const years = academicYearGenerator( 29, true, true )
+    const typeObject = {
+        scholarName: 'text', degreeName: Lists.phdAwardedDegree, awardSubmit: Lists.phdAwardedSubmit, thesisTitle: 'text', rac: "date", gender: Lists.gender, category: Lists.phdAwardedCategory, yearOfScholar: years, phdAwardYear: 'number', year: years,
+    }
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -78,7 +75,6 @@ const tableHead = {
 
         submitWithFile(formData, 'PhdAwarded', refetch, setLoading, setPhdModal, setIsFormOpen)
     }
-
     // make states together
     function handleChange(e) {
         e.preventDefault();
@@ -100,13 +96,8 @@ const tableHead = {
         formData.append('phdAwardYear', awardYear)
         formData.append('year', year)
         formData.append('file', proof)
-
-
         handleEditWithFile(formData, 'PhdAwarded', setEditModal, refetch, setLoading, setIsFormOpen)
-
     }
-
-
     function pencilClick(itemId) {
         setEditId(itemId)
         data?.data?.data?.forEach(function (item) {
@@ -122,16 +113,13 @@ const tableHead = {
                 setRac(item.rac)
                 setGender(item.gender)
                 setCategory(item.category)
-
                 setYear(item.year)
                 setProof(item.file)
-
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
         })
     }
-
     // function to clear states to '' 
     function clearStates() {
         setScholarName('')
@@ -164,15 +152,12 @@ const tableHead = {
 
             data?.data?.data?.forEach(function (item) {
                 if (item._id === editId) {
-
                     console.log(item)
-
                     if (awardSubmit === 'Awarded') {
                         setAwardYear("")
                     } else {
                         setAwardYear("-")
                     }
-
                     if (degreeName !== 'Ph.D.') {
                         setRac("")
                     } else {
@@ -180,26 +165,19 @@ const tableHead = {
                     }
                 }
             })
-
-
         } else {
             if (awardSubmit === 'Awarded') {
                 setAwardYear("")
             } else {
                 setAwardYear("-")
             }
-
             if (degreeName !== 'Ph.D.') {
                 setRac("")
             } else {
                 setRac("-")
             }
         }
-
-
-
     }, [awardSubmit, editModal, degreeName])
-
 
     return (
         <div>
@@ -207,14 +185,13 @@ const tableHead = {
 
             <Header user={user} model='PhdAwarded' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Guidance"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='PhdAwardedFaculty' title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id, departmentName:user?.department, guideName:`${user?.salutation} ${user?.name}` }} title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
                 <DialogContent >
                     <FormWrapper action={editModal ? 'Editing' : 'Adding'} loading={loading} cancelFunc={editModal ? () => { setEditModal(false); clearStates() } : () => { setPhdModal(false) }} onSubmit={editModal ? handleChange : handleSubmit} setIsFormOpen={setIsFormOpen}>
                         <p className='text-2xl font-bold my-3'>{editModal ? 'Edit a Ph.D.' : 'Add a new Ph.D.'}</p>
-
                         <Text title='Scholar Name' state={scholarName} setState={setScholarName} />
                         <Text title='Department Name' state={departmentName} setState={setDepartmentName} />
                         <Text title='Guide Name' state={guideName} setState={setGuideName} />

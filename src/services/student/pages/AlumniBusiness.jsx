@@ -56,8 +56,8 @@ const AlumniBusiness = () => {
   return (
     <>
 
-      <AddButton onclick={setOpen} title="Your Business" />
-      <DialogBox title="Business" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton onclick={setOpen} title="Your Business" dataCount={data ? data?.data.length : 0} />
+      <DialogBox title="Business" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_the_employer" value={Name_of_the_employer} label="Name of the Business/Company" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Employer_contact_details" value={Employer_contact_details} label="Business contact details" setState={setValues} />

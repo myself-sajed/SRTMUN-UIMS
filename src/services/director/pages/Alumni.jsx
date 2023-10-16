@@ -74,7 +74,7 @@ const Alumni = () => {
   return (
     <>
     <div className='my-2'>
-      <AddButton onclick={setOpen} title="Manage Alumni" />
+      <AddButton onclick={setOpen} title="Manage Alumni" dataCount={data ? data?.data.length : 0} />
     </div>
     <div style={{ width: "100%", overflow: "hidden", background: "#FFF" }}>
       <div className='table-responsive my-2' style={{ display: "flex", gap: "10px", borderRadius: "5px"}}>

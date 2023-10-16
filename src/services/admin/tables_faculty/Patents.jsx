@@ -5,7 +5,6 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
-    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    patenterName: 'Patenter Name',
@@ -46,3 +45,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default Patents
+export { tableHead }

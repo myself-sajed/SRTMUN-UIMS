@@ -5,7 +5,6 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
-    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    purposeOfVisit: 'Purpose Of Visit',
@@ -43,3 +42,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default ForaginVisit
+export { tableHead }

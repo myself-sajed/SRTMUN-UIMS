@@ -21,11 +21,11 @@ const StudentBasicInfoTable = () => {
   const module = 'nss';
   const title = "Student Basic Info"
 
-  const user = useSelector(state => state.user.studentUser)
+  // const user = useSelector(state => state.user.studentUser)
 
   let filter = {};
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     studentName: "", parentName: "", gender: "", state: "", distric: "", mobileNo: "", address: "", email: "", createdByEmail: "", otherAreaOfInterest: "", dob: ""
@@ -63,8 +63,8 @@ const StudentBasicInfoTable = () => {
 
   return (
     <>
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} Student Basic Info`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
+      <DialogBox title={`${edit ? "Edit" : "Add"} Student Basic Info`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg"  loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="studentName" value={studentName} label="Student Name" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="parentName" value={parentName} label="Father/Mother Name" setState={setValues} />

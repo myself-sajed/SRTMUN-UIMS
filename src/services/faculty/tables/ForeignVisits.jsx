@@ -3,8 +3,8 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
-import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+// import File from '../../../inputs/File';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import submit from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import DateRPicker from '../../../inputs/DateRPicker';
 import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/ForaginVisit'
 
 const ForeignVisits = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [orgModal, setOrgModal] = useState(false)
@@ -35,15 +36,10 @@ const ForeignVisits = ({ filterByAcademicYear = false, academicYear, showTable =
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        purposeOfVisit: 'text', nameOfTheInstitutionVisited: 'text', fromDate: 'date', toDate: 'date', year: academicYearGenerator( 29, true, true ),
+    }
 
     function handleSubmit(e) {
         e.preventDefault();

@@ -11,7 +11,7 @@ import getReq from '../../../components/requestComponents/getReq'
 import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
-import { Switch } from 'antd'
+// import { Switch } from 'antd'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 
 
@@ -62,7 +62,7 @@ const CombineQualification = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} title="Your Qualifications" />
+      <AddButton onclick={setOpen} title="Your Qualifications" dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} Qualification`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <div className={`col-12 p-1 col-md-6 col-lg-4 text-sm md:text-base`}>

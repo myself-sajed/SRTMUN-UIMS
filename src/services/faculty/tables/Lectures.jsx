@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import TvRoundedIcon from '@mui/icons-material/TvRounded';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
-import File from '../../../inputs/File';
+// import File from '../../../inputs/File';
 import Text from '../../../inputs/Text';
-import Year from '../../../inputs/Year';
-import submit, { submitWithFile } from '../js/submit';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
+import submit from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
-import View from './View';
-import handleEditWithFile from '../js/handleEditWithFile';
+// import View from './View';
+// import handleEditWithFile from '../js/handleEditWithFile';
 import { useQuery } from 'react-query';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
@@ -18,6 +18,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import handleEdit from '../js/handleEdit';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/Lactures'
 
 
 const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = false }) => {
@@ -35,7 +36,6 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
 
     // const [proof, setProof] = useState(null)
     const [year, setYear] = useState(academicYear ? academicYear : '')
-    const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -43,13 +43,9 @@ const Lectures = ({ filterByAcademicYear = false, academicYear, setPulledData = 
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
-
+    const typeObject = {
+        course: 'text', level: 'text', teachingMode: 'text', noOfClasses: 'number', classesTaken: "number",  year: academicYearGenerator( 29, true, true ),
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -139,18 +135,11 @@ const tableHead = {
 
                         <Text title='Teaching Mode' state={mode} setState={setMode} />
 
-
-
                         <Text type='number' space='col-md-3' title='No of classes alloted' state={noOfClasses} setState={setNoOfClasses} />
 
                         <Text type='number' space='col-md-3' title='No of classes taken' state={classesTaken} setState={setClassesTaken} />
 
                         <Year state={year} setState={setYear} />
-
-
-
-
-
 
                     </FormWrapper>
                 </DialogContent>

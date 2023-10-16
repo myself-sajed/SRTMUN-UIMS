@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,8 @@ import { Dialog, DialogContent, LinearProgress } from '@mui/material';
 import FormWrapper from '../components/FormWrapper';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/InvitedTalks'
+import Lists from '../../../components/tableComponents/Lists';
 
 const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [talkModal, setTalkModal] = useState(false)
@@ -38,12 +40,9 @@ const InvitedTalk = ({ filterByAcademicYear = false, academicYear, showTable = t
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        lectureTitle: 'text', seminarTitle: 'text', organizedBy: 'text', isNat: Lists.patentIsNat, nature: Lists.invitedtalkNature, year: academicYearGenerator( 29, true, true ),
+    }
 
     function handleSubmit(e) {
         console.log('Start')

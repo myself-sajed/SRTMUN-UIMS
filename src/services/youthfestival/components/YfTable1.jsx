@@ -27,7 +27,7 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
   let filter = { academicYear: filterByAcademicYear, college: user?._id }
 
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     nameOfCollege: "", partnerType: "", partnerName: "", permentAddress: "", gender: "", mobileNo: "", dob: "", bloodGroup: "", namesOfCompetition: [], academicYear: filterByAcademicYear ? filterByAcademicYear : "",
@@ -78,16 +78,16 @@ const YfTable1 = ({ user, filterByAcademicYear }) => {
   return (
     <>
       {/* nameOfCollege, partnerName, permentAddress, mobileNo, dob, bloodGroup, academicYear, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
+      <AddButton title={title} dataCount={data ? data?.data.length : 0} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true}  />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap' loading={Loading} >
 
 
           <div className='flex-items-center justify-center flex-col w-full mb-4'>
             {
               PhotoURL ?
-                <img src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
-                <img src={serverLinks.showFile(PhotoURL2, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
+                <img alt='' src={avatar} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' /> :
+                <img alt='' src={serverLinks.showFile(PhotoURL2, 'youth')} className='h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full object-cover border-4 border-[#344e87] mx-auto' />
             }
             <div className='flex items-center justify-center gap-3'>
               <label className=' bg-blue-100 md:mt-3 mt-1 p-1 rounded-xl text-blue-700 md:text-sm text-xs text-center cursor-pointer w-full duration-200 ease-in-out hover:bg-blue-200 hover:text-blue-800' htmlFor='file'>Choose Profile Photo</label>

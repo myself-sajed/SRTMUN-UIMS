@@ -23,7 +23,7 @@ const OtherDemandRatio = ({ filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { Academic_Year: filterByAcademicYear } : {};
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     SchoolName: "", Programme_Code: "", Programme_name: "", Academic_Year: "", Type_of_program: "", Number_of_seats_available: "", Number_of_eligible_applications: "", Number_of_Students_admitted: "", Upload_Proof: "",
@@ -62,8 +62,8 @@ const OtherDemandRatio = ({ filterByAcademicYear = false }) => {
   return (
     <>
       {/* Programme_Code, Programme_name, Academic_Year, Type_of_program, Number_of_seats_available, Number_of_eligible_applications, Number_of_Students_admitted, Upload_Proof, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true}  dataCount={data ? data?.data.length : 0} />
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg"  loading={Loading}>
         <div className='flex flex-wrap'>
           <Select className='col-md-6 col-lg-4' id="SchoolName" value={SchoolName} label={tableHead.SchoolName} options={Object.keys(SchoolsProgram).map(item => { return item })} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Programme_Code" value={Programme_Code} label={tableHead.Programme_Code} setState={setValues} />

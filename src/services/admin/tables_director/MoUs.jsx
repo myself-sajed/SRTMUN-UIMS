@@ -33,3 +33,4 @@ function MoUs({id, setState, yearFilter, schoolName, Heading, setLoaded}) {
     );
 }
 export default MoUs;
+export { tableHead };

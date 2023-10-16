@@ -37,7 +37,7 @@ const YFGroupTable = ({ user, filterByAcademicYear }) => {
     let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear, college: user?._id } : { college: user?._id }
 
     const params = { model, id: '', module, filter }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
     const [edit, setEdit] = useState(false);
 
@@ -67,7 +67,7 @@ const YFGroupTable = ({ user, filterByAcademicYear }) => {
 
 
         <div>
-            <DialogBox title={`${edit ? "Edit" : "Add"} युवक महोत्सवात सहभागी गट (Group)`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+            <DialogBox title={`${edit ? "Edit" : "Add"} युवक महोत्सवात सहभागी गट (Group)`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={loading} >
                 <div>
                     <div className='row px-4'>
                         <Select className="col-md-5" id="namesOfCompetition" value={namesOfCompetition} label="स्पर्धकाचे नाव" setState={setValues} options={Lists.yfGgroup} />
@@ -84,7 +84,7 @@ const YFGroupTable = ({ user, filterByAcademicYear }) => {
                 </div>
             </DialogBox>
 
-            <AddButton onclick={() => setOpen(true)} title="युवक महोत्सवात सहभागी गट (Group)" />
+            <AddButton onclick={() => setOpen(true)} title="युवक महोत्सवात सहभागी गट (Group)" dataCount={data ? data?.data.length : 0} />
             <div className='mt-3'>
                 <table className='table table-bordered'>
                     <thead className='bg-primary text-light'>

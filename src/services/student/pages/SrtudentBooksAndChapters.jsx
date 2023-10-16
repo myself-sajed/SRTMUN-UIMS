@@ -23,7 +23,7 @@ const SrtudentBooksAndChapters = () => {
     const user = useSelector(state => state.user.studentUser)
   
     const params = { model, id: user?._id, module}
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
   
     const initialstate = { type: '', titleOfBook: '', chapterTitle: '', paperTitle: '-', transType: '', titleOfProceeding: '-', conName: '-', isNat: '', authorEditor: '', publicationYear: '', issnNumber: '', aff: '',publisherName: '', year: '', Upload_Proof: '' }
     const [values, setValues] = useState(initialstate)
@@ -83,7 +83,7 @@ const SrtudentBooksAndChapters = () => {
     //{ type, titleOfBook, chapterTitle, paperTitle, transType, titleOfProceeding, conName, isNat, publicationYear, issnNumber, aff,publisherName, year }
     return (
       <>
-        <AddButton title={title} onclick={setOpen} />
+        <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
         <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
           <div className='flex flex-wrap'>
             <Select className='col-md-6 col-lg-4' id="type" value={type} label={tableHead.type} setState={setValues} options={Lists.bookCapType} />

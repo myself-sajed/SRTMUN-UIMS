@@ -19,7 +19,7 @@ const AlumniJobs = () => {
   const user = useSelector(state => state.user.alumniUser)
 
   const params = { model, id: user?._id, module, filter: "placementJob" }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = { Name_of_the_employer: '', Employer_contact_details: '', Pay_package_annum: '', Academic_Year: '', Upload_Proof: '' }
   const [values, setValues] = useState(initialstate)
@@ -54,8 +54,8 @@ const AlumniJobs = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} title="Your Jobs" />
-      <DialogBox title="Job" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton onclick={setOpen} title="Your Jobs" dataCount={data ? data?.data.length : 0} />
+      <DialogBox title="Job" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_the_employer" value={Name_of_the_employer} label="Name of the employer" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Employer_contact_details" value={Employer_contact_details} label="Employer contact details" setState={setValues} />

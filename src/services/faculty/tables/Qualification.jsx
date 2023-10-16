@@ -10,7 +10,7 @@ import { useQuery } from 'react-query';
 import Loader from '../../../components/Loader';
 import EmptyBox from '../../../components/EmptyBox';
 import FormWrapper from '../components/FormWrapper';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
@@ -21,6 +21,13 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
 
+    const tableHead = {
+
+    }
+    const typeObject = {
+
+    }
+
     // states
     const [exam, setExam] = useState('')
     const [institute, setinstitute] = useState('')
@@ -29,10 +36,8 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
     const [subjects, setSubjects] = useState('')
     const [qualificationModal, setQualificationModal] = useState(false)
     const [isFormOpen, setIsFormOpen] = useState(false)
-    const [res, setRes] = useState('')
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
-
     const [filteredItems, setFilteredItems] = useState([])
 
 
@@ -185,7 +190,7 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
                     isLoading && <Loader />
                 }
                 {
-                    (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                    ((data && data?.data?.data === undefined) || (filteredItems.length === 0)) && <EmptyBox />
                 }
             </div>
 

@@ -45,7 +45,6 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
   
     if (pastedData) {
       const cleanedData = pastedData.replace(/\r/g, '');
-
   
       if (cleanedData.includes("\n")) {
         filteredData = cleanedData.split('\n');
@@ -57,18 +56,74 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
         toast.error(filteredData.includes("") ? "Randomly cell selection or Empty cell selection not allowed" : "Column Field can not be empty");
         filteredData = [];
       }
-
+      console.log(filteredData);
+  
       if (filteredData.length > 0) {
-        filteredData.forEach((e,i) => {
-          setTableData((prev)=>{
-            return [...prev , {[columnToFill]: filteredData[i]}]
-          })
-        });
+        for (let i = 0; i < filteredData.length; i++) {
+          if (tableData.length === i) {
+            // Asynchronously set the new state and initialize the missing elements
+            await setTableData((prevData) => [
+              ...prevData,
+              ...Array.from({ length: filteredData.length - prevData.length }, () => ({})),
+            ]);
+          }
+  
+          if (typeObject[columnToFill] === "date") {
+            const parsedDate = new Date(filteredData[i]);
+            if (!isNaN(parsedDate.getTime())) {
+              // Update the state with the formatted date
+              setTableData((prevData) => [
+                ...prevData.slice(0, i), // Copy data before the current index
+                { ...prevData[i], [columnToFill]: parsedDate.toISOString().slice(0, 10) }, // Update the current index
+                ...prevData.slice(i + 1), // Copy data after the current index
+              ]);
+            }
+          } else {
+            // Update the state with the non-date value
+            setTableData((prevData) => [
+              ...prevData.slice(0, i), // Copy data before the current index
+              { ...prevData[i], [columnToFill]: filteredData[i] }, // Update the current index
+              ...prevData.slice(i + 1), // Copy data after the current index
+            ]);
+          }
+        }
       } else {
         toast.error("no data");
       }
     }
   };
+
+  // const HandleDataPaste = async (e) => {
+  //   e.preventDefault();
+  //   const pastedData = e.clipboardData.getData('text').trim();
+  //   let filteredData = [];
+  
+  //   if (pastedData) {
+  //     const cleanedData = pastedData.replace(/\r/g, '');
+
+  
+  //     if (cleanedData.includes("\n")) {
+  //       filteredData = cleanedData.split('\n');
+  //     } else if (cleanedData.includes("\t")) {
+  //       filteredData = cleanedData.split('\t');
+  //     }
+  
+  //     if (filteredData.includes("") || columnToFill === "") {
+  //       toast.error(filteredData.includes("") ? "Randomly cell selection or Empty cell selection not allowed" : "Column Field can not be empty");
+  //       filteredData = [];
+  //     }
+
+  //     if (filteredData.length > 0) {
+  //       filteredData.forEach((e,i) => {
+  //         setTableData((prev)=>{
+  //           return [...prev , {[columnToFill]: filteredData[i]}]
+  //         })
+  //       });
+  //     } else {
+  //       toast.error("no data");
+  //     }
+  //   }
+  // };
 
   return (
     <div>

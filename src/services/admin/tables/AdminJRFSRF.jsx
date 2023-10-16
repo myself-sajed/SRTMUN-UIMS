@@ -73,7 +73,7 @@ const AdminJRFSRF = () => {
 
     return (
         <>
-            <AddButton title="JRF & SRF" onclick={setOpen} />
+            <AddButton title="JRF & SRF" onclick={setOpen}  dataCount={data ? data?.data.length : 0} />
             <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label={tableHead.researchName} setState={setValues} />

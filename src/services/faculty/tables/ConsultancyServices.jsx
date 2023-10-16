@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/Consultancy'
 
 const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [conModal, setConModal] = useState(false)
@@ -36,16 +37,10 @@ const ConsultancyServices = ({ filterByAcademicYear = false, academicYear, showT
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
 const typeObject = {
-
+    cName: 'text', cProjectName: 'text', cAgency: 'text', cYear: 'number', revenue: 'number', year: academicYearGenerator(29,true,true),
 }
-const tableHead = {
-
-}
-
     function handleSubmit(e) {
         e.preventDefault();
         setLoading(true)

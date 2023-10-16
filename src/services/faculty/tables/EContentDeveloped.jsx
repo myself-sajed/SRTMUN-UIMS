@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import submit from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import Text from '../../../inputs/Text';
 import handleEdit from '../js/handleEdit';
 import { useQuery } from 'react-query';
@@ -15,6 +15,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import Lists from '../../../components/tableComponents/Lists'
+import { tableHead } from '../../admin/tables_faculty/EContentDeveloped'
 
 
 const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
@@ -35,13 +37,9 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
     const [editId, setEditId] = useState(null)
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
-
+    const typeObject = {
+        moduleName: 'text', creationType: Lists.eContentCreation, platform: 'text', year: academicYearGenerator(29,true,true), link: 'text',
+    }
     function handleSubmit(e) {
         e.preventDefault();
         setLoading(true)

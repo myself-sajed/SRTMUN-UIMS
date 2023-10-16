@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header'
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/BooksAndChapters'
+import Lists from '../../../components/tableComponents/Lists';
 
 const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTable = true, title, propType = "Book", showConferenceOnly = false }) => {
     const [bookModal, setBookModal] = useState(false)
@@ -40,14 +42,11 @@ const BooksAndChapters = ({ filterByAcademicYear = false, academicYear, showTabl
     const [type, setType] = useState(null)
     const [editId, setEditId] = useState(null)
 
-    const [res, setRes] = useState('')
+    // const [res, setRes] = useState('')
 
     const user = useSelector(state => state.user.user);
 const typeObject = {
-
-}
-const tableHead = {
-
+    type: Lists.bookCapType, titleOfBook: 'text', paperTitle: 'text', titleOfProceeding: 'text', conName: 'text', isNat: Lists.bookChapConfIsNat, publicationYear: 'number', issnNumber: 'text', aff: 'text', year: academicYearGenerator( 29, true, true ), publisherName: 'text'
 }
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
@@ -105,7 +104,6 @@ const tableHead = {
         handleEditWithFile(formData, 'BookAndChapter', setEditModal, refetch, setLoading, setIsFormOpen)
     }
 
-
     function pencilClick(itemId) {
         setEditId(itemId)
         data?.data?.data?.forEach(function (item) {
@@ -124,7 +122,6 @@ const tableHead = {
                 setPubDate(item.publicationYear)
                 setYear(item.year)
                 setProof(item.file)
-
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -148,7 +145,6 @@ const tableHead = {
         setYear('')
         setProof('')
     }
-
 
     let param = { model: 'BookAndChapter', userId: user?._id }
 
@@ -233,7 +229,7 @@ const tableHead = {
             <Header user={user} model='BookAndChapter' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} font="text-[17px]" add="Books/Papers" editState={setEditModal} clearStates={clearStates} state={setBookModal} setIsFormOpen={setIsFormOpen} icon={<MenuBookRoundedIcon className='text-lg' />}
                 title={title ? title : "Books and Chapters published and papers in national/international conference proceedings"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='BookAndChapterFaculty' title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} disableUpload={true} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id, schoolName:user?.department}} title='Book And Chapter' SendReq='BookAndChapter' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

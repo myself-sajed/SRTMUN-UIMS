@@ -44,4 +44,5 @@ let filter = yearFilter.length === 0? null : {year: {$in: yearFilter}}
   )
 }
 
-export default Fellowship
+export default Fellowship;
+export { tableHead }

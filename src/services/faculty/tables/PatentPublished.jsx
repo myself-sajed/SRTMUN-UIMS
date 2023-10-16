@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/Patents'
+import Lists from '../../../components/tableComponents/Lists';
 
 const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [patentModal, setPatentModal] = useState(false)
@@ -38,12 +40,9 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        patentNumber: 'text', patentTitle: 'text', isNat: Lists.bookChapConfIsNat, awardYear: 'number', year: academicYearGenerator( 29, true, true ),
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -127,7 +126,7 @@ const tableHead = {
             {/* // HEADER */}
             <Header user={user} model='Patent' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Patent" editState={setEditModal} clearStates={clearStates} state={setPatentModal} icon={<DocumentScannerRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Patents published / awarded"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='PatentFaculty' title='Patents published / awarded' SendReq='Patent' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id, patenterName: `${user?.salutation} ${user?.name}`}} title='Patents published / awarded' SendReq='Patent' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

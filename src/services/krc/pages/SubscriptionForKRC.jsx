@@ -23,7 +23,7 @@ const SubscriptionForKRC = ({ filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     libraryResources: "", eBooks: "", eResources: "", academicYear: "", Proof: "",
@@ -62,8 +62,8 @@ const SubscriptionForKRC = ({ filterByAcademicYear = false }) => {
   return (
     <>
       {/* libraryResources, eBooks, eResources, academicYear, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg"  loading={Loading}>
         <div className='flex flex-wrap'>
 
           <Select className='col-md-6 col-lg-4' id="libraryResources" value={libraryResources} label={tableHead.libraryResources} options={['Books Journals', 'e–Journals', 'e-books', 'e-ShodhSindhu', 'Shodhganga', 'Databases',]} setState={setValues} />

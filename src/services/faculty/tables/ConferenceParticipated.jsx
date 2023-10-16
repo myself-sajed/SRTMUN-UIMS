@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,9 +17,8 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
-
-
-
+import {tableHead} from '../../admin/tables_faculty/ConferencePartipeted'
+import Lists from '../../../components/tableComponents/Lists';
 
 const ConferenceParticipated = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [orgModal, setOrgModal] = useState(false)
@@ -37,16 +36,10 @@ const ConferenceParticipated = ({ filterByAcademicYear = false, academicYear, sh
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
 const typeObject = {
-
+    programTitle: 'text', organizingInstitute: 'text', fundedBy: 'text', isNational: Lists.bookChapConfIsNat, year: academicYearGenerator(29,true,true),
 }
-const tableHead = {
-
-}
-
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -198,7 +191,7 @@ const tableHead = {
                         isLoading && <Loader />
                     }
                     {
-                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                        ((data && data?.data?.data === undefined) || filteredItems.length === 0) && <EmptyBox />
                     }
                 </div>
             }

@@ -13,7 +13,7 @@ const Collaborations = ({id, setState, yearFilter, schoolName, Heading, setLoade
   
    const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -34,3 +34,4 @@ const Collaborations = ({id, setState, yearFilter, schoolName, Heading, setLoade
 }
 
 export default Collaborations
+export {tableHead}

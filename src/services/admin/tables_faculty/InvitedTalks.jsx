@@ -5,7 +5,6 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
-    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    lectureTitle: 'Title of Lecture/Academic Session',
@@ -45,3 +44,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default InvitedTalks
+export { tableHead }

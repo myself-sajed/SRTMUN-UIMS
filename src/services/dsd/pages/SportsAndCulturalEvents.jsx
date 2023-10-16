@@ -22,7 +22,7 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
 
   let filter = filterByAcademicYear ? { userType, academicYear: filterByAcademicYear } : { userType };
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     dateOfEvent: "", nameOfEvent: "", academicYear: "", Proof: "",
@@ -61,8 +61,8 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
   return (
     <>
       {/* dateOfEvent, nameOfEvent, academicYear, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0}   />
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' type='date' id="dateOfEvent" value={dateOfEvent} label={tableHead.dateOfEvent} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="nameOfEvent" value={nameOfEvent} label={tableHead.nameOfEvent} setState={setValues} />

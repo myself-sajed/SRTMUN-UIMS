@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
-import Lists from '../../../components/tableComponents/Lists'
+// import Lists from '../../../components/tableComponents/Lists'
 import Select from '../../../components/formComponents/Select'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
@@ -23,7 +23,7 @@ const DsdAndSports = ({ userType = 'dsd', filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { userType, academicYear: filterByAcademicYear } : { userType };
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     academicYear: "", nameOfAward: "", teamIndividual: "", isNat: "", nameOfEvent: "", nameOfStudnt: "", Proof: "",
@@ -62,7 +62,7 @@ const DsdAndSports = ({ userType = 'dsd', filterByAcademicYear = false }) => {
   return (
     <>
       {/* academicYear, nameOfAward, teamIndividual, isNat, nameOfEvent, nameOfStudnt, Proof */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
+      <AddButton title={title} dataCount={data ? data?.data.length : 0} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} loading={Loading} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="nameOfAward" value={nameOfAward} label={tableHead.nameOfAward} setState={setValues} />

@@ -2,11 +2,10 @@ import React, { useEffect } from 'react'
 import { useQuery } from 'react-query';
 import getReq from '../../../components/requestComponents/getReq';
 import AdminAcordinTable from '../components/AdminAcordinTable';
-import AdminExcelExoprt from '../components/AdminExcelExoprt';
+// import AdminExcelExoprt from '../components/AdminExcelExoprt';
 
 const tableHead = {
    index: 'Sr.No.',
-    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    programTitle: 'Program Title',
@@ -26,7 +25,7 @@ let filter = yearFilter.length === 0? null : {year:{$in: yearFilter}}
 
  const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -46,3 +45,4 @@ let filter = yearFilter.length === 0? null : {year:{$in: yearFilter}}
 }
 
 export default ConferencePartipeted
+export { tableHead }

@@ -45,3 +45,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default FinancialSupport
+export { tableHead }

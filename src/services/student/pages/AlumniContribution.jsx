@@ -56,8 +56,8 @@ const AlumniContribution = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} title="Your Alumni Contribution" />
-      <DialogBox title="Alumni Contribution" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton onclick={setOpen} title="Your Alumni Contribution" dataCount={data ? data?.data.length : 0} />
+      <DialogBox title="Alumni Contribution" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' type='number' id="Amount_of_contribution" value={Amount_of_contribution} label="Contribution Ammount in ₹" setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="Academic_Year" value={Academic_Year} label="Acadmic Year" setState={setValues} />

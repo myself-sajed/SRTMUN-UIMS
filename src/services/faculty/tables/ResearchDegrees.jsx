@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import Axios from 'axios'
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import submit, { submitWithFile } from '../js/submit';
+import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
 import View from './View';
@@ -24,11 +22,15 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
-    const navigate = useNavigate()
-    const [res, setRes] = useState('')
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
     //states
+    const tableHead = {
+
+    }
+    const typeObject = {
+        
+    }
 
     const [degreeName, setDegreeName] = useState('')
     const [title, setTitle] = useState('')
@@ -247,7 +249,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
                         isLoading && <Loader />
                     }
                     {
-                        (data && data?.data?.data === undefined || filteredItems.length === 0) && <EmptyBox />
+                        ((data && data?.data?.data === undefined) || (filteredItems.length === 0)) && <EmptyBox />
                     }
                 </div>
             }

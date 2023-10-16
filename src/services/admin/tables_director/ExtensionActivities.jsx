@@ -13,7 +13,7 @@ let filter = yearFilter.length === 0 && schoolName === 'All Schools'? null : yea
 
 const params = { model: SendReq, id: '', module, filter, }
 
-const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
 useEffect(() => {
  setState((pri) => {
@@ -32,3 +32,4 @@ return (
 );
 }
 export default ExtensionActivities;
+export { tableHead }

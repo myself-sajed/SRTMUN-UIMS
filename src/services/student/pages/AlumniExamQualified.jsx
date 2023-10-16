@@ -23,7 +23,7 @@ const AlumniExamQualified = () => {
     const user = useSelector(state => state.user.alumniUser)
 
     const params = { model, id: user?._id, module }
-    const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
     const initialstate = { Registration_number_roll_number: '', Name_of_the_Exam: '', Acadmic_year: '', Upload_Proof: '' }
     const [values, setValues] = useState(initialstate)
@@ -57,8 +57,8 @@ const AlumniExamQualified = () => {
     }
     return (
         <>
-            <AddButton onclick={setOpen} title="Your Exam Qualified" />
-            <DialogBox title="Exam Qualified" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+            <AddButton onclick={setOpen} title="Your Exam Qualified" dataCount={data ? data?.data.length : 0} />
+            <DialogBox title="Exam Qualified" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="Registration_number_roll_number" value={Registration_number_roll_number} label="Registration no / roll no." setState={setValues} />
                     <Select className='col-md-6 col-lg-4' id="Name_of_the_Exam" value={Name_of_the_Exam} label="Select Exam" setState={setValues} options={Exams} />

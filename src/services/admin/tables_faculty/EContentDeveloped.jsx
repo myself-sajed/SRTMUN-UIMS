@@ -23,7 +23,7 @@ let filter = yearFilter.length === 0? null : {year: {$in: yearFilter}}
 
  const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition} 
  
- const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+ const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
  useEffect(() => {
     setState((pri) => {
@@ -43,3 +43,4 @@ let filter = yearFilter.length === 0? null : {year: {$in: yearFilter}}
 }
 
 export default EContentDeveloped
+export { tableHead }

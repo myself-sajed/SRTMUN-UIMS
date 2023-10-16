@@ -21,7 +21,7 @@ const NssExtensionActivity = ({ filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { SchoolName: "NSS", Year_of_activity: filterByAcademicYear } : { SchoolName: "NSS" };
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
 
   const initialstate = {
     Name_of_the_activity: "", Organising_unit: "", Name_of_the_scheme: "", Year_of_activity: "", Number_of_students: "", Upload_Proof: "",
@@ -60,8 +60,8 @@ const NssExtensionActivity = ({ filterByAcademicYear = false }) => {
   return (
     <>
       {/* Name_of_the_activity, Organising_unit, Name_of_the_scheme, Year_of_activity, Number_of_students, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} />
-      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg">
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg"  loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_the_activity" value={Name_of_the_activity} label={tableHead.Name_of_the_activity} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Organising_unit" value={Organising_unit} label={tableHead.Organising_unit} setState={setValues} />

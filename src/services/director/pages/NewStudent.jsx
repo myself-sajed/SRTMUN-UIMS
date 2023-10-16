@@ -149,7 +149,7 @@ const NewStudent = () => {
   return (
     <>
       <div className='py-2'>
-        <AddButton onclick={setOpen} title="Add New Studnet" />
+        <AddButton onclick={setOpen} title="Add New Studnet" dataCount={data ? data?.data.length : 0} />
       </div>
       {/* <div><button className='btn btn-success' onClick={()=>{setOpen(true)}}>add</button></div> */}
       <DialogBox title="Add new Student" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={!edit ? handleEmailTaken : onEdit} onCancel={onCancel} maxWidth="lg" loading={loading}>

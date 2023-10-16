@@ -55,8 +55,8 @@ const AlumniHE = () => {
 
   return (
     <>
-      <AddButton onclick={setOpen} title="Your Higher Education" />
-      <DialogBox title="Higher Education" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+      <AddButton onclick={setOpen} title="Your Higher Education" dataCount={data ? data?.data.length : 0} />
+      <DialogBox title="Higher Education" buttonName="submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' id="Name_of_institution_admitted" value={Name_of_institution_admitted} label="Name of the Current Institution" setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="Name_of_programme_admitted" value={Name_of_programme_admitted} label="Name of the program admitted" setState={setValues} />

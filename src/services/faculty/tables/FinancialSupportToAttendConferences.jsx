@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,6 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/FinancialSupport'
 
 const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [jrfModal, setJrfModal] = useState(false)
@@ -37,12 +38,9 @@ const FinancialSupportToAttendConferences = ({ filterByAcademicYear = false, aca
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        nameOfConference: 'text', feeprovider: 'text', amountOfSupport: 'number', pan: 'text', year: academicYearGenerator( 29, true, true ),
+    }
 
     function handleSubmit(e) {
         e.preventDefault();

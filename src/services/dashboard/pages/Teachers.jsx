@@ -1,20 +1,20 @@
 import React from 'react'
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+// import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import StickyNote2RoundedIcon from '@mui/icons-material/StickyNote2Rounded';
 import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import BookmarkAddedRoundedIcon from '@mui/icons-material/BookmarkAddedRounded';
 import VideoChatRoundedIcon from '@mui/icons-material/VideoChatRounded';
-import SafetyDividerRoundedIcon from '@mui/icons-material/SafetyDividerRounded';
-import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
+// import SafetyDividerRoundedIcon from '@mui/icons-material/SafetyDividerRounded';
+// import PermContactCalendarRoundedIcon from '@mui/icons-material/PermContactCalendarRounded';
 import LightbulbRoundedIcon from '@mui/icons-material/LightbulbRounded';
 import CardMembershipRoundedIcon from '@mui/icons-material/CardMembershipRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
-import DialogBox from '../DialogBox';
-import DeptSelect from '../../inputs/DeptSelect'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+// import DialogBox from '../DialogBox';
+// import DeptSelect from '../../inputs/DeptSelect'
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { toast } from 'react-hot-toast';
 
 const facultyTables = [
     {
@@ -68,9 +68,9 @@ const facultyTables = [
 ]
 
 const Teachers = ({ loginElement }) => {
-    const [deptModal, setDeptModal] = useState(false)
-    const [dept, setDept] = useState(null)
-    const navigate = useNavigate()
+    // const [deptModal, setDeptModal] = useState(false)
+    // const [dept, setDept] = useState(null)
+    // const navigate = useNavigate()
 
     return (
         <div className='mt-5 border-t border-gray-600 pt-4 w-full'>

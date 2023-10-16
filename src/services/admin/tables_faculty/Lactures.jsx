@@ -5,13 +5,13 @@ import AdminAcordinTable from '../components/AdminAcordinTable';
 
 const tableHead = {
    index: 'Sr.No.',
-    
    'userId.name': 'Faculty Name',
    'userId.department': 'Faculty School',
    course: 'Course/Paper',
    level: 'Level',
    teachingMode: 'Teaching Mode',
-   noOfClasses: 'No of classes alloted per week',
+   noOfClasses: 'No of classes alloted',
+   classesTaken: "No of classes taken",
    year: ' Year',
 }
 const Lactures = ({id, setState, yearFilter, schoolName, Heading, setLoaded }) => {
@@ -23,7 +23,7 @@ let filter = yearFilter.length === 0? null : {year: {$in:yearFilter}}
 
 const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -43,3 +43,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default Lactures
+export { tableHead }

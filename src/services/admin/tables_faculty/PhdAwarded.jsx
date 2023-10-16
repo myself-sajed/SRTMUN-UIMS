@@ -28,7 +28,7 @@ let filter = yearFilter.length === 0? {degreeName: "Ph.D.", awardSubmit: 'Awarde
 
 const params = { model: SendReq, id: '', module, filter: filter, filterConditios: condition}
   
-  const { data, isLoading, isError, error, refetch } = useQuery([SendReq, params], () => getReq(params))
+  const { data, isLoading } = useQuery([SendReq, params], () => getReq(params))
 
   useEffect(() => {
     setState((pri) => {
@@ -48,3 +48,4 @@ const params = { model: SendReq, id: '', module, filter: filter, filterConditios
 }
 
 export default PhdAwarded
+export { tableHead }
