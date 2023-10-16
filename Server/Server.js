@@ -168,6 +168,10 @@ app.use(require('./routes/youthfestival-routes/youth-auth'))
 require('./routes/youthfestival-routes/youth-routes')(app)
 app.use(require('./routes/youthfestival-routes/competition-routes'))
 
+// Editable Table
+require('./utility/editableTable')(app)
+
+
 
 mongoose
   .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
