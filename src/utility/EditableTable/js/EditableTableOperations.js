@@ -1,21 +1,31 @@
 import Axios from 'axios'
 import toast from 'react-hot-toast'
 
-const upsertRecord = async (data, refetch) => {
+const upsertRecord = async (data, refetch, uploadRowCount) => {
+
+    console.log('Row Count :', uploadRowCount)
 
     try {
         const link = `${process.env.REACT_APP_MAIN_URL}/api/upsertRecord`
         const res = await Axios.post(link, data)
         if (res.data.status === 'success') {
             toast.success(res.data.message)
-            refetch()
+            if (uploadRowCount < 2) {
+                refetch()
+            }
             return 200
         } else {
             toast.error('Record insertion failed')
+            if (uploadRowCount < 2) {
+                refetch()
+            }
             return 500
         }
     } catch (error) {
         toast.error('Something went wrong')
+        if (uploadRowCount < 2) {
+            refetch()
+        }
         return 500
     }
 }

@@ -20,17 +20,20 @@ import { ImageResizer } from '../../../components/ProfileCroper';
 
 const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable = true, }) => {
 
+    const tableHead = {
+
+    }
+
+    const typeObject = {
+
+    }
+
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
     //states
-    const tableHead = {
 
-    }
-    const typeObject = {
-        
-    }
 
     const [degreeName, setDegreeName] = useState('')
     const [title, setTitle] = useState('')
@@ -156,7 +159,7 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
 
             <Header user={user} model='Degree' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setDegreeModal} icon={<WorkspacePremiumIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Research Degree(s)" />
 
-            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='DegreeFaculty' title='Research Degrees' SendReq='Degree' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{ userId: user?._id }} sampleFile='DegreeFaculty' title='Research Degrees' SendReq='Degree' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 

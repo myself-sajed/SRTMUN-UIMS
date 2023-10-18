@@ -16,17 +16,18 @@ import sortByAcademicYear from '../../../js/sortByAcademicYear';
 
 const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
 
-
-    const user = useSelector(state => state.user.user)
-    const [loading, setLoading] = useState(false)
-    const [open, setOpen] = useState(false);
-
     const tableHead = {
 
     }
     const typeObject = {
 
     }
+
+    const user = useSelector(state => state.user.user)
+    const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false);
+
+    
 
     // states
     const [exam, setExam] = useState('')
@@ -102,7 +103,7 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
 
             <Header exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Qualification" editState={setEditModal} clearStates={clearStates} state={setQualificationModal} icon={<SchoolIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title="Your Qualifications" />
 
-            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='QualificationFaculty' title='Qualification' SendReq='Qualification' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{ userId: user?._id }} sampleFile='QualificationFaculty' title='Qualification' SendReq='Qualification' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
             {/* // 2. FIELDS */}
 
 

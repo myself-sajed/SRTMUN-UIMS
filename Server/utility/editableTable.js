@@ -25,7 +25,9 @@ function editableTableOperations(app) {
         try {
             if (Boolean(data?.isNew) && data?.isNew !== 'undefined') {
                 const { _id, ...dataWithoutId } = data;
-                await new models.InvitedTalk({ ...dataWithoutId, proof: req.file.filename }).save();
+                await new models.InvitedTalk(
+                    { ...dataWithoutId, proof: req.file ? req.file.filename : null }
+                ).save();
                 res.send({ status: 'success', message: 'Record added successfully' })
             } else {
                 await models.InvitedTalk.findOneAndUpdate({ _id: data?._id }, { ...data, proof: req.file ? req.file.filename : data.proof })
@@ -33,6 +35,7 @@ function editableTableOperations(app) {
             }
 
         } catch (error) {
+            console.log(error)
             res.send({ status: 'error' })
         }
 

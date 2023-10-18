@@ -110,6 +110,9 @@ app.use(require('./routes/krc-routes/krc-routes'))
 // iil
 require('./routes/iil-routes/iil-routes').iilRoutes(app)
 
+// skill
+require('./routes/skill-routes/umpscStudentsHandler')(app)
+
 //other
 app.use(require('./routes/other-routes/other-routes'))
 

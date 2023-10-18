@@ -96,6 +96,8 @@ let siteLinks = {
     skillLogin: { title: "Centre for Competitive Exams, Training & Skills Development Login", link: '/competativeExams-training-skillsDevelopment-login' },
     skillHome: { title: "Centre for Competitive Exams, Training & Skills Development Home", link: '/competativeExams-training-skillsDevelopment' },
     skillFillData: { title: "Data Center", link: '/competativeExams-training-skillsDevelopment/data-center' },
+    skillUMPSCRegistration: { title: "Student Registration: UPSC MPSC Foundation Course", link: '/competativeExams-training-skillsDevelopment/upsc-mpsc-studentRegistration' },
+    skillUMPSCFeedback: { title: "Feedback: UPSC MPSC Foundation Course", link: '/competativeExams-training-skillsDevelopment/upsc-mpsc-feedback' },
 
 
 

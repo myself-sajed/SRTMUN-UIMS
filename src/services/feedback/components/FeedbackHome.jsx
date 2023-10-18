@@ -7,7 +7,7 @@ import StepStatus from '../../../components/StepStatus';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear, schoolName, setSchoolName, activeStep, setActiveStep, customfunctionOnBack = false, customSteps = false }) => {
+const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear, schoolName, setSchoolName, activeStep, setActiveStep, customfunctionOnBack = false, customSteps = false, customYears = false }) => {
 
     const steps = ['Choose School & Year', `${userType} Feedback Form`, 'Acknowlegement'];
 
@@ -42,7 +42,7 @@ const FeedbackHome = ({ children, userType, links, academicYear, setAcademicYear
 
                 {
                     activeStep === 0 && <div>
-                        <IntroStep setActiveStep={setActiveStep} setAcademicYear={setAcademicYear} academicYear={academicYear} schoolName={schoolName} setSchoolName={setSchoolName} />
+                        <IntroStep customYears={customYears} setActiveStep={setActiveStep} setAcademicYear={setAcademicYear} academicYear={academicYear} schoolName={schoolName} setSchoolName={setSchoolName} />
                     </div>
                 }
 
