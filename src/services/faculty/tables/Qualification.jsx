@@ -17,14 +17,9 @@ import { tableHead } from '../../admin/tables_faculty/Qualification'
 
 const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
 
-    const typeObject = {
-        exam: 'text', institute: 'text', year: 'number', percentage: 'text', subjects: 'text'
-    }
-
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
-
 
     const typeObject = {
         exam: 'text', institute: 'text', year: 'number', percentage: 'text', subjects: 'text'
