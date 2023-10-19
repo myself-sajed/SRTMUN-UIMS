@@ -18,13 +18,33 @@ import View from '../../../services/faculty/tables/View';
 import EditableTableUploadButton from '../components/EditableTableUploadButton';
 import { deleteRecord, upsertRecord } from '../js/EditableTableOperations';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { useState } from 'react';
+
+const slots = {
+    toolbar: EditToolbar,
+}
 
 
 export default function EditableTable() {
 
     useAuth(false)
     const user = useSelector((state) => state.user?.user)
-    const [rows, setRows] = React.useState([]);
+    const [rows, setRows] = useState([]);
+    const [uploadRowCount, setUploadRowCount] = useState(0)
+
+    console.log(rows)
+
+    useEffect(() => {
+        let count = 0;
+        rows.forEach((row) => {
+            if (row?.isNew) {
+                count += 1
+            }
+        })
+
+        setUploadRowCount(() => count)
+
+    }, [rows])
 
 
     // main fetcher
@@ -42,6 +62,7 @@ export default function EditableTable() {
             const sortedData = sortByAcademicYear(data?.data?.data, "year");
             setRows(sortedData || [])
         }
+
     }, [data]);
 
     // Function to adjust the textarea's height based on content
@@ -148,14 +169,14 @@ export default function EditableTable() {
             field: "nature",
             headerName: "Nature",
             editable: true,
-            flex: 0.5,
+            flex: 0.7,
             renderEditCell: (params) => <EditableInputFields {...params} type="select"
                 options={["Invited Talk", "Resource Person", "Paper Presentation"]} />
         },
         {
             field: "year",
             headerName: "Year",
-            flex: 0.5,
+            flex: 0.7,
             editable: true,
             renderEditCell: (params) => <EditableInputFields type="AY" {...params} />
         },
@@ -163,7 +184,9 @@ export default function EditableTable() {
             field: "proof",
             headerName: "Proof",
             editable: true,
-            renderCell: (params) => (<div className='my-2' ><View proof={params.value} /></div>),
+            renderCell: (params) => (params?.row?.isNew ? <p className='text-center text-yellow-600'>Uploading...</p> : params?.row?.proof ? <div className='my-2' >
+                <View proof={params.value} />
+            </div> : <p className='text-center text-orange-500'>No Proof</p>),
             renderEditCell: (params) => <EditableTableUploadButton {...params} />
         },
         {
@@ -230,7 +253,6 @@ export default function EditableTable() {
                         onRowModesModelChange={handleRowModesModelChange}
                         onRowEditStop={handleRowEditStop}
                         processRowUpdate={async (updatedRow, originalRow) => {
-                            console.log('Updated Row:', updatedRow)
                             try {
 
 
@@ -247,33 +269,33 @@ export default function EditableTable() {
                                 formData.append('userId', user?._id)
 
 
-                                const status = await upsertRecord(formData, refetch)
+                                const status = await upsertRecord(formData, refetch, uploadRowCount)
 
                                 if (status === 200) {
                                     console.log('Record updated successfully in the database.');
+                                    // Create a deep copy of the updatedRow
+                                    const updatedRowCopy = { ...updatedRow };
+
+                                    // Set the 'isNew' flag to false for the updatedRowCopy
+                                    updatedRowCopy.isNew = false;
+
+                                    // Update the local state with the updated row
+                                    const updatedRows = rows.map((row) => (row._id === updatedRow._id ? updatedRowCopy : row));
+                                    setRows(updatedRows);
                                     return updatedRow;
                                 } else {
                                     console.error('Failed to update the database record.');
-                                    // Handle the database update failure. You can show an error message.
                                 }
                             } catch (error) {
                                 console.error('An error occurred while updating the record:', error);
-                                // Handle the error appropriately (e.g., show an error message to the user).
                             }
                             return originalRow;
                         }}
                         onProcessRowUpdateError={(params, error) => {
                             console.error('Row update error:', error);
-
-                            // You can provide user-friendly error messages here or perform other actions
-                            // to handle the error, such as displaying a notification to the user.
-
-                            // Returning false will prevent the error from being re-thrown and suppress any default error handling.
                             return false;
                         }}
-                        slots={{
-                            toolbar: EditToolbar,
-                        }}
+                        slots={slots}
                         slotProps={{
                             toolbar: { setRows, setRowModesModel },
                         }}

@@ -24,7 +24,7 @@ const EditableInputFields = (props) => {
             {type === "select" ? (
                 <select
                     ref={ref}
-                    className="form-select mx-2 text-sm"
+                    className="form-select mx-2 text-sm w-full"
                     id="validationCustom05"
                     required
                     value={value}
@@ -44,7 +44,7 @@ const EditableInputFields = (props) => {
             ) : type === "AY" ? (
                 <select
                     ref={ref}
-                    className="form-select mx-2 text-sm"
+                    className="form-select mx-2 text-sm w-full"
                     id="validationCustom05"
                     required
                     value={value}

@@ -3,6 +3,7 @@ import { useGridApiContext } from "@mui/x-data-grid";
 
 const EditableTableUploadButton = (props) => {
 
+
     const { id, value, field, hasFocus } = props;
     const apiRef = useGridApiContext();
     const ref = React.useRef();
@@ -13,12 +14,12 @@ const EditableTableUploadButton = (props) => {
     };
 
     return <div className="flex items-center justify-center w-full">
-        <label htmlFor="file" className="flex flex-col items-center justify-center w-full py-2 border-2 border-blue-700 border-dashed rounded-lg cursor-pointer text-blue-700 bg-blue-50 m-2 p-1 hover:bg-blue-100 ">
+        <label htmlFor={id} className="flex flex-col items-center justify-center w-full py-2 border-2 border-blue-700 border-dashed rounded-lg cursor-pointer text-blue-700 bg-blue-50 m-2 p-1 hover:bg-blue-100 ">
             {
                 value && <p className="text-xs text-green-700">Selected</p>
             }
             <p className="text-xs text-center">Choose File</p>
-            <input ref={ref} onChange={handleValueChange} id="file" name="file" type="file" className="hidden" />
+            <input ref={ref} onChange={handleValueChange} id={id} name="file" type="file" className="hidden" />
         </label>
     </div>
 

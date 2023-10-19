@@ -17,6 +17,12 @@ const GreetParagraph = ({ userType }) => {
             <p>
                 Your feedback is essential for us to enhance your learning environment. Please take a moment to share your candid responses in our student satisfaction survey to make a positive impact.
             </p>
+        </div>,
+        upmsc: <div>
+            <p>Greetings to all our students. </p>
+            <p>
+                Your feedback is essential for us to enhance your learning environment. Please take a moment to share your candid responses in our UPSC-MPSC Foundation Course to make a positive impact.
+            </p>
         </div>
     }
 

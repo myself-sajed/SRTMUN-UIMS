@@ -141,6 +141,8 @@ import PGHome from '../services/pgsection/pages/PGHome'
 import APDSLogin from '../services/apds/pages/APDSLogin'
 import APDSHome from '../services/apds/pages/APDSHome'
 import ServicesList from './ServicesList'
+import UMPSCStudentRegistration from '../services/skilldevelopment/pages/UMPSCStudentRegistration'
+import UMPSCFeedback from '../services/skilldevelopment/pages/UMPSCFeedback'
 
 let model = "Xyz"
 let module = 'abc'
@@ -335,6 +337,8 @@ const RoutesHandler = () => {
                 <Route path="/competativeExams-training-skillsDevelopment-login" exact element={<SkillLogin />} />
                 <Route path="/competativeExams-training-skillsDevelopment" exact element={<SkillsHome />} />
                 <Route path="/competativeExams-training-skillsDevelopment/data-center" exact element={<SkillFillData />} />
+                <Route path="/competativeExams-training-skillsDevelopment/upsc-mpsc-studentRegistration" exact element={<UMPSCStudentRegistration />} />
+                <Route path="/competativeExams-training-skillsDevelopment/upsc-mpsc-feedback" exact element={<UMPSCFeedback />} />
 
                 {/* Training and placements */}
                 <Route path="/training-and-placement-login" exact element={<PlacementLogin />} />
