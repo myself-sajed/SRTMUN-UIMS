@@ -17,7 +17,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
-import tableHead from '../../admin/tables_faculty/Collaborations'
+import { tableHead } from '../../admin/tables_faculty/Collaborations'
 
 const Collaboration = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [collModal, setCollModal] = useState(false)

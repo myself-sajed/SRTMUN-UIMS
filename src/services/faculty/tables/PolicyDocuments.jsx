@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Text from '../../../inputs/Text';
 import File from '../../../inputs/File';
-import Year from '../../../inputs/Year';
+import Year, { academicYearGenerator } from '../../../inputs/Year';
 import { submitWithFile } from '../js/submit';
 import refresh from '../js/refresh';
 import Actions from './Actions';
@@ -17,10 +17,11 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import Lists from '../../../components/tableComponents/Lists';
 
-
-
-
+const tableHead = {
+    policyName: 'Policy Name', organizationName: 'Organisation Name', isNat: 'Wheather National / International', year: 'Academic Year'
+}
 const PolicyDocument = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
     const [orgModal, setOrgModal] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -37,15 +38,10 @@ const PolicyDocument = ({ filterByAcademicYear = false, academicYear, showTable 
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [filteredItems, setFilteredItems] = useState([])
 
-    const [res, setRes] = useState('')
-
     const user = useSelector(state => state.user.user);
-const typeObject = {
-
-}
-const tableHead = {
-
-}
+    const typeObject = {
+        policyName: 'text', organizationName: Lists.policyDocOrgType, isNat: Lists.policyDocIsNat, year: academicYearGenerator( 29, true, true )
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -75,8 +71,6 @@ const tableHead = {
         formData.append('isNat', isNat)
         formData.append('file', proof)
         formData.append('year', year)
-
-
         handleEditWithFile(formData, 'PolicyDocuments', setEditModal, refetch, setLoading, setIsFormOpen)
     }
 
@@ -102,7 +96,6 @@ const tableHead = {
         setIsNat('')
         setProof(null)
         setYear('')
-
     }
 
 
@@ -121,7 +114,7 @@ const tableHead = {
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Policy Document" editState={setEditModal} clearStates={clearStates} state={setOrgModal} icon={<ArticleRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Policy Documents"} />
 
-            {/* <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} sampleFile='PolicyDocumentFaculty' title='Policy Documents' SendReq='PolicyDocument' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} /> */}
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id}} title='Policy Documents' SendReq='PolicyDocument' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
 
@@ -133,7 +126,6 @@ const tableHead = {
 
 
                         <Text title='Policy Name' space='col-md-6' state={policyName} setState={setPolicyName} />
-
 
                         <div className="col-md-6">
                             <label htmlFor="validationCustom05" className="form-label">Organisation Name</label>

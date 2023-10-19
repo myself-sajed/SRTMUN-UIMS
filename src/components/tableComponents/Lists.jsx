@@ -9,6 +9,8 @@ const Lists = {
   //patents books cahpters
   patentIsNat: ["State/University", "National", "International (Abroad)", "International (within country)"],
   ConferenceOrganisedIsNational: ["State", "University", "National", "International"],
+  policyDocIsNat: ["State", "National", "International"],
+  policyDocOrgType: ["International Body", "Organizations like UNO / UNESCO / World Bank / IMF etc.", "Central Government / State Government"],
   bookChapConfIsNat: ["National", "International"],
   bookCapType: ["Book", "Chapter", "Editor", "Translator", "Conference",],
   bookCapTranswork: ["Research Paper / Chapter","Book"],

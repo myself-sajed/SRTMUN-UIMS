@@ -13,6 +13,7 @@ import FormWrapper from '../components/FormWrapper';
 import { Dialog, DialogContent } from '@mui/material';
 import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
+import { tableHead } from '../../admin/tables_faculty/Qualification'
 
 const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
 
@@ -21,11 +22,8 @@ const Qualification = ({ filterByAcademicYear = false, academicYear }) => {
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
 
-    const tableHead = {
-
-    }
     const typeObject = {
-
+        exam: 'text', institute: 'text', year: 'number', percentage: 'text', subjects: 'text'
     }
 
     // states

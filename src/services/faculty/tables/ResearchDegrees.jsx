@@ -16,6 +16,7 @@ import BulkExcel from '../../../components/BulkExcel';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import { toast } from 'react-hot-toast';
 import { ImageResizer } from '../../../components/ProfileCroper';
+import { tableHead } from '../../admin/tables_faculty/ResearchDegrees'
 
 
 const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable = true, }) => {
@@ -25,11 +26,8 @@ const ResearchDegrees = ({ filterByAcademicYear = false, academicYear, showTable
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
     //states
-    const tableHead = {
-
-    }
     const typeObject = {
-        
+        degreeName: 'text', title: 'text', subject: 'text', university: 'text', awardDate: 'text'
     }
 
     const [degreeName, setDegreeName] = useState('')
