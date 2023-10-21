@@ -34,9 +34,9 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
     setTableData(updatedTableData);
   };
 
-  useEffect(()=>{
-    console.log('Table data is:', tableData)
-  }, [tableData])
+  // useEffect(()=>{
+  //   console.log('Table data is:', tableData)
+  // }, [tableData])
 
   const HandleDataPaste = async (e) => {
     e.preventDefault();
@@ -78,7 +78,16 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
                 ...prevData.slice(i + 1), // Copy data after the current index
               ]);
             }
-          } else {
+          }
+          else if (Array.isArray(typeObject[columnToFill])) {
+            let arr = typeObject[columnToFill];
+            setTableData((prevData) => [
+              ...prevData.slice(0, i),
+              { ...prevData[i], [columnToFill]: arr.includes(filteredData[i]) ? filteredData[i] : "" },
+              ...prevData.slice(i + 1),
+            ]);
+          }
+          else {
             // Update the state with the non-date value
             setTableData((prevData) => [
               ...prevData.slice(0, i), // Copy data before the current index
@@ -92,38 +101,6 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
       }
     }
   };
-
-  // const HandleDataPaste = async (e) => {
-  //   e.preventDefault();
-  //   const pastedData = e.clipboardData.getData('text').trim();
-  //   let filteredData = [];
-  
-  //   if (pastedData) {
-  //     const cleanedData = pastedData.replace(/\r/g, '');
-
-  
-  //     if (cleanedData.includes("\n")) {
-  //       filteredData = cleanedData.split('\n');
-  //     } else if (cleanedData.includes("\t")) {
-  //       filteredData = cleanedData.split('\t');
-  //     }
-  
-  //     if (filteredData.includes("") || columnToFill === "") {
-  //       toast.error(filteredData.includes("") ? "Randomly cell selection or Empty cell selection not allowed" : "Column Field can not be empty");
-  //       filteredData = [];
-  //     }
-
-  //     if (filteredData.length > 0) {
-  //       filteredData.forEach((e,i) => {
-  //         setTableData((prev)=>{
-  //           return [...prev , {[columnToFill]: filteredData[i]}]
-  //         })
-  //       });
-  //     } else {
-  //       toast.error("no data");
-  //     }
-  //   }
-  // };
 
   return (
     <div>
@@ -177,6 +154,7 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
                       value={rowData[columnName]}
                       className="w-full"
                       onChange={(e) => handleInputChange(e, rowIndex, columnName)}
+                      required
                     >
                       <option selected disabled value="">Choose</option>
                       {typeObject[columnName].map((option, index) => (
@@ -186,12 +164,13 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
                       ))}
                     </select>
                   ) : (
-                    <input
+                    <textarea
                       type={typeObject[columnName]}
                       className={`${typeObject[columnName]==="number"?"w-24":"w-full"}`}
                       value={rowData[columnName]}
                       onChange={(e) => handleInputChange(e, rowIndex, columnName)}
-                    />
+                      required
+                    > </textarea>
                   )}
                 
                 </td>
@@ -199,7 +178,7 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
               <td>
                 <button onClick={() => handleDeleteRow(rowIndex)}><DeleteOutlineIcon color='error'/></button>
               </td>
-            </tr>
+          </tr>
           ))}
         </tbody>
         </table>

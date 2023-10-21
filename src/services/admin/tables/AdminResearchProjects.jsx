@@ -4,7 +4,7 @@ import Text from '../../../components/formComponents/Text'
 import Select from '../../../components/formComponents/Select'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
-import AddButton from '../../student/components/AddButton'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
 import Table from '../../../components/tableComponents/TableComponent'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
@@ -14,6 +14,7 @@ import Lists from '../../../components/tableComponents/Lists'
 import FromToDate from '../../../inputs/FromToDate'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
+import BulkExcel from '../../../components/BulkExcel'
 
 const tableHead =  { index: 'Sr.No.', schoolName: 'School', schemeName: 'Scheme / Project Title', principalName: 'Principal Invigilator', coInvestigator: 'Co-Invigilator', fundingName: 'Funding Agency', isGov: 'Govt. / Non-Govt.', awardYear: 'Award Year', providedFunds: 'Funds (INR)', fundType: 'Major / Minor', status: 'Project Status', duration: 'Project Duration', year: 'Academic Year', Proof: 'Upload Proof', Action: "Action" }
 
@@ -31,6 +32,7 @@ const AdminResearchProjects = () => {
   const [values, setValues] = useState(initialstate)
   const { principalName, schoolName, otherSchool, guideName, otherGuide, schemeName, isCo, coInvestigator, fundingName, isGov, awardYear, providedFunds, fundType, status, year } = values
   const [open, setOpen] = useState(false)
+  const [excelOpen, setExcelOpen] = useState(false)
   const [fromDate, setFromDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [active, setActive] = useState(false)
@@ -42,6 +44,10 @@ const AdminResearchProjects = () => {
   const [Loading, setLoading] = useState(false);
   const [guides, setGuides] = useState([]);
   const schools = Object.keys(SchoolsProgram)
+
+  const typeObject = {
+
+  }
 
     useEffect(() => {
         // setValues((pri)=>{
@@ -121,7 +127,7 @@ useEffect(() => {
   //{ schemeName, principalName, coInvestigator, fundingName, isGov, awardYear, providedFunds, fundType, status, duration, durationYears, year }
   return (
     <>
-      <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
+      <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
         <Select options={schools
@@ -181,6 +187,9 @@ useEffect(() => {
           <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
         </div>
       </DialogBox>
+
+      <BulkExcel data={data?.data} proof='proof' title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} open={excelOpen} setOpen={setExcelOpen} tableHead={tableHead} typeObject={typeObject} />
+
       <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>
   )
