@@ -1,3 +1,20 @@
+import React from 'react'
+import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
+import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
+
+const Test2 = () => {
+  return (
+    <div>
+      <AdminJRFSRF/>
+      <AdminResearchProjects/>
+    </div>
+  )
+}
+
+export default Test2
+
+
+
 // import React, { useState } from 'react';
 // import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // import { useEffect } from 'react';

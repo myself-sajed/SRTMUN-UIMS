@@ -3,7 +3,7 @@ import DialogBox from '../../../components/formComponents/DialogBox'
 import Text from '../../../components/formComponents/Text'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
-import AddButton from '../../student/components/AddButton'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
 import Table from '../../../components/tableComponents/TableComponent'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
@@ -12,6 +12,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
+import BulkExcel from '../../../components/BulkExcel'
 
 
 const tableHead = { index: "Sr. no.", researchName: "Research Fellow Name", schoolName: "School / Research Center Name", guideName: "Research Guide", enrolmentYear: "Enrollment Date (RAC)", fellowshipDate: "Fellowship Starting Date", fellowshipDuration: "Fellowship Duration (in Years)", fellowshipType: "Fellowship Type", grantingAgency: "Granting Agency", qualifyingExam: "Qualifying Exam", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
@@ -19,6 +20,7 @@ const AdminJRFSRF = () => {
 
     const model = 'JrfSrfAdmin'
     const module = 'adminTable'
+    const title = 'JRF, SRF & PDF'
 
     const filter = {}
 
@@ -29,6 +31,7 @@ const AdminJRFSRF = () => {
     const [values, setValues] = useState(initialstate)
     const { researchName, guideName, otherGuide, otherSchool, schoolName, enrolmentYear, fellowshipDuration, fellowshipType, grantingAgency, qualifyingExam, year, fellowshipDate } = values
     const [open, setOpen] = useState(false)
+    const [excelOpen, setExcelOpen] = useState(false)
 
     //---------------edit state-------------------
     const [itemToEdit, setItemToEdit] = useState(null)
@@ -36,6 +39,10 @@ const AdminJRFSRF = () => {
     const [Loading, setLoading] = useState(false);
     const [guides, setGuides] = useState([]);
     const schools = Object.keys(SchoolsProgram)
+
+    const typeObject = {
+        
+    }
 
     useEffect(() => {
         // setValues((pri)=>{
@@ -73,7 +80,7 @@ const AdminJRFSRF = () => {
 
     return (
         <>
-            <AddButton title="JRF & SRF" onclick={setOpen}  dataCount={data ? data?.data.length : 0} />
+            <AddButton customName="JRF & SRF" onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
             <DialogBox title={`${edit ? "Edit" : "Add"} JRF, SRF`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="researchName" value={researchName} label={tableHead.researchName} setState={setValues} />
@@ -108,6 +115,9 @@ const AdminJRFSRF = () => {
                     <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
+
+            <BulkExcel data={data?.data} proof='proof' title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} open={excelOpen} setOpen={setExcelOpen} tableHead={tableHead} typeObject={typeObject} />
+
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
         </>
     )

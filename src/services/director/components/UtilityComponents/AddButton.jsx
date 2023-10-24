@@ -38,11 +38,11 @@ export default function AddButton({ title, onclick, exceldialog, yearFilter, set
                     })}
                 </div>
             </div>
-            {
+            {/* {
                 !filterByAcademicYear && <div className='text-sm' style={{ display: "flex", justifyContent: "flex-end", marginTop: "5px" }}>
                     <AcadmicYearSelect className="col-md-3 col-lg-3 col-12" value={yearFilter} setState={setState} id="yearFilter" label="Filter by Academic Year" />
                 </div>
-            }
+            } */}
 
         </div>
 

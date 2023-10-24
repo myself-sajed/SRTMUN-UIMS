@@ -109,7 +109,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
         })
     }
 
-    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={/*disableUpload*/ true} maxWidth="xl" loading={loading}>
+    return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} disableButton={tableData.length<=1} maxWidth="xl" loading={loading}>
         <div className='p-2 bg-blue-100'>
             <div className='p-1 flex items-start justify-end'>
                 <div className=''>

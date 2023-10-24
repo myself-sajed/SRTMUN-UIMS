@@ -426,6 +426,12 @@ const excelObject = {
     },
     IilCollaborativeActivities:{
         'titleOfActivity': "Title of the collaborative activity", 'nameOfAgency': "Name of the collaborating agency with contact details", 'nameOfParticipant': "Name of the participant ", 'duration': "Duration",'natureOfActivity': "Nature of the activity", 'academicYear': 'Year of collaboration',
+    },
+    JrfSrfAdmin:{
+        'researchName': "Research Fellow Name", 'schoolName': "School / Research Center Name", 'guideName': "Research Guide", 'enrolmentYear': "Enrollment Date (RAC)", 'fellowshipDate': "Fellowship Starting Date", 'fellowshipDuration': "Fellowship Duration (in Years)", 'fellowshipType': "Fellowship Type", 'grantingAgency': "Granting Agency", 'qualifyingExam': "Qualifying Exam", 'year': "Academic Year" 
+    },
+    ResearchProjectsAdmin:{
+        'schoolName': 'School', 'schemeName': 'Scheme / Project Title', 'principalName': 'Principal Invigilator', 'coInvestigator': 'Co-Invigilator', 'fundingName': 'Funding Agency', 'isGov': 'Govt. / Non-Govt.', 'awardYear': 'Award Year', 'providedFunds': 'Funds (INR)', 'fundType': 'Major / Minor', 'status': 'Project Status', 'duration': 'Project Duration', 'year': 'Academic Year',
     }
 }
 
