@@ -19,18 +19,19 @@ const upload = multer({ storage: storage });
 function editableTableOperations(app) {
 
 
-    app.post('/api/upsertRecord', upload.single('file'), async (req, res) => {
+    app.post('/api/upsertRecord/:model', upload.single('file'), async (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body))
+        const model = req.params.model
 
         try {
             if (Boolean(data?.isNew) && data?.isNew !== 'undefined') {
                 const { _id, ...dataWithoutId } = data;
-                await new models.InvitedTalk(
+                await new models[model](
                     { ...dataWithoutId, proof: req.file ? req.file.filename : null }
                 ).save();
                 res.send({ status: 'success', message: 'Record added successfully' })
             } else {
-                await models.InvitedTalk.findOneAndUpdate({ _id: data?._id }, { ...data, proof: req.file ? req.file.filename : data.proof })
+                await models[model].findOneAndUpdate({ _id: data?._id }, { ...data, proof: req.file ? req.file.filename : data.proof })
                 res.send({ status: 'success', message: 'Record updated successfully' })
             }
 

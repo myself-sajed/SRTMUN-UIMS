@@ -14,6 +14,7 @@ import { iilAuthParams } from "../services/iil/pages/IILHome"
 import { skillsAuthParams } from "../services/skilldevelopment/pages/SkillsHome"
 import { pgAuthParams } from "../services/pgsection/pages/PGHome"
 import { apdsAuthParams } from "../services/apds/pages/APDSHome"
+import { swayamAuthParams } from "../services/swayam/pages/SwayamHome"
 
 
 const useUserIsLoggedIn = () => {
@@ -30,6 +31,7 @@ const useUserIsLoggedIn = () => {
     useOtherServiceAuth({ ...skillsAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...pgAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...apdsAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...swayamAuthParams, usingInIsUserLoggedInHook: true })
 
 
     useEffect(() => {

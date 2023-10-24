@@ -22,7 +22,7 @@ const HomeProfile = ({ children, bredLinks, user, setUser, userType, tokenName, 
                             <div className='text-black '>
                                 <p className='text-lg sm:text-2xl font-bold'>{user?.name} </p>
                                 <p className='text-base sm:text-xl'>{user?.designation ? user.designation : "Director"},</p>
-                                <p className='text-xs sm:text-sm'>{user?.department}</p>
+                                <p className='text-xs sm:text-sm'>{user?.department},</p>
                                 <p className='text-xs sm:text-sm'>
                                     SRTMUN, Vishnupuri, Nanded - 431 606</p>
                                 <div className='flex items-start justify-start gap-2 mt-4 flex-wrap'>

@@ -19,20 +19,22 @@ import EditableTableUploadButton from '../components/EditableTableUploadButton';
 import { deleteRecord, upsertRecord } from '../js/EditableTableOperations';
 import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import { useState } from 'react';
+import generateFormData from '../js/generateFormData';
 
 const slots = {
     toolbar: EditToolbar,
 }
 
 
-export default function EditableTable() {
+export default function EditableTable({ tableColumns, formDataArray, formDataAdditionalArray, sortedData, refetch, info, }) {
 
-    useAuth(false)
-    const user = useSelector((state) => state.user?.user)
     const [rows, setRows] = useState([]);
     const [uploadRowCount, setUploadRowCount] = useState(0)
 
-    console.log(rows)
+    useEffect(() => {
+        setRows(sortedData)
+    }, [sortedData])
+
 
     useEffect(() => {
         let count = 0;
@@ -46,24 +48,6 @@ export default function EditableTable() {
 
     }, [rows])
 
-
-    // main fetcher
-    let param = { model: "InvitedTalk", userId: user?._id };
-    const { data, isLoading, isError, error, refetch } = useQuery(
-        [param.model, param],
-        () => refresh(param),
-        {
-            refetchOnWindowFocus: false
-        }
-    );
-
-    useEffect(() => {
-        if (data) {
-            const sortedData = sortByAcademicYear(data?.data?.data, "year");
-            setRows(sortedData || [])
-        }
-
-    }, [data]);
 
     // Function to adjust the textarea's height based on content
     const adjustTextareaHeight = (element) => {
@@ -115,7 +99,7 @@ export default function EditableTable() {
 
     const handleDeleteClick = async (_id) => {
         const itemToDelete = rows.find((item) => item._id === _id)
-        await deleteRecord(itemToDelete, 'InvitedTalk', refetch)
+        await deleteRecord(itemToDelete, info.model, refetch)
         setRows(rows?.filter((row) => row._id !== _id));
     };
 
@@ -135,102 +119,85 @@ export default function EditableTable() {
         setRowModesModel(newRowModesModel);
     };
 
-    const columns = [
-        {
-            field: "lectureTitle",
-            headerName: "Title of Lecture / Academic Session",
-            flex: 1,
+    const columns = tableColumns.map((column) => {
+        return {
+            field: column.field,
+            headerName: column.headerName,
+            flex: column.flex || 1,
             editable: true,
-            renderEditCell: (params) => <EditableInputFields {...params} />
-        },
-        {
-            field: "seminarTitle",
-            headerName: "Title of Seminar",
-            flex: 1,
-            editable: true,
-            renderEditCell: (params) => <EditableInputFields {...params} />
-        },
-        {
-            field: "organizedBy",
-            headerName: "Organized by",
-            flex: 1,
-            editable: true,
-            renderEditCell: (params) => <EditableInputFields {...params} />
-        },
-        {
-            field: "isNat",
-            headerName: "Level",
-            flex: 1,
-            editable: true,
-            renderEditCell: (params) => <EditableInputFields {...params} type="select"
-                options={["State/University", "National", "International (within country)", "International (Abroad)"]} />
-        },
-        {
-            field: "nature",
-            headerName: "Nature",
-            editable: true,
-            flex: 0.7,
-            renderEditCell: (params) => <EditableInputFields {...params} type="select"
-                options={["Invited Talk", "Resource Person", "Paper Presentation"]} />
-        },
-        {
-            field: "year",
-            headerName: "Year",
-            flex: 0.7,
-            editable: true,
-            renderEditCell: (params) => <EditableInputFields type="AY" {...params} />
-        },
-        {
-            field: "proof",
-            headerName: "Proof",
-            editable: true,
-            renderCell: (params) => (params?.row?.isNew ? <p className='text-center text-yellow-600'>Uploading...</p> : params?.row?.proof ? <div className='my-2' >
-                <View proof={params.value} />
-            </div> : <p className='text-center text-orange-500'>No Proof</p>),
-            renderEditCell: (params) => <EditableTableUploadButton {...params} />
-        },
-        {
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Actions',
-            cellClassName: 'actions',
-            getActions: (params) => {
-                const _id = params.row._id;
-                const isInEditMode = rowModesModel[_id]?.mode === GridRowModes.Edit;
-
-                if (isInEditMode) {
-                    return [
-                        <GridActionsCellItem
-                            icon={<SaveIcon />}
-                            label="Save"
-                            sx={{
-                                color: 'primary.main',
-                            }}
-                            onClick={handleSaveClick(_id)}
-                        />,
-                        <GridActionsCellItem
-                            icon={<CancelIcon />}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(_id)}
-                            color="inherit"
-                        />,
-                    ];
+            renderCell: (params) => {
+                if (column.type === 'proof') {
+                    return params.row.isNew ? (
+                        <p className='text-center text-yellow-600'>Uploading...</p>
+                    ) : params.row.proof ? (
+                        <div className='my-2'>
+                            <View proof={params.value} />
+                        </div>
+                    ) : (
+                        <p className='text-center text-orange-500'>No Proof</p>
+                    );
+                } else {
+                    return <span>{params.value}</span>;
                 }
+            },
+            renderEditCell: column.renderEditCell
+                ? column.renderEditCell
+                : (params) => {
+                    if (column.type === 'proof') {
+                        return <EditableTableUploadButton {...params} />;
+                    } else {
+                        // Handle other types here
+                        return <EditableInputFields {...params} type={column.type} options={column.options} inputType={column.inputType} />;
+                    }
+                },
+        };
+    });
 
+    // Append the actions column
+    columns.push({
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        cellClassName: 'actions',
+        getActions: (params) => {
+            const _id = params.row._id;
+            const isInEditMode = rowModesModel[_id]?.mode === GridRowModes.Edit;
+
+            if (isInEditMode) {
                 return [
                     <GridActionsCellItem
-                        icon={<EditIcon />}
-                        label="Edit"
+                        icon={<SaveIcon />}
+                        label="Save"
+                        sx={{
+                            color: 'primary.main',
+                        }}
+                        onClick={handleSaveClick(_id)}
+                    />,
+                    <GridActionsCellItem
+                        icon={<CancelIcon />}
+                        label="Cancel"
                         className="textPrimary"
-                        onClick={handleEditClick(_id)}
+                        onClick={handleCancelClick(_id)}
                         color="inherit"
                     />,
-                    <TableDeleteAction _id={_id} handleDeleteClick={handleDeleteClick} />,
                 ];
-            },
+            }
+
+            return [
+                <GridActionsCellItem
+                    icon={<EditIcon />}
+                    label="Edit"
+                    className="textPrimary"
+                    onClick={handleEditClick(_id)}
+                    color="inherit"
+                />,
+                <TableDeleteAction _id={_id} handleDeleteClick={handleDeleteClick} />,
+            ];
         },
-    ];
+    });
+
+    // Now 'columns' contains the dynamic DataGrid column configuration
+
 
 
     return (
@@ -256,30 +223,14 @@ export default function EditableTable() {
                             try {
 
 
-                                let formData = new FormData()
-                                formData.append('_id', updatedRow['_id'])
-                                formData.append('lectureTitle', updatedRow['lectureTitle'])
-                                formData.append('seminarTitle', updatedRow['seminarTitle'])
-                                formData.append('organizedBy', updatedRow['organizedBy'])
-                                formData.append('isNat', updatedRow['isNat'])
-                                formData.append('nature', updatedRow['nature'])
-                                formData.append('file', updatedRow['proof'])
-                                formData.append('year', updatedRow['year'])
-                                formData.append('isNew', updatedRow['isNew'])
-                                formData.append('userId', user?._id)
+                                const formData = generateFormData(updatedRow, formDataArray, formDataAdditionalArray)
 
-
-                                const status = await upsertRecord(formData, refetch, uploadRowCount)
+                                const status = await upsertRecord(formData, refetch, uploadRowCount, info.model)
 
                                 if (status === 200) {
                                     console.log('Record updated successfully in the database.');
-                                    // Create a deep copy of the updatedRow
                                     const updatedRowCopy = { ...updatedRow };
-
-                                    // Set the 'isNew' flag to false for the updatedRowCopy
                                     updatedRowCopy.isNew = false;
-
-                                    // Update the local state with the updated row
                                     const updatedRows = rows.map((row) => (row._id === updatedRow._id ? updatedRowCopy : row));
                                     setRows(updatedRows);
                                     return updatedRow;

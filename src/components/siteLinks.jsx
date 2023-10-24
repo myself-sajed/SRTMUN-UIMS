@@ -98,6 +98,11 @@ let siteLinks = {
     skillFillData: { title: "Data Center", link: '/competativeExams-training-skillsDevelopment/data-center' },
     skillUMPSCRegistration: { title: "Student Registration: UPSC MPSC Foundation Course", link: '/competativeExams-training-skillsDevelopment/upsc-mpsc-studentRegistration' },
     skillUMPSCFeedback: { title: "Feedback: UPSC MPSC Foundation Course", link: '/competativeExams-training-skillsDevelopment/upsc-mpsc-feedback' },
+    swayamLogin: { title: "SWAYAM / NPTEL Login", link: '/swayam-nptel-login' },
+    swayamHome: { title: "SWAYAM / NPTEL Home", link: '/swayam-nptel' },
+    swayamFillData: { title: "Data Center", link: '/swayam-nptel/data-center' },
+
+
 
 
 
