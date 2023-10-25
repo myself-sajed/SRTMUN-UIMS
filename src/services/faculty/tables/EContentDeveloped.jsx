@@ -69,13 +69,14 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
         let formData = new FormData()
         formData.append('moduleName', moduleName)
         formData.append('itemId', itemToDelete._id)
-        formData.append('proof', proof)
         formData.append('platform', platform)
         formData.append('year', year)
         formData.append('creationType', creationType)
         formData.append('userId', user?._id)
         formData.append('link', link)
         formData.append('file', proof)
+        formData.append('proof', itemToDelete.proof)
+
 
         handleEditWithFile(formData, 'EContentDeveloped', setEditModal, refetch, setLoading, setIsFormOpen)
 
@@ -91,7 +92,6 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
                 setYear(item.year)
                 setLink(item.link)
                 setCreationType(item.creationType)
-
                 setItemToDelete(item)
                 setIsFormOpen(true)
             }
@@ -254,7 +254,7 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
 
 
                                         <td>
-                                            {item?.link === 'N/A' ? 'N/A' : <a href={item?.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
+                                            {(item?.link === 'N/A' || item?.link === '' || item?.link === null) ? 'N/A' : <a href={item?.link} target="_blank" className='text-blue-500 hover:text-blue-900 ease-in-out duration-200'>
                                                 {item?.link?.slice(0, 30)}{item?.link?.length > 30 && `...`}</a>}
                                         </td>
 

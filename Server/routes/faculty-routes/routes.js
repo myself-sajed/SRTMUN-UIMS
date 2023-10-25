@@ -545,7 +545,7 @@ function initRoutes(app) {
                 platform: data.platform,
                 year: data.year,
                 link: data.link,
-                proof: req.file ? req.file.filename : '',
+                proof: req.file ? req.file.filename : null,
                 userId: data.userId
             })
 

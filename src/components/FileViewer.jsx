@@ -121,9 +121,9 @@ export default function FileViewer({ fileName, serviceName, replace = null, chil
                             </div>
                         </Dialog>
                     }
-                </div> : fileName===""||fileName===undefined?<Button sx={{ textTransform: "none", border: 'none', color: '#9a3412', outline: 'none', backgroundColor: '#ffedd5' }}>
-                            No File
-                        </Button>: <p>Uploading...</p>
+                </div> : fileName === "" || fileName === undefined || fileName === null ? <Button sx={{ textTransform: "none", border: 'none', color: '#9a3412', outline: 'none', backgroundColor: '#ffedd5' }}>
+                    No File
+                </Button> : <p>Uploading...</p>
             }
 
         </>

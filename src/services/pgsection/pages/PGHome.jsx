@@ -22,16 +22,16 @@ const PGHome = () => {
 
     const tables = [
         {
-            title : "Research Guidance",
-            component : <AdminPhdAwarded/>
+            title: "Ph.D. Scholars",
+            component: <AdminPhdAwarded />
         },
         {
-            title : "Progression to Higher Education",
-            component : <AdminHE/>
+            title: "Progression to Higher Education",
+            component: <AdminHE />
         },
         {
-            title : "Demand Ratio",
-            component : <AdminDemandRatio/>
+            title: "Demand Ratio",
+            component: <AdminDemandRatio />
         },
     ]
     return (
