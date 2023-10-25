@@ -445,7 +445,6 @@ function editRoutes(app) {
     app.post('/api/edit/EContentDeveloped', upload.single('file'), (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body));
 
-        console.log('Data:', data)
 
         if (req.file) {
             EContentDeveloped.findOneAndUpdate({ _id: data.itemId }, {

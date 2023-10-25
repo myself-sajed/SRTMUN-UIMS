@@ -23,6 +23,7 @@ import ShowModal from '../../../components/ShowModal'
 import { setActive } from '../../../redux/slices/ActiveSlice'
 import { setPage } from '../../../redux/slices/NavbarSlice'
 import capitalizeText from '../../../js/capitalizeText'
+import { useQuery } from 'react-query'
 
 
 const Home = () => {
@@ -37,19 +38,19 @@ const Home = () => {
     useScroll()
     title("Faculty Home")
 
-    // get all the academic data for tables in Server/services
-    useEffect(() => {
+    const fetchDashboardData = () => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/api/getAllData`
-        if (user) {
-            Axios.post(URL, { userId: user._id, fetchYears: 'all' })
-                .then((res) => {
-                    res.data.status = 'success' && setAcademicData(res.data.data)
-                }).catch((err) => {
-                    toast.error('Could not fetch dashboard data...')
-                })
-        }
+        return Axios.post(URL, { userId: user?._id, fetchYears: 'all' })
+    }
 
-    }, [user])
+    useQuery(`GetAllData-${user?._id}`, () => fetchDashboardData, {
+        onSuccess: async (promiseData) => {
+            const data = await promiseData
+            data?.data?.status === 'success' && setAcademicData(data?.data?.data)
+        },
+        refetchOnWindowFocus: false
+    })
+
 
     const urlLinks = {
         ResearchProject: {
