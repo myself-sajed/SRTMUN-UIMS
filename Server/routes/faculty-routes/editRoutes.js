@@ -442,28 +442,51 @@ function editRoutes(app) {
     })
 
     // EContentDeveloped
-    app.post('/api/edit/EContentDeveloped', (req, res) => {
-        const { data } = req.body
+    app.post('/api/edit/EContentDeveloped', upload.single('file'), (req, res) => {
+        const data = JSON.parse(JSON.stringify(req.body));
 
-        EContentDeveloped.findOneAndUpdate({ _id: data.itemId }, {
-            moduleName: data.moduleName,
-            creationType: data.creationType,
-            platform: data.platform,
-            year: data.year,
-            link: data.link,
+        console.log('Data:', data)
 
-        }).then(function (data) {
-            if (data) {
-                res.send({ status: 'deleted' })
-            }
-            else {
+        if (req.file) {
+            EContentDeveloped.findOneAndUpdate({ _id: data.itemId }, {
+                moduleName: data.moduleName,
+                creationType: data.creationType,
+                platform: data.platform,
+                year: data.year,
+                link: data.link,
+                proof: req.file.filename,
+
+            }).then(function (data) {
+                if (data) {
+                    res.send({ status: 'deleted' })
+                }
+                else {
+                    res.send({ status: 'error' })
+                }
+            }).catch(function (err) {
                 res.send({ status: 'error' })
             }
-        }).catch(function (err) {
-            res.send({ status: 'error' })
+            )
+        } else {
+            EContentDeveloped.findOneAndUpdate({ _id: data.itemId }, {
+                moduleName: data.moduleName,
+                creationType: data.creationType,
+                platform: data.platform,
+                year: data.year,
+                link: data.link,
+                proof: data.proof,
+            }).then(function (data) {
+                if (data) {
+                    res.send({ status: 'deleted' })
+                }
+                else {
+                    res.send({ status: 'error' })
+                }
+            }).catch(function (err) {
+                res.send({ status: 'error' })
+            }
+            )
         }
-
-        )
 
 
 

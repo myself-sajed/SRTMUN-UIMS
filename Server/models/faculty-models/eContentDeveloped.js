@@ -7,13 +7,17 @@ const eContentDevelopedSchema = new mongoose.Schema({
     },
     creationType: {
         type: 'string',
-        required: true,
+        required: false,
     },
     platform: {
         type: 'string',
         required: false,
     },
     link: {
+        type: 'string',
+        required: false,
+    },
+    proof: {
         type: 'string',
         required: false,
     },

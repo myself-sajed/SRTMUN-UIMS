@@ -535,8 +535,9 @@ function initRoutes(app) {
     })
 
     // appointmentsHeldPrior
-    app.post('/api/add/EContentDeveloped', (req, res) => {
-        const { data } = req.body
+    app.post('/api/add/EContentDeveloped', upload.single('file'), (req, res) => {
+        const data = JSON.parse(JSON.stringify(req.body));
+
         try {
             const eContentDeveloped = new EContentDeveloped({
                 moduleName: data.moduleName,
@@ -544,6 +545,7 @@ function initRoutes(app) {
                 platform: data.platform,
                 year: data.year,
                 link: data.link,
+                proof: req.file ? req.file.filename : '',
                 userId: data.userId
             })
 
