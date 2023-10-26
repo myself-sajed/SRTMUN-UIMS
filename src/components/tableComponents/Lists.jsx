@@ -17,6 +17,7 @@ const Lists = {
   reserchProjectIsGov: ["Government", "Non-Government"],
   reserchProjectStatus: ["Completed", "Ongoing"],
   eContentCreation: ["Development of Innovative Pedagogy", "Design of new curriculla & courses", "MOOCS", "E-Content"],
+  eContentPlatform: ["For e-PG-Pathshala", "For SWAYAM", "For MOOCs Platforms", "Any other Government Initiatives", "For Institutional LMS"],
   jrfsrfFellowshipType: ["JRF", "SRF", "Post Doctoral Fellows", "Research Associate"],
   invitedtalkNature: ["Invited Talk", "Resource Person", "Paper Presentation"],
   phdAwardedDegree: ["Ph.D.", "M.Phil", "PG Dissertation"],

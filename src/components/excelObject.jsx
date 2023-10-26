@@ -432,7 +432,9 @@ const excelObject = {
     },
     ResearchProjectsAdmin:{
         'schoolName': 'School', 'schemeName': 'Scheme / Project Title', 'principalName': 'Principal Invigilator', 'coInvestigator': 'Co-Invigilator', 'fundingName': 'Funding Agency', 'isGov': 'Govt. / Non-Govt.', 'awardYear': 'Award Year', 'providedFunds': 'Funds (INR)', 'fundType': 'Major / Minor', 'status': 'Project Status', 'duration': 'Project Duration', 'year': 'Academic Year',
-    }
+    },
+    SwayamValueAddedCourses:{'nameOfProgram': "Name of the Course / Programme", 'programCode': "Course / Programme Code (if any)", 'modeOfCourse': "Mode of the Course- offered by the HEI or Online (Specify the platform like MOOCS, SWAYAM, etc.)", 'yearOfOffering': "Year of offering / Year of enrolment", 'contactHours': "Contact Hours of Course", 'studentsEnrolled': "Number of students enrolled in the year", 'studentsCompleting': "Number of Students completing the course  in the year", 'academicYear': "Academic Year",},
+    SwayamEContentDeveloped:{'moduleName': 'Name of the Module / Course developed', 'creationType': 'Type of Creation', 'platform': 'Platform on which the module is developed', 'year': 'Academic Year', 'link': 'Web link to the content',}
 }
 
 export default excelObject;

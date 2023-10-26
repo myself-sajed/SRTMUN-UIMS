@@ -7,8 +7,9 @@ const multerConfig = require('../../utility/multerConfig').multerConfig
 const swayamUpload = multerConfig("../uploads/swayam-uploads/")
 
 const SwayamValueAddedCourses = require('../../models/swayam-models/swayamValueAddedCourseSchema')
+const SwayamEContentDeveloped = require('../../models/swayam-models/swayamEContentDevelopedSchema')
 
-const models = {SwayamValueAddedCourses}
+const models = {SwayamValueAddedCourses, SwayamEContentDeveloped}
 
 //get
 router.post('/swayam/getData', async (req, res) => {

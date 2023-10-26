@@ -1,6 +1,6 @@
 import React from 'react'
 import SwayamEContentDeveloped from '../services/swayam/pages/SwayamEContentDeveloped'
-// import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
+import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 
@@ -9,7 +9,7 @@ const Test2 = () => {
     <div>
       {/* <AdminJRFSRF/>
       <AdminResearchProjects/> */}
-      {/* <SwayamValueAddedCourses/> */}
+      <SwayamValueAddedCourses/>
       <SwayamEContentDeveloped/>
 
     </div>

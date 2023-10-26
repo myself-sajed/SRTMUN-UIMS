@@ -162,7 +162,7 @@ const EContentDeveloped = ({ filterByAcademicYear = false, academicYear, showTab
 
             <Header showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Content" editState={setEditModal} clearStates={clearStates} state={setECont} icon={<CloudIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "E-Content Developed"} />
 
-            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{ userId: user?._id }} sampleFile='EContentDevelopedFaculty' title='EContent Developed' SendReq='EContentDeveloped' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} tableHead={tableHead} typeObject={typeObject} commonFilds={{ userId: user?._id }} title='EContent Developed' SendReq='EContentDeveloped' refetch={refetch} module='faculty' department={user?._id} open={open} setOpen={setOpen} proof='proof' />
 
             {/* // 2. FIELDS */}
 
