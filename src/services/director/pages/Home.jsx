@@ -29,6 +29,7 @@ import { setDirectorActive, setSsmActive } from '../../../redux/slices/DirectorA
 import ProfileCroper from '../../../components/ProfileCroper'
 import capitalizeText from '../../../js/capitalizeText'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { useQuery } from 'react-query'
 
 
 
@@ -80,19 +81,19 @@ const Home = () => {
         }
     }, [user])
 
-    // get all the academic data for tables
-    useEffect(() => {
-        // this route is in : academic-audit/routes
+
+    const fetchDashboardData = () => {
         const URL = `${process.env.REACT_APP_MAIN_URL}/api/getAllData/director`
-        if (user) {
-            Axios.post(URL, { department: user.department, fetchYears: 'all' })
-                .then((res) => {
-                    res.data.status = 'success' && setAcademicData(res.data.data)
-                }).catch((err) => {
-                    toast.error('Could not fetch dashboard data...')
-                })
-        }
-    }, [user])
+        return Axios.post(URL, { department: user?.department, fetchYears: 'all' })
+    }
+
+    useQuery(`GetAllData-${user?.department}`, () => fetchDashboardData, {
+        onSuccess: async (promiseData) => {
+            const data = await promiseData
+            data?.data?.status === 'success' && setAcademicData(data?.data?.data)
+        },
+        refetchOnWindowFocus: false
+    })
 
 
     const urlLinks = {

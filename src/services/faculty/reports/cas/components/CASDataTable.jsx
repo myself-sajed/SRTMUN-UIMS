@@ -268,7 +268,8 @@ const CASDataTable = {
             "Creation Type",
             "Platform on which the module is developed",
             "Year",
-            "Link to content"
+            "Link to content",
+            "Proof"
         ],
         tableCells: [
             "moduleName",
@@ -276,6 +277,7 @@ const CASDataTable = {
             "platform",
             "year",
             "link",
+            "proof",
         ],
         mainKey: {
             head: ['Name of the Module / Course developed'],
