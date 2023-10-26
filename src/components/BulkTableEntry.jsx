@@ -164,13 +164,13 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
                       ))}
                     </select>
                   ) : (
-                    <textarea
+                    <input
                       type={typeObject[columnName]}
                       className={`${typeObject[columnName]==="number"?"w-24":"w-full"}`}
                       value={rowData[columnName]}
                       onChange={(e) => handleInputChange(e, rowIndex, columnName)}
                       required
-                    > </textarea>
+                    /> 
                   )}
                 
                 </td>

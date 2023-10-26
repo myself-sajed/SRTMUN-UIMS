@@ -107,6 +107,9 @@ app.use(require('./routes/exam-routes/exam-routes').router)
 //krc
 app.use(require('./routes/krc-routes/krc-routes'))
 
+//swayam
+app.use(require('./routes/swayam-routes/swayam-routes').router)
+
 // iil
 require('./routes/iil-routes/iil-routes').iilRoutes(app)
 
