@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <>
             <div className='border-b pb-2'>
-                <img src="/assets/logo.jpg" style={{ mixBlendMode: 'darken' }} className={`h-16 mx-auto mt-2 block sm:hidden opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'opacity-100' : ''}`} onLoad={() => setIsVisible(true)} alt="" />
+                <img src="/assets/logo.png" style={{ mixBlendMode: 'darken' }} className={`h-16 mx-auto mt-2 block sm:hidden opacity-0 transition-opacity duration-1000 ease-in-out ${isVisible ? 'opacity-100' : ''}`} onLoad={() => setIsVisible(true)} alt="" />
                 <div className="sm:flex items-center justify-between gap-3">
                     <img src="/assets/swami.png" style={{ mixBlendMode: 'darken' }} alt="" className={`hidden sm:block opacity-0 h-20 transition-opacity duration-1000 ease-in-out ${isVisible ? 'opacity-100' : ''}`} onLoad={() => setIsVisible(true)} />
 

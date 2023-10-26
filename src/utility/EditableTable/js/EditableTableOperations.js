@@ -1,12 +1,12 @@
 import Axios from 'axios'
 import toast from 'react-hot-toast'
 
-const upsertRecord = async (data, refetch, uploadRowCount) => {
+const upsertRecord = async (data, refetch, uploadRowCount, model) => {
 
     console.log('Row Count :', uploadRowCount)
 
     try {
-        const link = `${process.env.REACT_APP_MAIN_URL}/api/upsertRecord`
+        const link = `${process.env.REACT_APP_MAIN_URL}/api/upsertRecord/${model}`
         const res = await Axios.post(link, data)
         if (res.data.status === 'success') {
             toast.success(res.data.message)
@@ -37,9 +37,6 @@ const deleteRecord = async (item, model, refreshFunction, setIsLoading = () => {
 
         if (res.data.status === 'deleted') {
             toast.success('Item deleted successfully')
-            if (refreshFunction) {
-                refreshFunction()
-            }
             setIsLoading(false)
         }
         else if (res.data.status === 'error') {

@@ -143,6 +143,9 @@ import APDSHome from '../services/apds/pages/APDSHome'
 import ServicesList from './ServicesList'
 import UMPSCStudentRegistration from '../services/skilldevelopment/pages/UMPSCStudentRegistration'
 import UMPSCFeedback from '../services/skilldevelopment/pages/UMPSCFeedback'
+import SwayamLogin from '../services/swayam/pages/SwayamLogin'
+import SwayamHome from '../services/swayam/pages/SwayamHome'
+import SwayamDataCenter from '../services/swayam/pages/SwayamDataCenter'
 
 let model = "Xyz"
 let module = 'abc'
@@ -350,6 +353,11 @@ const RoutesHandler = () => {
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />
+
+                {/* SWAYAM, NPTEL & MOOCs */}
+                <Route path="/swayam-nptel-login" exact element={<SwayamLogin />} />
+                <Route path="/swayam-nptel" exact element={<SwayamHome />} />
+                <Route path="/swayam-nptel/data-center" exact element={<SwayamDataCenter />} />
 
             </Routes>
 

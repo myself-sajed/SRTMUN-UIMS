@@ -118,9 +118,9 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
                     </Button>
                 </div>
             </div>
-            {/* <div className='mt-2'>
+            <div className='mt-2'>
               <BulkTableEntry tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
-            </div> */}
+            </div>
         </div>
 
     </DialogBox>

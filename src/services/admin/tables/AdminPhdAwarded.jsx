@@ -14,7 +14,7 @@ import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
 import Lists from '../../../components/tableComponents/Lists'
 
-const tableHead = { index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category", yearOfScholar: 'Year of Scholar Registration', phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof',  Action: "Action" }
+const tableHead = { index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category", yearOfScholar: 'Year of Scholar Registration', phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof', Action: "Action" }
 
 const AdminPhdAwarded = () => {
     const model = 'PhdAwardedAdmin'
@@ -42,7 +42,7 @@ const AdminPhdAwarded = () => {
         //     return{...pri, guideName: ""} 
 
         // })
-        if(schoolName!=="Other"){
+        if (schoolName !== "Other") {
             fetchFacutys({ model: "User", id: "", module, filter: { department: schoolName, salutation: "Dr." }, }, null, setGuides);
         }
     }, [schoolName]);
@@ -64,35 +64,35 @@ const AdminPhdAwarded = () => {
     }
     const onSubmit = (e) => {
         e.preventDefault();
-        edit ? editReq({ id: itemToEdit }, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-            addReq({}, model, initialstate, {...values,guideName: guideName=== "Other"?otherGuide:guideName, schoolName: schoolName=== "Other"?otherSchool:schoolName }, setValues, refetch, setOpen, setLoading, module)
+        edit ? editReq({ id: itemToEdit }, model, initialstate, { ...values, guideName: guideName === "Other" ? otherGuide : guideName, schoolName: schoolName === "Other" ? otherSchool : schoolName }, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
+            addReq({}, model, initialstate, { ...values, guideName: guideName === "Other" ? otherGuide : guideName, schoolName: schoolName === "Other" ? otherSchool : schoolName }, setValues, refetch, setOpen, setLoading, module)
     }
-    
+
     return (
         <>
-            <AddButton title="Research Guidance" onclick={setOpen} dataCount={data ? data?.data.length : 0} />
-            <DialogBox title={`${edit ? "Edit" : "Add"} Research Guidance`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+            <AddButton title="Ph.D. Scholars" onclick={setOpen} dataCount={data ? data?.data.length : 0} />
+            <DialogBox title={`${edit ? "Edit" : "Add"} Ph.D. Scholars`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
                     <Select options={schools
                         ? [
                             ...new Set([...schools, schoolName || "", "Other"]),
-                          ].filter((item) => item !== "")
+                        ].filter((item) => item !== "")
                         : []
-                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} /> 
+                    } className='col-md-6 col-lg-4' id="schoolName" value={schoolName} label="School / Research Center Name" setState={setValues} />
                     {
-                        schoolName==="Other" &&  <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
+                        schoolName === "Other" && <><Text className='col-md-6 col-lg-4' id="otherSchool" value={otherSchool} label="Name of School / Research Center" setState={setValues} /> <Text className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} /></>
                     }
                     {
-                        schoolName!=="Other" && <Select options={guides
+                        schoolName !== "Other" && <Select options={guides
                             ? [
                                 ...new Set([...guides, guideName || "", "Other"]),
-                              ].filter((item) => item !== "")
+                            ].filter((item) => item !== "")
                             : []
                         } className='col-md-6 col-lg-4' id="guideName" value={guideName} label="Guide Name" setState={setValues} />
                     }
                     {
-                        guideName==="Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
+                        guideName === "Other" && <Text className='col-md-6 col-lg-4' id="otherGuide" value={otherGuide} label="Name of Guide" setState={setValues} />
                     }
 
                     <Text className='col-md-6 col-lg-4' id="thesisTitle" value={thesisTitle} label={tableHead.thesisTitle} setState={setValues} />

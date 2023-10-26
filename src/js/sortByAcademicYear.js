@@ -3,7 +3,7 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
 
     if (arrayToSort?.length > 0) {
         if (isMultiYear) {
-            return arrayToSort.sort((a, b) => {
+            return [...arrayToSort || []].sort((a, b) => {
                 // Check if "Till Date" exists in the year array
                 const aHasTillDate = a.durationYears.includes('Till Date');
                 const bHasTillDate = b.durationYears.includes('Till Date');
@@ -54,7 +54,7 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
         } else {
             if (filterByAcademicYear) {
                 // Filter the array based on the provided academicYear
-                const filteredArray = arrayToSort.filter(item => {
+                const filteredArray = [...arrayToSort || []].filter(item => {
                     return item[fieldNameToSort] === academicYear;
                 });
 
@@ -72,7 +72,7 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
                 return filteredArray;
             } else {
                 // Sort the entire array by createdAt and year
-                arrayToSort.sort(function (a, b) {
+                return [...arrayToSort].sort(function (a, b) {
                     var dateA = new Date(a.createdAt),
                         dateB = new Date(b.createdAt);
                     return dateB - dateA;
@@ -82,7 +82,7 @@ const sortByAcademicYear = (arrayToSort, fieldNameToSort, filterByAcademicYear =
                     return yearB - yearA;
                 });
 
-                return arrayToSort;
+
             }
         }
     } else {

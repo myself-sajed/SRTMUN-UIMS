@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const eContentDevelopedSchema = new mongoose.Schema({
+const swayamEContentDevelopedSchema = new mongoose.Schema({
     moduleName: {
         type: 'string',
         required: true,
     },
     creationType: {
         type: 'string',
-        required: false,
+        required: true,
     },
     platform: {
         type: 'string',
@@ -17,22 +17,11 @@ const eContentDevelopedSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
-    proof: {
-        type: 'string',
-        required: false,
-    },
     year: {
         type: 'string',
         required: true,
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "users"
     }
-
-
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('eContentDeveloped', eContentDevelopedSchema);
+module.exports = mongoose.model('swayamEContentDeveloped', swayamEContentDevelopedSchema);

@@ -3,8 +3,7 @@ import { TextareaAutosize } from "@mui/material";
 import { useGridApiContext } from "@mui/x-data-grid";
 import { academicYearGenerator } from "../../../inputs/Year";
 
-const EditableInputFields = (props) => {
-    const { id, value, field, hasFocus, type = "textarea", options } = props;
+const EditableInputFields = ({ id, value, field, hasFocus, type = "textarea", options, inputType = "text" }) => {
     const apiRef = useGridApiContext();
     const ref = React.useRef();
 
@@ -62,14 +61,22 @@ const EditableInputFields = (props) => {
                     })}
                 </select>
             ) : (
-                <TextareaAutosize
-                    ref={ref}
-                    type="text"
-                    value={value}
-                    onChange={handleValueChange}
-                    className="p-2 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
-                    style={{ resize: "none" }}
-                />
+
+                (inputType === 'date' || inputType === 'number') ?
+
+                    (<>
+                        <input type={inputType} className="form-control" id="validationCustom02" dataDateFormat="mm-dd-yy" required ref={ref} value={value} onChange={handleValueChange} />
+                    </>) :
+
+                    <TextareaAutosize
+                        ref={ref}
+                        itemType={inputType}
+                        type={inputType}
+                        value={value}
+                        onChange={handleValueChange}
+                        className="p-2 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
+                        style={{ resize: "none" }}
+                    />
             )}
         </>
     );

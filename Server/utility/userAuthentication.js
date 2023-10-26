@@ -15,9 +15,10 @@ const IILUser = require('../models/iil-models/iilUserSchema')
 const SkillUser = require('../models/skilldevelopment-models/skillUserSchema')
 const PGUser = require('../models/pg-models/pgUserSchema')
 const APDSUser = require('../models/apds-models/apdsUserSchema')
+const SwayamUser = require('../models/swayam-models/swayamUserSchema')
 
 
-const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser, SkillUser, PGUser, APDSUser }
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser, SkillUser, PGUser, APDSUser, SwayamUser }
 
 const userAuthentication = (app, jwt) => {
 

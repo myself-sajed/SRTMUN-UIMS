@@ -29,6 +29,11 @@ const ServicesList = () => {
       title: "Academic Planning & Development Section",
       desc: "JRF-SRF, Research Projects",
       loginLink: user?.apdsUser ? siteLinks.apdsHome.link : siteLinks.apdsLogin.link
+    },
+    {
+      title: "SWAYAM, NPTEL & MOOCs",
+      desc: "Tables related to MOOCs, SWAYAM/e-PG Pathshala/ NPTEL",
+      loginLink: user?.swayamUser ? siteLinks.swayamHome.link : siteLinks.swayamLogin.link
     }
 
   ]
