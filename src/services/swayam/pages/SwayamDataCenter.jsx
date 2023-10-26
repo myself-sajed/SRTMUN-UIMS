@@ -4,18 +4,41 @@ import siteLinks from '../../../components/siteLinks'
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
 import { swayamAuthParams } from './SwayamHome'
 import title from '../../../js/title'
+import SwayamValueAddedCourses from './SwayamValueAddedCourses'
+import SwayamEContentDeveloped from './SwayamEContentDeveloped'
+import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
+import UserLoading from '../../../pages/UserLoading'
+import { useSelector } from 'react-redux'
 
 const SwayamDataCenter = () => {
     useOtherServiceAuth({ ...swayamAuthParams, shouldNavigate: false })
     const bredLinks = [siteLinks.welcome, siteLinks.swayamHome, siteLinks.swayamFillData]
     title(siteLinks.swayamFillData.title)
+    const user = useSelector((state) => state.user?.swayamUser)
+
+    const tables = [
+        {
+            title: "Value Added Courses",
+            component: <SwayamValueAddedCourses />
+        },
+        {
+            title: "E-content developed by teachers",
+            component: <SwayamEContentDeveloped />
+        },
+    ]
 
 
     return (
         <div>
             <GoBack pageTitle={siteLinks.swayamFillData.title} bredLinks={bredLinks} />
-            <div className="mt-4">
-                <p className="text-center my-5">This page is under construction, please come back later...</p>
+            <div className="min-h-screen">
+
+                {user ?
+                    <div>
+                        <TableAccordion AQARTables={tables} />
+                    </div>
+                    :
+                    <UserLoading title="Fetching User Details" />}
             </div>
         </div>
     )
