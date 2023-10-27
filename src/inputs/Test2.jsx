@@ -1,6 +1,10 @@
 import React from 'react'
-import SwayamEContentDeveloped from '../services/swayam/pages/SwayamEContentDeveloped'
-import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
+// import SwayamEContentDeveloped from '../services/swayam/pages/SwayamEContentDeveloped'
+// import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
+import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
+import AdminHE from '../services/admin/tables/AdminHE'
+import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
+import AdminResearchGuide from '../services/admin/tables/AdminResearchGuide'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 
@@ -9,8 +13,12 @@ const Test2 = () => {
     <div>
       {/* <AdminJRFSRF/>
       <AdminResearchProjects/> */}
-      <SwayamValueAddedCourses/>
-      <SwayamEContentDeveloped/>
+      <AdminPhdAwarded/>
+      <AdminHE/>
+      <AdminDemandRatio/>
+      <AdminResearchGuide/>
+      {/* <SwayamValueAddedCourses/>
+      <SwayamEContentDeveloped/> */}
 
     </div>
   )

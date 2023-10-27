@@ -3,7 +3,7 @@ import DialogBox from '../../../components/formComponents/DialogBox'
 import Text from '../../../components/formComponents/Text'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
-import AddButton from '../../student/components/AddButton'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
 import Table from '../../../components/tableComponents/TableComponent'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
@@ -11,8 +11,10 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
+import { academicYearGenerator } from '../../../inputs/Year'
+import BulkExcel from '../../../components/BulkExcel'
 
-const tableHead = { index: "Sr. no.", schoolName: 'School', programmeCode: "Program Code", programmeName: "Program name", programType: "Type of Program", seatsAvailable: "Name of programme admitted", eligibleApplications: "Number of eligible applications", studentsAdmitted: "Number of Students admitted", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action"}
+const tableHead = { index: "Sr. no.", schoolName: 'School', programmeCode: "Program Code", programmeName: "Program name", programType: "Type of Program", seatsAvailable: "Number of seats available", eligibleApplications: "Number of eligible applications", studentsAdmitted: "Number of Students admitted", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action"}
 
 const AdminDemandRatio = () => {
     const TOP = ["UG", "PG", "Ph.D", "Diploma", "PG Diploma", "Certificate"]
@@ -23,7 +25,7 @@ const AdminDemandRatio = () => {
     const filter = {}
 
     const params = { model, module, filter }
-    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery(`${model}D~(U*G*2p4-L,@'3}?yH`, () => getReq(params))
 
     const initialstate = { schoolName: "", programmeCode: "", otherSchool: "", programmeName: "", programType: "", seatsAvailable: "", eligibleApplications: "",
     studentsAdmitted: '', year: '', Proof: '' }
@@ -36,6 +38,11 @@ const AdminDemandRatio = () => {
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
     const schools = Object.keys(SchoolsProgram)
+    const [excelOpen, setExcelOpen] = useState(false)
+
+    const typeObject = {
+        schoolName: schools, programmeCode: "text", programmeName: Object.values(SchoolsProgram).flatMap(school => school.map(program => program[0])), programType: TOP, seatsAvailable: "number", eligibleApplications: "number", studentsAdmitted: "number", year: academicYearGenerator( 29, true, true ),
+    }
 
     useEffect(() => {
         if (itemToEdit && data.data) {
@@ -62,7 +69,7 @@ const AdminDemandRatio = () => {
 
     return (
         <>
-            <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
+            <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
             <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="programmeCode" value={programmeCode} label={tableHead.programmeCode} setState={setValues} />
@@ -87,6 +94,7 @@ const AdminDemandRatio = () => {
                     <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
+            <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
         </>
     )

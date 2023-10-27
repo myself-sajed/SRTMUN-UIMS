@@ -3,7 +3,7 @@ import DialogBox from '../../../components/formComponents/DialogBox'
 import Text from '../../../components/formComponents/Text'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
-import AddButton from '../../student/components/AddButton'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
 import Table from '../../../components/tableComponents/TableComponent'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
@@ -13,29 +13,38 @@ import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
 import { fetchFacutys } from '../../student/pages/StudentHome'
 import Lists from '../../../components/tableComponents/Lists'
+import BulkExcel from '../../../components/BulkExcel'
+import { academicYearGenerator } from '../../../inputs/Year'
 
 const tableHead = { index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category", yearOfScholar: 'Year of Scholar Registration', phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof', Action: "Action" }
 
 const AdminPhdAwarded = () => {
     const model = 'PhdAwardedAdmin'
     const module = 'adminTable'
+    const title = "Ph.D. Scholars"
 
     const filter = {}
 
     const params = { model, module, filter }
-    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery(`${model}-,DYGZ}Enf1wbSOh?iUj`, () => getReq(params))
 
     const initialstate = { scholarName: "", schoolName: "", otherSchool: "", guideName: "", otherGuide: "", degreeName: "", awardSubmit: "", thesisTitle: "", rac: "", gender: "", category: "", yearOfScholar: "", phdAwardYear: "", year: "", Proof: "" }
     const [values, setValues] = useState(initialstate)
     const { scholarName, schoolName, otherSchool, guideName, otherGuide, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, } = values
     const [open, setOpen] = useState(false)
+    const [excelOpen, setExcelOpen] = useState(false)
 
     //---------------edit state-------------------
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
     const [guides, setGuides] = useState([]);
+    const [allGuides, setAllGuides] = useState([]);
     const schools = Object.keys(SchoolsProgram)
+
+    useEffect(() => {
+        fetchFacutys({ model: "User", id: "", module, filter: { salutation: "Dr." }, }, null, setAllGuides)
+    }, [])
 
     useEffect(() => {
         // setValues((pri)=>{
@@ -46,6 +55,10 @@ const AdminPhdAwarded = () => {
             fetchFacutys({ model: "User", id: "", module, filter: { department: schoolName, salutation: "Dr." }, }, null, setGuides);
         }
     }, [schoolName]);
+
+    const typeObject = {
+        scholarName: 'text', schoolName: schools, guideName: allGuides, degreeName: Lists.phdAwardedDegree, awardSubmit: Lists.phdAwardedSubmit, thesisTitle: 'text', rac: "date", gender: Lists.gender, category: Lists.phdAwardedCategory, yearOfScholar: 'number', phdAwardYear: 'number', year: academicYearGenerator(29, true, true),
+    }
 
     useEffect(() => {
         if (itemToEdit && data.data) {
@@ -70,8 +83,8 @@ const AdminPhdAwarded = () => {
 
     return (
         <>
-            <AddButton title="Ph.D. Scholars" onclick={setOpen} dataCount={data ? data?.data.length : 0} />
-            <DialogBox title={`${edit ? "Edit" : "Add"} Ph.D. Scholars`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+            <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
+            <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="scholarName" value={scholarName} label={tableHead.scholarName} setState={setValues} />
                     <Select options={schools
@@ -111,6 +124,7 @@ const AdminPhdAwarded = () => {
                     <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
+            <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
         </>
     )

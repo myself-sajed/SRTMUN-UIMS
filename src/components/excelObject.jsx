@@ -433,6 +433,18 @@ const excelObject = {
     ResearchProjectsAdmin:{
         'schoolName': 'School', 'schemeName': 'Scheme / Project Title', 'principalName': 'Principal Invigilator', 'coInvestigator': 'Co-Invigilator', 'fundingName': 'Funding Agency', 'isGov': 'Govt. / Non-Govt.', 'awardYear': 'Award Year', 'providedFunds': 'Funds (INR)', 'fundType': 'Major / Minor', 'status': 'Project Status', 'duration': 'Project Duration', 'year': 'Academic Year',
     },
+    DemandRatioAdmin:{
+        'schoolName': 'School', 'programmeCode': "Program Code", 'programmeName': "Program name", 'programType': "Type of Program", 'seatsAvailable': "Number of seats available", 'eligibleApplications': "Number of eligible applications", 'studentsAdmitted': "Number of Students admitted", 'year': "Academic Year",
+    },
+    HEAdmin:{
+        'schoolName': 'School', 'nameOfStudent': "Name of student enrolling", 'programGraduated': "Program graduated from", 'nameOfInstitution': "Name of institution admitted", 'programmeAdmitted': "Name of programme admitted", 'year': "Academic Year",
+    },
+    PhdAwardedAdmin:{
+        'scholarName': 'Scholar Name', 'schoolName': 'School / Department Name', 'guideName': 'Guide Name', 'degreeName': 'Degree', 'awardSubmit': 'Awarded / Submitted / Ongoing', 'thesisTitle': 'Thesis Title', 'rac': "Date of Registration (RAC)", 'gender': "Gender", 'category': "Category", 'yearOfScholar': 'Year of Scholar Registration', 'phdAwardYear': 'Year of Award', 'year': 'Year',
+    },
+    ResearchGuideAdmin:{
+        'fullTimeTeacher': 'Name of the full time teacher', 'qualification': "Qualification", 'recognisedAsResearchGuide': "Whether Recognised as research guide", 'researchCenterName': "Research Center Name", 'year': "Year of recognition as research gude",
+    },
     SwayamValueAddedCourses:{'nameOfProgram': "Name of the Course / Programme", 'programCode': "Course / Programme Code (if any)", 'modeOfCourse': "Mode of the Course- offered by the HEI or Online (Specify the platform like MOOCS, SWAYAM, etc.)", 'yearOfOffering': "Year of offering / Year of enrolment", 'contactHours': "Contact Hours of Course", 'studentsEnrolled': "Number of students enrolled in the year", 'studentsCompleting': "Number of Students completing the course  in the year", 'academicYear': "Academic Year",},
     SwayamEContentDeveloped:{'moduleName': 'Name of the Module / Course developed', 'creationType': 'Type of Creation', 'platform': 'Platform on which the module is developed', 'year': 'Academic Year', 'link': 'Web link to the content',}
 }

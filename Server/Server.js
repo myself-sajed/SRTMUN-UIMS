@@ -120,7 +120,7 @@ require('./routes/skill-routes/umpscStudentsHandler')(app)
 app.use(require('./routes/other-routes/other-routes'))
 
 //admin routes
-app.use(require('./routes/admin-routes/admin-routes'));
+app.use(require('./routes/admin-routes/admin-routes').router);
 
 //alumni routes
 app.use(require('./routes/alumni-routes/alumni-routes'));
