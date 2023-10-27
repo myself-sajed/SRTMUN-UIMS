@@ -12,11 +12,15 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import { academicYearGenerator } from "../../../inputs/Year";
 
-const tableHead = { index: "Sr. no.", nameOfProgram: "Name of the Course / Programme", programCode: "Course / Programme Code (if any)", modeOfCourse: "Mode of the Course- offered by the HEI or Online (Specify the platform like MOOCS, SWAYAM, etc.)", yearOfOffering: "Year of offering / Year of enrolment", contactHours: "Contact Hours of Course", studentsEnrolled: "Number of students enrolled in the year", studentsCompleting: "Number of Students completing the course  in the year", academicYear: "Academic Year", Proof: "Uploaded Proof", Action: "Action" }
+const tableHead = {
+  index: "Sr. no.", nameOfProgram: "Name of the Course / Programme", programCode: "Course / Programme Code (if any)", modeOfCourse: 'Mode'
+  // "Mode of the Course- offered by the HEI or Online (Specify the platform like MOOCS, SWAYAM, etc.)"
+  , yearOfOffering: "Year of offering / Year of enrolment", contactHours: "Contact Hours of Course", studentsEnrolled: "Number of students enrolled in the year", studentsCompleting: "Number of Students completing the course  in the year", academicYear: "Academic Year", Proof: "Uploaded Proof", Action: "Action"
+}
 const SwayamValueAddedCourses = () => {
-    const module = "swayam"
-    const model = "SwayamValueAddedCourses"
-    const title = "Value Added Courses"
+  const module = "swayam"
+  const model = "SwayamValueAddedCourses"
+  const title = "Value Added Courses"
 
   let filter = {}
   const params = { model, module, filter }
@@ -56,28 +60,28 @@ const SwayamValueAddedCourses = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     edit ? editReq({ id: itemToEdit }, model, initialstate, values, setValues, refetch, setOpen, setEdit, setItemToEdit, setLoading, module) :
-   addReq({  }, model, initialstate, values, setValues, refetch, setOpen, setLoading, module) 
+      addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
   }
   // { nameOfProgram, programCode, modeOfCourse, yearOfOffering, contactHours, studentsEnrolled, studentsCompleting, year, }
   return (
     <>
-    <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
-    <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
-      <div className='flex flex-wrap'>
-        <Text className='col-md-6 col-lg-4' id="nameOfProgram" value={nameOfProgram} label={tableHead.nameOfProgram} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' id="programCode" value={programCode} label={tableHead.programCode} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' id="modeOfCourse" value={modeOfCourse} label={tableHead.modeOfCourse} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' type='number' id="yearOfOffering" value={yearOfOffering} label={tableHead.yearOfOffering} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' id="contactHours" value={contactHours} label={tableHead.contactHours} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' type='number' id="studentsEnrolled" value={studentsEnrolled} label={tableHead.studentsEnrolled} setState={setValues} />
-        <Text className='col-md-6 col-lg-4' type='number' id="studentsCompleting" value={studentsCompleting} label={tableHead.studentsCompleting} setState={setValues} />
-        <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
-        <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
-      </div>
-    </DialogBox>
-    <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
-    <Table TB={data?.data} module={module} getproof="proof" proof="swayam" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
-  </>
+      <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
+      <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
+        <div className='flex flex-wrap'>
+          <Text className='col-md-6 col-lg-4' id="nameOfProgram" value={nameOfProgram} label={tableHead.nameOfProgram} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="programCode" value={programCode} label={tableHead.programCode} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="modeOfCourse" value={modeOfCourse} label={tableHead.modeOfCourse} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' type='number' id="yearOfOffering" value={yearOfOffering} label={tableHead.yearOfOffering} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' id="contactHours" value={contactHours} label={tableHead.contactHours} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' type='number' id="studentsEnrolled" value={studentsEnrolled} label={tableHead.studentsEnrolled} setState={setValues} />
+          <Text className='col-md-6 col-lg-4' type='number' id="studentsCompleting" value={studentsCompleting} label={tableHead.studentsCompleting} setState={setValues} />
+          <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
+          <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
+        </div>
+      </DialogBox>
+      <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
+      <Table TB={data?.data} module={module} getproof="proof" proof="swayam" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
+    </>
   )
 }
 

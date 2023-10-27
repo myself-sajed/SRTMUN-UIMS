@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { TextareaAutosize } from '@mui/material';
 
-function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }) {
+function BulkTableEntry({ tableHead, typeObject, tableData, setTableData, model }) {
   const [filds, setFilds] = useState("");
   const [columnToFill, setColumnToFill] = useState("");
-  
+
   useEffect(() => {
     setTableData((pri) => {
       if (pri.length > filds) {
@@ -25,7 +26,7 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
     setTableData(updatedTableData);
     setFilds(updatedTableData.length)
   };
-// console.log(filds);
+  // console.log(filds);
   const handleInputChange = (event, index, columnName) => {
     const newValue = event.target.value;
 
@@ -42,22 +43,22 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').trim();
     let filteredData = [];
-  
+
     if (pastedData) {
       const cleanedData = pastedData.replace(/\r/g, '');
-  
+
       if (cleanedData.includes("\n")) {
         filteredData = cleanedData.split('\n');
       } else if (cleanedData.includes("\t")) {
         filteredData = cleanedData.split('\t');
       }
-  
+
       if (filteredData.includes("") || columnToFill === "") {
         toast.error(filteredData.includes("") ? "Randomly cell selection or Empty cell selection not allowed" : "Column Field can not be empty");
         filteredData = [];
       }
       console.log(filteredData);
-  
+
       if (filteredData.length > 0) {
         for (let i = 0; i < filteredData.length; i++) {
           if (tableData.length === i) {
@@ -67,7 +68,7 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
               ...Array.from({ length: filteredData.length - prevData.length }, () => ({})),
             ]);
           }
-  
+
           if (typeObject[columnToFill] === "date") {
             const parsedDate = new Date(filteredData[i]);
             if (!isNaN(parsedDate.getTime())) {
@@ -104,13 +105,13 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
 
   return (
     <div>
-      
+
       <div className='flex w-full'>
         <div className='col-12 col-md-6 col-lg-4 px-1'>
-        <label htmlFor="colSelect" className="form-label">Select Column</label>
+          <label htmlFor="colSelect" className="form-label">Select Column</label>
           <select
             value={columnToFill} className='form-select' id="colSelect"
-            onChange={(e) => {setColumnToFill(e.target.value)}}
+            onChange={(e) => { setColumnToFill(e.target.value) }}
           >
             <option selected disabled value="">Choose</option>
             {Object.keys(typeObject).map((option) => (
@@ -126,61 +127,71 @@ function BulkTableEntry({tableHead, typeObject, tableData, setTableData, model }
         </div>
       </div>
       <div className='table-responsive mt-4' style={{ maxHeight: "80vh" }}>
-      <table className="table table-bordered" >
-        <thead className="sticky-top bg-blue-600 text-[#fff]" >
-          {
-            model==="ReservedSeats"?
+        <table className="table table-bordered" >
+          <thead className="sticky-top bg-blue-600 text-[#fff]" >
+            {
+              model === "ReservedSeats" ?
+                <tr>
+                  <th colSpan={2}></th>
+                  <th colSpan={6}>Number of seats earmarked for reserved category as per GOI or State Government rule</th>
+                  <th colSpan={6}>Number of students admitted from the reserved category</th>
+                  <th></th>
+                </tr> : null
+            }
             <tr>
-              <th colSpan={2}></th>
-              <th colSpan={6}>Number of seats earmarked for reserved category as per GOI or State Government rule</th>
-              <th colSpan={6}>Number of students admitted from the reserved category</th>
-              <th></th>
-            </tr>: null
-          }
-          <tr>
-            {Object.keys(typeObject).map((columnName) => (
-              <th key={columnName}>{tableHead[columnName]}</th>
-            ))}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody className='bg-slate-300'>
-          {tableData.map((rowData, rowIndex) => (
-            <tr key={`row${rowIndex}`} >
-              {Object.keys(typeObject).map((columnName, cellIndex) => (
-                <td key={`${columnName}${cellIndex}`} className='px-1 w-full'>
-                  {Array.isArray(typeObject[columnName]) ? (
-                    <select
-                      value={rowData[columnName]}
-                      className="w-full"
-                      onChange={(e) => handleInputChange(e, rowIndex, columnName)}
-                      required
-                    >
-                      <option selected disabled value="">Choose</option>
-                      {typeObject[columnName].map((option, index) => (
-                        <option key={`option${index}`} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type={typeObject[columnName]}
-                      className={`${typeObject[columnName]==="number"?"w-24":"w-full"}`}
-                      value={rowData[columnName]}
-                      onChange={(e) => handleInputChange(e, rowIndex, columnName)}
-                      required
-                    /> 
-                  )}
-                
-                </td>
+              {Object.keys(typeObject).map((columnName) => (
+                <th key={columnName}>{tableHead[columnName]}</th>
               ))}
-              <td>
-                <button onClick={() => handleDeleteRow(rowIndex)}><DeleteOutlineIcon color='error'/></button>
-              </td>
-          </tr>
-          ))}
-        </tbody>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody className='bg-blue-200'>
+            {tableData.map((rowData, rowIndex) => (
+              <tr key={`row${rowIndex}`} >
+                {Object.keys(typeObject).map((columnName, cellIndex) => (
+                  <td key={`${columnName}${cellIndex}`}>
+                    {Array.isArray(typeObject[columnName]) ? (
+                      <select
+                        className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
+                        value={rowData[columnName]}
+                        onChange={(e) => handleInputChange(e, rowIndex, columnName)}
+                        required
+                      >
+                        <option selected disabled value="">Choose</option>
+                        {typeObject[columnName].map((option, index) => (
+                          <option key={`option${index}`} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+
+                      typeObject[columnName] === 'number' || typeObject[columnName] === 'date' ?
+
+                        (<input type={typeObject[columnName]}
+                          className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
+                          value={rowData[columnName]}
+                          onChange={(e) => handleInputChange(e, rowIndex, columnName)}
+                        />)
+
+                        :
+
+                        (<TextareaAutosize
+                          className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
+                          value={rowData[columnName]}
+                          style={{ resize: 'none' }}
+                          onChange={(e) => handleInputChange(e, rowIndex, columnName)}
+                        />)
+                    )}
+
+                  </td>
+                ))}
+                <td>
+                  <button onClick={() => handleDeleteRow(rowIndex)}><DeleteOutlineIcon color='error' /></button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
