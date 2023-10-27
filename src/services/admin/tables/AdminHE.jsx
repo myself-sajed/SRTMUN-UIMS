@@ -3,7 +3,7 @@ import DialogBox from '../../../components/formComponents/DialogBox'
 import Text from '../../../components/formComponents/Text'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
-import AddButton from '../../student/components/AddButton'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
 import Table from '../../../components/tableComponents/TableComponent'
 import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
@@ -11,6 +11,8 @@ import editReq from '../../../components/requestComponents/editReq'
 import addReq from '../../../components/requestComponents/addReq'
 import Select from '../../../components/formComponents/Select'
 import SchoolsProgram from '../../../components/SchoolsProgram'
+import BulkExcel from '../../../components/BulkExcel'
+import { academicYearGenerator } from '../../../inputs/Year'
 
 const tableHead = { index: "Sr. no.", schoolName: 'School', nameOfStudent: "Name of student enrolling", programGraduated: "Program graduated from", nameOfInstitution: "Name of institution admitted", programmeAdmitted: "Name of programme admitted", year: "Academic Year", Proof: "Uploaded Proof", Action: "Action"}
 
@@ -23,18 +25,23 @@ const AdminHE = () => {
     const filter = {}
 
     const params = { model, module, filter }
-    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery(`${model}|?X1'Hc'bZ69rNw"HqHv`, () => getReq(params))
 
     const initialstate = { schoolName: "", nameOfStudent: "", otherSchool: "", programGraduated: "", nameOfInstitution: "", programmeAdmitted: "", year: '', Proof: '' }
     const [values, setValues] = useState(initialstate)
     const { schoolName, otherSchool, nameOfStudent, programGraduated, nameOfInstitution, programmeAdmitted, year, } = values
     const [open, setOpen] = useState(false)
+    const [excelOpen, setExcelOpen] = useState(false)
 
     //---------------edit state-------------------
     const [itemToEdit, setItemToEdit] = useState(null)
     const [edit, setEdit] = useState(false);
     const [Loading, setLoading] = useState(false);
     const schools = Object.keys(SchoolsProgram)
+
+    const typeObject = {
+        schoolName: schools, nameOfStudent: "text", programGraduated: Object.values(SchoolsProgram).flatMap(school => school.map(program => program[0])), nameOfInstitution: "text", programmeAdmitted: "text", year: academicYearGenerator( 29, true, true ),
+    }
 
     useEffect(() => {
         if (itemToEdit && data.data) {
@@ -61,7 +68,7 @@ const AdminHE = () => {
 
     return (
         <>
-            <AddButton title={title} onclick={setOpen} dataCount={data ? data?.data.length : 0} />
+            <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
             <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="nameOfStudent" value={nameOfStudent} label={tableHead.nameOfStudent} setState={setValues} />
@@ -84,6 +91,7 @@ const AdminHE = () => {
                     <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
+            <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
         </>
     )

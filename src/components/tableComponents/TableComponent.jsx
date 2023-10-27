@@ -15,7 +15,7 @@ function TableComponent(props) {
 
     useEffect(() => {
         let tblCells = [];
-        const cellsrm = ["index", "propic", "Upload_Proof", "Proof", "Action"]
+        const cellsrm = ["index", "propic", "link", "Upload_Proof", "Proof", "Action"]
         Object.keys(props?.tableHead).map((e) => {
             tblCells.push(e)
         })
@@ -48,7 +48,7 @@ function TableComponent(props) {
                                                 return <TblCell key={key} val={row[key]} />
                                             })
                                         }
-
+                                        {tableKeys.includes("link")&& <TblCell val={row.link==="N/A" ? row.link : <a href={row.link} target="_blank" style={{ color: "blue" }} rel="noreferrer">{row.link}</a>} />}
                                         {tableKeys.includes("Upload_Proof") || tableKeys.includes("Proof") ? <TblView val={props.getproof ? row[props.getproof] : row.Upload_Proof} module={props.proof ? props.proof : props.module} /> : ""}
                                         <TblEditDelete val={row._id} loc={props.SendReq} fatchdata={props.fatchdata} setItemToEdit={props.setItemToEdit} module={props.module} editIcon={props.editIcon} deleteDisabled={props.deleteDisabled} EditDisabled={props.EditDisabled} CheckBox={props.CheckBox} checkedData={props.checkedData} setCheckedData={props.setCheckedData} customDelete={props.customDelete} />
                                     </TableRow>
