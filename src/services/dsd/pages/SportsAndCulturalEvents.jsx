@@ -73,7 +73,7 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} proof="Proof" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{}} />
+      <BulkExcel data={data?.data} proof="Proof" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{userType}} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
     </>

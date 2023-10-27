@@ -21,7 +21,7 @@ const ExamPassedDuringYear = ({ filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
   const params = { model, id: '', module, filter }
-  const { data, isLoading, isError, error, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery(`${model}Y5KRWc}nU)Pj1rR=ePZ<`, () => getReq(params))
 
   const initialstate = {
     programCode: "", programName: "", studentsAppeared: "", studentsPassed: "", academicYear: "",

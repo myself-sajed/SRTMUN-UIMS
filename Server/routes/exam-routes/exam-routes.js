@@ -171,4 +171,4 @@ router.post('/exam/excelRecord/:model', excelUpload.single('excelFile'), (req, r
 })
 
 
-module.exports = { router, excelObject };
+module.exports = { router, excelObject, models };

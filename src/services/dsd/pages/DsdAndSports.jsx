@@ -21,9 +21,11 @@ const DsdAndSports = ({ userType = 'dsd', filterByAcademicYear = false }) => {
   const model = 'DSDSports'
   const module = 'dsd';
   const title = "Awards / Medals achieved by Students"
+  const TeamIndividual = ['Team', 'Individual']
+  const IsNat = ['Inter-university', 'State', 'National', 'International']
   const typeObject = {
-    nameOfAward: "text", teamIndividual: "text", isNat: ['Inter-university', 'State', 'National', 'International'], nameOfEvent: "text", nameOfStudnt: "text", academicYear: academicYearGenerator(29, true, true)
-  }
+    nameOfAward: "text", teamIndividual: TeamIndividual, isNat: IsNat, nameOfEvent: "text", nameOfStudnt: "text", academicYear: academicYearGenerator(29, true, true)
+  }  
 
   let filter = filterByAcademicYear ? { userType, academicYear: filterByAcademicYear } : { userType };
   const params = { model, id: '', module, filter }
@@ -72,14 +74,14 @@ const DsdAndSports = ({ userType = 'dsd', filterByAcademicYear = false }) => {
           <Text className='col-md-6 col-lg-4' id="nameOfAward" value={nameOfAward} label={tableHead.nameOfAward} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="nameOfEvent" value={nameOfEvent} label={tableHead.nameOfEvent} setState={setValues} />
           <Text className='col-md-6 col-lg-4' id="nameOfStudnt" value={nameOfStudnt} label={tableHead.nameOfStudnt} setState={setValues} />
-          <Select className='col-md-6 col-lg-4' id="teamIndividual" value={teamIndividual} label={tableHead.teamIndividual} options={['Team', 'Individual']} setState={setValues} />
-          <Select className='col-md-6 col-lg-4' id="isNat" value={isNat} label={tableHead.isNat} options={['Inter-university', 'State', 'National', 'International']} setState={setValues} />
+          <Select className='col-md-6 col-lg-4' id="teamIndividual" value={teamIndividual} label={tableHead.teamIndividual} options={TeamIndividual} setState={setValues} />
+          <Select className='col-md-6 col-lg-4' id="isNat" value={isNat} label={tableHead.isNat} options={IsNat} setState={setValues} />
           <YearSelect className='col-md-6 col-lg-4' id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues} />
           <UploadFile className='col-md-6 col-lg-4' id="Proof" label={tableHead.Proof} setState={setValues} required={!edit} />
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} proof="Proof" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{}} />
+      <BulkExcel data={data?.data} proof="Proof" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{ userType }} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
     </>

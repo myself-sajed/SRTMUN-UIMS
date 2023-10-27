@@ -212,4 +212,4 @@ router.post('/dsd/excelRecord/:model', excelUpload.single('excelFile'), (req, re
 })
 
 
-module.exports = { router, excelObject }
+module.exports = { router, excelObject, models }

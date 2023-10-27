@@ -24,7 +24,7 @@ const DateOfResultDiclaration = ({ filterByAcademicYear = false }) => {
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
   const params = { model, id: '', module, filter }
-  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+  const { data, isLoading, refetch } = useQuery(`${model}6)RQK]bK~6Xwe1DNx+ei`, () => getReq(params))
 
   const initialstate = {
     programmeName: "", programmeCode: "", academicYear: "", lastDate: "", diclarationDate: "",
