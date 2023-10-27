@@ -10,6 +10,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
+import { academicYearGenerator } from '../../../inputs/Year';
 
 const tableHead = { index: "Sr. no.", noOfStudents: "No Of Students Appeared", noOfGrievances: "No Of Grievances", academicYear: 'Year', Action: "Action" }
 
@@ -17,6 +18,7 @@ const StudentComplaintsGrievances = ({ filterByAcademicYear = false }) => {
   const model = 'StudentComplaintsGrievances'
   const module = 'exam';
   const title = "Student Complaints Grievances ";
+  const typeObject = { noOfStudents: "number", noOfGrievances: "number", academicYear: academicYearGenerator(29, true, true) }
 
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
@@ -60,7 +62,7 @@ const StudentComplaintsGrievances = ({ filterByAcademicYear = false }) => {
   return (
     <>
       {/* noOfStudents, noOfGrievances, academicYear, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true}  dataCount={data ? data?.data.length : 0} />
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading} >
         <div className='flex flex-wrap'>
 
@@ -70,7 +72,7 @@ const StudentComplaintsGrievances = ({ filterByAcademicYear = false }) => {
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} sampleFile="Student Complaints Grievances" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+      <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{}} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>

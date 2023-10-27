@@ -10,6 +10,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
+import { academicYearGenerator } from '../../../inputs/Year';
 
 
 const tableHead = { index: "Sr. no.", dateOfEvent: "Date of event/competition", nameOfEvent: "Name  of the event/competition", academicYear: "Academic Year", Proof: "Proof of Report", Action: "Action" }
@@ -19,6 +20,7 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
   const model = 'SportsAndCulturalEvents'
   const module = 'dsd';
   const title = "Information of Sports And Cultural Event"
+  const typeObject = { dateOfEvent: "date", nameOfEvent: "text", academicYear: academicYearGenerator(29, true, true) }
 
   let filter = filterByAcademicYear ? { userType, academicYear: filterByAcademicYear } : { userType };
   const params = { model, id: '', module, filter }
@@ -61,7 +63,7 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
   return (
     <>
       {/* dateOfEvent, nameOfEvent, academicYear, */}
-      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0}   />
+      <AddButton title={title} onclick={setOpen} exceldialog={setExcelOpen} customName={title} filterByAcademicYear={true} dataCount={data ? data?.data.length : 0} />
       <DialogBox title={`${edit ? "Edit" : "Add"} ${title}`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
         <div className='flex flex-wrap'>
           <Text className='col-md-6 col-lg-4' type='date' id="dateOfEvent" value={dateOfEvent} label={tableHead.dateOfEvent} setState={setValues} />
@@ -71,7 +73,7 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} proof="Proof" sampleFile="Sports And Cultural Event" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+      <BulkExcel data={data?.data} proof="Proof" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{}} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
     </>

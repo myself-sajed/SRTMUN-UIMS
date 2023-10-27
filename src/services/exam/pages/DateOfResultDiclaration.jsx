@@ -10,6 +10,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import BulkExcel from '../../../components/BulkExcel'
 import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
+import { academicYearGenerator } from '../../../inputs/Year';
 
 const tableHead = { index: "Sr. no.", programmeName: "Programme Name", programmeCode: "Programme Code", academicYear: "Semester/ year", lastDate: "Last date of the last semester-end/ year- end examination", diclarationDate: "Date of declaration of results of semester-end/ year- end examination", Action: "Action" }
 
@@ -17,6 +18,8 @@ const DateOfResultDiclaration = ({ filterByAcademicYear = false }) => {
   const model = 'DateOfResultDiclaration'
   const module = 'exam';
   const title = "Date Of Result Declaration";
+
+  const typeObject = { programmeName: "text", programmeCode: "text", academicYear: academicYearGenerator(29, true, true), lastDate: "date", diclarationDate: "date" }
 
 
   let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
@@ -72,7 +75,7 @@ const DateOfResultDiclaration = ({ filterByAcademicYear = false }) => {
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} sampleFile="Date Of Result Diclaration" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
+      <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} typeObject={typeObject} tableHead={tableHead} commonFilds={{}} />
 
       <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>
