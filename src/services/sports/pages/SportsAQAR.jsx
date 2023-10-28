@@ -13,7 +13,7 @@ import AQARStepper from '../../dsd/components/AQARStepper';
 
 
 const SportsAQAR = () => {
-    title(siteLinks.dsdAQAR.title)
+    title(siteLinks.sportsAQAR.title)
     const bredLinks = [siteLinks.welcome, siteLinks.sportsHome, siteLinks.sportsAQAR]
     const user = useSelector((state) => state.user.sportsUser)
     useOtherServiceAuth({ ...sportsAuthParams, shouldNavigate: false })

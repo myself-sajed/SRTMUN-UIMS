@@ -11,6 +11,7 @@ import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion
 import AdminPhdAwarded from '../../admin/tables/AdminPhdAwarded'
 import AdminHE from '../../admin/tables/AdminHE'
 import AdminDemandRatio from '../../admin/tables/AdminDemandRatio'
+import AdminResearchGuide from '../../admin/tables/AdminResearchGuide'
 
 const pgAuthParams = { shouldNavigate: true, tokenName: "pg-token", setUser: setPGUser, navigationHomeLink: siteLinks.pgHome.link, navigationLoginLink: siteLinks.pgLogin.link, model: "PGUser" }
 
@@ -24,6 +25,11 @@ const PGHome = () => {
         {
             title: "Ph.D. Scholars",
             component: <AdminPhdAwarded />
+        },
+        {
+            title: "Research Guidance",
+            component: <AdminResearchGuide />
+
         },
         {
             title: "Progression to Higher Education",
