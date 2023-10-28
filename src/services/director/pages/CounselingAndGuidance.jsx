@@ -20,17 +20,13 @@ import BulkExcel from '../../../components/BulkExcel';
 import SCTextField from "../components/FormComponents/SCTextField";
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import { academicYearGenerator } from "../../../inputs/Year";
+import Lists from "../../../components/tableComponents/Lists";
 
-const tableHead = { index: "Sr. no.", SchoolName: "School Name", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
+const tableHead = { index: "Sr. no.", SchoolName: "School Name", activityType: "Type Of Activity", Name_of_the_Activity_conducted_by_the_HEI: "Name of the Activity conducted by the HEI", Number_of_Students_Attended: "Number of Students Attended", Year_of_Activity: "Year of Activity", Upload_Proof: "Link to the relevant document", Action: "Action" }
 
-const typeObject = {SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Name_of_the_Activity_conducted_by_the_HEI: "text", Number_of_Students_Attended: "number", Year_of_Activity: academicYearGenerator(29, true),}
+
 
 function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, newSchool=false, school }) {
-
-    if(!school && !newSchool) {
-            delete tableHead.SchoolName;
-            delete typeObject.SchoolName;
-    }
 
     const SendReq = "CounselingAndGuidance";
     const module = 'director'
@@ -39,16 +35,20 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, new
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
     
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: (school || newSchool) || directorUser?.department })
+    
+    const typeObject = {activityType: Lists.counselingActivities, Name_of_the_Activity_conducted_by_the_HEI: "text", Number_of_Students_Attended: "number", Year_of_Activity: academicYearGenerator(29, true),}
+
+    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Year_of_Activity: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
 
-    const { data, isLoading, refetch } = useQuery([SendReq, "fUAjg+wzc-MW^;R&V-hI"], () => GetReq(params))
+    const { data, isLoading, refetch } = useQuery(`${SendReq}fUAjg+wzc-MW^;R&V-hI`, () => GetReq(params))
 
+   
 
     //--------------values useState---------------
-    const initialState = { SchoolN: newSchool || "", cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "" }
+    const initialState = { cagnotacbth: "", cagnosa: "", Upload_Proof: "", cagyoa: "", activityType: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -66,7 +66,7 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, new
                         cagnotacbth: item.Name_of_the_Activity_conducted_by_the_HEI,
                         cagnosa: item.Number_of_Students_Attended,
                         cagyoa: item.Year_of_Activity,
-                        SchoolN:(school || newSchool)? item.SchoolName : ""
+                        activityType: item.activityType
                     })
                 }
             })
@@ -94,12 +94,10 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, new
                         setLoading(true)
                         edit ?
                             EditReq({ id: itemToEdit }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
-                            PostReq({ School: (school || newSchool) ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
+                            PostReq({ School: directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
                     }}>
                         <Grid container className="flex_between">
-                            {
-                                school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
-                            }
+                            <SCTextField value={values.activityType} id="activityType" label={tableHead.activityType} required={true} onch={setvalues} select={Lists.counselingActivities} />
                             <CTextField label="Name of the Activity conducted by the HEI" type="text" value={values.cagnotacbth} id="cagnotacbth" required={true} onch={setvalues} />
                             <CTextField label="Number of Students Attended" type="number" value={values.cagnosa} id="cagnosa" required={true} onch={setvalues} />
                             <SYTextField label="Year of Activity" value={values.cagyoa} id="cagyoa" required={true} onch={setvalues} />
@@ -110,7 +108,8 @@ function CounselingAndGuidance({ filterByAcademicYear = false, academicYear, new
                 </DialogContent>
             </Dialog>
 
-            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false} />
+            <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
+
             <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Activity" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
         </>
     )

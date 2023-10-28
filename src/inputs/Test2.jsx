@@ -5,6 +5,7 @@ import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
 import AdminHE from '../services/admin/tables/AdminHE'
 import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
 import AdminResearchGuide from '../services/admin/tables/AdminResearchGuide'
+import TPOCounselingAndGuiance from '../services/placement/pages/TPOCounselingAndGuiance'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 
@@ -13,13 +14,14 @@ const Test2 = () => {
     <div>
       {/* <AdminJRFSRF/>
       <AdminResearchProjects/> */}
-      <AdminPhdAwarded/>
+      {/* <AdminPhdAwarded/>
       <AdminHE/>
       <AdminDemandRatio/>
-      <AdminResearchGuide/>
+      <AdminResearchGuide/> */}
       {/* <SwayamValueAddedCourses/>
       <SwayamEContentDeveloped/> */}
 
+      <TPOCounselingAndGuiance />
     </div>
   )
 }

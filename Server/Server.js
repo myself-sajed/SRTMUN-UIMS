@@ -110,6 +110,9 @@ app.use(require('./routes/krc-routes/krc-routes'))
 //swayam
 app.use(require('./routes/swayam-routes/swayam-routes').router)
 
+//tpo
+app.use(require('./routes/tpo-routes/tpo-routes').router)
+
 // iil
 require('./routes/iil-routes/iil-routes').iilRoutes(app)
 
@@ -309,6 +312,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     youth: `./uploads/youth-uploads/${filename}`,
     skill: `./uploads/skilldevelopment-uploads/${filename}`,
     swayam: `./uploads/swayam-uploads/${filename}`,
+    tpo: `./uploads/tpo-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
