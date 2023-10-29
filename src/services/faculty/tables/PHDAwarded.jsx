@@ -21,7 +21,7 @@ import GenderSelect, { CasteSelect } from '../../../inputs/GenderSelect';
 import { tableHead } from '../../admin/tables/AdminPhdAwarded';
 import Lists from '../../../components/tableComponents/Lists'
 
-const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = true, title }) => {
+const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = true, title, type = false }) => {
     const [phdModal, setPhdModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [departmentName, setDepartmentName] = useState('')
     const [guideName, setGuideName] = useState('')
     const [thesisTitle, setThesisTitle] = useState('')
-    const [degreeName, setDegreeName] = useState('')
+    const [degreeName, setDegreeName] = useState(type === 'Ph.D.' ? type : type === 'PG' ? 'PG Dissertation' : '')
     const [awardSubmit, setAwardSubmit] = useState('')
     const [scholarYear, setScholarYear] = useState('')
     const [awardYear, setAwardYear] = useState('')
@@ -49,7 +49,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
     const [editId, setEditId] = useState(null);
 
     const user = useSelector(state => state.user.user);
-    const years = academicYearGenerator( 29, true, true )
+    const years = academicYearGenerator(29, true, true)
     const typeObject = {
         scholarName: 'text', degreeName: Lists.phdAwardedDegree, awardSubmit: Lists.phdAwardedSubmit, thesisTitle: 'text', rac: "date", gender: Lists.gender, category: Lists.phdAwardedCategory, yearOfScholar: years, phdAwardYear: 'number', year: years,
     }
@@ -138,7 +138,9 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
     }
 
-    let param = { model: 'PhdAwarded', userId: user?._id }
+    const dataFilter = type === 'Ph.D.' ? { degreeName: { '$ne': 'PG Dissertation' }, userId: user?._id } : { degreeName: 'PG Dissertation', userId: user?._id }
+
+    let param = { model: 'PhdAwarded', userId: user?._id, dataFilter, year: type ? true : false }
 
     // main fetcher
     const { data, isLoading, refetch } = useQuery([param.model, param], () => refresh(param))
@@ -185,7 +187,7 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
 
             <Header user={user} model='PhdAwarded' showTable={showTable} exceldialog={setOpen} dataCount={filteredItems ? filteredItems.length : 0} add="Degree" editState={setEditModal} clearStates={clearStates} state={setPhdModal} icon={<CardMembershipRoundedIcon className='text-lg' />} setIsFormOpen={setIsFormOpen} title={title ? title : "Research Guidance"} />
 
-            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{userId:user?._id, departmentName:user?.department, guideName:`${user?.salutation} ${user?.name}` }} title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
+            <BulkExcel data={data?.data?.data} proof='proof' tableHead={tableHead} typeObject={typeObject} commonFilds={{ userId: user?._id, departmentName: user?.department, guideName: `${user?.salutation} ${user?.name}` }} title={title ? title : 'Ph.D. Awarded'} SendReq='PhdAwarded' refetch={refetch} module='faculty' open={open} setOpen={setOpen} />
 
             {/* // 2. FIELDS */}
             <Dialog fullWidth maxWidth='lg' open={isFormOpen}>
@@ -196,16 +198,21 @@ const PHDAwarded = ({ filterByAcademicYear = false, academicYear, showTable = tr
                         <Text title='Department Name' state={departmentName} setState={setDepartmentName} />
                         <Text title='Guide Name' state={guideName} setState={setGuideName} />
                         <Text title='Thesis Title' state={thesisTitle} setState={setThesisTitle} />
-                        <div className="col-md-4">
-                            <label htmlFor="degreeName" className="form-label">Degree</label>
-                            <select className="form-select" id="degreeName" required
-                                value={degreeName} onChange={(e) => { setDegreeName(e.target.value) }}>
-                                <option selected disabled value="">Choose</option>
-                                <option value="Ph.D.">Ph.D.</option>
-                                <option value="M.Phil">M.Phil</option>
-                                <option value="PG Dissertation">PG Dissertation</option>
-                            </select>
-                        </div>
+
+                        {
+                            !type && <div className="col-md-4">
+                                <label htmlFor="degreeName" className="form-label">Degree</label>
+                                <select className="form-select" id="degreeName" required
+                                    value={degreeName} onChange={(e) => { setDegreeName(e.target.value) }}>
+                                    <option selected disabled value="">Choose</option>
+                                    <option value="Ph.D.">Ph.D.</option>
+                                    <option value="M.Phil">M.Phil</option>
+                                    <option value="PG Dissertation">PG Dissertation</option>
+                                </select>
+                            </div>
+                        }
+
+
                         <div className="col-md-4">
                             <label htmlFor="awardSubmit" className="form-label">Awarded / Submitted / Ongoing</label>
                             <select className="form-select" id="awardSubmit" required

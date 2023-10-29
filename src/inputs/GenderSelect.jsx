@@ -2,9 +2,9 @@ import React from 'react'
 
 const GenderSelect = ({ id, state, setState, className, showLabel = false, title = false }) => {
     return (
-        <div>
+        <div className={className}>
             {showLabel && <label htmlFor={id}>{title}</label>}
-            <select className={`form-select ${className}`} id={id} required onChange={(e) => { setState(e.target.value) }} value={state}>
+            <select className={`form-select ${className} mt-2`} id={id} required onChange={(e) => { setState(e.target.value) }} value={state}>
                 <option selected disabled value="">Choose</option>
                 <option>Male</option>
                 <option>Female</option>

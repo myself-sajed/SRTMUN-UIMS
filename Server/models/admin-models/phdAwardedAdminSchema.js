@@ -28,7 +28,7 @@ const phdAwardedAdminSchema = new mongoose.Schema({
     },
     yearOfScholar: {
         type: 'string',
-        required: true,
+        required: false,
     },
     rac: {
         type: 'string',
