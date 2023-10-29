@@ -2,11 +2,14 @@ import React from 'react'
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
 import { setESTTUser } from '../../../redux/slices/UserSlice'
 import siteLinks from '../../../components/siteLinks'
-import UserLoading from '../../../pages/UserLoading'
 import { useSelector } from 'react-redux'
 import title from '../../../js/title'
 import Footer from '../../../components/Footer'
 import GoBack from '../../../components/GoBack'
+import ESTTSanctionedPostWithProof from '../components/ESTTSanctionedPost'
+import AQARStepper from '../../dsd/components/AQARStepper'
+import { useState } from 'react'
+import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 
 const esttAuthParams = { shouldNavigate: true, tokenName: "estt-token", setUser: setESTTUser, navigationHomeLink: siteLinks.esttHome.link, navigationLoginLink: siteLinks.esttLogin.link, model: "ESTTUser" }
 
@@ -15,40 +18,31 @@ const ESTTHome = () => {
     const user = useSelector((state) => state.user?.esttUser)
     const bredLinks = [siteLinks.welcome, siteLinks.esttHome]
     title(siteLinks.esttHome.title)
+    const [aqarYearState, setAqarYearState] = useState(null)
 
-    // const tables = [
-    //     {
-    //         title: "Ph.D. Scholars",
-    //         component: <AdminPhdAwarded />
-    //     },
-    //     {
-    //         title: "Research Guidance",
-    //         component: <AdminResearchGuide />
 
-    //     },
-    //     {
-    //         title: "Progression to Higher Education",
-    //         component: <AdminHE />
-    //     },
-    //     {
-    //         title: "Demand Ratio",
-    //         component: <AdminDemandRatio />
-    //     },
-    // ]
+    const tables = [
+        {
+            title: "3.3 Sanctioned posts during the year",
+            component: <ESTTSanctionedPostWithProof academicYear={aqarYearState} />
+        },
+
+    ]
+
+    const tableTitles = tables.map((table) => table.title)
+
+
     return (
         <div>
-            <GoBack bredLinks={bredLinks} pageTitle={siteLinks.esttHome.title} />
-            <div className="min-h-screen">
+            <div>
+                <div className="min-h-screen">
+                    <AQARStepper setAqarYearState={setAqarYearState} aqarYearState={aqarYearState} bredLinks={bredLinks} submitModel="ESTTAQAR" user={user} tableTitles={tableTitles} navigateToAfterSubmission={siteLinks.esttHome.link} >
+                        <TableAccordion AQARTables={tables} showIndex={false} />
+                    </AQARStepper>
 
-                {user ?
-                    <div>
-                        {/* <TableAccordion AQARTables={tables} /> */}
-                        <p>Tables are here...</p>
-                    </div>
-                    :
-                    <UserLoading title="Fetching User Details" />}
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </div>
     )
 }

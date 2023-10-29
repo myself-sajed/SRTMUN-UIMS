@@ -13,10 +13,11 @@ const NSSAQAR = require('../../models/nss-models/nssAqarSchema')
 const ExamAQAR = require('../../models/exam-models/examAqarSchema')
 const PlacementAQAR = require('../../models/placement-models/placementAqarSchema')
 const IILAQAR = require('../../models/iil-models/iilAQARSchema')
+const ESTTAQAR = require('../../models/establishment-models/esttAqarSchema')
 const OtherAQAR = require('../../models/other-models/otherAQARSchema')
 const YFReportIsSubmitted = require('../../models/youth-festival/yfSubmitted')
 
-const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR }
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR, ESTTAQAR }
 
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');

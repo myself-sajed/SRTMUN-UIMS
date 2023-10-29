@@ -48,7 +48,7 @@ const AQARLibraryUsageWithProof = ({ setUsage, usage, academicYear }) => {
                         usage && <TableSupportingProof proof={proof} setFile={setFile} file={file} title='Upload relevant proof based on the above choice' />
                     }
                     {usage && <div className='mt-2'>
-                        <ArrowButton title="Save Details" onClickFunction={submitProofFunction} />
+                        <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />
                     </div>}
                 </div>
         }

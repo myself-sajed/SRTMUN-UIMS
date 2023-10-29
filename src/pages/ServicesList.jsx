@@ -32,8 +32,13 @@ const ServicesList = () => {
     },
     {
       title: "SWAYAM, NPTEL & MOOCs",
-      desc: "Tables related to MOOCs, SWAYAM/e-PG Pathshala/ NPTEL",
+      desc: "Information related to MOOCs, SWAYAM/e-PG Pathshala/ NPTEL",
       loginLink: user?.swayamUser ? siteLinks.swayamHome.link : siteLinks.swayamLogin.link
+    },
+    {
+      title: "Establishment Section",
+      desc: "Information related to Permanent & Temporary Faculties",
+      loginLink: user?.esttUser ? siteLinks.esttHome.link : siteLinks.esttLogin.link
     }
 
   ]
