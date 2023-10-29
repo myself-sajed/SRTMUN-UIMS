@@ -78,6 +78,8 @@ let siteLinks = {
     krcAQAR: { title: "KRC AQAR", link: '/krc/aqar' },
     pgLogin: { title: "PG Section Login", link: '/pg-login' },
     pgHome: { title: "PG Section Home", link: '/pg' },
+    esttLogin: { title: "Establishment Section Login", link: '/establishment-login' },
+    esttHome: { title: "Establishment Section Home", link: '/establishment' },
     apdsHome: { title: "Academic Planning & Development Section Home", link: '/apds' },
     apdsLogin: { title: "Academic Planning & Development Section Login", link: '/apds-login' },
     examLogin: { title: "BOEE Login", link: '/boee-login' },

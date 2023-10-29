@@ -309,6 +309,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     youth: `./uploads/youth-uploads/${filename}`,
     skill: `./uploads/skilldevelopment-uploads/${filename}`,
     swayam: `./uploads/swayam-uploads/${filename}`,
+    estt: `./uploads/establishment-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
