@@ -1,11 +1,14 @@
 import React from 'react'
 // import SwayamEContentDeveloped from '../services/swayam/pages/SwayamEContentDeveloped'
 // import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
-import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
-import AdminHE from '../services/admin/tables/AdminHE'
-import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
-import AdminResearchGuide from '../services/admin/tables/AdminResearchGuide'
+// import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
+// import AdminHE from '../services/admin/tables/AdminHE'
+// import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
+// import AdminResearchGuide from '../services/admin/tables/AdminResearchGuide'
 import TPOCounselingAndGuiance from '../services/placement/pages/TPOCounselingAndGuiance'
+import TPOPlacements from '../services/placement/pages/TPOPlacements'
+import TPOProgressionToHE from '../services/placement/pages/TPOProgressionToHE'
+// import NewComponent from '../components/formComponents/NewComponent'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 
@@ -22,6 +25,9 @@ const Test2 = () => {
       <SwayamEContentDeveloped/> */}
 
       <TPOCounselingAndGuiance />
+      <TPOPlacements />
+      <TPOProgressionToHE />
+      {/* <NewComponent /> */}
     </div>
   )
 }
