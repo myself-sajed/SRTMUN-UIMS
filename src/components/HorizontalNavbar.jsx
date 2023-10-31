@@ -27,6 +27,7 @@ import TourRoundedIcon from '@mui/icons-material/TourRounded';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 
 import { setActive } from '../redux/slices/ActiveSlice';
 import useScroll from '../hooks/useScroll';
@@ -106,6 +107,9 @@ const HorizontalNavbar = () => {
 
                                             <SidebarTile active={active} setActive={setActive} state='phd_awarded'
                                                 icon={<CardMembershipRoundedIcon fontSize={`small`} className='text-blue-900' />} title='Research Guidance' />
+
+                                            <SidebarTile active={active} setActive={setActive} state='pg_dessertation'
+                                                icon={<DescriptionRoundedIcon fontSize={`small`} className='text-blue-900' />} title='PG Dissertation' />
 
                                             <SidebarTile active={active} setActive={setActive} state='e_content_development'
                                                 icon={<CloudIcon fontSize={`small`} className='text-blue-900' />} title='E-Content Developed' />

@@ -30,6 +30,7 @@ const LoggedInUsers = () => {
         pgUser: { homeLink: siteLinks.pgHome.link, serviceName: 'pg', title: "PG", abbr: "PG" },
         apdsUser: { homeLink: siteLinks.apdsHome.link, serviceName: 'apds', title: "APDS", abbr: "APDS" },
         swayamUser: { homeLink: siteLinks.swayamHome.link, serviceName: 'swayam', title: "NPTEL", abbr: "NPTEL" },
+        esttUser: { homeLink: siteLinks.esttHome.link, serviceName: 'estt', title: "ESTT", abbr: "ESTT" },
     }
 
     return (
