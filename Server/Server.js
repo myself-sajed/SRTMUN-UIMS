@@ -1,6 +1,6 @@
 // all imports
 const cron = require('node-cron');
-const { Delete_Pdfs, DB_Backups, Delete_Excels, HitRandomUrl } = require('./utility/cronFunction');
+const { Delete_Pdfs, DB_Backups, Delete_Excels } = require('./utility/cronFunction');
 const { generateExcelFile } = require('./utility/sampleExcelGenrater');
 const express = require("express");
 const app = express();
@@ -121,6 +121,9 @@ require('./routes/skill-routes/umpscStudentsHandler')(app)
 
 //other
 app.use(require('./routes/other-routes/other-routes'))
+
+//estt
+app.use(require('./routes/estt-routes/estt-routes').router)
 
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes').router);

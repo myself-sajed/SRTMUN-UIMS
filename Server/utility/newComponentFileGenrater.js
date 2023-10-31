@@ -223,19 +223,19 @@ fs.writeFile(pathOfRoute, routeContent, (err) => {
 
 genrateTableComponent(
 {
-    title: "Progression To HE", 
-    model: "TpoProgrationToHE", 
-    module: "tpo",
-    componentName: "TPOProgressionToHE",
-    pathOfComponent: path.join(__dirname, '../../src/services/placement/pages/TPOProgressionToHE.jsx'),
-    modelName: 'tpoProgrationToHE',
-    pathOfModel: path.join(__dirname, '../models/tpo-models/tpoProgrationToHESchema.js'),
-    pathOfRoute: path.join(__dirname, '../routes/tpo-routes/tpo2-routes.js'),
+    title: "Full Time Teachers Against Sanctioned Posts", 
+    model: "EsttFullTimeTeacherAgainstSanctioned", 
+    module: "estt",
+    componentName: "EsttFullTimeTeacherAgainstSanctioned",
+    pathOfComponent: path.join(__dirname, '../../src/services/establishment/pages/EsttFullTimeTeacherAgainstSanctioned.jsx'),
+    modelName: 'esttFullTimeTeacherAgainstSanctioned',
+    pathOfModel: path.join(__dirname, '../models/establishment-models/esttFullTimeTeacherAgainstSanctionedSchema.js'),
+    pathOfRoute: path.join(__dirname, '../routes/estt-routes/estt-routes.js'),
     tableHead:{ 
-        Name_of_student_enrolling: "Name of student enrolling", SchoolName: "School Name", Program_graduated_from: "Program graduated from", Name_of_institution_admitted: "Name of institution admitted", Name_of_programme_admitted: "Name of programme admitted", academicYear: "Academic Year" 
+        name: "Name of the Full-time teacher", pan: "PAN", designation: "Designation", yearOfAppointment: "Year of appointment", natureOfAppointment: "Nature of Appointment", departmentName: "Name of the Department", experienceInYears: "Total years of Experience in the same institution", stillWorking: "Is the teacher still serving the institution/If not last year of the service of Faculty to the Institution", academicYear: "Academic Year" 
     }, 
     typeObject: {
-        Name_of_student_enrolling: "text", SchoolName: "select", Program_graduated_from: "select", Name_of_institution_admitted: "text", Name_of_programme_admitted: "text", academicYear: "academicYearGenerator( 29, true, true )"
+      name: "text", pan: "text", designation: "text", yearOfAppointment: "number", natureOfAppointment: "select", departmentName: "text", experienceInYears: "number", stillWorking: "text", academicYear: "academicYearGenerator( 29, true, true )"
     }
-}, false, false, true
+}
 )
