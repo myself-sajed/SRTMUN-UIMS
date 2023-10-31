@@ -20,6 +20,8 @@ const ESTTSanctionedPostWithProof = ({ academicYear }) => {
         assistantProf: { sanctioned: 0, filled: 0, cas: 0 },
     })
 
+    console.log(teachingPosts)
+
     const filter = { academicYear, userType: 'estt', proofType: 'FacultyPostForm' }
     const { data, isLoading, refetch } = useQuery(`AQARFacultyPostData-${academicYear}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
 
@@ -41,7 +43,6 @@ const ESTTSanctionedPostWithProof = ({ academicYear }) => {
         if (data?.data?.status === 'success') {
             setTeachingPosts(JSON.parse(data?.data?.data?.info))
             setProof(data?.data?.data?.proof)
-            console.log(data?.data?.data)
         }
     }, [data])
 
