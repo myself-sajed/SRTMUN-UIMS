@@ -59,7 +59,7 @@ import getReq from "../../../components/requestComponents/getReq";
       addReq({}, model, initialstate, values, setValues, refetch, setOpen, setLoading, module)
     }
     
-    const typeObject = {name: "text",pan: "text",designation: "text",yearOfAppointment: "number",natureOfAppointment: Lists.natureOfAppointment,departmentName: "text",experienceInYears: "number",stillWorking: "text",academicYear: academicYearGenerator( 29, true, true )};
+    const typeObject = {name: "text",pan: "text",designation: "text",yearOfAppointment: "number",natureOfAppointment: Lists.esttNatureOfAppointment,departmentName: "text",experienceInYears: "number",stillWorking: "text",academicYear: academicYearGenerator( 29, true, true )};
       
     return (
       <>
