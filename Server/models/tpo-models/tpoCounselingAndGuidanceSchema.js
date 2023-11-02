@@ -25,6 +25,6 @@ const tpoCounselingAndGuidanceSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-})
+},{timestamps: true})
 
-module.exports = mongoose.model('tpoCounselingAndGuidance', tpoCounselingAndGuidanceSchema);;
+module.exports = mongoose.model('tpoCounselingAndGuidance', tpoCounselingAndGuidanceSchema);

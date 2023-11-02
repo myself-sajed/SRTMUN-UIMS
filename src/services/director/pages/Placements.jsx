@@ -20,10 +20,11 @@ import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from '../../../components/BulkExcel';
 import SchoolsProgram from "../../../components/SchoolsProgram";
 import { academicYearGenerator } from "../../../inputs/Year";
+import Lists from "../../../components/tableComponents/Lists";
 
 
 const tableHead = { index: "Sr. no.", Name_of_student_placed: "Name of student placed/started Business", SchoolName: "School Name", Program_graduated_from: "Program graduated from", Name_of_the_employer: "Name of the employer/business", Employer_contact_details: "Employer/business contact details", Pay_package_annum: "Pay package ( ₹ / annum)", Academic_Year: "Year of Placement", Type_Of_Placement: "Type of placemnt", Upload_Proof: "Upload Proof", Action: "Action" }
-const typesOfPlacements = ["Placement", "Business Started"];
+
 
 function Placements({ filterByAcademicYear = false, academicYear, school }) {
 
@@ -39,7 +40,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
     const directorUser = useSelector(state => state.user.directorUser)
 
     const typeObject = {
-        Name_of_student_placed: "text", SchoolName: Object.keys(SchoolsProgram), Program_graduated_from: school?Object.values(SchoolsProgram).flat().map(programArray => programArray[0]):SchoolsProgram[directorUser?.department]?.map(item => item[0]), Name_of_the_employer: "text", Employer_contact_details: "text", Pay_package_annum: "number", Academic_Year: academicYearGenerator( 29, true ), Type_Of_Placement: typesOfPlacements,
+        Name_of_student_placed: "text", SchoolName: Object.keys(SchoolsProgram), Program_graduated_from: school?Object.values(SchoolsProgram).flat().map(programArray => programArray[0]):SchoolsProgram[directorUser?.department]?.map(item => item[0]), Name_of_the_employer: "text", Employer_contact_details: "text", Pay_package_annum: "number", Academic_Year: academicYearGenerator( 29, true ), Type_Of_Placement: Lists.typesOfPlacements,
     }
     if (!school) {
         delete typeObject.SchoolName;
@@ -112,7 +113,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
                             <CTextField label="Employer/business contact details" type="text" value={values.Employer_contact_details} id="Employer_contact_details" required={true} onch={setvalues} />
                             <CTextField label="Pay package ( ₹ / annum)" value={values.Pay_package_annum} id="Pay_package_annum" required={true} onch={setvalues} />
                             <SYTextField label="Academic year of placement" value={values.Academic_Year} id="Academic_Year" required={true} onch={setvalues} />
-                            <SCTextField label="Type of placemnt" value={values.Type_Of_Placement} id="Type_Of_Placement" required={true} onch={setvalues} select={typesOfPlacements} />
+                            <SCTextField label="Type of placemnt" value={values.Type_Of_Placement} id="Type_Of_Placement" required={true} onch={setvalues} select={Lists.typesOfPlacements} />
                             <UTextField label="Upload Proof" id="Upload_Proof" required={!edit} onch={setvalues} />
                             <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
                         </Grid>

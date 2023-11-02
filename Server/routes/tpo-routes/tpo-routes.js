@@ -7,8 +7,10 @@ const multerConfig = require('../../utility/multerConfig').multerConfig
 const tpoUpload = multerConfig("../uploads/tpo-uploads/")
 
 const TpoCounselingAndGuidance = require('../../models/tpo-models/tpoCounselingAndGuidanceSchema')
+const TpoPlacements = require('../../models/tpo-models/tpoPlacementsSchema')
+const TpoProgrationToHE = require('../../models/tpo-models/tpoProgrationToHESchema')
 
-const models = {TpoCounselingAndGuidance}
+const models = { TpoCounselingAndGuidance, TpoPlacements, TpoProgrationToHE }
 
 //get
 router.post('/tpo/getData', async (req, res) => {
