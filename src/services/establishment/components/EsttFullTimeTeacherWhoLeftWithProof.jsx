@@ -47,7 +47,7 @@ const EsttFullTimeTeacherWhoLeftWithProof = ({ academicYear }) => {
                             <ArrowButton className="mt-2" title="Upload Proof" onClickFunction={submitProofFunction} />
                         </div>
                     </div>
-                    <EsttFullTimeTeacherWhoLeft />
+                    <EsttFullTimeTeacherWhoLeft filterByAcademicYear={academicYear} />
 
                 </div>
         }

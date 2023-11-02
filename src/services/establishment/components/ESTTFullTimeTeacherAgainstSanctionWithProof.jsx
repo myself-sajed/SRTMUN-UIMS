@@ -46,7 +46,7 @@ const ESTTFullTimeTeacherAgainstSanctionWithProof = ({ academicYear }) => {
                             <ArrowButton className="mt-2" title="Upload Proof" onClickFunction={submitProofFunction} />
                         </div>
                     </div>
-                    <EsttFullTimeTeacherAgainstSanctioned />
+                    <EsttFullTimeTeacherAgainstSanctioned filterByAcademicYear={academicYear} />
 
                 </div>
         }

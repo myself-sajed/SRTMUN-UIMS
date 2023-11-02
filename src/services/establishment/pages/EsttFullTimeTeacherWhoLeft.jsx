@@ -15,12 +15,12 @@ import getReq from "../../../components/requestComponents/getReq";
 
 
 const tableHead = { index: "Sr. no.", name: "Name", idNumber: "ID number/Aadhar number", yearInWhich: "Year in which left/joined/resigned/ retired etc.", email: "Email", gender: "Gender", designation: "Designation", natureOfPost: "Nature of Post", dateOfJoining: "Date of joining institution", dateOfLeaving: "Date of leaving", academicYear: "Academic Year", Action: "Action" }
-const EsttFullTimeTeacherWhoLeft = () => {
+const EsttFullTimeTeacherWhoLeft = ({ filterByAcademicYear = false }) => {
 
   const module = "estt";
   const model = "EsttFullTimeTeacherWhoLeft";
   const title = "Full Time Teachers who left/joined the institution";
-  let filter = {};
+  let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
 
   const params = { model, module, filter };
   const { data, isLoading, refetch } = useQuery(`${model}d'/ELf01=eER$.Hlvp;9`, () => getReq(params));

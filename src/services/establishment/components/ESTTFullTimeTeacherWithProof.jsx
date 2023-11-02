@@ -46,7 +46,7 @@ const ESTTFullTimeTeacherWithProof = ({ academicYear }) => {
                             <ArrowButton className="mt-2" title="Upload Proof" onClickFunction={submitProofFunction} />
                         </div>
                     </div>
-                    <EsttFullTimeTeacher />
+                    <EsttFullTimeTeacher filterByAcademicYear={academicYear} />
 
                 </div>
         }

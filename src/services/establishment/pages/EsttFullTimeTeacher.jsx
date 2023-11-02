@@ -15,12 +15,12 @@ import getReq from "../../../components/requestComponents/getReq";
 
 
 const tableHead = { index: "Sr. no.", name: "Name", idNumber: "ID number/Aadhar number", email: "Email", gender: "Gender", designation: "Designation", natureOfPost: "Nature of Post", dateOfJoining: "Date of joining institution", academicYear: "Academic Year", Action: "Action" }
-const EsttFullTimeTeacher = () => {
+const EsttFullTimeTeacher = ({ filterByAcademicYear = false }) => {
 
   const module = "estt";
   const model = "EsttFullTimeTeacher";
   const title = "Full Time Teachers";
-  let filter = {};
+  let filter = filterByAcademicYear ? { academicYear: filterByAcademicYear } : {};
 
   const params = { model, module, filter };
   const { data, isLoading, refetch } = useQuery(`${model}04O3}JTY|/"Kq)mvxUv(`, () => getReq(params));
