@@ -188,7 +188,7 @@ useEffect(() => {
         </div>
       </DialogBox>
 
-      <BulkExcel data={data?.data} proof='proof' title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} open={excelOpen} setOpen={setExcelOpen} tableHead={tableHead} typeObject={typeObject} />
+      <BulkExcel data={data?.data} proof='proof' title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} open={excelOpen} setOpen={setExcelOpen} tableHead={tableHead} typeObject={typeObject} serviceName="admin" />
 
       <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
     </>
