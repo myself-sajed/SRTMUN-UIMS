@@ -16,7 +16,11 @@ import Lists from '../../../components/tableComponents/Lists'
 import BulkExcel from '../../../components/BulkExcel'
 import { academicYearGenerator } from '../../../inputs/Year'
 
-const tableHead = { index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category", yearOfScholar: 'Year of Scholar Registration', phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof', Action: "Action" }
+const tableHead = {
+    index: 'Sr.No.', scholarName: 'Scholar Name', schoolName: 'School / Department Name', guideName: 'Guide Name', degreeName: 'Degree', awardSubmit: 'Awarded / Submitted / Ongoing', thesisTitle: 'Thesis Title', rac: "Date of Registration (RAC)", gender: "Gender", category: "Category",
+    // yearOfScholar: 'Year of Scholar Registration', 
+    phdAwardYear: 'Year of Award', year: 'Year', Proof: 'Uploaded Proof', Action: "Action"
+}
 
 const AdminPhdAwarded = () => {
     const model = 'PhdAwardedAdmin'
@@ -28,7 +32,7 @@ const AdminPhdAwarded = () => {
     const params = { model, module, filter }
     const { data, isLoading, refetch } = useQuery(`${model}-,DYGZ}Enf1wbSOh?iUj`, () => getReq(params))
 
-    const initialstate = { scholarName: "", schoolName: "", otherSchool: "", guideName: "", otherGuide: "", degreeName: "", awardSubmit: "", thesisTitle: "", rac: "", gender: "", category: "", yearOfScholar: "", phdAwardYear: "", year: "", Proof: "" }
+    const initialstate = { scholarName: "", schoolName: "", otherSchool: "", guideName: "", otherGuide: "", degreeName: "Ph.D.", awardSubmit: "", thesisTitle: "", rac: "", gender: "", category: "", yearOfScholar: "", phdAwardYear: "", year: "", Proof: "" }
     const [values, setValues] = useState(initialstate)
     const { scholarName, schoolName, otherSchool, guideName, otherGuide, degreeName, awardSubmit, thesisTitle, rac, gender, category, yearOfScholar, phdAwardYear, year, } = values
     const [open, setOpen] = useState(false)
@@ -109,14 +113,14 @@ const AdminPhdAwarded = () => {
                     }
 
                     <Text className='col-md-6 col-lg-4' id="thesisTitle" value={thesisTitle} label={tableHead.thesisTitle} setState={setValues} />
-                    <Select options={Lists.phdAwardedDegree} className='col-md-6 col-lg-4' id="degreeName" value={degreeName} label={tableHead.degreeName} setState={setValues} />
+                    {/* <Select options={Lists.phdAwardedDegree} className='col-md-6 col-lg-4' id="degreeName" value={degreeName} label={tableHead.degreeName} setState={setValues} /> */}
                     {
-                        degreeName === 'Ph.D.' && <Text className='col-md-6 col-lg-4' type="date" id="rac" title={tableHead.rac} value={rac} setState={setValues} />
+                        degreeName === 'Ph.D.' && <Text label="Date of RAC" className='col-md-6 col-lg-4' type="date" id="rac" title={tableHead.rac} value={rac} setState={setValues} />
                     }
                     <Select options={Lists.phdAwardedSubmit} className='col-md-6 col-lg-4' id="awardSubmit" value={awardSubmit} label={tableHead.awardSubmit} setState={setValues} />
                     <Select options={Lists.gender} className='col-md-6 col-lg-4' id="gender" value={gender} label={tableHead.gender} setState={setValues} />
                     <Select options={Lists.phdAwardedCategory} className='col-md-6 col-lg-4' id="category" value={category} label={tableHead.category} setState={setValues} />
-                    <YearSelect className='col-md-6 col-lg-4' id="yearOfScholar" value={yearOfScholar} label={tableHead.yearOfScholar} setState={setValues} />
+                    {/* <YearSelect className='col-md-6 col-lg-4' id="yearOfScholar" value={yearOfScholar} label={tableHead.yearOfScholar} setState={setValues} /> */}
                     {
                         awardSubmit === 'Awarded' && <Text className='col-md-6 col-lg-4' id="phdAwardYear" label={tableHead.phdAwardYear} type="number" value={phdAwardYear} setState={setValues} />
                     }

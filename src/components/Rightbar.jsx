@@ -60,41 +60,43 @@ const Rightbar = () => {
                                                     page === 'book_and_chapters' ?
                                                         <BooksAndChapters /> :
                                                         page === 'phd_awarded' ?
-                                                            <PHDAwarded /> :
-                                                            page === 'jrf_srf' ?
-                                                                <JRFSRF /> :
-                                                                page === 'award_and_recognition' ?
-                                                                    <AwardRecognition /> :
-                                                                    page === 'patents' ?
-                                                                        <PatentPublished /> :
-                                                                        page === 'consultancy' ?
-                                                                            <ConsultancyServices /> :
-                                                                            page === 'collab' ?
-                                                                                <Collaboration /> :
-                                                                                page === 'invited_talk' ?
-                                                                                    <InvitedTalk /> :
-                                                                                    page === 'conference_organized' ?
-                                                                                        <ConferenceOrganized /> :
-                                                                                        page === 'fellowship' ?
-                                                                                            <Fellowship /> :
-                                                                                            page === 'lectures_seminars' ?
-                                                                                                <Lectures /> :
-                                                                                                page === 'e_content_development' ?
-                                                                                                    <EContentDeveloped /> :
-                                                                                                    page === 'financialsupport' ?
-                                                                                                        <FinancialSupportToAttendConferences /> :
-                                                                                                        page === 'responsibilities' ?
-                                                                                                            <Responsibilities /> :
-                                                                                                            page === 'policy_documents' ?
-                                                                                                                <PolicyDocument /> :
-                                                                                                                page === 'conference_participated' ?
-                                                                                                                    <ConferenceParticipated /> :
-                                                                                                                    page === 'foreign_visit' ?
-                                                                                                                        <ForeignVisits /> :
-                                                                                                                        page === 'mous' ?
-                                                                                                                            <MoUsFaculty /> :
-                                                                                                                            page === 'extension_activities' ?
-                                                                                                                                <ExtensionActivityFaculty /> : null
+                                                            <PHDAwarded type="Ph.D." /> :
+                                                            page === 'pg_dessertation' ?
+                                                                <PHDAwarded type="PG" /> :
+                                                                page === 'jrf_srf' ?
+                                                                    <JRFSRF /> :
+                                                                    page === 'award_and_recognition' ?
+                                                                        <AwardRecognition /> :
+                                                                        page === 'patents' ?
+                                                                            <PatentPublished /> :
+                                                                            page === 'consultancy' ?
+                                                                                <ConsultancyServices /> :
+                                                                                page === 'collab' ?
+                                                                                    <Collaboration /> :
+                                                                                    page === 'invited_talk' ?
+                                                                                        <InvitedTalk /> :
+                                                                                        page === 'conference_organized' ?
+                                                                                            <ConferenceOrganized /> :
+                                                                                            page === 'fellowship' ?
+                                                                                                <Fellowship /> :
+                                                                                                page === 'lectures_seminars' ?
+                                                                                                    <Lectures /> :
+                                                                                                    page === 'e_content_development' ?
+                                                                                                        <EContentDeveloped /> :
+                                                                                                        page === 'financialsupport' ?
+                                                                                                            <FinancialSupportToAttendConferences /> :
+                                                                                                            page === 'responsibilities' ?
+                                                                                                                <Responsibilities /> :
+                                                                                                                page === 'policy_documents' ?
+                                                                                                                    <PolicyDocument /> :
+                                                                                                                    page === 'conference_participated' ?
+                                                                                                                        <ConferenceParticipated /> :
+                                                                                                                        page === 'foreign_visit' ?
+                                                                                                                            <ForeignVisits /> :
+                                                                                                                            page === 'mous' ?
+                                                                                                                                <MoUsFaculty /> :
+                                                                                                                                page === 'extension_activities' ?
+                                                                                                                                    <ExtensionActivityFaculty /> : null
                 }
             </div>
         </div>

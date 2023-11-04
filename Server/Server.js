@@ -1,6 +1,6 @@
 // all imports
 const cron = require('node-cron');
-const { Delete_Pdfs, DB_Backups, Delete_Excels, HitRandomUrl } = require('./utility/cronFunction');
+const { Delete_Pdfs, DB_Backups, Delete_Excels } = require('./utility/cronFunction');
 const { generateExcelFile } = require('./utility/sampleExcelGenrater');
 const express = require("express");
 const app = express();
@@ -110,6 +110,9 @@ app.use(require('./routes/krc-routes/krc-routes'))
 //swayam
 app.use(require('./routes/swayam-routes/swayam-routes').router)
 
+//tpo
+app.use(require('./routes/tpo-routes/tpo-routes').router)
+
 // iil
 require('./routes/iil-routes/iil-routes').iilRoutes(app)
 
@@ -118,6 +121,9 @@ require('./routes/skill-routes/umpscStudentsHandler')(app)
 
 //other
 app.use(require('./routes/other-routes/other-routes'))
+
+//estt
+app.use(require('./routes/estt-routes/estt-routes').router)
 
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes').router);
@@ -309,6 +315,8 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     youth: `./uploads/youth-uploads/${filename}`,
     skill: `./uploads/skilldevelopment-uploads/${filename}`,
     swayam: `./uploads/swayam-uploads/${filename}`,
+    estt: `./uploads/establishment-uploads/${filename}`,
+    tpo: `./uploads/tpo-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);

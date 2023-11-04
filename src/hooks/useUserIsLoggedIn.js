@@ -15,6 +15,7 @@ import { skillsAuthParams } from "../services/skilldevelopment/pages/SkillsHome"
 import { pgAuthParams } from "../services/pgsection/pages/PGHome"
 import { apdsAuthParams } from "../services/apds/pages/APDSHome"
 import { swayamAuthParams } from "../services/swayam/pages/SwayamHome"
+import { esttAuthParams } from "../services/establishment/pages/ESTTHome"
 
 
 const useUserIsLoggedIn = () => {
@@ -32,6 +33,7 @@ const useUserIsLoggedIn = () => {
     useOtherServiceAuth({ ...pgAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...apdsAuthParams, usingInIsUserLoggedInHook: true })
     useOtherServiceAuth({ ...swayamAuthParams, usingInIsUserLoggedInHook: true })
+    useOtherServiceAuth({ ...esttAuthParams, usingInIsUserLoggedInHook: true })
 
 
     useEffect(() => {

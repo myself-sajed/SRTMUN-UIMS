@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const models = {...require('../director-routes/director-routes').models, ...require('../faculty-routes/routes').models, ...require('../swayam-routes/swayam-routes').models, ...require('../admin-routes/admin-routes').AdminModels, ...require('../exam-routes/exam-routes').models, ...require('../dsd-routes/dsd-routes').models }
+const models = {...require('../director-routes/director-routes').models, ...require('../faculty-routes/routes').models, ...require('../swayam-routes/swayam-routes').models, ...require('../admin-routes/admin-routes').AdminModels, ...require('../exam-routes/exam-routes').models, ...require('../dsd-routes/dsd-routes').models, ...require('../tpo-routes/tpo-routes').models, ...require('../estt-routes/estt-routes').models }
 
 
 router.post('/bulktableentry/Excel', (req, res) => {

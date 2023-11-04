@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router';
 import useScroll from '../hooks/useScroll';
 import { useDispatch, useSelector } from 'react-redux';
 import title from '../js/title';
-import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser, setIILUser } from '../redux/slices/UserSlice';
+import { setDirectorUser, setUser, setAlumniUser, setStudentUser, setProUser, setPlacementUser, setExamUser, setKRCUser, setDSDUser, setNSSUser, setSportsUser, setIILUser, setESTTUser } from '../redux/slices/UserSlice';
 import siteLinks from '../components/siteLinks';
 import Dashboard from '../services/dashboard/pages/Dashboard';
 import useUserIsLoggedIn from '../hooks/useUserIsLoggedIn';
@@ -159,10 +159,11 @@ const Index = () => {
             icon: <BusinessRoundedIcon sx={iconProps} />,
             title: 'Establishment Department',
             phrase: 'Login to Establishment Department section',
-            user: users.establishment ? users.establishment : null,
-            profileUrl: '/UnderDevelopment',
-            tokenId: 'faculty-token',
-            loginUrl: '/establishment-login'
+            user: users.esttUser ? users.esttUser : null,
+            profileUrl: siteLinks.esttHome.link,
+            tokenId: 'estt-token',
+            loginUrl: siteLinks.esttLogin.link,
+            dispatchFunction: setESTTUser
         },
         {
             icon: <AutoGraphRoundedIcon sx={iconProps} />,

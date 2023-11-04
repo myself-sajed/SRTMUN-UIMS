@@ -1722,19 +1722,19 @@ const EditableTd = ({ setState, title, state, keyName, tableName = 'program' }) 
                 <td className='p-1'>
                     <input type="number"
                         className='p-2 w-full m-0 outline-2 outline-indigo-200 border-2 hover:border-blue-100 rounded-md'
-                        value={state[keyName].sanctioned}
+                        value={state[keyName].sanctioned ? state[keyName].sanctioned : ''}
                         onChange={((e) => { setState({ ...state, [keyName]: { ...state[keyName], sanctioned: e.target.value } }) })} />
                 </td>
                 <td className='p-1'>
                     <input type="number"
                         className='p-2 w-full m-0 outline-2 outline-indigo-200 border-2 hover:border-blue-100 rounded-md'
-                        value={state[keyName].filled}
+                        value={state[keyName].filled ? state[keyName].filled : ''}
                         onChange={((e) => { setState({ ...state, [keyName]: { ...state[keyName], filled: e.target.value } }) })} />
                 </td>
                 <td className='p-1'>
                     <input type="number"
                         className='p-2 w-full outline-2 outline-indigo-200 border-2 hover:border-blue-100 rounded-md'
-                        value={state[keyName].cas}
+                        value={state[keyName].cas ? state[keyName].cas : ''}
                         onChange={((e) => { setState({ ...state, [keyName]: { ...state[keyName], cas: e.target.value } }) })} />
                 </td>
 

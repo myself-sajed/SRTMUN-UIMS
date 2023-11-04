@@ -283,11 +283,12 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         }
         //CounselingAndGuidance
         else if (model == 'CounselingAndGuidance') {
-            const { cagnotacbth, cagnosa, cagyoa, } = data
+            const { cagnotacbth, cagnosa, cagyoa, activityType } = data
             SendData = {
                 Name_of_the_Activity_conducted_by_the_HEI: cagnotacbth,
                 Number_of_Students_Attended: cagnosa,
-                Year_of_Activity: cagyoa
+                Year_of_Activity: cagyoa,
+                activityType
             }
         }
         //DemandRatio

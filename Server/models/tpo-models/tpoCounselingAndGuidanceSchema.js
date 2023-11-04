@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const counselingAndGuidanceSchema = new mongoose.Schema({
+const tpoCounselingAndGuidanceSchema = new mongoose.Schema({
     Name_of_the_Activity_conducted_by_the_HEI: {
         type: String,
         required: true
@@ -13,21 +13,18 @@ const counselingAndGuidanceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Upload_Proof: {
-        type: String,
-        required: false
-    },
     Year_of_Activity: {
         type: String,
-        required: false
+        required: true
     },
     SchoolName: {
         type: String,
         required: true
-    }
+    },
+    proof: {
+        type: String,
+        required: false
+    },
+},{timestamps: true})
 
-})
-
-const CounselingAndGuidance = new mongoose.model('CounselingAndGuidance', counselingAndGuidanceSchema);
-
-module.exports = CounselingAndGuidance;
+module.exports = mongoose.model('tpoCounselingAndGuidance', tpoCounselingAndGuidanceSchema);

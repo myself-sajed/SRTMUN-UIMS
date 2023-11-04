@@ -146,6 +146,8 @@ import UMPSCFeedback from '../services/skilldevelopment/pages/UMPSCFeedback'
 import SwayamLogin from '../services/swayam/pages/SwayamLogin'
 import SwayamHome from '../services/swayam/pages/SwayamHome'
 import SwayamDataCenter from '../services/swayam/pages/SwayamDataCenter'
+import ESTTHome from '../services/establishment/pages/ESTTHome'
+import ESTTLogin from '../services/establishment/pages/ESTTLogin'
 
 let model = "Xyz"
 let module = 'abc'
@@ -332,7 +334,11 @@ const RoutesHandler = () => {
                 <Route path="/pg-login" exact element={<PGLogin />} />
                 <Route path="/pg" exact element={<PGHome />} />
 
-                {/* PG Section */}
+                {/* ESTT Section */}
+                <Route path="/establishment-login" exact element={<ESTTLogin />} />
+                <Route path="/establishment" exact element={<ESTTHome />} />
+
+                {/* APDS Section */}
                 <Route path="/apds-login" exact element={<APDSLogin />} />
                 <Route path="/apds" exact element={<APDSHome />} />
 
