@@ -14,7 +14,7 @@ let obj = {
 }
 
     
-    const generateExcelWithDropdown = async () => {
+    const generateExcelSampleFile = async () => {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Sheet1');
         const school = Object.keys(SchoolsProgram)
@@ -96,14 +96,12 @@ let obj = {
     
       return (
         <div>
-          <button onClick={generateExcelWithDropdown} className='btn btn-success'>Generate Excel with Dropdown</button>
-          {
-            Object.keys(SchoolsProgram).map((e)=>{
-              return<p>{e.replace(/[^a-zA-Z0-9_]/g, "_")}</p>
-            })
-          }
+          <button onClick={generateExcelSampleFile} className='btn btn-success'>Generate Excel with Dropdown</button>
         </div>
       );
 }
 
 export default Excelmaker;
+
+
+//<BulkTableEntry tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
