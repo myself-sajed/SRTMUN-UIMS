@@ -10,10 +10,6 @@ const researchGuideAdminSchema = new mongoose.Schema({
         type: 'string',
         required: false,
     },
-    recognisedAsResearchGuide: {
-        type: 'string',
-        required: true,
-    },
     researchCenterName: {
         type: 'string',
         required: true,

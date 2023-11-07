@@ -10,6 +10,9 @@ import ESTTSanctionedPostWithProof from '../components/ESTTSanctionedPost'
 import AQARStepper from '../../dsd/components/AQARStepper'
 import { useState } from 'react'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
+import ESTTFullTimeTeacherWithProof from '../components/ESTTFullTimeTeacherWithProof'
+import ESTTFullTimeTeacherAgainstSanctionWithProof from '../components/ESTTFullTimeTeacherAgainstSanctionWithProof'
+import EsttFullTimeTeacherWhoLeftWithProof from '../components/EsttFullTimeTeacherWhoLeftWithProof'
 
 const esttAuthParams = { shouldNavigate: true, tokenName: "estt-token", setUser: setESTTUser, navigationHomeLink: siteLinks.esttHome.link, navigationLoginLink: siteLinks.esttLogin.link, model: "ESTTUser" }
 
@@ -23,8 +26,20 @@ const ESTTHome = () => {
 
     const tables = [
         {
-            title: "3.3 Sanctioned posts during the year",
+            title: "3.2 (A) - Sanctioned posts during the year",
+            component: <ESTTFullTimeTeacherWithProof academicYear={aqarYearState} />
+        },
+        {
+            title: "3.2 (B) - Full time teachers who left/joined the institution",
+            component: <EsttFullTimeTeacherWhoLeftWithProof academicYear={aqarYearState} />
+        },
+        {
+            title: "3.3 - Sanctioned posts during the year",
             component: <ESTTSanctionedPostWithProof academicYear={aqarYearState} />
+        },
+        {
+            title: "2.4.1 - Full time teachers against sanctioned posts during the year",
+            component: <ESTTFullTimeTeacherAgainstSanctionWithProof academicYear={aqarYearState} />
         },
 
     ]

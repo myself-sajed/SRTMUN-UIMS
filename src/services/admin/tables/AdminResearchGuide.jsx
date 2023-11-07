@@ -12,7 +12,7 @@ import addReq from '../../../components/requestComponents/addReq'
 import { academicYearGenerator } from '../../../inputs/Year'
 import BulkExcel from '../../../components/BulkExcel'
 
-const tableHead = { index: "Sr. no.", fullTimeTeacher: 'Name of the full time teacher', qualification: "Qualification", recognisedAsResearchGuide: "Whether Recognised as research guide", researchCenterName: "Research Center Name", year: "Year of recognition as research gude", Proof: "Guideship Letter", Action: "Action"}
+const tableHead = { index: "Sr. no.", fullTimeTeacher: 'Name of the full time teacher', qualification: "Qualification", researchCenterName: "Research Center Name", year: "Year of recognition as Research Guide", Proof: "Guideship Letter", Action: "Action" }
 
 const AdminResearchGuide = () => {
     const model = 'ResearchGuideAdmin'
@@ -24,9 +24,9 @@ const AdminResearchGuide = () => {
     const params = { model, module, filter }
     const { data, isLoading, refetch } = useQuery(`${model}8]6ss$!N,0.pfI0X9;Dl`, () => getReq(params))
 
-    const initialstate = { fullTimeTeacher: "", qualification: "", recognisedAsResearchGuide: "", researchCenterName: "", year: "", Proof: "", }
+    const initialstate = { fullTimeTeacher: "", qualification: "", researchCenterName: "", year: "", Proof: "", }
     const [values, setValues] = useState(initialstate)
-    const { fullTimeTeacher, qualification, recognisedAsResearchGuide, researchCenterName, year, } = values
+    const { fullTimeTeacher, qualification, researchCenterName, year, } = values
     const [open, setOpen] = useState(false)
 
     //---------------edit state-------------------
@@ -36,7 +36,7 @@ const AdminResearchGuide = () => {
     const [excelOpen, setExcelOpen] = useState(false)
 
     const typeObject = {
-        fullTimeTeacher: 'text', qualification: "text", recognisedAsResearchGuide: "text", researchCenterName: "text", year: academicYearGenerator( 29, true, true ),
+        fullTimeTeacher: 'text', qualification: "text", recognisedAsResearchGuide: "text", researchCenterName: "text", year: academicYearGenerator(29, true, true),
     }
 
     useEffect(() => {
@@ -45,9 +45,9 @@ const AdminResearchGuide = () => {
                 if (item?._id === itemToEdit) {
                     const { fullTimeTeacher, qualification, recognisedAsResearchGuide, researchCenterName, year, } = item
                     setEdit(true); setOpen(true);
-                    setValues({ 
-                             fullTimeTeacher, qualification, recognisedAsResearchGuide, researchCenterName, year,
-                     })
+                    setValues({
+                        fullTimeTeacher, qualification, recognisedAsResearchGuide, researchCenterName, year,
+                    })
                 }
             })
         }
@@ -69,13 +69,13 @@ const AdminResearchGuide = () => {
                 <div className='flex flex-wrap'>
                     <Text className='col-md-6 col-lg-4' id="fullTimeTeacher" value={fullTimeTeacher} label={tableHead.fullTimeTeacher} setState={setValues} />
                     <Text className='col-md-6 col-lg-4' id="qualification" value={qualification} label={tableHead.qualification} setState={setValues} />
-                    <Text className='col-md-6 col-lg-4' id="recognisedAsResearchGuide" value={recognisedAsResearchGuide} label={tableHead.recognisedAsResearchGuide} setState={setValues} />
+
                     <Text className='col-md-6 col-lg-4' id="researchCenterName" value={researchCenterName} label={tableHead.researchCenterName} setState={setValues} />
-                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Choose Year" setState={setValues} />
-                    <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
+                    <YearSelect className='col-md-6 col-lg-4' id="year" value={year} label="Year of Recognition as Research Guide" setState={setValues} />
+                    <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Guideship Letter" setState={setValues} required={!edit} />
                 </div>
             </DialogBox>
-            <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
+            <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' serviceName="admin" />
             <Table TB={data?.data} module={module} getproof="proof" proof="admin" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} />
         </>
     )
