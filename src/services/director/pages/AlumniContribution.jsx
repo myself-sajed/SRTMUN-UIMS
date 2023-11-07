@@ -37,7 +37,7 @@ const AlumniContribution = ({ filterByAcademicYear = false, academicYear }) => {
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_year: { in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
 
-  const { data, isLoading, refetch } = useQuery([SendReq, ">mI:d>v73H[*+Fl@i9^E"], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery(`${SendReq}>mI:d>v73H[*+Fl@i9^E`, () => GetReq(params))
 
   //--------------values useState---------------
   const initialState = { Name_of_The_Alumni_Contributed: "", Program_graduated_from: "", Amount_of_contribution: "", Academic_Year: "", Upload_Proof: "" }

@@ -25,7 +25,7 @@ const Cate = ["Institution", "Teacher", "Research Scholar", "Student"]
 const tableHead = { index: "Sr. no.", SchoolName: "School Name", Title_of_the_innovation: "Title of the innovation", Name_of_the_Award: "Name of the Award", Year_of_Award: "Year of Award", Name_of_the_Awarding_Agency: "Name of the Awarding Agency", Contact_details_Agency: "Contact details Agency", Category: "Category", Upload_Proof: "Proof", Action: "Action" }
 
 const typeObject = {
-  SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Title_of_the_innovation: "test", Name_of_the_Award: "text", Year_of_Award: academicYearGenerator(29, true), Name_of_the_Awarding_Agency: "text", Contact_details_Agency: "text", Category: Cate,
+  SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Title_of_the_innovation: "test", Name_of_the_Award: "text", Year_of_Award: academicYearGenerator(29, true, true), Name_of_the_Awarding_Agency: "text", Contact_details_Agency: "text", Category: Cate,
 }
 function Awards({ filterByAcademicYear = false, academicYear, school }) { 
 
@@ -46,7 +46,7 @@ function Awards({ filterByAcademicYear = false, academicYear, school }) {
   let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
 
-  const { data, isLoading, refetch } = useQuery([ SendReq, "Jf*H&8pQrZ1q@K9Lb2Xm" ], () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery( `${SendReq}Jf*H&8pQrZ1q@K9Lb2Xm`, () => GetReq(params))
 
   //--------------values useState---------------
   const initialState = { atoti: "", anota: "", SchoolN:"", anotaa: "", acda: "", ayoa: "", ac: "", Upload_Proof: "" }

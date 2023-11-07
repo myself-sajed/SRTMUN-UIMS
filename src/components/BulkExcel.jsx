@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import BulkTableEntry from './BulkTableEntry';
 
-const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof, disableUpload = false, tableHead, typeObject, commonFilds }) => {
+const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof, serviceName, disableUpload = false, tableHead, typeObject, commonFilds }) => {
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(false);
     
@@ -53,7 +53,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
             const proofValue = data[i - 2][proof] == undefined || data[i - 2][proof] == "undefined" ? 'Not Uploaded' : 'View Proof';
             const cell = worksheet.getCell(`${String.fromCharCode(65 + lastColumnIndex-1)}${i}`);
             if (proofValue === 'View Proof') {
-              const proofURL = `${process.env.REACT_APP_MAIN_URL}/showFile/${data[i - 2][proof]}/${module}`;
+              const proofURL = `${process.env.REACT_APP_MAIN_URL}/showFile/${data[i - 2][proof]}/${serviceName?serviceName:module}`;
               cell.value = { text: proofValue, hyperlink: proofURL };
               cell.font = { color: { argb: 'FF0000FF' }, underline: true };
             } else {

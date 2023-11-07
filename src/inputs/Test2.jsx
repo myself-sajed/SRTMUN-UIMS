@@ -5,12 +5,13 @@ import React from 'react'
 // import AdminHE from '../services/admin/tables/AdminHE'
 // import AdminDemandRatio from '../services/admin/tables/AdminDemandRatio'
 // import AdminResearchGuide from '../services/admin/tables/AdminResearchGuide'
-import TPOCounselingAndGuiance from '../services/placement/pages/TPOCounselingAndGuiance'
-import TPOPlacements from '../services/placement/pages/TPOPlacements'
-import TPOProgressionToHE from '../services/placement/pages/TPOProgressionToHE'
-import EsttFullTimeTeacher from '../services/establishment/pages/EsttFullTimeTeacher'
-import EsttFullTimeTeacherWhoLeft from '../services/establishment/pages/EsttFullTimeTeacherWhoLeft'
-import EsttFullTimeTeacherAgainstSanctioned from '../services/establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
+// import TPOCounselingAndGuiance from '../services/placement/pages/TPOCounselingAndGuiance'
+// import TPOPlacements from '../services/placement/pages/TPOPlacements'
+// import TPOProgressionToHE from '../services/placement/pages/TPOProgressionToHE'
+// import EsttFullTimeTeacher from '../services/establishment/pages/EsttFullTimeTeacher'
+// import EsttFullTimeTeacherWhoLeft from '../services/establishment/pages/EsttFullTimeTeacherWhoLeft'
+// import EsttFullTimeTeacherAgainstSanctioned from '../services/establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
+import Excelmaker from '../utility/excel/Excelmaker'
 // import NewComponent from '../components/formComponents/NewComponent'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
@@ -30,10 +31,11 @@ const Test2 = () => {
       {/* <TPOCounselingAndGuiance />
       <TPOPlacements />
       <TPOProgressionToHE /> */}
-      <EsttFullTimeTeacher />
+      {/* <EsttFullTimeTeacher />
       <EsttFullTimeTeacherWhoLeft />
-      <EsttFullTimeTeacherAgainstSanctioned />
+      <EsttFullTimeTeacherAgainstSanctioned /> */}
       {/* <NewComponent /> */}
+      <Excelmaker/>
     </div>
   )
 }
