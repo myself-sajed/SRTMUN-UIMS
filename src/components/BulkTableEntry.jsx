@@ -6,19 +6,7 @@ import { TextareaAutosize } from '@mui/material';
 
 function BulkTableEntry({ tableHead, typeObject, tableData, setTableData, model }) {
   const [filds, setFilds] = useState("");
-  // const [columnToFill, setColumnToFill] = useState("");
 
-  useEffect(() => {
-    setTableData((pri) => {
-      if (pri.length > filds) {
-        return pri.slice(0, filds);
-      } else if (pri.length < filds) {
-        const extraEmptyObjects = Array.from({ length: filds - pri.length }, () => ({}));
-        return [...pri, ...extraEmptyObjects];
-      }
-      return pri;
-    });
-  }, [filds]);
 
   const handleDeleteRow = (index) => {
     const updatedTableData = [...tableData];
