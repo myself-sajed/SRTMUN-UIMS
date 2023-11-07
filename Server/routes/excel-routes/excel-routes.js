@@ -8,7 +8,15 @@ const path = require('path')
 
 const excelUpload = multerConfig(`../../excels/`)
 
-
+function swapKeyAndValue(obj) {
+    const result = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            result[obj[key]] = key;
+        }
+    }
+    return result;
+}
 
 
 router.post('/bulktableentry/Excel', (req, res) => {
@@ -29,6 +37,8 @@ router.post('/bulktableentry/Excel', (req, res) => {
 
 router.post('/excel/parseExcelData', excelUpload.single('excelFile'), async (req, res) => {
     const excelFile = req.file.filename;
+    const { tableHead } = JSON.parse(JSON.stringify(req.body));
+
 
     try {
         const workbook = new excel.Workbook();
@@ -48,14 +58,33 @@ router.post('/excel/parseExcelData', excelUpload.single('excelFile'), async (req
             }
         });
 
-        console.log('Data from excel :', data)
+        const swappedTableHeads = swapKeyAndValue(JSON.parse(tableHead));
+        let tableData = []
+        data.forEach((item) => {
+
+            const obj = {}
+            Object.keys(swappedTableHeads).forEach((key) => {
+                obj[swappedTableHeads[key]] = item[key]
+            })
+
+            tableData.push(obj)
 
 
-        res.status(201).send(data);
+        })
+
+        console.log('Table Data :', tableData)
+
+
+
+
+        res.status(201).send(tableData);
     } catch (err) {
         console.error(err);
         res.status(500).send();
     }
 })
+
+
+
 
 module.exports = router

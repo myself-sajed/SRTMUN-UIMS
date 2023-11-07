@@ -16,6 +16,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
   const [value, setValues] = useState(initialState);
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1)
 
   const generateExcelSampleFile = async () => {
     const workbook = new ExcelJS.Workbook();
@@ -181,18 +182,24 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
     setLoading(false);
     setTableData([])
   }
-  // const onSubmit = (e) => {
-  //     e.preventDefault();
-  //     setLoading(true)
-  //     axios.post(`${process.env.REACT_APP_MAIN_URL}/bulktableentry/Excel`,{ commonFilds, model: SendReq, tableData }).then((res)=>{
-  //       if(res.status===201){toast.success(res.data)}
-  //       else if(res.status===500){toast.error("Something went wrong")}
-  //       setLoading(false); 
-  //       refetch(); 
-  //       setOpen(false); 
-  //       setTableData([])
-  //     })
-  // }
+
+
+  const dataBulkEntry = (e) => {
+    e.preventDefault();
+    setLoading(true)
+    axios.post(`${process.env.REACT_APP_MAIN_URL}/bulktableentry/Excel`, { commonFilds, model: SendReq, tableData }).then((res) => {
+      if (res.status === 201) { toast.success(res.data) }
+      else if (res.status === 500) { toast.error("Something went wrong") }
+      setLoading(false);
+      refetch();
+      setOpen(false);
+      setTableData([])
+    })
+  }
+
+  console.log('Step :', step, tableData)
+
+
   const uploadSampleExcel = (e) => {
     e.preventDefault();
     setLoading(true)
@@ -201,45 +208,79 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
 
     const formData = new FormData()
     formData.append('excelFile', value.excelFile)
+    formData.append('tableHead', JSON.stringify(tableHead))
 
     axios.post(`${process.env.REACT_APP_MAIN_URL}/excel/parseExcelData`, formData).then((res) => {
       if (res.status === 201) {
         toast.success('File Uploaded Successfully')
         console.log(res.data)
+        if (res.data.length > 0) {
+          setTableData(() => res.data)
+          console.log(res.data)
+          setStep(2)
+        } else {
+          throw new Error('File was empty')
+        }
       }
-      else if (res.status === 500) { toast.error("Something went wrong") }
+      else if (res.status === 500) {
+        toast.error("Something went wrong")
+        setLoading(false);
+        setOpen(false);
+        setTableData([])
+        setStep(1)
+
+      }
+    }).catch(function (err) {
+      toast.error(err.message)
       setLoading(false);
       setOpen(false);
       setTableData([])
+      setStep(1)
+
     })
   }
 
 
 
-  return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={uploadSampleExcel} onCancel={onCancel} maxWidth="xl" loading={loading}>
+  return <DialogBox title={`${title} Excel Data Entry`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={step === 1 ? uploadSampleExcel : dataBulkEntry} onCancel={onCancel} maxWidth="xl" loading={loading}>
     <div className='p-2 bg-blue-100 rounded-md'>
-      <div className='p-1 flex items-start justify-between'>
-        <div>
 
-          {/* onClick={() => {}} */}
 
-          <div><Button variant="contained" component="label" onClick={generateExcelSampleFile} startIcon={<CloudUploadRoundedIcon />} sx={{ right: 0, fontSize: 14, maxHeight: 100 }} disabled={disableUpload}>
-            Sample Excel File to Fill
-          </Button> </div>
-        </div>
-        <div className=''>
-          <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100 }} onClick={() => { generateExcelFile(data, SendReq, `${title}.xlsx`); }} >
-            Download Data In Excel
-          </Button>
+      {
+        step === 1 ?
+          <div>
+            <div className='p-1 flex items-start justify-between'>
+              <div>
 
-        </div>
-      </div>
-      <div className='w-full mt-3'>
-        <UploadFile className='col-md-12' accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excelFile" label="Upload Filled Sample Excel File" setState={setValues} desable={disableUpload} />
-      </div>
+                {/* onClick={() => {}} */}
+
+                <div><Button variant="contained" component="label" onClick={generateExcelSampleFile} startIcon={<CloudUploadRoundedIcon />} sx={{ right: 0, fontSize: 14, maxHeight: 100 }} disabled={disableUpload}>
+                  Sample Excel File to Fill
+                </Button> </div>
+              </div>
+              <div className=''>
+                <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100 }} onClick={() => { generateExcelFile(data, SendReq, `${title}.xlsx`); }} >
+                  Download Data In Excel
+                </Button>
+
+              </div>
+            </div>
+            <div className='w-full mt-3'>
+              <UploadFile className='col-md-12' accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excelFile" label="Upload Filled Sample Excel File" setState={setValues} desable={disableUpload} />
+            </div>
+          </div>
+          :
+          <BulkTableEntry tableHead={tableHead} typeObject={typeObject} tableData={tableData} setTableData={setTableData} model={SendReq} />
+      }
+
+
+
     </div>
 
+
+
   </DialogBox>
+
 
 }
 
