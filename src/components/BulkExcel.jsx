@@ -181,6 +181,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
     setOpen(false);
     setLoading(false);
     setTableData([])
+    setStep(1)
   }
 
 
@@ -218,6 +219,7 @@ const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof
           setTableData(() => res.data)
           console.log(res.data)
           setStep(2)
+          setLoading(false)
         } else {
           throw new Error('File was empty')
         }
