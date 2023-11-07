@@ -27,7 +27,7 @@ const tableHead = { index: "Sr. no.", SchoolName: "School Name", Title_of_the_in
 const typeObject = {
   SchoolName: Object.keys(SchoolsProgram).map(item => { return item }), Title_of_the_innovation: "test", Name_of_the_Award: "text", Year_of_Award: academicYearGenerator(29, true, true), Name_of_the_Awarding_Agency: "text", Contact_details_Agency: "text", Category: Cate,
 }
-function Awards({ filterByAcademicYear = false, academicYear, school }) { 
+function Awards({ filterByAcademicYear = false, academicYear, school }) {
 
   if (!school) {
     delete tableHead.SchoolName;
@@ -46,10 +46,10 @@ function Awards({ filterByAcademicYear = false, academicYear, school }) {
   let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
 
-  const { data, isLoading, refetch } = useQuery( `${SendReq}Jf*H&8pQrZ1q@K9Lb2Xm`, () => GetReq(params))
+  const { data, isLoading, refetch } = useQuery(`${SendReq}Jf*H&8pQrZ1q@K9Lb2Xm`, () => GetReq(params))
 
   //--------------values useState---------------
-  const initialState = { atoti: "", anota: "", SchoolN:"", anotaa: "", acda: "", ayoa: "", ac: "", Upload_Proof: "" }
+  const initialState = { atoti: "", anota: "", SchoolN: "", anotaa: "", acda: "", ayoa: "", ac: "", Upload_Proof: "" }
   const [values, setvalues] = useState(initialState);
 
   //---------------edit state-------------------
@@ -70,7 +70,7 @@ function Awards({ filterByAcademicYear = false, academicYear, school }) {
             acda: item.Contact_details_Agency,
             ayoa: item.Year_of_Award,
             ac: item.Category,
-            SchoolN:school? item.SchoolName : ""
+            SchoolN: school ? item.SchoolName : ""
           })
         }
       })
@@ -96,13 +96,13 @@ function Awards({ filterByAcademicYear = false, academicYear, school }) {
             e.preventDefault();
             setLoading(true)
             edit ?
-              EditReq({ id: itemToEdit, School:values?.SchoolN }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
+              EditReq({ id: itemToEdit, School: values?.SchoolN }, SendReq, initialState, values, setvalues, refetch, setAdd, setEdit, setItemToEdit, setLoading, module) :
               PostReq({ School: school ? values?.SchoolN : directorUser?.department }, SendReq, initialState, values, setvalues, refetch, setAdd, setLoading, module)
           }}>
             <Grid container >
-            {
-              school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
-            }
+              {
+                school && <SCTextField value={values.SchoolN} id="SchoolN" type="text" label="School" required={true} onch={setvalues} select={Object.keys(SchoolsProgram).map(item => { return item })} />
+              }
               <CTextField value={values.atoti} id="atoti" type="text" label="Title of the innovation" required={!edit} onch={setvalues} />
               <CTextField value={values.anota} id="anota" type="text" label="Name of the Award" required={!edit} onch={setvalues} />
               <CTextField value={values.anotaa} id="anotaa" type="text" label="Name of the Awarding Agency" required={!edit} onch={setvalues} />
@@ -116,7 +116,7 @@ function Awards({ filterByAcademicYear = false, academicYear, school }) {
         </DialogContent>
       </Dialog>
 
-      <BulkExcel data={data?.data} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} disableUpload={school?true:false} tableHead={tableHead} typeObject={typeObject} />
+      <BulkExcel data={data?.data} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{ SchoolName: directorUser?.department }} open={open} setOpen={setOpen} tableHead={tableHead} typeObject={typeObject} />
 
       <Table TB={data?.data} module={module} filterByAcademicYear={filterByAcademicYear} academicYear={academicYear} year="Year_of_Award" fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
     </>
