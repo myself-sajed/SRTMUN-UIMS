@@ -1,23 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import EditToolbar from '../components/EditToolbar'
-import EditableInputFields from '../components/EditableInputFields'
+import EditToolbar from '../components/EditToolbar';
+import EditableInputFields from '../components/EditableInputFields';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import {
-    GridRowModes, DataGrid, GridActionsCellItem, GridRowEditStopReasons, useGridApiContext,
+    GridRowModes, DataGrid, GridActionsCellItem, GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import { useQuery } from 'react-query';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import TableDeleteAction from '../components/TableDeleteAction';
-import refresh from '../../../services/faculty/js/refresh';
-import useAuth from '../../../hooks/useAuth';
 import View from '../../../services/faculty/tables/View';
 import EditableTableUploadButton from '../components/EditableTableUploadButton';
 import { deleteRecord, upsertRecord } from '../js/EditableTableOperations';
-import sortByAcademicYear from '../../../js/sortByAcademicYear';
 import { useState } from 'react';
 import generateFormData from '../js/generateFormData';
 
@@ -38,7 +33,7 @@ export default function EditableTable({ tableColumns, formDataArray, formDataAdd
 
     useEffect(() => {
         let count = 0;
-        rows.forEach((row) => {
+        rows?.forEach((row) => {
             if (row?.isNew) {
                 count += 1
             }

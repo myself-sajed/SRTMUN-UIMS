@@ -1,16 +1,18 @@
-function generateFormData(data, formDataArray, extraDetails = null) {
+function generateFormData(data, formDataArray, extraDetails = null, isProof = false) {
 
     let formData = new FormData()
 
-    formDataArray.forEach((item) => {
-        formData.append([item.name], data[item.value])
-    })
-
     extraDetails?.forEach((item) => {
-        formData.append([item.name], item.value)
+        formData.append([item.name], item.value);
     })
 
-    return formData
+    formDataArray?.forEach((item) => {
+        formData.append([item.name], data?.[item.value]);
+    })
+
+    formData.append("isNew", "isNew");
+
+    return formData;
 }
 
 export default generateFormData
