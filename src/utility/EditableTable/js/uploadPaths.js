@@ -1,4 +1,4 @@
-export default {
+const uploadPaths = {
     faculty: `../uploads/faculty-uploads`,
     CAS: `../uploads/faculty-uploads/CAS-uploads`,
     PBAS: `../uploads/faculty-uploads/PBAS-uploads`,
@@ -26,3 +26,5 @@ export default {
     estt: `../uploads/establishment-uploads`,
     tpo: `../uploads/tpo-uploads`,
 }
+
+export default uploadPaths

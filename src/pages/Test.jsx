@@ -28,7 +28,8 @@ const Test = () => {
     { name: "isNat", value: "isNat" },
     { name: "nature", value: "nature" },
     { name: "file", value: "proof" },
-    { name: "year", value: "year" },]
+    { name: "year", value: "year" }
+  ]
 
   const formDataAdditionalArray = [
     { name: "userId", value: user?._id },
