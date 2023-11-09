@@ -3,7 +3,6 @@ import toast from 'react-hot-toast'
 
 const upsertRecord = async (data, refetch, uploadRowCount, model) => {
 
-    console.log('Row Count :', uploadRowCount)
 
     try {
         const link = `${process.env.REACT_APP_MAIN_URL}/api/upsertRecord/${model}`
@@ -50,7 +49,6 @@ const deleteRecord = async (item, model, refreshFunction, setIsLoading = () => {
     } catch (error) {
         setIsLoading(false)
         toast.error('Internal Server error')
-        console.log(error)
     }
 }
 
