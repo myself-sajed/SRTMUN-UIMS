@@ -48,15 +48,26 @@ router.post('/excel/parseExcelData', excelUpload.single('excelFile'), async (req
         let data = [];
         worksheet.eachRow((row, rowNumber) => {
             if (rowNumber > 1) {
-                const rowData = {};
+                let hasNonEmptyValue = false; // Flag to check if any cell in the row has a non-empty value
                 row.eachCell((cell, colNumber) => {
-                    const header = worksheet.getRow(1).getCell(colNumber).value;
-                    rowData[header] = cell.value;
+                    if (cell.value !== '') {
+                        hasNonEmptyValue = true;
+                        return false; // Exit the cell loop early if a non-empty value is found
+                    }
                 });
-
-                data.push(rowData);
+        
+                if (hasNonEmptyValue) {
+                    const rowData = {};
+                    row.eachCell((cell, colNumber) => {
+                        const header = worksheet.getRow(1).getCell(colNumber).value;
+                        rowData[header] = cell.value;
+                    });
+        
+                    data.push(rowData);
+                }
             }
         });
+        
 
         const swappedTableHeads = swapKeyAndValue(JSON.parse(tableHead));
         let tableData = []
