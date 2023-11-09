@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         // Get the dynamic destination folder from req.body
         const uploadPath = req.body.uploadPath; // Access it directly from req.body
-        const data = JSON.parse(JSON.stringify(req.body))
         const dynamicDestination = path.join(__dirname, uploadPath || null);
         callback(null, dynamicDestination);
     },
@@ -24,7 +23,6 @@ function editableTableOperations(app) {
     app.post('/api/upsertRecord/:model', upload.single('file'), async (req, res) => {
         const data = JSON.parse(JSON.stringify(req.body))
         const model = req.params.model
-
 
         try {
             if (Boolean(data?.isNew) && data?.isNew !== 'undefined') {

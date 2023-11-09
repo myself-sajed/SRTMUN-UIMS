@@ -20,7 +20,7 @@ const EditableInputFields = ({ id, value, field, hasFocus, type = "textarea", op
 
     return (
         <>
-            {type === "select" ? (
+            {Array.isArray(type) ? (
                 <select
                     ref={ref}
                     className="form-select mx-2 text-sm w-full"
@@ -32,7 +32,7 @@ const EditableInputFields = ({ id, value, field, hasFocus, type = "textarea", op
                     <option selected disabled value="">
                         Choose
                     </option>
-                    {options.map((option, i) => {
+                    {type.map((option, i) => {
                         return (
                             <option key={i} value={option}>
                                 {option}

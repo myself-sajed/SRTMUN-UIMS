@@ -10,7 +10,7 @@ function generateFormData(data, formDataArray, extraDetails = null, isProof = fa
         formData.append([item.name], data?.[item.value]);
     })
 
-    formData.append("isNew", "isNew");
+    formData.append("isNew", data["isNew"]);
 
     return formData;
 }

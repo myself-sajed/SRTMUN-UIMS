@@ -52,15 +52,13 @@ const Test = () => {
     {
       field: "isNat",
       headerName: "Level",
-      type: 'select',
-      options: ["State/University", "National", "International (within country)", "International (Abroad)"]
+      type: ["State/University", "National", "International (within country)", "International (Abroad)"],
     },
     {
       field: "nature",
       headerName: "Nature",
       flex: 0.7,
-      type: 'select',
-      options: ["Invited Talk", "Resource Person", "Paper Presentation"]
+      type: ["Invited Talk", "Resource Person", "Paper Presentation"],
     },
     {
       field: "year",
