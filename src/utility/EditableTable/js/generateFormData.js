@@ -1,4 +1,4 @@
-function generateFormData(data, formDataArray, extraDetails = null, isProof = false) {
+function generateFormData(data, formDataArray, extraDetails = null) {
 
     let formData = new FormData()
 
@@ -7,7 +7,7 @@ function generateFormData(data, formDataArray, extraDetails = null, isProof = fa
     })
 
     formDataArray?.forEach((item) => {
-        formData.append([item.name], data?.[item.value]);
+        formData.append([item.name], item.value ? data?.[item.value] : data?.[item.name]);
     })
 
     formData.append("isNew", data["isNew"]);

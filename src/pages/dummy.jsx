@@ -501,3 +501,139 @@ const Test = () => {
 }
 
 export default Test
+
+import React, { useEffect, useState } from 'react'
+import DialogBox from '../../../components/formComponents/DialogBox'
+import Text from '../../../components/formComponents/Text'
+import YearSelect from '../../../components/formComponents/YearSelect'
+import UploadFile from '../../../components/formComponents/UploadFile'
+import AddButton from '../../director/components/UtilityComponents/AddButton'
+import Table from '../../../components/tableComponents/TableComponent'
+import { useQuery } from 'react-query'
+import getReq from '../../../components/requestComponents/getReq'
+import editReq from '../../../components/requestComponents/editReq'
+import addReq from '../../../components/requestComponents/addReq'
+import Select from '../../../components/formComponents/Select'
+import SchoolsProgram from '../../../components/SchoolsProgram'
+import { fetchFacutys } from '../../student/pages/StudentHome'
+import BulkExcel from '../../../components/BulkExcel'
+import uploadPaths from '../../../utility/EditableTable/js/uploadPaths'
+import refresh from '../../faculty/js/refresh'
+import UserLoading from '../../../pages/UserLoading'
+import EditableTable from '../../../utility/EditableTable/content/EditableTable'
+import sortByAcademicYear from '../../../js/sortByAcademicYear'
+
+
+const AdminJRFSRF = () => {
+
+
+  const info = {
+    model: 'JrfSrfAdmin'
+  }
+
+  const formDataArray = [
+    { name: "_id", value: "_id" },
+    { name: "researchName" },
+    { name: "schoolName" },
+    { name: "guideName" },
+    { name: "enrolmentYear" },
+    { name: "fellowshipDate" },
+    { name: "fellowshipDuration" },
+    { name: "fellowshipType" },
+
+
+    { name: "grantingAgency" },
+    { name: "qualifyingExam" },
+    { name: "year" },
+    { name: "file", value: "proof" },
+  ]
+
+  const formDataAdditionalArray = [
+    { name: 'uploadPath', value: uploadPaths.admin }
+  ]
+
+
+  const tableColumns = [
+    {
+      field: "researchName",
+      headerName: "Research Fellow Name",
+    },
+    {
+      field: "schoolName",
+      headerName: "School / Research Center Name",
+      type: 'schools'
+    },
+    {
+      field: "guideName",
+      headerName: "Research Guide",
+    },
+    {
+      field: "enrolmentYear",
+      headerName: "Enrollment Date (RAC)",
+      type: 'date'
+    },
+    {
+      field: "fellowshipDate",
+      headerName: "Fellowship Starting Date",
+      type: 'date'
+    },
+    {
+      field: "fellowshipDuration",
+      headerName: "Fellowship Duration (in Years)",
+      type: 'number'
+    },
+    {
+      field: "fellowshipType",
+      headerName: "Fellowship Type",
+      type: ["JRF", "SRF"]
+    },
+    {
+      field: "grantingAgency",
+      headerName: "Granting Agency",
+    },
+    {
+      field: "qualifyingExam",
+      headerName: "Qualifying Exam",
+      flex: 0.5,
+    },
+    {
+      field: "year",
+      headerName: "Academic Year",
+      flex: 0.7,
+      type: 'AY',
+    },
+    {
+      field: "proof",
+      headerName: "Proof",
+      type: 'proof',
+      flex: 0.5,
+
+    },
+  ];
+
+  const [sortedData, setSortedData] = useState([])
+
+  // main fetcher
+  let param = { model: info.model };
+  const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param),
+    {
+      refetchOnWindowFocus: false
+    }
+  );
+
+  useEffect(() => {
+    if (data) {
+      setSortedData(sortByAcademicYear(data?.data?.data, "year"))
+    }
+  }, [data]);
+
+  return (
+    <>
+      {
+        isLoading ? <UserLoading title="Fetching table contents" /> : <EditableTable sortedData={sortedData} tableColumns={tableColumns} formDataArray={formDataArray} formDataAdditionalArray={formDataAdditionalArray} refetch={refetch} info={info} />
+      }
+    </>
+  )
+}
+
+export default AdminJRFSRF
