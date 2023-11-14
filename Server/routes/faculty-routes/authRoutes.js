@@ -180,7 +180,7 @@ function authRoutes(app, upload, jwt) {
             .then((adminUser) => {
                 if (adminUser) {
                     if (req.body.password === adminUser.password) {
-                        const token = jwt.sign({ id: adminUser._id, }, "SRTMUN");
+                        const token = jwt.sign({ id: adminUser._id, username: adminUser.username }, "SRTMUN");
                         res.send({ status: "ok", adminUser, token });
                     } else {
                         res.send({

@@ -65,7 +65,7 @@ function services(app) {
 
 
     let models = {
-        ...AllModels
+        ...AllModels, DirectorUser, MoUs, ExtensionActivities
     }
 
     app.post('/service/deleteItem', function (req, res) {
