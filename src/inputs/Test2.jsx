@@ -1,4 +1,141 @@
 import React from 'react'
+// import { useQuery } from 'react-query'
+// import fetchData from '../services/dashboard/js/fetchData'
+// import UserLoading from '../pages/UserLoading'
+// import capitalizeText from '../js/capitalizeText'
+// import EmptyBox from '../components/EmptyBox'
+// import ShowImage from './ShowImage'
+// import { convertToURLFormat } from '../services/dashboard/js/prettifyTextForLink'
+// import designationWiseSorting from '../js/designationWiseSorting'
+// import BulkExcel from '../components/BulkExcel'
+
+const Test2 = ({ school: sch }) => {
+
+    // "School of Computational Sciences"
+    // "School of Chemical Sciences"
+    // "School of Commerce and Management Sciences"
+    // "School of Educational Sciences"
+    // "School of Earth Sciences"
+    // "School of Fine and Performing Arts"
+    // "School of Language, Literature and Culture Studies"
+    // "School of Life Sciences"
+    // "School of Mathematical Sciences"
+    // "School of Media Studies"
+    // "School of Pharmacy"
+    // "School of Physical Sciences"
+    // "School of Social Sciences"
+    // "School of Management Sciences, Sub-Campus, Latur"
+    // "School of Social Sciences, Sub-Campus, Latur"
+    // const school = "School of Technology, Sub-Campus, Latur"
+
+//     const param = { model: 'User', filter: { department: school || sch } }
+//     const { data, isLoading, refetch } = useQuery([`${param.model}-${school || sch}`, school || sch], () => fetchData(param), { staleTime: 600000 })
+
+//     const [open, setOpen] = useState(false)
+//     const [filteredData, setFilteredData] = useState(false)
+//     const tableHead = {  Name: "Name", url: "Profile Link", userName: "Username" }
+//     const typeObject = {}
+
+//     useEffect(()=>{
+//       let arr = []
+//       designationWiseSorting(data?.data?.data)?.map((item)=>{
+//         const {name, salutation, username } = item
+        
+//         const Name = `${salutation} ${name}`
+//         const url = 'https://srtmun-uims.org/dashboard/faculty/' + (item ? convertToURLFormat(name) : '');
+//         const userName = username.includes('UFTG') || username.includes('C-') ? item.username : `TG-${item.username}`
+
+//         const newItem = { Name, url, userName }
+//         arr.push(newItem)
+//       } )
+//       setFilteredData(arr)
+      
+//     }, [data] )
+
+//     useEffect(()=>{
+//       console.log(filteredData)
+//     },[filteredData])
+
+//     return (
+//         <div>
+//           <button className='btn btn-success' onClick={()=>{setOpen(true)}}>Excel</button>
+//             { !isLoading && <BulkExcel data={filteredData} title={school} SendReq={""} refetch={refetch} module={module} commonFilds={{}} open={open} setOpen={setOpen} tableHead={tableHead} typeObject={typeObject} /> }
+
+//         </div>
+//     )
+}
+
+export default Test2
+
+// const AllFacultyTable = ({ data, isLoading }) => {
+
+
+//     return <div className='table-responsive w-full'>
+//         <table className="table table-bordered css-serial">
+//             <thead className='bg-blue-600 text-white'>
+//                 <tr>
+//                     <th scope="col">Sr No.</th>
+//                     <th scope="col">Photo</th>
+//                     <th scope="col">Faculty Name</th>
+//                     <th scope="col">Employee ID</th>
+//                     <th scope="col">Designation</th>
+//                     <th scope="col">Field of Specialization</th>
+
+//                 </tr>
+//             </thead>
+//             <tbody>
+
+//                 {
+//                     designationWiseSorting(data?.data?.data)?.map((item) => {
+//                         return <tr>
+//                             <td className='font-bold'></td>
+//                             <td className='min-w-32'><ShowImage fileName={item?.photoURL} serviceName={'faculty'} /></td>
+
+//                             <td className='w-[25%]'>
+//                                 <div>
+//                                     <p>{item?.salutation} {capitalizeText(item?.name)}</p>
+//                                     <button className='p-2 my-2 text-sm rounded-md bg-blue-200 text-blue-800 hover:bg-blue-100' onClick={() => {
+//                                         const url = '/dashboard/faculty/' + (item ? convertToURLFormat(item.name) : '');
+//                                         window.open(url, '_blank');
+//                                     }}>View Profile</button>
+//                                 </div>
+//                             </td>
+//                             <td>{item?.username.includes('UFTG') || item.username.includes('C-') ? item.username : `TG-${item.username}`}</td>
+//                             <td>{item?.designation === 'Contractual' ? 'Assistant Professor (Contractual)' : item?.designation}</td>
+//                             <td>{item?.specialization}</td>
+//                         </tr>
+//                     })
+//                 }
+
+//             </tbody>
+//         </table>
+//         {isLoading && <UserLoading title="Fetching data" />}
+
+
+//         {
+//             data?.data?.data?.length === 0 && <EmptyBox />
+//         }
+
+//     </div>
+// }
+
+
+// export { AllFacultyTable }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from 'react'
 // import SwayamEContentDeveloped from '../services/swayam/pages/SwayamEContentDeveloped'
 // import SwayamValueAddedCourses from '../services/swayam/pages/SwayamValueAddedCourses'
 // import AdminPhdAwarded from '../services/admin/tables/AdminPhdAwarded'
@@ -11,36 +148,36 @@ import React from 'react'
 // import EsttFullTimeTeacher from '../services/establishment/pages/EsttFullTimeTeacher'
 // import EsttFullTimeTeacherWhoLeft from '../services/establishment/pages/EsttFullTimeTeacherWhoLeft'
 // import EsttFullTimeTeacherAgainstSanctioned from '../services/establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
-import Excelmaker from '../utility/excel/Excelmaker'
+// import Excelmaker from '../utility/excel/Excelmaker'
 // import NewComponent from '../components/formComponents/NewComponent'
 // import AdminJRFSRF from '../services/admin/tables/AdminJRFSRF'
 // import AdminResearchProjects from '../services/admin/tables/AdminResearchProjects'
 
-const Test2 = () => {
-  return (
-    <div>
-      {/* <AdminJRFSRF/>
-      <AdminResearchProjects/> */}
-      {/* <AdminPhdAwarded/>
-      <AdminHE/>
-      <AdminDemandRatio/>
-      <AdminResearchGuide/> */}
-      {/* <SwayamValueAddedCourses/>
-      <SwayamEContentDeveloped/> */}
+// const Test2 = () => {
+//   return (
+//     <div>
+//       {/* <AdminJRFSRF/>
+//       <AdminResearchProjects/> */}
+//       {/* <AdminPhdAwarded/>
+//       <AdminHE/>
+//       <AdminDemandRatio/>
+//       <AdminResearchGuide/> */}
+//       {/* <SwayamValueAddedCourses/>
+//       <SwayamEContentDeveloped/> */}
 
-      {/* <TPOCounselingAndGuiance />
-      <TPOPlacements />
-      <TPOProgressionToHE /> */}
-      {/* <EsttFullTimeTeacher />
-      <EsttFullTimeTeacherWhoLeft />
-      <EsttFullTimeTeacherAgainstSanctioned /> */}
-      {/* <NewComponent /> */}
-      <Excelmaker/>
-    </div>
-  )
-}
+//       {/* <TPOCounselingAndGuiance />
+//       <TPOPlacements />
+//       <TPOProgressionToHE /> */}
+//       {/* <EsttFullTimeTeacher />
+//       <EsttFullTimeTeacherWhoLeft />
+//       <EsttFullTimeTeacherAgainstSanctioned /> */}
+//       {/* <NewComponent /> */}
+//       {/* <Excelmaker/> */}
+//     </div>
+//   )
+// }
 
-export default Test2
+// export default Test2
 
 
 
