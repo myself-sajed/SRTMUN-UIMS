@@ -589,3 +589,10 @@ body {
   background-color: initial !important;
   box-shadow: none !important;
 }
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: #1d4ed8; 
+  color: white;
+}

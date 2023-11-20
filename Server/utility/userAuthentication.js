@@ -1,4 +1,5 @@
 // import necessary models here
+const AdminUser = require('../models/faculty-models/adminUser')
 const FacultyUser = require('../models/faculty-models/userModel')
 const DirectorUser = require('../models/director-models/directorUser')
 const StudentUser = require('../models/student-models/studentUserSchema')
@@ -19,7 +20,7 @@ const SwayamUser = require('../models/swayam-models/swayamUserSchema')
 const ESTTUser = require('../models/establishment-models/esttUserSchema')
 
 
-const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser, SkillUser, PGUser, APDSUser, SwayamUser, ESTTUser }
+const models = { FacultyUser, DirectorUser, StudentUser, AlumniUser, PROUser, YFCollege, DSDUser, KRCUser, SportsUser, NSSUser, ExamUser, PlacementUser, IILUser, SkillUser, PGUser, APDSUser, SwayamUser, ESTTUser, AdminUser }
 
 const userAuthentication = (app, jwt) => {
 

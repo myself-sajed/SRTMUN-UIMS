@@ -47,6 +47,7 @@ const fs = require('fs');
 const AlumniUser = require('../../models/alumni-models/alumniUserSchema');
 const StudentUser = require('../../models/student-models/studentUserSchema');
 const { multerConfig } = require('../../utility/multerConfig');
+const { AllModels } = require('./routes');
 
 async function deleteFile(filename, type, callback) {
     let paths = {
@@ -64,7 +65,7 @@ function services(app) {
 
 
     let models = {
-        User, Qualification, Degree, AppointmentsHeldPrior, PostHeld, Lectures, Online, ResearchProject, ResearchPaper, BookAndChapter, ResearchGuidance, PhdAwarded, JrfSrf, AwardRecognition, Patent, ConsultancyServices, Collaboration, InvitedTalk, ConferenceOrganized, Fellowship, EContentDeveloped, PolicyDocuments, Experience, DirectorUser, Responsibilities, FinancialSupport, ConferenceParticipated, ForeignVisit, MoUs, ExtensionActivities
+        ...AllModels, DirectorUser, MoUs, ExtensionActivities
     }
 
     app.post('/service/deleteItem', function (req, res) {

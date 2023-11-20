@@ -2,6 +2,7 @@ import React from "react";
 import { TextareaAutosize } from "@mui/material";
 import { useGridApiContext } from "@mui/x-data-grid";
 import { academicYearGenerator } from "../../../inputs/Year";
+import SchoolsProgram from "../../../components/SchoolsProgram";
 
 const EditableInputFields = ({ id, value, field, hasFocus, type = "textarea", options, inputType = "text" }) => {
     const apiRef = useGridApiContext();
@@ -53,6 +54,26 @@ const EditableInputFields = ({ id, value, field, hasFocus, type = "textarea", op
                         Choose Year
                     </option>
                     {academicYearGenerator(30, null, true).map((option, i) => {
+                        return (
+                            <option key={i} value={option}>
+                                {option}
+                            </option>
+                        );
+                    })}
+                </select>
+            ) : type === "schools" ? (
+                <select
+                    ref={ref}
+                    className="form-select mx-2 text-sm w-full"
+                    id="validationCustom05"
+                    required
+                    value={value}
+                    onChange={handleValueChange}
+                >
+                    <option selected disabled value="">
+                        Choose School
+                    </option>
+                    {Object.keys(SchoolsProgram).map((option, i) => {
                         return (
                             <option key={i} value={option}>
                                 {option}

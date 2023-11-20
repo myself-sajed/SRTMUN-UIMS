@@ -118,7 +118,7 @@ export default function EditableTable({ tableColumns, formDataArray, formDataAdd
         return {
             field: column.field,
             headerName: column.headerName,
-            flex: column.flex || 1,
+            // flex: column.flex || 1,
             editable: true,
             renderCell: (params) => {
                 if (column.type === 'proof') {
@@ -197,58 +197,58 @@ export default function EditableTable({ tableColumns, formDataArray, formDataAdd
 
     return (
         <div>
-            <Box
-                sx={sx}
-            >
-                <div className="w-full">
-                    <DataGrid
-                        sx={{ border: 'none' }}
-                        autoHeight
-                        showCellVerticalBorder={true}
-                        showColumnVerticalBorder={true}
-                        rows={rows}
-                        columns={columns}
-                        getRowHeight={() => 'auto'}
-                        editMode="row"
-                        getRowId={(row) => row._id}
-                        rowModesModel={rowModesModel}
-                        onRowModesModelChange={handleRowModesModelChange}
-                        onRowEditStop={handleRowEditStop}
-                        processRowUpdate={async (updatedRow, originalRow) => {
-                            try {
+            <div style={{ height: 350, width: '100%' }}>
+                <DataGrid
+                    sx={{ border: 'none' }}
+                    autoHeight
+                    showCellVerticalBorder={true}
+                    showColumnVerticalBorder={true}
+                    rows={rows}
+                    columns={columns.map((col) => ({
+                        ...col,
+                        headerName: col.headerName, // Set headerName to the full name of the column
+                        filterable: false, // Disable filtering
+                        headerClassName: 'sticky-header',
+                    }))}
+                    getRowHeight={() => 'auto'}
+                    editMode="row"
+                    getRowId={(row) => row._id}
+                    rowModesModel={rowModesModel}
+                    onRowModesModelChange={handleRowModesModelChange}
+                    onRowEditStop={handleRowEditStop}
+                    processRowUpdate={async (updatedRow, originalRow) => {
+                        try {
 
 
-                                const formData = generateFormData(updatedRow, formDataArray, formDataAdditionalArray)
+                            const formData = generateFormData(updatedRow, formDataArray, formDataAdditionalArray)
 
-                                const status = await upsertRecord(formData, refetch, uploadRowCount, info.model)
+                            const status = await upsertRecord(formData, refetch, uploadRowCount, info.model)
 
-                                if (status === 200) {
-                                    console.log('Record updated successfully in the database.');
-                                    const updatedRowCopy = { ...updatedRow };
-                                    updatedRowCopy.isNew = false;
-                                    const updatedRows = rows.map((row) => (row._id === updatedRow._id ? updatedRowCopy : row));
-                                    setRows(updatedRows);
-                                    return updatedRow;
-                                } else {
-                                    console.error('Failed to update the database record.');
-                                }
-                            } catch (error) {
-                                console.error('An error occurred while updating the record:', error);
+                            if (status === 200) {
+                                console.log('Record updated successfully in the database.');
+                                const updatedRowCopy = { ...updatedRow };
+                                updatedRowCopy.isNew = false;
+                                const updatedRows = rows.map((row) => (row._id === updatedRow._id ? updatedRowCopy : row));
+                                setRows(updatedRows);
+                                return updatedRow;
+                            } else {
+                                console.error('Failed to update the database record.');
                             }
-                            return originalRow;
-                        }}
-                        onProcessRowUpdateError={(params, error) => {
-                            console.error('Row update error:', error);
-                            return false;
-                        }}
-                        slots={slots}
-                        slotProps={{
-                            toolbar: { setRows, setRowModesModel },
-                        }}
-                    />
-                </div>
-
-            </Box>
+                        } catch (error) {
+                            console.error('An error occurred while updating the record:', error);
+                        }
+                        return originalRow;
+                    }}
+                    onProcessRowUpdateError={(params, error) => {
+                        console.error('Row update error:', error);
+                        return false;
+                    }}
+                    slots={slots}
+                    slotProps={{
+                        toolbar: { setRows, setRowModesModel },
+                    }}
+                />
+            </div>
         </div>
     );
 }

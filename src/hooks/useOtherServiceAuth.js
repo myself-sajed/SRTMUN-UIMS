@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-const useOtherServiceAuth = ({ shouldNavigate = true, tokenName, model, setUser, navigationHomeLink, navigationLoginLink, usingInIsUserLoggedInHook = false }) => {
+const useOtherServiceAuth = ({ shouldNavigate = true, tokenName, model, setUser, navigationHomeLink, navigationLoginLink, usingInIsUserLoggedInHook = false, filterName = null }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -14,7 +14,7 @@ const useOtherServiceAuth = ({ shouldNavigate = true, tokenName, model, setUser,
         if (token) {
 
             Axios.post(`${process.env.REACT_APP_MAIN_URL}/api/user/authentication`,
-                { token: token, model, filterName: 'email' })
+                { token: token, model, filterName: filterName || 'email' })
                 .then(res => {
                     if (res.data.status === 'authenticated') {
                         dispatch(setUser(res.data.user))

@@ -1,107 +1,83 @@
-import React from 'react';
-import GoBack from '../components/GoBack';
-import EditableTable from '../utility/EditableTable/content/EditableTable';
-import refresh from '../services/faculty/js/refresh';
-import UserLoading from './UserLoading';
-import sortByAcademicYear from '../js/sortByAcademicYear';
-import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
-import useAuth from '../hooks/useAuth';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Test = () => {
-
-  useAuth(false)
-  const user = useSelector((state) => state.user?.user)
-
-
-  const info = {
-    model: 'InvitedTalk'
-  }
-
-  const formDataArray = [
-    { name: "_id", value: "_id" },
-    { name: "lectureTitle", value: "lectureTitle" },
-    { name: "seminarTitle", value: "seminarTitle" },
-    { name: "organizedBy", value: "organizedBy" },
-    { name: "isNat", value: "isNat" },
-    { name: "nature", value: "nature" },
-    { name: "file", value: "proof" },
-    { name: "year", value: "year" }
-  ]
-
-  const formDataAdditionalArray = [
-    { name: "userId", value: user?._id },
-    { name: 'uploadPath', value: `../uploads/faculty-uploads/` }
-  ]
-
-  const tableColumns = [
-    {
-      field: "lectureTitle",
-      headerName: "Title of Lecture / Academic Session",
-    },
-    {
-      field: "seminarTitle",
-      headerName: "Title of Seminar",
-    },
-    {
-      field: "organizedBy",
-      headerName: "Organized by",
-    },
-    {
-      field: "isNat",
-      headerName: "Level",
-      type: ["State/University", "National", "International (within country)", "International (Abroad)"],
-    },
-    {
-      field: "nature",
-      headerName: "Nature",
-      flex: 0.7,
-      type: ["Invited Talk", "Resource Person", "Paper Presentation"],
-    },
-    {
-      field: "year",
-      headerName: "Year",
-      flex: 0.7,
-      type: 'AY',
-    },
-    {
-      field: "proof",
-      headerName: "Proof",
-      type: 'proof',
-      flex: 0.5,
-
-    },
+  // Initial list of items
+  const initialItems = [
+    { id: 1, label: 'Item 1' },
+    { id: 2, label: 'Item 2' },
+    { id: 3, label: 'Item 3' },
+    // Add more items as needed
   ];
 
-  const [sortedData, setSortedData] = useState([])
+  // States
+  const [leftItems, setLeftItems] = useState(initialItems);
+  const [rightItems, setRightItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  // main fetcher
-  let param = { model: info.model, userId: user?._id };
-  const { data, isLoading, isError, error, refetch } = useQuery([param.model, param], () => refresh(param),
-    {
-      refetchOnWindowFocus: false
-    }
-  );
+  // Event handler for checkbox change
+  const handleCheckboxChange = (item) => {
+    const updatedSelectedItems = [...selectedItems];
+    const index = updatedSelectedItems.findIndex((selectedItem) => selectedItem.id === item.id);
 
-  useEffect(() => {
-    if (data) {
-      setSortedData(sortByAcademicYear(data?.data?.data, "year"))
+    if (index === -1) {
+      updatedSelectedItems.push(item);
+    } else {
+      updatedSelectedItems.splice(index, 1);
     }
-  }, [data]);
+
+    setSelectedItems(updatedSelectedItems);
+  };
+
+  // Event handler for moving items
+  const handleMoveItems = (direction) => {
+    const sourceItems = direction === 'left' ? rightItems : leftItems;
+    const destinationItems = direction === 'left' ? leftItems : rightItems;
+
+    const updatedSourceItems = sourceItems.filter((item) => !selectedItems.includes(item));
+    const updatedDestinationItems = [...destinationItems, ...selectedItems];
+
+    direction === 'left' ? setRightItems(updatedSourceItems) : setLeftItems(updatedSourceItems);
+    direction === 'left' ? setLeftItems(updatedDestinationItems) : setRightItems(updatedDestinationItems);
+
+    setSelectedItems([]);
+  };
 
   return (
     <div>
-      <GoBack pageTitle="Editable Table" />
-      <div className="pt-3">
-        {
-          isLoading ? <UserLoading title="Fetching table contents" /> : <EditableTable sortedData={sortedData} tableColumns={tableColumns} formDataArray={formDataArray} formDataAdditionalArray={formDataAdditionalArray} refetch={refetch} info={info} />
-        }
+      <div>
+        <h2>Left Box</h2>
+        {leftItems.map((item) => (
+          <div key={item.id}>
+            <input
+              type="checkbox"
+              checked={selectedItems.includes(item)}
+              onChange={() => handleCheckboxChange(item)}
+            />
+            {item.label}
+          </div>
+        ))}
+      </div>
 
+      <div>
+        <button onClick={() => handleMoveItems('right')}>&gt;&gt;</button>
+        <button onClick={() => handleMoveItems('left')}>&lt;&lt;</button>
+      </div>
+
+      <div>
+        <h2>Right Box</h2>
+        {rightItems.map((item) => (
+          <div key={item.id}>
+            <input
+              type="checkbox"
+              checked={selectedItems.includes(item)}
+              onChange={() => handleCheckboxChange(item)}
+            />
+            {item.label}
+          </div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Test
+export default Test;

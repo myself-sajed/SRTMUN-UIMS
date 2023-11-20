@@ -148,6 +148,8 @@ import SwayamHome from '../services/swayam/pages/SwayamHome'
 import SwayamDataCenter from '../services/swayam/pages/SwayamDataCenter'
 import ESTTHome from '../services/establishment/pages/ESTTHome'
 import ESTTLogin from '../services/establishment/pages/ESTTLogin'
+import ChooseAQARYear from '../services/aqar-naac/content/ChooseAQARYear'
+import Stage from '../services/aqar-naac/content/Stage'
 
 let model = "Xyz"
 let module = 'abc'
@@ -364,6 +366,11 @@ const RoutesHandler = () => {
                 <Route path="/swayam-nptel-login" exact element={<SwayamLogin />} />
                 <Route path="/swayam-nptel" exact element={<SwayamHome />} />
                 <Route path="/swayam-nptel/data-center" exact element={<SwayamDataCenter />} />
+
+                {/* AQAR (Director + Admin) */}
+                <Route path="/:userType/aqar" exact element={<ChooseAQARYear />} />
+                <Route path="/:userType/aqar/:academicYear/:stageName" exact element={<Stage />} />
+
 
             </Routes>
 
