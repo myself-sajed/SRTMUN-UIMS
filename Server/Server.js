@@ -185,6 +185,9 @@ app.use(require('./routes/youthfestival-routes/competition-routes'))
 // Editable Table
 require('./utility/editableTable')(app)
 
+// NAAC-AQAR Routes
+app.use(require('./routes/naac-aqar-routes/naac-aqar'))
+
 
 
 mongoose

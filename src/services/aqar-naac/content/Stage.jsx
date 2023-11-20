@@ -26,6 +26,7 @@ import AlumniContribution from '../../director/pages/AlumniContribution'
 import TrainingProgramsOrganized from '../../director/pages/TrainingProgramsOrganized'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import { useSelector } from 'react-redux'
+import AQARTextMatter from '../components/AQARTextMatter'
 
 const Stage = () => {
     const { academicYear, userType, stageName } = useParams();
@@ -48,7 +49,8 @@ const Stage = () => {
                 proofData: {
                     academicYear, proofType: 'SyllabusRevision', userType: 'director'
                 },
-                component: <SyllabusRevision filterByAcademicYear={true} academicYear={academicYear} />
+                // component: <SyllabusRevision filterByAcademicYear={true} academicYear={academicYear} />,
+                component: <AQARTextMatter academicYear={academicYear} matterType="SyllabusRevision" userType="director" />
             },
             {
                 title: 'Employability',

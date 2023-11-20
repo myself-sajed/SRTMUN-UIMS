@@ -248,14 +248,12 @@ const BulkExcel = ({
       });
   };
 
-  console.log("Step :", step, tableData);
 
   const uploadSampleExcel = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      console.log("Function is called");
 
       const formData = new FormData();
       formData.append("excelFile", value.excelFile);
@@ -283,7 +281,6 @@ const BulkExcel = ({
         });
 
         setTableData(updatedData);
-        console.log(updatedData);
         setStep(2);
         setLoading(false);
       } else if (response.status === 500) {

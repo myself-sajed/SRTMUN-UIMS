@@ -8,13 +8,14 @@ import { useEffect } from 'react'
 
 const AQARWithProof = ({ supportingProofMetaData, children }) => {
 
+
     const { academicYear, proofType, userType } = supportingProofMetaData
 
     const [file, setFile] = useState(null)
     const [proof, setProof] = useState(null)
 
     const filter = { academicYear: academicYear, userType, proofType }
-    const { data, isLoading, refetch } = useQuery(`${proofType}-${academicYear}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
+    const { data, isLoading, refetch } = useQuery(`Proof-${proofType}-${academicYear}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
 
     const submitProofFunction = () => {
         const formData = new FormData()

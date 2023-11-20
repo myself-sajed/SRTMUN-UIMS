@@ -3,7 +3,6 @@ import toast from 'react-hot-toast'
 
 // route available in krc-routes.js
 const uploadSupportingDocument = (formData, refetch) => {
-    console.log('Data:', [...formData])
     const link = `${process.env.REACT_APP_MAIN_URL}/aqar/uploadSupportingProof`
     Axios.post(link, formData).then((res) => {
         if (res.data.status === 'success') {
