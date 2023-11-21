@@ -27,6 +27,7 @@ import TrainingProgramsOrganized from '../../director/pages/TrainingProgramsOrga
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import { useSelector } from 'react-redux'
 import AQARTextMatter from '../components/AQARTextMatter'
+import AdminMasterTable from '../../admin/components/AdminMasterTable'
 
 const Stage = () => {
     const { academicYear, userType, stageName } = useParams();
@@ -41,7 +42,7 @@ const Stage = () => {
     const users = useSelector((state) => state.user)
 
 
-    console.log(users);
+    // console.log(users.directorUser.department);
 
 
     const AQARTables = {
@@ -99,6 +100,23 @@ const Stage = () => {
         ],
         "criterion-3": [
             {
+                title: '3.1.3 - Teachers receiving national/ international fellowship/financial support by various agencies for advanced studies/ research  during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Fellowship', userType: 'director'
+                },
+                component: <AdminMasterTable model="Fellowship" academicYear={academicYear} school={users?.directorUser?.department} heading='Fellowships' serviceName="faculty" />
+            },
+            {
+                title: '3.1.4 - JRFs, SRFs, Post Doctoral Fellows, Research Associates and other research fellows enrolled in the institution during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'JrfSrf', userType: 'director'
+                },
+                component: <AdminMasterTable model="JrfSrf" academicYear={academicYear} school={users?.directorUser?.department} heading='JRFs, SRFs, PDF, Research Associates' serviceName="faculty" />
+            },
+
+            {
                 title: '3.1.6 - UGC-SAP, CAS, DST-FIST, DBT, ICSSR',
                 hasSupportingDocument: true,
                 proofData: {
@@ -121,6 +139,14 @@ const Stage = () => {
                     academicYear, proofType: 'Award', userType: 'director'
                 },
                 component: <Awards filterByAcademicYear={true} academicYear={academicYear} />
+            },
+            {
+                title: '3.4.2 - Patents published/awarded during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Patent', userType: 'director'
+                },
+                component: <AdminMasterTable model="Patent" academicYear={academicYear} school={users?.directorUser?.department} heading='Patents' serviceName="faculty" />
             },
             {
                 title: '3.6.3 - Extension Activities ',
@@ -197,7 +223,7 @@ const Stage = () => {
                 title: 'Alumni Contribution',
                 hasSupportingDocument: true,
                 proofData: {
-                    academicYear, proofType: 'ProjectsInternships', userType: 'director'
+                    academicYear, proofType: 'AlumniContribution', userType: 'director'
                 },
                 component: <AlumniContribution filterByAcademicYear={true} academicYear={academicYear} />
             },

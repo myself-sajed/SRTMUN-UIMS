@@ -6,7 +6,7 @@ import Loader from '../../../components/Loader'
 import siteLinks from '../../../components/siteLinks';
 
 
-const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) => {
+const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28' }) => {
 
   const [tblCells, setTblCells] = useState();
 
@@ -33,7 +33,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
 
       <div className='table-responsive' style={{ height: "100%" }}>
         <table className="table table-bordered" >
-          <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b':'#ae7e28'}`, color: '#FFF' }}>
+          <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b': headColor }`, color: '#FFF' }}>
             <tr>
               {
                 Object.values(tableHead)?.map(item => {
@@ -52,7 +52,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading }) =>
 
               }
               {
-                proof ? proof == "link" ? <td><a href={row[proof]} target="_blank" style={{ color: "blue" }}>{row[proof]}</a></td> : <td><FileViewer fileName={row[proof]} serviceName={serviceName} /></td> : ""
+                proof ? proof == "link" ? <td><a href={row[proof]} target="_blank" style={{ color: "blue" }} rel="noreferrer">{row[proof]}</a></td> : <td><FileViewer fileName={row[proof]} serviceName={serviceName} /></td> : ""
               }
             </tr>
             )}
