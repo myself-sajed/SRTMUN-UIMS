@@ -32,7 +32,7 @@ const AlumniContribution = ({ filterByAcademicYear = false, academicYear }) => {
 
   const typeObject = {Name_of_The_Alumni_Contributed: "text", Program_graduated_from: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Amount_of_contribution: "number", Academic_Year: academicYearGenerator(29, true),}
 
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_year: { in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }

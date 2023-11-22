@@ -35,7 +35,7 @@ function ProjectsInternships({ filterByAcademicYear = false, academicYear }) {
         Programme_Code: "text", Programme_name: SchoolsProgram[directorUser?.department]?.map(item => item[0]), Name_of_the_student: "text", Academic_Year: academicYearGenerator( 29, true ),
     }
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

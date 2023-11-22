@@ -36,7 +36,7 @@ function DemandRatio({ filterByAcademicYear = false, academicYear }) {
   const typeObject = {
     Programme_Code: "text", Programme_name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Academic_Year: academicYearGenerator( 29, true ), Type_of_program: TOP, Number_of_seats_available: "number", Number_of_eligible_applications: "number", Number_of_Students_admitted: "number",
   }
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }

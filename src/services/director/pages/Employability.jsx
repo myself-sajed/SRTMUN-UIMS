@@ -37,7 +37,7 @@ function Employability({ filterByAcademicYear = false, academicYear }) {
     const typeObject = {
         Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Course_Code: "text", Name_of_the_Course: "text", Academic_Year: academicYearGenerator( 29, true ), Year_of_introduction: yearArray(), Activities_Content_with_direct_bearing_on_Employability_Entrepreneurship_Skill_development: "text",
     }
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear?[academicYear]: [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

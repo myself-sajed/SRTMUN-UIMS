@@ -36,7 +36,7 @@ function UgcSapCasDstFistDbtICssr({ filterByAcademicYear = false, academicYear }
     const typeObject = {
         Name_of_the_Scheme_Project_Endowments_Chairs: "text", Name_of_the_Principal_Investigator_Co_Investigator: "text", Name_of_the_Funding_agency: "text", Type_of_Agency: TyofAgency, Name_of_Department: Object.keys(SchoolsProgram), Year_of_Award: academicYearGenerator(29, true, true), Funds_provided_in_lakhs: "number", Duration_of_the_project_in_Years: "number"
     }
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_Award: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

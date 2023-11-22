@@ -29,7 +29,7 @@ function CourceInAllPrograms({ filterByAcademicYear = false, academicYear }) {
   const [open, setOpen] = useState(false);
   const directorUser = useSelector(state => state.user.directorUser)
   const typeObject = {programName: "text", programCode: "text", courseName: "text", courseCode: "text", academicYear: academicYearGenerator(29,true),}
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { academicYear: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }

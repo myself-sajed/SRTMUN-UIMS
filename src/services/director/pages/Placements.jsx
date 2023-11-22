@@ -45,7 +45,7 @@ function Placements({ filterByAcademicYear = false, academicYear, school }) {
     if (!school) {
         delete typeObject.SchoolName;
     }
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

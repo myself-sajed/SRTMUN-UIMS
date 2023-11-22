@@ -39,7 +39,7 @@ function SyllabusRevision({ filterByAcademicYear = false, academicYear }) {
   const typeObject = {
       Programme_Code: "text", Programme_Name:directorUser? SchoolsProgram[directorUser?.department].map(item => { return item[0] }): [], Academic_Year: academicYearGenerator(29,true,true), Year_of_Introduction: years, Status_of_implementation: CE, Year_of_Implimentation: years, Year_of_Revision: years, Percentage_of_content_added_or_replaced: "number"
   }
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear?[academicYear]: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }

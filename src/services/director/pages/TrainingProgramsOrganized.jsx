@@ -38,7 +38,7 @@ function TrainingProgramsOrganized({ filterByAcademicYear = false, academicYear 
   const typeObject = {
     Year: academicYearGenerator(29,true,true), From_Date: "date", To_Date: "date", Title_Of_the_Program: "text", Type_of_staff: StaffType, Number_of_Participants: "number"
   }
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }
