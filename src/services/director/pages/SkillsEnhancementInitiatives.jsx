@@ -33,7 +33,7 @@ function SkillsEnhancementInitiatives({ filterByAcademicYear = false, academicYe
     const typeObject = {
         Name_of_the_capacity_development_schemes: "text", Academic_Year: academicYearGenerator(29,true), Date_of_implementation: "date", Number_of_students_enrolled: "number",
     }
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

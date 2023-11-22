@@ -36,7 +36,7 @@ function ValueAddedCource({ filterByAcademicYear = false, academicYear }) {
   const typeObject = {
     Program_Name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Name_of_the_value_added_courses_offered: "text", Course_Code_if_any: "text", Academic_year: academicYearGenerator(29,true,true), Year_of_offering: yearArray(), No_of_times_offered_during_the_same_year: "number", Duration_of_the_course: "number", Number_of_students_enrolled: "number", Number_of_Students_completing_the_course: "number"
   }
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear?[academicYear]: [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Academic_year: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: "", module, filter }

@@ -41,9 +41,9 @@ function MoUs({ filterByAcademicYear = false, academicYear, school }) {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
-    let filter = school ? yearFilter.length === 0 ? {} : { Academic_Year: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Academic_Year: { $in: yearFilter }, SchoolName };
+    let filter = school ? yearFilter.length === 0 ? {} : { Year_of_signing_MoU: { $in: yearFilter } } : yearFilter.length === 0 ? { SchoolName } : { Year_of_signing_MoU: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
     const { data, isLoading, refetch } = useQuery([SendReq, "hluX%z1d~8KFhGj/%lt$"], () => GetReq(params))
 

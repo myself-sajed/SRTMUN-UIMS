@@ -38,7 +38,7 @@ function StudentSatisfactionSurvey({ filterByAcademicYear = false, academicYear 
     const typeObject = {
         Name_of_the_student: "text", Year_of_joining: academicYearGenerator(29,true,true), Category: Category, State_of_Domicile: "text", Nationality: Lists.countrys, Email_ID: "text", Programme_name: SchoolsProgram[directorUser.department].map(item => { return item[0] }), Student_Unique_Enrolment_ID: "text", Mobile_Number: "number", Gender: Lists.gender,
     }
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_joining: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }

@@ -33,7 +33,7 @@ function ExtensionActivities({ filterByAcademicYear = false, academicYear }) {
     Name_of_the_activity: "text", Organising_unit: "text", Name_of_the_scheme: "text", Year_of_activity: academicYearGenerator( 29, true, true ), Number_of_students: "number"
   }
 
-  const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+  const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
   const { yearFilter, SchoolName } = Filter
   let filter = yearFilter.length === 0 ? { SchoolName } : { Year_of_activity: { $in: yearFilter }, SchoolName };
   const params = { model: SendReq, id: '', module, filter }

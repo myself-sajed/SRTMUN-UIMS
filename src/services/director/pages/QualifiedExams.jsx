@@ -37,7 +37,7 @@ function QualifiedExams({ filterByAcademicYear = false, academicYear }) {
         Registration_number_roll_number: "text", Names_of_students_selected_qualified: "text", Name_of_the_Exam: exam, Acadmic_year: academicYearGenerator(29, true),
     }
 
-    const [Filter, setFiletr] = useState({ yearFilter: [], SchoolName: directorUser?.department })
+    const [Filter, setFiletr] = useState({ yearFilter: filterByAcademicYear? [academicYear] : [], SchoolName: directorUser?.department })
     const { yearFilter, SchoolName } = Filter
     let filter = yearFilter.length === 0 ? { SchoolName } : { Acadmic_year: { $in: yearFilter }, SchoolName };
     const params = { model: SendReq, id: '', module, filter }
