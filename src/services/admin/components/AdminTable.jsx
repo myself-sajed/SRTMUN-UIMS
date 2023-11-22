@@ -6,7 +6,7 @@ import Loader from '../../../components/Loader'
 import siteLinks from '../../../components/siteLinks';
 
 
-const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28', SendReq }) => {
+const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28', SendReq, tableHeight="100%" }) => {
 
   const [tblCells, setTblCells] = useState();
 
@@ -31,7 +31,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, head
   return (
     <>
 
-      <div className='table-responsive' style={{ height: "100%" }}>
+      <div className='table-responsive' style={{ height: tableHeight }}>
         <table className="table table-bordered" >
           <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b': headColor }`, color: '#FFF' }}>
             {

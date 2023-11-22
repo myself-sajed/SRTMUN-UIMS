@@ -30,7 +30,7 @@ const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model
             </div>
           </div>
         </div>
-      <AdminTable data={data?.data} tableHead={updatedTableHead[model]} proof={proof} serviceName={serviceName} Heading={heading} SendReq={model} isLoading={isLoading} headColor={color} />
+      <AdminTable data={data?.data} tableHead={updatedTableHead[model]} proof={proof} serviceName={serviceName} Heading={heading} SendReq={model} isLoading={isLoading} headColor={color} tableHeight='90vh' />
     </div>
   )
 }
