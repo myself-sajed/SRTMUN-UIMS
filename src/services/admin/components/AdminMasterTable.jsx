@@ -4,12 +4,13 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import { tableHead } from '../pages/AdminNumaricalData'
 import AdminExcelExoprt from './AdminExcelExoprt'
+import { tableHead as OnlineTableHead}  from '../tables_faculty/OrientationRefresherCourse'
 
-const updatedTableHead = {...tableHead}
+const updatedTableHead = {...tableHead, Online: OnlineTableHead}
 
-const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model, academicYear, heading, school, serviceName}) => {
+const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model, academicYear, heading, school, serviceName, costomParams}) => {
 
-    const params = { model: model, module, filter: academicYear && { year: { $in: academicYear } },
+    const params = costomParams || { model, module, filter: academicYear && { year: { $in: academicYear } },
     filterConditios: school && { department: school }}
   
   const { data, isLoading } = useQuery(`${model} ${params}`, () => getReq(params))

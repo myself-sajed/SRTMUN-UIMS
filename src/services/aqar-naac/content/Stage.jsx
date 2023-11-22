@@ -42,7 +42,7 @@ const Stage = () => {
     const users = useSelector((state) => state.user)
 
 
-    // console.log(users.directorUser.department);
+    let department = users?.directorUser?.department;
 
 
     const AQARTables = {
@@ -103,19 +103,18 @@ const Stage = () => {
                 title: '3.1.3 - Teachers receiving national/ international fellowship/financial support by various agencies for advanced studies/ research  during the year',
                 hasSupportingDocument: true,
                 proofData: {
-                    academicYear, proofType: 'Fellowship', userType: 'director'
+                    academicYear, proofType: 'Fellowship', userType: 'faculty'
                 },
-                component: <AdminMasterTable model="Fellowship" academicYear={academicYear} school={users?.directorUser?.department} heading='Fellowships' serviceName="faculty" />
+                component: <AdminMasterTable model="Fellowship" academicYear={academicYear} school={department} heading='Fellowships' serviceName="faculty" />
             },
             {
                 title: '3.1.4 - JRFs, SRFs, Post Doctoral Fellows, Research Associates and other research fellows enrolled in the institution during the year',
                 hasSupportingDocument: true,
                 proofData: {
-                    academicYear, proofType: 'JrfSrf', userType: 'director'
+                    academicYear, proofType: 'JrfSrf', userType: 'faculty'
                 },
-                component: <AdminMasterTable model="JrfSrf" academicYear={academicYear} school={users?.directorUser?.department} heading='JRFs, SRFs, PDF, Research Associates' serviceName="faculty" />
+                component: <AdminMasterTable model="JrfSrf" academicYear={academicYear} school={department} heading='JRFs, SRFs, PDF, Research Associates' serviceName="faculty" />
             },
-
             {
                 title: '3.1.6 - UGC-SAP, CAS, DST-FIST, DBT, ICSSR',
                 hasSupportingDocument: true,
@@ -141,12 +140,61 @@ const Stage = () => {
                 component: <Awards filterByAcademicYear={true} academicYear={academicYear} />
             },
             {
-                title: '3.4.2 - Patents published/awarded during the year',
+                title: '3.4.2 - Full time teachers who received awards, recognition, fellowships at State, National, International level from Government/Govt. recognised bodies during the year',
                 hasSupportingDocument: true,
                 proofData: {
-                    academicYear, proofType: 'Patent', userType: 'director'
+                    academicYear, proofType: 'AwardRecognition', userType: 'faculty'
                 },
-                component: <AdminMasterTable model="Patent" academicYear={academicYear} school={users?.directorUser?.department} heading='Patents' serviceName="faculty" />
+                component: <AdminMasterTable model="AwardRecognition" academicYear={academicYear} school={department} heading='Award Recognition' serviceName="faculty" />
+            },
+            {
+                title: '3.4.3 - Patents published/awarded during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Patent', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="Patent" academicYear={academicYear} school={department} heading='Patents' serviceName="faculty" />
+            },
+            {
+                title: '3.4.4 - Ph.D awarded during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'PhdAwarded', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="PhdAwarded" costomParams={{ model: "PhdAwarded", module:"Admin", filter: { year: { $in: academicYear }, degreeName: "Ph.D.", awardSubmit: 'Awarded' },
+                filterConditios: { department }}} heading='Ph.D Awarded' serviceName="faculty" />
+            },
+            {
+                title: '3.4.5 - Research papers per teacher in the Journals notified on UGC website during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'ResearchPapers', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="ResearchPapers" academicYear={academicYear} school={department}  heading='Research papers' serviceName="faculty" />
+            },
+            {
+                title: '3.4.6 - Books and  Chapters in edited volumes published per teacher during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'BooksAndChapters', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="BooksAndChapters" academicYear={academicYear} school={department}  heading='Books and  Chapters' serviceName="faculty" />
+            },
+            {
+                title: '3.4.7 - E-content is developed by teachers',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'EContentDeveloped', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={department} heading='E-content Developed' serviceName="faculty" />
+            },
+            {
+                title: '3.5.2 - Consultancy Services',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'ConsultancyServices', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="ConsultancyServices" academicYear={academicYear} school={department} heading='Consultancy Services' serviceName="faculty" />
             },
             {
                 title: '3.6.3 - Extension Activities ',
@@ -155,6 +203,14 @@ const Stage = () => {
                     academicYear, proofType: 'ExtensionActivities', userType: 'director'
                 },
                 component: <ExtensionActivities filterByAcademicYear={true} academicYear={academicYear} />
+            },
+            {
+                title: '3.7.1 - Collaborative activities and academic development of faculty and students during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Collaboration', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="Collaboration" academicYear={academicYear} school={department} heading='Collaborations' serviceName="faculty" />
             },
             {
                 title: '3.7.2 - Memorandum of Understanding (MoU) ',
@@ -215,6 +271,14 @@ const Stage = () => {
                     academicYear, proofType: 'TrainingProgramsOrganized', userType: 'director'
                 },
                 component: <TrainingProgramsOrganized filterByAcademicYear={true} academicYear={academicYear} />
+            },
+            {
+                title: '6.3.4 - Teachers undergoing online/ face-to-face  Faculty Development Programmes (FDP)during  the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Online', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="Online" academicYear={academicYear} school={department} heading='Orientation / Refresher Course (FDP)' serviceName="faculty" />
             },
         ],
         director: [
