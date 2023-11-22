@@ -31,7 +31,7 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, head
   return (
     <>
 
-      <div className='table-responsive' style={{ height: tableHeight }}>
+      <div className='table-responsive' style={{ maxHeight: tableHeight }}>
         <table className="table table-bordered" >
           <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b': headColor }`, color: '#FFF' }}>
             {
