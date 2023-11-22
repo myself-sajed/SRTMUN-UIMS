@@ -4,9 +4,13 @@ import { useQuery } from 'react-query'
 import getReq from '../../../components/requestComponents/getReq'
 import { tableHead } from '../pages/AdminNumaricalData'
 import AdminExcelExoprt from './AdminExcelExoprt'
-import { tableHead as OnlineTableHead}  from '../tables_faculty/OrientationRefresherCourse'
 
-const updatedTableHead = {...tableHead, Online: OnlineTableHead}
+//Extra tableHeads
+import { tableHead as OnlineTableHead}  from '../tables_faculty/OrientationRefresherCourse'
+import { tableHead as DemandRatioTableHead}  from '../tables_director/DemandRatio'
+import { tableHead as ReservedSeatsTableHead}  from '../tables_director/ReservedSeats'
+
+const updatedTableHead = {...tableHead, Online: OnlineTableHead, DemandRatio: DemandRatioTableHead, ReservedSeats: ReservedSeatsTableHead }
 
 const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model, academicYear, heading, school, serviceName, costomParams}) => {
 

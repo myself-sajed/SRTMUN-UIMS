@@ -35,3 +35,4 @@ function DemandRatio({id, setState, yearFilter, schoolName, Heading, setLoaded})
 }
 
 export default DemandRatio
+export { tableHead }

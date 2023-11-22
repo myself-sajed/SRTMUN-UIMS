@@ -6,7 +6,7 @@ import Loader from '../../../components/Loader'
 import siteLinks from '../../../components/siteLinks';
 
 
-const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28' }) => {
+const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28', SendReq }) => {
 
   const [tblCells, setTblCells] = useState();
 
@@ -34,6 +34,14 @@ const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, head
       <div className='table-responsive' style={{ height: "100%" }}>
         <table className="table table-bordered" >
           <thead className="sticky-top" style={{ background: `${window.location.pathname===siteLinks.fdc.link?'#28359b': headColor }`, color: '#FFF' }}>
+            {
+              SendReq==="ReservedSeats"&&<tr>
+                <th colSpan={4}></th>
+                <th colSpan={6}>Number of seats earmarked for reserved category as per GOI or State Government rule</th>
+                <th colSpan={6}>Number of students admitted from the reserved category</th>
+                <th colSpan={1}></th>
+              </tr>
+            }
             <tr>
               {
                 Object.values(tableHead)?.map(item => {
