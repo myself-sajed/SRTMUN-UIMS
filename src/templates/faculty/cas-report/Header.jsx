@@ -123,6 +123,7 @@ const Header = ({ forPrintOut = 'false', user, title, subTitle, directorData, ot
                                     <DetailTile sr="Name" value={`${user.salutation} ${user.name}`} />
                                     <DetailTile sr="School" value={user.department} />
                                     <DetailTile sr="Current Designation" value={user.designation} />
+                                    <DetailTile sr="Research Specialization" value={user?.specialization} />
                                     {showPersonalDetails && <DetailTile sr="Date of Last Promotion" value={user.promotionDate} />}
                                     {showPersonalDetails && <DetailTile sr="Grade Pay" value={user.gradePay} />}
 
