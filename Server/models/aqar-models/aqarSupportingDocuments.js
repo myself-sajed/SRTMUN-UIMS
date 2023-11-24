@@ -9,6 +9,10 @@ const schema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    school: {
+        type: 'string',
+        required: false,
+    },
     info: {
         type: 'string',
         required: false,

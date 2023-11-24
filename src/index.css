@@ -596,3 +596,12 @@ body {
   background-color: #1d4ed8; 
   color: white;
 }
+
+.tox-notifications-container{
+  display:none;
+}
+
+.tox-statusbar__branding{
+  display:none;
+}
+
