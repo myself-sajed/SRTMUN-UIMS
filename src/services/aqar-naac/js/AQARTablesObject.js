@@ -24,15 +24,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
         "extended-profile": [],
         "criterion-1": [
             {
-                title: '1.2.1 - Employability',
-                hasSupportingDocument: true,
-                proofData: {
-                    academicYear, proofType: 'Employability', userType: 'director'
-                },
-                component: isDirector ? <Employability filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="Employability" costomParams={{ model: "Employability", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Courses focusing employability / entrepreneurship / skill development' serviceName="director" />
-            },
-            {
-                title: '1.2.2 - Syllabus Revision ',
+                title: '1.1.1 - Programmes for which syllabus revision was carried out during the Academic year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'SyllabusRevision', userType: 'director'
@@ -41,7 +33,32 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <SyllabusRevision filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="SyllabusRevision" costomParams={{ model: "SyllabusRevision", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Syllabus Revision' serviceName="director" />,
             },
             {
-                title: '1.3.3 - Value Added Courses ',
+                title: '1.1.2 - Programmes/ courses focussed on employability/ entrepreneurship/ skill development during the Academic year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Employability', userType: 'director'
+                },
+                component: isDirector ? <Employability filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="Employability" costomParams={{ model: "Employability", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Courses focusing employability / entrepreneurship / skill development' serviceName="director" />
+            },
+            {
+                title: '1.2.1 - New programmes/courses introduced during the Academic year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Employability', userType: 'director'
+                },
+                component: isDirector ? <Employability filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="Employability" costomParams={{ model: "Employability", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Courses focusing employability / entrepreneurship / skill development' serviceName="director" />
+            },
+            {
+                title: '1.2.2 - Programmes in which Choice Based Credit System (CBCS)/Elective Course System implemented at the University level during the Academic year.',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'SyllabusRevision', userType: 'director'
+                },
+                component: isDirector ?
+                    <SyllabusRevision filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="SyllabusRevision" costomParams={{ model: "SyllabusRevision", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Syllabus Revision' serviceName="director" />,
+            },
+            {
+                title: '1.3.1 – Value-added courses imparting transferable and life skills offered during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'ValueAddedCource', userType: 'director'
@@ -50,7 +67,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <ValueAddedCource filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="ValueAddedCource" costomParams={{ model: "ValueAddedCource", module: "Admin", filter: { Academic_year: academicYear } }} heading='Value Added Courses' serviceName="director" />,
             },
             {
-                title: '1.3.4 - Projects / Internships',
+                title: '1.3.2 - Field Projects / Internships under taken during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'ProjectsInternships', userType: 'director'
@@ -59,10 +76,13 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <ProjectsInternships filterByAcademicYear={true} academicYear={academicYear} /> :
                     <AdminMasterTable model="ProjectsInternships" costomParams={{ model: "ProjectsInternships", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Projects / Internships' serviceName="director" />,
             },
+            // todo 1.4 remains complete it sajed
+
         ],
         "criterion-2": [
+            // ?   2.1
             {
-                title: '2.1.1 - Demand Ratio',
+                title: '2.1.1 - Demand Ratio during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'DemandRatio', userType: 'director'
@@ -71,20 +91,40 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <DemandRatio filterByAcademicYear={true} academicYear={academicYear} /> :
                     <AdminMasterTable model="DemandRatio" costomParams={{ model: "DemandRatio", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Demand Ratio' serviceName="director" />,
             },
+            
+            // ! not contain in criterion 2
+            // {
+            //     title: '2.1.2 - Seats reserved for various categories as per applicable reservation policy',
+            //     hasSupportingDocument: true,
+            //     proofData: {
+            //         academicYear, proofType: 'ReservedSeats', userType: 'director'
+            //     },
+            //     component: isDirector ?
+            //         <ReservedSeats filterByAcademicYear={true} academicYear={academicYear} /> :
+            //         <AdminMasterTable model="ReservedSeats" costomParams={{ model: "ReservedSeats", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Seats reserved for various categories as per applicable reservation policy' serviceName="director" />,
+            // },
+
+
+            // todo 2.2, 2.3, 2.4.1, 
+
+
+            // ? 2.4
             {
-                title: '2.1.2 - Seats reserved for various categories as per applicable reservation policy',
+                title: '2.4.2 - Honours and recognition received by teachers (received awards, recognition, fellowships at State, National, International level from Government, recognised bodies during the year )',
                 hasSupportingDocument: true,
                 proofData: {
-                    academicYear, proofType: 'ReservedSeats', userType: 'director'
+                    academicYear, proofType: 'AwardRecognition', userType: 'faculty'
                 },
-                component: isDirector ?
-                    <ReservedSeats filterByAcademicYear={true} academicYear={academicYear} /> :
-                    <AdminMasterTable model="ReservedSeats" costomParams={{ model: "ReservedSeats", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Seats reserved for various categories as per applicable reservation policy' serviceName="director" />,
+                component: <AdminMasterTable model="AwardRecognition" academicYear={academicYear} school={school} heading='Award Recognition' serviceName="faculty" />
             },
+
+            // todo 2.5, 2.6, 2.7
+
         ],
         "criterion-3": [
+            // ? 3.1
             {
-                title: '3.1.3 - Teachers receiving national/ international fellowship/financial support by various agencies for advanced studies/ research  during the year',
+                title: '3.1.1 - Teachers awarded National/International fellowship for advanced studies/ research during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'Fellowship', userType: 'faculty'
@@ -92,13 +132,14 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 component: <AdminMasterTable model="Fellowship" academicYear={academicYear} school={school} heading='Fellowships' serviceName="faculty" />
             },
             {
-                title: '3.1.4 - JRFs, SRFs, Post Doctoral Fellows, Research Associates and other research fellows enrolled in the institution during the year',
+                title: '3.1.2 - Number of JRFs, SRFs, Post Doctoral Fellows, Research Associates and other fellows in the Institution enrolled during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'JrfSrf', userType: 'faculty'
                 },
                 component: <AdminMasterTable model="JrfSrf" academicYear={academicYear} school={school} heading='JRFs, SRFs, PDF, Research Associates' serviceName="faculty" />
             },
+
             {
                 title: '3.1.6 - UGC-SAP, CAS, DST-FIST, DBT, ICSSR',
                 hasSupportingDocument: true,
