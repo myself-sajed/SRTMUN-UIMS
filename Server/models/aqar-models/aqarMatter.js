@@ -13,6 +13,10 @@ const schema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    school: {
+        type: 'string',
+        required: false,
+    },
     matter: {
         type: 'string',
         required: false,

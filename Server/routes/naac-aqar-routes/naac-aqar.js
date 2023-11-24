@@ -3,10 +3,13 @@ const AQARMatter = require('../../models/aqar-models/aqarMatter')
 
 router.post('/aqar/fetchAQARMatter', async (req, res) => {
     try {
-        const { filter } = req.body
-        const doc = await AQARMatter.findOne(filter)
-        if (doc) {
-            res.send({ status: 'success', data: doc })
+        const { filter, isMultiple } = req.body
+
+        console.log(filter, isMultiple)
+
+        const doc = await AQARMatter.find(filter)
+        if (doc.length > 0) {
+            res.send({ status: 'success', data: isMultiple ? doc : doc[0] })
         } else {
             res.send({ status: 'notfound' })
         }
@@ -20,7 +23,7 @@ router.post('/aqar/fetchAQARMatter', async (req, res) => {
 router.post('/aqar/saveAQARMatter', (req, res) => {
     try {
         const { formData } = req.body
-        const filter = { academicYear: formData.academicYear, userType: formData.userType, matterType: formData.matterType }
+        const filter = { academicYear: formData.academicYear, userType: formData.userType, matterType: formData.matterType, school: formData.school || null }
 
         AQARMatter.findOneAndUpdate(filter, formData, { upsert: true, new: true }, (err, updatedDocument) => {
             if (err) {

@@ -27,7 +27,7 @@ const supportingDocsUpload = multerConfig(`../uploads/aqar-uploads/`, 'AQAR-Supp
 router.post('/aqar/uploadSupportingProof', supportingDocsUpload.single('file'), async (req, res) => {
     try {
         const formData = JSON.parse(JSON.stringify(req.body));
-        const filter = { academicYear: formData.academicYear, userType: formData.userType, proofType: formData.proofType }
+        const filter = { academicYear: formData.academicYear, userType: formData.userType, proofType: formData.proofType, school: formData.school || null }
 
         let dataToUpdate = {}
 
@@ -56,10 +56,10 @@ router.post('/aqar/uploadSupportingProof', supportingDocsUpload.single('file'), 
 
 router.post('/aqar/fetchSupportingProof', async (req, res) => {
     try {
-        const { filter } = req.body
-        const doc = await AQARSupportingDocuments.findOne(filter)
-        if (doc) {
-            res.send({ status: 'success', data: doc })
+        const { filter, isMultiple } = req.body
+        const doc = await AQARSupportingDocuments.find(filter)
+        if (doc.length > 0) {
+            res.send({ status: 'success', data: isMultiple ? doc : doc[0] })
         } else {
             res.send({ status: 'notfound' })
         }

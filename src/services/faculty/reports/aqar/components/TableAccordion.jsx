@@ -25,8 +25,8 @@ const TableAccordion = ({ AQARTables, showIndex = true }) => {
                     <Typography sx={{ color: 'blue', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>{showIndex ? `${index + 1}.` : ''} {table.title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {table?.hasSupportingDocument ? <AQARWithProof supportingProofMetaData={table?.proofData} >
-                        {table.component}
+                    {table?.hasSupportingDocument ? <AQARWithProof isAdmin={table?.isAdmin} supportingProofMetaData={table?.proofData} >
+                        {table.component} 
                     </AQARWithProof> : table.component}
                 </AccordionDetails>
             </Accordion>
