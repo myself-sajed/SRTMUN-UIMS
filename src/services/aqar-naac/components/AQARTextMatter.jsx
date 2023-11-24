@@ -106,7 +106,7 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                             </table>
                             </div>
                         </div> : <div>
-                            <p className="text-center my-3 text-yellow-500">No data available...</p>
+                            <p className="text-center my-3 text-yellow-500">No data available</p>
                         </div>
                     }
                 </div>
