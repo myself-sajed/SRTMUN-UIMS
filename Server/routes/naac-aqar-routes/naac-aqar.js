@@ -5,8 +5,6 @@ router.post('/aqar/fetchAQARMatter', async (req, res) => {
     try {
         const { filter, isMultiple } = req.body
 
-        console.log(filter, isMultiple)
-
         const doc = await AQARMatter.find(filter)
         if (doc.length > 0) {
             res.send({ status: 'success', data: isMultiple ? doc : doc[0] })
