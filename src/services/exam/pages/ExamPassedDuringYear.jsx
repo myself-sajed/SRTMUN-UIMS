@@ -79,3 +79,4 @@ const ExamPassedDuringYear = ({ filterByAcademicYear = false }) => {
 }
 
 export default ExamPassedDuringYear
+export { tableHead }

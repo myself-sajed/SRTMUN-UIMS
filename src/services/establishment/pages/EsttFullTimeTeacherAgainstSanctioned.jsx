@@ -85,3 +85,4 @@ const EsttFullTimeTeacherAgainstSanctioned = ({ filterByAcademicYear = false }) 
   )
 }
 export default EsttFullTimeTeacherAgainstSanctioned
+export { tableHead }

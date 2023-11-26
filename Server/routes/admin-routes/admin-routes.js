@@ -76,6 +76,12 @@ const HEAdmin = require('../../models/admin-models/heAdminSchema')
 const DemandRatioAdmin = require('../../models/admin-models/demandRatioAdminSchema')
 const ResearchProjectsAdmin = require('../../models/admin-models/researchProjectsAdminSchema')
 const ResearchGuideAdmin = require('../../models/admin-models/researchGuideAdminSchema')
+const EsttFullTimeTeacherAgainstSanctioned = require('../../models/establishment-models/esttFullTimeTeacherAgainstSanctionedSchema')
+const DateOfResultDiclaration = require('../../models/exam-models/dateOfResultDiclarationSchema')
+const StudentComplaintsGrievances = require('../../models/exam-models/studentComplaintsGrevancesSchema')
+const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
+const TotalExpenditure = require('../../models/other-models/totalExpenditureSchema')
+const SubscriptionForKRC = require('../../models/krc-models/subscriptionForKRCSchema')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
@@ -84,7 +90,12 @@ const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
 const AdminModels = { JrfSrfAdmin, PhdAwardedAdmin, HEAdmin, DemandRatioAdmin, ResearchProjectsAdmin, ResearchGuideAdmin }
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels }
+const establishmentModels = { EsttFullTimeTeacherAgainstSanctioned, }
+const examModels = { DateOfResultDiclaration, StudentComplaintsGrievances, ExamPassedDuringYear }
+const otherModels = { TotalExpenditure }
+const krcModels = { SubscriptionForKRC }
+
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels }
 
 
 
@@ -225,6 +236,10 @@ router.post('/Admin/getData', async (req, res) => {
                 }
                 res.status(200).send(filterData);
             });
+        }
+        else if (school===""){
+            const fetch = await models[model].find(fil);
+            res.status(200).send(fetch);
         }
         else {
             const fetch = await models[model].find(fil).sort({ [school]: 1 });

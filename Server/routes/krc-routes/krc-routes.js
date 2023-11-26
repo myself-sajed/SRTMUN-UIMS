@@ -93,7 +93,7 @@ router.post("/krc/newRecord/:model", krcUpload.single("Proof"), async (req, res)
         const up = req.file.filename;
         SendData = data
 
-        var withUpData = Object.assign(SendData, { Proof: up })
+        var withUpData = Object.assign(SendData, { proof: up })
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
@@ -118,7 +118,7 @@ router.post('/krc/editRecord/:model', krcUpload.single('Proof'), async (req, res
 
     var alldata = null
     if (up) {
-        alldata = Object.assign(SendData, { Proof: up })
+        alldata = Object.assign(SendData, { proof: up })
     }
     else {
         alldata = SendData

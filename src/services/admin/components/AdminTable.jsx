@@ -7,7 +7,7 @@ import siteLinks from '../../../components/siteLinks';
 
 
 const AdminTable = ({ tableHead, data, year, proof, serviceName, isLoading, headColor='#ae7e28', SendReq, tableHeight="100%" }) => {
-
+  
   const [tblCells, setTblCells] = useState();
 
   useEffect(() => {

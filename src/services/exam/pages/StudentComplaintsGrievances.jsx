@@ -80,3 +80,4 @@ const StudentComplaintsGrievances = ({ filterByAcademicYear = false }) => {
 }
 
 export default StudentComplaintsGrievances
+export { tableHead }

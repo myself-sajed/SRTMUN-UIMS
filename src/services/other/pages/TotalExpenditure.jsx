@@ -81,3 +81,4 @@ const TotalExpenditure = ({ filterByAcademicYear = false }) => {
 }
 
 export default TotalExpenditure
+export { tableHead }

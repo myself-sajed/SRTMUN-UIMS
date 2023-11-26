@@ -83,3 +83,4 @@ const DateOfResultDiclaration = ({ filterByAcademicYear = false }) => {
 }
 
 export default DateOfResultDiclaration
+export { tableHead }

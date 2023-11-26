@@ -12,7 +12,7 @@ import YearSelect from '../../../components/formComponents/YearSelect'
 import UploadFile from '../../../components/formComponents/UploadFile'
 import Select from '../../../components/formComponents/Select';
 
-const tableHead = { index: "Sr. no.", libraryResources: "Library resources	If yes, details of memberships/subscriptions", eBooks: "Expenditure on subscription to e-journals, e-books (INR in lakhs)", eResources: "Expenditure on subscription to other e-resources (INR in lakhs)", academicYear: 'Year', Proof: "Total Library Expenditure	Link to the relevant document", Action: "Action" }
+const tableHead = { index: "Sr. no.", libraryResources: "Library resources	If yes, details of memberships/subscriptions", eBooks: "Expenditure on subscription to e-journals, e-books (INR in lakhs)", eResources: "Expenditure on subscription to other e-resources (INR in lakhs)", academicYear: 'Year', Proof: "Total Library Expenditure Link to the relevant document", Action: "Action" }
 
 
 const SubscriptionForKRC = ({ filterByAcademicYear = false }) => {
@@ -76,9 +76,10 @@ const SubscriptionForKRC = ({ filterByAcademicYear = false }) => {
 
       <BulkExcel data={data?.data} sampleFile="Student Complaints Grievances" title={title} SendReq={model} refetch={refetch} module={module} department={title} open={excelOpen} setOpen={setExcelOpen} />
 
-      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="Proof" />
+      <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={model} getproof="proof" />
     </>
   )
 }
 
 export default SubscriptionForKRC
+export { tableHead }

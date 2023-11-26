@@ -6,19 +6,29 @@ import { tableHead } from '../pages/AdminNumaricalData'
 import AdminExcelExoprt from './AdminExcelExoprt'
 
 //Extra tableHeads
-import { tableHead as OnlineTableHead}  from '../tables_faculty/OrientationRefresherCourse'
-import { tableHead as DemandRatioTableHead}  from '../tables_director/DemandRatio'
-import { tableHead as ReservedSeatsTableHead}  from '../tables_director/ReservedSeats'
+import { tableHead as Online }  from '../tables_faculty/OrientationRefresherCourse'
+import { tableHead as DemandRatio }  from '../tables_director/DemandRatio'
+import { tableHead as ReservedSeats }  from '../tables_director/ReservedSeats'
+import { tableHead as EsttFullTimeTeacherAgainstSanctioned }  from '../../establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
+import { tableHead as DateOfResultDiclaration }  from '../../exam/pages/DateOfResultDiclaration'
+import { tableHead as StudentComplaintsGrievances }  from '../../exam/pages/StudentComplaintsGrievances'
+import { tableHead as TotalExpenditure }  from '../../other/pages/TotalExpenditure'
+import { tableHead as SubscriptionForKRC }  from '../../krc/pages/SubscriptionForKRC'
 
-const updatedTableHead = {...tableHead, Online: OnlineTableHead, DemandRatio: DemandRatioTableHead, ReservedSeats: ReservedSeatsTableHead }
+const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC }
 
-const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model, academicYear, heading, school, serviceName, costomParams}) => {
+const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams}) => {
 
-    const params = costomParams || { model, module, filter: academicYear && { year: { $in: academicYear } },
+
+    const params = customParams || { model, module, filter: academicYear && { year: { $in: academicYear } },
     filterConditios: school && { department: school }}
   
   const { data, isLoading } = useQuery(`${model} ${params}`, () => getReq(params))
 
+  let filterTableHead = {...updatedTableHead[model]}
+  if (filterTableHead.hasOwnProperty("Action")){
+    delete filterTableHead.Action
+  }
   return (
     <div>
         <div className='mr-4 my-3'>
@@ -30,7 +40,7 @@ const AdminMasterTable = ({module="Admin", proof="proof", color="#3d3dff", model
             </div>
           </div>
         </div>
-      <AdminTable data={data?.data} tableHead={updatedTableHead[model]} proof={proof} serviceName={serviceName} Heading={heading} SendReq={model} isLoading={isLoading} headColor={color} tableHeight='90vh' />
+      <AdminTable data={data?.data} tableHead={filterTableHead} proof={proof} serviceName={serviceName} Heading={heading} SendReq={model} isLoading={isLoading} headColor={color} tableHeight='90vh' />
     </div>
   )
 }

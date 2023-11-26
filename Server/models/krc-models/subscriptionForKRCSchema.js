@@ -18,7 +18,7 @@ const subscriptionForKRCSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    Proof: {
+    proof: {
         type: 'string',
         required: false
     }
