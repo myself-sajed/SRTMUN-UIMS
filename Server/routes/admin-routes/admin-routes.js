@@ -82,6 +82,7 @@ const StudentComplaintsGrievances = require('../../models/exam-models/studentCom
 const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
 const TotalExpenditure = require('../../models/other-models/totalExpenditureSchema')
 const SubscriptionForKRC = require('../../models/krc-models/subscriptionForKRCSchema')
+const DSDSports = require('../../models/dsd-models/dsdSportsSchema')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
@@ -94,8 +95,9 @@ const establishmentModels = { EsttFullTimeTeacherAgainstSanctioned, }
 const examModels = { DateOfResultDiclaration, StudentComplaintsGrievances, ExamPassedDuringYear }
 const otherModels = { TotalExpenditure }
 const krcModels = { SubscriptionForKRC }
+const dsdModels = { DSDSports,  }
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels }
 
 
 

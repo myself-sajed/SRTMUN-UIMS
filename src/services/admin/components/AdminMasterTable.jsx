@@ -12,10 +12,13 @@ import { tableHead as ReservedSeats }  from '../tables_director/ReservedSeats'
 import { tableHead as EsttFullTimeTeacherAgainstSanctioned }  from '../../establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
 import { tableHead as DateOfResultDiclaration }  from '../../exam/pages/DateOfResultDiclaration'
 import { tableHead as StudentComplaintsGrievances }  from '../../exam/pages/StudentComplaintsGrievances'
+import { tableHead as ExamPassedDuringYear }  from '../../exam/pages/ExamPassedDuringYear'
 import { tableHead as TotalExpenditure }  from '../../other/pages/TotalExpenditure'
 import { tableHead as SubscriptionForKRC }  from '../../krc/pages/SubscriptionForKRC'
+import { tableHead as DSDSports }  from '../../dsd/pages/DsdAndSports'
 
-const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC }
+
+const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports }
 
 const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams}) => {
 

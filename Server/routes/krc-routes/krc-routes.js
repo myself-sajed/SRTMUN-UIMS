@@ -134,7 +134,7 @@ router.post('/krc/deleteRecord', async (req, res) => {
     try {
         const Record = await models[model].findOne({ _id: id });
         await models[model].deleteOne({ _id: id })
-        const Filename = Record.Proof;
+        const Filename = Record.proof;
         const link = path.join(__dirname, `../../uploads/krc-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {

@@ -23,7 +23,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
         "extended-profile": [],
         "criterion-1": [
-            // todo 1.1.1 text area
+            // todo 1.1
+                // ? textarea title - 1.1.1 - Curricula developed and implemented have relevance to the local, national, regional and global developmental needs which is reflected in Programme outcomes (POs), Programme Specific Outcomes(PSOs) and Course Outcomes(COs) of the Programmes offered by the University
             {
                 title: '1.1.2 - Programmes for which syllabus revision was carried out during the Academic year',
                 hasSupportingDocument: true,
@@ -41,6 +42,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 },
                 component: isDirector ? <Employability filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="Employability" customParams={{ model: "Employability", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Courses focusing employability / entrepreneurship / skill development' serviceName="director" proof= "Upload_Proof" />
             },
+            // ? 1.2
             {
                 title: '1.2.1 - New programmes/courses introduced during the Academic year',
                 hasSupportingDocument: true,
@@ -59,7 +61,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <SyllabusRevision filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="SyllabusRevision" customParams={{ model: "SyllabusRevision", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Syllabus Revision' serviceName="director"  proof= "Upload_Proof" />,
             },
             // todo 1.3
-                // ? textarea title - 1.3.2 
+                // ? textarea title - 1.3.1 - Institution integrates crosscutting issues relevant to Professional Ethics, Gender, Human Values, Environment and Sustainability into the Curriculum 
              {
                 title: '1.3.2 - Value-added courses imparting transferable and life skills offered during the year',
                 hasSupportingDocument: true,
@@ -69,8 +71,17 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 component: isDirector ?
                     <ValueAddedCource filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="ValueAddedCource" customParams={{ model: "ValueAddedCource", module: "Admin", filter: { Academic_year: academicYear } }} heading='Value Added Courses' serviceName="director" proof= "Upload_Proof" />,
             },
+             {
+                title: '1.3.3 - Total number of students enrolled in the courses under 1.3.2 above',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'ValueAddedCource', userType: 'director'
+                },
+                component: isDirector ?
+                    <ValueAddedCource filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="ValueAddedCource" customParams={{ model: "ValueAddedCource", module: "Admin", filter: { Academic_year: academicYear } }} heading='Value Added Courses' serviceName="director" proof= "Upload_Proof" />,
+            },
             {
-                title: '1.3.3 - Field Projects / Internships under taken during the year',
+                title: '1.3.4 - Number of students undertaking field projects / research projects / internships during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'ProjectsInternships', userType: 'director'
@@ -80,8 +91,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <AdminMasterTable model="ProjectsInternships" customParams={{ model: "ProjectsInternships", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Projects / Internships' serviceName="director" proof= "Upload_Proof" />,
             },
             // todo 1.4 
-                // ? 1.4.1
-                // ? 1.4.2 student/teacher/employee/alumni/parent feedback
+                // ? table 1.4.1 - Structured feedback for design and review of syllabus – semester wise / is received from Students, Teachers, Employers, Alumni
+                // ? ????? 1.4.2 - Feedback processes of the institution may be classified as follows
 
         ],
         "criterion-2": [
@@ -207,7 +218,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <UgcSapCasDstFistDbtICssr filterByAcademicYear={true} academicYear={academicYear} /> :
                     <AdminMasterTable model="UgcSapCasDstFistDBTICSSR" customParams={{ model: "UgcSapCasDstFistDBTICSSR", module: "Admin", filter: { Year_of_Award: academicYear } }} heading='UGC-SAP, CAS, DST-FIST, DBT, ICSSR' serviceName="director" proof= "Upload_Proof" />,
             },
-            // * 3.2
+            // ? 3.2
             {
                 title: '3.2.1 - Extramural funding for Research (Grants sponsored by the non-government sources such as industry, corporate houses, international bodies for research projects) endowments, Chairs in the University during the year (INR in Lakhs)',
                 hasSupportingDocument: true,
@@ -393,10 +404,36 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 },
                 component: !isDirector&&<AdminMasterTable model="SubscriptionForKRC" customParams={{ model: "SubscriptionForKRC", module: "Admin", filter: { academicYear } }} heading='Institution has subscription for KRC' serviceName="krc" proof="proof" />
             },
+                // ? ????? title - 4.2.4 - Number of usage of library by teachers and students per day (foot falls and login data for online access)
+            // todo 4.3
+                // ? table title - 4.3.1 - Number of classrooms and seminar halls with ICT - enabled facilities such as LCD, smart board, Wi-Fi/LAN, audio video recording facilities during the year
+                // ? textarea title - 4.3.2 - Institution has an IT policy, makes appropriate budgetary provision and updates its IT facilities including Wi-Fi facility
+                // ? ????? title - 4.3.3 - Student - Computer ratio during the year
+                // ? ????? title - 4.3.4 - Available bandwidth of internet connection in the Institution (Leased line)
+            {
+                title: '4.3.5 - Institution has the following Facilities for e-content development 1) Media centre, 2) Audio visual centre, 3) Lecture Capturing System(LCS), 4) Mixing equipment’s and softwares for editing',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'EContentDeveloped', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
+            },
+            // todo 4.4
+            {
+                title: '4.4.1 - Total expenditure incurred on maintenance of physical facilities and academic support facilities excluding salary component during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'TotalExpenditure', userType: 'other'
+                },
+                component: !isDirector&&<AdminMasterTable model="TotalExpenditure" customParams={{ model: "TotalExpenditure", module: "Admin", filter: { academicYear } }} heading='Total Expenditure (FAO)' serviceName="other" />
+             },
+                // ? textarea title - 4.4.2 - There are established systems and procedures for maintaining and utilizing physical, academic and support facilities - laboratory, library, sports complex, computers, classrooms etc.
         ],
         "criterion-5": [
+            // todo 5.1
+                // ? table title - 5.1.1 - Total number of students benefited by scholarships and free ships provided by the institution, Government and non-government agencies (NGOs) during the year (other than the students receiving scholarships under the government schemes for reserved categories)
             {
-                title: '5.1.2 - Counseling and Guidance ',
+                title: '5.1.2 - Total number of students benefited by career counselling and guidance for competitive examinations offered by the Institution during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'CounselingAndGuidance', userType: 'director'
@@ -406,7 +443,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <AdminMasterTable model="CounselingAndGuidance" customParams={{ model: "CounselingAndGuidance", module: "Admin", filter: { Year_of_Activity: academicYear } }} heading='Counseling and Guidance' serviceName="director" proof= "Upload_Proof" />,
             },
             {
-                title: '5.1.3 - Skills Enhancement Initiatives',
+                title: '5.1.3 - Following Capacity development and skills enhancement initiatives are taken by the institution 1) Soft skills, 2) Language and communication skills, 3) Life skills (Yoga, physical fitness, health and hygiene), 4) Awareness of trends in technology',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'SkillsEnhancementInitiatives', userType: 'director'
@@ -415,8 +452,11 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <SkillsEnhancementInitiatives filterByAcademicYear={true} academicYear={academicYear} /> :
                     <AdminMasterTable model="SkillsEnhancementInitiatives" customParams={{ model: "SkillsEnhancementInitiatives", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Skills Enhancement Initiatives' serviceName="director" proof= "Upload_Proof" />,
             },
+                // ? ????? title - 5.1.4 - The Institution adopts the following for redressal of student grievances including sexual harassment and ragging cases 1) Implementation of guidelines of statutory/regulatory bodies, 2)Organisation wide awareness and undertakings on policies with zero tolerance, 3) Mechanisms for submission of online/offline students’ grievances, 4) Timely redressal of the grievances through appropriate committees
+
+            // todo 5.2
             {
-                title: '5.2.1 - Qualified Exams',
+                title: '5.2.1 - Number of students qualifying in state/ national/ international level examinations during the year (eg:NET/SLET/GATE/GMAT/CAT/ GRE/TOEFL/Civil Services/State government examinations)',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'QualifiedExams', userType: 'director'
@@ -426,7 +466,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <AdminMasterTable model="QualifiedExams" customParams={{ model: "QualifiedExams", module: "Admin", filter: { Acadmic_year: academicYear } }} heading='Qualified Exams' serviceName="director" proof= "Upload_Proof" />,
             },
             {
-                title: '5.2.2 - Placements',
+                title: '5.2.2 - Total number of placement of outgoing students during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'Placement', userType: 'director'
@@ -436,7 +476,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <AdminMasterTable model="Placement" customParams={{ model: "Placement", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Placements' serviceName="director" proof= "Upload_Proof" />,
             },
             {
-                title: '5.2.3 - Progression to Higher Education',
+                title: '5.2.3 - Number of recently graduated students who have progressed to higher education (previous graduating batch) during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'ProgressionToHE', userType: 'director'
@@ -445,10 +485,55 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     <ProgressionToHE filterByAcademicYear={true} academicYear={academicYear} /> :
                     <AdminMasterTable model="ProgressionToHE" customParams={{ model: "ProgressionToHE", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Progression to Higher Education' serviceName="director" proof= "Upload_Proof" />,
             },
+            // todo 5.3
+            {
+                title: '5.3.1 - Number of awards/medals won by students for outstanding performance in sports/cultural activities at inter-university/state/national/international events (award for a team event should be counted as one) during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'DSDSports', userType: 'dsd'
+                },
+                component: !isDirector&&<AdminMasterTable model="DSDSports" customParams={{ model: "DSDSports", module: "Admin", filter: { academicYear } }} heading='Awards / Medals achieved by Students' serviceName="dsd" proof="proof" />
+            },
+                // ? textarea title - 5.3.2 - Presence of Student Council and its activities for institutional development and student welfare
+            {
+                title: '5.3.3 - Number of sports and cultural events / competitions organised by the institution during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'SportsAndCulturalEvents', userType: 'dsd'
+                },
+                component: !isDirector&&<AdminMasterTable model="SportsAndCulturalEvents" customParams={{ model: "SportsAndCulturalEvents", module: "Admin", filter: { academicYear } }} heading='Awards / Medals achieved by Students' serviceName="dsd" proof="proof" />
+            },
+            // todo 5.4
+                // ? textarea title - 5.4.1 - The Alumni Association/Chapters (registered and functional)contributes significantly to the development of the institution through financial and other support services during the year 
+            {
+                title: '5.4.2 - Alumni contribution during the year (INR in Lakhs)',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'AlumniContribution', userType: 'director'
+                },
+                component: isDirector? <AlumniContribution filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="AlumniContribution" customParams={{ model: "AlumniContribution", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Alumni Contribution' serviceName="director" proof="Upload_Proof" />,
+            },
         ],
         "criterion-6": [
+            // todo 6.1
+                // ? textarea title - 6.1.1 - The institution has a clearly stated vision and mission which are reflected in its academic and administrative governance
+                // ? textarea title - 6.1.2 - The effective leadership is reflected in various institutional practices such as decentralization and participative management
+            // todo 6.2
+                // ? textarea title - 6.2.1 - The institutional Strategic plan is effectively deployed
+                // ? textarea title - 6.2.2 - The functioning of the institutional bodies is effective and efficient as visible from policies, administrative setup, appointment and service rules, procedures, etc.
+                // ? table title - 6.2.3 - Institution Implements e-governance in its areas of operations
+            // todo 6.3
+                // ? textarea title - 6.3.1 - The institution has a performance appraisal system, promotional avenues and effective welfare measures for teaching and non-teaching staff
             {
-                title: '6.3.3 - Professional Development / Administrative Training programs organized',
+                title: '6.3.2 - Total number of teachers provided with financial support to attend conferences / workshops and towards membership fee of professional bodies during the year',
+                hasSupportingDocument: true,
+                proofData: {
+                    academicYear, proofType: 'Financialsupport', userType: 'faculty'
+                },
+                component: <AdminMasterTable model="Financialsupport" academicYear={academicYear} school={school} heading='Collaborations' serviceName="faculty" proof="proof" />,
+                },
+            {
+                title: '6.3.3 - Number of professional development / administrative training Programmes organized by the institution for teaching and non-teaching staff during the year',
                 hasSupportingDocument: true,
                 proofData: {
                     academicYear, proofType: 'TrainingProgramsOrganized', userType: 'director'
@@ -465,18 +550,38 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 },
                 component: <AdminMasterTable model="Online" academicYear={academicYear} school={school} heading='Orientation / Refresher Course (FDP)' serviceName="faculty" proof="proof" />
             },
+            // todo 6.4
+                // ? textarea title - 6.4.1 - Institutional strategies for mobilisation of funds and the optimal utilisation of resources
+                // ? !!!!! 6.4.2 - Funds / Grants received from government bodies during the year for development and maintenance of infrastructure (not covered under Criteria III and V) (INR in Lakhs)
+                // ? !!!!! 6.4.3 - Funds / Grants received from non-government bodies, individuals,philanthropists during the year for development and maintenance of infrastructure (not covered under Criteria III and V)(INR in Lakhs)
+                // ? textarea title - 6.4.4 - Institution conducts internal and external financial audits regularly
+            // todo 6.5
+                // ? textarea title - 6.5.1 - Internal Quality Assurance Cell (IQAC) has contributed significantly for institutionalizing the quality assurance strategies and processes by constantly reviewing the teaching learning process, structures & methodologies of operations and learning outcomes at periodic intervals
+                // ? !!!!! 6.5.2 - Institution has adopted the following for Quality assurance  1) Academic Administrative Audit (AAA) and follow up action taken 2) Confernces, Seminars, Workshops on quality conducted 3) Collaborative quality initiatives with other institution(s) 4) Orientation programme on quality issues for teachers and studens 5) Participation in NIRF 6) Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)
+                // ? textarea title - 6.5.3 - Incremental improvements made for the preceding during the year with regard to quality (in case of first cycle) Post accreditation quality initiatives(second and subsequent cycles)
         ],
-        "criterion-7": [],
+        "criterion-7": [
+            // todo 7.1
+                // ? textarea title - 7.1.1 - Measures initiated by the Institution for the promotion of gender equity during the year
+                // ? ????? title - 7.1.2 - The Institution has facilities for alternate sources of energy and energy conservation 1) Solar energy 2) Biogas plant 3) Wheeling to the Grid   4) Sensor-based energy conservation 5) Use of LED bulbs/ power-efficient equipment 
+                // ? textarea title - 7.1.3 - Describe the facilities in the Institution for the management of the following types of degradable and non-degradable waste (within 200 words) 1) Solid waste management 2) Liquid waste management 3) Biomedical waste management 4) E-waste management 5)  Waste recycling system 6) Hazardous chemicals and radioactive waste management
+                // ? ????? title - 7.1.4 - Water conservation facilities available in the Institution: 1) Rain water harvesting 2) Bore well /Open well recharge 3) Construction of tanks and bunds 4) Waste water recycling 5) Maintenance of water bodies and distribution system in the campus
+                // ? ????? title - 7.1.5 - Green campus initiatives include
+                // ? ????? title - 7.1.6 - Quality audits on environment and energy are regularly undertaken by the institution
+                // ? ????? title - 7.1.7 - The Institution has a disabled-friendly and barrier-free environment 1) Ramps/lifts for easy access to classrooms and centres. 2) Disabled-friendly washrooms 3) Signage including tactile path lights, display boards and signposts 4) Assistive technology and facilities for persons with disabilities: accessible website, screen-reading software,mechanized equipment, etc. 5) Provision for enquiry and information: Human assistance, reader, scribe, soft copies of reading materials, screen reading, etc.
+                // ? textarea title - 7.1.8 - Describe the Institutional efforts/initiatives in providing an inclusive environment i.e. tolerance and harmony towards cultural, regional, linguistic, communal, socio-economic and other diversities (within a maximum of 200 words)
+                // ? textarea title - 7.1.9 - Sensitization of students and employees of the institution to constitutional obligations: values, rights, duties and responsibilities of citizens:
+                // ? ????? title - 7.1.10 - The Institution has a prescribed code of conduct for students, teachers, administrators and other staff and conducts periodic programmes in this regard. 1) The Code of Conduct is displayed on the website 2) There is a committee to monitor adherence to the Code of Conduct 3) Institution organizes professional ethics programmes for students, teachers, administrators and other staff 4) Annual awareness programmes on Code of Conduct are organized
+                // ? textarea title - 7.1.11 - Institution celebrates / organizes national and international commemorative days, events and festivals
+            // todo 7.2
+                // ? textarea title - 7.2.1 - Describe one best practice successfully implemented by the Institution as per NAAC format provided in the Manual
+                // ? textarea title - 7.3.1 - Highlight the performance of the institution in an area distinct to its priority and thrust (within a maximum of 200 words)
+                // ? textarea title - 7.3.2 - Plan of action for the next academic year
+
+        ],
         director: [
 
-            {
-                title: 'Alumni Contribution',
-                hasSupportingDocument: true,
-                proofData: {
-                    academicYear, proofType: 'AlumniContribution', userType: 'director'
-                },
-                component: <AlumniContribution filterByAcademicYear={true} academicYear={academicYear} />
-            },
+            
 
 
         ]

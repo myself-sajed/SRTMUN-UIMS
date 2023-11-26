@@ -112,7 +112,7 @@ router.post("/dsd/newRecord/:model", dsdUpload.single("Proof"), async (req, res)
         const up = req.file.filename;
         SendData = data
 
-        var withUpData = Object.assign(SendData, { Proof: up })
+        var withUpData = Object.assign(SendData, { proof: up })
         const obj = new models[model](withUpData);
         await obj.save();
         res.status(201).send("Entry Succeed")
@@ -137,7 +137,7 @@ router.post('/dsd/editRecord/:model', dsdUpload.single('Proof'), async (req, res
 
     var alldata = null
     if (up) {
-        alldata = Object.assign(SendData, { Proof: up })
+        alldata = Object.assign(SendData, { proof: up })
     }
     else {
         alldata = SendData
@@ -153,7 +153,7 @@ router.post('/dsd/deleteRecord', async (req, res) => {
     try {
         const Record = await models[model].findOne({ _id: id });
         await models[model].deleteOne({ _id: id })
-        const Filename = Record.Proof;
+        const Filename = Record.proof;
         const link = path.join(__dirname, `../../uploads/dsd-uploads/${Filename}`);
         fs.unlink(link, function (err) {
             if (err) {
