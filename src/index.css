@@ -598,10 +598,13 @@ body {
 }
 
 .tox-notifications-container{
-  display:none;
+  display:none !important;
+  background-color: red;
+  color: white;
 }
 
 .tox-statusbar__branding{
   display:none;
 }
+
 

@@ -37,6 +37,8 @@ router.post('/aqar/uploadSupportingProof', supportingDocsUpload.single('file'), 
             dataToUpdate = { ...formData }
         }
 
+        console.log('Proof :', dataToUpdate)
+
         AQARSupportingDocuments.findOneAndUpdate(filter, dataToUpdate, { upsert: true, new: true }, (err, updatedDocument) => {
             if (err) {
                 res.send({ status: 'error', message: err })

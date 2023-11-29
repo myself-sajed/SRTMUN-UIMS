@@ -24,7 +24,6 @@ const schema = new mongoose.Schema({
     proof: {
         type: 'string',
         required: false,
-        default: null
     },
 })
 

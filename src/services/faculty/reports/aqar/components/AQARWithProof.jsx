@@ -22,6 +22,7 @@ const AQARWithProof = ({ supportingProofMetaData, children, isAdmin }) => {
 
     const { data, isLoading, refetch } = useQuery(`Proof-${proofType}-${academicYear}-${school ? school : 'admin'}`, () => fetchSupportingDocuments(filter, isAdmin), { refetchOnWindowFocus: false })
 
+
     const submitProofFunction = () => {
         const formData = new FormData()
         if (file) {
@@ -38,6 +39,7 @@ const AQARWithProof = ({ supportingProofMetaData, children, isAdmin }) => {
 
     useEffect(() => {
         if (data?.data?.status === 'success') {
+            console.log(data?.data?.data)
             if (isAdmin) {
                 setProofs(data?.data?.data)
             } else {

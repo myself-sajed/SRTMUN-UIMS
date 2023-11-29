@@ -54,8 +54,10 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                     <Editor
                         onInit={(evt, editor) => editorRef.current = editor}
                         initialValue={matter.content}
+                        apiKey={process.env.REACT_APP_TINY_MCE}
                         init={{
                             height: 300,
+                            branding:false,
                             menubar: false,
                             placeholder: "Start typing...",
                             plugins: [

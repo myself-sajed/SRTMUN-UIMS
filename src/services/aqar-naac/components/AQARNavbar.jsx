@@ -1,4 +1,4 @@
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ArrowButton from '../../../components/ArrowButton';
@@ -58,34 +58,41 @@ export default AQARNavbar
 const navbarLinks = {
     'extended-profile': {
         title: 'Extended Profile',
-        abbv: 'extended-profile',
+        abbv: 'extended-profile'
     },
     'criterion-1': {
         title: 'Criterion 1',
+        subtitle: "Curricular Aspects",
         abbv: 'criterion-1',
     },
     'criterion-2': {
         title: 'Criterion 2',
+        subtitle: "Teaching, Learning & Evaluation",
         abbv: 'criterion-2',
     },
     'criterion-3': {
         title: 'Criterion 3',
+        subtitle: "Research, Innovations and Extension",
         abbv: 'criterion-3',
     },
     'criterion-4': {
         title: 'Criterion 4',
+        subtitle: "Infrastructure & Learning Resources",
         abbv: 'criterion-4',
     },
     'criterion-5': {
         title: 'Criterion 5',
+        subtitle: "Student Support & Progression",
         abbv: 'criterion-5',
     },
     'criterion-6': {
         title: 'Criterion 6',
+        subtitle: "Governance, Leadership & Management",
         abbv: 'criterion-6',
     },
     'criterion-7': {
         title: 'Criterion 7',
+        subtitle: "Institutional Values & Best Practices",
         abbv: 'criterion-7',
     },
 }
