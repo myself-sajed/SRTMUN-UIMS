@@ -515,28 +515,28 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         },
                         component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
                     },
-                    {
-                        id: "3.4.8",
-                        title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
-                        hasSupportingDocument: true,
-                        isAdmin: !isDirector,
-                        proofData: {
-                            academicYear, proofType: '3.4.8', userType: 'director', school
-                        },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.8' userType='director' />
+                    // {
+                    //     id: "3.4.8",
+                    //     title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
+                    //     hasSupportingDocument: true,
+                    //     isAdmin: !isDirector,
+                    //     proofData: {
+                    //         academicYear, proofType: '3.4.8', userType: 'director', school
+                    //     },
+                    //     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.8' userType='director' />
 
-                    },
-                    {
-                        id: "3.4.9",
-                        title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
-                        hasSupportingDocument: true,
-                        isAdmin: !isDirector,
-                        proofData: {
-                            academicYear, proofType: '3.4.9', userType: 'director', school
-                        },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.9' userType='director' />
+                    // },
+                    // {
+                    //     id: "3.4.9",
+                    //     title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
+                    //     hasSupportingDocument: true,
+                    //     isAdmin: !isDirector,
+                    //     proofData: {
+                    //         academicYear, proofType: '3.4.9', userType: 'director', school
+                    //     },
+                    //     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.9' userType='director' />
 
-                    },
+                    // },
                 ]
             },
             {
