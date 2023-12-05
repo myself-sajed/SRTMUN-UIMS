@@ -65,7 +65,8 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                                 'anchor', 'visualblocks', 'code', 'fullscreen',
                                 'insertdatetime', 'media', 'table', 'wordcount',
                             ],
-                            toolbar: 'bold italic underline bullist numlist lineheight paste | styles fontfamily fontsize' + '| image link | undo redo',
+                            toolbar: 'bold italic underline | undo redo',
+                            // toolbar: 'bold italic underline bullist numlist lineheight paste | styles fontfamily fontsize' + '| image link | undo redo',
                             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                         }}
                         onBlur={log}

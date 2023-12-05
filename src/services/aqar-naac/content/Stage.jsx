@@ -65,8 +65,8 @@ const Stage = () => {
                             return <div className={`border-[#8c8cd9] rounded-lg p-1 border-2 my-3 text-sm lg:text-base w-full`}>
                                 <Accordion sx={{ boxShadow: 'none' }} TransitionProps={{ unmountOnExit: true }} expanded={expandedAccordion === mainIndex} onChange={() => handleChangeAccordion(mainIndex)}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}
-                                        aria-controls={`main-content-${mainIndex}`}
-                                        id={`main-accordion-${mainIndex}`}
+                                        aria-controls={`main-content-${stageName}-${mainIndex}`}
+                                        id={`main-accordion-${stageName}-${mainIndex}`}
                                     >
                                         <Typography sx={{ color: 'blue', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> {mainPoint.title}</Typography>
                                     </AccordionSummary>
@@ -77,10 +77,6 @@ const Stage = () => {
                             </div>
                         })
                     }
-
-
-
-
 
 
                 </div>
