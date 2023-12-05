@@ -95,3 +95,4 @@ const SwayamEContentDeveloped = () => {
 }
 
 export default SwayamEContentDeveloped
+export {tableHead}

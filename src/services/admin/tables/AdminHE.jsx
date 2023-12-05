@@ -98,6 +98,7 @@ const AdminHE = () => {
 }
 
 export default AdminHE
+export { tableHead }
 
 
 

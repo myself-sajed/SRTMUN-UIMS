@@ -86,3 +86,4 @@ const SwayamValueAddedCourses = () => {
 }
 
 export default SwayamValueAddedCourses
+export {tableHead}

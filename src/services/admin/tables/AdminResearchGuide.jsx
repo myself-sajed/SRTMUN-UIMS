@@ -82,3 +82,4 @@ const AdminResearchGuide = () => {
 }
 
 export default AdminResearchGuide
+export {tableHead}

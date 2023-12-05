@@ -101,3 +101,4 @@ const AdminDemandRatio = () => {
 }
 
 export default AdminDemandRatio
+export {tableHead}
