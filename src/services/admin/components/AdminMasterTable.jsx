@@ -10,17 +10,29 @@ import { tableHead as Online }  from '../tables_faculty/OrientationRefresherCour
 import { tableHead as DemandRatio }  from '../tables_director/DemandRatio'
 import { tableHead as ReservedSeats }  from '../tables_director/ReservedSeats'
 import { tableHead as EsttFullTimeTeacherAgainstSanctioned }  from '../../establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
+import { tableHead as EsttFullTimeTeacher }  from '../../establishment/pages/EsttFullTimeTeacher'
+import { tableHead as EsttFullTimeTeacherWhoLeft }  from '../../establishment/pages/EsttFullTimeTeacherWhoLeft'
 import { tableHead as DateOfResultDiclaration }  from '../../exam/pages/DateOfResultDiclaration'
 import { tableHead as StudentComplaintsGrievances }  from '../../exam/pages/StudentComplaintsGrievances'
 import { tableHead as ExamPassedDuringYear }  from '../../exam/pages/ExamPassedDuringYear'
 import { tableHead as TotalExpenditure }  from '../../other/pages/TotalExpenditure'
 import { tableHead as SubscriptionForKRC }  from '../../krc/pages/SubscriptionForKRC'
 import { tableHead as DSDSports }  from '../../dsd/pages/DsdAndSports'
+import { tableHead as SportsAndCulturalEvents }  from '../../dsd/pages/SportsAndCulturalEvents'
+import { tableHead as JrfSrfAdmin }  from '../../admin/tables/AdminJRFSRF'
+import { tableHead as ResearchProjectsAdmin }  from '../../admin/tables/AdminResearchProjects'
+import { tableHead as ResearchGuideAdmin }  from '../../admin/tables/AdminResearchGuide'
+import { tableHead as PhdAwardedAdmin }  from '../../admin/tables/AdminPhdAwarded'
+import { tableHead as DemandRatioAdmin }  from '../../admin/tables/AdminDemandRatio'
+import { tableHead as HEAdmin }  from '../../admin/tables/AdminHE'
+import { tableHead as SwayamEContentDeveloped }  from '../../swayam/pages/SwayamEContentDeveloped'
+import { tableHead as SwayamValueAddedCourses }  from '../../swayam/pages/SwayamValueAddedCourses'
+import { tableHead as AwardForExtensionActivities }  from '../../nss/pages/NssAwardByInstitution'
 
 
-const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports }
+const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports, SportsAndCulturalEvents, JrfSrfAdmin, ResearchProjectsAdmin, ResearchGuideAdmin, PhdAwardedAdmin, DemandRatioAdmin, HEAdmin, AwardForExtensionActivities, SwayamEContentDeveloped, SwayamValueAddedCourses }
 
-const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams}) => {
+const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams }) => {
 
 
     const params = customParams || { model, module, filter: academicYear && { year: { $in: academicYear } },
@@ -49,3 +61,4 @@ const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, a
 }
 
 export default AdminMasterTable
+export {updatedTableHead}

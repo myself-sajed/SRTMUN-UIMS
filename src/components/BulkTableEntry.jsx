@@ -45,12 +45,8 @@ function BulkTableEntry({ tableHead, typeObject, tableData, setTableData, model 
                 {Object.keys(typeObject).map((columnName, cellIndex) => (
                   <td key={`${columnName}${cellIndex}`}>
                     {Array.isArray(typeObject[columnName]) ? (
-                      <select
-                        className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
-                        value={rowData[columnName]}
-                        onChange={(e) => handleInputChange(e, rowIndex, columnName)}
-                        required
-                      >
+                      <select className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea" value={rowData[columnName]}
+                        onChange={(e) => handleInputChange(e, rowIndex, columnName)} required >
                         <option selected disabled value="">Choose</option>
                         {typeObject[columnName].map((option, index) => (
                           <option key={`option${index}`} value={option}>
@@ -67,9 +63,7 @@ function BulkTableEntry({ tableHead, typeObject, tableData, setTableData, model 
                           value={rowData[columnName]}
                           onChange={(e) => handleInputChange(e, rowIndex, columnName)}
                         />)
-
                         :
-
                         (<TextareaAutosize
                           className="p-1 border-2 border-transparent w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea"
                           value={rowData[columnName]}

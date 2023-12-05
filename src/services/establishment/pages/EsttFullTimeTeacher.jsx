@@ -84,3 +84,4 @@ const EsttFullTimeTeacher = ({ filterByAcademicYear = false }) => {
   )
 }
 export default EsttFullTimeTeacher
+export {tableHead}

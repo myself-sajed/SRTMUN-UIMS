@@ -10,22 +10,7 @@ import BulkTableEntry from "./BulkTableEntry";
 import SchoolsProgram from "./SchoolsProgram";
 import UploadFile from "./formComponents/UploadFile";
 
-const BulkExcel = ({
-  SendReq,
-  module,
-  title,
-  refetch,
-  open,
-  setOpen,
-  data,
-  proof,
-  serviceName,
-  disableUpload = false,
-  tableHead,
-  typeObject,
-  commonFilds,
-  schoolPrograms = null,
-}) => {
+const BulkExcel = ({ SendReq, module, title, refetch, open, setOpen, data, proof, serviceName, disableUpload = false, tableHead, typeObject, commonFilds, schoolPrograms = null, }) => {
   const initialState = { excelFile: "" };
   const [value, setValues] = useState(initialState);
   const [tableData, setTableData] = useState([]);
@@ -320,31 +305,14 @@ const BulkExcel = ({
                 {/* onClick={() => {}} */}
 
                 <div>
-                  <Button
-                    variant="contained"
-                    component="label"
-                    onClick={generateExcelSampleFile}
-                    startIcon={<CloudUploadRoundedIcon />}
-                    sx={{ right: 0, fontSize: 14, maxHeight: 100 }}
-                    disabled={disableUpload}
-                  >
-                    Sample Excel File to Fill
-                  </Button>{" "}
+                  <Button variant="contained" component="label" onClick={generateExcelSampleFile} startIcon={<CloudUploadRoundedIcon />} sx={{ right: 0, fontSize: 14, maxHeight: 100 }} disabled={disableUpload}>Sample Excel File to Fill</Button>
                 </div>
               </div>
               <div className="">
-                <Button
-                  variant="contained"
-                  component="label"
-                  startIcon={<SimCardDownloadTwoToneIcon />}
-                  color="success"
-                  sx={{ right: 0, fontSize: 14, maxHeight: 100 }}
+                <Button variant="contained" component="label" startIcon={<SimCardDownloadTwoToneIcon />} color="success" sx={{ right: 0, fontSize: 14, maxHeight: 100 }}
                   onClick={() => {
                     generateExcelFile(data, modifyedHeads, `${title}.xlsx`);
-                  }}
-                >
-                  Download Data In Excel
-                </Button>
+                  }} > Download Data In Excel </Button>
               </div>
             </div>
             <div className="w-full mt-3">

@@ -124,3 +124,4 @@ const AdminJRFSRF = () => {
 }
 
 export default AdminJRFSRF
+export {tableHead}

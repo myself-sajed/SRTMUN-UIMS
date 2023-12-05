@@ -79,3 +79,4 @@ const NssAwardByInstitution = ({ filterByAcademicYear = false }) => {
 }
 
 export default NssAwardByInstitution
+export {tableHead}

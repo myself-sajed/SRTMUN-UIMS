@@ -196,3 +196,4 @@ useEffect(() => {
 }
 
 export default AdminResearchProjects
+export {tableHead}

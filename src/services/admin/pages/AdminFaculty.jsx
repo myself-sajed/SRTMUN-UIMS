@@ -50,8 +50,6 @@ const AdminFaculty = ({ school }) => {
   const [loaded, setLoaded] = useState(loadedInitial)
   
   const loading = !(Object.values(loaded).every((value) => value === true));
-  
-  
 
   const allFacultyComponents = [
     {

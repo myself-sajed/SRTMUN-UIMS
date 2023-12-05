@@ -81,3 +81,4 @@ const SportsAndCulturalEvents = ({ userType = 'dsd', filterByAcademicYear = fals
 }
 
 export default SportsAndCulturalEvents
+export {tableHead}

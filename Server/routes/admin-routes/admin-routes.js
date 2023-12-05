@@ -77,12 +77,18 @@ const DemandRatioAdmin = require('../../models/admin-models/demandRatioAdminSche
 const ResearchProjectsAdmin = require('../../models/admin-models/researchProjectsAdminSchema')
 const ResearchGuideAdmin = require('../../models/admin-models/researchGuideAdminSchema')
 const EsttFullTimeTeacherAgainstSanctioned = require('../../models/establishment-models/esttFullTimeTeacherAgainstSanctionedSchema')
+const EsttFullTimeTeacher = require('../../models/establishment-models/esttFullTimeTeacherSchema')
+const EsttFullTimeTeacherWhoLeft = require('../../models/establishment-models/esttFullTimeTeacherWhoLeftSchema')
 const DateOfResultDiclaration = require('../../models/exam-models/dateOfResultDiclarationSchema')
 const StudentComplaintsGrievances = require('../../models/exam-models/studentComplaintsGrevancesSchema')
 const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
 const TotalExpenditure = require('../../models/other-models/totalExpenditureSchema')
 const SubscriptionForKRC = require('../../models/krc-models/subscriptionForKRCSchema')
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema')
+const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema')
+const AwardForExtensionActivities = require('../../models/nss-models/awardForExtensionActivitiesSchema')
+const SwayamEContentDeveloped = require('../../models/swayam-models/swayamEContentDevelopedSchema')
+const SwayamValueAddedCourses = require('../../models/swayam-models/swayamValueAddedCourseSchema')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
@@ -91,13 +97,15 @@ const { pupetteerSetting } = require('../../utility/pupetteerSetting');
 
 const AdminModels = { JrfSrfAdmin, PhdAwardedAdmin, HEAdmin, DemandRatioAdmin, ResearchProjectsAdmin, ResearchGuideAdmin }
 
-const establishmentModels = { EsttFullTimeTeacherAgainstSanctioned, }
+const establishmentModels = { EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft }
 const examModels = { DateOfResultDiclaration, StudentComplaintsGrievances, ExamPassedDuringYear }
 const otherModels = { TotalExpenditure }
 const krcModels = { SubscriptionForKRC }
-const dsdModels = { DSDSports,  }
+const dsdModels = { DSDSports, SportsAndCulturalEvents }
+const nssModels = { AwardForExtensionActivities, }
+const swayamModels = { SwayamEContentDeveloped, SwayamValueAddedCourses }
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels, ...nssModels, ...swayamModels }
 
 
 

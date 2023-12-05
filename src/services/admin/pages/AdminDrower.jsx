@@ -13,13 +13,14 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import title from '../../../js/title'
 
 
 const AdminDrower = ({ children, hideHeader = false }) => {
   
   //ADD icon here 
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Student Satisfaction Survey": <GroupsRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "More": <MoreIcon />, }
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Student Satisfaction Survey": <GroupsRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "Others": <OtherHousesIcon />, "More": <MoreIcon />, }
 
   // "University Programs": <FestivalRoundedIcon />,
   title('Admin Panel')
