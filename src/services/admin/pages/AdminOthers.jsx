@@ -8,11 +8,11 @@ import BtnAdminTable from '../components/BtnAdminTable';
 
 const AdminOthers = () => {
 
-  const [childData, setChildData] = useState({ ResearchProjectsAdmin: null, JrfSrfAdmin: null, DSDSports: null, SportsAndCulturalEvents: null, EsttFullTimeTeacherAgainstSanctioned: null, EsttFullTimeTeacher: null, EsttFullTimeTeacherWhoLeft: null, DateOfResultDiclaration: null, ExamPassedDuringYear: null, StudentComplaintsGrievances: null, SubscriptionForKRC: null, AwardForExtensionActivities: null,   })
+  const [childData, setChildData] = useState({ ResearchProjectsAdmin: null, JrfSrfAdmin: null, DSDSports: null, SportsAndCulturalEvents: null, EsttFullTimeTeacherAgainstSanctioned: null, EsttFullTimeTeacher: null, EsttFullTimeTeacherWhoLeft: null, DateOfResultDiclaration: null, ExamPassedDuringYear: null, StudentComplaintsGrievances: null, SubscriptionForKRC: null, AwardForExtensionActivities: null, ExtensionActivities: null, TotalExpenditure: null, PhdAwardedAdmin: null, ResearchGuideAdmin: null, HEAdmin: null, DemandRatioAdmin: null, SwayamValueAddedCourses: null, SwayamEContentDeveloped: null,  })
   const [values, setValues] = useState({ yearFilter: [] })
   const { yearFilter } = values
 
-  const loadedInitial ={ ResearchProjectsAdmin: false, JrfSrfAdmin: false, DSDSports: false, SportsAndCulturalEvents: false, EsttFullTimeTeacherAgainstSanctioned: false, EsttFullTimeTeacher: false, EsttFullTimeTeacherWhoLeft: false, DateOfResultDiclaration: false, ExamPassedDuringYear: false, StudentComplaintsGrievances: false, SubscriptionForKRC: false, AwardForExtensionActivities: false,  }
+  const loadedInitial ={ ResearchProjectsAdmin: false, JrfSrfAdmin: false, DSDSports: false, SportsAndCulturalEvents: false, EsttFullTimeTeacherAgainstSanctioned: false, EsttFullTimeTeacher: false, EsttFullTimeTeacherWhoLeft: false, DateOfResultDiclaration: false, ExamPassedDuringYear: false, StudentComplaintsGrievances: false, SubscriptionForKRC: false, AwardForExtensionActivities: false, ExtensionActivities: false, TotalExpenditure: false, PhdAwardedAdmin: false, ResearchGuideAdmin: false, HEAdmin: false, DemandRatioAdmin: false, SwayamValueAddedCourses: false, SwayamEContentDeveloped: false, }
   const [loaded, setLoaded] = useState(loadedInitial)
   
   const loading = !(Object.values(loaded).every((value) => value === true));  
@@ -27,8 +27,8 @@ const AdminOthers = () => {
       childData: childData?.ResearchProjectsAdmin, filename: 'Research Projects (APDS).xlsx', SendReq: "ResearchProjectsAdmin", module: "faculty"
     },
     {
-      element: <BtnAdminTable model="DSDSports" setState={setChildData} customParams={{ model: "DSDSports", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Students Awards / Medals (DSD)' setLoaded={setLoaded} serviceName="dsd" />,
-      childData: childData?.DSDSports, filename: 'Students Awards / Medals (DSD).xlsx', SendReq: "DSDSports", module: "faculty"
+      element: <BtnAdminTable model="DSDSports" setState={setChildData} customParams={{ model: "DSDSports", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Students Awards & Medals (DSD)' setLoaded={setLoaded} serviceName="dsd" />,
+      childData: childData?.DSDSports, filename: 'Students Awards & Medals (DSD).xlsx', SendReq: "DSDSports", module: "faculty"
     },
     {
       element: <BtnAdminTable model="SportsAndCulturalEvents" setState={setChildData} customParams={{ model: "SportsAndCulturalEvents", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Information of Sports And Cultural Event (DSD)' setLoaded={setLoaded} serviceName="dsd" />,
@@ -43,8 +43,8 @@ const AdminOthers = () => {
       childData: childData?.EsttFullTimeTeacher, filename: 'Full Time Teachers (Establishment).xlsx', SendReq: "EsttFullTimeTeacher", module: "faculty"
     },
     {
-      element: <BtnAdminTable model="EsttFullTimeTeacherWhoLeft" setState={setChildData} customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Full Time Teachers who left/joined the institution (Establishment)' setLoaded={setLoaded} serviceName="estt" />,
-      childData: childData?.EsttFullTimeTeacherWhoLeft, filename: 'Full Time Teachers who left/joined the institution (Establishment).xlsx', SendReq: "EsttFullTimeTeacherWhoLeft", module: "faculty"
+      element: <BtnAdminTable model="EsttFullTimeTeacherWhoLeft" setState={setChildData} customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Full Time Teachers who left joined the institution (Establishment)' setLoaded={setLoaded} serviceName="estt" />,
+      childData: childData?.EsttFullTimeTeacherWhoLeft, filename: 'Full Time Teachers who left joined the institution (Establishment).xlsx', SendReq: "EsttFullTimeTeacherWhoLeft", module: "faculty"
     },
     {
       element: <BtnAdminTable model="DateOfResultDiclaration" setState={setChildData} customParams={{ model: "DateOfResultDiclaration", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Date Of Result Declaration (Exam)' setLoaded={setLoaded} serviceName="exam" />,
@@ -66,7 +66,38 @@ const AdminOthers = () => {
       element: <BtnAdminTable model="AwardForExtensionActivities" setState={setChildData} customParams={{ model: "AwardForExtensionActivities", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Award For Extension Activities (NSS)' setLoaded={setLoaded} serviceName="nss" />,
       childData: childData?.AwardForExtensionActivities, filename: 'Award For Extension Activities (NSS).xlsx', SendReq: "AwardForExtensionActivities", module: "faculty"
     },
-   
+    {
+      element: <BtnAdminTable model="ExtensionActivities" setState={setChildData} customParams={{ model: "ExtensionActivities", module: "Admin", filter: { Year_of_activity: {$in:yearFilter}, SchoolName: "NSS" } }} heading='Extension Activities (NSS)' setLoaded={setLoaded} serviceName="director" proof="Upload_Proof" />,
+      childData: childData?.ExtensionActivities, filename: 'Extension Activities (NSS).xlsx', SendReq: "ExtensionActivities", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="TotalExpenditure" setState={setChildData} customParams={{ model: "TotalExpenditure", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Total Expenditure (FAO)' setLoaded={setLoaded} serviceName="other" />,
+      childData: childData?.TotalExpenditure, filename: 'Total Expenditure (FAO).xlsx', SendReq: "TotalExpenditure", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="PhdAwardedAdmin" setState={setChildData} customParams={{ model: "PhdAwardedAdmin", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Ph.D. Scholars (PG Section)' setLoaded={setLoaded} serviceName="admin" proof="proof" />,
+      childData: childData?.PhdAwardedAdmin, filename: 'Ph.D. Scholars (PG Section).xlsx', SendReq: "PhdAwardedAdmin", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="ResearchGuideAdmin" setState={setChildData} customParams={{ model: "ResearchGuideAdmin", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Research Guide (PG Section)' setLoaded={setLoaded} serviceName="admin" proof="proof" />,
+      childData: childData?.ResearchGuideAdmin, filename: 'Research Guide (PG Section).xlsx', SendReq: "ResearchGuideAdmin", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="HEAdmin" setState={setChildData} customParams={{ model: "HEAdmin", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Progression To HE (PG Section)' setLoaded={setLoaded} serviceName="admin" proof="proof" />,
+      childData: childData?.HEAdmin, filename: 'Progression To HE (PG Section).xlsx', SendReq: "HEAdmin", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="DemandRatioAdmin" setState={setChildData} customParams={{ model: "DemandRatioAdmin", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Demand Ratio (PG Section)' setLoaded={setLoaded} serviceName="admin" proof="proof" />,
+      childData: childData?.DemandRatioAdmin, filename: 'Demand Ratio (PG Section).xlsx', SendReq: "DemandRatioAdmin", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="SwayamValueAddedCourses" setState={setChildData} customParams={{ model: "SwayamValueAddedCourses", module: "Admin", filter: { academicYear: {$in:yearFilter} } }} heading='Value Added Courses (Swayam)' setLoaded={setLoaded} serviceName="swayam" proof="proof" />,
+      childData: childData?.SwayamValueAddedCourses, filename: 'Value Added Courses (Swayam).xlsx', SendReq: "SwayamValueAddedCourses", module: "faculty"
+    },
+    {
+      element: <BtnAdminTable model="SwayamEContentDeveloped" setState={setChildData} customParams={{ model: "SwayamEContentDeveloped", module: "Admin", filter: { year: {$in:yearFilter} } }} heading='E-Content Developed (Swayam)' setLoaded={setLoaded} serviceName="swayam" proof="proof" />,
+      childData: childData?.SwayamEContentDeveloped, filename: 'E-Content Developed (Swayam).xlsx', SendReq: "SwayamEContentDeveloped", module: "faculty"
+    },
   ]
 
   useEffect(() => {

@@ -34,6 +34,7 @@ import AdminSchoolSelect from '../components/AdminSchoolSelect';
 import { toast } from 'react-hot-toast';
 import siteLinks from '../../../components/siteLinks';
 import CircularProgress from '@mui/material/CircularProgress';
+import { updatedTableHead } from '../components/AdminMasterTable';
 
 
 const AdminFaculty = ({ school }) => {
@@ -191,8 +192,15 @@ const downloadExcelZip = async (allComponentData, zipName) => {
 
     // Generate Excel worksheets and add them to the zip file
     allComponentData.forEach(({ childData, filename, SendReq, proof, module }) => {
-      const columnMapping = adminExcelObject[SendReq];
-
+      
+      let commonObject = {...adminExcelObject, ...updatedTableHead}
+      const columnMapping = commonObject[SendReq];
+      if (columnMapping.hasOwnProperty("Action")){
+        delete columnMapping.Action
+      }
+      if (columnMapping.hasOwnProperty("index")){
+        delete columnMapping.index
+      }
       if (!columnMapping) {
         throw new Error(`Column mapping '${SendReq}' not found.`);
       }
