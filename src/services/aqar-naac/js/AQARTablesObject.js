@@ -735,7 +735,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 ]
             },
             {
-                title: "4.4",
+                title: "4.4 - Maintenance of Campus Infrastructure",
                 components: [
                     {
                         id: "4.4.1",
