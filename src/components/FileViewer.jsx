@@ -13,7 +13,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function FileViewer({ fileName, serviceName, replace = null, children, showFullFileName = false, justShowButton = false, justShowButtonTitle = null }) {
-    console.log("serviceName",serviceName);
 
     const [open, setOpen] = React.useState(false);
 

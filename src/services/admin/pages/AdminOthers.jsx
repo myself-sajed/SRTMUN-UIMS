@@ -115,7 +115,7 @@ const AdminOthers = () => {
 
           <div className='button-wraper'>
 
-            <div className='flex flex-wrap p-2'>
+            <div className='grid grid-cols-4 gap-4 p-2'>
               {
                 allOtherComponents?.map(((item) => item?.element))
               }
