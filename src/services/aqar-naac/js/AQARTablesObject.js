@@ -728,12 +728,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
 
                     },
                     {
-                        id: "3.5.2",
-                        title: '3.5.2 - Revenue generated from consultancy and corporate training during the year (INR in Lakhs)',
+                        id: "3.6.2",
+                        title: '3.6.2 - Awards received by the Institution, its teachers and students from Government /Government recognised bodies in recognition of the extension activities carried out  during the year ',
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '3.5.2', userType: 'nss'
+                            academicYear, proofType: '3.6.2', userType: 'nss'
                         },
                         component: <AdminMasterTable model="AwardForExtensionActivities" customParams={{ model: "AwardForExtensionActivities", module: "Admin", filter: { academicYear } }} heading='Award For Extension Activities' serviceName="nss" proof="Upload_Proof" />
                     },
@@ -982,7 +982,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '5.1.1', userType: 'other', school
                         },
-                        component: <AdminMasterTable model="Scholarship" customParams={{ model: "Scholarship", module: "Admin", filter: {  academicYear } }} heading='Scholarship Benefit' serviceName="other" proof="proof" />
+                        component: <AdminMasterTable model="Scholarship" customParams={{ model: "Scholarship", module: "Admin", filter: { academicYear } }} heading='Scholarship Benefit' serviceName="other" proof="proof" />
                     },
                     {
                         id: "5.1.2",
