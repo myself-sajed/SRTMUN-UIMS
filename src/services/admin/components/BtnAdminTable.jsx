@@ -36,7 +36,7 @@ const BtnAdminTable = ({module="Admin", proof=null, color="#ae7e28", model, acad
    }, [data && data])
 
   return (
-    <div className='col-12 col-md-4 col-lg-3 px-1 py-1'>
+    <div className='h-full w-full'>
         <div style={{border:`solid 2px #997024`,borderRadius:"6px", display: "flex"}}>
         <Button className='adminBtn normalBtn' sx={{ background: '#f3e9d5'}} size="small" onClick={()=>{setOpen(true)}} >
           <div>{heading}<span className='px-2' style={{ border: '1px solid',borderRadius: '4px', margin: '0 5px', color: '#ae7e28', fontWeight: '700'}}>{data?.data?.length}</span></div>

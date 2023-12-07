@@ -18,7 +18,6 @@ const saveAQARMatter = (formData, refetch) => {
 }
 
 function fetchAQARMatter(filter, isMultiple) {
-    console.log(filter, isMultiple)
     const link = `${process.env.REACT_APP_MAIN_URL}/aqar/fetchAQARMatter`
     return axios.post(link, { filter, isMultiple })
 }

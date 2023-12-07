@@ -19,6 +19,7 @@ import TrainingProgramsOrganized from '../../director/pages/TrainingProgramsOrga
 import AQARTextMatter from '../components/AQARTextMatter'
 import AdminMasterTable from '../../admin/components/AdminMasterTable'
 import IctClassrooms from '../../director/pages/IctClassrooms'
+import AQARTextInfo from '../components/AQARTextInfo'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
@@ -186,6 +187,23 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='2.2.1' userType='director' />
 
                     },
+                    {
+                        id: "2.2.2",
+                        title: "2.2.2 - Student - Full time teacher ratio during the year ",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '2.2.2', userType: 'director', school
+                        },
+                        component: <AQARTextInfo
+                            tableInfo={[
+                                { head: 'Number of Students', cell: 'students' },
+                                { head: 'Number of Teacher', cell: 'teachers' }
+                            ]}
+                            academicYear={academicYear} tableId="2.2.2" school={school} isAdmin={!isDirector}
+                        />
+
+                    },
                 ]
             },
             {
@@ -213,6 +231,23 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='2.3.2' userType='director' />
 
                     },
+                    {
+                        id: "2.3.3",
+                        title: "2.3.3 - Ratio of students to mentor for academic and other related issues during the year",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '2.3.3', userType: 'director', school
+                        },
+                        component: <AQARTextInfo
+                            tableInfo={[
+                                { head: 'Number of Mentors', cell: 'mentors' },
+                            ]}
+                            academicYear={academicYear} tableId="2.3.3" school={school} isAdmin={!isDirector}
+                        />
+
+                    },
+
                 ]
             },
             {
@@ -536,28 +571,39 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         },
                         component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
                     },
-                    // {
-                    //     id: "3.4.8",
-                    //     title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
-                    //     hasSupportingDocument: true,
-                    //     isAdmin: !isDirector,
-                    //     proofData: {
-                    //         academicYear, proofType: '3.4.8', userType: 'director', school
-                    //     },
-                    //     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.8' userType='director' />
+                    {
+                        id: "3.4.8",
+                        title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.4.8', userType: 'director', school
+                        },
+                        component: <AQARTextInfo
+                            tableInfo={[
+                                { head: 'Scopus', cell: 'scopus' },
+                                { head: 'Web of Science', cell: 'wos' },
+                            ]}
+                            academicYear={academicYear} tableId="3.4.8" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "3.4.9",
+                        title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.4.9', userType: 'director', school
+                        },
+                        component: <AQARTextInfo
+                            tableInfo={[
+                                { head: 'Scopus', cell: 'scopus' },
+                                { head: 'Web of Science', cell: 'wos' },
+                            ]}
+                            academicYear={academicYear} tableId="3.4.9" school={school} isAdmin={!isDirector}
+                        />
 
-                    // },
-                    // {
-                    //     id: "3.4.9",
-                    //     title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
-                    //     hasSupportingDocument: true,
-                    //     isAdmin: !isDirector,
-                    //     proofData: {
-                    //         academicYear, proofType: '3.4.9', userType: 'director', school
-                    //     },
-                    //     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.4.9' userType='director' />
-
-                    // },
+                    },
                 ]
             },
             {
@@ -743,39 +789,56 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
             {
                 title: "4.3 - IT Infrastructure",
                 components: [
-                {
-                    id: "4.3.1",
-                    title: '4.3.1 - Number of classrooms and seminar halls with ICT - enabled facilities such as LCD, smart board, Wi-Fi/LAN, audio video recording facilities during the year',
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '4.3.1', userType: 'director', school
+                    {
+                        id: "4.3.1",
+                        title: '4.3.1 - Number of classrooms and seminar halls with ICT - enabled facilities such as LCD, smart board, Wi-Fi/LAN, audio video recording facilities during the year',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '4.3.1', userType: 'director', school
+                        },
+                        component: isDirector ?
+                            <IctClassrooms filterByAcademicYear={true} academicYear={academicYear} /> :
+                            <AdminMasterTable model="IctClassrooms" customParams={{ model: "IctClassrooms", module: "Admin", filter: { academicYear } }} heading='Ict Classrooms' serviceName="director" proof="Upload_Proof" />,
                     },
-                    component: isDirector ?
-                        <IctClassrooms filterByAcademicYear={true} academicYear={academicYear} /> :
-                        <AdminMasterTable model="IctClassrooms" customParams={{ model: "IctClassrooms", module: "Admin", filter: { academicYear } }} heading='Ict Classrooms' serviceName="director" proof="Upload_Proof" />,
-                },
-                {
-                    id: "4.3.2",
-                    title: "4.3.2 - Institution has an IT policy, makes appropriate budgetary provision and updates its IT facilities including Wi-Fi facility",
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '4.3.2', userType: 'director', school
-                    },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.3.2' userType='director' />
+                    {
+                        id: "4.3.2",
+                        title: "4.3.2 - Institution has an IT policy, makes appropriate budgetary provision and updates its IT facilities including Wi-Fi facility",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '4.3.2', userType: 'director', school
+                        },
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.3.2' userType='director' />
 
-                },
-                {
-                    id: "4.3.5",
-                    title: '4.3.5 - Institution has the following Facilities for e-content development 1) Media centre, 2) Audio visual centre, 3) Lecture Capturing System(LCS), 4) Mixing equipment’s and softwares for editing',
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '4.3.5', userType: 'faculty', school
                     },
-                    component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
-                },
+                    {
+                        id: "4.3.3",
+                        title: "4.3.3 - Student - Computer ratio during the year ",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '4.3.3', userType: 'director', school
+                        },
+                        component: <AQARTextInfo
+                            tableInfo={[
+                                { head: 'Number of students', cell: 'students' },
+                                { head: 'Number of Computers available to students for academic purposes', cell: 'computers' },
+                            ]}
+                            academicYear={academicYear} tableId="4.3.3" school={school} isAdmin={!isDirector}
+                        />
+
+                    },
+                    {
+                        id: "4.3.5",
+                        title: '4.3.5 - Institution has the following Facilities for e-content development 1) Media centre, 2) Audio visual centre, 3) Lecture Capturing System(LCS), 4) Mixing equipment’s and softwares for editing',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '4.3.5', userType: 'faculty', school
+                        },
+                        component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
+                    },
                 ]
             },
             {
