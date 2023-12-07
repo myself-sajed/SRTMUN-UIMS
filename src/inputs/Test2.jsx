@@ -1,5 +1,6 @@
 import React from 'react'
 import Scholarship from '../services/other/pages/Scholarship'
+import MaintenanceAndInfrastructure from '../services/other/pages/MaintenanceAndInfrastructure'
 // import { useQuery } from 'react-query'
 // import fetchData from '../services/dashboard/js/fetchData'
 // import UserLoading from '../pages/UserLoading'
@@ -12,7 +13,10 @@ import Scholarship from '../services/other/pages/Scholarship'
 
 const Test2 = ({ school: sch }) => {
 
-    return<Scholarship/>
+    return <div>
+      {/* <Scholarship/>
+      <MaintenanceAndInfrastructure /> */}
+    </div>
 
     // "School of Computational Sciences"
     // "School of Chemical Sciences"

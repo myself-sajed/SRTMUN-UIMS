@@ -25,10 +25,6 @@ const totalExpenditureSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    Proof: {
-        type: 'string',
-        required: false
-    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('TotalExpenditure', totalExpenditureSchema);

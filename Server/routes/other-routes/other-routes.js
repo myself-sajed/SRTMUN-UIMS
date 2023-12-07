@@ -6,8 +6,9 @@ const fs = require('fs');
 
 const TotalExpenditure = require("../../models/other-models/totalExpenditureSchema")
 const Scholarship = require("../../models/other-models/scholarshipSchema")
+const MaintenanceAndInfrastructure = require("../../models/other-models/maintenanceAndInfrastructureSchema")
 
-const models = { TotalExpenditure, Scholarship }
+const models = { TotalExpenditure, Scholarship, MaintenanceAndInfrastructure }
 
 const otherstorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -42,12 +43,13 @@ router.post("/other/newRecord/:model", otherUpload.single("Proof"), async (req, 
         if(isFile){
             var up = req.file.filename;
         }
+        let withUpData;
 
         if(up){
-            var withUpData = Object.assign(data, { Proof: up })
+            withUpData = Object.assign(data, { proof: up })
         }
         else{
-            var withUpData = data
+            withUpData = data
         }
         const obj = new models[model](withUpData);
         await obj.save();
@@ -73,7 +75,7 @@ router.post('/other/editRecord/:model', otherUpload.single('Proof'), async (req,
 
      var alldata = null
     if (up) {
-        alldata = Object.assign(SendData, { Proof: up })
+        alldata = Object.assign(SendData, { proof: up })
     }
     else {
         alldata = SendData

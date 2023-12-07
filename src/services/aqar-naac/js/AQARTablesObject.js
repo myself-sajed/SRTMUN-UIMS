@@ -873,6 +873,16 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 title: "5.1 - Student Support",
                 components: [
                     {
+                        id: "5.1.1",
+                        title: '5.1.1 - Total number of students benefited by scholarships and free ships provided by the institution, Government and non-government agencies (NGOs) during the year (other than the students receiving scholarships under the government schemes for reserved categories)',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '5.1.1', userType: 'other', school
+                        },
+                        component: <AdminMasterTable model="Scholarship" customParams={{ model: "Scholarship", module: "Admin", filter: {  academicYear } }} heading='Scholarship Benefit' serviceName="other" proof="proof" />
+                    },
+                    {
                         id: "5.1.2",
                         title: '5.1.2 - Total number of students benefited by career counselling and guidance for competitive examinations offered by the Institution during the year',
                         hasSupportingDocument: true,
@@ -1116,6 +1126,26 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear, proofType: '6.4.1', userType: 'director', school
                         },
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.4.1' userType='director' />
+                    },
+                    {
+                        id: "6.4.2",
+                        title: '6.4.2 - Teachers undergoing online/ face-to-face  Faculty Development Programmes (FDP)during  the year',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '6.4.2', userType: 'other', school
+                        },
+                        component: <AdminMasterTable model="MaintenanceAndInfrastructure" customParams={{ model: "MaintenanceAndInfrastructure", module: "Admin", filter: { academicYear } }} heading='Infrastructure and Maintenance Fundings' serviceName="other" proof="proof" />
+                    },
+                    {
+                        id: "6.4.3",
+                        title: '6.4.3 - Funds / Grants received from non-government bodies, individuals,philanthropists during the year for development and maintenance of infrastructure (not covered under Criteria III and V)(INR in Lakhs)',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '6.4.3', userType: 'other', school
+                        },
+                        component: <AdminMasterTable model="MaintenanceAndInfrastructure" customParams={{ model: "MaintenanceAndInfrastructure", module: "Admin", filter: { academicYear } }} heading='Infrastructure and Maintenance Fundings' serviceName="other" proof="proof" />
                     },
                     {
                         id: "6.4.4",

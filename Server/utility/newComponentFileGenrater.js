@@ -223,19 +223,19 @@ fs.writeFile(pathOfRoute, routeContent, (err) => {
 
 genrateTableComponent(
 {
-    title: "Scholarship Benefit", 
-    model: "Scholarship", 
+    title: "Infrastructure and Maintenance Fundings", 
+    model: "MaintenanceAndInfrastructure", 
     module: "other",
-    componentName: "Scholarship",
-    pathOfComponent: path.join(__dirname, '../../src/services/other/pages/Scholarship.jsx'),
-    modelName: 'scholarship',
-    pathOfModel: path.join(__dirname, '../models/other-models/scholarshipSchema.js'),
+    componentName: "MaintenanceAndInfrastructure",
+    pathOfComponent: path.join(__dirname, '../../src/services/other/pages/MaintenanceAndInfrastructure.jsx'),
+    modelName: 'maintenanceAndInfrastructure',
+    pathOfModel: path.join(__dirname, '../models/other-models/maintenanceAndInfrastructureSchema.js'),
     pathOfRoute: path.join(__dirname, '../routes/estt-routes/estt-routes.js'),
     tableHead:{ 
-      academicYear: "Year", name: "Name of the scheme", governmentStudnts: "Number of students", governmentAmount: "Amount", institutionStudnts: "Number of students", institutionAmount: "Amount", nonGovernmentStudnts: "Number of students", nonGovernmentAmount: "Amount", nonGovernmentNgo: "Name of the NGO/agency", 
+      academicYear: "Year", governmentAgencyName: "Name of the government funding agencies", nonGovernmentAgencyName: "Name of the non government funding agencies/ individuals", grantPurpose: "Purpose of the Grant", fundsReseived: "Funds/ Grants received (INR in lakhs)", 
     }, 
     typeObject: {
-      academicYear: "academicYearGenerator( 29, true, true )", name: "text", governmentStudnts: "text", governmentAmount: "number", institutionStudnts: "text", institutionAmount: "number", nonGovernmentStudnts: "text", nonGovernmentAmount: "number", nonGovernmentNgo: "text", 
+      academicYear: "academicYearGenerator( 29, true, true )", governmentAgencyName: "text", nonGovernmentAgencyName: "text", grantPurpose: "text", fundsReseived: "number",
     }
 }, true, true
 )

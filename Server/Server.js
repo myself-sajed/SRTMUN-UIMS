@@ -320,6 +320,7 @@ app.get("/showFile/:filename/:userType", function (req, res) {
     swayam: `./uploads/swayam-uploads/${filename}`,
     estt: `./uploads/establishment-uploads/${filename}`,
     tpo: `./uploads/tpo-uploads/${filename}`,
+    other: `./uploads/other-uploads/${filename}`,
   }
 
   const link = path.join(__dirname, uploadPaths[userType]);
