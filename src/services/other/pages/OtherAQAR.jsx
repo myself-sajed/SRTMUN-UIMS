@@ -10,6 +10,8 @@ import { TableSupportingProof } from '../../exam/pages/ExamAQAR';
 import uploadSupportingDocument, { fetchSupportingDocuments } from '../../krc/js/uploadSupportingDocument';
 import { useQuery } from 'react-query';
 import ArrowButton from '../../../components/ArrowButton';
+import Scholarship from './Scholarship';
+import MaintenanceAndInfrastructure from './MaintenanceAndInfrastructure';
 
 
 
@@ -29,7 +31,15 @@ const OtherAQAR = () => {
         {
             title: "4.1.4 - Total Expenditure (FAO)",
             component: <Expenditure aqarYearState={aqarYearState} />
-        }
+        },
+        {
+            title: "5.1.1 - students receiving scholarships",
+            component: <Scholarship />
+        },
+        {
+            title: "6.4.2 - Infrastructure and Maintenance Fundings",
+            component: <MaintenanceAndInfrastructure />
+        },
     ]
 
     const tableTitles = AQARTables.map((table) => table.title)

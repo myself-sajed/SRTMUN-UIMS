@@ -12,7 +12,7 @@ import BulkExcel from  '../../../components/BulkExcel';
 import AddButton from  '../../director/components/UtilityComponents/AddButton';
 import { academicYearGenerator } from "../../../inputs/Year";
 
-  const tableHead = { index: "Sr. no.", academicYear: "Year",name: "Name of the scheme",governmentStudnts: "Number of students",governmentAmount: "Amount",institutionStudnts: "Number of students",institutionAmount: "Amount",nonGovernmentStudnts: "Number of students",nonGovernmentAmount: "Amount",nonGovernmentNgo: "Name of the NGO/agency", Proof: "Upload Proof", Action: "Action" }
+  const tableHead = { index: "Sr. no.", academicYear: "Year",name: "Name of the scheme",governmentStudnts: "Number of students",governmentAmount: "Amount",institutionStudnts: "Number of students",institutionAmount: "Amount",nonGovernmentStudnts: "Number of students",nonGovernmentAmount: "Amount",nonGovernmentNgo: "Name of the NGO/agency", Proof: "Link to relevant document", Action: "Action" }
   const Scholarship = () => {
 
     const module = "other";
@@ -63,18 +63,30 @@ import { academicYearGenerator } from "../../../inputs/Year";
       <>
         <AddButton customName={title} onclick={setOpen} exceldialog={setExcelOpen} dataCount={data ? data?.data.length : 0} />
         <DialogBox title={`${edit ? "Edit" : "Add"} Scholarship Benefit`} buttonName="Submit" isModalOpen={open} setIsModalOpen={setOpen} onClickFunction={onSubmit} onCancel={onCancel} maxWidth="lg" loading={Loading}>
-        <div className='flex flex-wrap'>
-         <YearSelect className='col-md-6 col-lg-4'  id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4'  id="name" value={name} label={tableHead.name} setState={setValues} />
-				 <Text className='col-md-6 col-lg-4'  id="governmentStudnts" value={governmentStudnts} label={tableHead.governmentStudnts} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4' type="number" id="governmentAmount" value={governmentAmount} label={tableHead.governmentAmount} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4'  id="institutionStudnts" value={institutionStudnts} label={tableHead.institutionStudnts} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4' type="number" id="institutionAmount" value={institutionAmount} label={tableHead.institutionAmount} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4'  id="nonGovernmentStudnts" value={nonGovernmentStudnts} label={tableHead.nonGovernmentStudnts} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4' type="number" id="nonGovernmentAmount" value={nonGovernmentAmount} label={tableHead.nonGovernmentAmount} setState={setValues}  />
-				 <Text className='col-md-6 col-lg-4'  id="nonGovernmentNgo" value={nonGovernmentNgo} label={tableHead.nonGovernmentNgo} setState={setValues}  />
-				<UploadFile className='col-md-6 col-lg-4' id="Proof" label="Upload Proof" setState={setValues} required={!edit} />
-        </div>
+        
+          <div className="flex flex-row flex-wrap">
+            <YearSelect className='col-md-6 col-lg-4'  id="academicYear" value={academicYear} label={tableHead.academicYear} setState={setValues}  />
+            <Text className='col-md-6 col-lg-4'  id="name" value={name} label={tableHead.name} setState={setValues} />
+          </div>
+          <div className="flex flex-row flex-wrap">
+            <div className="w-full font-semibold ml-2 my-2">Number of students benefited by government scheme and amount</div>
+				    <Text className='col-md-6 col-lg-4'  id="governmentStudnts" value={governmentStudnts} label={tableHead.governmentStudnts} setState={setValues}  />
+            <Text className='col-md-6 col-lg-4' type="number" id="governmentAmount" value={governmentAmount} label={tableHead.governmentAmount} setState={setValues}  />
+          </div>
+          <div className="flex flex-row flex-wrap">
+            <div className="w-full font-semibold ml-2 my-2">Number of students benefited by  the institution's schemes and amount</div>
+            <Text className='col-md-6 col-lg-4'  id="institutionStudnts" value={institutionStudnts} label={tableHead.institutionStudnts} setState={setValues}  />
+				    <Text className='col-md-6 col-lg-4' type="number" id="institutionAmount" value={institutionAmount} label={tableHead.institutionAmount} setState={setValues}  />
+          </div>
+          <div className="flex flex-row flex-wrap">
+            <div className="w-full font-semibold ml-2 my-2">Number of students benefited by  the non-government agencies (NGOs) and amount</div>
+            <Text className='col-md-6 col-lg-4'  id="nonGovernmentStudnts" value={nonGovernmentStudnts} label={tableHead.nonGovernmentStudnts} setState={setValues}  />
+				    <Text className='col-md-6 col-lg-4' type="number" id="nonGovernmentAmount" value={nonGovernmentAmount} label={tableHead.nonGovernmentAmount} setState={setValues}  />
+				    <Text className='col-md-6 col-lg-4'  id="nonGovernmentNgo" value={nonGovernmentNgo} label={tableHead.nonGovernmentNgo} setState={setValues}  />
+          </div>
+          <div className="flex flex-row flex-wrap">
+				    <UploadFile className='col-md-6 col-lg-4' id="Proof" label="Link to relevant document" setState={setValues} required={!edit} />
+          </div>
         </DialogBox>
         
         <BulkExcel data={data?.data} title={title} SendReq={model} refetch={refetch} module={module} commonFilds={{}} tableHead={tableHead} typeObject={typeObject} open={excelOpen} setOpen={setExcelOpen} proof='proof' />
@@ -84,3 +96,4 @@ import { academicYearGenerator } from "../../../inputs/Year";
     )
   }
   export default Scholarship
+  export {tableHead}
