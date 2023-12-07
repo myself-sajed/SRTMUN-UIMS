@@ -77,7 +77,8 @@ const excelObject = {
     },
     IctClassrooms: {
         'Room number or Name of Classrooms': 'Room_number_or_Name_of_Classrooms',
-        'Type of ICT facility': 'Type_of_ICT_facility'
+        'Type of ICT facility': 'Type_of_ICT_facility',
+        'Academic Year': 'academicYear'
     },
     MoUs: {
         'Name of Organisation with whome mou signed': 'Name_of_Organisation_with_whome_mou_signed',
@@ -317,10 +318,11 @@ router.post("/director/newRecord/:model", upload.single("Upload_Proof"), async (
         }
         //IctClassrooms
         else if (model == 'IctClassrooms') {
-            const { icrnonoc, ictoif } = data
+            const { icrnonoc, ictoif, academicYear } = data
             SendData = {
                 Room_number_or_Name_of_Classrooms: icrnonoc,
-                Type_of_ICT_facility: ictoif
+                Type_of_ICT_facility: ictoif,
+                academicYear
             }
         }
         //MoUs
@@ -590,10 +592,11 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     }
     //IctClassrooms
     else if (model == 'IctClassrooms') {
-        const { icrnonoc, ictoif } = data
+        const { icrnonoc, ictoif, academicYear } = data
         SendData = {
             Room_number_or_Name_of_Classrooms: icrnonoc,
-            Type_of_ICT_facility: ictoif
+            Type_of_ICT_facility: ictoif,
+            academicYear
         }
     }
     //MoUs

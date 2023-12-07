@@ -9,6 +9,10 @@ const ictClassroomsSchema = new mongoose.Schema({
         type: String,
         required:true
     },
+    academicYear:{
+        type: String,
+        required:true
+    },
     Upload_Proof:{
         type:String,
         required:false

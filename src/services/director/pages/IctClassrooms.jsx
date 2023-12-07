@@ -16,8 +16,10 @@ import EditReq from "../../../components/requestComponents/editReq";
 import AddButton from "../components/UtilityComponents/AddButton";
 import Diatitle from "../components/UtilityComponents/Diatitle";
 import BulkExcel from "../../../components/BulkExcel";
+import { academicYearGenerator } from "../../../inputs/Year";
+import SYTextField from "../components/FormComponents/SYTextField";
 
-const tableHead = { index: "Sr. no.", Room_number_or_Name_of_Classrooms: "Room number or Name of Classrooms", Type_of_ICT_facility: "Type of ICT facility ", Upload_Proof: "Gio taged photo", Action: "Action" }
+const tableHead = { index: "Sr. no.", Room_number_or_Name_of_Classrooms: "Room number or Name of Classrooms", Type_of_ICT_facility: "Type of ICT facility ", academicYear: "Academic Year", Upload_Proof: "Gio taged photo", Action: "Action" }
 
 function IctClassrooms() {
 
@@ -29,14 +31,14 @@ function IctClassrooms() {
     const [open, setOpen] = useState(false);
     const directorUser = useSelector(state => state.user.directorUser)
     const typeObject = {
-        Room_number_or_Name_of_Classrooms: "text", Type_of_ICT_facility: "text"
+        Room_number_or_Name_of_Classrooms: "text", Type_of_ICT_facility: "text", academicYear: academicYearGenerator( 29, true, true )
     }
 
     const params = { model: SendReq, id: directorUser.department, module }
     const { data, isLoading, refetch } = useQuery([SendReq, "a58pRj6;?ewz'x{&6ANy"], () => GetReq(params))
 
     //--------------values useState---------------
-    const initialState = { icrnonoc: "", ictoif: "", Upload_Proof: "" }
+    const initialState = { icrnonoc: "", ictoif: "", academicYear: "", Upload_Proof: "" }
     const [values, setvalues] = useState(initialState);
 
     //---------------edit state-------------------
@@ -53,6 +55,7 @@ function IctClassrooms() {
                     setvalues({
                         icrnonoc: item.Room_number_or_Name_of_Classrooms,
                         ictoif: item.Type_of_ICT_facility,
+                        academicYear: item.academicYear
                     })
                 }
             })
@@ -76,6 +79,7 @@ function IctClassrooms() {
                         <Grid container>
                             <CTextField label="Room number or Name of Classrooms" type="text" value={values.icrnonoc} id="icrnonoc" required={true} onch={setvalues} />
                             <CTextField label="Type of ICT facility" type="text" value={values.ictoif} id="ictoif" required={true} onch={setvalues} />
+                            <SYTextField value={values.ayoa} id="academicYear" label="Academic Year" required={!edit} onch={setvalues} />
                             <UTextField label="Upload Geo tagged Photo" id="Upload_Proof" required={!edit} onch={setvalues} />
                             <SubmitButton label="Submit" init={initialState} setval={setvalues} Loading={Loading} />
                         </Grid>
@@ -84,7 +88,7 @@ function IctClassrooms() {
             </Dialog>
 
             <BulkExcel data={data?.data} tableHead={tableHead} typeObject={typeObject} proof='Upload_Proof' title={title} SendReq={SendReq} refetch={refetch} module={module} commonFilds={{SchoolName:directorUser?.department}} open={open} setOpen={setOpen} />
-            <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} />
+            <Table TB={data?.data} module={module} fatchdata={refetch} setItemToEdit={setItemToEdit} isLoading={isLoading} tableHead={tableHead} SendReq={SendReq} year="academicyear" />
         </>
     )
 }

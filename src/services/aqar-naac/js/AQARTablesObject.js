@@ -18,6 +18,7 @@ import AlumniContribution from '../../director/pages/AlumniContribution'
 import TrainingProgramsOrganized from '../../director/pages/TrainingProgramsOrganized'
 import AQARTextMatter from '../components/AQARTextMatter'
 import AdminMasterTable from '../../admin/components/AdminMasterTable'
+import IctClassrooms from '../../director/pages/IctClassrooms'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
@@ -228,6 +229,16 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: !isDirector && <AdminMasterTable model="EsttFullTimeTeacherAgainstSanctioned" customParams={{ model: "EsttFullTimeTeacherAgainstSanctioned", module: "Admin", filter: { academicYear } }} heading='Full Time Teachers Against Sanctioned Posts' serviceName="estt" />
                     },
                     {
+                        id: "2.4.2",
+                        title: '2.4.2 - Total Number of full time teachers withPh.D./D.M/M.Ch./D.N.B Superspeciality/D.Sc./D’Lit. during the year',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '2.4.2', userType: 'pgsection'
+                        },
+                        component: !isDirector && <AdminMasterTable model="ResearchGuideAdmin" customParams={{ model: "ResearchGuideAdmin", module: "Admin", filter: { year:academicYear } }} heading='Full Time Teachers Against Sanctioned Posts' serviceName="admin" proof="proof" />
+                    },
+                    {
                         id: "2.4.3",
                         title: '2.4.3 - Total teaching experience of full time teachers in the same institution during the year',
                         hasSupportingDocument: true,
@@ -337,6 +348,16 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         },
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.1.1' userType='director' />
 
+                    },
+                    {
+                        id: "3.1.2",
+                        title: '3.1.2 - The institution provides seed money to its teachers for research (amount INR in Lakhs)',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.1.2', userType: 'faculty', school
+                        },
+                        component: <AdminMasterTable model="ResearchProject" academicYear={academicYear} school={school} heading='Reserch Projects' serviceName="faculty" proof="proof" />
                     },
                     {
                         id: "3.1.3",
@@ -581,6 +602,16 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
 
                     },
                     {
+                        id: "3.5.2",
+                        title: '3.5.2 - Revenue generated from consultancy and corporate training during the year (INR in Lakhs)',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.5.2', userType: 'nss'
+                        },
+                        component: <AdminMasterTable model="AwardForExtensionActivities" customParams={{ model: "AwardForExtensionActivities", module: "Admin", filter: { academicYear } }} heading='Award For Extension Activities' serviceName="nss" proof="Upload_Proof" />
+                    },
+                    {
                         id: "3.6.3",
                         title: '3.6.3 - Number of extension and outreach programs conducted by the institution including those through NSS/NCC/Red cross/YRC during the year(including Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs)',
                         hasSupportingDocument: true,
@@ -711,7 +742,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
             },
             {
                 title: "4.3 - IT Infrastructure",
-                components: [{
+                components: [
+                {
+                    id: "4.3.1",
+                    title: '4.3.1 - Number of classrooms and seminar halls with ICT - enabled facilities such as LCD, smart board, Wi-Fi/LAN, audio video recording facilities during the year',
+                    hasSupportingDocument: true,
+                    isAdmin: !isDirector,
+                    proofData: {
+                        academicYear, proofType: '4.3.1', userType: 'director', school
+                    },
+                    component: isDirector ?
+                        <IctClassrooms filterByAcademicYear={true} academicYear={academicYear} /> :
+                        <AdminMasterTable model="IctClassrooms" customParams={{ model: "IctClassrooms", module: "Admin", filter: { academicYear } }} heading='Ict Classrooms' serviceName="director" proof="Upload_Proof" />,
+                },
+                {
                     id: "4.3.2",
                     title: "4.3.2 - Institution has an IT policy, makes appropriate budgetary provision and updates its IT facilities including Wi-Fi facility",
                     hasSupportingDocument: true,

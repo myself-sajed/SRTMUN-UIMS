@@ -1,4 +1,5 @@
 import React from 'react'
+import Scholarship from '../services/other/pages/Scholarship'
 // import { useQuery } from 'react-query'
 // import fetchData from '../services/dashboard/js/fetchData'
 // import UserLoading from '../pages/UserLoading'
@@ -10,6 +11,8 @@ import React from 'react'
 // import BulkExcel from '../components/BulkExcel'
 
 const Test2 = ({ school: sch }) => {
+
+    return<Scholarship/>
 
     // "School of Computational Sciences"
     // "School of Chemical Sciences"

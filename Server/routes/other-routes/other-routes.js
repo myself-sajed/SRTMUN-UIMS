@@ -5,8 +5,9 @@ const path = require('path');
 const fs = require('fs');
 
 const TotalExpenditure = require("../../models/other-models/totalExpenditureSchema")
+const Scholarship = require("../../models/other-models/scholarshipSchema")
 
-const models = { TotalExpenditure }
+const models = { TotalExpenditure, Scholarship }
 
 const otherstorage = multer.diskStorage({
     destination: (req, file, cb) => {

@@ -28,9 +28,10 @@ import { tableHead as HEAdmin }  from '../../admin/tables/AdminHE'
 import { tableHead as SwayamEContentDeveloped }  from '../../swayam/pages/SwayamEContentDeveloped'
 import { tableHead as SwayamValueAddedCourses }  from '../../swayam/pages/SwayamValueAddedCourses'
 import { tableHead as AwardForExtensionActivities }  from '../../nss/pages/NssAwardByInstitution'
+import { tableHead as ResearchProject }  from '../../admin/tables_faculty/ResearchProjects'
 
 
-const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports, SportsAndCulturalEvents, JrfSrfAdmin, ResearchProjectsAdmin, ResearchGuideAdmin, PhdAwardedAdmin, DemandRatioAdmin, HEAdmin, AwardForExtensionActivities, SwayamEContentDeveloped, SwayamValueAddedCourses }
+const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports, SportsAndCulturalEvents, JrfSrfAdmin, ResearchProjectsAdmin, ResearchGuideAdmin, PhdAwardedAdmin, DemandRatioAdmin, HEAdmin, AwardForExtensionActivities, SwayamEContentDeveloped, SwayamValueAddedCourses, ResearchProject }
 
 const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams }) => {
 
