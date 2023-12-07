@@ -20,6 +20,7 @@ import AQARTextMatter from '../components/AQARTextMatter'
 import AdminMasterTable from '../../admin/components/AdminMasterTable'
 import IctClassrooms from '../../director/pages/IctClassrooms'
 import AQARTextInfo from '../components/AQARTextInfo'
+import AQARCheckRadio from '../components/AQARCheckRadio'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
@@ -135,13 +136,41 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             <AdminMasterTable model="ProjectsInternships" customParams={{ model: "ProjectsInternships", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Projects / Internships' serviceName="director" proof="Upload_Proof" />,
                     },
                 ]
+            },
+            {
+                title: "1.4 - Feedback System",
+                components: [
+                    {
+                        id: "1.4.1",
+                        title: "1.4.1 - Structured feedback for design and review of syllabus – semester wise / is received from Students, Teachers, Employers, Alumni",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '1.4.1', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Students", "Teachers", "Employers", "Alumni"]}
+                            academicYear={academicYear} radioId={"1.4.1"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
+                    {
+                        id: "1.4.2",
+                        title: '1.4.2 - Feedback processes of the institution may be classified as follows',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '1.4.2', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Feedback collected, analysed and action taken and feedback available on website", "Feedback collected, analysed and action has been taken", "Feedback collected and analysed", "Feedback collected", "Feedback not collected"]}
+
+                            academicYear={academicYear} radioId={"1.4.2"} isAdmin={!isDirector} school={school} type='radio'
+                        />
+                    },
+
+                ]
             }
-
-            // ? 1.2
-            // todo 1.4 
-            // ? table 1.4.1 - Structured feedback for design and review of syllabus – semester wise / is received from Students, Teachers, Employers, Alumni
-            // ? ????? 1.4.2 - Feedback processes of the institution may be classified as follows
-
         ],
         "criterion-2": [
             {
@@ -271,7 +300,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '2.4.2', userType: 'pgsection'
                         },
-                        component: !isDirector && <AdminMasterTable model="ResearchGuideAdmin" customParams={{ model: "ResearchGuideAdmin", module: "Admin", filter: { year:academicYear } }} heading='Full Time Teachers Against Sanctioned Posts' serviceName="admin" proof="proof" />
+                        component: !isDirector && <AdminMasterTable model="ResearchGuideAdmin" customParams={{ model: "ResearchGuideAdmin", module: "Admin", filter: { year: academicYear } }} heading='Full Time Teachers Against Sanctioned Posts' serviceName="admin" proof="proof" />
                     },
                     {
                         id: "2.4.3",
@@ -327,6 +356,21 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear, proofType: '2.5.3', userType: 'director', school
                         },
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='2.5.3' userType='director' />
+
+                    },
+                    {
+                        id: "2.5.4",
+                        title: "2.5.4 - Status of automation of Examination division along with approved Examination Manual",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '2.5.4', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["100% automation of entire division & implementation of Examination Management System (EMS)", "Only student registration, Hall ticket issue & Result Processing", "Only student registration and result processing", "Only result processing", "Only manual methodology"]}
+
+                            academicYear={academicYear} radioId={"2.5.4"} isAdmin={!isDirector} school={school} type='radio'
+                        />
 
                     },
                 ]
@@ -413,6 +457,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear, proofType: '3.1.4', userType: 'faculty', school
                         },
                         component: <AdminMasterTable model="JrfSrf" academicYear={academicYear} school={school} heading='JRFs, SRFs, PDF, Research Associates' serviceName="faculty" proof="proof" />
+                    },
+                    {
+                        id: "3.1.5",
+                        title: "3.1.5 - Institution has the following facilities to support research",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.1.5', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Central Instrumentation Centre", "Animal House/Green House", "Museum", "Media laboratory/Studios", "Business Lab", "Research/Statistical Databases", "Moot court", "Theatre", "Art Gallery"]}
+                            academicYear={academicYear} radioId={"3.1.5"} isAdmin={!isDirector} school={school}
+                        />
+
                     },
                     {
                         id: "3.1.6",
@@ -509,6 +567,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 title: '3.4 - Research Publications and Awards',
                 components: [
                     {
+                        id: "3.4.1",
+                        title: "3.4.1 - The institution ensures implementation of its stated Code of Ethics for research",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.4.1', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Inclusion of research ethics in the research methodology course work", "Presence of institutional Ethics committees (Animal, chemical, bio-ethics etc)", "Plagiarism check", "Research Advisory Committee"]}
+                            academicYear={academicYear} radioId={"3.4.1"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
+                    {
                         id: "3.4.2",
                         title: '3.4.2 - The institution provides incentives to teachers who receive state, national and international recognitions/awards',
                         hasSupportingDocument: true,
@@ -516,7 +588,15 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '3.4.2', userType: 'faculty', school
                         },
-                        component: <AdminMasterTable model="AwardRecognition" academicYear={academicYear} school={school} heading='Award Recognition' serviceName="faculty" proof="proof" />
+                        component: <div>
+                            <AQARCheckRadio
+                                options={["Commendation and monetary incentive at a University function", "Commendation and medal at a University function", "Certificate of honor", "Announcement in the Newsletter / website"]}
+                                academicYear={academicYear} radioId={"3.4.2"} isAdmin={!isDirector} school={school} />
+
+                            <div className="mt-3">
+                                <AdminMasterTable model="AwardRecognition" academicYear={academicYear} school={school} heading='Award Recognition' serviceName="faculty" proof="proof" />
+                            </div>
+                        </div>
                     },
                     {
                         id: "3.4.3",
@@ -830,6 +910,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
 
                     },
                     {
+                        id: "4.3.4",
+                        title: "4.3.4 - Available bandwidth of internet connection in the Institution (Leased line)",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '4.3.4', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["≥1 GBPS", "500 MBPS - 1 GBPS", "250 MBPS - 500 MBPS", "50 MBPS - 250 MBPS", "<50 MBPS"]}
+                            academicYear={academicYear} radioId={"4.3.4"} isAdmin={!isDirector} school={school} type='radio'
+                        />
+
+                    },
+                    {
                         id: "4.3.5",
                         title: '4.3.5 - Institution has the following Facilities for e-content development 1) Media centre, 2) Audio visual centre, 3) Lecture Capturing System(LCS), 4) Mixing equipment’s and softwares for editing',
                         hasSupportingDocument: true,
@@ -837,7 +931,15 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '4.3.5', userType: 'faculty', school
                         },
-                        component: <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
+                        component: <>
+                            <AQARCheckRadio
+                                options={["Media centre", "Audio visual centre", "Lecture Capturing System(LCS)", "Mixing equipment’s and softwares for editing"]}
+                                academicYear={academicYear} radioId={"4.3.5"} isAdmin={!isDirector} school={school}
+                            />
+                            <div className="mt-3">
+                                <AdminMasterTable model="EContentDeveloped" academicYear={academicYear} school={school} heading='E-content Developed' serviceName="faculty" proof="proof" />
+                            </div>
+                        </>
                     },
                 ]
             },
@@ -895,7 +997,21 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: isDirector ?
                             <SkillsEnhancementInitiatives filterByAcademicYear={true} academicYear={academicYear} /> :
                             <AdminMasterTable model="SkillsEnhancementInitiatives" customParams={{ model: "SkillsEnhancementInitiatives", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Skills Enhancement Initiatives' serviceName="director" proof="Upload_Proof" />,
-                    }
+                    },
+                    {
+                        id: "5.1.4",
+                        title: "5.1.4 - The Institution adopts the following for redressal of student grievances including sexual harassment and ragging cases",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '5.1.4', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Implementation of guidelines of statutory/regulatory bodies", "Organisation wide awareness and undertakings on policies with zero tolerance", "Mechanisms for submission of online/offline students’ grievances", "Timely redressal of the grievances through appropriate committees"]}
+                            academicYear={academicYear} radioId={"5.1.4"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
                 ]
             },
             {
@@ -1054,7 +1170,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.2.2' userType='director' />
 
                 },
+                {
+                    id: "6.2.3",
+                    title: "6.2.3 - Institution Implements e-governance in its areas of operations ",
+                    hasSupportingDocument: true,
+                    isAdmin: !isDirector,
+                    proofData: {
+                        academicYear, proofType: '6.2.3', userType: 'director', school
+                    },
+                    component: <AQARCheckRadio
+                        options={["Administration", "Finance and Accounts", "Student Admission and Support", "Examination"]}
+                        academicYear={academicYear} radioId={"6.2.3"} isAdmin={!isDirector} school={school}
+                    />
 
+                },
                 ]
             },
             {
@@ -1141,6 +1270,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear, proofType: '6.5.1', userType: 'director', school
                         },
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.5.1' userType='director' />
+                    },
+                    {
+                        id: "6.5.2",
+                        title: "6.5.2 - Institution has adopted the following for Quality assurance",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '6.5.2', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Academic Administrative Audit (AAA) and follow up action taken", "Confernces, Seminars, Workshops on quality conducted", "Collaborative quality initiatives with other institution(s)", "Orientation programme on quality issues for teachers and students", "Participation in NIRF", "Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)"]}
+                            academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school={school}
+                        />
+
                     },
                     {
                         id: "6.5.3",

@@ -5,11 +5,11 @@ const schema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
-    tableId: {
+    radioId: {
         type: 'string',
         required: true,
     },
-    tableData: {
+    radioInfo: {
         type: 'string',
         required: true,
     },
@@ -19,4 +19,4 @@ const schema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('aqarTextInfo', schema);
+module.exports = mongoose.model('aqarRadioInfo', schema);
