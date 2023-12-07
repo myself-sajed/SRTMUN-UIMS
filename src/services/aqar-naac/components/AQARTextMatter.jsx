@@ -16,17 +16,15 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
 
     const log = () => {
         if (editorRef.current) {
-            setMatter({ content: editorRef.current.getContent() })
+            submitMatter({ content: editorRef.current.getContent() })
         }
     };
 
 
-    const submitMatter = (e) => {
-
-        e.preventDefault();
+    const submitMatter = (contentMatter) => {
 
         const formData = {
-            matter: JSON.stringify(matter), userType, matterType, academicYear, school
+            matter: JSON.stringify(contentMatter), userType, matterType, academicYear, school
         }
 
         saveAQARMatter(formData, refetch)
@@ -48,7 +46,7 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
 
 
     return <div>
-        {isLoading ? <UserLoading title="Getting data" /> : <form onSubmit={submitMatter}>
+        {isLoading ? <UserLoading title="Getting data" /> : <form>
             {
                 !isAdmin ? <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3">
                     <Editor
@@ -57,7 +55,7 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                         apiKey={process.env.REACT_APP_TINY_MCE}
                         init={{
                             height: 300,
-                            branding:false,
+                            branding: false,
                             menubar: false,
                             placeholder: "Start typing...",
                             plugins: [
@@ -71,42 +69,37 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                         }}
                         onBlur={log}
                     />
-                    <div className="flex items-center justify-between px-3 py-2 border-t">
-                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                            Submit Details
-                        </button>
-                    </div>
                 </div> : <div className="bg-gray-50 rounded-md p-3 mt-3 border">
                     {
                         matters && matters?.length > 0 ? <div >
-                             <p className='text-semibold mb-3 font-medium'>School wise content / write-up:</p>
-                             <div className="max-h-72 overflow-y-scroll">
-                            <table className="table table-responsive table-bordered ">
-                                <thead className="bg-primary text-white">
-                                    <tr>
-                                        <th>School Name</th>
-                                        <th>Content / write-up</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        matters?.map((matter) => {
+                            <p className='text-semibold mb-3 font-medium'>School wise content / write-up:</p>
+                            <div className="max-h-72 overflow-y-scroll">
+                                <table className="table table-responsive table-bordered ">
+                                    <thead className="bg-primary text-white">
+                                        <tr>
+                                            <th>School Name</th>
+                                            <th>Content / write-up</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            matters?.map((matter) => {
 
 
-                                            return <tr>
-                                                <td>
-                                                    {matter?.school}
-                                                </td>
-                                                <td>
-                                                <div dangerouslySetInnerHTML={{ __html: JSON.parse(matter.matter).content }} />
-                                                    
-                                                </td>
-                                                
-                                            </tr>
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+                                                return <tr>
+                                                    <td>
+                                                        {matter?.school}
+                                                    </td>
+                                                    <td>
+                                                        <div dangerouslySetInnerHTML={{ __html: JSON.parse(matter.matter).content }} />
+
+                                                    </td>
+
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div> : <div>
                             <p className="text-center my-3 text-yellow-500">No data available</p>

@@ -1344,6 +1344,21 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     },
 
                     {
+                        id: "7.1.2",
+                        title: "7.1.2 - The Institution has facilities for alternate sources of energy and energy conservation",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.2', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Solar energy", "Biogas plant", "Wheeling to the Grid", "Sensor-based energy conservation", "Use of LED bulbs / power-efficient equipment"]}
+                            academicYear={academicYear} radioId={"7.1.2"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
+
+                    {
                         id: "7.1.3",
                         title: "7.1.3 - Describe the facilities in the Institution for the management of the following types of degradable and non-degradable waste (within 200 words) 1) Solid waste management 2) Liquid waste management 3) Biomedical waste management 4) E-waste management 5)  Waste recycling system 6) Hazardous chemicals and radioactive waste management",
                         hasSupportingDocument: true,
@@ -1354,7 +1369,62 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.3' userType='director' />
                     },
 
+                    {
+                        id: "7.1.4",
+                        title: "7.1.4 - Water conservation facilities available in the Institution",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.4', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Rain water harvesting", "Bore well /Open well recharge", "Construction of tanks and bunds", "Waste water recycling", "Maintenance of water bodies and distribution system in the campus"]}
+                            academicYear={academicYear} radioId={"7.1.4"} isAdmin={!isDirector} school={school}
+                        />
 
+                    },
+                    {
+                        id: "7.1.5",
+                        title: "7.1.5 - Green campus initiatives include",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.5', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Restricted entry of automobiles", "Use of bicycles/ Battery-powered vehicles", "Pedestrian-friendly pathways", "Ban on use of plastic", "Landscaping"]}
+                            academicYear={academicYear} radioId={"7.1.5"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
+                    {
+                        id: "7.1.6",
+                        title: "7.1.6 - Quality audits on environment and energy are regularly undertaken by the institution",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.6', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Green audit", "Energy audit", "Environment audit", "Clean and green campus recognitions/awards", "Beyond the campus environmental promotional activities"]}
+                            academicYear={academicYear} radioId={"7.1.6"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
+                    {
+                        id: "7.1.7",
+                        title: "7.1.7 - The Institution has a disabled-friendly and barrier-free environment",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.7', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["Ramps/lifts for easy access to classrooms and centres.", "Disabled-friendly washrooms", "Signage including tactile path lights, display boards and signposts", "Assistive technology and facilities for persons with disabilities: accessible website, screen-reading software,mechanized equipment, etc.", "Provision for enquiry and information: Human assistance, reader, scribe, soft copies of reading materials, screen reading, etc."]}
+                            academicYear={academicYear} radioId={"7.1.7"} isAdmin={!isDirector} school={school}
+                        />
+
+                    },
                     {
                         id: "7.1.8",
                         title: "7.1.8 - Describe the Institutional efforts/initiatives in providing an inclusive environment i.e. tolerance and harmony towards cultural, regional, linguistic, communal, socio-economic and other diversities",
@@ -1375,18 +1445,29 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         },
                         component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.9' userType='director' />
                     },
+                    {
+                        id: "7.1.10",
+                        title: "7.1.10 - The Institution has a prescribed code of conduct for students, teachers, administrators and other staff and conducts periodic programmes in this regard.",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '7.1.10', userType: 'director', school
+                        },
+                        component: <AQARCheckRadio
+                            options={["The Code of Conduct is displayed on the website", "There is a committee to monitor adherence to the Code of Conduct", "Institution organizes professional ethics programmes for students, teachers, administrators and other staff", "Annual awareness programmes on Code of Conduct are organized"]}
+                            academicYear={academicYear} radioId={"7.1.10"} isAdmin={!isDirector} school={school}
+                        />
 
-
-
+                    },
                     {
                         id: "7.1.11",
                         title: "7.1.11 - Institution celebrates / organizes national and international commemorative days, events and festivals",
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '7.1.1', userType: 'director', school
+                            academicYear, proofType: '7.1.11', userType: 'director', school
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.1' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.11' userType='director' />
                     },
                 ]
             },
