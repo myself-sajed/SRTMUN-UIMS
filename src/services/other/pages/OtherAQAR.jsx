@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import ArrowButton from '../../../components/ArrowButton';
 import Scholarship from './Scholarship';
 import MaintenanceAndInfrastructure from './MaintenanceAndInfrastructure';
+import IQACInstitutionQualityAssurance from './IQACInstitutionQualityAssurance';
 
 
 
@@ -39,6 +40,10 @@ const OtherAQAR = () => {
         {
             title: "6.4.2 - Infrastructure and Maintenance Fundings",
             component: <MaintenanceAndInfrastructure />
+        },
+        {
+            title: "6.5.2 - Institution adopted Quality assurance",
+            component: <IQACInstitutionQualityAssurance/>
         },
     ]
 
