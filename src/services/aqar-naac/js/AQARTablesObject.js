@@ -1389,7 +1389,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
 
                             {/* // place IQAC table inside this div */}
                             <div className="mt-2">
-
+                                <AdminMasterTable model="IQACInstitutionQualityAssurance" customParams={{ model: "IQACInstitutionQualityAssurance", module: "Admin", filter: { academicYear } }} heading='Institution adopted Quality assurance' serviceName="other" proof="proof" />
                             </div>
                         </>
 

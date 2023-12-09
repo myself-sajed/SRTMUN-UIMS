@@ -223,19 +223,19 @@ fs.writeFile(pathOfRoute, routeContent, (err) => {
 
 genrateTableComponent(
 {
-    title: "Infrastructure and Maintenance Fundings", 
-    model: "MaintenanceAndInfrastructure", 
+    title: "Institution adopted Quality assurance", 
+    model: "IQACInstitutionQualityAssurance", 
     module: "other",
-    componentName: "MaintenanceAndInfrastructure",
-    pathOfComponent: path.join(__dirname, '../../src/services/other/pages/MaintenanceAndInfrastructure.jsx'),
-    modelName: 'maintenanceAndInfrastructure',
-    pathOfModel: path.join(__dirname, '../models/other-models/maintenanceAndInfrastructureSchema.js'),
+    componentName: "IQACInstitutionQualityAssurance",
+    pathOfComponent: path.join(__dirname, '../../src/services/other/pages/IQACInstitutionQualityAssurance.jsx'),
+    modelName: 'iqacInstitutionQualityAssurance',
+    pathOfModel: path.join(__dirname, '../models/other-models/iqacInstitutionQualityAssuranceSchema.js'),
     pathOfRoute: path.join(__dirname, '../routes/estt-routes/estt-routes.js'),
     tableHead:{ 
-      academicYear: "Year", governmentAgencyName: "Name of the government funding agencies", nonGovernmentAgencyName: "Name of the non government funding agencies/ individuals", grantPurpose: "Purpose of the Grant", fundsReseived: "Funds/ Grants received (INR in lakhs)", 
+      academicYear: "Year", conferncesSeminarsWorkshops: "Confernces, Seminars, Workshops on quality conducted", aaaFollowUp: "Academic Administrative Audit (AAA) and initiation of follow up action", participationNIRF: "Participation in NIRF along with Status", iSOCertification: "ISO Certification. and nature and validity period", nBAOtherCertification: "NBA or any other certification received with program specifications", collaborativeQuality: "Collaborative quality initiatives with other institution(s) (Provide name of the institution and activity)", from: "Orientation programme on quality issues fromDate (DD-MM-YYYY)", to: "Orientation programme on quality issues ToDate (DD-MM-YYYY)"
     }, 
     typeObject: {
-      academicYear: "academicYearGenerator( 29, true, true )", governmentAgencyName: "text", nonGovernmentAgencyName: "text", grantPurpose: "text", fundsReseived: "number",
+      academicYear: "academicYearGenerator( 29, true, true )", conferncesSeminarsWorkshops: "text", aaaFollowUp: "text", participationNIRF: "text", iSOCertification: "text", nBAOtherCertification: "text", collaborativeQuality: "text", from: "date", to: "date"
     }
 }, true, true
 )

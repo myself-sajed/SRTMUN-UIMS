@@ -85,6 +85,7 @@ const StudentComplaintsGrievances = require('../../models/exam-models/studentCom
 const ExamPassedDuringYear = require('../../models/exam-models/examPassedDuringYearSchema')
 const TotalExpenditure = require('../../models/other-models/totalExpenditureSchema')
 const MaintenanceAndInfrastructure = require('../../models/other-models/maintenanceAndInfrastructureSchema')
+const IQACInstitutionQualityAssurance = require('../../models/other-models/iqacInstitutionQualityAssuranceSchema')
 const Scholarship = require('../../models/other-models/scholarshipSchema')
 const SubscriptionForKRC = require('../../models/krc-models/subscriptionForKRCSchema')
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema')
@@ -102,7 +103,7 @@ const AdminModels = { JrfSrfAdmin, PhdAwardedAdmin, HEAdmin, DemandRatioAdmin, R
 
 const establishmentModels = { EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft }
 const examModels = { DateOfResultDiclaration, StudentComplaintsGrievances, ExamPassedDuringYear }
-const otherModels = { TotalExpenditure, MaintenanceAndInfrastructure, Scholarship }
+const otherModels = { TotalExpenditure, MaintenanceAndInfrastructure, Scholarship, IQACInstitutionQualityAssurance }
 const krcModels = { SubscriptionForKRC }
 const dsdModels = { DSDSports, SportsAndCulturalEvents }
 const nssModels = { AwardForExtensionActivities, }

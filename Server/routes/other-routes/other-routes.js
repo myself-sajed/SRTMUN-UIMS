@@ -7,8 +7,9 @@ const fs = require('fs');
 const TotalExpenditure = require("../../models/other-models/totalExpenditureSchema")
 const Scholarship = require("../../models/other-models/scholarshipSchema")
 const MaintenanceAndInfrastructure = require("../../models/other-models/maintenanceAndInfrastructureSchema")
+const IQACInstitutionQualityAssurance = require("../../models/other-models/iqacInstitutionQualityAssuranceSchema")
 
-const models = { TotalExpenditure, Scholarship, MaintenanceAndInfrastructure }
+const models = { TotalExpenditure, Scholarship, MaintenanceAndInfrastructure, IQACInstitutionQualityAssurance }
 
 const otherstorage = multer.diskStorage({
     destination: (req, file, cb) => {
