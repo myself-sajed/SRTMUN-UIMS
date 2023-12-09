@@ -9,6 +9,7 @@ import AdminExcelExoprt from './AdminExcelExoprt'
 import { tableHead as Online }  from '../tables_faculty/OrientationRefresherCourse'
 import { tableHead as DemandRatio }  from '../tables_director/DemandRatio'
 import { tableHead as ReservedSeats }  from '../tables_director/ReservedSeats'
+import { tableHead as NewPrograms }  from '../../director/pages/NewPrograms'
 import { tableHead as EsttFullTimeTeacherAgainstSanctioned }  from '../../establishment/pages/EsttFullTimeTeacherAgainstSanctioned'
 import { tableHead as EsttFullTimeTeacher }  from '../../establishment/pages/EsttFullTimeTeacher'
 import { tableHead as EsttFullTimeTeacherWhoLeft }  from '../../establishment/pages/EsttFullTimeTeacherWhoLeft'
@@ -33,7 +34,7 @@ import { tableHead as Scholarship }  from '../../other/pages/Scholarship'
 import { tableHead as MaintenanceAndInfrastructure }  from '../../other/pages/MaintenanceAndInfrastructure'
 
 
-const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports, SportsAndCulturalEvents, JrfSrfAdmin, ResearchProjectsAdmin, ResearchGuideAdmin, PhdAwardedAdmin, DemandRatioAdmin, HEAdmin, AwardForExtensionActivities, SwayamEContentDeveloped, SwayamValueAddedCourses, ResearchProject, Scholarship, MaintenanceAndInfrastructure }
+const updatedTableHead = {...tableHead, Online, DemandRatio, ReservedSeats, EsttFullTimeTeacherAgainstSanctioned, EsttFullTimeTeacher, EsttFullTimeTeacherWhoLeft, DateOfResultDiclaration, StudentComplaintsGrievances, TotalExpenditure, SubscriptionForKRC, ExamPassedDuringYear, DSDSports, SportsAndCulturalEvents, JrfSrfAdmin, ResearchProjectsAdmin, ResearchGuideAdmin, PhdAwardedAdmin, DemandRatioAdmin, HEAdmin, AwardForExtensionActivities, SwayamEContentDeveloped, SwayamValueAddedCourses, ResearchProject, Scholarship, MaintenanceAndInfrastructure, NewPrograms }
 
 const AdminMasterTable = ({module="Admin", proof=null, color="#3d3dff", model, academicYear, heading, school, serviceName, customParams }) => {
 

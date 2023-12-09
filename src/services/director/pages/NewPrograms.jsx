@@ -103,3 +103,4 @@ function NewPrograms({ filterByAcademicYear = false, academicYear }) {
   )
 }
 export default NewPrograms;
+export {tableHead}

@@ -21,25 +21,68 @@ import AdminMasterTable from '../../admin/components/AdminMasterTable'
 import IctClassrooms from '../../director/pages/IctClassrooms'
 import AQARTextInfo from '../components/AQARTextInfo'
 import AQARCheckRadio from '../components/AQARCheckRadio'
+import NewPrograms from '../../director/pages/NewPrograms'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
         "extended-profile": [
             {
                 title: "1 - Programme",
-                components: []
+                components: [
+                    {
+                        id: "1.1",
+                        title: "1.1 - Number of programmes offered during the year",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '1.1', userType: 'director'
+                        },
+                        component:  isDirector ?
+                        <NewPrograms filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="NewPrograms" customParams={{ model: "NewPrograms", module: "Admin", filter: { academicYear } }} heading='Syllabus Revision' serviceName="director" />,
+                            
+                    },
+                    //todo textfild - 1.2
+                ]
             },
             {
                 title: "2 - Student",
-                components: []
+                components: [
+                    // todo textfild - 2.1
+                    // todo textfild - 2.2
+                    // todo textfild - 2.3
+                    // todo textfild - 2.4
+                ]
             },
             {
                 title: "3 - Academic",
-                components: []
+                components: [
+                    // todo textfild - 3.1
+                    {
+                        id: "3.2",
+                        title: "3.2 - Number of full time teachers during the year. ",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.2', userType: 'estt'
+                        },
+                        component: !isDirector && <>
+                            <AdminMasterTable model="EsttFullTimeTeacher" customParams={{ model: "EsttFullTimeTeacher", module: "Admin", filter: { academicYear } }} heading='Full Time Teachers' serviceName="estt" />
+                            <hr className='my-4'/>
+                            <AdminMasterTable model="EsttFullTimeTeacherWhoLeft" customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear } }} heading="Full Time Teachers who left/joined the institution" serviceName="estt" />
+                        </>
+                    },
+                    // todo checkout estt home 3.3
+                ]
             },
             {
                 title: "4 - Institution",
-                components: []
+                components: [
+                    // todo textfild - 4.1
+                    // todo textfild - 4.2
+                    // todo textfild - 4.3
+                    // todo textfild - 4.4
+                    // todo textfild - 4.5
+                ]
             },
         ],
         "criterion-1": [

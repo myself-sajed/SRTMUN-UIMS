@@ -61,6 +61,7 @@ const SyllabusRevision = require('../../models/director-models/syllabusRevisionS
 const TrainingProgramsOrganized = require('../../models/director-models/trainingProgramsOrganizedSchema')
 const UgcSapCasDstFistDBTICSSR = require('../../models/director-models/ugcSapCasDstFistDBTICSSRSchema')
 const ValueAddedCource = require('../../models/director-models/valueAddedCourceSchema')
+const NewPrograms = require('../../models/director-models/newProgramsSchema')
 const StudentFeedback = require('../../models/feedback-models/studentFeedbackModel')
 const AlumniFeedback = require('../../models/feedback-models/alumniFeedbackModel')
 const TeacherFeedback = require('../../models/feedback-models/teacherFeedbackModel')
@@ -107,7 +108,7 @@ const dsdModels = { DSDSports, SportsAndCulturalEvents }
 const nssModels = { AwardForExtensionActivities, }
 const swayamModels = { SwayamEContentDeveloped, SwayamValueAddedCourses }
 
-const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels, ...nssModels, ...swayamModels }
+const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, NewPrograms, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels, ...nssModels, ...swayamModels }
 
 
 
