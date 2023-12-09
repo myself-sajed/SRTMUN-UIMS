@@ -32,7 +32,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 components: [
                     {
                         id: "1.1",
-                        title: "1.1 - Number of programmes offered during the year",
+                        title: "1.1 - Programmes offered during the year",
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
@@ -42,22 +42,88 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             <NewPrograms filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="NewPrograms" customParams={{ model: "NewPrograms", module: "Admin", filter: { academicYear } }} heading='Syllabus Revision' serviceName="director" />,
 
                     },
-                    //todo textfild - 1.2
+                    {
+                        id: "1.2",
+                        title: "1.2 - Departments offering academic programmes. ",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of departments offering academic programmes', cell: 'departments' },
+                            ]}
+                            academicYear={academicYear} tableId="1.2" school={school} isAdmin={!isDirector}
+                        />
+                    },
                 ]
             },
             {
                 title: "2 - Student",
                 components: [
-                    // todo textfild - 2.1
-                    // todo textfild - 2.2
-                    // todo textfild - 2.3
-                    // todo textfild - 2.4
+                    {
+                        id: "2.1",
+                        title: "2.1 - Students during the year. ",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of students during the year', cell: 'students' },
+                            ]}
+                            academicYear={academicYear} tableId="2.1" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "2.2",
+                        title: "2.2 - Outgoing / final year students during the year",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of outgoing / final year students during the year', cell: 'students' },
+                            ]}
+                            academicYear={academicYear} tableId="2.2" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "2.3",
+                        title: "2.3 - Students appeared in the University examination during the year",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of students appeared in the University examination during the year', cell: 'students' },
+                            ]}
+                            academicYear={academicYear} tableId="2.3" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "2.4",
+                        title: "2.4 - Revaluation applications during the year.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of revaluation applications during the year', cell: 'apps' },
+                            ]}
+                            academicYear={academicYear} tableId="2.4" school={school} isAdmin={!isDirector}
+                        />
+                    },
                 ]
             },
             {
                 title: "3 - Academic",
                 components: [
-                    // todo textfild - 3.1
+                    {
+                        id: "3.1",
+                        title: "3.1 - Courses in all Programmes during the year",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of courses in all Programmes during the year', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="3.1" school={school} isAdmin={!isDirector}
+                        />
+                    },
                     {
                         id: "3.2",
                         title: "3.2 - Number of full time teachers during the year. ",
@@ -72,17 +138,83 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             <AdminMasterTable model="EsttFullTimeTeacherWhoLeft" customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear } }} heading="Full Time Teachers who left/joined the institution" serviceName="estt" />
                         </>
                     },
-                    // todo checkout estt home 3.3
+                    {
+                        id: "3.3",
+                        title: "3.3 - Sanctioned posts during the year.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of sanctioned posts during the year', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="3.3" school={school} isAdmin={!isDirector}
+                        />
+                    },
                 ]
             },
             {
                 title: "4 - Institution",
                 components: [
-                    // todo textfild - 4.1
-                    // todo textfild - 4.2
-                    // todo textfild - 4.3
-                    // todo textfild - 4.4
-                    // todo textfild - 4.5
+                    {
+                        id: "4.1",
+                        title: "4.1 - Eligible applications received for admissions to all the Programmes during the year.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of eligible applications received for admissions to all the Programmes during the year', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="4.1" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "4.2",
+                        title: "4.2 - Seats earmarked for reserved category as per GOI/ State Govt. rule during the year.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Number of seats earmarked for reserved category as per GOI/ State Govt. rule during the year', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="4.2" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "4.3",
+                        title: "4.3 - Classrooms and seminar halls.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Total number of classrooms and seminar halls', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="4.3" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "4.4",
+                        title: "4.4 - Computers in the campus for academic purpose.",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Total number of computers in the campus for academic purpose', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="4.4" school={school} isAdmin={!isDirector}
+                        />
+                    },
+                    {
+                        id: "4.5",
+                        title: "4.5 - Expenditure excluding salary during the year (INR in lakhs).",
+                        isAdmin: !isDirector,
+                        component: <AQARTextInfo
+                            singleTextField={true}
+                            tableInfo={[
+                                { head: 'Total expenditure excluding salary during the year (INR in lakhs)', cell: 'data' },
+                            ]}
+                            academicYear={academicYear} tableId="4.5" school={school} isAdmin={!isDirector}
+                        />
+                    },
                 ]
             },
         ],
@@ -473,6 +605,25 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     },
                 ]
             },
+            {
+                title: "2.7 - Student Satisfaction Survey",
+                components: [
+                    {
+                        id: "2.7.1",
+                        title: "2.7.1 - Student Satisfaction Survey (SSS) on overall institutional performance (Institution may design its own questionnaire) (results and details need to be provided as a web link) ",
+                        isAdmin: !isDirector,
+                        component: <div>
+                            <p>Link to share:
+                                <a href={`${process.env.REACT_APP_REPORT_URL}/student-satisfaction-survey`} target="_blank" className='ml-4 text-blue-700 bg-blue-100 rounded-md p-2'>
+                                    {
+                                        `${process.env.REACT_APP_REPORT_URL}/student-satisfaction-survey}`
+                                    }
+                                </a>
+                            </p>
+                        </div>
+                    }
+                ]
+            }
         ],
         "criterion-3": [
             {
