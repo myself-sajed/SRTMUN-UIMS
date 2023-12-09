@@ -721,7 +721,7 @@ router.post('/director/editRecord/:model', upload.single('Upload_Proof'), async 
     else {
         SendData = data
         if (model === "Placement" && data.School !== "") {
-            SendData.SchoolName = School
+            SendData.SchoolName = data.School
         }
     }
 
