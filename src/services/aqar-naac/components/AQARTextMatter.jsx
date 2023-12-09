@@ -3,6 +3,8 @@ import { useQuery } from 'react-query'
 import fetchAQARMatter, { saveAQARMatter } from '../js/fetchAQARMatter'
 import UserLoading from '../../../pages/UserLoading'
 import { Editor } from '@tinymce/tinymce-react'
+import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill'
 
 const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin }) => {
 
@@ -14,10 +16,15 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
 
     const { data, isLoading, refetch } = useQuery(`Matter-${matterType}-${academicYear}-${school || 'admin'}`, () => fetchAQARMatter(filter, isAdmin), { refetchOnWindowFocus: false })
 
-    const log = () => {
-        if (editorRef.current) {
-            submitMatter({ content: editorRef.current.getContent() })
+    const handleBlur = () => {
+        // if (editorRef.current) {
+        //     submitMatter({ content: editorRef.current.getContent() })
+        // }
+
+        if (matter) {
+            submitMatter(matter)
         }
+
     };
 
 
@@ -48,27 +55,19 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
     return <div>
         {isLoading ? <UserLoading title="Getting data" /> : <form>
             {
-                !isAdmin ? <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3">
-                    <Editor
-                        onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue={matter.content}
-                        apiKey={process.env.REACT_APP_TINY_MCE}
-                        init={{
-                            height: 300,
-                            branding: false,
-                            menubar: false,
-                            placeholder: "Start typing...",
-                            plugins: [
-                                'advlist', 'autolink', 'lists', 'link', 'charmap',
-                                'anchor', 'visualblocks', 'code', 'fullscreen',
-                                'insertdatetime', 'media', 'table', 'wordcount',
-                            ],
-                            toolbar: 'bold italic underline | undo redo',
-                            // toolbar: 'bold italic underline bullist numlist lineheight paste | styles fontfamily fontsize' + '| image link | undo redo',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                        }}
-                        onBlur={log}
-                    />
+                !isAdmin ? <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3 p-3">
+                    <div style={{ height: '350px', overflowY: 'auto' }}>
+                        <ReactQuill
+                            theme="snow" // You can change the theme as needed
+                            value={matter}
+                            onChange={(html) => {
+                                setMatter(() => html);
+                            }}
+                            onBlur={handleBlur}
+                            placeholder='Start typing here...'
+                            className='h-[87%]'
+                        />
+                    </div>
                 </div> : <div className="bg-gray-50 rounded-md p-3 mt-3 border">
                     {
                         matters && matters?.length > 0 ? <div >
