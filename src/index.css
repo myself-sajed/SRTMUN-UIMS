@@ -607,4 +607,9 @@ body {
   display:none;
 }
 
+.ql-toolbar.ql-snow{
+  background-color: #f4f4f4;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
