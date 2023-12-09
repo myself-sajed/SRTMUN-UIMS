@@ -22,6 +22,7 @@ import IctClassrooms from '../../director/pages/IctClassrooms'
 import AQARTextInfo from '../components/AQARTextInfo'
 import AQARCheckRadio from '../components/AQARCheckRadio'
 import NewPrograms from '../../director/pages/NewPrograms'
+import AQARCheckWithProof from '../../krc/components/AQARCheckWithProof'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
@@ -37,9 +38,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '1.1', userType: 'director'
                         },
-                        component:  isDirector ?
-                        <NewPrograms filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="NewPrograms" customParams={{ model: "NewPrograms", module: "Admin", filter: { academicYear } }} heading='Syllabus Revision' serviceName="director" />,
-                            
+                        component: isDirector ?
+                            <NewPrograms filterByAcademicYear={true} academicYear={academicYear} /> : <AdminMasterTable model="NewPrograms" customParams={{ model: "NewPrograms", module: "Admin", filter: { academicYear } }} heading='Syllabus Revision' serviceName="director" />,
+
                     },
                     //todo textfild - 1.2
                 ]
@@ -67,7 +68,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         },
                         component: !isDirector && <>
                             <AdminMasterTable model="EsttFullTimeTeacher" customParams={{ model: "EsttFullTimeTeacher", module: "Admin", filter: { academicYear } }} heading='Full Time Teachers' serviceName="estt" />
-                            <hr className='my-4'/>
+                            <hr className='my-4' />
                             <AdminMasterTable model="EsttFullTimeTeacherWhoLeft" customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear } }} heading="Full Time Teachers who left/joined the institution" serviceName="estt" />
                         </>
                     },
@@ -912,6 +913,17 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     },
                     component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.2.1' userType='director' />
 
+                },
+                {
+                    id: "4.2.2",
+                    title: '4.2.2 - Institution has subscription for e-Library resources Library has regular subscription for the following: 1. e – journals, 2. e-books, 3. e-ShodhSindhu, 4.Shodhganga, 5. Databases',
+                    hasSupportingDocument: false,
+                    isAdmin: !isDirector,
+                    proofData: {
+                        academicYear, proofType: '4.2.2', userType: 'krc'
+                    },
+                    component: !isDirector && <AQARCheckWithProof academicYear={academicYear}
+                        isAdmin={!isDirector} />
                 },
                 {
                     id: "4.2.3",

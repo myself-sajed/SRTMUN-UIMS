@@ -165,10 +165,12 @@ const ExamPassedDuringYearWithProof = ({ aqarYearState }) => {
 }
 
 
-const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  ", proof = false, }) => {
+const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  ", proof = false, isAdmin = false }) => {
     return <div className="my-3">
-        <label htmlFor="resultFile">{title}</label>
-        <input onChange={(e) => setFile(() => e.target.files[0])} type="file" name="file" id="resultFile" className='form-control mt-1' />
+        {!isAdmin && <>
+            <label htmlFor="resultFile">{title}</label>
+            < input onChange={(e) => setFile(() => e.target.files[0])} type="file" name="file" id="resultFile" className='form-control mt-1' />
+        </>}
         {
             proof && <div className="mt-3">
                 <p className="my-1 text-xs text-muted">Uploaded Document</p>

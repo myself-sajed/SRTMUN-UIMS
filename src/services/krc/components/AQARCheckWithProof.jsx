@@ -6,9 +6,10 @@ import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import UserLoading from '../../../pages/UserLoading';
 
-const AQARCheckWithProof = ({ setCheckData, checkData, academicYear }) => {
+const AQARCheckWithProof = ({ academicYear, isAdmin = false }) => {
 
     const [file, setFile] = useState(null)
+    const [checkData, setCheckData] = useState(null)
     const [proof, setProof] = useState(null)
     const filter = { academicYear, userType: 'krc', proofType: 'checkForm' }
     const { data, isLoading, refetch } = useQuery(`AQARCheckData-${academicYear}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
@@ -58,7 +59,7 @@ const AQARCheckWithProof = ({ setCheckData, checkData, academicYear }) => {
 
         {
             isLoading ? <UserLoading title="Fetching Data..." /> : <div>
-                <div className="bg-gray-50 rounded-md p-3 mt-3 border">
+                {!isAdmin && <div className="bg-gray-50 rounded-md p-3 mt-3 border">
                     <p className='mb-2'>According to the above list check one of the following options:</p>
                     {
                         checkObject.map((item, index) => {
@@ -70,19 +71,23 @@ const AQARCheckWithProof = ({ setCheckData, checkData, academicYear }) => {
                             </div>
                         })
                     }
-                </div>
+                </div>}
+
+                {
+                    isAdmin && <div> {checkData ? <p className="font-medium text-green-500 my-3"> Selected: {checkData}</p> : <p>No data available</p>} </div>
+                }
 
                 <div>
                     {
                         checkData && <div className='bg-gray-50 rounded-md p-3 mt-3 border'>
-                            <TableSupportingProof proof={proof} setFile={setFile} file={file} title='Upload relevant proof based on the above choice' />
+                            <TableSupportingProof proof={proof} setFile={setFile} file={file} title='Upload relevant proof based on the above choice' isAdmin={isAdmin} />
                         </div>
                     }
                 </div>
 
-                {checkData && <div className='mt-2'>
+                {!isAdmin && (checkData && <div className='mt-2'>
                     <ArrowButton title="Save Details" onClickFunction={submitProofFunction} />
-                </div>}
+                </div>)}
             </div>
         }
 

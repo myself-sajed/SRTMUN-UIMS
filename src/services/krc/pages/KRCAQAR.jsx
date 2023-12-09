@@ -20,10 +20,6 @@ const KRCAQAR = () => {
     useOtherServiceAuth({ ...krcAuthParams, shouldNavigate: false })
     const [aqarYearState, setAqarYearState] = useState(null)
 
-    // data states
-    const [checkData, setCheckData] = useState(null)
-    const [checkFile, setCheckFile] = useState(null)
-
     const [usage, setUsage] = useState(null)
     const [usageFile, setUsageFile] = useState(null)
 
@@ -32,7 +28,7 @@ const KRCAQAR = () => {
     const AQARTables = [
         {
             title: "4.2.2 - Institution has subscription for e-Library resources Library has regular subscription for the following",
-            component: <AQARCheckWithProof academicYear={aqarYearState} setCheckData={setCheckData} checkData={checkData} />
+            component: <AQARCheckWithProof academicYear={aqarYearState} />
         },
         {
             title: "4.2.3 - Annual expenditure for purchase of books / e-books and subscription to journals / e-journals during the year (INR in Lakhs)",
