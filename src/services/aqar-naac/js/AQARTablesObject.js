@@ -24,7 +24,24 @@ import AQARCheckRadio from '../components/AQARCheckRadio'
 
 function AQARTablesObject({ academicYear, isDirector, school }) {
     return {
-        "extended-profile": [],
+        "extended-profile": [
+            {
+                title: "1 - Programme",
+                components: []
+            },
+            {
+                title: "2 - Student",
+                components: []
+            },
+            {
+                title: "3 - Academic",
+                components: []
+            },
+            {
+                title: "4 - Institution",
+                components: []
+            },
+        ],
         "criterion-1": [
             {
                 title: "1.1 - Curriculum Design and Development",
@@ -1309,10 +1326,17 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '6.5.2', userType: 'director', school
                         },
-                        component: <AQARCheckRadio
-                            options={["Academic Administrative Audit (AAA) and follow up action taken", "Confernces, Seminars, Workshops on quality conducted", "Collaborative quality initiatives with other institution(s)", "Orientation programme on quality issues for teachers and students", "Participation in NIRF", "Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)"]}
-                            academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school={school}
-                        />
+                        component: <>
+                            <AQARCheckRadio
+                                options={["Academic Administrative Audit (AAA) and follow up action taken", "Confernces, Seminars, Workshops on quality conducted", "Collaborative quality initiatives with other institution(s)", "Orientation programme on quality issues for teachers and students", "Participation in NIRF", "Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)"]}
+                                academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school={school}
+                            />
+
+                            {/* // place IQAC table inside this div */}
+                            <div className="mt-2">
+
+                            </div>
+                        </>
 
                     },
                     {
