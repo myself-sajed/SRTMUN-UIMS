@@ -101,8 +101,6 @@ const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school }) => 
                         </tbody>
                 }
 
-
-
             </table>
 
             {
