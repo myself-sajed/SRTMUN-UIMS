@@ -1532,7 +1532,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         proofData: {
                             academicYear, proofType: '6.5.2', userType: 'director', school
                         },
-                        component: <>
+                        component: !isDirector && <>
                             <AQARCheckRadio
                                 options={["Academic Administrative Audit (AAA) and follow up action taken", "Confernces, Seminars, Workshops on quality conducted", "Collaborative quality initiatives with other institution(s)", "Orientation programme on quality issues for teachers and students", "Participation in NIRF", "Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)"]}
                                 academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school={school}
