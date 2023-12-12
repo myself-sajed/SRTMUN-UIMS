@@ -92,4 +92,24 @@ router.post('/aqar/saveAQARMatter', (req, res) => {
     }
 })
 
+router.post('/aqar/saveAQARTextInfo', (req, res) => {
+    try {
+        const { formData } = req.body
+        const filter = { academicYear: formData.academicYear, tableId: formData.tableId, school: formData.school || null }
+
+        AQARTextInfo.findOneAndUpdate(filter, formData, { upsert: true, new: true }, (err, updatedDocument) => {
+            if (err) {
+                res.send({ status: 'error', message: err })
+            } else {
+                res.send({ status: 'success' })
+            }
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.send({ status: 'error', message: error.message })
+
+    }
+})
+
 module.exports = router

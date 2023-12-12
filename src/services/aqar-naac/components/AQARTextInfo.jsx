@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { fetchAQARTextInfo, saveAQARTextInfo } from "../js/fetchAQARTextInfo";
 import { useEffect } from "react";
 
-const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school }) => {
+const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school, singleTextField = false }) => {
 
     const [info, setInfo] = useState({})
     const [schoolWiseInfo, setSchoolWiseInfo] = useState([])
@@ -48,7 +48,6 @@ const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school }) => 
 
     return (
         <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3 p-3">
-            <p className="my-2 font-medium">Teacher Full time ratio</p>
             <table className="table table-bordered">
                 <thead className="bg-primary text-light">
                     <tr>
@@ -90,6 +89,16 @@ const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school }) => 
                                                 onChange={(e) => setInfo(() => {
                                                     return { ...info, [item.cell]: e.target.value }
                                                 })}
+
+                                                onBlur={(e) => {
+                                                    if (singleTextField) {
+                                                        const formData = {
+                                                            tableData: JSON.stringify({ ...info, [item.cell]: e.target.value }), tableId, academicYear, school
+                                                        }
+                                                        saveAQARTextInfo(formData, refetch)
+                                                    }
+                                                }}
+
                                                 value={info[item.cell] || ''}
                                                 type="text"
                                                 className="p-2 border-2 rounded-md border-blue-400"
@@ -110,7 +119,7 @@ const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school }) => 
             }
 
             {
-                !isAdmin && <ArrowButton title="Submit Info" onClickFunction={submit} />
+                !isAdmin && (!singleTextField && <ArrowButton title="Submit Info" onClickFunction={submit} />)
             }
         </div>
     );
