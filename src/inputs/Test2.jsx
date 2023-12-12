@@ -17,7 +17,7 @@ const Test2 = ({ school: sch }) => {
     return <div>
       {/* <Scholarship/>
       <MaintenanceAndInfrastructure /> */}
-      <IQACInstitutionQualityAssurance/>
+      {/* <IQACInstitutionQualityAssurance/> */}
     </div>
 
     // "School of Computational Sciences"
