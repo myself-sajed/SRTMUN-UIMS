@@ -33,8 +33,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.1",
                         title: "1.1 - Programmes offered during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.1', userType: 'director'
                         },
@@ -66,7 +66,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: <AQARTextInfo
                             singleTextField={true}
                             tableInfo={[
-                                { head: 'Number of students during the year', cell: 'students' },
+                                { head: 'Number of students of all years (including Ph.D.)', cell: 'students' },
                             ]}
                             academicYear={academicYear} tableId="2.1" school={school} isAdmin={!isDirector}
                         />
@@ -95,18 +95,19 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear={academicYear} tableId="2.3" school={school} isAdmin={!isDirector}
                         />
                     },
-                    {
-                        id: "2.4",
-                        title: "2.4 - Revaluation applications during the year.",
-                        isAdmin: !isDirector,
-                        component: <AQARTextInfo
-                            singleTextField={true}
-                            tableInfo={[
-                                { head: 'Number of revaluation applications during the year', cell: 'apps' },
-                            ]}
-                            academicYear={academicYear} tableId="2.4" school={school} isAdmin={!isDirector}
-                        />
-                    },
+                    //! removed
+                    // {
+                    //     id: "2.4",
+                    //     title: "2.4 - Revaluation applications during the year.",
+                    //     isAdmin: !isDirector,
+                    //     component: <AQARTextInfo
+                    //         singleTextField={true}
+                    //         tableInfo={[
+                    //             { head: 'Number of revaluation applications during the year', cell: 'apps' },
+                    //         ]}
+                    //         academicYear={academicYear} tableId="2.4" school={school} isAdmin={!isDirector}
+                    //     />
+                    // },
                 ]
             },
             {
@@ -127,8 +128,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.2",
                         title: "3.2 - Number of full time teachers during the year. ",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.2', userType: 'estt'
                         },
@@ -138,18 +139,19 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             <AdminMasterTable model="EsttFullTimeTeacherWhoLeft" customParams={{ model: "EsttFullTimeTeacherWhoLeft", module: "Admin", filter: { academicYear } }} heading="Full Time Teachers who left/joined the institution" serviceName="estt" />
                         </>
                     },
-                    {
-                        id: "3.3",
-                        title: "3.3 - Sanctioned posts during the year.",
-                        isAdmin: !isDirector,
-                        component: <AQARTextInfo
-                            singleTextField={true}
-                            tableInfo={[
-                                { head: 'Number of sanctioned posts during the year', cell: 'data' },
-                            ]}
-                            academicYear={academicYear} tableId="3.3" school={school} isAdmin={!isDirector}
-                        />
-                    },
+                    //! removed
+                    // {
+                    //     id: "3.3",
+                    //     title: "3.3 - Sanctioned posts during the year.",
+                    //     isAdmin: !isDirector,
+                    //     component: <AQARTextInfo
+                    //         singleTextField={true}
+                    //         tableInfo={[
+                    //             { head: 'Number of sanctioned posts during the year', cell: 'data' },
+                    //         ]}
+                    //         academicYear={academicYear} tableId="3.3" school={school} isAdmin={!isDirector}
+                    //     />
+                    // },
                 ]
             },
             {
@@ -174,7 +176,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         component: <AQARTextInfo
                             singleTextField={true}
                             tableInfo={[
-                                { head: 'Number of seats earmarked for reserved category as per GOI/ State Govt. rule during the year', cell: 'data' },
+                                { head: 'Number of seats earmarked for reserved category as per GOI/ State Govt. rule during the year (1st Year Only)', cell: 'data' },
                             ]}
                             academicYear={academicYear} tableId="4.2" school={school} isAdmin={!isDirector}
                         />
@@ -203,18 +205,19 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                             academicYear={academicYear} tableId="4.4" school={school} isAdmin={!isDirector}
                         />
                     },
-                    {
-                        id: "4.5",
-                        title: "4.5 - Expenditure excluding salary during the year (INR in lakhs).",
-                        isAdmin: !isDirector,
-                        component: <AQARTextInfo
-                            singleTextField={true}
-                            tableInfo={[
-                                { head: 'Total expenditure excluding salary during the year (INR in lakhs)', cell: 'data' },
-                            ]}
-                            academicYear={academicYear} tableId="4.5" school={school} isAdmin={!isDirector}
-                        />
-                    },
+                    // ! do not show in directors
+                    // {
+                    //     id: "4.5",
+                    //     title: "4.5 - Expenditure excluding salary during the year (INR in lakhs).",
+                    //     isAdmin: !isDirector,
+                    //     component: <AQARTextInfo
+                    //         singleTextField={true}
+                    //         tableInfo={[
+                    //             { head: 'Total expenditure excluding salary during the year (INR in lakhs)', cell: 'data' },
+                    //         ]}
+                    //         academicYear={academicYear} tableId="4.5" school={school} isAdmin={!isDirector}
+                    //     />
+                    // },
                 ]
             },
         ],
@@ -225,8 +228,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.1.1",
                         title: "1.1.1 - Curricula developed and implemented have relevance to the local, national, regional and global developmental needs which is reflected in Programme outcomes (POs), Programme Specific Outcomes(PSOs) and Course Outcomes(COs) of the Programmes offered by the University",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.1.1', userType: 'director', school
                         },
@@ -236,8 +239,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.1.2",
                         title: '1.1.2 - Programmes for which syllabus revision was carried out during the Academic year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.1.2', userType: 'director', school
                         },
@@ -247,8 +250,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.1.3",
                         title: '1.1.3 - Programmes/ courses focussed on employability/ entrepreneurship/ skill development during the Academic year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.1.3', userType: 'director', school
                         },
@@ -286,8 +289,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.3.1",
                         title: "1.3.1 - Institution integrates crosscutting issues relevant to Professional Ethics, Gender, Human Values, Environment and Sustainability into the Curriculum",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.3.1', userType: 'director', school
                         },
@@ -297,8 +300,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.3.2",
                         title: '1.3.2 - Value-added courses imparting transferable and life skills offered during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.3.2', userType: 'director', school
                         },
@@ -308,8 +311,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.3.3",
                         title: '1.3.3 - Total number of students enrolled in the courses under 1.3.2 above',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.3.3', userType: 'director', school
                         },
@@ -319,8 +322,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.3.4",
                         title: '1.3.4 - Number of students undertaking field projects / research projects / internships during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.3.4', userType: 'director', school
                         },
@@ -336,8 +339,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.4.1",
                         title: "1.4.1 - Structured feedback for design and review of syllabus – semester wise / is received from Students, Teachers, Employers, Alumni",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.4.1', userType: 'director', school
                         },
@@ -350,8 +353,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "1.4.2",
                         title: '1.4.2 - Feedback processes of the institution may be classified as follows',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '1.4.2', userType: 'director', school
                         },
@@ -372,8 +375,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.1.1",
                         title: '2.1.1 - Demand Ratio during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.1.1', userType: 'director', school
                         },
@@ -384,8 +387,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.1.2",
                         title: '2.1.2 - Total number of seats filled against reserved categories (SC, ST, OBC, Divyangjan, etc.) as per applicable reservation policy during the year (Excluding Supernumerary Seats)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.1.2', userType: 'director', school
                         },
@@ -401,8 +404,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.2.1",
                         title: "2.2.1 - The institution assesses the learning levels of the students and organises special Programmes for advanced learners and slow learners",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.2.1', userType: 'director', school
                         },
@@ -412,8 +415,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.2.2",
                         title: "2.2.2 - Student - Full time teacher ratio during the year ",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.2.2', userType: 'director', school
                         },
@@ -434,8 +437,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.3.1",
                         title: "2.3.1 - Student centric methods, such as experiential learning, participative learning and problem-solving methodologies are used for enhancing learning experiences",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.3.1', userType: 'director', school
                         },
@@ -445,8 +448,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.3.2",
                         title: "2.3.2 - Teachers use ICT enabled tools including online resources for effective teaching and learning processes during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.3.2', userType: 'director', school
                         },
@@ -456,8 +459,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.3.3",
                         title: "2.3.3 - Ratio of students to mentor for academic and other related issues during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.3.3', userType: 'director', school
                         },
@@ -478,8 +481,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.4.1",
                         title: '2.4.1 - Total Number of full time teachers against sanctioned posts during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.4.1', userType: 'estt'
                         },
@@ -488,8 +491,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.4.2",
                         title: '2.4.2 - Total Number of full time teachers withPh.D./D.M/M.Ch./D.N.B Superspeciality/D.Sc./D’Lit. during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.4.2', userType: 'pgsection'
                         },
@@ -498,8 +501,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.4.3",
                         title: '2.4.3 - Total teaching experience of full time teachers in the same institution during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.4.3', userType: 'estt'
                         },
@@ -508,8 +511,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.4.4",
                         title: '2.4.4 - Total number of full time teachers who received awards, recognition, fellowships at State, National, International level from Government/Govt. recognised bodies during the year ',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.4.4', userType: 'faculty', school
                         },
@@ -523,8 +526,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.5.1",
                         title: '2.5.1 - Number of days from the date of last semester-end/ year- end examination till the declaration of results during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.5.1', userType: 'exam', school: "BOEE"
                         },
@@ -533,8 +536,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.5.2",
                         title: '2.5.2 - Total number of student complaints/grievances about evaluation against total number appeared in the examinations during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.5.2', userType: 'exam', school: "BOEE"
                         },
@@ -543,8 +546,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.5.3",
                         title: "2.5.3 - IT integration and reforms in the examination procedures and processes (continuous internal assessment and end-semester assessment) have brought in considerable improvement in examination management system of the institution",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.5.3', userType: 'exam', school: "BOEE"
                         },
@@ -554,8 +557,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.5.4",
                         title: "2.5.4 - Status of automation of Examination division along with approved Examination Manual",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.5.4', userType: 'director', school
                         },
@@ -574,8 +577,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.6.1",
                         title: "2.6.1 - The institution has stated learning outcomes (generic and programme specific)/graduate attributes which are integrated into the assessment process and widely publicized through the website and other documents ",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.6.1', userType: 'director', school
                         },
@@ -585,8 +588,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.6.2",
                         title: "2.6.2 - Attainment of Programme outcomes, Programme specific outcomes and course outcomes are evaluated by the institution during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.6.2', userType: 'director', school
                         },
@@ -596,8 +599,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "2.6.3",
                         title: '2.6.3 - Number of students passed during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '2.6.3', userType: 'faculty', school
                         },
@@ -632,8 +635,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.1",
                         title: "3.1.1 - The institution Research facilities are frequently updated and there is well defined policy for promotion of research which is uploaded on the institutional website and implemented",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.1', userType: 'director', school
                         },
@@ -643,8 +646,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.2",
                         title: '3.1.2 - The institution provides seed money to its teachers for research (amount INR in Lakhs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.2', userType: 'faculty', school
                         },
@@ -653,8 +656,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.3",
                         title: '3.1.3 - Teachers awarded National/International fellowship for advanced studies/ research during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.3', userType: 'faculty', school
                         },
@@ -663,8 +666,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.4",
                         title: '3.1.4 - Number of JRFs, SRFs, Post Doctoral Fellows, Research Associates and other fellows in the Institution enrolled during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.4', userType: 'faculty', school
                         },
@@ -673,8 +676,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.5",
                         title: "3.1.5 - Institution has the following facilities to support research",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.5', userType: 'director', school
                         },
@@ -687,8 +690,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.1.6",
                         title: '3.1.6 - Number of departments with UGC-SAP, CAS, DST-FIST, DBT, ICSSR and other recognitions by national and international agencies during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.1.6', userType: 'director', school
                         },
@@ -743,8 +746,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.3.1",
                         title: "3.3.1 - Institution has created an eco-system for innovations including Incubation centre and other initiatives for creation and transfer of knowledge",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.3.1', userType: 'iil', school: "IIL"
                         },
@@ -754,8 +757,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.3.2",
                         title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.3.2', userType: 'director', school
                         },
@@ -766,8 +769,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.3.3",
                         title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.3.3', userType: 'director', school
                         },
@@ -782,8 +785,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.1",
                         title: "3.4.1 - The institution ensures implementation of its stated Code of Ethics for research",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.1', userType: 'director', school
                         },
@@ -796,8 +799,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.2",
                         title: '3.4.2 - The institution provides incentives to teachers who receive state, national and international recognitions/awards',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.2', userType: 'faculty', school
                         },
@@ -814,8 +817,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.3",
                         title: '3.4.3 - Number of Patents published/awarded during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.3', userType: 'faculty', school
                         },
@@ -824,8 +827,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.4",
                         title: '3.4.4 - Number of Ph.D’s awarded per teacher during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.4', userType: 'faculty', school
                         },
@@ -837,8 +840,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.5",
                         title: '3.4.5 - Number of research papers per teacher in the Journals notified on UGC website during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.5', userType: 'faculty', school
                         },
@@ -847,8 +850,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.6",
                         title: '3.4.6 - Number of books and chapters in edited volumes published per teacher during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.6', userType: 'faculty', school
                         },
@@ -857,8 +860,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.7",
                         title: '3.4.7 - E-content is developed by teachers',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.7', userType: 'faculty', school
                         },
@@ -883,8 +886,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.9",
                         title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.4.9', userType: 'iil', school: "IIL"
                         },
@@ -905,8 +908,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.5.1",
                         title: "3.5.1 - Institution has a policy on consultancy including revenue sharing between the institution and the individual and encourages its faculty to undertake consultancy",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.5.1', userType: 'director', school
                         },
@@ -917,8 +920,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.5.2",
                         title: '3.5.2 - Revenue generated from consultancy and corporate training during the year (INR in Lakhs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.5.2', userType: 'faculty', school
                         },
@@ -932,8 +935,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.6.1",
                         title: "3.6.1 - Extension activities in the neighbourhood community in terms of impact and  sensitising students to social issues and holistic development during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.6.1', userType: 'director', school
                         },
@@ -965,10 +968,10 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.6.4",
                         title: '3.6.4 - Total number of students participating in extension activities listed at 3.6.3 above during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '3.6.4', userType: 'director', school
+                            academicYear, proofType: '3.6.4', userType: 'nss', school: "NSS"
                         },
                         component: isDirector ?
                             <ExtensionActivities filterByAcademicYear={true} academicYear={academicYear} /> :
@@ -982,8 +985,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.7.1",
                         title: '3.7.1 - Number of collaborative activities with other institutions/ research establishment/industry for research and academic development of faculty and students during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.7.1', userType: 'faculty', school
                         },
@@ -992,8 +995,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.7.2",
                         title: '3.7.2 - Number of functional MoUs with institutions/ industries in India and abroad for internship, on-the-job training, project work, student / faculty exchange and collaborative research during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '3.7.2', userType: 'director', school
                         },
@@ -1011,8 +1014,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.1.1",
                         title: "4.1.1 - The institution has adequate facilities for teaching - learning. viz., classrooms, laboratories, computing equipment, etc.",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.1.1', userType: 'director', school
                         },
@@ -1022,23 +1025,23 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.1.2",
                         title: "4.1.2 - The institution has adequate facilities for cultural activities, yoga, games (indoor, outdoor) and sports. (gymnasium, yoga centre, auditorium, etc.)",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '4.1.2', userType: 'director', school
+                            academicYear, proofType: '4.1.2', userType: 'sports', school: "Sports"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.1.2' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={"Sports"} matterType='4.1.2' userType='sports' />
 
                     },
                     {
                         id: "4.1.3",
                         title: "4.1.3 - Availability of general campus facilities and overall ambience",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '4.1.3', userType: 'director', school
+                            academicYear, proofType: '4.1.3', userType: 'iqac', school: "IQAC"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.1.3' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="IQAC" matterType='4.1.3' userType='iqac' />
 
                     },
                     {
@@ -1058,12 +1061,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 components: [{
                     id: "4.2.1",
                     title: "4.2.1 - Library is automated using Integrated Library Management System (ILMS) and has digitisation facility",
-                    hasSupportingDocument: true,
                     isAdmin: !isDirector,
+                    hasSupportingDocument: true,
                     proofData: {
-                        academicYear, proofType: '4.2.1', userType: 'director', school
+                        academicYear, proofType: '4.2.1', userType: 'krc', school: "KRC"
                     },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.2.1' userType='director' />
+                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.2.1' userType='krc' />
 
                 },
                 {
@@ -1080,10 +1083,10 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                 {
                     id: "4.2.3",
                     title: '4.2.3 - Annual expenditure for purchase of books/ e-books and subscription to journals/e-journals during the year (INR in Lakhs)',
-                    hasSupportingDocument: true,
                     isAdmin: !isDirector,
+                    hasSupportingDocument: true,
                     proofData: {
-                        academicYear, proofType: '4.2.3', userType: 'krc'
+                        academicYear, proofType: '4.2.3', userType: 'krc', school: "KRC"
                     },
                     component: !isDirector && <AdminMasterTable model="SubscriptionForKRC" customParams={{ model: "SubscriptionForKRC", module: "Admin", filter: { academicYear } }} heading='Institution has subscription for KRC' serviceName="krc" proof="proof" />
                 },
@@ -1096,8 +1099,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.3.1",
                         title: '4.3.1 - Number of classrooms and seminar halls with ICT - enabled facilities such as LCD, smart board, Wi-Fi/LAN, audio video recording facilities during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.3.1', userType: 'director', school
                         },
@@ -1108,19 +1111,19 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.3.2",
                         title: "4.3.2 - Institution has an IT policy, makes appropriate budgetary provision and updates its IT facilities including Wi-Fi facility",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '4.3.2', userType: 'director', school
+                            academicYear, proofType: '4.3.2', userType: 'iqac', school: "IQAC"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='4.3.2' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="IQAC" matterType='4.3.2' userType='iqac' />
 
                     },
                     {
                         id: "4.3.3",
                         title: "4.3.3 - Student - Computer ratio during the year ",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.3.3', userType: 'director', school
                         },
@@ -1136,8 +1139,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.3.4",
                         title: "4.3.4 - Available bandwidth of internet connection in the Institution (Leased line)",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.3.4', userType: 'director', school
                         },
@@ -1150,8 +1153,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.3.5",
                         title: '4.3.5 - Institution has the following Facilities for e-content development 1) Media centre, 2) Audio visual centre, 3) Lecture Capturing System(LCS), 4) Mixing equipment’s and softwares for editing',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.3.5', userType: 'faculty', school
                         },
@@ -1173,8 +1176,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.4.1",
                         title: '4.4.1 - Total expenditure incurred on maintenance of physical facilities and academic support facilities excluding salary component during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.4.1', userType: 'other'
                         },
@@ -1183,8 +1186,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.4.2",
                         title: "4.4.2 - There are established systems and procedures for maintaining and utilizing physical, academic and support facilities - laboratory, library, sports complex, computers, classrooms etc.",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '4.4.2', userType: 'director', school
                         },
@@ -1211,8 +1214,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.1.2",
                         title: '5.1.2 - Total number of students benefited by career counselling and guidance for competitive examinations offered by the Institution during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.1.2', userType: 'director', school
                         },
@@ -1223,8 +1226,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.1.3",
                         title: '5.1.3 - Following Capacity development and skills enhancement initiatives are taken by the institution 1) Soft skills, 2) Language and communication skills, 3) Life skills (Yoga, physical fitness, health and hygiene), 4) Awareness of trends in technology',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.1.3', userType: 'director', school
                         },
@@ -1235,14 +1238,14 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.1.4",
                         title: "5.1.4 - The Institution adopts the following for redressal of student grievances including sexual harassment and ragging cases",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '5.1.4', userType: 'director', school
+                            academicYear, proofType: '5.1.4', userType: 'iqac', school: "IQAC"
                         },
                         component: <AQARCheckRadio
                             options={["Implementation of guidelines of statutory/regulatory bodies", "Organisation wide awareness and undertakings on policies with zero tolerance", "Mechanisms for submission of online/offline students’ grievances", "Timely redressal of the grievances through appropriate committees"]}
-                            academicYear={academicYear} radioId={"5.1.4"} isAdmin={!isDirector} school={school}
+                            academicYear={academicYear} radioId={"5.1.4"} isAdmin={!isDirector} school="IQAC"
                         />
 
                     },
@@ -1254,8 +1257,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.2.1",
                         title: '5.2.1 - Number of students qualifying in state/ national/ international level examinations during the year (eg:NET/SLET/GATE/GMAT/CAT/ GRE/TOEFL/Civil Services/State government examinations)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.2.1', userType: 'director', school
                         },
@@ -1266,8 +1269,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.2.2",
                         title: '5.2.2 - Total number of placement of outgoing students during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.2.2', userType: 'director', school
                         },
@@ -1278,8 +1281,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.2.3",
                         title: '5.2.3 - Number of recently graduated students who have progressed to higher education (previous graduating batch) during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.2.3', userType: 'director', school
                         },
@@ -1295,18 +1298,18 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.3.1",
                         title: '5.3.1 - Number of awards/medals won by students for outstanding performance in sports/cultural activities at inter-university/state/national/international events (award for a team event should be counted as one) during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '5.3.1', userType: 'dsd'
+                            academicYear, proofType: '5.3.1', userType: 'sports', school: "Sports"
                         },
-                        component: !isDirector && <AdminMasterTable model="DSDSports" customParams={{ model: "DSDSports", module: "Admin", filter: { academicYear } }} heading='Awards / Medals achieved by Students' serviceName="dsd" proof="proof" />
+                        component: !isDirector && <AdminMasterTable model="DSDSports" customParams={{ model: "DSDSports", module: "Admin", filter: { academicYear } }} heading='Awards / Medals achieved by Students' serviceName="sports" proof="proof" />
                     },
                     {
                         id: "5.3.2",
                         title: "5.3.2 - Presence of Student Council and its activities for institutional development and student welfare",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.3.2', userType: 'director', school
                         },
@@ -1316,10 +1319,10 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.3.3",
                         title: '5.3.3 - Number of sports and cultural events / competitions organised by the institution during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '5.3.3', userType: 'dsd'
+                            academicYear, proofType: '5.3.3', userType: 'sports', school: "Sports"
                         },
                         component: !isDirector && <AdminMasterTable model="SportsAndCulturalEvents" customParams={{ model: "SportsAndCulturalEvents", module: "Admin", filter: { academicYear } }} heading='Awards / Medals achieved by Students' serviceName="dsd" proof="proof" />
                     },
@@ -1331,8 +1334,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.4.1",
                         title: "5.4.1 - The Alumni Association/Chapters (registered and functional)contributes significantly to the development of the institution through financial and other support services during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.4.1', userType: 'director', school
                         },
@@ -1342,8 +1345,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.4.2",
                         title: '5.4.2 - Alumni contribution during the year (INR in Lakhs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.4.2', userType: 'director', school
                         },
@@ -1362,9 +1365,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     hasSupportingDocument: true,
                     isAdmin: !isDirector,
                     proofData: {
-                        academicYear, proofType: '6.1.1', userType: 'director', school
+                        academicYear, proofType: '6.1.1', userType: 'iqac', school: "IQAC"
                     },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.1.1' userType='director' />
+                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="IQAC" matterType='6.1.1' userType='iqac' />
 
                 },
                 {
@@ -1373,9 +1376,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     hasSupportingDocument: true,
                     isAdmin: !isDirector,
                     proofData: {
-                        academicYear, proofType: '6.1.2', userType: 'director', school
+                        academicYear, proofType: '6.1.2', userType: 'iqac', school: "IQAC"
                     },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.1.2' userType='director' />
+                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="IQAC" matterType='6.1.2' userType='iqac' />
 
                 },
                 ]
@@ -1388,9 +1391,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     hasSupportingDocument: true,
                     isAdmin: !isDirector,
                     proofData: {
-                        academicYear, proofType: '6.2.1', userType: 'director', school
+                        academicYear, proofType: '6.2.1', userType: 'iqac', school: "IQAC"
                     },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.2.1' userType='director' />
+                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={"IQAC"} matterType='6.2.1' userType='iqac' />
 
                 },
                 {
@@ -1399,9 +1402,10 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     hasSupportingDocument: true,
                     isAdmin: !isDirector,
                     proofData: {
-                        academicYear, proofType: '6.2.2', userType: 'director', school
+                        academicYear, proofType: '6.2.2', userType: 'iqac', school: "IQAC"
                     },
-                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.2.2' userType='director' />
+                    component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector}
+                        school={"IQAC"} matterType='6.2.2' userType='iqac' />
 
                 },
                 {
@@ -1410,11 +1414,11 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     hasSupportingDocument: true,
                     isAdmin: !isDirector,
                     proofData: {
-                        academicYear, proofType: '6.2.3', userType: 'director', school
+                        academicYear, proofType: '6.2.3', userType: 'iqac', school: "IQAC"
                     },
                     component: <AQARCheckRadio
                         options={["Administration", "Finance and Accounts", "Student Admission and Support", "Examination"]}
-                        academicYear={academicYear} radioId={"6.2.3"} isAdmin={!isDirector} school={school}
+                        academicYear={academicYear} radioId={"6.2.3"} isAdmin={!isDirector} school={"IQAC"}
                     />
 
                 },
@@ -1426,8 +1430,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.3.1",
                         title: "6.3.1 - The institution has a performance appraisal system, promotional avenues and effective welfare measures for teaching and non-teaching staff",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.3.1', userType: 'director', school
                         },
@@ -1436,8 +1440,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.3.2",
                         title: '6.3.2 - Total number of teachers provided with financial support to attend conferences / workshops and towards membership fee of professional bodies during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.3.2', userType: 'faculty', school
                         },
@@ -1446,8 +1450,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.3.3",
                         title: '6.3.3 - Number of professional development / administrative training Programmes organized by the institution for teaching and non-teaching staff during the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.3.3', userType: 'director', school
                         },
@@ -1458,8 +1462,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.3.4",
                         title: '6.3.4 - Teachers undergoing online/ face-to-face  Faculty Development Programmes (FDP)during  the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.3.4', userType: 'faculty', school
                         },
@@ -1473,18 +1477,18 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.4.1",
                         title: "6.4.1 - Institutional strategies for mobilisation of funds and the optimal utilisation of resources",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '6.4.1', userType: 'director', school
+                            academicYear, proofType: '6.4.1', userType: 'finance', school: "Finance"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.4.1' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="Finance" matterType='6.4.1' userType='finance' />
                     },
                     {
                         id: "6.4.2",
                         title: '6.4.2 - Teachers undergoing online/ face-to-face  Faculty Development Programmes (FDP)during  the year',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.4.2', userType: 'other', school: "Finance"
                         },
@@ -1493,8 +1497,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.4.3",
                         title: '6.4.3 - Funds / Grants received from non-government bodies, individuals,philanthropists during the year for development and maintenance of infrastructure (not covered under Criteria III and V)(INR in Lakhs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '6.4.3', userType: 'other', school
                         },
@@ -1503,12 +1507,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.4.4",
                         title: "6.4.4 - Institution conducts internal and external financial audits regularly",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '6.4.4', userType: 'director', school
+                            academicYear, proofType: '6.4.4', userType: 'finance', school: "Finance"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.4.4' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="Finance" matterType='6.4.4' userType='finance' />
                     },
                 ]
             },
@@ -1518,12 +1522,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.5.1",
                         title: "6.5.1 - Internal Quality Assurance Cell (IQAC) has contributed significantly for institutionalizing the quality assurance strategies and processes by constantly reviewing the teaching learning process, structures & methodologies of operations and learning outcomes at periodic intervals",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '6.5.1', userType: 'director', school
+                            academicYear, proofType: '6.5.1', userType: 'iqac', school: "IQAC"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.5.1' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school="IQAC" matterType='6.5.1' userType='iqac' />
                     },
                     {
                         id: "6.5.2",
@@ -1531,12 +1535,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: true,
                         proofData: {
-                            academicYear, proofType: '6.5.2', userType: 'other', school: "IQAC"
+                            academicYear, proofType: '6.5.2', userType: 'iqac', school: "IQAC"
                         },
                         component: !isDirector && <>
                             <AQARCheckRadio
                                 options={["Academic Administrative Audit (AAA) and follow up action taken", "Confernces, Seminars, Workshops on quality conducted", "Collaborative quality initiatives with other institution(s)", "Orientation programme on quality issues for teachers and students", "Participation in NIRF", "Any other quality audit recognized by state, national or international agencies (ISO Certification, NBA)"]}
-                                academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school={school}
+                                academicYear={academicYear} radioId={"6.5.2"} isAdmin={!isDirector} school="IQAC"
                             />
 
                             {/* // place IQAC table inside this div */}
@@ -1549,12 +1553,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "6.5.3",
                         title: "6.5.3 - Incremental improvements made for the preceding during the year with regard to quality (in case of first cycle) Post accreditation quality initiatives(second and subsequent cycles)",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '6.5.3', userType: 'director', school
+                            academicYear, proofType: '6.5.3', userType: 'iqac', school: "IQAC"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='6.5.3' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={"IQAC"} matterType='6.5.3' userType='iqac' />
                     },
                 ]
             },
@@ -1566,8 +1570,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.1",
                         title: "7.1.1 - Measures initiated by the Institution for the promotion of gender equity during the year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.1', userType: 'director', school
                         },
@@ -1577,14 +1581,14 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.2",
                         title: "7.1.2 - The Institution has facilities for alternate sources of energy and energy conservation",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '7.1.2', userType: 'director', school
+                            academicYear, proofType: '7.1.2', userType: 'iqac', school: "IQAC"
                         },
                         component: <AQARCheckRadio
                             options={["Solar energy", "Biogas plant", "Wheeling to the Grid", "Sensor-based energy conservation", "Use of LED bulbs / power-efficient equipment"]}
-                            academicYear={academicYear} radioId={"7.1.2"} isAdmin={!isDirector} school={school}
+                            academicYear={academicYear} radioId={"7.1.2"} isAdmin={!isDirector} school={"IQAC"}
                         />
 
                     },
@@ -1592,33 +1596,33 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.3",
                         title: "7.1.3 - Describe the facilities in the Institution for the management of the following types of degradable and non-degradable waste (within 200 words) 1) Solid waste management 2) Liquid waste management 3) Biomedical waste management 4) E-waste management 5)  Waste recycling system 6) Hazardous chemicals and radioactive waste management",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '7.1.3', userType: 'director', school
+                            academicYear, proofType: '7.1.3', userType: 'iqac', school: "IQAC"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.3' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={"IQAC"} matterType='7.1.3' userType='iqac' />
                     },
 
                     {
                         id: "7.1.4",
                         title: "7.1.4 - Water conservation facilities available in the Institution",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '7.1.4', userType: 'director', school
+                            academicYear, proofType: '7.1.4', userType: 'iqac', school: "IQAC"
                         },
                         component: <AQARCheckRadio
                             options={["Rain water harvesting", "Bore well /Open well recharge", "Construction of tanks and bunds", "Waste water recycling", "Maintenance of water bodies and distribution system in the campus"]}
-                            academicYear={academicYear} radioId={"7.1.4"} isAdmin={!isDirector} school={school}
+                            academicYear={academicYear} radioId={"7.1.4"} isAdmin={!isDirector} school={"IQAC"}
                         />
 
                     },
                     {
                         id: "7.1.5",
                         title: "7.1.5 - Green campus initiatives include",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.5', userType: 'director', school
                         },
@@ -1631,8 +1635,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.6",
                         title: "7.1.6 - Quality audits on environment and energy are regularly undertaken by the institution",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.6', userType: 'director', school
                         },
@@ -1645,8 +1649,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.7",
                         title: "7.1.7 - The Institution has a disabled-friendly and barrier-free environment",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.7', userType: 'director', school
                         },
@@ -1659,8 +1663,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.8",
                         title: "7.1.8 - Describe the Institutional efforts/initiatives in providing an inclusive environment i.e. tolerance and harmony towards cultural, regional, linguistic, communal, socio-economic and other diversities",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.8', userType: 'director', school
                         },
@@ -1669,8 +1673,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.9",
                         title: "7.1.9 - Sensitization of students and employees of the institution to constitutional obligations: values, rights, duties and responsibilities of citizens",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.9', userType: 'director', school
                         },
@@ -1679,8 +1683,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.10",
                         title: "7.1.10 - The Institution has a prescribed code of conduct for students, teachers, administrators and other staff and conducts periodic programmes in this regard.",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.1.10', userType: 'director', school
                         },
@@ -1693,12 +1697,12 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.1.11",
                         title: "7.1.11 - Institution celebrates / organizes national and international commemorative days, events and festivals",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '7.1.11', userType: 'director', school
+                            academicYear, proofType: '7.1.11', userType: 'nss', school: "NSS"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.11' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='7.1.11' userType='nss' />
                     },
                 ]
             },
@@ -1708,8 +1712,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.2.1",
                         title: "7.2.1 - Describe one best practice successfully implemented by the Institution as per NAAC format provided in the Manual",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.2.1', userType: 'director', school
                         },
@@ -1723,8 +1727,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.3.1",
                         title: "7.3.1 - Highlight the performance of the institution in an area distinct to its priority and thrust",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.3.1', userType: 'director', school
                         },
@@ -1733,8 +1737,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "7.3.2",
                         title: "7.3.2 - Plan of action for the next academic year",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '7.3.2', userType: 'director', school
                         },

@@ -16,7 +16,7 @@ let siteLinks = {
     pbasReport: { title: 'Generate PBAS Report', link: '/faculty/service/generatePBASReport' },
     aqar: { title: 'Faculty AQAR Report', link: '/faculty/service/aqar-report' },
     aqarReport: { title: 'Generate AQAR Report', link: '/faculty/service/generateAQARReport' },
-    directorAqar: { title: 'Director AQAR Report', link: '/director/service/aqar-report' },
+    directorAqar: { title: 'Director AQAR Report', link: '/director/aqar' },
     directorAqarReport: { title: 'Generate AQAR Report', link: '/director/service/generateAQARReport' },
     aaaReport: { title: 'Academic & Administrative Audit Report', link: '/director/service/generateAAAReport' },
     directorReport: { title: 'Director Report', link: '/director/service/generateDirectorReport' },

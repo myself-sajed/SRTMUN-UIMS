@@ -150,6 +150,7 @@ import ESTTHome from '../services/establishment/pages/ESTTHome'
 import ESTTLogin from '../services/establishment/pages/ESTTLogin'
 import ChooseAQARYear from '../services/aqar-naac/content/ChooseAQARYear'
 import Stage from '../services/aqar-naac/content/Stage'
+import SingleOtherAQAR from '../services/other/pages/SingleOtherAQAR'
 
 let model = "Xyz"
 let module = 'abc'
@@ -358,6 +359,7 @@ const RoutesHandler = () => {
 
                 {/* Other AQAR */}
                 <Route path="/aqar/other" exact element={<OtherAQAR />} />
+                <Route path="/aqar/other/:academicYear/:tableId" exact element={<SingleOtherAQAR />} />
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />

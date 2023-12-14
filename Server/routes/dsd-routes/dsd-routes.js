@@ -6,6 +6,7 @@ const fs = require('fs');
 const xlsx = require('xlsx');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 
+const SchoolAQAR = require('../../models/director-models/schoolAqarSchema')
 const DSDAQAR = require('../../models/dsd-models/dsdAqarSchema')
 const KRCAQAR = require('../../models/krc-models/krcAqarSchema')
 const SportsAQAR = require('../../models/sports-models/sportsAqarSchema')
@@ -17,7 +18,7 @@ const ESTTAQAR = require('../../models/establishment-models/esttAqarSchema')
 const OtherAQAR = require('../../models/other-models/otherAQARSchema')
 const YFReportIsSubmitted = require('../../models/youth-festival/yfSubmitted')
 
-const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR, ESTTAQAR }
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR, ESTTAQAR, SchoolAQAR }
 
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');
@@ -53,6 +54,7 @@ router.post('/other/services/isReportSubmitted', (req, res) => {
     const { year, model, filter, dataToAdd } = req.body;
     const modelFilter = filter ? filter : {}
     const data = dataToAdd ? dataToAdd : {}
+    console.log('Data to add', dataToAdd)
     NonTeachingModels[model].findOne(modelFilter, (err, doc) => {
         if (err) {
             console.error(err);
@@ -60,6 +62,10 @@ router.post('/other/services/isReportSubmitted', (req, res) => {
         } else {
             if (!doc) {
                 doc = new NonTeachingModels[model](data);
+            }
+
+            if (model === 'SchoolAQAR') {
+                doc.schoolName = dataToAdd.schoolName
             }
 
 

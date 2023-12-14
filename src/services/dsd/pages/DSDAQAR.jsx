@@ -9,6 +9,7 @@ import Footer from '../../../components/Footer';
 import { useSelector } from 'react-redux';
 import useOtherServiceAuth from '../../../hooks/useOtherServiceAuth'
 import { dsdAuthParams } from './DSDHome'
+import AQARTextMatter from '../../aqar-naac/components/AQARTextMatter';
 
 const DSDAQAR = () => {
     title(siteLinks.dsdAQAR.title)
@@ -21,12 +22,28 @@ const DSDAQAR = () => {
     const AQARTables = [
         {
             title: "5.3.1 - Awards/medals won by students for outstanding performance in sports / cultural activities at Inter-university / State / National / International events (award for a team event should be counted as one) during the year",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '5.3.1', userType: 'dsd', school: "DSD"
+            },
             component: <DsdAndSports filterByAcademicYear={aqarYearState} />
         },
         {
             title: "5.3.3 - Information about Sports and cultural events / competitions organised by the institution during the year ",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '5.3.3', userType: 'dsd', school: "DSD"
+            },
             component: <SportsAndCulturalEvents filterByAcademicYear={aqarYearState} />
-        }
+        },
+        {
+            title: "7.1.11 - Institution celebrates / organizes national and international commemorative days, events and festivals",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '7.1.11', userType: 'nss', school: "NSS"
+            },
+            component: <AQARTextMatter academicYear={aqarYearState} school="NSS" matterType='7.1.11' userType='nss' />
+        },
 
     ]
 

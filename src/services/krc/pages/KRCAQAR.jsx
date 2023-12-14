@@ -10,6 +10,7 @@ import { krcAuthParams } from './KRCHome';
 import SubscriptionForKRC from './SubscriptionForKRC';
 import AQARCheckWithProof from '../components/AQARCheckWithProof';
 import AQARLibraryUsageWithProof from '../components/AQARLibraryUsageWithProof';
+import AQARTextMatter from '../../aqar-naac/components/AQARTextMatter';
 
 
 
@@ -27,11 +28,25 @@ const KRCAQAR = () => {
 
     const AQARTables = [
         {
+            id: "4.2.1",
+            title: "4.2.1 - Library is automated using Integrated Library Management System (ILMS) and has digitisation facility",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '4.2.1', userType: 'krc', school: "KRC"
+            },
+            component: <AQARTextMatter academicYear={aqarYearState} school={"KRC"} matterType='4.2.1' userType='krc' />
+
+        },
+        {
             title: "4.2.2 - Institution has subscription for e-Library resources Library has regular subscription for the following",
             component: <AQARCheckWithProof academicYear={aqarYearState} />
         },
         {
             title: "4.2.3 - Annual expenditure for purchase of books / e-books and subscription to journals / e-journals during the year (INR in Lakhs)",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '4.2.3', userType: 'krc', school: "KRC"
+            },
             component: <SubscriptionForKRC filterByAcademicYear={aqarYearState} />
         },
         {

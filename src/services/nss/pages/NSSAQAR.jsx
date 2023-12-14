@@ -9,6 +9,7 @@ import AQARStepper from '../../dsd/components/AQARStepper';
 import { nssAuthParams } from './NSSHome';
 import NssAwardByInstitution from './NssAwardByInstitution';
 import NssExtensionActivity from './NssExtensionActivity';
+import AQARTextMatter from '../../aqar-naac/components/AQARTextMatter';
 
 
 
@@ -21,6 +22,14 @@ const NSSAQAR = () => {
 
 
     const AQARTables = [
+        {
+            title: "3.6.1 - Extension activities in the neighbourhood community in terms of impact and  sensitising students to social issues and holistic development during the year",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.6.1', userType: 'director', school: "NSS"
+            },
+            component: <AQARTextMatter academicYear={aqarYearState} school="NSS" matterType='3.6.1' userType='director' />
+        },
         {
             title: "3.6.2 - Awards received by the Institution, its teachers and students from Government / Government recognised bodies in recognition of the extension activities carried out  during the year",
             hasSupportingDocument: true,
