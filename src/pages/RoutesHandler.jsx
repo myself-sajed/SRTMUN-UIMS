@@ -357,7 +357,7 @@ const RoutesHandler = () => {
                 <Route path="/training-and-placement/aqar" exact element={<PlacementAQAR />} />
 
                 {/* Other AQAR */}
-                <Route path="/expenditure-and-demand-ratio/aqar" exact element={<OtherAQAR />} />
+                <Route path="/aqar/other" exact element={<OtherAQAR />} />
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />

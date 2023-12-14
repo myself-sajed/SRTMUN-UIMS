@@ -526,7 +526,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '2.5.1', userType: 'faculty', school
+                            academicYear, proofType: '2.5.1', userType: 'exam', school: "BOEE"
                         },
                         component: <AdminMasterTable model="DateOfResultDiclaration" customParams={{ model: "DateOfResultDiclaration", module: "Admin", filter: { academicYear } }} heading='Date Of Result Declaration' serviceName="exam" />
                     },
@@ -536,7 +536,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '2.5.2', userType: 'faculty', school
+                            academicYear, proofType: '2.5.2', userType: 'exam', school: "BOEE"
                         },
                         component: <AdminMasterTable model="StudentComplaintsGrievances" customParams={{ model: "StudentComplaintsGrievances", module: "Admin", filter: { academicYear } }} heading='Student Complaints Grievances' serviceName="exam" />
                     },
@@ -546,9 +546,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '2.5.3', userType: 'director', school
+                            academicYear, proofType: '2.5.3', userType: 'exam', school: "BOEE"
                         },
-                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='2.5.3' userType='director' />
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={false} school="BOEE" matterType='2.5.3' userType='exam' />
 
                     },
                     {
@@ -739,41 +739,42 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
             },
             {
                 title: '3.3 - Innovation Ecosystem',
-                components: [{
-                    id: "3.3.1",
-                    title: "3.3.1 - Institution has created an eco-system for innovations including Incubation centre and other initiatives for creation and transfer of knowledge",
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '3.3.1', userType: 'director', school
-                    },
-                    components: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.3.1' userType='director' />
+                components: [
+                    {
+                        id: "3.3.1",
+                        title: "3.3.1 - Institution has created an eco-system for innovations including Incubation centre and other initiatives for creation and transfer of knowledge",
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.3.1', userType: 'iil', school: "IIL"
+                        },
+                        component: <AQARTextMatter academicYear={academicYear} isAdmin={!isDirector} school={school} matterType='3.3.1' userType='iil' />
 
-                },
-                {
-                    id: "3.3.2",
-                    title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year',
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '3.3.2', userType: 'director', school
                     },
-                    component: isDirector ?
-                        <ResearchMethodologyWorkshops filterByAcademicYear={true} academicYear={academicYear} /> :
-                        <AdminMasterTable model="ResearchMethodologyWorkshops" customParams={{ model: "ResearchMethodologyWorkshops", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Research Methodology Workshops' serviceName="director" proof="Upload_Proof" />,
-                },
-                {
-                    id: "3.3.3",
-                    title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year',
-                    hasSupportingDocument: true,
-                    isAdmin: !isDirector,
-                    proofData: {
-                        academicYear, proofType: '3.3.3', userType: 'director', school
+                    {
+                        id: "3.3.2",
+                        title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.3.2', userType: 'director', school
+                        },
+                        component: isDirector ?
+                            <ResearchMethodologyWorkshops filterByAcademicYear={true} academicYear={academicYear} /> :
+                            <AdminMasterTable model="ResearchMethodologyWorkshops" customParams={{ model: "ResearchMethodologyWorkshops", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Research Methodology Workshops' serviceName="director" proof="Upload_Proof" />,
                     },
-                    component: isDirector ?
-                        <Awards filterByAcademicYear={true} academicYear={academicYear} /> :
-                        <AdminMasterTable model="Award" customParams={{ model: "Award", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Awards' serviceName="director" proof="Upload_Proof" />,
-                },]
+                    {
+                        id: "3.3.3",
+                        title: '3.3.3 - Number of awards / recognitions received for research/innovations by the institution/teachers/research scholars/students during the year',
+                        hasSupportingDocument: true,
+                        isAdmin: !isDirector,
+                        proofData: {
+                            academicYear, proofType: '3.3.3', userType: 'director', school
+                        },
+                        component: isDirector ?
+                            <Awards filterByAcademicYear={true} academicYear={academicYear} /> :
+                            <AdminMasterTable model="Award" customParams={{ model: "Award", module: "Admin", filter: { Academic_Year: academicYear } }} heading='Awards' serviceName="director" proof="Upload_Proof" />,
+                    },]
             },
             {
                 title: '3.4 - Research Publications and Awards',
@@ -866,17 +867,17 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.4.8",
                         title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '3.4.8', userType: 'director', school
+                            academicYear, proofType: '3.4.8', userType: 'iil', school: "IIL"
                         },
                         component: <AQARTextInfo
                             tableInfo={[
                                 { head: 'Scopus', cell: 'scopus' },
                                 { head: 'Web of Science', cell: 'wos' },
                             ]}
-                            academicYear={academicYear} tableId="3.4.8" school={school} isAdmin={!isDirector}
+                            academicYear={academicYear} tableId="3.4.8" school="IIL" isAdmin={!isDirector}
                         />
                     },
                     {
@@ -885,14 +886,14 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '3.4.9', userType: 'director', school
+                            academicYear, proofType: '3.4.9', userType: 'iil', school: "IIL"
                         },
                         component: <AQARTextInfo
                             tableInfo={[
                                 { head: 'Scopus', cell: 'scopus' },
                                 { head: 'Web of Science', cell: 'wos' },
                             ]}
-                            academicYear={academicYear} tableId="3.4.9" school={school} isAdmin={!isDirector}
+                            academicYear={academicYear} tableId="3.4.9" school="IIL" isAdmin={!isDirector}
                         />
 
                     },
@@ -942,20 +943,20 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "3.6.2",
                         title: '3.6.2 - Awards received by the Institution, its teachers and students from Government /Government recognised bodies in recognition of the extension activities carried out  during the year ',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '3.6.2', userType: 'nss'
+                            academicYear, proofType: '3.6.2', userType: 'nss', school: "NSS"
                         },
                         component: <AdminMasterTable model="AwardForExtensionActivities" customParams={{ model: "AwardForExtensionActivities", module: "Admin", filter: { academicYear } }} heading='Award For Extension Activities' serviceName="nss" proof="Upload_Proof" />
                     },
                     {
                         id: "3.6.3",
                         title: '3.6.3 - Number of extension and outreach programs conducted by the institution including those through NSS/NCC/Red cross/YRC during the year(including Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '3.6.3', userType: 'director', school
+                            academicYear, proofType: '3.6.3', userType: 'nss', school: "NSS"
                         },
                         component: isDirector ?
                             <ExtensionActivities filterByAcademicYear={true} academicYear={academicYear} /> :
@@ -1043,10 +1044,10 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "4.1.4",
                         title: '4.1.4 - Total expenditure excluding salary for infrastructure augmentation during the year (INR in Lakhs)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
-                            academicYear, proofType: '4.1.4', userType: 'other'
+                            academicYear, proofType: '4.1.4', userType: 'other', school: "Finance"
                         },
                         component: !isDirector && <AdminMasterTable model="TotalExpenditure" customParams={{ model: "TotalExpenditure", module: "Admin", filter: { academicYear } }} heading='Total Expenditure (FAO)' serviceName="other" />
                     },
@@ -1200,8 +1201,8 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                     {
                         id: "5.1.1",
                         title: '5.1.1 - Total number of students benefited by scholarships and free ships provided by the institution, Government and non-government agencies (NGOs) during the year (other than the students receiving scholarships under the government schemes for reserved categories)',
-                        hasSupportingDocument: true,
                         isAdmin: !isDirector,
+                        hasSupportingDocument: true,
                         proofData: {
                             academicYear, proofType: '5.1.1', userType: 'other', school
                         },
@@ -1485,7 +1486,7 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         hasSupportingDocument: true,
                         isAdmin: !isDirector,
                         proofData: {
-                            academicYear, proofType: '6.4.2', userType: 'other', school
+                            academicYear, proofType: '6.4.2', userType: 'other', school: "Finance"
                         },
                         component: <AdminMasterTable model="MaintenanceAndInfrastructure" customParams={{ model: "MaintenanceAndInfrastructure", module: "Admin", filter: { academicYear } }} heading='Infrastructure and Maintenance Fundings' serviceName="other" proof="proof" />
                     },
@@ -1528,9 +1529,9 @@ function AQARTablesObject({ academicYear, isDirector, school }) {
                         id: "6.5.2",
                         title: "6.5.2 - Institution has adopted the following for Quality assurance",
                         hasSupportingDocument: true,
-                        isAdmin: !isDirector,
+                        isAdmin: true,
                         proofData: {
-                            academicYear, proofType: '6.5.2', userType: 'director', school
+                            academicYear, proofType: '6.5.2', userType: 'other', school: "IQAC"
                         },
                         component: !isDirector && <>
                             <AQARCheckRadio

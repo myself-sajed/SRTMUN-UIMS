@@ -58,7 +58,7 @@ const AQARCheckRadio = ({ questionMatter, options, radioId, academicYear, school
                         <table className="table table-bordered mt-2">
                             <thead className="bg-primary text-light">
                                 <tr>
-                                    <td>School Name</td>
+                                    <td>School / Department Name</td>
                                     <td>Selected Option(s)</td>
                                 </tr>
                             </thead>
