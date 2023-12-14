@@ -30,9 +30,9 @@ const Stage = () => {
 
 
     let school = users?.directorUser?.department;
-    let isDirector = userType === "director";
+    
 
-    const AQARTables = AQARTablesObject({ academicYear, isDirector, school })
+    const AQARTables = AQARTablesObject({ academicYear, userType, school })
 
     const [expandedAccordion, setExpandedAccordion] = useState();
 
