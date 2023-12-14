@@ -41,14 +41,14 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
     useEffect(() => {
         if (data?.data?.status === 'success') {
 
-            console.log(data?.data?.data)
-
             if (isAdmin) {
                 setMatters(data?.data?.data)
             } else {
                 setMatter(JSON.parse(data?.data?.data?.matter) || { content: '' })
             }
         }
+
+
     }, [data])
 
 
@@ -71,12 +71,12 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                 </div> : <div className="bg-gray-50 rounded-md p-3 mt-3 border">
                     {
                         matters && matters?.length > 0 ? <div >
-                            <p className='text-semibold mb-3 font-medium'>School wise content / write-up:</p>
+                            <p className='text-semibold mb-3 font-medium'>School / Department wise content / write-up:</p>
                             <div className="max-h-72 overflow-y-scroll">
                                 <table className="table table-responsive table-bordered ">
                                     <thead className="bg-primary text-white">
                                         <tr>
-                                            <th>School Name</th>
+                                            <th>School / Department Name </th>
                                             <th>Content / write-up</th>
                                         </tr>
                                     </thead>
@@ -84,14 +84,13 @@ const AQARTextMatter = ({ academicYear, matterType, userType, school, isAdmin })
                                         {
                                             matters?.map((matter) => {
 
-
+                                                console.log("matter", matter)
                                                 return <tr>
                                                     <td>
                                                         {matter?.school}
                                                     </td>
                                                     <td>
-                                                        <div dangerouslySetInnerHTML={{ __html: JSON.parse(matter.matter).content }} />
-
+                                                        <div dangerouslySetInnerHTML={{ __html: JSON.parse(matter.matter) }} />
                                                     </td>
 
                                                 </tr>

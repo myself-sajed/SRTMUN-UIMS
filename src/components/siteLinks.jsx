@@ -91,7 +91,7 @@ let siteLinks = {
     placementLogin: { title: "Training & Placement Login", link: '/training-and-placement-login' },
     placementHome: { title: "Training & Placement Home", link: '/training-and-placement' },
     placementAQAR: { title: "Training & Placement AQAR", link: '/training-and-placement/aqar' },
-    otherAQAR: { title: "Expenditure & Demand Ratio AQAR", link: '/expenditure-and-demand-ratio/aqar' },
+    otherAQAR: { title: "AQAR", link: '/aqar/other' },
     iilLogin: { title: "Innovation, Incubation and Linkages Login", link: '/iil-login' },
     iilHome: { title: "Innovation, Incubation and Linkages Home", link: '/iil' },
     iilAQAR: { title: "IIL AQAR", link: '/iil/aqar' },

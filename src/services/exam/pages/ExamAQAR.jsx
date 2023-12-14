@@ -14,6 +14,7 @@ import FileViewer from '../../../components/FileViewer';
 import { useQuery } from 'react-query';
 import uploadSupportingDocument, { fetchSupportingDocuments } from '../../krc/js/uploadSupportingDocument';
 import ArrowButton from '../../../components/ArrowButton';
+import AQARTextMatter from '../../aqar-naac/components/AQARTextMatter';
 
 
 
@@ -28,15 +29,37 @@ const ExamAQAR = () => {
     const AQARTables = [
         {
             title: "2.5.1 - Days from the date of last semester-end/ year- end examination till the declaration of  results during the year",
-            component: <ResultDeclarationWithProof aqarYearState={aqarYearState} />
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '2.5.1', userType: 'exam', school: "BOEE"
+            },
+            component: <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
         },
         {
             title: "2.5.2 - Student complaints/grievances about evaluation against total number appeared in the examinations during the year ",
-            component: <StudentComplaintWithProof aqarYearState={aqarYearState} />
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '2.5.2', userType: 'exam', school: "BOEE"
+            },
+            component: <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
+        },
+        {
+            title: "2.5.3 - IT integration and reforms in the examination procedures and processes (continuous internal assessment and end-semester assessment) have brought in considerable improvement in examination management system of the institution",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '2.5.3', userType: 'exam', school: "BOEE"
+            },
+            component: <AQARTextMatter academicYear={aqarYearState} isAdmin={false}
+                school="BOEE" matterType='2.5.3' userType='exam' />
+
         },
         {
             title: "2.6.3 - Students passed during the year",
-            component: <ExamPassedDuringYearWithProof aqarYearState={aqarYearState} />
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '2.6.3', userType: 'exam', school: "BOEE"
+            },
+            component: <ExamPassedDuringYear filterByAcademicYear={aqarYearState} />
         },
     ]
 
@@ -57,112 +80,6 @@ const ExamAQAR = () => {
 }
 
 export default ExamAQAR
-
-const ResultDeclarationWithProof = ({ aqarYearState }) => {
-    const [file, setFile] = useState(null)
-    const [proof, setProof] = useState(null)
-
-    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'ResultDeclarationWithProof' }
-    const { data, isLoading, refetch } = useQuery(`ResultDeclarationWithProof-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
-
-    const submitProofFunction = () => {
-        const formData = new FormData()
-        if (file) {
-            formData.append('file', file)
-        }
-        formData.append('userType', 'exam')
-        formData.append('proofType', 'ResultDeclarationWithProof')
-        formData.append('academicYear', aqarYearState)
-
-        uploadSupportingDocument(formData, refetch)
-
-    }
-
-    useEffect(() => {
-        if (data?.data?.status === 'success') {
-            setProof(data?.data?.data?.proof)
-        }
-    }, [data])
-
-
-    return <div>
-        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
-            <TableSupportingProof setFile={setFile} proof={proof} />
-            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
-        </div>
-        <DateOfResultDiclaration filterByAcademicYear={aqarYearState} />
-    </div>
-}
-
-const StudentComplaintWithProof = ({ aqarYearState }) => {
-    const [file, setFile] = useState(null)
-    const [proof, setProof] = useState(null)
-
-    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'StudentComplaint' }
-    const { data, isLoading, refetch } = useQuery(`StudentComplaint-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
-
-    const submitProofFunction = () => {
-        const formData = new FormData()
-        if (file) {
-            formData.append('file', file)
-        }
-        formData.append('userType', 'exam')
-        formData.append('proofType', 'StudentComplaint')
-        formData.append('academicYear', aqarYearState)
-
-        uploadSupportingDocument(formData, refetch)
-
-    }
-
-    useEffect(() => {
-        if (data?.data?.status === 'success') {
-            setProof(data?.data?.data?.proof)
-        }
-    }, [data])
-    return <div>
-        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
-            <TableSupportingProof setFile={setFile} proof={proof} />
-            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
-        </div>
-        <StudentComplaintsGrievances filterByAcademicYear={aqarYearState} />
-    </div>
-
-}
-
-const ExamPassedDuringYearWithProof = ({ aqarYearState }) => {
-    const [file, setFile] = useState(null)
-    const [proof, setProof] = useState(null)
-
-    const filter = { academicYear: aqarYearState, userType: 'exam', proofType: 'ExamPassedDuringYear' }
-    const { data, isLoading, refetch } = useQuery(`ExamPassedDuringYear-${aqarYearState}`, () => fetchSupportingDocuments(filter), { refetchOnWindowFocus: false })
-
-    const submitProofFunction = () => {
-        const formData = new FormData()
-        if (file) {
-            formData.append('file', file)
-        }
-        formData.append('userType', 'exam')
-        formData.append('proofType', 'ExamPassedDuringYear')
-        formData.append('academicYear', aqarYearState)
-
-        uploadSupportingDocument(formData, refetch)
-
-    }
-
-    useEffect(() => {
-        if (data?.data?.status === 'success') {
-            setProof(data?.data?.data?.proof)
-        }
-    }, [data])
-    return <div>
-        <div className="bg-gray-50 rounded-md p-3 mt-3 border">
-            <TableSupportingProof setFile={setFile} proof={proof} />
-            {file && <ArrowButton title="Upload Proof" onClickFunction={submitProofFunction} />}
-        </div>
-        <ExamPassedDuringYear filterByAcademicYear={aqarYearState} />
-    </div>
-
-}
 
 
 const TableSupportingProof = ({ file, setFile, title = "Upload a supporting / relevant document here for the table below  ", proof = false, isAdmin = false }) => {

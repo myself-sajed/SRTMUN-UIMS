@@ -15,6 +15,8 @@ import ResearchMethodologyWorkshops from '../../director/pages/ResearchMethodolo
 import IILRevenueConsultancy from '../components/IILRevenueConsultancy';
 import IILRevenueCorporateTraining from '../components/IILRevenueCorporateTraining';
 import IILCollaborativeActivities from '../components/IILCollaborativeActivities';
+import AQARTextMatter from '../../aqar-naac/components/AQARTextMatter';
+import AQARTextInfo from '../../aqar-naac/components/AQARTextInfo';
 
 
 
@@ -28,8 +30,13 @@ const IILAQAR = () => {
 
     const AQARTables = [
         {
-            title: '3.3.1 - Institution has as created an eco-system for innovations including Incubation centre and other initiatives for creation and transfer of knowledge',
-            component: <IncubationDetails academicYear={aqarYearState} />
+
+            title: "3.3.1 - Institution has created an eco-system for innovations including Incubation centre and other initiatives for creation and transfer of knowledge",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.3.1', userType: 'iil', school: "IIL"
+            },
+            component: <AQARTextMatter academicYear={aqarYearState} school="IIL" matterType='3.3.1' userType='iil' />
         },
         {
             title: '3.3.2 - Number of workshops/seminars conducted on Research Methodology, Intellectual Property Rights (IPR), Entrepreneurship and Skill Development during the year',
@@ -40,12 +47,35 @@ const IILAQAR = () => {
             component: <Awards school={true} academicYear={aqarYearState} filterByAcademicYear={true} />
         },
         {
-            title: '3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus Web of Science / PubMed',
-            component: <IILScopusWebOfScience academicYear={aqarYearState} type="CitationIndex" />
+            id: "3.4.8",
+            title: "3.4.8 - Bibliometrics of the publications during the year based on average Citation Index in Scopus/ Web of Science/PubMed",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.4.8', userType: 'iil', school: "IIL"
+            },
+            component: <AQARTextInfo
+                tableInfo={[
+                    { head: 'Scopus', cell: 'scopus' },
+                    { head: 'Web of Science', cell: 'wos' },
+                ]}
+                academicYear={aqarYearState} tableId="3.4.8" school="IIL"
+            />
         },
         {
-            title: '3.4.9 - Bibliometrics of the publications during the year based on Scopus / Web of Science - h-Index of the University',
-            component: <IILScopusWebOfScience academicYear={aqarYearState} type="H-Index" />
+            id: "3.4.9",
+            title: "3.4.9 - Bibliometrics of the publications during the year based on Scopus/ Web of Science – h-Index of the University",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.4.9', userType: 'iil', school: "IIL"
+            },
+            component: <AQARTextInfo
+                tableInfo={[
+                    { head: 'Scopus', cell: 'scopus' },
+                    { head: 'Web of Science', cell: 'wos' },
+                ]}
+                academicYear={aqarYearState} tableId="3.4.9" school="IIL"
+            />
+
         },
         {
             title: '3.5.2 (A) - Revenue generated from consultancy training during the year (INR in Lakhs)',

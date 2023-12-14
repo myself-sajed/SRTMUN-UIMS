@@ -51,7 +51,7 @@ const AQARTextInfo = ({ tableInfo, academicYear, tableId, isAdmin, school, singl
             <table className="table table-bordered">
                 <thead className="bg-primary text-light">
                     <tr>
-                        <th>School Name</th>
+                        <th>School / Department Name</th>
 
                         {tableInfo?.map((item) => {
                             return <th>{item.head}</th>;

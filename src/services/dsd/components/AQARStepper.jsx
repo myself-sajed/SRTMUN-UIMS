@@ -11,7 +11,7 @@ import Acknowledgement from '../../../components/Acknowledgement'
 import isReportSubmitted from '../js/isReportSubmitted'
 
 
-const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navigateToAfterSubmission, setAqarYearState, aqarYearState }) => {
+const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navigateToAfterSubmission, setAqarYearState, aqarYearState, showSteps = true }) => {
     const steps = ["Select AQAR Academic Year", "Fill AQAR Form & Submit", "Acknowledgement"]
     const [activeStep, setActiveStep] = useState(0)
     const navigate = useNavigate()
@@ -43,9 +43,9 @@ const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navi
         <div>
             <GoBack pageTitle={`Annual Quality Assurance Report Form ${aqarYearState ? `(${aqarYearState})` : ''}`} bredLinks={bredLinks} functionOnBack={navigateTabs} />
             <div className='w-full'>
-                <div className='mt-3'>
+                {showSteps && <div className='mt-3'>
                     <StepStatus activeStep={activeStep} steps={steps} />
-                </div>
+                </div>}
 
                 {/* FORM BODY */}
                 {/* STEP 0 */}
@@ -70,13 +70,13 @@ const AQARStepper = ({ children, bredLinks, submitModel, user, tableTitles, navi
                 {
                     activeStep === 1 && <div className="my-5">
                         <div>{children}</div>
-                        <SaveButton title={`Save and Submit`} onClickFunction={() => {
+                        {showSteps && <SaveButton title={`Save and Submit`} onClickFunction={() => {
                             if (aqarYearState) {
                                 handleFormSubmit();
                             } else {
                                 toast.error('Select AQAR Year before you proceed.')
                             }
-                        }} />
+                        }} />}
                     </div>
                 }
 

@@ -23,10 +23,18 @@ const NSSAQAR = () => {
     const AQARTables = [
         {
             title: "3.6.2 - Awards received by the Institution, its teachers and students from Government / Government recognised bodies in recognition of the extension activities carried out  during the year",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.6.2', userType: 'nss', school: "NSS"
+            },
             component: <NssAwardByInstitution filterByAcademicYear={aqarYearState} />
         },
         {
             title: "3.6.3 - Extension and outreach programs conducted  by the institution through NSS/NCC/Red cross/YRC etc. during the year ( including  Government initiated programs such as Swachh Bharat, Aids Awareness, Gender Issue, etc. and those organised in collaboration with industry, community and NGOs) ",
+            hasSupportingDocument: true,
+            proofData: {
+                academicYear: aqarYearState, proofType: '3.6.3', userType: 'nss', school: "NSS"
+            },
             component: <NssExtensionActivity filterByAcademicYear={aqarYearState} />
         },
     ]
