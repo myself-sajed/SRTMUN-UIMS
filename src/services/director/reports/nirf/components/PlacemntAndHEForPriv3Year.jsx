@@ -17,7 +17,7 @@ function privYear(academicYear, numYears) {
 
 
 
-const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2022-23", type = "UG2", school = "School of Computational Sciences" }) => {
+const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2021-22", type = "UG2", school = "School of Computational Sciences" }) => {
     if (forYear !== 4) {
         delete tableHead.decrementedAY2;
         delete tableHead.leteralEntry;
@@ -33,6 +33,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2022-23", type
     const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
     const [values, setValues] = useState(initialstate);
     const [btnLoading, setBtnLoading] = useState({ [privYearby2]: false, [privYearby1]: false, [academicYear]: false })
+    const yearArray = [privYearby2, privYearby1, academicYear]
 
     useEffect(() => {
         data?.data.map((e) => {
@@ -52,7 +53,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2022-23", type
                 </thead>
                 <tbody>
                     {
-                        Object.keys(btnLoading).map((e, i) => {
+                        yearArray.map((e, i) => {
                             return (<tr key={`tr-${i}`}>
                                 <th style={{ border: "solid black 1px" }}>{forYear === 1 ? e : privYear(e, forYear - 1)}</th>
                                 <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e]?.noOfIntake} /></td>
@@ -69,7 +70,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2022-23", type
                                 <td style={{ border: "solid black 1px" }}><Text type="number" name="salary" fieldName={e} setValues={setValues} value={values[e]?.salary} /></td>
                                 <td style={{ border: "solid black 1px" }}><Text name="salaryInWords" fieldName={e} setValues={setValues} value={values[e]?.salaryInWords} /></td>
                                 <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfHEStudents" fieldName={e} setValues={setValues} value={values[e]?.noOfHEStudents} /></td>
-                                <Submit values={values[e]} model={model} module={module} fieldName={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} />
+                                <Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} />
                             </tr>)
                         })
                     }
