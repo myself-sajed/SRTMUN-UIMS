@@ -96,6 +96,7 @@ const Text = ({type="text", name, academicYear, setValues, value})=>{
                 value={value} />
 }
 
+
 const Submit = ({values, model, module, refetch, years, btnLoading, setBtnLoading, academicYear })=>{
 
     const btnLoadingToggle = (state) => {
@@ -144,3 +145,5 @@ const Submit = ({values, model, module, refetch, years, btnLoading, setBtnLoadin
     }
     return<button className='btn btn-success' onClick={validateAndSubmit} disabled={btnLoading[academicYear]}>Submit</button>
 }
+
+export {Text}
