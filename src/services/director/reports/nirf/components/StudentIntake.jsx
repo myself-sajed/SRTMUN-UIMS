@@ -6,10 +6,12 @@ const StudentIntake = () => {
 
     const user = useSelector((state) => state.user?.directorUser)
     const { programs, isLoading } = useNIRFGetProgram(user)
-
+    console.log(programs);
+    
     return (
-        <div>
-            this is student intake
+        !isLoading?<div>{programs}</div>
+        :<div>
+            {/* this is student intake */}
         </div>
     )
 }

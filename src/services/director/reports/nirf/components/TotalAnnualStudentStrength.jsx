@@ -4,16 +4,19 @@ import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import { Text } from './PlacemntAndHEForPriv3Year';
 import { CircularProgress } from '@mui/material';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const tableHead = { males: "No. of Male Students", females: "No. of Female Students", total: "Total Students", outSideState: "Outside State (Including male & female)", outSideCountry: "Outside Country (Including male & female)", economicallyBackward: "Economically Backward (Including male & female)", sociallyChallenged: "Socially Challenged (SC+ST+OBC Including male & female)", fullFeeGovernment: "No. of students receiving full tuition fee reimbursement from the State and Central Government", fullFeeInstitution: "No. of students receiving full tuition fee reimbursement from Institution Funds", fullFeePrivateBodies: "No. of students receiving full tuition fee reimbursement from the Private Bodies", notReceivingfullFee: "No. of students who are not receiving full tuition fee reimbursement" }
 
-const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF), academicYear = "2022-23", school= "School of Computational Sciences" }) => {
+const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF), academicYear = "2023-24", school= "School of Computational Sciences" }) => {
 
   let model = "TotalAnnualStudentStrength";
   let module = "nirf";
   let filter = { academicYear, school}
   const params = { model, module, filter }
   const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+  
   let initialstate ={};
   programTypes.map((e)=>{
     initialstate[e]={
@@ -40,6 +43,21 @@ const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF)
     console.log(values);
   },[values])
  
+  const Submit = ()=>{
+        axios.post(`${process.env.REACT_APP_MAIN_URL}/${module}/${!values.hasOwnProperty("_id")?"threeYearSubmit":"threeYearEdit"}/${model}`, values).then(res=>{
+                if(res.status===200){
+                    toast.success(res.data)
+                }
+                if(res.status===500){
+                    toast.error("Error while submiting data pleae try again")
+                }
+            }).catch((err)=>{
+                console.log(err);
+                toast.error("Something Went Wrong");
+            })
+            refetch()
+  }
+
   return (
     isLoading?<div className='w-full flex justify-center'><CircularProgress /></div>:<div>
       <table style={{ border: "solid black 1px" }}>
@@ -70,6 +88,7 @@ const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF)
           }
         </tbody>
       </table>
+      <button className='btn btn-success' onClick={Submit} >Submit</button>
     </div>
   )
 }
