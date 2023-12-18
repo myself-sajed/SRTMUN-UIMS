@@ -30,7 +30,7 @@ const PlacemntAndHEForPriv3Year = ({forYear=2, academicYear = "2022-23", type="U
     const params = { model, module, filter }
     const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
     const preInitialState = {school, type, noOfIntake: null, noOfAdmitted: null, leteralEntry: null, noOfGraduating: null, placed: null, salary: null, salaryInWords: null, noOfHEStudents: null}
-    const initialstate = {[academicYear]: preInitialState,[privYearby1]: preInitialState, [privYearby2]: preInitialState}
+    const initialstate = {[academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState}
     const [values, setValues] = useState(initialstate);
     const [btnLoading, setBtnLoading] = useState({[privYearby2]:false, [privYearby1]:false, [academicYear]:false })
 
