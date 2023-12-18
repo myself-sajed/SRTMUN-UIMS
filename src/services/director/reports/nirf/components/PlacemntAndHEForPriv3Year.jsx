@@ -50,7 +50,6 @@ const PlacemntAndHEForPriv3Year = ({forYear=2, academicYear = "2022-23", type="U
                     {Object.values(tableHead).map((e,i)=><th style={{border:"solid black 1px"}} key={`head${i}`}>{e}</th>)}
                 </tr>
             </thead>
-
             <tbody>
                 {
                     Object.keys(btnLoading).map((e, i)=>{
