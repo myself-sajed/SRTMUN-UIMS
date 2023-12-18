@@ -1,9 +1,9 @@
 import React from 'react'
-import nirfPrograms from '../js/nirfPrograms';
+import programsByNIRF from '../js/programsByNIRF';
 
 const tableHead = { males: "No. of Male Students", females: "No. of Female Students", total: "Total Students", outSideState: "Outside State (Including male & female)", outSideCountry: "Outside Country (Including male & female)", economicallyBackward: "Economically Backward (Including male & female)", sociallyChallenged: "Socially Challenged (SC+ST+OBC Including male & female)", fullFeeGovernment: "No. of students receiving full tuition fee reimbursement from the State and Central Government", fullFeeInstitution: "No. of students receiving full tuition fee reimbursement from Institution Funds", fullFeePrivateBodies: "No. of students receiving full tuition fee reimbursement from the Private Bodies", notReceivingfullFee: "No. of students who are not receiving full tuition fee reimbursement" }
 
-const TotalAnnualStudentStrength = ({ programTypes = nirfPrograms }) => {
+const TotalAnnualStudentStrength = ({ programTypes = programsByNIRF }) => {
 
   let model = "TotalAnualStudentStrength";
   let module = "nirf";

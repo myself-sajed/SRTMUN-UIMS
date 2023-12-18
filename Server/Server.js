@@ -127,6 +127,7 @@ app.use(require('./routes/estt-routes/estt-routes').router)
 
 //nirf
 app.use(require('./routes/nirf-routes/nirf-routes').router)
+app.use(require('./routes/nirf-routes/nirf-program-routes.js'))
 
 //admin routes
 app.use(require('./routes/admin-routes/admin-routes').router);

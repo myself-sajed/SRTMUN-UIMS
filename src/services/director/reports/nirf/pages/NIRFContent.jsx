@@ -5,6 +5,8 @@ import GoBack from '../../../../../components/GoBack'
 import useDirectorAuth from '../../../../../hooks/useDirectorAuth'
 import { useSelector } from 'react-redux'
 import NIRFNavbar, { navbarLinks } from '../components/NIRFNavbar'
+import nirfTablesObject from '../js/nirfTablesObject'
+import Footer from '../../../../../components/Footer'
 
 const NIRFContent = () => {
 
@@ -14,23 +16,38 @@ const NIRFContent = () => {
     const user = useSelector((state) => state.user?.directorUser)
     const stageTitle = navbarLinks?.[module]?.title
 
+    const NIRFTables = nirfTablesObject(user?.department)
+
 
     return (
         <div>
             <GoBack pageTitle={`NIRF Report (${academicYear})`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} />
 
-            <div className="my-3 sticky-top">
+            <div className="my-3 md:sticky-top">
                 <NIRFNavbar />
             </div>
 
-            <div className="bg-gray-100 p-2 rounded-lg">
-                {
-                    module !== 'acknowledgement' && <>
-                        <p className="text-center mt-3 font-bold text-xl">
-                            {stageTitle}{navbarLinks?.[module]?.subtitle ? `: ${navbarLinks?.[module]?.subtitle}` : ''}</p>
-                    </>
-                }
+            <div className="bg-gray-100 p-2 rounded-lg min-h-screen">
+                <div>
+                    {
+                        module !== 'acknowledgement' && <>
+                            <p className="text-center mt-3 font-bold text-xl">
+                                {NIRFTables?.[module]?.title}</p>
+                        </>
+                    }
+                </div>
+
+                <div>
+                    {
+                        NIRFTables?.[module]?.component || <p>No available component</p>
+                    }
+                </div>
             </div>
+
+            <Footer />
+
+
+
 
 
         </div>

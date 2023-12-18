@@ -31,10 +31,10 @@ const NIRFNavbar = () => {
                 </div>
                 <div>
                     <div className="block md:hidden">
-                        <ArrowButton title="Show Criteria List" onClickFunction={showDrawer} showArrow={false} />
+                        <ArrowButton title="Show NIRF Module List" onClickFunction={showDrawer} showArrow={false} />
                     </div>
 
-                    <Drawer title="AQAR Criteria" placement="right" onClose={onClose} open={open}>
+                    <Drawer title="NIRF Modules" placement="right" onClose={onClose} open={open}>
                         <div className="flex flex-col gap-3">
                             {
                                 Object.keys(navbarLinks).map((item, index) => {
@@ -57,37 +57,31 @@ export default NIRFNavbar
 
 const navbarLinks = {
     'programs': {
-        title: 'Sanctioned Intake',
+        title: 'School Programs',
         abbv: 'programs'
     },
     'sanctioned-intake': {
-        title: 'Criterion 1',
-        subtitle: "Curricular Aspects",
+        title: 'Sanctioned Intake',
         abbv: 'sanctioned-intake',
     },
     'student-strength': {
-        title: 'Criterion 2',
-        subtitle: "Teaching, Learning & Evaluation",
+        title: 'Student Strength',
         abbv: 'student-strength',
     },
     'placement-and-higher-education': {
-        title: 'Criterion 3',
-        subtitle: "Research, Innovations and Extension",
+        title: 'Placement & Higher Education',
         abbv: 'placement-and-higher-education',
     },
     'patents': {
-        title: 'Criterion 4',
-        subtitle: "Infrastructure & Learning Resources",
+        title: 'Patents',
         abbv: 'patents',
     },
     'consultancy': {
-        title: 'Criterion 5',
-        subtitle: "Student Support & Progression",
+        title: 'Consultancy',
         abbv: 'consultancy',
     },
     'programs-organized': {
-        title: 'Criterion 6',
-        subtitle: "Governance, Leadership & Management",
+        title: 'Programs Organized',
         abbv: 'programs-organized',
     },
 }
