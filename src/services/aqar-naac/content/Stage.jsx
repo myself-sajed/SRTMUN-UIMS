@@ -18,6 +18,7 @@ import { SaveButton } from '../../faculty/reports/pbas/PbasReportHome'
 import toast from 'react-hot-toast'
 import isReportSubmitted from '../../dsd/js/isReportSubmitted'
 import Acknowledgement from '../../../components/Acknowledgement'
+import title from '../../../js/title'
 
 
 const Stage = () => {
@@ -36,7 +37,8 @@ const Stage = () => {
 
 
     let school = users?.directorUser?.department;
-    
+    title('AQAR')
+
 
     const AQARTables = AQARTablesObject({ academicYear, userType, school })
 

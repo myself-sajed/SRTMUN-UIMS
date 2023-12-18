@@ -105,6 +105,7 @@ let siteLinks = {
     swayamFillData: { title: "Data Center", link: '/swayam-nptel/data-center' },
     directorAQAR: { title: "AQAR Form", link: '/' },
     adminAQAR: { title: "AQAR Form", link: '/' },
+    nirfSelectYear: { title: "NIRF: Select Academic Year", link: '/director/nirf' },
 
 
 

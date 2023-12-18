@@ -29,7 +29,6 @@ const PGHome = () => {
         {
             title: "Research Guidance",
             component: <AdminResearchGuide />
-
         },
         {
             title: "Progression to Higher Education",
