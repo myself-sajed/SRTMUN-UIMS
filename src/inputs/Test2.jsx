@@ -3,7 +3,7 @@ import Scholarship from '../services/other/pages/Scholarship'
 import MaintenanceAndInfrastructure from '../services/other/pages/MaintenanceAndInfrastructure'
 import IQACInstitutionQualityAssurance from '../services/other/pages/IQACInstitutionQualityAssurance'
 import PlacemntAndHEForPriv3Year from '../services/director/reports/nirf/components/PlacemntAndHEForPriv3Year'
-import TotalAnualStudentStrength from '../services/director/reports/nirf/components/TotalAnualStudentStrgth'
+import TotalAnnualStudentStrength from '../services/director/reports/nirf/components/TotalAnnualStudentStrength'
 // import { useQuery } from 'react-query'
 // import fetchData from '../services/dashboard/js/fetchData'
 // import UserLoading from '../pages/UserLoading'
@@ -21,7 +21,7 @@ const Test2 = ({ school: sch }) => {
       <MaintenanceAndInfrastructure /> */}
       {/* <IQACInstitutionQualityAssurance/> */}
       <PlacemntAndHEForPriv3Year />
-      <TotalAnualStudentStrength/>
+      <TotalAnnualStudentStrength/>
     </div>
 
     // "School of Computational Sciences"
