@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import programsByNIRF from '../js/programsByNIRF';
 import ArrowButton from '../../../../../components/ArrowButton';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPrograms, savePrograms } from '../js/savePrograms';
 import { useQuery } from 'react-query';
 import UserLoading from '../../../../../pages/UserLoading';
+import { setNIRFPrograms } from '../../../../../redux/slices/NIRFSlice';
 
 function SelectPrograms() {
     const [selectedPrograms, setSelectedPrograms] = useState([]);
     const user = useSelector((state) => state.user?.directorUser)
-
+    const dispatch = useDispatch()
 
     const { isLoading, refetch } = useQuery(['Programs', user?._id], () => fetchPrograms(user?.department), {
+        refetchOnWindowFocus: false,
         onSuccess: (data) => {
-            console.log('Data programs:', data)
             setSelectedPrograms(data.data)
+            dispatch(setNIRFPrograms(data.data));
+
         }
     })
 
@@ -28,7 +31,7 @@ function SelectPrograms() {
     };
 
     const onSubmit = async () => {
-        await savePrograms(user?.department, selectedPrograms)
+        await savePrograms(user?.department, selectedPrograms, dispatch, setNIRFPrograms)
     }
 
     return (

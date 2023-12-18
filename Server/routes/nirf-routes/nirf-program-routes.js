@@ -9,7 +9,7 @@ router.post('/NIRF/savePrograms', async (req, res) => {
 
     if (savedPrograms) {
         console.log('Saved program:', savedPrograms)
-        res.send({ status: 'success' })
+        res.send({ status: 'success', data: savedPrograms.programs })
     } else {
         res.send({ status: 'error', message: 'Could not save programs' })
     }

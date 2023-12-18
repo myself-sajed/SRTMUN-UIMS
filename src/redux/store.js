@@ -10,6 +10,7 @@ import { DirectorActiveSlice } from './slices/DirectorActiveSlice'
 import { AlumniActiveSlice } from './slices/AlumniActiveSlice'
 import { AdminActiveSlice } from './slices/AdminActiveSlice'
 import { AQARSlice } from './slices/AQARSlice'
+import { NIRFSlice } from './slices/NIRFSlice'
 
 export default configureStore({
     reducer: {
@@ -24,5 +25,6 @@ export default configureStore({
         directorActive: DirectorActiveSlice.reducer,
         alumniActive: AlumniActiveSlice.reducer,
         adminActive: AdminActiveSlice.reducer,
+        nirf: NIRFSlice.reducer,
     },
 })
