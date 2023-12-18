@@ -151,6 +151,8 @@ import ESTTLogin from '../services/establishment/pages/ESTTLogin'
 import ChooseAQARYear from '../services/aqar-naac/content/ChooseAQARYear'
 import Stage from '../services/aqar-naac/content/Stage'
 import SingleOtherAQAR from '../services/other/pages/SingleOtherAQAR'
+import NIRFContent from '../services/director/reports/nirf/pages/NIRFContent'
+import ChooseNIRFYear from '../services/director/reports/nirf/pages/ChooseNIRFYear'
 
 let model = "Xyz"
 let module = 'abc'
@@ -372,6 +374,10 @@ const RoutesHandler = () => {
                 {/* AQAR (Director + Admin) */}
                 <Route path="/:userType/aqar" exact element={<ChooseAQARYear />} />
                 <Route path="/:userType/aqar/:academicYear/:stageName" exact element={<Stage />} />
+
+                {/* NIRF for directors */}
+                <Route path="/director/nirf" exact element={<ChooseNIRFYear />} />
+                <Route path="/director/nirf/:academicYear/:module" exact element={<NIRFContent />} />
 
 
             </Routes>
