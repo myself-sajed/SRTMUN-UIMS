@@ -17,7 +17,6 @@ function SelectPrograms() {
         onSuccess: (data) => {
             setSelectedPrograms(data.data)
             dispatch(setNIRFPrograms(data.data));
-
         }
     })
 
