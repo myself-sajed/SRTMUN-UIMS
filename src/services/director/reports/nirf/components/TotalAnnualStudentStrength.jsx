@@ -38,10 +38,6 @@ const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF)
       });
     }
   }, [data]);
-
-  useEffect(()=>{
-    console.log(values);
-  },[values])
  
   const Submit = ()=>{
         axios.post(`${process.env.REACT_APP_MAIN_URL}/${module}/${!values.hasOwnProperty("_id")?"threeYearSubmit":"threeYearEdit"}/${model}`, values).then(res=>{
