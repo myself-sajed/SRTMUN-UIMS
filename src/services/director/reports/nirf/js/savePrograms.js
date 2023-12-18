@@ -19,7 +19,6 @@ async function savePrograms(schoolName, programs, dispatch, setData) {
 }
 
 async function fetchPrograms(schoolName) {
-    console.log('Running')
     const link = `${process.env.REACT_APP_MAIN_URL}/NIRF/getPrograms`
     return await Axios.post(link, { schoolName })
 }

@@ -56,4 +56,21 @@ const academicYearGenerator = (numberOfYearsToDisplay, showCurrentYear = true, e
     return arrayOfYears
 }
 
-export { academicYearGenerator }
+const academicYearGeneratorBackwards = (numberOfYearsToDisplay, showCurrentYear = true, customCurrentYear = null) => {
+    const now = new Date().getUTCFullYear();
+    const startingYear = customCurrentYear ? +customCurrentYear.slice(0, 4) : showCurrentYear ? now : now - 1
+
+    const arrayOfYears = Array(numberOfYearsToDisplay).fill('').map((v, idx) => {
+        const startYear = startingYear - idx;
+        return `${startYear}-${(startYear + 1).toString().slice(2, 4)}`;
+    });
+
+    return arrayOfYears;
+}
+
+
+
+
+
+export { academicYearGenerator, academicYearGeneratorBackwards }
+

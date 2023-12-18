@@ -9,11 +9,9 @@ const useNIRFGetProgram = (user) => {
     const [shouldFetch, setShouldFetch] = useState(false)
     const reduxPrograms = useSelector((state) => state.nirf.nirfPrograms);
 
-    console.log('Redux Programs:', reduxPrograms)
-
     const { data, isLoading, refetch } = useQuery(['Programs', user?._id], () => fetchPrograms(user?.department), {
         enabled: shouldFetch,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: shouldFetch,
         onSuccess: (data) => {
             dispatch(setNIRFPrograms(data?.data));
             setShouldFetch(false)
@@ -33,7 +31,7 @@ const useNIRFGetProgram = (user) => {
         }
     }, [shouldFetch, refetch]);
 
-    return { programs: data?.data || [], isLoading };
+    return { programs: reduxPrograms || data?.data || [], isLoading };
 };
 
 export default useNIRFGetProgram;
