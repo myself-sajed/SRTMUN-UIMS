@@ -12,8 +12,8 @@ const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF)
   let model = "TotalAnnualStudentStrength";
   let module = "nirf";
   let filter = { academicYear, school}
-    const params = { model, module, filter }
-    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+  const params = { model, module, filter }
+  const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
   let initialstate ={};
   programTypes.map((e)=>{
     initialstate[e]={
@@ -44,26 +44,26 @@ const TotalAnnualStudentStrength = ({ programTypes = Object.keys(programsByNIRF)
     isLoading?<div className='w-full flex justify-center'><CircularProgress /></div>:<div>
       <table style={{ border: "solid black 1px" }}>
         <thead>
-          <tr><th></th>{Object.keys(tableHead).map((e) => {
-            return <th style={{ border: "solid black 1px" }}>{tableHead[e]}</th>
+          <tr><th></th>{Object.keys(tableHead).map((e, i) => {
+            return <th key={`head-${i}`} style={{ border: "solid black 1px" }}>{tableHead[e]}</th>
           })}</tr>
         </thead>
         <tbody>
           {
-           programTypes.map((e) => {
-              return <tr>
+           programTypes.map((e, i) => {
+              return <tr key={`body-${i}`}>
                 <th style={{border:"solid black 1px"}}>{programsByNIRF[e].name}</th>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="males" academicYear={e} setValues={setValues} value={values[e].males} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="females" academicYear={e} setValues={setValues} value={values[e].females} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="total" academicYear={e} setValues={setValues} value={values[e].total} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="outSideState" academicYear={e} setValues={setValues} value={values[e].outSideState} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="outSideCountry" academicYear={e} setValues={setValues} value={values[e].outSideCountry} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="economicallyBackward" academicYear={e} setValues={setValues} value={values[e].economicallyBackward} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="sociallyChallenged" academicYear={e} setValues={setValues} value={values[e].sociallyChallenged} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeeGovernment" academicYear={e} setValues={setValues} value={values[e].fullFeeGovernment} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeeInstitution" academicYear={e} setValues={setValues} value={values[e].fullFeeInstitution} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeePrivateBodies" academicYear={e} setValues={setValues} value={values[e].fullFeePrivateBodies} /></td>
-                <td style={{border:"solid black 1px"}}><Text type="number" name="notReceivingfullFee" academicYear={e} setValues={setValues} value={values[e].notReceivingfullFee} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="males" fieldName={e} setValues={setValues} value={values[e].males} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="females" fieldName={e} setValues={setValues} value={values[e].females} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="total" fieldName={e} setValues={setValues} value={values[e].total} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="outSideState" fieldName={e} setValues={setValues} value={values[e].outSideState} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="outSideCountry" fieldName={e} setValues={setValues} value={values[e].outSideCountry} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="economicallyBackward" fieldName={e} setValues={setValues} value={values[e].economicallyBackward} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="sociallyChallenged" fieldName={e} setValues={setValues} value={values[e].sociallyChallenged} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeeGovernment" fieldName={e} setValues={setValues} value={values[e].fullFeeGovernment} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeeInstitution" fieldName={e} setValues={setValues} value={values[e].fullFeeInstitution} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="fullFeePrivateBodies" fieldName={e} setValues={setValues} value={values[e].fullFeePrivateBodies} /></td>
+                <td style={{border:"solid black 1px"}}><Text type="number" name="notReceivingfullFee" fieldName={e} setValues={setValues} value={values[e].notReceivingfullFee} /></td>
               </tr>
             }
             )

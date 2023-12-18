@@ -55,21 +55,21 @@ const PlacemntAndHEForPriv3Year = ({forYear=2, academicYear = "2022-23", type="U
                     Object.keys(btnLoading).map((e, i)=>{
                     return(<tr key={`tr-${i}`}>
                     <th style={{border:"solid black 1px"}}>{forYear===1? e: privYear(e,forYear-1)}</th>
-                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfIntake" academicYear={e} setValues={setValues} value={values[e].noOfIntake} /></td>
-                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfAdmitted" academicYear={e} setValues={setValues} value={values[e].noOfAdmitted} /></td>
+                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e].noOfIntake} /></td>
+                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfAdmitted" fieldName={e} setValues={setValues} value={values[e].noOfAdmitted} /></td>
                     {
                         forYear===4?<>
                             <th style={{border:"solid black 1px"}}>{privYear(e, forYear-2)}</th>
-                            <td style={{border:"solid black 1px"}}><Text type="number" name="leteralEntry" academicYear={e} setValues={setValues} value={values[e].leteralEntry} /></td>
+                            <td style={{border:"solid black 1px"}}><Text type="number" name="leteralEntry" fieldName={e} setValues={setValues} value={values[e].leteralEntry} /></td>
                         </>:null
                     }
                     <th style={{border:"solid black 1px"}}>{e}</th>
-                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfGraduating" academicYear={e} setValues={setValues} value={values[e].noOfGraduating} /></td>
-                    <td style={{border:"solid black 1px"}}> <Text type="number" name="placed" academicYear={e} setValues={setValues} value={values[e].placed} /></td>
-                    <td style={{border:"solid black 1px"}}><Text type="number" name="salary" academicYear={e} setValues={setValues} value={values[e].salary} /></td>
-                    <td style={{border:"solid black 1px"}}><Text name="salaryInWords" academicYear={e} setValues={setValues} value={values[e].salaryInWords} /></td>
-                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfHEStudents" academicYear={e} setValues={setValues} value={values[e].noOfHEStudents} /></td>
-                    <Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} />
+                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfGraduating" fieldName={e} setValues={setValues} value={values[e].noOfGraduating} /></td>
+                    <td style={{border:"solid black 1px"}}> <Text type="number" name="placed" fieldName={e} setValues={setValues} value={values[e].placed} /></td>
+                    <td style={{border:"solid black 1px"}}><Text type="number" name="salary" fieldName={e} setValues={setValues} value={values[e].salary} /></td>
+                    <td style={{border:"solid black 1px"}}><Text name="salaryInWords" fieldName={e} setValues={setValues} value={values[e].salaryInWords} /></td>
+                    <td style={{border:"solid black 1px"}}><Text type="number" name="noOfHEStudents" fieldName={e} setValues={setValues} value={values[e].noOfHEStudents} /></td>
+                    <Submit values={values[e]} model={model} module={module} fieldName={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} />
                 </tr>)
                 })
                 }
@@ -81,14 +81,14 @@ const PlacemntAndHEForPriv3Year = ({forYear=2, academicYear = "2022-23", type="U
 }
 export default PlacemntAndHEForPriv3Year
 
-const Text = ({type="text", name, academicYear, setValues, value})=>{
+const Text = ({type="text", name, fieldName, setValues, value})=>{
 
     return<input id="fname" type={type} 
                 onChange={(e) => {
                     setValues((pri) => {
                         return {
-                            ...pri, [academicYear]: {
-                                ...pri[academicYear],[name]: e.target.value
+                            ...pri, [fieldName]: {
+                                ...pri[fieldName],[name]: e.target.value
                             }
                         }
                     })
