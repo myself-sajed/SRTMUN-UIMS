@@ -1,6 +1,6 @@
 const  mongoose = require('mongoose');
 
-const placemntAndHEForPriv3YearSchema = mongoose.Schema({
+const placemntAndHEForPriv3YearSchema = new mongoose.Schema({
     noOfIntake: {
         type: Number,
         required: true,
