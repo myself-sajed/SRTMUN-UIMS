@@ -114,7 +114,6 @@ const Submit = ({ values, model, module, refetch, years, btnLoading, setBtnLoadi
         let breakFlag = false;
         for (let i = 0; i < arr.length; i++) {
             const fieldName = arr?.[i];
-            console.log(values);
             if (values?.[fieldName] === null) {
                 if (years !== 4 && fieldName === "leteralEntry") {
                     continue;
