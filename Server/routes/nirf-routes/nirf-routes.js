@@ -23,7 +23,7 @@ router.post("/nirf/threeYearSubmit/:model", async (req,res)=>{
         const data = req.body;
         const obj = new models[model](data);
         await obj.save();
-        res.status(201).send("Entry Succeed")
+        res.status(200).send("Entry Succeed")
     } catch (err) {
         console.log(err);
         res.status(500).send()        
