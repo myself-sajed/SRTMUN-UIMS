@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import programsByNIRF from '../js/programsByNIRF';
 import ArrowButton from '../../../../../components/ArrowButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,23 +6,28 @@ import { fetchPrograms, savePrograms } from '../js/savePrograms';
 import { useQuery } from 'react-query';
 import UserLoading from '../../../../../pages/UserLoading';
 import { setNIRFPrograms } from '../../../../../redux/slices/NIRFSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { navigateToURL } from './StudentIntake';
+import useNIRFGetProgram from '../../../../../hooks/director-hooks/useNIRFGetProgram';
+import toast from 'react-hot-toast';
 
 function SelectPrograms() {
     const [selectedPrograms, setSelectedPrograms] = useState([]);
     const user = useSelector((state) => state.user?.directorUser)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { academicYear } = useParams()
+    const [isProgramLoading, setIsProgramLoading] = useState(false)
 
-    const { isLoading, refetch } = useQuery(['Programs', user?._id], () => fetchPrograms(user?.department), {
-        refetchOnWindowFocus: false,
-        onSuccess: (data) => {
-            setSelectedPrograms(data.data)
-            dispatch(setNIRFPrograms(data.data));
-        }
-    })
+    const { programs, isLoading } = useNIRFGetProgram(user, academicYear)
+
+    useEffect(() => {
+        setSelectedPrograms(programs || [])
+    }, [programs])
 
 
     const handleCheckboxChange = (value) => {
-        if (selectedPrograms.includes(value)) {
+        if (selectedPrograms?.includes(value)) {
             setSelectedPrograms((prevItems) => prevItems.filter(item => item !== value));
         } else {
             setSelectedPrograms((prevItems) => [...prevItems, value]);
@@ -30,7 +35,14 @@ function SelectPrograms() {
     };
 
     const onSubmit = async () => {
-        await savePrograms(user?.department, selectedPrograms, dispatch, setNIRFPrograms)
+
+        if (selectedPrograms.length === programs.length && selectedPrograms.every((value, index) => value === programs[index])) {
+            toast.success('Programs saved successfully')
+        } else {
+            await savePrograms(user?.department, academicYear, selectedPrograms, dispatch, setNIRFPrograms, setIsProgramLoading)
+        }
+
+        navigateToURL(academicYear, 'sanctioned-intake', navigate)
     }
 
     return (
@@ -67,7 +79,8 @@ function SelectPrograms() {
 
 
             <div className='text-center my-4'>
-                <ArrowButton onClickFunction={onSubmit} title="Save & Continue" />
+                <ArrowButton className="mt-3" onClickFunction={onSubmit}
+                    title={!isProgramLoading ? "Save Programs & Continue" : "Saving Programs..."} showArrow={!isProgramLoading} />
             </div>
         </div>
     );

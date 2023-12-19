@@ -10,6 +10,10 @@ const schema = new mongoose.Schema({
     schoolName: {
         type: String,
         required: true
+    },
+    academicYear: {
+        type: String,
+        required: true
     }
 
 }, { timestamps: true });

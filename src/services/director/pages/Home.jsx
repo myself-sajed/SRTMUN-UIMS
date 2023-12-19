@@ -30,6 +30,7 @@ import ProfileCroper from '../../../components/ProfileCroper'
 import capitalizeText from '../../../js/capitalizeText'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useQuery } from 'react-query'
+import directorServices from '../js/directorServices'
 
 
 
@@ -324,129 +325,32 @@ const Home = () => {
                     <hr className='text-black' />
                     <div className="flex flex-col lg:flex-row items-center justify-between flex-wrap">
 
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>School Student Management</h5>
-                                        <p className="prices">SSM</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.ssm.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Go to SSM</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Faculty Data Center</h5>
-                                        <p className="prices">FDC</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.fdc.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Get Faculty Data</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            directorServices.map((service) => {
+                                return <div className="p-3 flex-auto w-full lg:w-fit">
+                                    <div className="wrap-price">
 
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Annual Quality Assurance Report</h5>
-                                        <p className="prices">AQAR</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.directorAqar.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
-                                        <Link to={siteLinks.directorAqarReport.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Download AQAR Data </Link>
+                                        <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
+                                            <div>
+                                                <h5>{service.title}</h5>
+                                                <div className='flex items-center gap-2 justify-center'>
+                                                    <p className="prices">{service.abbv} </p>{service?.isNew && <span class="badge bg-blue-700 text-blue-200">New</span>}
+                                                </div>
+                                            </div>
+                                            <div className='flex items-center justify-center gap-2'>
 
+                                                {
+                                                    service?.link1 && <Link to={service?.link1.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">{service?.link1.title} </Link>
+                                                }
+                                                {
+                                                    service?.link2 && <Link to={service?.link2.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">{service?.link2.title} </Link>
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Research Center</h5>
-                                        <p className="prices">RC</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.rc.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">View Data</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Student, Parent, Employee Feedback</h5>
-                                        <p className="prices">FEEDBACK</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.feedbackDashboard.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Feedback Response </Link>
-                                        <Link to={siteLinks.feedbackAction.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Feedback Action Taken Report </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Academic & Administrative Audit</h5>
-                                        <p className="prices">AAA</p>
-                                    </div>
-
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.aaa.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
-                                        <Link to={siteLinks.aaaReport.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Download AAA Report </Link>
-
-                                    </div>
-
-                                    {/* <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
-                                        {serverAuditData?.AAAData?.sort((a, b) => {
-                                            let yearA = JSON.parse(a)?.['auditYear']?.split('-')[0];
-                                            let yearB = JSON.parse(b)?.['auditYear']?.split('-')[0];
-                                            return yearB - yearA;
-                                        }).map((aaaItem) => {
-                                            return <Dropdown
-                                                menu={{
-                                                    items: [
-                                                        {
-                                                            key: '1',
-                                                            label: <div onClick={() => { navigate(siteLinks.aaa.link, { state: { academicYear: JSON.parse(aaaItem)?.['auditYear'] } }); }}>View / Edit</div>
-                                                        },
-                                                        {
-                                                            key: '2',
-                                                            label: <div onClick={() => { setLoading(true); toast.success('Generating Report, Please wait...'); generateAAAReport(user, [JSON.parse(aaaItem)?.['auditYear']], setLoading) }}>Generate Report</div>
-                                                        }]
-                                                }}
-                                                placement="bottomLeft"
-                                                arrow={{
-                                                    pointAtCenter: true,
-                                                }}
-                                            >
-                                                <Button className='duration-200 bg-blue-900 text-white hover:bg-blue-800 rounded-lg ease-in-out text-decoration-none'>{JSON.parse(aaaItem)?.['auditYear']}</Button>
-                                            </Dropdown>
-                                        })}
-
-                                        <Button onClick={() => { navigate(siteLinks.aaa.link) }} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 rounded-lg ease-in-out text-decoration-none" > Fill Form </Button>
-
-
-                                    </div> */}
-
-
-                                </div>
-                            </div>
-                        </div>
-
-
+                            })
+                        }
 
                     </div>
                 </div>
