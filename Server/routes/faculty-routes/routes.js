@@ -896,6 +896,8 @@ function initRoutes(app) {
                 isNat: data.isNat,
                 designation: data.designation,
                 awardYear: data.awardYear,
+                publishedDate: data.publishedDate,
+                fieldDate: data.fieldDate,
                 incentive: data.incentive,
                 year: data.year,
                 proof: req.file.filename,

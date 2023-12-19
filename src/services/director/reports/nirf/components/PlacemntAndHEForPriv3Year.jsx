@@ -15,8 +15,6 @@ function privYear(academicYear, numYears) {
     return previousAcademicYear;
 }
 
-
-
 const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2021-22", type = "UG2", school = "School of Computational Sciences" }) => {
     if (forYear !== 4) {
         delete tableHead.decrementedAY2;
