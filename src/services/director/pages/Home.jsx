@@ -329,10 +329,13 @@ const Home = () => {
                             directorServices.map((service) => {
                                 return <div className="p-3 flex-auto w-full lg:w-fit">
                                     <div className="wrap-price">
+
                                         <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
                                             <div>
                                                 <h5>{service.title}</h5>
-                                                <p className="prices">{service.abbv}</p>
+                                                <div className='flex items-center gap-2 justify-center'>
+                                                    <p className="prices">{service.abbv} </p>{service?.isNew && <span class="badge bg-blue-700 text-blue-200">New</span>}
+                                                </div>
                                             </div>
                                             <div className='flex items-center justify-center gap-2'>
 
@@ -348,56 +351,6 @@ const Home = () => {
                                 </div>
                             })
                         }
-
-
-
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>
-                                            []
-                                        </h5>
-                                        <p className="prices">RC</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.rc.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">View Data</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Student, Parent, Employee Feedback</h5>
-                                        <p className="prices">FEEDBACK</p>
-                                    </div>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.feedbackDashboard.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Feedback Response </Link>
-                                        <Link to={siteLinks.feedbackAction.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none">Feedback Action Taken Report </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-3 flex-auto w-full lg:w-fit">
-                            <div className="wrap-price">
-                                <div className="price-innerdetail h-[100%] text-center flex flex-col items-center justify-between">
-                                    <div>
-                                        <h5>Academic & Administrative Audit</h5>
-                                        <p className="prices">AAA</p>
-                                    </div>
-
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <Link to={siteLinks.aaa.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Fill Form</Link>
-                                        <Link to={siteLinks.aaaReport.link} className="duration-200 bg-blue-900 text-white hover:bg-blue-800 p-2 rounded-lg ease-in-out mt-5 text-decoration-none"> Download AAA Report </Link>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
 
                     </div>
                 </div>
