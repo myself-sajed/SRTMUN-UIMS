@@ -4,6 +4,8 @@ import { useQuery } from 'react-query';
 import { CircularProgress } from '@mui/material';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import UserLoading from '../../../../../pages/UserLoading';
+import ArrowButton from '../../../../../components/ArrowButton';
 
 
 let tableHead = { decrementedAY: "Academic Year", noOfIntake: "No. of first Year students intake in the year", noOfAdmitted: "No. of first year students admitted in the year", decrementedAY2: "Academic Year", leteralEntry: "No. of students admitted through Lateral entry", academicYear: "Academic Year", noOfGraduating: "No. of students graduating in minimum stipulated time", placed: "No. of students placed", salary: "Median salary of placed graduates per annum (Amount in Rs.)", salaryInWords: "Medián salary of placed graduates per annum (Amount in Words)", noOfHEStudents: "No. of students selected for Higher Studies" }
@@ -17,7 +19,7 @@ function privYear(academicYear, numYears) {
 
 
 
-const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2021-22", type = "UG2", school = "School of Computational Sciences" }) => {
+const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, program }) => {
     if (forYear !== 4) {
         delete tableHead.decrementedAY2;
         delete tableHead.leteralEntry;
@@ -28,7 +30,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2021-22", type
     const privYearby2 = privYear(academicYear, 2);
     let filter = { academicYear: { $in: [academicYear, privYearby1, privYearby2] }, school, type }
     const params = { model, module, filter }
-    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params))
+    const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params), { refetchOnWindowFocus: false })
     const preInitialState = { school, type, noOfIntake: null, noOfAdmitted: null, leteralEntry: null, noOfGraduating: null, placed: null, salary: null, salaryInWords: null, noOfHEStudents: null }
     const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
     const [values, setValues] = useState(initialstate);
@@ -44,38 +46,44 @@ const PlacemntAndHEForPriv3Year = ({ forYear = 2, academicYear = "2021-22", type
     }, [data])
 
     return (
-        isLoading ? <div className='w-full flex justify-center'><CircularProgress /></div> : <div>
-            <table style={{ border: "solid black 1px" }}>
-                <thead>
-                    <tr>
-                        {Object.values(tableHead)?.map((e, i) => <th style={{ border: "solid black 1px" }} key={`head${i}`}>{e}</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        yearArray.map((e, i) => {
-                            return (<tr key={`tr-${i}`}>
-                                <th style={{ border: "solid black 1px" }}>{forYear === 1 ? e : privYear(e, forYear - 1)}</th>
-                                <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e]?.noOfIntake} /></td>
-                                <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfAdmitted" fieldName={e} setValues={setValues} value={values[e]?.noOfAdmitted} /></td>
-                                {
-                                    forYear === 4 ? <>
-                                        <th style={{ border: "solid black 1px" }}>{privYear(e, forYear - 2)}</th>
-                                        <td style={{ border: "solid black 1px" }}><Text type="number" name="leteralEntry" fieldName={e} setValues={setValues} value={values?.[e]?.leteralEntry} /></td>
-                                    </> : null
-                                }
-                                <th style={{ border: "solid black 1px" }}>{e}</th>
-                                <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfGraduating" fieldName={e} setValues={setValues} value={values[e]?.noOfGraduating} /></td>
-                                <td style={{ border: "solid black 1px" }}> <Text type="number" name="placed" fieldName={e} setValues={setValues} value={values[e]?.placed} /></td>
-                                <td style={{ border: "solid black 1px" }}><Text type="number" name="salary" fieldName={e} setValues={setValues} value={values[e]?.salary} /></td>
-                                <td style={{ border: "solid black 1px" }}><Text name="salaryInWords" fieldName={e} setValues={setValues} value={values[e]?.salaryInWords} /></td>
-                                <td style={{ border: "solid black 1px" }}><Text type="number" name="noOfHEStudents" fieldName={e} setValues={setValues} value={values[e]?.noOfHEStudents} /></td>
-                                <Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} />
-                            </tr>)
-                        })
-                    }
-                </tbody>
-            </table>
+        isLoading ? <div className='w-full flex justify-center'><UserLoading title="Fetching Placement and HE Content" /></div> : <div className="my-3 border-2 rounded-md p-2">
+            <p className="my-3 font-medium">{program.name}</p>
+
+            <div className="table-responsive">
+                <table className="table table-bordered" >
+                    <thead className='bg-primary text-light'>
+                        <tr>
+                            {Object.values(tableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            yearArray.map((e, i) => {
+                                return (<tr key={`tr-${i}`}>
+                                    <th>{forYear === 1 ? e : privYear(e, forYear - 1)}</th>
+                                    <td><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e]?.noOfIntake} /></td>
+                                    <td><Text type="number" name="noOfAdmitted" fieldName={e} setValues={setValues} value={values[e]?.noOfAdmitted} /></td>
+                                    {
+                                        forYear === 4 ? <>
+                                            <th>{privYear(e, forYear - 2)}</th>
+                                            <td><Text type="number" name="leteralEntry" fieldName={e} setValues={setValues} value={values?.[e]?.leteralEntry} /></td>
+                                        </> : null
+                                    }
+                                    <th>{e}</th>
+                                    <td><Text type="number" name="noOfGraduating" fieldName={e} setValues={setValues} value={values[e]?.noOfGraduating} /></td>
+                                    <td> <Text type="number" name="placed" fieldName={e} setValues={setValues} value={values[e]?.placed} /></td>
+                                    <td><Text type="number" name="salary" fieldName={e} setValues={setValues} value={values[e]?.salary} /></td>
+                                    <td><Text name="salaryInWords" fieldName={e} setValues={setValues} value={values[e]?.salaryInWords} /></td>
+                                    <td><Text type="number" name="noOfHEStudents" fieldName={e} setValues={setValues} value={values[e]?.noOfHEStudents} /></td>
+                                    <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} /></td>
+
+                                </tr>)
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     )
@@ -85,6 +93,7 @@ export default PlacemntAndHEForPriv3Year
 const Text = ({ type = "text", name, fieldName, setValues, value }) => {
 
     return <input id="fname" type={type}
+        className="p-2 border-2 border-blue-200 w-full rounded-md focus:border-blue-500 outline-none auto-expanding-textarea "
         onChange={(e) => {
             setValues((pri) => {
                 return {
@@ -143,7 +152,7 @@ const Submit = ({ values, model, module, refetch, years, btnLoading, setBtnLoadi
         btnLoadingToggle(false);
         refetch();
     }
-    return <button className='btn btn-success' onClick={validateAndSubmit} disabled={btnLoading[academicYear]}>Submit</button>
+    return <ArrowButton showArrow={false} title="Save" onClickFunction={validateAndSubmit} disabled={btnLoading[academicYear]} />
 }
 
 export { Text }

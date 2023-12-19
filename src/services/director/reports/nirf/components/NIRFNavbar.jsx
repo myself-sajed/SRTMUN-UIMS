@@ -21,7 +21,7 @@ const NIRFNavbar = () => {
 
     return (
         <div>
-            <div className="bg-gray-100 rounded-lg p-2">
+            <div className="sm:bg-gray-100 rounded-lg p-2">
                 <div className="hidden md:flex items-center justify-between gap-2 text-center">
                     {
                         Object.keys(navbarLinks).map((item, index) => {
@@ -30,11 +30,11 @@ const NIRFNavbar = () => {
                     }
                 </div>
                 <div>
-                    <div className="block md:hidden">
+                    {!open && <div className="block md:hidden z-10">
                         <ArrowButton title="Show NIRF Module List" onClickFunction={showDrawer} showArrow={false} />
-                    </div>
+                    </div>}
 
-                    <Drawer title="NIRF Modules" placement="right" onClose={onClose} open={open}>
+                    <Drawer className='z-20' title="NIRF Modules" placement="right" onClose={onClose} open={open}>
                         <div className="flex flex-col gap-3">
                             {
                                 Object.keys(navbarLinks).map((item, index) => {

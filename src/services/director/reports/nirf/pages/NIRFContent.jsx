@@ -25,7 +25,7 @@ const NIRFContent = () => {
         <div>
             <GoBack pageTitle={`NIRF Report (${academicYear})`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} bredLinks={bredLinks} />
 
-            <div className="my-3 md:sticky-top">
+            <div className="my-3 sticky-top">
                 <NIRFNavbar />
             </div>
 

@@ -21,7 +21,7 @@ const AQARNavbar = () => {
 
     return (
         <div>
-            <div className="bg-gray-100 rounded-lg p-2">
+            <div className="sm:bg-gray-100 rounded-lg p-2">
                 <div className="hidden md:flex items-center justify-between gap-2 text-center">
                     {
                         Object.keys(navbarLinks).map((item, index) => {
@@ -30,22 +30,22 @@ const AQARNavbar = () => {
                     }
                 </div>
                 <div>
-                        <div className="block md:hidden">
+                    {!open && <div className="block md:hidden">
                         <ArrowButton title="Show Criteria List" onClickFunction={showDrawer} showArrow={false} />
-                        </div>
+                    </div>}
 
-                        <Drawer title="AQAR Criteria" placement="right" onClose={onClose} open={open}>
-                            <div className="flex flex-col gap-3">
-                                {
-                                    Object.keys(navbarLinks).map((item, index) => {
-                                        return <span onClick={() => {
-                                            navigate(`/${userType}/aqar/${academicYear}/${navbarLinks[item].abbv}`);
-                                            onClose();
-                                        }} className={`${item === stageName && 'border-b-2 text-blue-600 border-b-blue-600'}  hover:bg-gray-50 p-2 cursor-pointer text-xs md:text-sm font-medium select-none`} key={index}>{navbarLinks[item].title}</span>
-                                    })
-                                }
-                            </div>
-                        </Drawer>
+                    <Drawer title="AQAR Criteria" placement="right" onClose={onClose} open={open}>
+                        <div className="flex flex-col gap-3">
+                            {
+                                Object.keys(navbarLinks).map((item, index) => {
+                                    return <span onClick={() => {
+                                        navigate(`/${userType}/aqar/${academicYear}/${navbarLinks[item].abbv}`);
+                                        onClose();
+                                    }} className={`${item === stageName && 'border-b-2 text-blue-600 border-b-blue-600'}  hover:bg-gray-50 p-2 cursor-pointer text-xs md:text-sm font-medium select-none`} key={index}>{navbarLinks[item].title}</span>
+                                })
+                            }
+                        </div>
+                    </Drawer>
 
                 </div>
             </div>

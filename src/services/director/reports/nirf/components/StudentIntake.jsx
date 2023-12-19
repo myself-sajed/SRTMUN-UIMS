@@ -44,11 +44,7 @@ const StudentIntake = () => {
                         </div>
 
                     </div> :
-                    <div className="text-center">
-                        <p className="my-5 text-yellow-600">No programs are added for the academic year <b>{academicYear}</b>. <br />Please add programs first, and then proceed.</p>
-
-                        <ArrowButton title="Add Programs" onClickFunction={() => navigateToURL(academicYear, 'programs', navigate)} />
-                    </div>
+                    <NotAvailableComponentNIRF academicYear={academicYear} />
             }
         </div>
     )
@@ -56,10 +52,20 @@ const StudentIntake = () => {
 
 export default StudentIntake
 
+
+const NotAvailableComponentNIRF = ({ academicYear }) => {
+    const navigate = useNavigate()
+    return <div className="text-center">
+        <p className="my-5 text-yellow-600">No programs are added for the academic year <b>{academicYear}</b>. <br />Please add programs first, and then proceed.</p>
+
+        <ArrowButton title="Add Programs" onClickFunction={() => navigateToURL(academicYear, 'programs', navigate)} />
+    </div>
+}
+
 const navigateToURL = (academicYear, pageToGo, navigate) => {
     navigate(`/director/nirf/${academicYear}/${pageToGo}`)
 }
 
-export { navigateToURL }
+export { navigateToURL, NotAvailableComponentNIRF }
 
 
