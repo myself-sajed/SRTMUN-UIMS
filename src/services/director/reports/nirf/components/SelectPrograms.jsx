@@ -13,21 +13,21 @@ import toast from 'react-hot-toast';
 
 function SelectPrograms() {
     const [selectedPrograms, setSelectedPrograms] = useState([]);
-    const reduxItem = useSelector((state) => state.nirf?.nirfPrograms)
     const user = useSelector((state) => state.user?.directorUser)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { academicYear } = useParams()
+    const [isProgramLoading, setIsProgramLoading] = useState(false)
 
-    const { programs, isLoading } = useNIRFGetProgram(user)
+    const { programs, isLoading } = useNIRFGetProgram(user, academicYear)
 
     useEffect(() => {
-        setSelectedPrograms(programs)
+        setSelectedPrograms(programs || [])
     }, [programs])
 
 
     const handleCheckboxChange = (value) => {
-        if (selectedPrograms.includes(value)) {
+        if (selectedPrograms?.includes(value)) {
             setSelectedPrograms((prevItems) => prevItems.filter(item => item !== value));
         } else {
             setSelectedPrograms((prevItems) => [...prevItems, value]);
@@ -36,10 +36,10 @@ function SelectPrograms() {
 
     const onSubmit = async () => {
 
-        if (selectedPrograms.length === reduxItem.length && selectedPrograms.every((value, index) => value === reduxItem[index])) {
+        if (selectedPrograms.length === programs.length && selectedPrograms.every((value, index) => value === programs[index])) {
             toast.success('Programs saved successfully')
         } else {
-            await savePrograms(user?.department, selectedPrograms, dispatch, setNIRFPrograms)
+            await savePrograms(user?.department, academicYear, selectedPrograms, dispatch, setNIRFPrograms, setIsProgramLoading)
         }
 
         navigateToURL(academicYear, 'sanctioned-intake', navigate)
@@ -79,7 +79,8 @@ function SelectPrograms() {
 
 
             <div className='text-center my-4'>
-                <ArrowButton onClickFunction={onSubmit} title="Save & Continue" />
+                <ArrowButton className="mt-3" onClickFunction={onSubmit}
+                    title={!isProgramLoading ? "Save Programs & Continue" : "Saving Programs..."} showArrow={!isProgramLoading} />
             </div>
         </div>
     );

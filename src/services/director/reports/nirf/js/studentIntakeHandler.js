@@ -1,9 +1,9 @@
 import Axios from 'axios'
 import toast from 'react-hot-toast'
 
-const saveStudentIntake = async (programId, programData, schoolName) => {
+const saveStudentIntake = async (programId, programData, schoolName, setIsLoading) => {
     const link = `${process.env.REACT_APP_MAIN_URL}/NIRF/saveStudentIntake`
-
+    setIsLoading(true)
     try {
         const res = await Axios.post(link, { programId, programData, schoolName })
 
@@ -15,6 +15,9 @@ const saveStudentIntake = async (programId, programData, schoolName) => {
     } catch (error) {
         console.log('Error in save intake count', error)
         toast.error('Could not save intake count')
+    } finally {
+        setIsLoading(false)
+
     }
 
 }

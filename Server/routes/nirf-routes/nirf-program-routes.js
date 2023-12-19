@@ -4,9 +4,9 @@ const NIRFPrograms = require('../../models/nirf-models/nirfProgramsModel')
 const NIRFStudentIntake = require('../../models/nirf-models/nirfStudentIntakeModel')
 
 router.post('/NIRF/savePrograms', async (req, res) => {
-    const { programs, schoolName } = req.body;
+    const { programs, schoolName, academicYear } = req.body;
 
-    const savedPrograms = await NIRFPrograms.findOneAndUpdate({ schoolName }, { programs, schoolName }, { upsert: true, new: true })
+    const savedPrograms = await NIRFPrograms.findOneAndUpdate({ schoolName, academicYear }, { programs, schoolName, academicYear }, { upsert: true, new: true })
 
     if (savedPrograms) {
         res.send({ status: 'success', data: savedPrograms.programs })
@@ -17,9 +17,9 @@ router.post('/NIRF/savePrograms', async (req, res) => {
 })
 
 router.post('/NIRF/getPrograms', async (req, res) => {
-    const { schoolName } = req.body;
+    const { schoolName, academicYear } = req.body;
     try {
-        const program = await NIRFPrograms.findOne({ schoolName })
+        const program = await NIRFPrograms.findOne({ schoolName, academicYear })
         res.send(program?.programs || [])
     } catch (error) {
         res.send([])

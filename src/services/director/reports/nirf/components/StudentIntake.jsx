@@ -14,14 +14,12 @@ const StudentIntake = () => {
 
     const { academicYear } = useParams()
     const user = useSelector((state) => state.user?.directorUser)
-    const { programs, isLoading } = useNIRFGetProgram(user)
+    const { programs, isLoading } = useNIRFGetProgram(user, academicYear)
     const navigate = useNavigate()
 
     const { data, isLoading: intakeLoading, refetch } = useQuery(['StudentIntake', `Intake-${user?._id}`],
         () => fetchStudentIntake(user?.department), { refetchOnWindowFocus: false });
 
-
-    console.log('Saved student intake :', data?.data)
 
     return (
         <div>
@@ -47,7 +45,7 @@ const StudentIntake = () => {
 
                     </div> :
                     <div className="text-center">
-                        <p className="my-5 text-yellow-600">Module not available. Please add programs first and then fill this infomation.</p>
+                        <p className="my-5 text-yellow-600">No programs are added for the academic year <b>{academicYear}</b>. <br />Please add programs first, and then proceed.</p>
 
                         <ArrowButton title="Add Programs" onClickFunction={() => navigateToURL(academicYear, 'programs', navigate)} />
                     </div>

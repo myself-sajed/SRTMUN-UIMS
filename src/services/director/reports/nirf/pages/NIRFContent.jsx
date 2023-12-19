@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import NIRFNavbar, { navbarLinks } from '../components/NIRFNavbar'
 import nirfTablesObject from '../js/nirfTablesObject'
 import Footer from '../../../../../components/Footer'
+import siteLinks from '../../../../../components/siteLinks'
 
 const NIRFContent = () => {
 
@@ -17,11 +18,12 @@ const NIRFContent = () => {
     const stageTitle = navbarLinks?.[module]?.title
 
     const NIRFTables = nirfTablesObject(user?.department)
+    const bredLinks = [siteLinks.welcome, siteLinks.directorHome, siteLinks.nirfSelectYear, { title: stageTitle }]
 
 
     return (
         <div>
-            <GoBack pageTitle={`NIRF Report (${academicYear})`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} />
+            <GoBack pageTitle={`NIRF Report (${academicYear})`} showAvatar={{ photoURL: user?.photoURL, userType: 'director' }} bredLinks={bredLinks} />
 
             <div className="my-3 md:sticky-top">
                 <NIRFNavbar />

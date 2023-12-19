@@ -6,7 +6,7 @@ import { saveStudentIntake } from '../js/studentIntakeHandler';
 const StudentIntakeYearWise = ({ program, schoolName, serverData, academicYear }) => {
 
     const academicYears = academicYearGeneratorBackwards(program.year, false, academicYear)
-
+    const [isLoading, setIsLoading] = useState(false)
     const [programData, setProgramData] = useState(serverData[program.id] || {});
 
     const handleInputChange = (year, value) => {
@@ -15,6 +15,10 @@ const StudentIntakeYearWise = ({ program, schoolName, serverData, academicYear }
             [year]: value,
         }));
     };
+
+    const handleSubmit = async () => {
+        await saveStudentIntake(program.id, programData, schoolName, setIsLoading)
+    }
 
 
 
@@ -32,7 +36,8 @@ const StudentIntakeYearWise = ({ program, schoolName, serverData, academicYear }
                 </div>
             })}
         </div>
-        <ArrowButton className="mt-3" onClickFunction={() => saveStudentIntake(program.id, programData, schoolName)} title="Save Program Data" />
+        <ArrowButton className="mt-3" onClickFunction={handleSubmit}
+            title={!isLoading ? "Save Program Data" : "Saving Data..."} showArrow={!isLoading} />
     </div>
 }
 
