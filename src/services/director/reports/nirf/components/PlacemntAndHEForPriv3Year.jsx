@@ -20,10 +20,10 @@ function privYear(academicYear, numYears) {
 
 
 const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, program }) => {
-    if (forYear !== 4) {
-        delete tableHead.decrementedAY2;
-        delete tableHead.leteralEntry;
-    }
+    // if (forYear !== 4) {
+    //     delete tableHead.decrementedAY2;
+    //     delete tableHead.leteralEntry;
+    // }
     const model = "PlacemntAndHEForPriv3Year"
     const module = "nirf"
     const privYearby1 = privYear(academicYear, 1);
@@ -45,6 +45,8 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
         })
     }, [data])
 
+
+
     return (
         isLoading ? <div className='w-full flex justify-center'><UserLoading title="Fetching Placement and HE Content" /></div> : <div className="my-3 border-2 rounded-md p-2">
             <p className="my-3 font-medium">{program.name}</p>
@@ -53,7 +55,11 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
                 <table className="table table-bordered" >
                     <thead className='bg-primary text-light'>
                         <tr>
-                            {Object.values(tableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
+                            {Object.keys(tableHead)?.map((head, i) => <th key={`head${i}`}>
+                                {
+                                    (head === 'leteralEntry' || head === 'decrementedAY2') ? (type.includes('UG') ? tableHead[head] : null) : tableHead[head]
+                                }
+                            </th>)}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,7 +71,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
                                     <td><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e]?.noOfIntake} /></td>
                                     <td><Text type="number" name="noOfAdmitted" fieldName={e} setValues={setValues} value={values[e]?.noOfAdmitted} /></td>
                                     {
-                                        forYear === 4 ? <>
+                                        type.includes('UG') ? <>
                                             <th>{privYear(e, forYear - 2)}</th>
                                             <td><Text type="number" name="leteralEntry" fieldName={e} setValues={setValues} value={values?.[e]?.leteralEntry} /></td>
                                         </> : null
