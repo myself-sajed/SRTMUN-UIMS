@@ -22,6 +22,14 @@ const patentSchema = new mongoose.Schema({
         type: 'string',
         required: true,
     },
+    fieldDate: {
+        type: 'string',
+        required: false
+    },
+    publishedDate: {
+        type: 'string',
+        required: false
+    },
     year: {
         type: 'string',
         required: true,

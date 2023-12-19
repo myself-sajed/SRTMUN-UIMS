@@ -36,12 +36,13 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
     const [editModal, setEditModal] = useState(false)
     const [itemToDelete, setItemToDelete] = useState('')
     const [isFormOpen, setIsFormOpen] = useState(false)
-
+    const [publishedDate, setPublishedDate] = useState('')
+    const [fieldDate, setFieldDate] = useState('')
     const [filteredItems, setFilteredItems] = useState([])
 
     const user = useSelector(state => state.user.user);
     const typeObject = {
-        patentNumber: 'text', patentTitle: 'text', isNat: Lists.bookChapConfIsNat, awardYear: 'number', year: academicYearGenerator( 29, true, true ),
+        patentNumber: 'text', patentTitle: 'text', isNat: Lists.bookChapConfIsNat, awardYear: 'number', fieldDate: 'date', publishedDate: 'date', year: academicYearGenerator( 29, true, true ),
     }
 
     function handleSubmit(e) {
@@ -53,6 +54,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
         formData.append('patentTitle', patentTitle)
         formData.append('isNat', isNat)
         formData.append('awardYear', awardYear)
+        formData.append('fieldDate', fieldDate)
+        formData.append('publishedDate', publishedDate)
         formData.append('file', proof)
         formData.append('year', year)
         formData.append('userId', user?._id)
@@ -74,6 +77,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
         formData.append('patentNumber', patentNumber)
         formData.append('isNat', isNat)
         formData.append('patentTitle', patentTitle)
+        formData.append('fieldDate', fieldDate)
+        formData.append('publishedDate', publishedDate)
         formData.append('awardYear', awardYear)
         formData.append('file', proof)
         formData.append('year', year)
@@ -91,6 +96,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
                 setPatentNumber(item.patentNumber)
                 setPatentTitle(item.patentTitle)
                 setAwardYear(item.awardYear)
+                setFieldDate(item.fieldDate)
+                setPublishedDate(item.publishedDate)
                 setIsNat(item.isNat)
                 setYear(item.year)
                 setProof(item.proof)
@@ -107,6 +114,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
         setPatentNumber('')
         setPatentTitle('')
         setAwardYear('')
+        setFieldDate('')
+        setPublishedDate('')
         setIsNat('')
         setYear('')
         setProof(null)
@@ -149,6 +158,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
                             </select>
                         </div>
 
+                        <Text title="Patent Field Date" type="date" state={fieldDate} setState={setFieldDate} />
+                        <Text title="Patent Published / Granted Date" type="date" state={publishedDate} setState={setPublishedDate} />
                         <Text title='Patent Number' state={patentNumber} setState={setPatentNumber} />
                         <Text title='Award Year of Patent' state={awardYear} setState={setAwardYear} />
                         <Year space='col-md-4' state={year} setState={setYear} />
@@ -173,6 +184,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
                                 <th scope="col">Patent Number</th>
                                 <th scope="col">Patent Title</th>
                                 <th scope="col">National / International</th>
+                                <th scope="col">Patent Field Date</th>
+                                <th scope="col">Patent Published / Granted Date</th>
                                 <th scope="col">Award Year of Patent </th>
                                 <th scope="col"><div className="w-20">Year</div></th>
 
@@ -190,6 +203,8 @@ const PatentPublished = ({ filterByAcademicYear = false, academicYear, showTable
                                         <td>{item.patentNumber}</td>
                                         <td>{item.patentTitle}</td>
                                         <td>{item.isNat}</td>
+                                        <td>{item.fieldDate}</td>
+                                        <td>{item.publishedDate}</td>
                                         <td>{item.awardYear}</td>
                                         <td>{item.year}</td>
                                         <td> <View proof={item.proof} /></td>
