@@ -46,6 +46,8 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
         })
     }, [data])
 
+
+
     return (
         isLoading ? <div className='w-full flex justify-center'><UserLoading title="Fetching Placement and HE Content" /></div> : <div className="my-3 border-2 rounded-md p-2">
             <p className="my-3 font-medium">{program.name}</p>
