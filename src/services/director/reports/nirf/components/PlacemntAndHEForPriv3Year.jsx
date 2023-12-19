@@ -20,9 +20,10 @@ function privYear(academicYear, numYears) {
 
 
 const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, program }) => {
-    if (forYear !== 4) {
-        delete tableHead.decrementedAY2;
-        delete tableHead.leteralEntry;
+    const tempTableHead = {...tableHead};
+    if (!(type.includes("UG"))) {
+        delete tempTableHead.decrementedAY2;
+        delete tempTableHead.leteralEntry;
     }
     const model = "PlacemntAndHEForPriv3Year"
     const module = "nirf"
@@ -53,7 +54,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
                 <table className="table table-bordered" >
                     <thead className='bg-primary text-light'>
                         <tr>
-                            {Object.values(tableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
+                            {Object.values(tempTableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,7 +66,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
                                     <td><Text type="number" name="noOfIntake" fieldName={e} setValues={setValues} value={values[e]?.noOfIntake} /></td>
                                     <td><Text type="number" name="noOfAdmitted" fieldName={e} setValues={setValues} value={values[e]?.noOfAdmitted} /></td>
                                     {
-                                        forYear === 4 ? <>
+                                        (type.includes("UG"))? <>
                                             <th>{privYear(e, forYear - 2)}</th>
                                             <td><Text type="number" name="leteralEntry" fieldName={e} setValues={setValues} value={values?.[e]?.leteralEntry} /></td>
                                         </> : null
