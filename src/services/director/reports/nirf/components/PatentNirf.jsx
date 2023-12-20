@@ -3,11 +3,13 @@ import { Submit, Text, privYear } from './PlacemntAndHEForPriv3Year';
 import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import UserLoading from '../../../../../pages/UserLoading';
+import { useParams } from 'react-router-dom';
 
 const tableHead = { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" }
 
-const PatentNirf = ({ academicYear, school, program }) => {
+const PatentNirf = ({ school, program }) => {
 
+  const { academicYear } = useParams()
   const model = "PatentNirf";
   const module = "nirf"
   const privYearby1 = privYear(academicYear, 1);
@@ -17,7 +19,7 @@ const PatentNirf = ({ academicYear, school, program }) => {
   const { data, isLoading, refetch } = useQuery(`${model}-${params}`, () => getReq(params), { refetchOnWindowFocus: false })
 
 
-  const preInitialState = {school, noOfpublished: null, noOfGranted: null }
+  const preInitialState = { school, noOfpublished: null, noOfGranted: null }
   const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
   const [values, setValues] = useState(initialstate);
   const [btnLoading, setBtnLoading] = useState({ [privYearby2]: false, [privYearby1]: false, [academicYear]: false })
@@ -49,8 +51,8 @@ const PatentNirf = ({ academicYear, school, program }) => {
                 yearArray.map((e, i) => {
                   return (<tr key={`tr-${i}`}>
                     <th>{e}</th>
-                     <td><Text type="number" name="noOfpublished" fieldName={e} setValues={setValues} value={values[e]?.noOfpublished} /></td>
-                     <td><Text type="number" name="noOfGranted" fieldName={e} setValues={setValues} value={values[e]?.noOfGranted} /></td>
+                    <td><Text type="number" name="noOfpublished" fieldName={e} setValues={setValues} value={values[e]?.noOfpublished} /></td>
+                    <td><Text type="number" name="noOfGranted" fieldName={e} setValues={setValues} value={values[e]?.noOfGranted} /></td>
                     <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} valdateArr={Object.keys(tableHead)} /></td>
 
                   </tr>)

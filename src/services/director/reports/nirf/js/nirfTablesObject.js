@@ -1,4 +1,5 @@
 import CombineComponentNirf from "../components/CombineComponentNirf"
+import PatentNirf from "../components/PatentNirf"
 import PlacementHENIRF from "../components/PlacementHENIRF"
 import PlacemntAndHEForPriv3Year from "../components/PlacemntAndHEForPriv3Year"
 import SelectPrograms from "../components/SelectPrograms"
@@ -30,8 +31,8 @@ const nirfTablesObject = (schoolName) => {
         'patents': {
             id: 'patents',
             title: 'Patents',
-            component: <div className="my-5 text-center">This section is under construction...</div>
-            // component: <CombineComponentNirf model="PatentNirf" school={schoolName} program="Patents Published" />
+            // component: <div className="my-5 text-center">This section is under construction...</div>
+            component: <PatentNirf school={schoolName} program="Patents Published" />
         },
         'consultancy': {
             id: 'consultancy',
