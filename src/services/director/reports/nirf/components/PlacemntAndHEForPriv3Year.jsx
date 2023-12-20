@@ -125,7 +125,7 @@ const Submit = ({ values, model, module, refetch, years=1, btnLoading, setBtnLoa
                     continue;
                 }
                 btnLoadingToggle(false);
-                toast.error(`Incomplete fields ${tableHead?.[fieldName]}`);
+                toast.error(`Incomplete fields`);
                 breakFlag = true;
                 break;
             }

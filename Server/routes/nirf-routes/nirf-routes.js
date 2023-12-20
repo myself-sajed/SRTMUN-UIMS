@@ -24,6 +24,7 @@ router.post("/nirf/threeYearSubmit/:model", async (req,res)=>{
     try {
         const model = req.params.model
         const data = req.body;
+        console.log(data);
         const obj = new models[model](data);
         await obj.save();
         res.status(200).send("Entry Succeed")
@@ -38,6 +39,7 @@ router.post("/nirf/threeYearEdit/:model", async (req,res)=>{
     try {
         const model = req.params.model
         const data =  JSON.parse(JSON.stringify(req.body));
+        console.log(data);
         const {_id} = data
         await models[model].findOneAndUpdate({ _id }, data)
         res.status(200).send("Edited Successfully")

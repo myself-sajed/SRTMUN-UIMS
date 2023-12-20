@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Text, privYear, Submit } from './PlacemntAndHEForPriv3Year';
+import { Submit, Text, privYear } from './PlacemntAndHEForPriv3Year';
 import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import UserLoading from '../../../../../pages/UserLoading';
-import { useParams } from 'react-router-dom';
 
-const tableHead = {
-  PatentNirf: { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" },
-  ConsultancyNirf: { Consultancy: "Total no of Consultancy", clientOrganization: "Total no of Client Organization", amountReceived: "Total Amount Received (in INR)", amountInWords: "Amount Received in Words" },
-  DevelopmentProgramNirf: { NoOfEDPMDP: "No of Executive Development Programs/ Management Development Programs", participants: "Total no Of Participants", earnings: "Total Annnual Earnings (Excluding Lodging & Boarding Charges) in INR", earningsInWords: "Total Annnual Earnings in Words" }
-}
-const CombineComponentNirf = ({ model, school, program }) => {
-  /* PatentNirf, ConsultancyNirf, DevelopmentProgramNirf  */
+const tableHead = { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" }
 
-  const { academicYear } = useParams()
-  const textFilds = ["amountInWords", "earningsInWords"]
+const PatentNirf = ({ academicYear, school, program }) => {
+
+  const model = "PatentNirf";
   const module = "nirf"
   const privYearby1 = privYear(academicYear, 1);
   const privYearby2 = privYear(academicYear, 2);
@@ -22,15 +16,10 @@ const CombineComponentNirf = ({ model, school, program }) => {
   const params = { model, module, filter }
   const { data, isLoading, refetch } = useQuery(`${model}-${params}`, () => getReq(params), { refetchOnWindowFocus: false })
 
-  const keysOfModel = Object.keys(tableHead[model])
-  const preInitialState = {}
-  keysOfModel.forEach((key) => {
-    preInitialState[key] = null;
-  })
-  preInitialState.school= school
+
+  const preInitialState = {school, noOfpublished: null, noOfGranted: null }
   const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
   const [values, setValues] = useState(initialstate);
-
   const [btnLoading, setBtnLoading] = useState({ [privYearby2]: false, [privYearby1]: false, [academicYear]: false })
   const yearArray = [privYearby2, privYearby1, academicYear]
 
@@ -41,7 +30,6 @@ const CombineComponentNirf = ({ model, school, program }) => {
       })
     })
   }, [data])
-
   return (
     <div>
       {isLoading ? <div className='w-full flex justify-center'><UserLoading title="Fetching Placement and HE Content" /></div> : <div className="my-3 border-2 rounded-md p-2">
@@ -51,8 +39,8 @@ const CombineComponentNirf = ({ model, school, program }) => {
           <table className="table table-bordered" >
             <thead className='bg-primary text-light'>
               <tr>
-                <th>{model === "PatentNirf" ? "Calendar Year" : "Financial Year"}</th>
-                {Object.values(tableHead[model])?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
+                <th>Calendar Year</th>
+                {Object.values(tableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
                 <th>Action</th>
               </tr>
             </thead>
@@ -61,10 +49,9 @@ const CombineComponentNirf = ({ model, school, program }) => {
                 yearArray.map((e, i) => {
                   return (<tr key={`tr-${i}`}>
                     <th>{e}</th>
-                    {
-                      keysOfModel.map((key) => <td><Text type={textFilds.includes(key) ? "text" : "number"} name={key} fieldName={e} setValues={setValues} value={values[e]?.[key]} /></td>)
-                    }
-                    <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} valdateArr={keysOfModel} /></td>
+                     <td><Text type="number" name="noOfpublished" fieldName={e} setValues={setValues} value={values[e]?.noOfpublished} /></td>
+                     <td><Text type="number" name="noOfGranted" fieldName={e} setValues={setValues} value={values[e]?.noOfGranted} /></td>
+                    <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} valdateArr={Object.keys(tableHead)} /></td>
 
                   </tr>)
                 })
@@ -79,4 +66,4 @@ const CombineComponentNirf = ({ model, school, program }) => {
   )
 }
 
-export default CombineComponentNirf
+export default PatentNirf
