@@ -3,15 +3,17 @@ import { Text, privYear, Submit } from './PlacemntAndHEForPriv3Year';
 import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import UserLoading from '../../../../../pages/UserLoading';
+import { useParams } from 'react-router-dom';
 
 const tableHead = {
   PatentNirf: { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" },
   ConsultancyNirf: { Consultancy: "Total no of Consultancy", clientOrganization: "Total no of Client Organization", amountReceived: "Total Amount Received (in INR)", amountInWords: "Amount Received in Words" },
   DevelopmentProgramNirf: { NoOfEDPMDP: "No of Executive Development Programs/ Management Development Programs", participants: "Total no Of Participants", earnings: "Total Annnual Earnings (Excluding Lodging & Boarding Charges) in INR", earningsInWords: "Total Annnual Earnings in Words" }
 }
-const CombineComponentNirf = ({ model, academicYear, school, program }) => {
+const CombineComponentNirf = ({ model, school, program }) => {
   /* PatentNirf, ConsultancyNirf, DevelopmentProgramNirf  */
 
+  const { academicYear } = useParams()
   const textFilds = ["amountInWords", "earningsInWords"]
   const module = "nirf"
   const privYearby1 = privYear(academicYear, 1);
