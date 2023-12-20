@@ -4,15 +4,15 @@ const developmentProgramNirfSchema = new mongoose.Schema({
     NoOfEDPMDP: {
         type: Number,
         required: true
-    }, 
+    },
     participants: {
         type: Number,
         required: true
-    }, 
+    },
     earnings: {
         type: Number,
         required: true
-    }, 
+    },
     earningsInWords: {
         type: String,
         required: true
@@ -24,7 +24,7 @@ const developmentProgramNirfSchema = new mongoose.Schema({
     school: {
         type: String,
         required: true,
-    }, 
-},{timestamps:true});
+    },
+}, { timestamps: true });
 
-module.exports = mongoose.model('developmentProgramNirf', developmentProgramNirfSchema)
+module.exports = mongoose.model('developmentProgramNirfs', developmentProgramNirfSchema)

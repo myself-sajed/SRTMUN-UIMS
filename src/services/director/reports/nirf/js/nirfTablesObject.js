@@ -30,17 +30,22 @@ const nirfTablesObject = (schoolName) => {
         'patents': {
             id: 'patents',
             title: 'Patents',
-            component: <CombineComponentNirf model="PatentNirf" school={schoolName} program="Patents Published" />
+            component: <div className="my-5 text-center">This section is under construction...</div>
+            // component: <CombineComponentNirf model="PatentNirf" school={schoolName} program="Patents Published" />
         },
         'consultancy': {
             id: 'consultancy',
             title: 'Consultancy Projects',
-            component: <CombineComponentNirf model="ConsultancyNirf" school={schoolName} program="Consultancy Projects" />
+            component: <div className="my-5 text-center">This section is under construction...</div>
+
+            // component: <CombineComponentNirf model="ConsultancyNirf" school={schoolName} program="Consultancy Projects" />
         },
         'programs-organized': {
             id: 'programs-organized',
             title: 'Programs Organized',
-            component: <CombineComponentNirf model="DevelopmentProgramNirf" school={schoolName} program="Executive development programs / Management programs / Workshop / Training programs" />
+            component: <div className="my-5 text-center">This section is under construction...</div>
+
+            // component: <CombineComponentNirf model="DevelopmentProgramNirf" school={schoolName} program="Executive development programs / Management programs / Workshop / Training programs" />
         },
     }
 }
