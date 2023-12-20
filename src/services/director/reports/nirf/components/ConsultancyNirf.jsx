@@ -5,12 +5,12 @@ import getReq from '../../../../../components/requestComponents/getReq';
 import UserLoading from '../../../../../pages/UserLoading';
 import { useParams } from 'react-router-dom';
 
-const tableHead = { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" }
+const tableHead = { Consultancy: "Total no of Consultancy", clientOrganization: "Total no of Client Organization", amountReceived: "Total Amount Received (in INR)", amountInWords: "Amount Received in Words" }
 
-const PatentNirf = ({ school, program }) => {
+const ConsultancyNirf = ({ school, program }) => {
 
   const { academicYear } = useParams()
-  const model = "PatentNirf";
+  const model = "ConsultancyNirf";
   const module = "nirf"
   const privYearby1 = privYear(academicYear, 1);
   const privYearby2 = privYear(academicYear, 2);
@@ -19,7 +19,7 @@ const PatentNirf = ({ school, program }) => {
   const { data, isLoading, refetch } = useQuery(`${model}-${params}`, () => getReq(params), { refetchOnWindowFocus: false })
 
 
-  const preInitialState = { school, noOfpublished: null, noOfGranted: null }
+  const preInitialState = { school, Consultancy: null, clientOrganization: null, amountReceived: null, amountInWords: null }
 
   const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
 
@@ -62,8 +62,10 @@ const PatentNirf = ({ school, program }) => {
                 yearArray.map((e, i) => {
                   return (<tr key={`tr-${i}`}>
                     <th>{e}</th>
-                    <td><Text type="number" name="noOfpublished" fieldName={e} setValues={setValues} value={values[e]?.noOfpublished} /></td>
-                    <td><Text type="number" name="noOfGranted" fieldName={e} setValues={setValues} value={values[e]?.noOfGranted} /></td>
+                    <td><Text type="number" name="Consultancy" fieldName={e} setValues={setValues} value={values[e]?.Consultancy} /></td>
+                    <td><Text type="number" name="clientOrganization" fieldName={e} setValues={setValues} value={values[e]?.clientOrganization} /></td>
+                    <td><Text type="number" name="amountReceived" fieldName={e} setValues={setValues} value={values[e]?.amountReceived} /></td>
+                    <td><Text name="amountInWords" fieldName={e} setValues={setValues} value={values[e]?.amountInWords} /></td>
                     <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} valdateArr={Object.keys(tableHead)} /></td>
 
                   </tr>)
@@ -79,4 +81,4 @@ const PatentNirf = ({ school, program }) => {
   )
 }
 
-export default PatentNirf
+export default ConsultancyNirf
