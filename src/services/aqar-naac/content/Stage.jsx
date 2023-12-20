@@ -34,13 +34,13 @@ const Stage = () => {
     useOtherServiceAuth({ ...authParams[userType], shouldNavigate: false })
     const users = useSelector((state) => state.user)
     const userDirector = useSelector((state) => state.user?.directorUser)
-
+    const isDirector = userType === 'director'
 
     let school = users?.directorUser?.department;
     title('AQAR')
 
 
-    const AQARTables = AQARTablesObject({ academicYear, userType, school })
+    const AQARTables = AQARTablesObject({ academicYear, userType, school, isDirector })
 
     if (!Object.keys(AQARTables).includes(stageName) && stageName !== "acknowledgement") {
         toast.error('URL was not valid')
