@@ -4,6 +4,7 @@ import MaintenanceAndInfrastructure from '../services/other/pages/MaintenanceAnd
 import IQACInstitutionQualityAssurance from '../services/other/pages/IQACInstitutionQualityAssurance'
 import PlacemntAndHEForPriv3Year from '../services/director/reports/nirf/components/PlacemntAndHEForPriv3Year'
 import TotalAnnualStudentStrength from '../services/director/reports/nirf/components/TotalAnnualStudentStrength'
+import CombineComponentNirf from '../services/director/reports/nirf/components/CombineComponentNirf'
 // import { useQuery } from 'react-query'
 // import fetchData from '../services/dashboard/js/fetchData'
 // import UserLoading from '../pages/UserLoading'
@@ -20,8 +21,11 @@ const Test2 = ({ school: sch }) => {
       {/* <Scholarship/>
       <MaintenanceAndInfrastructure /> */}
       {/* <IQACInstitutionQualityAssurance/> */}
-      <PlacemntAndHEForPriv3Year />
-      <TotalAnnualStudentStrength/>
+      {/* <PlacemntAndHEForPriv3Year />
+      <TotalAnnualStudentStrength/> */}
+      <CombineComponentNirf model="PatentNirf" academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" />
+      <CombineComponentNirf model="ConsultancyNirf" academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" />
+      <CombineComponentNirf model="DevelopmentProgramNirf" academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" />
     </div>
 
     // "School of Computational Sciences"
