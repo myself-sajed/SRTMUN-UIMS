@@ -1,15 +1,23 @@
 import React from 'react'
 import { Years } from '../services/faculty/js/TableInfo'
 
-const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numberOfYearsToDisplay = 30 }) => {
+const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numberOfYearsToDisplay = 30, customYears = null }) => {
 
     // generate years
     const now = new Date().getUTCFullYear();
-    const arrayOfYears = Array(numberOfYearsToDisplay).fill('').map((_, idx) => {
-        const startYear = now - idx;
-        const endYear = startYear + 1;
-        return `${startYear}-${endYear.toString().slice(2, 4)}`;
-    });
+    let arrayOfYears = []
+
+    if (!customYears) {
+        arrayOfYears = generate()
+    }
+
+    function generate() {
+        return Array(numberOfYearsToDisplay).fill('').map((_, idx) => {
+            const startYear = now - idx;
+            const endYear = startYear + 1;
+            return `${startYear}-${endYear.toString().slice(2, 4)}`;
+        });
+    }
 
 
     return (
@@ -18,7 +26,7 @@ const Year = ({ space = 'col-md-2', state, setState, title = "Choose Year", numb
             <select className="form-select" id="validationCustom04" required onChange={(e) => { setState(e.target.value) }} value={state}>
                 <option selected={state === null && true} disabled value="">Choose</option>
 
-                {arrayOfYears.map((year, index) => {
+                {(customYears || arrayOfYears).map((year, index) => {
                     return <option key={index} value={year}>{year}</option>
                 })}
 

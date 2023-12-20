@@ -14,7 +14,7 @@ const directorServices = [
         abbv: "NIRF",
         isNew: true,
         link1: {
-            title: "Go to NIRF Report",
+            title: "Fill Data",
             link: siteLinks.nirfSelectYear.link
         }
     },
@@ -23,7 +23,7 @@ const directorServices = [
         abbv: "AQAR",
         isNew: true,
         link1: {
-            title: "Fill Form",
+            title: "Fill Data",
             link: siteLinks.directorAqar.link
         },
     },
@@ -59,7 +59,7 @@ const directorServices = [
         title: "Academic & Administrative Audit",
         abbv: "AAA",
         link1: {
-            title: "Fill Form",
+            title: "Fill Data",
             link: siteLinks.aaa.link
         },
         link2: {

@@ -112,7 +112,7 @@ const TotalAnnualStudentStrength = () => {
               </tbody>
             </table>
           </div>
-          <ArrowButton className="my-4" onClickFunction={submit} title={!isSubmitLoading ? 'Submit Details' : 'Saving data...'} />
+          <ArrowButton className="my-4" onClickFunction={submit} title={!isSubmitLoading ? 'Submit Details' : 'Saving data...'} showArrow={false} />
         </div> : <NotAvailableComponentNIRF academicYear={academicYear} />
   )
 }

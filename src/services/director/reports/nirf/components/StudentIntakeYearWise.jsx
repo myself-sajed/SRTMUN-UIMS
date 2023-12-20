@@ -37,7 +37,7 @@ const StudentIntakeYearWise = ({ program, schoolName, serverData, academicYear }
             })}
         </div>
         <ArrowButton className="mt-3" onClickFunction={handleSubmit}
-            title={!isLoading ? "Save Program Data" : "Saving Data..."} showArrow={!isLoading} />
+            title={!isLoading ? "Save Program Data" : "Saving Data..."} showArrow={false} />
     </div>
 }
 

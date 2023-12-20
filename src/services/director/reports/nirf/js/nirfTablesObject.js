@@ -26,6 +26,21 @@ const nirfTablesObject = (schoolName) => {
             title: 'Placement & Higher Education',
             component: <PlacementHENIRF />
         },
+        'patents': {
+            id: 'patents',
+            title: 'Patents',
+            component: <p>Patent Under Construction</p>
+        },
+        'consultancy': {
+            id: 'consultancy',
+            title: 'Consultancy Projects',
+            component: <p>Consultancy Under Construction</p>
+        },
+        'programs-organized': {
+            id: 'programs-organized',
+            title: 'Programs Organized',
+            component: <p>Consultancy Under Construction</p>
+        },
     }
 }
 

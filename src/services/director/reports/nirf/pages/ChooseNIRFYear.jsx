@@ -24,7 +24,7 @@ const ChooseNIRFYear = () => {
             <div className='h-screen'>
                 <div className='mx-auto flex items-center text-center justify-center my-5'>
                     <Year state={academicYear} setState={setAcademicYear} space='col-md-3'
-                        title="Choose Academic Year" numberOfYearsToDisplay={3} />
+                        title="Choose Academic Year" customYears={['2022-23']} />
                 </div>
                 <div className='mx-auto flex items-center justify-center'>
                     <SaveButton title={`Save and Proceed`} onClickFunction={() => {

@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast'
 import GoBack from '../../../components/GoBack'
 import siteLinks from '../../../components/siteLinks'
 import title from '../../../js/title'
-import Year from '../../../inputs/Year'
+import Year, { academicYearGenerator } from '../../../inputs/Year'
 import { SaveButton } from '../../faculty/reports/cas/CasReportHome'
 import Footer from '../../../components/Footer'
 import { useSelector } from 'react-redux'
@@ -34,7 +34,7 @@ const ChooseAQARYear = () => {
             <div className='h-screen'>
                 <div className='mx-auto flex items-center text-center justify-center my-5'>
                     <Year state={academicYear} setState={setAcademicYear} space='col-md-3'
-                        title="Choose AQAR Academic Year" numberOfYearsToDisplay={3} />
+                        title="Choose AQAR Academic Year" customYears={['2021-22']} />
                 </div>
                 <div className='mx-auto flex items-center justify-center'>
                     <SaveButton title={`Save and Proceed`} onClickFunction={() => {

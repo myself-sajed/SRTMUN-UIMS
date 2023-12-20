@@ -7,6 +7,7 @@ const xlsx = require('xlsx');
 const multerConfig = require('../../utility/multerConfig').multerConfig
 
 const SchoolAQAR = require('../../models/director-models/schoolAqarSchema')
+const SchoolNIRF = require('../../models/director-models/schoolNirfSchema')
 const DSDAQAR = require('../../models/dsd-models/dsdAqarSchema')
 const KRCAQAR = require('../../models/krc-models/krcAqarSchema')
 const SportsAQAR = require('../../models/sports-models/sportsAqarSchema')
@@ -18,7 +19,7 @@ const ESTTAQAR = require('../../models/establishment-models/esttAqarSchema')
 const OtherAQAR = require('../../models/other-models/otherAQARSchema')
 const YFReportIsSubmitted = require('../../models/youth-festival/yfSubmitted')
 
-const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR, ESTTAQAR, SchoolAQAR }
+const NonTeachingModels = { DSDAQAR, KRCAQAR, SportsAQAR, NSSAQAR, ExamAQAR, PlacementAQAR, OtherAQAR, YFReportIsSubmitted, IILAQAR, ESTTAQAR, SchoolAQAR, SchoolNIRF }
 
 const DSDSports = require('../../models/dsd-models/dsdSportsSchema');
 const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCulturalEventsSchema');
@@ -64,7 +65,7 @@ router.post('/other/services/isReportSubmitted', (req, res) => {
                 doc = new NonTeachingModels[model](data);
             }
 
-            if (model === 'SchoolAQAR') {
+            if (model === 'SchoolAQAR' || model === 'SchoolNIRF') {
                 doc.schoolName = dataToAdd.schoolName
             }
 
@@ -86,7 +87,7 @@ router.post('/other/services/isReportSubmitted', (req, res) => {
                     return res.send({ status: 'error', message: "Could not submit the form" });
 
                 } else {
-                    return res.send({ status: 'success', message: `AQAR Form (${year}) submission successful` });
+                    return res.send({ status: 'success', message: `Report submission successful` });
                 }
             });
 
