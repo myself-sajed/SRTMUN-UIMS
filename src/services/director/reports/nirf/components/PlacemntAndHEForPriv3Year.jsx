@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import getReq from '../../../../../components/requestComponents/getReq';
 import { useQuery } from 'react-query';
-import { CircularProgress } from '@mui/material';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import UserLoading from '../../../../../pages/UserLoading';
 import ArrowButton from '../../../../../components/ArrowButton';
-
 
 let tableHead = { decrementedAY: "Academic Year", noOfIntake: "No. of first Year students intake in the year", noOfAdmitted: "No. of first year students admitted in the year", decrementedAY2: "Academic Year", leteralEntry: "No. of students admitted through Lateral entry", academicYear: "Academic Year", noOfGraduating: "No. of students graduating in minimum stipulated time", placed: "No. of students placed", salary: "Median salary of placed graduates per annum (Amount in Rs.)", salaryInWords: "Medián salary of placed graduates per annum (Amount in Words)", noOfHEStudents: "No. of students selected for Higher Studies" }
 
@@ -16,8 +14,6 @@ function privYear(academicYear, numYears) {
     const previousAcademicYear = `${previousYear}-${(previousYear + 1).toString().slice(-2)}`;
     return previousAcademicYear;
 }
-
-
 
 const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, program }) => {
     const tempTableHead = {...tableHead};
@@ -45,7 +41,6 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
             })
         })
     }, [data])
-
 
 
     return (
@@ -79,7 +74,7 @@ const PlacemntAndHEForPriv3Year = ({ forYear, academicYear, type, school, progra
                                     <td><Text type="number" name="salary" fieldName={e} setValues={setValues} value={values[e]?.salary} /></td>
                                     <td><Text name="salaryInWords" fieldName={e} setValues={setValues} value={values[e]?.salaryInWords} /></td>
                                     <td><Text type="number" name="noOfHEStudents" fieldName={e} setValues={setValues} value={values[e]?.noOfHEStudents} /></td>
-                                    <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} /></td>
+                                    <td><Submit values={values[e]} model={model} module={module} academicYear={e} refetch={refetch} years={forYear} setBtnLoading={setBtnLoading} btnLoading={btnLoading} setValues={setValues} valdateArr={["noOfIntake", "noOfAdmitted", "leteralEntry", "academicYear", "noOfGraduating", "placed", "salaryInWords", "noOfHEStudents"]} /></td>
 
                                 </tr>)
                             })
@@ -110,7 +105,7 @@ const Text = ({ type = "text", name, fieldName, setValues, value }) => {
 }
 
 
-const Submit = ({ values, model, module, refetch, years, btnLoading, setBtnLoading, academicYear }) => {
+const Submit = ({ values, model, module, refetch, years=1, btnLoading, setBtnLoading, academicYear, valdateArr }) => {
 
     const btnLoadingToggle = (state) => {
         setBtnLoading((pri) => {
@@ -122,10 +117,9 @@ const Submit = ({ values, model, module, refetch, years, btnLoading, setBtnLoadi
 
     const validateAndSubmit = () => {
         btnLoadingToggle(true);
-        let arr = ["noOfIntake", "noOfAdmitted", "leteralEntry", "academicYear", "noOfGraduating", "placed", "salaryInWords", "noOfHEStudents"]
         let breakFlag = false;
-        for (let i = 0; i < arr.length; i++) {
-            const fieldName = arr?.[i];
+        for (let i = 0; i < valdateArr.length; i++) {
+            const fieldName = valdateArr?.[i];
             if (values?.[fieldName] === null) {
                 if (years !== 4 && fieldName === "leteralEntry") {
                     continue;
@@ -158,4 +152,4 @@ const Submit = ({ values, model, module, refetch, years, btnLoading, setBtnLoadi
     return <ArrowButton showArrow={false} title="Save" onClickFunction={validateAndSubmit} disabled={btnLoading[academicYear]} />
 }
 
-export { Text }
+export { Text, privYear, Submit }

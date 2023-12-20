@@ -3,8 +3,11 @@ const router = express.Router();
 
 const PlacemntAndHEForPriv3Year = require('../../models/nirf-models/placemntAndHEForPriv3YearSchema');
 const TotalAnnualStudentStrength = require('../../models/nirf-models/totalAnnualStudentStrengthSchema');
+const ConsultancyNirf = require('../../models/nirf-models/consultancyNirfSchema');
+const DevelopmentProgramNirf = require('../../models/nirf-models/developmentProgramNirfSchema');
+const PatentNirf = require('../../models/nirf-models/patentNirfSchema');
 
-const models = {PlacemntAndHEForPriv3Year, TotalAnnualStudentStrength}
+const models = {PlacemntAndHEForPriv3Year, TotalAnnualStudentStrength, ConsultancyNirf, DevelopmentProgramNirf, PatentNirf}
 
 router.post("/nirf/getData", async (req, res) => {
     const { model, filter } = req.body

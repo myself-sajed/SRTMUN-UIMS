@@ -3,9 +3,6 @@ import programsByNIRF from '../js/programsByNIRF';
 import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import { Text } from './PlacemntAndHEForPriv3Year';
-import { CircularProgress } from '@mui/material';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import useNIRFGetProgram from '../../../../../hooks/director-hooks/useNIRFGetProgram';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,7 +10,7 @@ import UserLoading from '../../../../../pages/UserLoading';
 import ArrowButton from '../../../../../components/ArrowButton';
 import Note from '../../academic-audit/components/Note';
 import { submitStrength } from '../js/utility';
-import { NotAvailableComponentNIRF, navigateToURL } from './StudentIntake';
+import { NotAvailableComponentNIRF } from './StudentIntake';
 
 const tableHead = { males: "No. of Male Students", females: "No. of Female Students", total: "Total Students", outSideState: "Outside State (Including male & female)", outSideCountry: "Outside Country (Including male & female)", economicallyBackward: "Economically Backward (Including male & female)", sociallyChallenged: "Socially Challenged (SC+ST+OBC Including male & female)", fullFeeGovernment: "No. of students receiving full tuition fee reimbursement from the State and Central Government", fullFeeInstitution: "No. of students receiving full tuition fee reimbursement from Institution Funds", fullFeePrivateBodies: "No. of students receiving full tuition fee reimbursement from the Private Bodies", notReceivingfullFee: "No. of students who are not receiving full tuition fee reimbursement" }
 
@@ -24,7 +21,6 @@ const TotalAnnualStudentStrength = () => {
   const user = useSelector((state) => state.user?.directorUser)
   const [programTypes, setProgramTypes] = useState([])
   let school = user?.department
-  const navigate = useNavigate()
   const { academicYear } = useParams()
 
   const { programs, isLoading: isProgramLoading } = useNIRFGetProgram(user, academicYear)
@@ -41,14 +37,12 @@ const TotalAnnualStudentStrength = () => {
   const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params), { refetchOnWindowFocus: false })
 
 
-  let initialstate = {};
+  let initialstate = { academicYear, school };
   programTypes.map((e) => {
     initialstate[e] = {
       males: null, females: null, total: null, outSideState: null, outSideCountry: null, economicallyBackward: null, sociallyChallenged: null, fullFeeGovernment: null, fullFeeInstitution: null, fullFeePrivateBodies: null, notReceivingfullFee: null
     }
   })
-  initialstate.academicYear = academicYear
-  initialstate.school = school
 
   const [values, setValues] = useState(initialstate)
 
