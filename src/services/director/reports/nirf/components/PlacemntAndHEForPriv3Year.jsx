@@ -107,7 +107,6 @@ const Text = ({ type = "text", name, fieldName, setValues, value }) => {
 
 const Submit = ({ values, model, module, refetch, years = 1, btnLoading, setBtnLoading, academicYear, valdateArr }) => {
 
-    console.log('Values:', values)
 
     const btnLoadingToggle = (state) => {
         setBtnLoading((pri) => {

@@ -20,18 +20,29 @@ const PatentNirf = ({ school, program }) => {
 
 
   const preInitialState = { school, noOfpublished: null, noOfGranted: null }
+
   const initialstate = { [academicYear]: preInitialState, [privYearby1]: preInitialState, [privYearby2]: preInitialState }
+
   const [values, setValues] = useState(initialstate);
+
   const [btnLoading, setBtnLoading] = useState({ [privYearby2]: false, [privYearby1]: false, [academicYear]: false })
   const yearArray = [privYearby2, privYearby1, academicYear]
+
+
+  useEffect(() => {
+    if (initialstate) {
+      setValues(initialstate)
+    }
+  }, [school])
 
   useEffect(() => {
     data?.data.map((e) => {
       setValues(prev => {
-        return { ...prev, [e.academicYear]: { ...e, school: e.school || school } }
+        return { ...prev, [e.academicYear]: { ...e, school: school } }
       })
     })
   }, [data])
+
   return (
     <div>
       {isLoading ? <div className='w-full flex justify-center'><UserLoading title="Fetching Placement and HE Content" /></div> : <div className="my-3 border-2 rounded-md p-2">
