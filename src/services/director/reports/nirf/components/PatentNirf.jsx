@@ -30,7 +30,7 @@ const PatentNirf = ({ school, program }) => {
 
 
   useEffect(() => {
-    if (initialstate) {
+    if (school) {
       setValues(initialstate)
     }
   }, [school])

@@ -25,7 +25,7 @@ const CombineComponentNirf = ({ model, program }) => {
   const params = { model, module, filter }
   const { data, isLoading, refetch } = useQuery(`${model}-${params}`, () => getReq(params), { refetchOnWindowFocus: false })
 
-  console.log(school, model, 'NIRF:', data?.data)
+  // console.log(school, model, 'NIRF:', data?.data)
 
   const keysOfModel = Object.keys(tableHead[model])
   const preInitialState = {}
@@ -39,6 +39,11 @@ const CombineComponentNirf = ({ model, program }) => {
   const [btnLoading, setBtnLoading] = useState({ [privYearby2]: false, [privYearby1]: false, [academicYear]: false })
   const yearArray = [privYearby2, privYearby1, academicYear]
 
+  useEffect(() => {
+    if (school) {
+      setValues(initialstate)
+    }
+  }, [school])
   useEffect(() => {
     data?.data.map((e) => {
       setValues(prev => {
