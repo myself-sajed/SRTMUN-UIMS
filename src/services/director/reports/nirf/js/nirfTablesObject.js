@@ -1,6 +1,7 @@
 import CombineComponentNirf from "../components/CombineComponentNirf"
 import PatentNirf from "../components/PatentNirf"
 import ConsultancyNirf from "../components/ConsultancyNirf"
+import DevelopmentProgramNirf from "../components/DevelopmentProgramNirf"
 import PlacementHENIRF from "../components/PlacementHENIRF"
 import PlacemntAndHEForPriv3Year from "../components/PlacemntAndHEForPriv3Year"
 import SelectPrograms from "../components/SelectPrograms"
@@ -32,23 +33,17 @@ const nirfTablesObject = (schoolName) => {
         'patents': {
             id: 'patents',
             title: 'Patents',
-            // component: <div className="my-5 text-center">This section is under construction...</div>
-            // component: <CombineComponentNirf model="PatentNirf" school={schoolName} program="Patents Published" />
             component:<PatentNirf school={schoolName} program="Patents Published" />
         },
         'consultancy': {
             id: 'consultancy',
             title: 'Consultancy Projects',
-            // component: <div className="my-5 text-center">This section is under construction...</div>
             component:<ConsultancyNirf school={schoolName} program="Consultancy Projects" />
-            // component: <CombineComponentNirf model="ConsultancyNirf" school={schoolName} program="Consultancy Projects" />
         },
         'programs-organized': {
             id: 'programs-organized',
             title: 'Programs Organized',
-            // component: <div className="my-5 text-center">This section is under construction...</div>
-
-            component: <CombineComponentNirf model="DevelopmentProgramNirf" school={schoolName} program="Executive development programs / Management programs / Workshop / Training programs" />
+            component: <DevelopmentProgramNirf school={schoolName} program="Executive development programs / Management programs / Workshop / Training programs" />
         },
     }
 }
