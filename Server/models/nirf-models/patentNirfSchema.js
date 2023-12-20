@@ -4,11 +4,11 @@ const patentNirfSchema = new mongoose.Schema({
     noOfpublished: {
         type: Number,
         required: true
-    }, 
+    },
     noOfGranted: {
         type: Number,
         required: true
-    }, 
+    },
     academicYear: {
         type: String,
         required: true,
@@ -16,7 +16,7 @@ const patentNirfSchema = new mongoose.Schema({
     school: {
         type: String,
         required: true,
-    }, 
-},{timestamps:true});
+    },
+}, { timestamps: true });
 
-module.exports = mongoose.model('patentNirf', patentNirfSchema)
+module.exports = mongoose.model('patentNirfs', patentNirfSchema)

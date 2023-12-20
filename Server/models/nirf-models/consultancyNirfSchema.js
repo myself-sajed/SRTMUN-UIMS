@@ -4,15 +4,15 @@ const consultancyNirfSchema = new mongoose.Schema({
     Consultancy: {
         type: Number,
         required: true
-    }, 
+    },
     clientOrganization: {
         type: Number,
         required: true
-    }, 
+    },
     amountReceived: {
         type: Number,
         required: true
-    }, 
+    },
     amountInWords: {
         type: String,
         required: true
@@ -24,7 +24,7 @@ const consultancyNirfSchema = new mongoose.Schema({
     school: {
         type: String,
         required: true,
-    }, 
-},{timestamps:true});
+    },
+}, { timestamps: true });
 
-module.exports = mongoose.model('consultancyNirf', consultancyNirfSchema)
+module.exports = mongoose.model('consultancyNirfs', consultancyNirfSchema)

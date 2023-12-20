@@ -4,15 +4,18 @@ import { useQuery } from 'react-query';
 import getReq from '../../../../../components/requestComponents/getReq';
 import UserLoading from '../../../../../pages/UserLoading';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const tableHead = {
   PatentNirf: { noOfpublished: "No of Patents Published", noOfGranted: "No of Patents" },
   ConsultancyNirf: { Consultancy: "Total no of Consultancy", clientOrganization: "Total no of Client Organization", amountReceived: "Total Amount Received (in INR)", amountInWords: "Amount Received in Words" },
   DevelopmentProgramNirf: { NoOfEDPMDP: "No of Executive Development Programs/ Management Development Programs", participants: "Total no Of Participants", earnings: "Total Annnual Earnings (Excluding Lodging & Boarding Charges) in INR", earningsInWords: "Total Annnual Earnings in Words" }
 }
-const CombineComponentNirf = ({ model, school, program }) => {
+const CombineComponentNirf = ({ model, program }) => {
   /* PatentNirf, ConsultancyNirf, DevelopmentProgramNirf  */
 
+  const user = useSelector((state) => state?.user?.directorUser)
+  const school = user?.department
   const { academicYear } = useParams()
   const textFilds = ["amountInWords", "earningsInWords"]
   const module = "nirf"
@@ -21,6 +24,8 @@ const CombineComponentNirf = ({ model, school, program }) => {
   let filter = { academicYear: { $in: [academicYear, privYearby1, privYearby2] }, school }
   const params = { model, module, filter }
   const { data, isLoading, refetch } = useQuery([model, params], () => getReq(params), { refetchOnWindowFocus: false })
+
+  console.log(school, model, 'NIRF:', data?.data)
 
   const keysOfModel = Object.keys(tableHead[model])
   const preInitialState = { school }
@@ -36,7 +41,7 @@ const CombineComponentNirf = ({ model, school, program }) => {
   useEffect(() => {
     data?.data.map((e) => {
       setValues(prev => {
-        return { ...prev, [e.academicYear]: { ...e, school: e.school || school } }
+        return { ...prev, [e.academicYear]: { ...e, school: school } }
       })
     })
   }, [data])
