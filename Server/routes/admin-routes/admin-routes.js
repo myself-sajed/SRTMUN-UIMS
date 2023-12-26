@@ -93,6 +93,7 @@ const SportsAndCulturalEvents = require('../../models/dsd-models/sportsAndCultur
 const AwardForExtensionActivities = require('../../models/nss-models/awardForExtensionActivitiesSchema')
 const SwayamEContentDeveloped = require('../../models/swayam-models/swayamEContentDevelopedSchema')
 const SwayamValueAddedCourses = require('../../models/swayam-models/swayamValueAddedCourseSchema')
+const SwayamDetailsOfOnlineCourses = require('../../models/swayam-models/swayamDetailsOfOnlineCoursesSchema')
 
 //admin
 const IsRegistration = require('../../models/admin-models/isRegistrationSchema')
@@ -107,7 +108,7 @@ const otherModels = { TotalExpenditure, MaintenanceAndInfrastructure, Scholarshi
 const krcModels = { SubscriptionForKRC }
 const dsdModels = { DSDSports, SportsAndCulturalEvents }
 const nssModels = { AwardForExtensionActivities, }
-const swayamModels = { SwayamEContentDeveloped, SwayamValueAddedCourses }
+const swayamModels = { SwayamEContentDeveloped, SwayamValueAddedCourses, SwayamDetailsOfOnlineCourses }
 
 const models = { User, DirectorUser, AlumniUser, StudentUser, BooksAndChapters, ResearchProjects, EContentDeveloped, Petant, ConferenceOrganized, InvitedTalk, ResearchPapers, Fellowship, Qualification, Degree, AppointmentsHeldPrior, AwardRecognition, BookAndChapter, Collaboration, ConferenceParticipated, ConsultancyServices, ResearchProject, PostHeld, Lectures, ResearchPaper, PhdAwarded, JrfSrf, Patent, Online, Financialsupport, Responsibilities, ForeignVisit, AlumniContribution, Award, ConferencesSemiWorkshopOrganized, CounselingAndGuidance, DemandRatio, Employability, ExtensionActivities, IctClassrooms, MoUs, Placement, ProgressionToHE, ProjectsInternships, QualifiedExams, ResearchMethodologyWorkshops, ReservedSeats, SkillsEnhancementInitiatives, StudentSatisfactionSurvey, SyllabusRevision, TrainingProgramsOrganized, UgcSapCasDstFistDBTICSSR, ValueAddedCource, StudentFeedback, AlumniFeedback, TeacherFeedback, ParentFeedback, EmployerFeedback, ExpertFeedback, FeedbackStudentSatisfactionSurvey, NewPrograms, ...AdminModels, ...establishmentModels, ...examModels, ...otherModels, ...krcModels, ...dsdModels, ...nssModels, ...swayamModels }
 
@@ -251,7 +252,7 @@ router.post('/Admin/getData', async (req, res) => {
                 res.status(200).send(filterData);
             });
         }
-        else if (school===""){
+        else if (school === "") {
             const fetch = await models[model].find(fil);
             res.status(200).send(fetch);
         }
