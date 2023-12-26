@@ -6,6 +6,7 @@ import { swayamAuthParams } from './SwayamHome'
 import title from '../../../js/title'
 import SwayamValueAddedCourses from './SwayamValueAddedCourses'
 import SwayamEContentDeveloped from './SwayamEContentDeveloped'
+import SwayamDetailsOfOnlineCourses from './SwayamDetailsOfOnlineCourses'
 import TableAccordion from '../../faculty/reports/aqar/components/TableAccordion'
 import UserLoading from '../../../pages/UserLoading'
 import { useSelector } from 'react-redux'
@@ -24,6 +25,10 @@ const SwayamDataCenter = () => {
         {
             title: "E-content developed by teachers",
             component: <SwayamEContentDeveloped />
+        },
+        {
+            title: "Details of online courses",
+            component: <SwayamDetailsOfOnlineCourses />
         },
     ]
 
