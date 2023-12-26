@@ -22,7 +22,7 @@ const NIRFContent = () => {
     const user = useSelector((state) => state.user?.directorUser)
     const stageTitle = navbarLinks?.[module]?.title
     const navigate = useNavigate()
-    const NIRFTables = nirfTablesObject(user?.department)
+    const NIRFTables = nirfTablesObject(user?.department, academicYear)
     const bredLinks = [siteLinks.welcome, siteLinks.directorHome, siteLinks.nirfSelectYear, { title: stageTitle || 'Acknowledgement' }]
 
     const navigationHandler = () => {

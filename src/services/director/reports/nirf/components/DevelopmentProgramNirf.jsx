@@ -52,7 +52,7 @@ const DevelopmentProgramNirf = ({ school, program }) => {
           <table className="table table-bordered" >
             <thead className='bg-primary text-light'>
               <tr>
-                <th>Calendar Year</th>
+                <th>Financial Year</th>
                 {Object.values(tableHead)?.map((e, i) => <th key={`head${i}`}>{e}</th>)}
                 <th>Action</th>
               </tr>

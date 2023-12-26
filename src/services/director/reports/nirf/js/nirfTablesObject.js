@@ -1,14 +1,13 @@
-import CombineComponentNirf from "../components/CombineComponentNirf"
 import PatentNirf from "../components/PatentNirf"
 import ConsultancyNirf from "../components/ConsultancyNirf"
 import DevelopmentProgramNirf from "../components/DevelopmentProgramNirf"
 import PlacementHENIRF from "../components/PlacementHENIRF"
-import PlacemntAndHEForPriv3Year from "../components/PlacemntAndHEForPriv3Year"
 import SelectPrograms from "../components/SelectPrograms"
 import StudentIntake from "../components/StudentIntake"
 import TotalAnnualStudentStrength from "../components/TotalAnnualStudentStrength"
+import AdminMasterTable from "../../../../admin/components/AdminMasterTable"
 
-const nirfTablesObject = (schoolName) => {
+const nirfTablesObject = (schoolName, academicYear) => {
     return {
         'programs': {
             id: 'programs',
@@ -33,7 +32,10 @@ const nirfTablesObject = (schoolName) => {
         'patents': {
             id: 'patents',
             title: 'Patents',
-            component:<PatentNirf school={schoolName} program="Patents Published" />
+            component:<>
+                <PatentNirf school={schoolName} program="Patents Published" />
+                <AdminMasterTable model="Patent" academicYear={academicYear} school={schoolName} heading='Patents' serviceName="faculty" proof="proof"  />
+            </>
         },
         'consultancy': {
             id: 'consultancy',

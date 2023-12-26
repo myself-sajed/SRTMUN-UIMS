@@ -223,19 +223,19 @@ fs.writeFile(pathOfRoute, routeContent, (err) => {
 
 genrateTableComponent(
 {
-    title: "Institution adopted Quality assurance", 
-    model: "IQACInstitutionQualityAssurance", 
-    module: "other",
-    componentName: "IQACInstitutionQualityAssurance",
-    pathOfComponent: path.join(__dirname, '../../src/services/other/pages/IQACInstitutionQualityAssurance.jsx'),
-    modelName: 'iqacInstitutionQualityAssurance',
-    pathOfModel: path.join(__dirname, '../models/other-models/iqacInstitutionQualityAssuranceSchema.js'),
+    title: "Details of online courses", 
+    model: "SwayamDetailsOfOnlineCourses", 
+    module: "swayam",
+    componentName: "SwayamDetailsOfOnlineCourses",
+    pathOfComponent: path.join(__dirname, '../../src/services/swayam/pages/SwayamDetailsOfOnlineCourses.jsx'),
+    modelName: 'swayamDetailsOfOnlineCourses',
+    pathOfModel: path.join(__dirname, '../models/swayam-models/swayamDetailsOfOnlineCoursesSchema.js'),
     pathOfRoute: path.join(__dirname, '../routes/estt-routes/estt-routes.js'),
     tableHead:{ 
-      academicYear: "Year", conferncesSeminarsWorkshops: "Confernces, Seminars, Workshops on quality conducted", aaaFollowUp: "Academic Administrative Audit (AAA) and initiation of follow up action", participationNIRF: "Participation in NIRF along with Status", iSOCertification: "ISO Certification. and nature and validity period", nBAOtherCertification: "NBA or any other certification received with program specifications", collaborativeQuality: "Collaborative quality initiatives with other institution(s) (Provide name of the institution and activity)", from: "Orientation programme on quality issues fromDate (DD-MM-YYYY)", to: "Orientation programme on quality issues ToDate (DD-MM-YYYY)"
+      portalName: "Portal Name", offeredOnlineCourses: "No. of students offered online courses which have credit transferred to transcript", onlineCoursesWhichTrasperedCredit: "Total no. of online courses which have credit transferred to the transcript", creditsTransferredToTranscript: "Total no. of credits transferred to transcript", academicYear: "Academic Year"
     }, 
     typeObject: {
-      academicYear: "academicYearGenerator( 29, true, true )", conferncesSeminarsWorkshops: "text", aaaFollowUp: "text", participationNIRF: "text", iSOCertification: "text", nBAOtherCertification: "text", collaborativeQuality: "text", from: "date", to: "date"
+      portalName: "text", offeredOnlineCourses: "number", onlineCoursesWhichTrasperedCredit: "number", creditsTransferredToTranscript: "number",academicYear: "academicYearGenerator( 29, true, true )", 
     }
 }, true, true
 )

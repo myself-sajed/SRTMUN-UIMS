@@ -12,11 +12,12 @@ import AdminReportStatus from './AdminReportStatus';
 import AdminFeedbackStatus from './AdminFeedbackStatus';
 import AdminNumaricalData from './AdminNumaricalData';
 import AdminResearchCenter from './AdminResearchCenter';
+import AdminCombine from './AdminCombine';
 import AdminSSS from './AdminSSS';
 import AdminOthers from './AdminOthers'
 
 
-const ComponentSetter = { "Dashboard": <AdminDashboard />, "Faculties": <AdminFaculty />, "Directors": <AdminDirector />, "Numerical Dashboard": <AdminNumaricalData />,"Student Satisfaction Survey": <AdminSSS />, "Research Center": <AdminResearchCenter/>, "Report Status": <AdminReportStatus />, "Feedback Status": <AdminFeedbackStatus />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "Others": <AdminOthers/>, "More": <AdminMore /> }
+const ComponentSetter = { "Dashboard": <AdminDashboard />, "Faculties": <AdminFaculty />, "Directors": <AdminDirector />, "Numerical Dashboard": <AdminNumaricalData />,"Student Satisfaction Survey": <AdminSSS />, "Research Center": <AdminResearchCenter/>, "Report Status": <AdminReportStatus />, "Feedback Status": <AdminFeedbackStatus />, "Alumnis": <AdminAlumni />, "Students": <AdminStudent />, "Other Section": <AdminOthers/>, "Combine Section": <AdminCombine />, "More": <AdminMore /> }
 const AdminMain = () => {
   
   // title('SDM | School Data Management')

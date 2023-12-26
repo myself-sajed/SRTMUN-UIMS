@@ -1,32 +1,11 @@
 import React from 'react'
-// import Scholarship from '../services/other/pages/Scholarship'
-// import MaintenanceAndInfrastructure from '../services/other/pages/MaintenanceAndInfrastructure'
-// import IQACInstitutionQualityAssurance from '../services/other/pages/IQACInstitutionQualityAssurance'
-// import PlacemntAndHEForPriv3Year from '../services/director/reports/nirf/components/PlacemntAndHEForPriv3Year'
-// import TotalAnnualStudentStrength from '../services/director/reports/nirf/components/TotalAnnualStudentStrength'
-import CombineComponentNirf from '../services/director/reports/nirf/components/CombineComponentNirf'
 import PatentNirf from '../services/director/reports/nirf/components/PatentNirf'
-// import { useQuery } from 'react-query'
-// import fetchData from '../services/dashboard/js/fetchData'
-// import UserLoading from '../pages/UserLoading'
-// import capitalizeText from '../js/capitalizeText'
-// import EmptyBox from '../components/EmptyBox'
-// import ShowImage from './ShowImage'
-// import { convertToURLFormat } from '../services/dashboard/js/prettifyTextForLink'
-// import designationWiseSorting from '../js/designationWiseSorting'
-// import BulkExcel from '../components/BulkExcel'
 
 const Test2 = ({ school: sch }) => {
 
     return <div>
-      {/* <Scholarship/>
-      <MaintenanceAndInfrastructure /> */}
-      {/* <IQACInstitutionQualityAssurance/> */}
-      {/* <PlacemntAndHEForPriv3Year />
-      <TotalAnnualStudentStrength/> */}
       <PatentNirf academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" />
-      {/* <CombineComponentNirf model="ConsultancyNirf" academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" />
-      <CombineComponentNirf model="DevelopmentProgramNirf" academicYear = "2022-23" school = "School of Computational Sciences" program="xyz" /> */}
+      
     </div>
 
     // "School of Computational Sciences"
