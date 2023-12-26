@@ -79,3 +79,4 @@ const SwayamDetailsOfOnlineCourses = () => {
   )
 }
 export default SwayamDetailsOfOnlineCourses
+export {tableHead}

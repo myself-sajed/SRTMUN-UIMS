@@ -22,7 +22,7 @@ import title from '../../../js/title'
 const AdminDrower = ({ children, hideHeader = false }) => {
   
   //ADD icon here 
-  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Student Satisfaction Survey": <GroupsRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "Others": <OtherHousesIcon />, "Combine Section": <MergeTypeRoundedIcon />, "More": <MoreIcon />, }
+  const iconsSetter = { "Dashboard": <CollectionsBookmarkIcon />, "Faculties": <PersonRoundedIcon />, "Directors": <LocalLibraryRoundedIcon />, "Report Status": <BarChartRoundedIcon />, "Feedback Status": <ForumRoundedIcon />, "Student Satisfaction Survey": <GroupsRoundedIcon />, "Numerical Dashboard": <DashboardRoundedIcon />, "Research Center":<BiotechRoundedIcon/>, "Alumnis": <BoyRoundedIcon />, "Students": <SchoolRoundedIcon />, "Other Section": <OtherHousesIcon />, "Combine Section": <MergeTypeRoundedIcon />, "More": <MoreIcon />, }
 
   // "University Programs": <FestivalRoundedIcon />,
   title('Admin Panel')
