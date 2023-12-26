@@ -16,8 +16,21 @@ import { genrateFeedbackExcel } from '../../feedback/pages/FeedbackDashboard'
 import designationWiseSorting from '../../../js/designationWiseSorting'
 import TabBox from '../../status/components/TabBox'
 import FileViewer from '../../../components/FileViewer'
+import ShareLink from '../../faculty/reports/aqar/components/ShareLink'
 
 const AdminFeedbackStatus = () => {
+  return <div className='w-full'>
+    <AdminDrower>
+      <div className='my-2 border p-2'>
+        <ShareLink linkToNavigate={`feedback/analysis-and-atr`} />
+      </div>
+      <FeedbackStatus />
+    </AdminDrower>
+  </div>
+
+}
+
+const FeedbackStatus = () => {
 
   const [academicYear, setAcademicYear] = useState(academicYearGenerator(1)[0])
   const [activePage, setActivePage] = useState(0)
@@ -97,121 +110,120 @@ const AdminFeedbackStatus = () => {
 
 
   return (
-    <div className='w-full'>
-      <AdminDrower>
+    <div>
 
-        <ShowAnalysisModal handleClose={handleClose} open={open} title={`${expandedRow?.title} Feedback Analysis for ${expandedRow?.school}`}>
-          <div>
-            <div className='pr-4'>
-              <p className='mb-3 mt-3 text-lg font-bold rounded-md text-center flex items-center justify-center gap-3 p-2 bg-blue-800 text-white'> <AnalyticsRoundedIcon /> {expandedRow?.title} Feedback Analysis for {expandedRow?.school} </p>
-              {analysisLoading ?
-                <div className='my-5'>
+      <ShowAnalysisModal handleClose={handleClose} open={open} title={`${expandedRow?.title} Feedback Analysis for ${expandedRow?.school}`}>
+        <div>
+          <div className='pr-4'>
+            <p className='mb-3 mt-3 text-lg font-bold rounded-md text-center flex items-center justify-center gap-3 p-2 bg-blue-800 text-white'> <AnalyticsRoundedIcon /> {expandedRow?.title} Feedback Analysis for {expandedRow?.school} </p>
+            {analysisLoading ?
+              <div className='my-5'>
+                <UserLoading title="Analyzing data" />
+              </div>
+              :
+              <div>
+                {!chartData ? <div className='my-5'>
                   <UserLoading title="Analyzing data" />
-                </div>
-                :
-                <div>
-                  {!chartData ? <div className='my-5'>
-                    <UserLoading title="Analyzing data" />
-                  </div> :
-                    <div>
+                </div> :
+                  <div>
 
-                      {
-                        expandedRow?.title === "Student" && chartData["Student"] &&
-                        <div className="mb-5 w-full">
-                          <StudentAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Student"], "Student", expandedRow.school) }} feedbackUser={"Student"} schoolName={expandedRow.school} academicYear={academicYear} chartData={chartData["Student"]} />
-                        </div>
-                      }
-                      {
-                        expandedRow?.title === "Teacher" && chartData["Teacher"] &&
-                        <div className="mb-5 w-full">
-                          <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Teacher"], "Teacher", expandedRow.school) }} feedbackUser={"Teacher"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Teacher"]} />
-                        </div>
-                      }
-                      {
-                        expandedRow?.title === "Alumni" && chartData["Alumni"] &&
-                        <div className="mb-5 w-full">
-                          <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Alumni"], "Alumni", expandedRow.school) }} feedbackUser={"Alumni"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Alumni"]} />
-                        </div>
-                      }
-                      {
-                        expandedRow?.title === "Parent" && chartData["Parent"] &&
-                        <div className="mb-5 w-full">
-                          <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Parent"], "Parent", expandedRow.school) }} feedbackUser={"Parent"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Parent"]} />
-                        </div>
-                      }
-                      {
-                        expandedRow?.title === "Employer" && chartData["Employer"] &&
-                        <div className="mb-5 w-full">
-                          <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Employer"], "Employer", expandedRow.school) }} feedbackUser={"Employer"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Employer"]} />
-                        </div>
-                      }
-                      {
-                        expandedRow?.title === "Expert" && chartData["Expert"] &&
-                        <div className="mb-5 w-full">
-                          <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Expert"], "Expert", expandedRow.school) }} feedbackUser={"Expert"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Expert"]} />
-                        </div>
-                      }
+                    {
+                      expandedRow?.title === "Student" && chartData["Student"] &&
+                      <div className="mb-5 w-full">
+                        <StudentAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Student"], "Student", expandedRow.school) }} feedbackUser={"Student"} schoolName={expandedRow.school} academicYear={academicYear} chartData={chartData["Student"]} />
+                      </div>
+                    }
+                    {
+                      expandedRow?.title === "Teacher" && chartData["Teacher"] &&
+                      <div className="mb-5 w-full">
+                        <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Teacher"], "Teacher", expandedRow.school) }} feedbackUser={"Teacher"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Teacher"]} />
+                      </div>
+                    }
+                    {
+                      expandedRow?.title === "Alumni" && chartData["Alumni"] &&
+                      <div className="mb-5 w-full">
+                        <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Alumni"], "Alumni", expandedRow.school) }} feedbackUser={"Alumni"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Alumni"]} />
+                      </div>
+                    }
+                    {
+                      expandedRow?.title === "Parent" && chartData["Parent"] &&
+                      <div className="mb-5 w-full">
+                        <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Parent"], "Parent", expandedRow.school) }} feedbackUser={"Parent"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Parent"]} />
+                      </div>
+                    }
+                    {
+                      expandedRow?.title === "Employer" && chartData["Employer"] &&
+                      <div className="mb-5 w-full">
+                        <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Employer"], "Employer", expandedRow.school) }} feedbackUser={"Employer"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Employer"]} />
+                      </div>
+                    }
+                    {
+                      expandedRow?.title === "Expert" && chartData["Expert"] &&
+                      <div className="mb-5 w-full">
+                        <OtherResponseAnalysis excelClick={() => { genrateFeedbackExcel(teachers, response["Expert"], "Expert", expandedRow.school) }} feedbackUser={"Expert"} schoolName={expandedRow.school} academicYear={academicYear} questionsWithData={chartData["Expert"]} />
+                      </div>
+                    }
 
 
-                    </div>}
-                </div>
-              }
-            </div>
+                  </div>}
+              </div>
+            }
           </div>
-        </ShowAnalysisModal>
-        {
-          isLoading ? <UserLoading title="Loading Feedback Data" /> :
-            <div className='sub-main'>
-              <div className="flex items-center justify-between w-full mb-3">
+        </div>
+      </ShowAnalysisModal>
+      {
+        isLoading ? <UserLoading title="Loading Feedback Data" /> :
+          <div className='sub-main'>
+            <div className="flex items-center justify-between w-full mb-3">
 
-                <div>
-                  <TabBox tabs={tabs} value={activePage} setValue={setActivePage} />
-                </div>
-
-                <div className='col-md-1'>
-                  <select className="form-select" id="validationCustom04" required onChange={
-                    (e) => { setAcademicYear(e.target.value); }} value={academicYear}>
-                    <option selected disabled value="">Choose</option>
-
-                    {listOfYears.map((academicYear, index) => {
-                      return <option key={index} value={academicYear}>{academicYear}</option>
-                    })}
-                  </select>
-                </div>
+              <div>
+                <TabBox tabs={tabs} value={activePage} setValue={setActivePage} />
               </div>
-              <hr />
-              <div className="my-3">
-                <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} showDetails={false} year={academicYear} />
+
+              <div className='col-md-1'>
+                <select className="form-select" id="validationCustom04" required onChange={
+                  (e) => { setAcademicYear(e.target.value); }} value={academicYear}>
+                  <option selected disabled value="">Choose</option>
+
+                  {listOfYears.map((academicYear, index) => {
+                    return <option key={index} value={academicYear}>{academicYear}</option>
+                  })}
+                </select>
               </div>
-              <p className="text-sm text-muted mt-5">Note: Please click on the count of Student, Teacher, Alumni, Parent, Employer or Expert of any school in the table to check the Feedback Analysis of that school.</p>
-              <table className="table table-bordered my-3">
-                <thead className="bg-primary text-white">
-                  <tr>
-                    <th>School Names</th>
-                    <th>Students</th>
-                    <th>Teachers</th>
-                    <th>Alumni</th>
-                    <th>Parents</th>
-                    <th>Employer</th>
-                    <th>Expert</th>
-                  </tr>
-                </thead>
-
-                {
-                  activePage === 0 ?
-                    <TableBodyForAnalysis chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} setExpandedRow={setExpandedRow} data={data} /> : <TableBodyForATR isLoading={ATRLoading} data={ATRData?.data?.data} />
-                }
-
-              </table>
             </div>
-        }
-      </AdminDrower>
+            <hr />
+            <div className="my-3">
+              <DashboardHeroSection countData={data?.data?.data} isLoading={isLoading} showDetails={false} year={academicYear} />
+            </div>
+            <p className="text-sm text-muted mt-5">Note: Please click on the count of Student, Teacher, Alumni, Parent, Employer or Expert of any school in the table to check the Feedback Analysis of that school.</p>
+            <table className="table table-bordered my-3">
+              <thead className="bg-primary text-white">
+                <tr>
+                  <th>School Names</th>
+                  <th>Students</th>
+                  <th>Teachers</th>
+                  <th>Alumni</th>
+                  <th>Parents</th>
+                  <th>Employer</th>
+                  <th>Expert</th>
+                </tr>
+              </thead>
+
+              {
+                activePage === 0 ?
+                  <TableBodyForAnalysis chartData={chartData} analysisLoading={analysisLoading} academicYear={academicYear} expandedRow={expandedRow} setExpandedRow={setExpandedRow} data={data} /> : <TableBodyForATR isLoading={ATRLoading} data={ATRData?.data?.data} />
+              }
+
+            </table>
+          </div>
+      }
 
     </div>
   )
 }
 
 export default AdminFeedbackStatus
+export { FeedbackStatus }
 
 
 

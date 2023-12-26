@@ -15,8 +15,21 @@ import ReportLoading from '../../../components/ReportLoading'
 import UserLoading from '../../../pages/UserLoading'
 import { genrateFeedbackExcel } from '../../feedback/pages/FeedbackDashboard'
 import axios from 'axios'
+import ShareLink from '../../faculty/reports/aqar/components/ShareLink'
 
 const AdminSSS = () => {
+    return <div>
+        <AdminDrower>
+            <div className='my-2 border p-2'>
+                <ShareLink linkToNavigate={`SSS/student-satisfaction-survey`} />
+            </div>
+            <AdminSSSModule />
+        </AdminDrower>
+    </div>
+}
+
+
+const AdminSSSModule = () => {
 
     // other important states
     const [open, setOpen] = useState(false)
@@ -32,7 +45,7 @@ const AdminSSS = () => {
 
 
     const getSSSWoleData = (schoolName, acadmicYear) => {
-       return axios.post(`${process.env.REACT_APP_MAIN_URL}/SSS/getFeedbackData`, {schoolName, acadmicYear})
+        return axios.post(`${process.env.REACT_APP_MAIN_URL}/SSS/getFeedbackData`, { schoolName, acadmicYear })
     }
 
     const showAnalytics = (schoolName, academicYear) => {
@@ -46,7 +59,7 @@ const AdminSSS = () => {
 
     const { data: analytics, isLoading: isAnalyticsLoading } = useQuery(key, () => getSSSAnalytics(schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear), { enabled: shouldFetchData })
 
-    const { data: response , isLoading: responseLoading } = useQuery(["wholeData", schoolNameAndYear?.schoolName,schoolNameAndYear?.academicYear], () => getSSSWoleData(schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear))
+    const { data: response, isLoading: responseLoading } = useQuery(["wholeData", schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear], () => getSSSWoleData(schoolNameAndYear?.schoolName, schoolNameAndYear?.academicYear))
     // console.log(response);
     const onClose = () => {
         setOpen(false);
@@ -56,66 +69,67 @@ const AdminSSS = () => {
 
     console.log("numericalData", numericalData);
     const excelClick = () => {
-        genrateFeedbackExcel("",response.data ,"SSS",schoolNameAndYear?.schoolName)
+        genrateFeedbackExcel("", response.data, "SSS", schoolNameAndYear?.schoolName)
     }
 
     return <div>
-        <AdminDrower>
 
 
-            <div className='sub-main'>
-                <p className="font-bold text-lg text-center mb-2">Student Satisfaction Survey</p>
-                {
-                    isLoading ? <UserLoading title="Fetching SSS Numerical Data" /> :
-                        <table className='table table-bordered'>
-                            <thead>
-                                <tr>
-                                    <th>School Names</th>
-                                    {
-                                        academicYearsToFetch.map((year) => {
-                                            return <th>{year}</th>
-                                        })
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
+
+        <div className='sub-main'>
+            <p className="font-bold text-lg text-center mb-2">Student Satisfaction Survey</p>
+            {
+                isLoading ? <UserLoading title="Fetching SSS Numerical Data" /> :
+                    <table className='table table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>School Names</th>
                                 {
-                                    Object.keys(SchoolsProgram).map((school) => {
-                                        return <tr>
-                                            <td>{school}</td>
-                                            {
-                                                academicYearsToFetch.map((year) => {
-                                                    return <td onClick={() => showAnalytics(school, year)}>
-                                                        <Button sx={{ fontWeight: 'bold', fontSize: '16px' }}>{numericalData?.data?.data[school][year]}</Button>
-                                                    </td>
-                                                })
-                                            }
-                                        </tr>
+                                    academicYearsToFetch.map((year) => {
+                                        return <th>{year}</th>
                                     })
                                 }
-                                <tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                Object.keys(SchoolsProgram).map((school) => {
+                                    return <tr>
+                                        <td>{school}</td>
+                                        {
+                                            academicYearsToFetch.map((year) => {
+                                                return <td onClick={() => showAnalytics(school, year)}>
+                                                    <Button sx={{ fontWeight: 'bold', fontSize: '16px' }}>{numericalData?.data?.data[school][year]}</Button>
+                                                </td>
+                                            })
+                                        }
+                                    </tr>
+                                })
+                            }
+                            <tr>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                }
+                            </tr>
+                        </tbody>
+                    </table>
+            }
 
-            </div>
+        </div>
 
-            <div>
-                {schoolNameAndYear && <ShowAnalysisModal open={open} total="Student Satisfaction Survey Analysis" handleClose={onClose} title={`Student Satisfaction Survey Analysis for ${schoolNameAndYear?.schoolName} of ${schoolNameAndYear?.academicYear}`} >
+        <div>
+            {schoolNameAndYear && <ShowAnalysisModal open={open} total="Student Satisfaction Survey Analysis" handleClose={onClose} title={`Student Satisfaction Survey Analysis for ${schoolNameAndYear?.schoolName} of ${schoolNameAndYear?.academicYear}`} >
 
-                    <SSSAnalyticalData isAnalyticsLoading={isAnalyticsLoading} reportLoading={reportLoading} setReportLoading={setReportLoading} forReport={forReport} analytics={analytics} schoolNameAndYear={schoolNameAndYear} excelClick={excelClick} />
+                <SSSAnalyticalData isAnalyticsLoading={isAnalyticsLoading} reportLoading={reportLoading} setReportLoading={setReportLoading} forReport={forReport} analytics={analytics} schoolNameAndYear={schoolNameAndYear} excelClick={excelClick} />
 
-                </ShowAnalysisModal>}
-            </div>
+            </ShowAnalysisModal>}
+        </div>
 
-        </AdminDrower>
+
     </div>
 }
 
 export default AdminSSS
+export { AdminSSSModule }
 
 
 const SSSAnalyticalData = ({ isAnalyticsLoading, reportLoading, setReportLoading, forReport, analytics, schoolNameAndYear, excelClick }) => {

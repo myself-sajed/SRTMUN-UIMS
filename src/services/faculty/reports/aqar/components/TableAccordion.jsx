@@ -7,6 +7,7 @@ import { Button, Typography } from '@mui/material'
 import AQARWithProof from './AQARWithProof';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import toast from 'react-hot-toast';
+import ShareLink from './ShareLink';
 
 const TableAccordion = ({ AQARTables, showIndex = true }) => {
 
@@ -28,7 +29,7 @@ const TableAccordion = ({ AQARTables, showIndex = true }) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <div>
-                        {table?.share && <div className="flex justify-end"><ShareLink table={table} /></div>}
+                        {table?.share && <div className="flex justify-end"><ShareLink linkToNavigate={`aqar/other/${table?.academicYear}/${table?.id}`} /></div>}
                         {table?.hasSupportingDocument ? <AQARWithProof isAdmin={table?.isAdmin} supportingProofMetaData={table?.proofData} >
                             {table.component}
                         </AQARWithProof> : table.component}
@@ -50,15 +51,3 @@ const AQARSection = ({ children }) => {
 
 export { AQARSection }
 
-const ShareLink = ({ table }) => {
-
-    const copyLink = () => {
-        const link = `${process.env.REACT_APP_REPORT_URL}/aqar/other/${table?.academicYear}/${table?.id}`
-        navigator.clipboard.writeText(link)
-        toast.success('Link copied successfully')
-    }
-
-    return <Button variant='contained' className='flex items-center gap-2 bg-green-50 text-green-800 p-2 rounded-full border-2 border-green-600' onClick={copyLink} style={{ textTransform: 'none' }} >
-        <SendRoundedIcon sx={{ fontSize: '20px' }} /> Share this module
-    </Button>
-}

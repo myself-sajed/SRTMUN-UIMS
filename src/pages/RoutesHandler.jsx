@@ -153,6 +153,8 @@ import Stage from '../services/aqar-naac/content/Stage'
 import SingleOtherAQAR from '../services/other/pages/SingleOtherAQAR'
 import NIRFContent from '../services/director/reports/nirf/pages/NIRFContent'
 import ChooseNIRFYear from '../services/director/reports/nirf/pages/ChooseNIRFYear'
+import { FeedbackStatus } from '../services/admin/pages/AdminFeedbackStatus'
+import { AdminSSSModule } from '../services/admin/pages/AdminSSS'
 
 let model = "Xyz"
 let module = 'abc'
@@ -270,6 +272,7 @@ const RoutesHandler = () => {
                 <Route path="director/feedback/dashboard" exact element={<StatusPage auth={{ director: useDirectorAuth }} />} />
                 <Route path="/feedback/generateFeedbackReport/:schoolName/:feedbackUser/:academicYear" exact element={<FeedbackReport />} />
                 <Route path="/SSS/report/:schoolName/:academicYear" exact element={<SSSReport />} />
+                <Route path="/feedback/analysis-and-atr" exact element={<FeedbackStatus />} />
 
                 {/* AQAR  */}
                 <Route path="/faculty/service/aqar-report" exact element={<AQARHome auth={useAuth} />} />
@@ -365,6 +368,7 @@ const RoutesHandler = () => {
 
                 {/* Student Satisfaction Survey */}
                 <Route path="/student-satisfaction-survey" exact element={<StudentSatisfactionSurvey />} />
+                <Route path="/SSS/student-satisfaction-survey" exact element={<AdminSSSModule />} />
 
                 {/* SWAYAM, NPTEL & MOOCs */}
                 <Route path="/swayam-nptel-login" exact element={<SwayamLogin />} />
